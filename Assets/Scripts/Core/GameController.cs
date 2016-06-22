@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using SpilGames.Unity;
+using SpilGames.Unity.Helpers;
 public class GameController : MonoBehaviour {
 
 	// different possible states of the game
@@ -9,11 +10,14 @@ public class GameController : MonoBehaviour {
 	{
 		Start,
 		InGame,
-		GameOver
+		GameOver,
+		Shop
 	}
 
 	// the players score for each round
 	public int playerScore = 0;
+
+	public static SpilGameDataHelper gameData;
 
 	//the player controller attached to the player gameobject 
 	public PlayerController player;
@@ -31,7 +35,7 @@ public class GameController : MonoBehaviour {
 	List<GameObject> listOfObsticles = new List<GameObject>();
 
 	//the panels of the UI
-	public GameObject startPanel, ingamePanel, gameoverPanel;
+	public GameObject startPanel, ingamePanel, gameoverPanel, shopPanel;
 
 	// Use this for initialization
 	void Start () {
@@ -71,9 +75,11 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void GameOver(){
+		PlayerData.AddToCoins (25,playerScore, "End Of Level");
 		CancelInvoke ("SpawnObsticle");
 		UpdateUI (GameStates.GameOver);
 		Spil.Instance.SendplayerDiesEvent ("MainGame");
+
 	}
 
 	void SpawnObsticle(){
@@ -81,10 +87,15 @@ public class GameController : MonoBehaviour {
 		listOfObsticles.Add((GameObject)Instantiate (obsticlePrefab, new Vector3 (obsticleSpawnPoint.position.x, obsticleSpawnPoint.position.y + rand, 0), transform.rotation));
 	}
 
+	public void ToggleShop(){
+		shopPanel.SetActive (!shopPanel.activeInHierarchy);
+	}
+
 	void UpdateUI(GameStates gameState){
 		startPanel.SetActive (gameState == GameStates.Start);
 		ingamePanel.SetActive (gameState == GameStates.InGame);
 		gameoverPanel.SetActive (gameState == GameStates.GameOver);
+		shopPanel.SetActive (gameState == GameStates.Shop);
 	}
 
 

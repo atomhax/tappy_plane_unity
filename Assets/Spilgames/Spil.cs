@@ -1,5 +1,5 @@
 /*
- * Spil Games Unity SDK 2016 V2.0.0
+ * Spil Games Unity SDK 2016
  * 
  * If you have any questions, don't hesitate to e-mail us at info@spilgames.com
  * Be sure to check the github page for documentation and the latest updates
@@ -9,6 +9,7 @@
 using UnityEngine;
 using SpilGames.Unity.Implementations;
 using SpilGames.Unity.Utils;
+using SpilGames.Unity.Helpers;
 
 namespace SpilGames.Unity
 { 
@@ -25,6 +26,10 @@ namespace SpilGames.Unity
 
                 Instance.OnAdNotAvailable -= AdNotAvailableHandler;
                 Instance.OnAdNotAvailable += AdNotAvailableHandler;
+
+				Instance.OnSpilGameDataAvailable -= SpilGameDataAvailableHandler;
+				Instance.OnSpilGameDataAvailable += SpilGameDataAvailableHandler;
+
             }
 
             private void AdAvailableHandler(enumAdType adType)
@@ -36,6 +41,12 @@ namespace SpilGames.Unity
             {
                 Debug.Log("PixelWizard AdNotAvailable");
             }
+
+			private void SpilGameDataAvailableHandler()
+			{
+				Debug.Log("SpilGameData Available");
+			}
+			
 
         #endregion
 
@@ -51,9 +62,13 @@ namespace SpilGames.Unity
                 get { return "127433475057"; }
             }
 
+			public static SpilGameDataHelper SpilGameDataInstance;
+			public static PlayerDataHelper SpilPlayerDataInstance;
+
 			#if UNITY_EDITOR
 				
 				public static SpilUnityEditorImplementation Instance = new SpilUnityEditorImplementation ();
+
 
 			#elif UNITY_ANDROID
 
@@ -79,6 +94,11 @@ namespace SpilGames.Unity
                 gameObject.name = "SpilSDK";
 
                 Instance.UpdatePackagesAndPromotions();
+
+				SpilGameDataInstance = new SpilGameDataHelper(Instance);
+				SpilPlayerDataInstance = new PlayerDataHelper(Instance);
+
+				//AttachListeners ();
 
             }
 
@@ -125,6 +145,46 @@ namespace SpilGames.Unity
             {
                 SpilUnityImplementationBase.OnResponseReceived(response);
             }
+            
+			/// <summary>
+			/// This method is called by the native Spil SDK, it should not be used by developers.
+			/// </summary>
+			public void SpilGameDataAvailable()
+			{
+				SpilUnityImplementationBase.fireSpilGameDataAvailable();
+			}
+			
+			/// <summary>
+			/// This method is called by the native Spil SDK, it should not be used by developers.
+			/// </summary>
+			public void SpilGameDataError(string reason)
+			{
+				SpilUnityImplementationBase.fireSpilGameDataError(reason);
+			}
+			
+			/// <summary>
+			/// This method is called by the native Spil SDK, it should not be used by developers.
+			/// </summary>
+			public void PlayerDataAvailable()
+			{
+				SpilUnityImplementationBase.firePlayerDataAvailable();
+			}
+			
+			/// <summary>
+			/// This method is called by the native Spil SDK, it should not be used by developers.
+			/// </summary>
+			public void PlayerDataUpdated()
+			{
+				SpilUnityImplementationBase.firePlayerDataUpdated();
+			}
+			
+			/// <summary>
+			/// This method is called by the native Spil SDK, it should not be used by developers.
+			/// </summary>
+			public void PlayerDataError(string reason)
+			{
+				SpilUnityImplementationBase.firePlayerDataError(reason);
+			}
 			
         #endregion
     }

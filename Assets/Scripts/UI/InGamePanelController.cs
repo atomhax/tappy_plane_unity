@@ -13,7 +13,7 @@ public class InGamePanelController : MonoBehaviour {
 	}
 
 	void DisplayScore(){
-		currentScoreText.text = "SCORE: " + gameController.playerScore.ToString ();
+		currentScoreText.text = gameController.playerScore.ToString ();
 	}
 
 }

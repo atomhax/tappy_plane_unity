@@ -142,6 +142,19 @@ namespace SpilGames.Unity.Implementations
             [DllImport("__Internal")]
 	        private static extern void playRewardVideoNative();
 
+
+
+
+			public override void ShowToastOnVideoReward(bool show)
+			{
+				showToastOnVideoReward(show);
+			}
+			
+			[DllImport("__Internal")]
+			private static extern void showToastOnVideoReward(bool show);
+
+			
+
             /// <summary>
             /// This can be called to show the "more apps" activity, for instance after calling "RequestMoreApps()"
             /// and receiving an "AdAvailable" event the developer could call this method from the event handler.
@@ -157,7 +170,9 @@ namespace SpilGames.Unity.Implementations
 	        private static extern void showMoreAppsNative();
 
             /// <summary>
-            /// Method that requests the "more apps" activity
+            /// Sends the "requestAd" event with the "moreApps" parameter to the native Spil SDK which will send a request to the back-end.
+            /// When a response has been received from the back-end the SDK will fire either an "AdAvailable" or and "AdNotAvailable"
+            /// event to which the developer can subscribe and for instance call PlayVideo(); or PlayMoreApps();
             /// </summary>
             public override void RequestMoreApps()
             {
@@ -180,6 +195,78 @@ namespace SpilGames.Unity.Implementations
 
             [DllImport("__Internal")]
 	        private static extern string getSpilUIDNative();
+
+			#region Spil Game Objects
+
+				public override string GetSpilGameDataFromSdk ()
+				{
+					return getSpilGameDataNative();
+				}
+
+				[DllImport("__Internal")]
+				private static extern string getSpilGameDataNative();
+			
+			#endregion
+
+			#region Player Data
+
+				public override string GetWalletFromSdk()
+				{
+					return getWalletNative();
+				}
+
+				[DllImport("__Internal")]
+				private static extern string getWalletNative();
+
+				public override string GetInvetoryFromSdk()
+				{
+					return getInventoryNative();
+				}
+
+				[DllImport("__Internal")]
+				private static extern string getInventoryNative();
+
+				public override void AddCurrencyToWallet (int currencyId, int amount, string reason)
+				{
+					addCurrencyToWallet(currencyId, amount, reason);
+				}
+
+				[DllImport("__Internal")]
+				private static extern void addCurrencyToWallet(int currencyId, int amount, string reason);
+
+				public override void SubtractCurrencyFromWallet (int currencyId, int amount, string reason)
+				{
+					subtractCurrencyFromWallet(currencyId, amount, reason);
+				}
+
+				[DllImport("__Internal")]
+				private static extern void subtractCurrencyFromWallet(int currencyId, int amount, string reason);
+
+				public override void AddItemToInventory (int itemId, int amount, string reason)
+				{
+					addItemToInventory(itemId, amount, reason);
+				}
+
+				[DllImport("__Internal")]
+				private static extern void addItemToInventory (int itemId, int amount, string reason);
+
+				public override void SubtractItemFromInventory (int itemId, int amount, string reason)
+				{
+					subtractItemToInventory(itemId, amount, reason);
+				}
+
+				[DllImport("__Internal")]
+				private static extern void subtractItemToInventory (int itemId, int amount, string reason);
+
+				public override void ConsumeBundle (int bundleId, string reason)
+				{
+					consumeBundle(bundleId, reason);
+				}
+
+				[DllImport("__Internal")]
+				private static extern void consumeBundle (int bundleId, string reason);
+
+			#endregion
 
         #endregion
 

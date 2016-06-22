@@ -1,0 +1,142 @@
+{
+	"name": "requestGameData",
+	"action": "null",
+	"type": "gameData",
+	"data": {
+		"shop": [{
+			"name": "Skins",
+			"entries": [{
+				"position": 1,
+				"label": "Blue",
+				"bundleId": 55
+			}, {
+				"position": 2,
+				"label": "Green",
+				"bundleId": 58
+			}, {
+				"position": 3,
+				"label": "All",
+				"bundleId": 70
+			}],
+			"position": 1
+		}, {
+			"name": "Backgrounds",
+			"entries": [{
+				"position": 1,
+				"label": "Normal",
+				"bundleId": 61
+			}, {
+				"position": 2,
+				"label": "Special",
+				"bundleId": 64
+			}, {
+				"position": 3,
+				"label": "All",
+				"bundleId": 67
+			}],
+			"position": 2
+		}],
+		"promotions": [],
+		"currencies": [{
+			"id": 28,
+			"name": "Diamonds",
+			"type": 0,
+			"initialValue": 0
+		}, {
+			"id": 25,
+			"name": "Stars",
+			"type": 1,
+			"initialValue": 0
+		}],
+		"items": [{
+			"id": 49,
+			"name": "Blue Skin",
+			"type": 2
+		}, {
+			"id": 52,
+			"name": "Green Skin",
+			"type": 2
+		}, {
+			"id": 55,
+			"name": "NormalBackground",
+			"type": 2
+		}, {
+			"id": 58,
+			"name": "SpecialBackground",
+			"type": 2
+		}],
+		"bundles": [{
+			"id": 67,
+			"name": "All backgrounds",
+			"prices": [{
+				"currencyId": 28,
+				"value": 250
+			}],
+			"items": [{
+				"id": 55,
+				"amount": 1
+			}, {
+				"id": 58,
+				"amount": 1
+			}]
+		}, {
+			"id": 70,
+			"name": "All skins",
+			"prices": [{
+				"currencyId": 25,
+				"value": 250
+			}],
+			"items": [{
+				"id": 49,
+				"amount": 1
+			}, {
+				"id": 52,
+				"amount": 1
+			}]
+		}, {
+			"id": 55,
+			"name": "Blue Skin",
+			"prices": [{
+				"currencyId": 25,
+				"value": 100
+			}],
+			"items": [{
+				"id": 49,
+				"amount": 1
+			}]
+		}, {
+			"id": 58,
+			"name": "Green Skin",
+			"prices": [{
+				"currencyId": 25,
+				"value": 200
+			}],
+			"items": [{
+				"id": 52,
+				"amount": 1
+			}]
+		}, {
+			"id": 61,
+			"name": "NormalBackground",
+			"prices": [{
+				"currencyId": 25,
+				"value": 100
+			}],
+			"items": [{
+				"id": 55,
+				"amount": 1
+			}]
+		}, {
+			"id": 64,
+			"name": "SpecialBackground",
+			"prices": [{
+				"currencyId": 28,
+				"value": 200
+			}],
+			"items": [{
+				"id": 58,
+				"amount": 1
+			}]
+		}]
+	}
+}

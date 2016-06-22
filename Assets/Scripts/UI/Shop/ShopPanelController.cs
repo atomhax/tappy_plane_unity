@@ -1,0 +1,92 @@
+﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.UI;
+using SpilGames.Unity;
+using SpilGames.Unity.Helpers;
+public class ShopPanelController : MonoBehaviour {
+
+	public GameObject getFreeCoinsButton, rewardSucessPanel;
+
+	public GameController gameController;
+
+	public Text starsAmountText;
+
+	public List<GameObject> shopTabs = new List<GameObject> ();
+
+
+	public Transform tabButtonPanel, tabsPanel;
+
+	public GameObject tabButtonPrefab, tabPrefab;
+
+
+	void OnEnable(){
+//		getFreeCoinsButton.SetActive (false);
+//		Spil.Instance.OnAdAvailable += Spil_Instance_OnAdAvailable;	
+//		Spil.Instance.SendrequestRewardVideoEvent ();
+		CreateShop ();
+	}
+
+
+
+
+	//this method will take the Spil game data and create the shop from it
+	void CreateShop(){
+		//First create the buttons for each shop tab/window
+		for(int i = 0; i < Spil.SpilGameDataInstance.Shop.Tabs.Count; i++ ) {
+			CreateTabButton (Spil.SpilGameDataInstance.Shop.Tabs[i], i);
+			CreateTab (Spil.SpilGameDataInstance.Shop.Tabs [i]);
+		}
+	}
+
+	void CreateTabButton(Tab tab,int position){
+		GameObject newTabButton = (GameObject)Instantiate (tabButtonPrefab);
+		newTabButton.transform.SetParent (tabButtonPanel);
+		newTabButton.GetComponent<TabButtonController> ().SetupButton (tab.Name, position, this);
+	}
+
+	void CreateTab(Tab tab){
+		GameObject newTab = (GameObject)Instantiate (tabPrefab);
+		newTab.transform.SetParent (tabsPanel);
+		newTab.GetComponent<TabController> ().SetupTab (tab);
+		newTab.SetActive (false);
+		shopTabs.Add (newTab);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	// REWARDED VIDEO STUFF
+
+	void Spil_Instance_OnAdAvailable (SpilGames.Unity.Utils.enumAdType adType)
+	{
+		if (adType == SpilGames.Unity.Utils.enumAdType.RewardVideo) {
+			getFreeCoinsButton.SetActive (true);
+		}
+	}
+
+	public void StartRewardedVideo(){
+		Spil.Instance.OnAdFinished += Spil_Instance_OnAdFinished;
+		Spil.Instance.PlayVideo ();
+	}
+
+	void Spil_Instance_OnAdFinished (SpilGames.Unity.Utils.SpilAdFinishedResponse response)
+	{
+		getFreeCoinsButton.SetActive (false);
+		if(response.reward != null){
+			PlayerData.AddToCoins (25,response.reward.reward, "Reward Ads");
+			rewardSucessPanel.SetActive (true);
+			starsAmountText.text = PlayerData.GetCurrencyAmount (25).ToString();
+		}
+		Spil.Instance.SendrequestRewardVideoEvent ();
+	}
+
+}

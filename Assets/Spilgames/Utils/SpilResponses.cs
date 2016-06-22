@@ -105,8 +105,8 @@ namespace SpilGames.Unity.Utils
         public class PromotionData
         {
             public string packageId;
-            public List<ItemData> items;
-            public string discountLabel;
+			public List<PackageItemData> items;
+			public string discountLabel;
             public DateTime startTime;
             public DateTime endTime;
         }
@@ -116,12 +116,12 @@ namespace SpilGames.Unity.Utils
         public class PackageData
         {
             public string packageId;
-            public List<ItemData> items;
-            public string discountLabel;
+			public List<PackageItemData> items;
+			public string discountLabel;
             public bool hasPromotion;
         }
 
-        public class ItemData
+        public class PackageItemData
         {
             public string id;
             public string type;
@@ -129,4 +129,109 @@ namespace SpilGames.Unity.Utils
         }
 
     #endregion
+
+	#region Spil Game Objects
+
+		public class SpilCurrencyData
+		{
+			public int id;
+			public string name;
+			public int type;
+		}
+		
+		public class SpilItemData
+		{
+			public int id;
+			public string name;
+			public int type;
+		}
+		
+		public class SpilBundlePriceData
+		{
+			public int currencyId;
+			public int value;
+		}
+		
+		public class SpilBundleItemData
+		{
+			public int id;
+			public int amount;
+		}
+		
+		public class SpilBundleData
+		{
+			public int id;
+			public string name;
+			public List<SpilBundlePriceData> prices;
+			public List<SpilBundleItemData> items;
+		}
+		
+		public class SpilGameData
+		{
+			public List<SpilCurrencyData> currencies;
+			public List<SpilItemData> items;
+			public List<SpilBundleData> bundles;
+			public List<SpilShopTabData> shop;
+			public List<SpilShopPromotionData> promotions;
+		}
+
+		#region Shop
+
+		public class SpilShopEntryData
+		{
+			public int bundleId;
+			public string label;
+			public int position;
+		}
+
+		public class SpilShopTabData
+		{
+			public string name;
+			public List<SpilShopEntryData> entries;
+		}
+
+		public class SpilShopPromotionData
+		{
+			public int bundleId;
+			public int amount;
+			public List<SpilBundlePriceData> prices;
+			public string discount;
+			public DateTime startDate;
+			public DateTime endDate;
+		}
+
+		#endregion
+
+	#endregion
+	
+	#region Player Data Objects
+	
+		public class PlayerCurrencyData : SpilCurrencyData
+		{
+			public int currentBalance;
+			public int delta;
+		}
+		
+		public class WalletData
+		{
+			public List<PlayerCurrencyData> currencies;
+			public int offset;
+			public string logic;
+		}
+		
+		public class PlayerItemData : SpilItemData
+		{
+			public int amount;
+			public int value;
+		}
+		
+		public class InventoryData
+		{
+			public List<PlayerItemData> items;
+			public int offset;
+			public string logic;
+		}
+	
+	#endregion 
+
 }

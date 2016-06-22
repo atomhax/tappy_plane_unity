@@ -110,13 +110,11 @@ namespace SpilGames.Unity.Helpers
         */
 
         // This is a class that mirrors the shape of the data in the JSON file.
-        // It can be used with the "GetConfigAsObject<T>()" method in Spil.cs to 
+        // It can be used with the "JsonHelper.getObjectFromJson<T>(string jsonString)" method
         // retrieve SLOT game configs as objects like this: 
-        // GameConfig myConfig = GetConfigAsObject<GameConfig>();
+        // GameConfig myConfig = JsonHelper.getObjectFromJson<GameConfig>(jsonString);
         //
-        // If you have your own JSON string you can turn it into an object in exactly the
-        // same way using "JsonHelper.getObjectFromJson<T>(string jsonString)" like this:
-        // MyCustomObject object = JsonHelper.getObjectFromJson<MyCustomObject>(string jsonString);
+        // If you have your own JSON string you can turn it into an object in exactly the same way!
         //
         public class GameConfig
         {

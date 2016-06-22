@@ -16,6 +16,12 @@ public class PlayerController : MonoBehaviour {
 
 	public GameController gameController;
 
+	public RuntimeAnimatorController[] playerSkinAnimators;
+
+	void Start(){
+		SetupPlayerSkin ();
+	}
+
 	// Update is called once per frame
 	void Update () {
 		if(idleMode){
@@ -44,6 +50,7 @@ public class PlayerController : MonoBehaviour {
 		}
 		if(!dead && coll.gameObject.tag == "ScoreChecker"){
 			gameController.AddToScore ();
+			coll.gameObject.SetActive (false);
 		}
 	}
 
@@ -58,5 +65,10 @@ public class PlayerController : MonoBehaviour {
 		if(transform.position.y < 0){
 			Jump ();
 		}
+	}
+
+	public void SetupPlayerSkin(){
+		int playerSkin = PlayerPrefs.GetInt ("Skin",0);
+		GetComponent<Animator> ().runtimeAnimatorController = playerSkinAnimators [playerSkin];
 	}
 }

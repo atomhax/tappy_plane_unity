@@ -12,9 +12,9 @@ public class GameOverPanelController : MonoBehaviour {
 	}
 	
 	void DisplayGameoverScore(){
-		gameoverScoreText.text = "SCORE: " + gameController.playerScore.ToString ();
+		gameoverScoreText.text = "STARS THIS ROUND: " + gameController.playerScore.ToString ();
 		gameoverScoreText.text += "\nHIGHSCORE: " + PlayerPrefs.GetInt ("HighScore", 0).ToString ();
+		gameoverScoreText.text += "\nTOTAL STARS: " + PlayerData.GetCurrencyAmount (25).ToString ();
 	}
-
 
 }
