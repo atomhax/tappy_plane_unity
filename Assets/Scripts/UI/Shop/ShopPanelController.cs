@@ -13,6 +13,7 @@ public class ShopPanelController : MonoBehaviour {
 	public Text starsAmountText;
 
 	public List<GameObject> shopTabs = new List<GameObject> ();
+	public List<GameObject> tabButtons = new List<GameObject> ();
 
 
 	public Transform tabButtonPanel, tabsPanel;
@@ -24,6 +25,7 @@ public class ShopPanelController : MonoBehaviour {
 //		getFreeCoinsButton.SetActive (false);
 //		Spil.Instance.OnAdAvailable += Spil_Instance_OnAdAvailable;	
 //		Spil.Instance.SendrequestRewardVideoEvent ();
+		ResetShop();
 		CreateShop ();
 	}
 
@@ -39,10 +41,22 @@ public class ShopPanelController : MonoBehaviour {
 		}
 	}
 
+	void ResetShop(){
+		for (int i = 0; i < tabButtons.Count; i++) {
+			Destroy (tabButtons [i]);
+		}
+		tabButtons.Clear ();
+		for (int i = 0; i < shopTabs.Count; i++) {
+			Destroy (shopTabs [i]);
+		}
+		shopTabs.Clear ();
+	}
+
 	void CreateTabButton(Tab tab,int position){
 		GameObject newTabButton = (GameObject)Instantiate (tabButtonPrefab);
 		newTabButton.transform.SetParent (tabButtonPanel);
 		newTabButton.GetComponent<TabButtonController> ().SetupButton (tab.Name, position, this);
+		tabButtons.Add (newTabButton);
 	}
 
 	void CreateTab(Tab tab){

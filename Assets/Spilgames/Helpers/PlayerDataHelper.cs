@@ -47,6 +47,42 @@ namespace SpilGames.Unity.Helpers
 		}
 
 		/// <summary>
+		/// Helper method that returns the Currency Balance given a currencyId
+		/// Returns -1 if no currency was found
+		/// </summary>
+		public int GetCurrencyBalance(int currencyId)
+		{
+			if (Wallet != null) {
+				foreach (PlayerCurrency currency in Wallet.Currencies) {
+					if (currency.Id == currencyId) {
+						return currency.CurrrentBalance;
+					}
+				}
+				return -1;
+			} else {
+				return -1;
+			}
+		}
+
+		/// <summary>
+		/// Helper method that returns the Item Amount given a itemId
+		/// Returns -1 if no item was found
+		/// </summary>
+		public int GetItemAmount(int itemId)
+		{
+			if (Inventory != null) {
+				foreach (PlayerItem item in Inventory.Items) {
+					if (item.Id == itemId) {
+						return item.Amount;
+					}
+				}
+				return -1;
+			} else {
+				return -1;
+			}
+		}
+
+		/// <summary>
 		/// Helper method that consumes the bundle given a bundleId and a reason
 		/// </summary>
 		public void ConsumeBundle(int bundleId, string reason)

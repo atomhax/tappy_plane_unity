@@ -3,140 +3,140 @@
 	"action": "null",
 	"type": "gameData",
 	"data": {
+		"bundles": [{
+			"name": "All backgrounds",
+			"id": 67,
+			"items": [{
+				"id": 55,
+				"amount": 1
+			}, {
+				"id": 58,
+				"amount": 1
+			}],
+			"prices": [{
+				"value": 250,
+				"currencyId": 28
+			}]
+		}, {
+			"name": "All skins",
+			"id": 70,
+			"items": [{
+				"id": 49,
+				"amount": 1
+			}, {
+				"id": 52,
+				"amount": 1
+			}],
+			"prices": [{
+				"value": 250,
+				"currencyId": 25
+			}]
+		}, {
+			"name": "Blue Skin",
+			"id": 55,
+			"items": [{
+				"id": 49,
+				"amount": 1
+			}],
+			"prices": [{
+				"value": 100,
+				"currencyId": 25
+			}]
+		}, {
+			"name": "CastleBackground",
+			"id": 61,
+			"items": [{
+				"id": 55,
+				"amount": 1
+			}],
+			"prices": [{
+				"value": 100,
+				"currencyId": 25
+			}]
+		}, {
+			"name": "Green Skin",
+			"id": 58,
+			"items": [{
+				"id": 52,
+				"amount": 1
+			}],
+			"prices": [{
+				"value": 200,
+				"currencyId": 25
+			}]
+		}, {
+			"name": "Woods Background",
+			"id": 64,
+			"items": [{
+				"id": 58,
+				"amount": 1
+			}],
+			"prices": [{
+				"value": 200,
+				"currencyId": 28
+			}]
+		}],
+		"currencies": [{
+			"name": "Diamonds",
+			"id": 28,
+			"type": 0,
+			"initialValue": 0
+		}, {
+			"name": "Stars",
+			"id": 25,
+			"type": 1,
+			"initialValue": 0
+		}],
+		"items": [{
+			"name": "Blue Skin",
+			"id": 49,
+			"type": 2
+		}, {
+			"name": "CastleBackground",
+			"id": 55,
+			"type": 2
+		}, {
+			"name": "Green Skin",
+			"id": 52,
+			"type": 2
+		}, {
+			"name": "Woods Background",
+			"id": 58,
+			"type": 2
+		}],
 		"shop": [{
 			"name": "Skins",
 			"entries": [{
 				"position": 1,
-				"label": "Blue",
-				"bundleId": 55
+				"bundleId": 55,
+				"label": "Blue"
 			}, {
 				"position": 2,
-				"label": "Green",
-				"bundleId": 58
+				"bundleId": 58,
+				"label": "Green"
 			}, {
 				"position": 3,
-				"label": "All",
-				"bundleId": 70
+				"bundleId": 70,
+				"label": "All"
 			}],
 			"position": 1
 		}, {
 			"name": "Backgrounds",
 			"entries": [{
 				"position": 1,
-				"label": "Normal",
-				"bundleId": 61
+				"bundleId": 61,
+				"label": "Normal"
 			}, {
 				"position": 2,
-				"label": "Special",
-				"bundleId": 64
+				"bundleId": 64,
+				"label": "Special"
 			}, {
 				"position": 3,
-				"label": "All",
-				"bundleId": 67
+				"bundleId": 67,
+				"label": "All"
 			}],
 			"position": 2
 		}],
-		"promotions": [],
-		"currencies": [{
-			"id": 28,
-			"name": "Diamonds",
-			"type": 0,
-			"initialValue": 0
-		}, {
-			"id": 25,
-			"name": "Stars",
-			"type": 1,
-			"initialValue": 0
-		}],
-		"items": [{
-			"id": 49,
-			"name": "Blue Skin",
-			"type": 2
-		}, {
-			"id": 52,
-			"name": "Green Skin",
-			"type": 2
-		}, {
-			"id": 55,
-			"name": "NormalBackground",
-			"type": 2
-		}, {
-			"id": 58,
-			"name": "SpecialBackground",
-			"type": 2
-		}],
-		"bundles": [{
-			"id": 67,
-			"name": "All backgrounds",
-			"prices": [{
-				"currencyId": 28,
-				"value": 250
-			}],
-			"items": [{
-				"id": 55,
-				"amount": 1
-			}, {
-				"id": 58,
-				"amount": 1
-			}]
-		}, {
-			"id": 70,
-			"name": "All skins",
-			"prices": [{
-				"currencyId": 25,
-				"value": 250
-			}],
-			"items": [{
-				"id": 49,
-				"amount": 1
-			}, {
-				"id": 52,
-				"amount": 1
-			}]
-		}, {
-			"id": 55,
-			"name": "Blue Skin",
-			"prices": [{
-				"currencyId": 25,
-				"value": 100
-			}],
-			"items": [{
-				"id": 49,
-				"amount": 1
-			}]
-		}, {
-			"id": 58,
-			"name": "Green Skin",
-			"prices": [{
-				"currencyId": 25,
-				"value": 200
-			}],
-			"items": [{
-				"id": 52,
-				"amount": 1
-			}]
-		}, {
-			"id": 61,
-			"name": "NormalBackground",
-			"prices": [{
-				"currencyId": 25,
-				"value": 100
-			}],
-			"items": [{
-				"id": 55,
-				"amount": 1
-			}]
-		}, {
-			"id": 64,
-			"name": "SpecialBackground",
-			"prices": [{
-				"currencyId": 28,
-				"value": 200
-			}],
-			"items": [{
-				"id": 58,
-				"amount": 1
-			}]
-		}]
+		"promotions": []
 	}
 }
