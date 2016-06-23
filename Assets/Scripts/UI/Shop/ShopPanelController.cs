@@ -10,7 +10,7 @@ public class ShopPanelController : MonoBehaviour {
 
 	public GameController gameController;
 
-	public Text starsAmountText;
+	public Text starsAmountText, diamonsAmountText;
 
 	public List<GameObject> shopTabs = new List<GameObject> ();
 	public List<GameObject> tabButtons = new List<GameObject> ();
@@ -21,12 +21,27 @@ public class ShopPanelController : MonoBehaviour {
 	public GameObject tabButtonPrefab, tabPrefab;
 
 
+
 	void OnEnable(){
 //		getFreeCoinsButton.SetActive (false);
 //		Spil.Instance.OnAdAvailable += Spil_Instance_OnAdAvailable;	
 //		Spil.Instance.SendrequestRewardVideoEvent ();
+		Spil_Instance_OnPlayerDataUpdated();
 		ResetShop();
 		CreateShop ();
+		Spil.Instance.OnPlayerDataUpdated += Spil_Instance_OnPlayerDataUpdated;
+	}
+
+	void OnDisable(){
+		gameController.UpdateSkins ();
+	}
+
+	void Spil_Instance_OnPlayerDataUpdated ()
+	{
+		starsAmountText.text = Spil.SpilPlayerDataInstance.GetCurrencyBalance (25).ToString ();
+		diamonsAmountText.text = Spil.SpilPlayerDataInstance.GetCurrencyBalance (28).ToString ();
+		Debug.Log ("RICH PLAYER WALLET" + Spil.SpilPlayerDataInstance.Wallet.Currencies [0].CurrrentBalance.ToString ());
+		Debug.Log ("RICH PLAYER WALLET" + Spil.SpilPlayerDataInstance.Wallet.Currencies [1].CurrrentBalance.ToString ());
 	}
 
 

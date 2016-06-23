@@ -31,6 +31,9 @@ public class GameController : MonoBehaviour {
 	public Transform obsticleSpawnPoint;
 	public GameObject obsticlePrefab;
 
+	public SpriteRenderer[] backgroundSpriteRenderes;
+	public Sprite[] backgroundSprites;
+
 	//the list of all obsitcles spawned
 	List<GameObject> listOfObsticles = new List<GameObject>();
 
@@ -62,7 +65,21 @@ public class GameController : MonoBehaviour {
 		player.transform.rotation = playerStartLocation.rotation;
 		player.idleMode = true;
 		UpdateUI (GameStates.Start);
+		//set backgroundSprite
+		foreach (SpriteRenderer r in backgroundSpriteRenderes) {
+			r.sprite = backgroundSprites[PlayerPrefs.GetInt("Background",0)];
+		}
+		player.SetupPlayerSkin ();
 	}
+
+
+	public void UpdateSkins(){
+		foreach (SpriteRenderer r in backgroundSpriteRenderes) {
+			r.sprite = backgroundSprites[PlayerPrefs.GetInt("Background",0)];
+		}
+		player.SetupPlayerSkin ();
+	}
+
 
 	public void StartNewGame(){
 		player.idleMode = false;

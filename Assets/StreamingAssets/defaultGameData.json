@@ -3,8 +3,56 @@
 	"action": "null",
 	"type": "gameData",
 	"data": {
+		"currencies": [{
+			"id": 28,
+			"name": "Diamonds",
+			"type": 0,
+			"initialValue": 0
+		}, {
+			"id": 25,
+			"name": "Stars",
+			"type": 1,
+			"initialValue": 0
+		}],
+		"promotions": [],
+		"shop": [{
+			"position": 1,
+			"entries": [{
+				"label": "Blue",
+				"position": 1,
+				"bundleId": 55
+			}, {
+				"label": "Green",
+				"position": 2,
+				"bundleId": 58
+			}, {
+				"label": "All",
+				"position": 3,
+				"bundleId": 70
+			}],
+			"name": "Skins"
+		}, {
+			"position": 2,
+			"entries": [{
+				"label": "All",
+				"position": 1,
+				"bundleId": 67
+			}, {
+				"label": "Castle",
+				"position": 2,
+				"bundleId": 61
+			}, {
+				"label": "Woods",
+				"position": 3,
+				"bundleId": 64
+			}],
+			"name": "Backgrounds"
+		}],
 		"bundles": [{
-			"name": "All backgrounds",
+			"prices": [{
+				"currencyId": 28,
+				"value": 250
+			}],
 			"id": 67,
 			"items": [{
 				"id": 55,
@@ -13,12 +61,12 @@
 				"id": 58,
 				"amount": 1
 			}],
-			"prices": [{
-				"value": 250,
-				"currencyId": 28
-			}]
+			"name": "All backgrounds"
 		}, {
-			"name": "All skins",
+			"prices": [{
+				"currencyId": 25,
+				"value": 250
+			}],
 			"id": 70,
 			"items": [{
 				"id": 49,
@@ -27,116 +75,68 @@
 				"id": 52,
 				"amount": 1
 			}],
-			"prices": [{
-				"value": 250,
-				"currencyId": 25
-			}]
+			"name": "All skins"
 		}, {
-			"name": "Blue Skin",
+			"prices": [{
+				"currencyId": 25,
+				"value": 5
+			}],
 			"id": 55,
 			"items": [{
 				"id": 49,
 				"amount": 1
 			}],
-			"prices": [{
-				"value": 100,
-				"currencyId": 25
-			}]
+			"name": "Blue Skin"
 		}, {
-			"name": "CastleBackground",
+			"prices": [{
+				"currencyId": 25,
+				"value": 5
+			}],
 			"id": 61,
 			"items": [{
 				"id": 55,
 				"amount": 1
 			}],
-			"prices": [{
-				"value": 100,
-				"currencyId": 25
-			}]
+			"name": "Castle Background"
 		}, {
-			"name": "Green Skin",
+			"prices": [{
+				"currencyId": 25,
+				"value": 5
+			}],
 			"id": 58,
 			"items": [{
 				"id": 52,
 				"amount": 1
 			}],
-			"prices": [{
-				"value": 200,
-				"currencyId": 25
-			}]
+			"name": "Green Skin"
 		}, {
-			"name": "Woods Background",
+			"prices": [{
+				"currencyId": 28,
+				"value": 200
+			}],
 			"id": 64,
 			"items": [{
 				"id": 58,
 				"amount": 1
 			}],
-			"prices": [{
-				"value": 200,
-				"currencyId": 28
-			}]
-		}],
-		"currencies": [{
-			"name": "Diamonds",
-			"id": 28,
-			"type": 0,
-			"initialValue": 0
-		}, {
-			"name": "Stars",
-			"id": 25,
-			"type": 1,
-			"initialValue": 0
+			"name": "Woods Background"
 		}],
 		"items": [{
-			"name": "Blue Skin",
 			"id": 49,
-			"type": 2
+			"type": 2,
+			"name": "Blue Skin"
 		}, {
-			"name": "CastleBackground",
 			"id": 55,
-			"type": 2
+			"type": 2,
+			"name": "Castle Background"
 		}, {
-			"name": "Green Skin",
 			"id": 52,
-			"type": 2
+			"type": 2,
+			"name": "Green Skin"
 		}, {
-			"name": "Woods Background",
 			"id": 58,
-			"type": 2
-		}],
-		"shop": [{
-			"name": "Skins",
-			"entries": [{
-				"position": 1,
-				"bundleId": 55,
-				"label": "Blue"
-			}, {
-				"position": 2,
-				"bundleId": 58,
-				"label": "Green"
-			}, {
-				"position": 3,
-				"bundleId": 70,
-				"label": "All"
-			}],
-			"position": 1
-		}, {
-			"name": "Backgrounds",
-			"entries": [{
-				"position": 1,
-				"bundleId": 61,
-				"label": "Normal"
-			}, {
-				"position": 2,
-				"bundleId": 64,
-				"label": "Special"
-			}, {
-				"position": 3,
-				"bundleId": 67,
-				"label": "All"
-			}],
-			"position": 2
-		}],
-		"promotions": []
+			"type": 2,
+			"name": "Woods Background"
+		}]
 	}
 }
