@@ -7,6 +7,8 @@ public class SkinSelectPanelController : MonoBehaviour {
 
 	public PlaneSkinButtonController[] skinButtons;
 
+	public GameController gameController;
+
 	public void UpdateButtons(){
 		for (int i = 0; i < backgroundButtons.Length; i++) {
 			backgroundButtons [i].SetupButton ();
@@ -16,6 +18,10 @@ public class SkinSelectPanelController : MonoBehaviour {
 		}
 	}
 
+	public void CloseSkinsPanel(){
+		gameController.UpdateSkins ();
+		gameObject.SetActive (false);
+	}
 
 
 }

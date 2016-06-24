@@ -15,11 +15,9 @@ public class ShopPanelController : MonoBehaviour {
 	public List<GameObject> shopTabs = new List<GameObject> ();
 	public List<GameObject> tabButtons = new List<GameObject> ();
 
-
 	public Transform tabButtonPanel, tabsPanel;
 
 	public GameObject tabButtonPrefab, tabPrefab;
-
 
 
 	void OnEnable(){
@@ -31,21 +29,6 @@ public class ShopPanelController : MonoBehaviour {
 		CreateShop ();
 		Spil.Instance.OnPlayerDataUpdated += Spil_Instance_OnPlayerDataUpdated;
 	}
-
-	void OnDisable(){
-		gameController.UpdateSkins ();
-	}
-
-	void Spil_Instance_OnPlayerDataUpdated ()
-	{
-		starsAmountText.text = Spil.SpilPlayerDataInstance.GetCurrencyBalance (25).ToString ();
-		diamonsAmountText.text = Spil.SpilPlayerDataInstance.GetCurrencyBalance (28).ToString ();
-		Debug.Log ("RICH PLAYER WALLET" + Spil.SpilPlayerDataInstance.Wallet.Currencies [0].CurrrentBalance.ToString ());
-		Debug.Log ("RICH PLAYER WALLET" + Spil.SpilPlayerDataInstance.Wallet.Currencies [1].CurrrentBalance.ToString ());
-	}
-
-
-
 
 	//this method will take the Spil game data and create the shop from it
 	void CreateShop(){
@@ -81,18 +64,17 @@ public class ShopPanelController : MonoBehaviour {
 		newTab.SetActive (false);
 		shopTabs.Add (newTab);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
+		
+	void OnDisable(){
+		gameController.UpdateSkins ();
+	}
+		
+	void Spil_Instance_OnPlayerDataUpdated ()
+	{
+		starsAmountText.text = Spil.SpilPlayerDataInstance.GetCurrencyBalance (25).ToString ();
+		diamonsAmountText.text = Spil.SpilPlayerDataInstance.GetCurrencyBalance (28).ToString ();
+	}
+		
 	// REWARDED VIDEO STUFF
 
 	void Spil_Instance_OnAdAvailable (SpilGames.Unity.Utils.enumAdType adType)
