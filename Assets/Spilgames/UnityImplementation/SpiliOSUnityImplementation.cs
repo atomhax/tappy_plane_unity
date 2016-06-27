@@ -252,11 +252,11 @@ namespace SpilGames.Unity.Implementations
 
 				public override void SubtractItemFromInventory (int itemId, int amount, string reason)
 				{
-					subtractItemToInventory(itemId, amount, reason);
+					subtractItemFromInventory(itemId, amount, reason);
 				}
 
 				[DllImport("__Internal")]
-				private static extern void subtractItemToInventory (int itemId, int amount, string reason);
+				private static extern void subtractItemFromInventory (int itemId, int amount, string reason);
 
 				public override void ConsumeBundle (int bundleId, string reason)
 				{

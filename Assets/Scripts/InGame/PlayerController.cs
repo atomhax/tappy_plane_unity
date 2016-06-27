@@ -58,6 +58,10 @@ public class PlayerController : MonoBehaviour {
 		dead = true;
 		playerBody.AddForce (10 * new Vector2 (-0.5f, 1), ForceMode2D.Impulse);
 		playerBody.AddTorque (Random.Range (-200f, 200f));
+		Invoke ("GameOver", 2);
+	}
+
+	void GameOver(){
 		gameController.GameOver ();
 	}
 		
