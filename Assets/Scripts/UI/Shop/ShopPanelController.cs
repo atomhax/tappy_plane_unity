@@ -10,7 +10,7 @@ public class ShopPanelController : MonoBehaviour {
 
 	public GameController gameController;
 
-	public Text starsAmountText, diamonsAmountText;
+	public Text starsAmountText, diamonsAmountText, starsRewardedText;
 
 	public List<GameObject> shopTabs = new List<GameObject> ();
 	public List<GameObject> tabButtons = new List<GameObject> ();
@@ -21,9 +21,9 @@ public class ShopPanelController : MonoBehaviour {
 
 
 	void OnEnable(){
-//		getFreeCoinsButton.SetActive (false);
-//		Spil.Instance.OnAdAvailable += Spil_Instance_OnAdAvailable;	
-//		Spil.Instance.SendrequestRewardVideoEvent ();
+		getFreeCoinsButton.SetActive (false);
+		Spil.Instance.OnAdAvailable += Spil_Instance_OnAdAvailable;	
+		Spil.Instance.SendrequestRewardVideoEvent ();
 		Spil_Instance_OnPlayerDataUpdated();
 		ResetShop();
 		CreateShop ();
@@ -93,6 +93,7 @@ public class ShopPanelController : MonoBehaviour {
 	{
 		getFreeCoinsButton.SetActive (false);
 		if(response.reward != null){
+			starsRewardedText.text = "Thanks!\nStars Rewarded : " + response.reward.reward.ToString ();
 			PlayerData.AddToCoins (25,response.reward.reward, "Reward Ads");
 			rewardSucessPanel.SetActive (true);
 			starsAmountText.text = PlayerData.GetCurrencyAmount (25).ToString();

@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using SpilGames.Unity;
 using SpilGames.Unity.Helpers;
+using SpilGames.Unity.Utils;
+using UnityEngine.UI;
+
 public class GameController : MonoBehaviour {
 
 	// different possible states of the game
@@ -17,7 +20,8 @@ public class GameController : MonoBehaviour {
 	// the players score for each round
 	public int playerScore = 0;
 
-	public static SpilGameDataHelper gameData;
+	public Text gameTitleText;
+
 
 	//the player controller attached to the player gameobject 
 	public PlayerController player;
@@ -42,6 +46,7 @@ public class GameController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		GetAndApplyGameConfig ();
 		SetupNewGame ();
 	}
 
@@ -72,6 +77,19 @@ public class GameController : MonoBehaviour {
 		player.SetupPlayerSkin ();
 	}
 
+
+	void GetAndApplyGameConfig(){
+
+		JSONObject config = new JSONObject( Spil.Instance.GetConfigAll ());
+
+		Debug.Log ("FOUND GAME CONFIG: " + config.ToString());
+
+		obsitcleSpawnFrequency = float.Parse( config.GetField ("obsitcleSpawnFrequency").str);
+
+		player.jumpForce = float.Parse (config.GetField ("playerJumpForce").str);
+
+		gameTitleText.text = config.GetField ("gameName").str;
+	}
 
 	public void UpdateSkins(){
 		foreach (SpriteRenderer r in backgroundSpriteRenderes) {
