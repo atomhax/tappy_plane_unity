@@ -20,7 +20,7 @@ public class GameController : MonoBehaviour {
 	// the players score for each round
 	public int playerScore = 0;
 
-	public Text gameTitleText, purchaceCompleteText;
+	public Text gameTitleText, purchaceCompleteText, purchaceFailText;
 
 
 	//the player controller attached to the player gameobject 
@@ -42,7 +42,7 @@ public class GameController : MonoBehaviour {
 	List<GameObject> listOfObsticles = new List<GameObject>();
 
 	//the panels of the UI
-	public GameObject startPanel, ingamePanel, gameoverPanel, shopPanel, skinSelectPanel, tabsPanel, inGamePurchaseSuccessPanel;
+	public GameObject startPanel, ingamePanel, gameoverPanel, shopPanel, skinSelectPanel, tabsPanel, inGamePurchaseSuccessPanel, inGamePurchaseFailPanel;
 
 	// Use this for initialization
 	void Start () {
@@ -127,6 +127,18 @@ public class GameController : MonoBehaviour {
 		ingamePanel.SetActive (gameState == GameStates.InGame);
 		gameoverPanel.SetActive (gameState == GameStates.GameOver);
 		shopPanel.SetActive (gameState == GameStates.Shop);
+	}
+
+	public void InGamePurchaesFail(Bundle bundle){
+		purchaceFailText.text = "Purchase Not Possible \n you need \n";
+
+		for(int i = 0 ; i < bundle.Prices.Count; i ++){
+			if(bundle.Prices[i].Value > 0){
+				purchaceFailText.text += bundle.Prices [i].Value.ToString () + " " + Spil.SpilGameDataInstance.GetCurrency (bundle.Prices [i].CurrencyId).Name;
+			}
+		}
+
+		inGamePurchaseFailPanel.SetActive (true);
 	}
 
 	public void InGamePurchaesSuccess(string bundleName){

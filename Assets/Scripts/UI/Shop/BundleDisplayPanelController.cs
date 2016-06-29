@@ -36,11 +36,13 @@ public class BundleDisplayPanelController : MonoBehaviour {
 	}
 
 	public void BuyBundle(){
-		if(CanAffordBundle()){
+		if (CanAffordBundle ()) {
 			SpendCurrencyForBundle ();
 			AddItemsToInventory ();
 			buyButton.SetActive (false);
 			GameObject.Find ("GameController").GetComponent<GameController> ().InGamePurchaesSuccess (bundleDisplayed.Name);
+		} else {
+			GameObject.Find ("GameController").GetComponent<GameController> ().InGamePurchaesFail (bundleDisplayed);
 		}
 	}
 		
