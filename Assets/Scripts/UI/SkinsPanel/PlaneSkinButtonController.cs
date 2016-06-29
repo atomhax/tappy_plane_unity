@@ -26,7 +26,6 @@ public class PlaneSkinButtonController : MonoBehaviour {
 	}
 
 	public void SetupButton(){
-		Debug.Log ("Settingup button with skin: " + PlayerPrefs.GetInt ("Skin", 0).ToString());
 		if (PlayerPrefs.GetInt ("Skin", 0) == position) {
 			backgroundImage.color = selectedColor;
 		} else {
@@ -41,13 +40,10 @@ public class PlaneSkinButtonController : MonoBehaviour {
 			lockImage.enabled = false;
 			owned = true;
 		}
-		Debug.Log ("Button Setup " + gameObject.name);
 	}
 		
 	public void ButtonClicked(){
-		Debug.Log ("Pressed");
 		if (owned) {
-			Debug.Log ("Pressed and owned");
 			PlayerPrefs.SetInt ("Skin", position);
 			skinSelectPanelController.UpdateButtons ();
 		}

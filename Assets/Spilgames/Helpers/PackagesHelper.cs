@@ -45,7 +45,6 @@ namespace SpilGames.Unity.Helpers
 					Packages.Add(new Package(packageData.packageId, packageData.discountLabel, packageData.items));
 				}
 			}
-			//Debug.Log("SpilSDK-Unity Found " + packages.Count() + " packages and " + promotions + " promotions");
 		}
 		
 		public Package GetPackageById(string packageId)

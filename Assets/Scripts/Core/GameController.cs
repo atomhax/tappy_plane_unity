@@ -42,7 +42,7 @@ public class GameController : MonoBehaviour {
 	List<GameObject> listOfObsticles = new List<GameObject>();
 
 	//the panels of the UI
-	public GameObject startPanel, ingamePanel, gameoverPanel, shopPanel;
+	public GameObject startPanel, ingamePanel, gameoverPanel, shopPanel, skinSelectPanel;
 
 	// Use this for initialization
 	void Start () {
@@ -54,9 +54,7 @@ public class GameController : MonoBehaviour {
 		playerScore++;
 		if(playerScore > PlayerPrefs.GetInt("HighScore",0)){
 			PlayerPrefs.SetInt ("HighScore",playerScore);
-			Debug.Log ("HighScore");
 		}	
-		Debug.Log ("Score: " + playerScore);
 	}
 		
 	public void SetupNewGame(){
@@ -81,8 +79,6 @@ public class GameController : MonoBehaviour {
 	void GetAndApplyGameConfig(){
 
 		JSONObject config = new JSONObject( Spil.Instance.GetConfigAll ());
-
-		Debug.Log ("FOUND GAME CONFIG: " + config.ToString());
 
 		obsitcleSpawnFrequency = float.Parse( config.GetField ("obsitcleSpawnFrequency").str);
 
@@ -126,12 +122,16 @@ public class GameController : MonoBehaviour {
 		shopPanel.SetActive (!shopPanel.activeInHierarchy);
 	}
 
-	void UpdateUI(GameStates gameState){
+	public void UpdateUI(GameStates gameState){
 		startPanel.SetActive (gameState == GameStates.Start);
 		ingamePanel.SetActive (gameState == GameStates.InGame);
 		gameoverPanel.SetActive (gameState == GameStates.GameOver);
 		shopPanel.SetActive (gameState == GameStates.Shop);
 	}
 
+	public void InGamePurchaesSuccess(){
+		skinSelectPanel.SetActive (true);
+		UpdateUI (GameStates.Start);
+	}
 
 }

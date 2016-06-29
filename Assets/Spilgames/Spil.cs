@@ -39,7 +39,6 @@ namespace SpilGames.Unity
 
             private void AdNotAvailableHandler(enumAdType adType)
             {
-                Debug.Log("PixelWizard AdNotAvailable");
             }
 
 			private void SpilGameDataAvailableHandler()

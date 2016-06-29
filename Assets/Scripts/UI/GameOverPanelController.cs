@@ -20,7 +20,7 @@ public class GameOverPanelController : MonoBehaviour {
 
 		Spil.SpilPlayerDataInstance.Wallet.Add (25, gameController.playerScore,PlayerDataUpdateReasons.LevelComplete);
 
-		gameoverScoreText.text += "\nTOTAL STARS: " + Spil.SpilPlayerDataInstance.GetCurrencyBalance (25).ToString ();
+		gameoverScoreText.text += "\nTOTAL STARS: " + (Spil.SpilPlayerDataInstance.GetCurrencyBalance (25) + gameController.playerScore).ToString ();
 	}
 
 	public void Restart(){

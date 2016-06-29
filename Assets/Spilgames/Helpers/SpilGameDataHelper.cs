@@ -27,7 +27,6 @@ namespace SpilGames.Unity.Helpers
 			{
 				SpilGameData spilGameData = JsonHelper.getObjectFromJson<SpilGameData> (spilGameDataString);
 				AddDataToHelper (spilGameData.currencies, spilGameData.items, spilGameData.bundles, spilGameData.shop, spilGameData.promotions);
-				Debug.Log ("Spil Game Data Created");
 			}
 		}
 
@@ -143,7 +142,6 @@ namespace SpilGames.Unity.Helpers
 			{
 				SpilGameData spilGameData = JsonHelper.getObjectFromJson<SpilGameData> (spilGameDataString);
 				AddDataToHelper (spilGameData.currencies, spilGameData.items, spilGameData.bundles, spilGameData.shop, spilGameData.promotions);
-				Debug.Log ("Spil Game Data Updated");
 			}
 		}
 	}

@@ -11,9 +11,6 @@ public class BackgroundScroll : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
-		Debug.Log ("SIZE: " + GetComponent<SpriteRenderer>().bounds.size.x );
-
 		startPosition = transform.position;
 	}
 	
