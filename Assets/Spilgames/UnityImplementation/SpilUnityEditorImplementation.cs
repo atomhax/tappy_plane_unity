@@ -71,7 +71,7 @@ namespace SpilGames.Unity.Implementations
 			/// The Spil Unity SDK is not packaged as a seperate assembly yet so this method is currently visible, this will be fixed in the future.
 			/// Internal method names start with a lower case so you can easily recognise and avoid them.
 			/// </summary>
-			internal override void SpilInit()
+			internal override void SpilInit(bool pushNotificationsEnabled)
 			{
 				
 			}
@@ -125,7 +125,7 @@ namespace SpilGames.Unity.Implementations
 			}
 
 
-			public override void ShowToastOnVideoReward(bool show)
+			public override void SetShowToastOnVideoReward(bool show)
 			{
 				
 			}

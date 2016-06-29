@@ -99,7 +99,7 @@ for framework in requiredCustomFrameworks:
 print 'Copying resources and adding them to the XCode project'
 bundles = project.get_or_create_group('')
 addBundleResource(os.getcwd() + '/Spil.framework/Settings.bundle', os.getcwd() + '/Settings.bundle', bundles)
-addBundleResource(os.getcwd() + '/Spil.framework/UnityAds.bundle', os.getcwd() + '/UnityAds.bundle', bundles)
+addBundleResource(os.getcwd() + '/Spil.framework/Frameworks/Fyber_UnityAds.framework/Resources/UnityAds.bundle', os.getcwd() + '/UnityAds.bundle', bundles)
 addBundleResource(os.getcwd() + '/Spil.framework/project.entitlements', os.getcwd() + '/' + projectname + '.entitlements', bundles)
 
 # change build settings

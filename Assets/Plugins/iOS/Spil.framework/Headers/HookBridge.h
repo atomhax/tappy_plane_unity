@@ -92,15 +92,15 @@ extern "C" {
     
     char* getInventoryNative ();
     
-    void addCurrencyToWallet(int currencyId, int amount, char* reasonName);
+    void addCurrencyToWalletNative (int currencyId, int amount, char* reasonName);
     
-    void subtractCurrencyFromWallet(int currencyId, int amount, char* reasonName);
+    void subtractCurrencyFromWalletNative(int currencyId, int amount, char* reasonName);
     
-    void addItemToInventory(int itemId, int amount, char* reasonName);
+    void addItemToInventoryNative (int itemId, int amount, char* reasonName);
     
-    void subtractItemFromInventory(int itemId, int amount, char* reasonName);
+    void subtractItemFromInventoryNative (int itemId, int amount, char* reasonName);
     
-    void consumeBundle(int itemId, char* reasonName);
+    void consumeBundleNative (int itemId, char* reasonName);
 }
 
 #endif

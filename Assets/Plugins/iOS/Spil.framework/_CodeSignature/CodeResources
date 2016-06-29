@@ -16,7 +16,7 @@
 		<data>
 		y3Uezfm65mXDcqo7aGEZiL9d7nk=
 		</data>
-		<key>Frameworks/Chartboost.framework/Versions/A/Chartboost</key>
+		<key>Frameworks/Chartboost.framework/Chartboost</key>
 		<data>
 		eDdkj28CurV9vnjrQx3EJZX/XCs=
 		</data>
@@ -28,51 +28,51 @@
 		<data>
 		o5J/QKyVGgMkwlSN3W2rm4/GJ8M=
 		</data>
-		<key>Frameworks/Fyber_AdColony.framework/Versions/A/Fyber_AdColony_2.6.1-r2</key>
+		<key>Frameworks/Fyber_AdColony.framework/Fyber_AdColony</key>
 		<data>
 		htq+/faYlTiY+ylaXvyQQeKUcWw=
 		</data>
-		<key>Frameworks/Fyber_AdColony.framework/Versions/A/Resources/Info.plist</key>
+		<key>Frameworks/Fyber_AdColony.framework/Resources/Info.plist</key>
 		<data>
 		+IlF0p7yAGsc/Ey1VtKOeeZZmOg=
 		</data>
-		<key>Frameworks/Fyber_AppLovin.framework/Versions/A/Fyber_AppLovin_3.2.2-r1</key>
+		<key>Frameworks/Fyber_AppLovin.framework/Fyber_AppLovin</key>
 		<data>
 		2ltzDXfOVmrObpkfLPjdcca0w/8=
 		</data>
-		<key>Frameworks/Fyber_AppLovin.framework/Versions/A/Resources/Info.plist</key>
+		<key>Frameworks/Fyber_AppLovin.framework/Resources/Info.plist</key>
 		<data>
 		l46xdfYe4f8wdEogTG4efVAZbr4=
 		</data>
-		<key>Frameworks/Fyber_UnityAds.framework/Versions/A/Fyber_UnityAds_1.5.5-r1</key>
+		<key>Frameworks/Fyber_UnityAds.framework/Fyber_UnityAds</key>
 		<data>
 		3h1neNKKeqW2zK71WtvEWxDOnDY=
 		</data>
-		<key>Frameworks/Fyber_UnityAds.framework/Versions/A/Resources/Info.plist</key>
+		<key>Frameworks/Fyber_UnityAds.framework/Resources/Info.plist</key>
 		<data>
 		iSHF9pDKNlAbdloznX17qttfCWo=
 		</data>
-		<key>Frameworks/Fyber_UnityAds.framework/Versions/A/Resources/UnityAds.bundle/Info.plist</key>
+		<key>Frameworks/Fyber_UnityAds.framework/Resources/UnityAds.bundle/Info.plist</key>
 		<data>
 		Q2MNqv4uL+M4j34o2IzfxlwodAA=
 		</data>
-		<key>Frameworks/Fyber_UnityAds.framework/Versions/A/Resources/UnityAds.bundle/audio_mute.png</key>
+		<key>Frameworks/Fyber_UnityAds.framework/Resources/UnityAds.bundle/audio_mute.png</key>
 		<data>
 		odsAzZCdQwrv21ZNqvg+dP8zz0A=
 		</data>
-		<key>Frameworks/Fyber_UnityAds.framework/Versions/A/Resources/UnityAds.bundle/audio_mute@2x.png</key>
+		<key>Frameworks/Fyber_UnityAds.framework/Resources/UnityAds.bundle/audio_mute@2x.png</key>
 		<data>
 		ge4dgW56jqwyZ/E7ySNujYMRXhI=
 		</data>
-		<key>Frameworks/Fyber_UnityAds.framework/Versions/A/Resources/UnityAds.bundle/audio_on.png</key>
+		<key>Frameworks/Fyber_UnityAds.framework/Resources/UnityAds.bundle/audio_on.png</key>
 		<data>
 		z7q5a3NoMvwqlg581EeBX+mPSho=
 		</data>
-		<key>Frameworks/Fyber_UnityAds.framework/Versions/A/Resources/UnityAds.bundle/audio_on@2x.png</key>
+		<key>Frameworks/Fyber_UnityAds.framework/Resources/UnityAds.bundle/audio_on@2x.png</key>
 		<data>
 		0Rs+e2J2q4ys4YQe276Sm37yqjc=
 		</data>
-		<key>Frameworks/Fyber_UnityAds.framework/Versions/A/Resources/UnityAds.bundle/en.lproj/InfoPlist.strings</key>
+		<key>Frameworks/Fyber_UnityAds.framework/Resources/UnityAds.bundle/en.lproj/InfoPlist.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -81,15 +81,15 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Frameworks/Fyber_UnityAds.framework/Versions/A/Resources/UnityAdsCompiler-Info.plist</key>
+		<key>Frameworks/Fyber_UnityAds.framework/Resources/UnityAdsCompiler-Info.plist</key>
 		<data>
 		BQYuLMDKtFFGDBjVXxwsJo61rVw=
 		</data>
-		<key>Frameworks/GoogleMobileAds.framework/Versions/A/GoogleMobileAds</key>
+		<key>Frameworks/GoogleMobileAds.framework/GoogleMobileAds</key>
 		<data>
 		/QvWXOI09U4++fCbBJUYYjdLsVs=
 		</data>
-		<key>Frameworks/MMAdSDK.framework/Versions/A/MMAdSDK</key>
+		<key>Frameworks/MMAdSDK.framework/MMAdSDK</key>
 		<data>
 		r9f+wN9Nf4EfInOuYQjl1BwUymE=
 		</data>
@@ -111,7 +111,7 @@
 		</data>
 		<key>Headers/HookBridge.h</key>
 		<data>
-		NdkuTThS6DN//gBxZ8iJAl3vzo0=
+		aVMM9OITnVzQkcXC5LwSVoOdp2k=
 		</data>
 		<key>Headers/JsonUtil.h</key>
 		<data>
@@ -135,7 +135,7 @@
 		</data>
 		<key>MPAdBrowserController.nib</key>
 		<data>
-		YrR8vUaUDikfSja2jvbkloNTrPU=
+		t99D5Wygp/WG1u3zgz/j823qwkM=
 		</data>
 		<key>MPCloseBtn.png</key>
 		<data>
@@ -217,10 +217,6 @@
 		<data>
 		nBQhbvJw7d7ucK1HDVnzTLNQS4Q=
 		</data>
-		<key>README.txt</key>
-		<data>
-		VlS1w7ukFzKrxIvXZLHiWmyPF4U=
-		</data>
 		<key>Settings.bundle/DebugMode.plist</key>
 		<data>
 		+5i7xG7ROeajN0KEpYLhKFThJx4=
@@ -234,68 +230,6 @@
 			<key>hash</key>
 			<data>
 			OdQkXZAAI2j/EQPbEhpVOf9KDTM=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>UnityAds.bundle/Info.plist</key>
-		<data>
-		qaLOM15SMHolj77eBDiGQ8cGnYM=
-		</data>
-		<key>UnityAds.bundle/Info.plist.meta</key>
-		<data>
-		CIWAvfz5ATUC+/YsXZ556O+FCLY=
-		</data>
-		<key>UnityAds.bundle/audio_mute.png</key>
-		<data>
-		odsAzZCdQwrv21ZNqvg+dP8zz0A=
-		</data>
-		<key>UnityAds.bundle/audio_mute.png.meta</key>
-		<data>
-		wevPp3E7jfz6NIG2VaFyuPB8FbA=
-		</data>
-		<key>UnityAds.bundle/audio_mute@2x.png</key>
-		<data>
-		ge4dgW56jqwyZ/E7ySNujYMRXhI=
-		</data>
-		<key>UnityAds.bundle/audio_mute@2x.png.meta</key>
-		<data>
-		3rqp9U04/Uer8lnhwobQ+KpHO8U=
-		</data>
-		<key>UnityAds.bundle/audio_on.png</key>
-		<data>
-		z7q5a3NoMvwqlg581EeBX+mPSho=
-		</data>
-		<key>UnityAds.bundle/audio_on.png.meta</key>
-		<data>
-		LLFAjp6rJtLmVTX1n2eQl2CTKXQ=
-		</data>
-		<key>UnityAds.bundle/audio_on@2x.png</key>
-		<data>
-		0Rs+e2J2q4ys4YQe276Sm37yqjc=
-		</data>
-		<key>UnityAds.bundle/audio_on@2x.png.meta</key>
-		<data>
-		7DSYCO7vzAts6H89WJywLQMRLjw=
-		</data>
-		<key>UnityAds.bundle/en.lproj.meta</key>
-		<data>
-		GE8mEwmDwaexVTaqs/EwY1nws+w=
-		</data>
-		<key>UnityAds.bundle/en.lproj/InfoPlist.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			zmV6UqBSo6r1NOz798vd5O4zTBA=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>UnityAds.bundle/en.lproj/InfoPlist.strings.meta</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			y2KohfVqacztX3X+0A79d7k1Q4w=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -318,7 +252,7 @@
 		</data>
 		<key>setup.py</key>
 		<data>
-		lIoNzv89XnwUHlcO23v+yKB4JG8=
+		JX7K2QDamObrGgwQitYKzIRegHM=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -358,11 +292,6 @@
 		</dict>
 		<key>Frameworks/Chartboost.framework/Chartboost</key>
 		<dict>
-			<key>symlink</key>
-			<string>./Versions/A/Chartboost</string>
-		</dict>
-		<key>Frameworks/Chartboost.framework/Versions/A/Chartboost</key>
-		<dict>
 			<key>hash</key>
 			<data>
 			eDdkj28CurV9vnjrQx3EJZX/XCs=
@@ -371,11 +300,6 @@
 			<data>
 			lpSS2TnR70jtKAyyOy9VochTeBDHLI3tD9IrRT2G1TQ=
 			</data>
-		</dict>
-		<key>Frameworks/Chartboost.framework/Versions/Current</key>
-		<dict>
-			<key>symlink</key>
-			<string>./A</string>
 		</dict>
 		<key>Frameworks/FBAudienceNetwork.framework/FBAudienceNetwork</key>
 		<dict>
@@ -401,16 +325,6 @@
 		</dict>
 		<key>Frameworks/Fyber_AdColony.framework/Fyber_AdColony</key>
 		<dict>
-			<key>symlink</key>
-			<string>Versions/Current/Fyber_AdColony_2.6.1-r2</string>
-		</dict>
-		<key>Frameworks/Fyber_AdColony.framework/Resources</key>
-		<dict>
-			<key>symlink</key>
-			<string>Versions/Current/Resources</string>
-		</dict>
-		<key>Frameworks/Fyber_AdColony.framework/Versions/A/Fyber_AdColony_2.6.1-r2</key>
-		<dict>
 			<key>hash</key>
 			<data>
 			htq+/faYlTiY+ylaXvyQQeKUcWw=
@@ -420,7 +334,7 @@
 			mhrt6/cbLrjXePyD475Hz4BNyS3Q7rr52YyEVlwGjqw=
 			</data>
 		</dict>
-		<key>Frameworks/Fyber_AdColony.framework/Versions/A/Resources/Info.plist</key>
+		<key>Frameworks/Fyber_AdColony.framework/Resources/Info.plist</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -431,22 +345,7 @@
 			NnhHcjoTs1i2BO999oQdIY7jmSdagPJv6iAfpzxL30c=
 			</data>
 		</dict>
-		<key>Frameworks/Fyber_AdColony.framework/Versions/Current</key>
-		<dict>
-			<key>symlink</key>
-			<string>A</string>
-		</dict>
 		<key>Frameworks/Fyber_AppLovin.framework/Fyber_AppLovin</key>
-		<dict>
-			<key>symlink</key>
-			<string>Versions/Current/Fyber_AppLovin_3.2.2-r1</string>
-		</dict>
-		<key>Frameworks/Fyber_AppLovin.framework/Resources</key>
-		<dict>
-			<key>symlink</key>
-			<string>Versions/Current/Resources</string>
-		</dict>
-		<key>Frameworks/Fyber_AppLovin.framework/Versions/A/Fyber_AppLovin_3.2.2-r1</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -457,7 +356,7 @@
 			SKIdUneVanqlNgBGIv13Y1Wr+880cNmuv05Pdhz6kVg=
 			</data>
 		</dict>
-		<key>Frameworks/Fyber_AppLovin.framework/Versions/A/Resources/Info.plist</key>
+		<key>Frameworks/Fyber_AppLovin.framework/Resources/Info.plist</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -468,22 +367,7 @@
 			xPIGCAStp14M9Xdx1WMioN99pKuUkcujJQwlG+2H9xs=
 			</data>
 		</dict>
-		<key>Frameworks/Fyber_AppLovin.framework/Versions/Current</key>
-		<dict>
-			<key>symlink</key>
-			<string>A</string>
-		</dict>
 		<key>Frameworks/Fyber_UnityAds.framework/Fyber_UnityAds</key>
-		<dict>
-			<key>symlink</key>
-			<string>Versions/Current/Fyber_UnityAds_1.5.5-r1</string>
-		</dict>
-		<key>Frameworks/Fyber_UnityAds.framework/Resources</key>
-		<dict>
-			<key>symlink</key>
-			<string>Versions/Current/Resources</string>
-		</dict>
-		<key>Frameworks/Fyber_UnityAds.framework/Versions/A/Fyber_UnityAds_1.5.5-r1</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -494,7 +378,7 @@
 			G6ucytfH4bwpGA2t+x7TzfNASsb/ASrN3Bnkf9ko8uM=
 			</data>
 		</dict>
-		<key>Frameworks/Fyber_UnityAds.framework/Versions/A/Resources/Info.plist</key>
+		<key>Frameworks/Fyber_UnityAds.framework/Resources/Info.plist</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -505,7 +389,7 @@
 			jO4Gffum9nX+9jqFAx5i+VnQU9rttr912fjL7MQ4mnI=
 			</data>
 		</dict>
-		<key>Frameworks/Fyber_UnityAds.framework/Versions/A/Resources/UnityAds.bundle/Info.plist</key>
+		<key>Frameworks/Fyber_UnityAds.framework/Resources/UnityAds.bundle/Info.plist</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -516,7 +400,7 @@
 			q9sdqVw8oPwoSzVKh7rIzSNoiRJtvx3rAesmmFlNIgM=
 			</data>
 		</dict>
-		<key>Frameworks/Fyber_UnityAds.framework/Versions/A/Resources/UnityAds.bundle/audio_mute.png</key>
+		<key>Frameworks/Fyber_UnityAds.framework/Resources/UnityAds.bundle/audio_mute.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -527,7 +411,7 @@
 			hIadqu8EOT6Obl+4xLvLbCvMiCIl8gZxErr84HiTKN0=
 			</data>
 		</dict>
-		<key>Frameworks/Fyber_UnityAds.framework/Versions/A/Resources/UnityAds.bundle/audio_mute@2x.png</key>
+		<key>Frameworks/Fyber_UnityAds.framework/Resources/UnityAds.bundle/audio_mute@2x.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -538,7 +422,7 @@
 			vNCCROnc4bgOy0SWlUyOy/4EOOLaMb1mFBpzLowJJ0k=
 			</data>
 		</dict>
-		<key>Frameworks/Fyber_UnityAds.framework/Versions/A/Resources/UnityAds.bundle/audio_on.png</key>
+		<key>Frameworks/Fyber_UnityAds.framework/Resources/UnityAds.bundle/audio_on.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -549,7 +433,7 @@
 			QovxA+5LenmJZS1dSEHCBF1E600NFhhEbd5S/mwNlMM=
 			</data>
 		</dict>
-		<key>Frameworks/Fyber_UnityAds.framework/Versions/A/Resources/UnityAds.bundle/audio_on@2x.png</key>
+		<key>Frameworks/Fyber_UnityAds.framework/Resources/UnityAds.bundle/audio_on@2x.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -560,7 +444,7 @@
 			5h6WFxEqM8hwZgWeFxeE5H3zu7ESY02WlUYVaqlKYEk=
 			</data>
 		</dict>
-		<key>Frameworks/Fyber_UnityAds.framework/Versions/A/Resources/UnityAds.bundle/en.lproj/InfoPlist.strings</key>
+		<key>Frameworks/Fyber_UnityAds.framework/Resources/UnityAds.bundle/en.lproj/InfoPlist.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -573,7 +457,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Frameworks/Fyber_UnityAds.framework/Versions/A/Resources/UnityAdsCompiler-Info.plist</key>
+		<key>Frameworks/Fyber_UnityAds.framework/Resources/UnityAdsCompiler-Info.plist</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -584,17 +468,7 @@
 			3HPItWR02jHgkEfHcQpymppYKFB/0IB1ATfpS/jy9c0=
 			</data>
 		</dict>
-		<key>Frameworks/Fyber_UnityAds.framework/Versions/Current</key>
-		<dict>
-			<key>symlink</key>
-			<string>A</string>
-		</dict>
 		<key>Frameworks/GoogleMobileAds.framework/GoogleMobileAds</key>
-		<dict>
-			<key>symlink</key>
-			<string>Versions/Current/GoogleMobileAds</string>
-		</dict>
-		<key>Frameworks/GoogleMobileAds.framework/Versions/A/GoogleMobileAds</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -605,17 +479,7 @@
 			BPwoHnSJuNbvQraEB1PyBt95wd7zl+KNDaRy9HGt7Rg=
 			</data>
 		</dict>
-		<key>Frameworks/GoogleMobileAds.framework/Versions/Current</key>
-		<dict>
-			<key>symlink</key>
-			<string>A</string>
-		</dict>
 		<key>Frameworks/MMAdSDK.framework/MMAdSDK</key>
-		<dict>
-			<key>symlink</key>
-			<string>Versions/Current/MMAdSDK</string>
-		</dict>
-		<key>Frameworks/MMAdSDK.framework/Versions/A/MMAdSDK</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -625,11 +489,6 @@
 			<data>
 			B1bbYUvM2hCyL1XHZD9/vFHhUpFPDoh2XJUu+t13f/M=
 			</data>
-		</dict>
-		<key>Frameworks/MMAdSDK.framework/Versions/Current</key>
-		<dict>
-			<key>symlink</key>
-			<string>A</string>
 		</dict>
 		<key>Frameworks/libAdMobMMAdapter.a</key>
 		<dict>
@@ -679,11 +538,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			NdkuTThS6DN//gBxZ8iJAl3vzo0=
+			aVMM9OITnVzQkcXC5LwSVoOdp2k=
 			</data>
 			<key>hash2</key>
 			<data>
-			/0Zu65yysbKecWYH6D8PQh16LypeOz7HMptkUqUWO3Y=
+			ojcFbwOhUZndNcf4fXL3OvrcOo33UeRfMopZ5+P4+D8=
 			</data>
 		</dict>
 		<key>Headers/JsonUtil.h</key>
@@ -734,11 +593,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			YrR8vUaUDikfSja2jvbkloNTrPU=
+			t99D5Wygp/WG1u3zgz/j823qwkM=
 			</data>
 			<key>hash2</key>
 			<data>
-			v//vmG6u7PmNuC9BulTIduZOeuH9LazY1fyVztI/QnQ=
+			oSlJQvcSjegY7hG9X4GitneUxbFI/KNSf4sCUdaXDDc=
 			</data>
 		</dict>
 		<key>MPCloseBtn.png</key>
@@ -961,17 +820,6 @@
 			NhZZV3nvFSxQsSANUGb+NvQNFLYWvXHNNuf8aVZGIaI=
 			</data>
 		</dict>
-		<key>README.txt</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			VlS1w7ukFzKrxIvXZLHiWmyPF4U=
-			</data>
-			<key>hash2</key>
-			<data>
-			V2x42Bw/qw0+lVG9nDBQq8dgp3Aq5gDbax2IYZ8qSwo=
-			</data>
-		</dict>
 		<key>Settings.bundle/DebugMode.plist</key>
 		<dict>
 			<key>hash</key>
@@ -1003,153 +851,6 @@
 			<key>hash2</key>
 			<data>
 			xPAcxICNQBbDBBtwLDKt44Nt4Mwz+fFXkX51CNESm1k=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>UnityAds.bundle/Info.plist</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			qaLOM15SMHolj77eBDiGQ8cGnYM=
-			</data>
-			<key>hash2</key>
-			<data>
-			234/x/HALyatFDQLsE+lKcAVFs5qG18gEmXQ8cLJKm8=
-			</data>
-		</dict>
-		<key>UnityAds.bundle/Info.plist.meta</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			CIWAvfz5ATUC+/YsXZ556O+FCLY=
-			</data>
-			<key>hash2</key>
-			<data>
-			ULNIi58pWgci+qC2CnnU7quSjyCSDY6ijgxstj6Hkpg=
-			</data>
-		</dict>
-		<key>UnityAds.bundle/audio_mute.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			odsAzZCdQwrv21ZNqvg+dP8zz0A=
-			</data>
-			<key>hash2</key>
-			<data>
-			hIadqu8EOT6Obl+4xLvLbCvMiCIl8gZxErr84HiTKN0=
-			</data>
-		</dict>
-		<key>UnityAds.bundle/audio_mute.png.meta</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			wevPp3E7jfz6NIG2VaFyuPB8FbA=
-			</data>
-			<key>hash2</key>
-			<data>
-			MLdcvxvWgbmy1frqHOX9kxc5GYlMMKD5tlqhqlADoL8=
-			</data>
-		</dict>
-		<key>UnityAds.bundle/audio_mute@2x.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			ge4dgW56jqwyZ/E7ySNujYMRXhI=
-			</data>
-			<key>hash2</key>
-			<data>
-			vNCCROnc4bgOy0SWlUyOy/4EOOLaMb1mFBpzLowJJ0k=
-			</data>
-		</dict>
-		<key>UnityAds.bundle/audio_mute@2x.png.meta</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			3rqp9U04/Uer8lnhwobQ+KpHO8U=
-			</data>
-			<key>hash2</key>
-			<data>
-			6CTEwxm9HcLT3Avcpkdswo6JMZn/3qPVuneXwlNMXWs=
-			</data>
-		</dict>
-		<key>UnityAds.bundle/audio_on.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			z7q5a3NoMvwqlg581EeBX+mPSho=
-			</data>
-			<key>hash2</key>
-			<data>
-			QovxA+5LenmJZS1dSEHCBF1E600NFhhEbd5S/mwNlMM=
-			</data>
-		</dict>
-		<key>UnityAds.bundle/audio_on.png.meta</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			LLFAjp6rJtLmVTX1n2eQl2CTKXQ=
-			</data>
-			<key>hash2</key>
-			<data>
-			kS0YVn+rxLkw7TwyrWLe8nePk+AhzxDX7sdKutnKSl0=
-			</data>
-		</dict>
-		<key>UnityAds.bundle/audio_on@2x.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			0Rs+e2J2q4ys4YQe276Sm37yqjc=
-			</data>
-			<key>hash2</key>
-			<data>
-			5h6WFxEqM8hwZgWeFxeE5H3zu7ESY02WlUYVaqlKYEk=
-			</data>
-		</dict>
-		<key>UnityAds.bundle/audio_on@2x.png.meta</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			7DSYCO7vzAts6H89WJywLQMRLjw=
-			</data>
-			<key>hash2</key>
-			<data>
-			4AKD8xae4MuNpplqyZQQ5w6Pbjp27nYf2lT5VwRTgtM=
-			</data>
-		</dict>
-		<key>UnityAds.bundle/en.lproj.meta</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			GE8mEwmDwaexVTaqs/EwY1nws+w=
-			</data>
-			<key>hash2</key>
-			<data>
-			bTpG7zn4Ucy22L5kQuYr/DPFe6FYABKwdUznqcrFWpk=
-			</data>
-		</dict>
-		<key>UnityAds.bundle/en.lproj/InfoPlist.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			zmV6UqBSo6r1NOz798vd5O4zTBA=
-			</data>
-			<key>hash2</key>
-			<data>
-			kmHsztpgjvF0JW5f3HdMHm49z1M0CcG8OT1JDQHHE/E=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>UnityAds.bundle/en.lproj/InfoPlist.strings.meta</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			y2KohfVqacztX3X+0A79d7k1Q4w=
-			</data>
-			<key>hash2</key>
-			<data>
-			8fcyDusG7LyPTzKnislHvmnME8OpyS6DftedfCUlCrc=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -1202,11 +903,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			lIoNzv89XnwUHlcO23v+yKB4JG8=
+			JX7K2QDamObrGgwQitYKzIRegHM=
 			</data>
 			<key>hash2</key>
 			<data>
-			INpunGMXvOl4ozk0WAVBW/tXm13uTuIeUoR66lck2Jo=
+			12RsUr9UrwH6SMungS6TqTvcejRDpC2QC4BN1s4bYdw=
 			</data>
 		</dict>
 	</dict>

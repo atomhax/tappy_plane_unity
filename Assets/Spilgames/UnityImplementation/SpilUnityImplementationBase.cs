@@ -15,7 +15,7 @@ namespace SpilGames.Unity.Implementations
             /// The Spil Unity SDK is not packaged as a seperate assembly yet so unfortunately this method is currently visible.
             /// Internal method names start with a lower case so you can easily recognise and avoid them.
             /// </summary>
-            internal abstract void SpilInit();  
+			internal abstract void SpilInit(bool pushNotificationsEnabled);  
 
         #endregion
 
@@ -231,7 +231,7 @@ namespace SpilGames.Unity.Implementations
 
             #region Advertisement events
 
-			public abstract void ShowToastOnVideoReward (bool show);
+			public abstract void SetShowToastOnVideoReward (bool show);
 
                 /// <summary>
                 /// This is fired by the native Spil SDK after it receives a response from the back-end.
