@@ -58,6 +58,7 @@ FOUNDATION_EXPORT const unsigned char SpilVersionString[];
 // define delegate property
 @property (nonatomic, assign) id  delegate;
 
++(Spil*)sharedInstance;
 
 /**
  *  Initiates the API
