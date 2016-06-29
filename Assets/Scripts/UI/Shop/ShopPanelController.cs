@@ -94,9 +94,8 @@ public class ShopPanelController : MonoBehaviour {
 		getFreeCoinsButton.SetActive (false);
 		if(response.reward != null){
 			starsRewardedText.text = "Thanks!\nStars Rewarded : " + response.reward.reward.ToString ();
-			PlayerData.AddToCoins (25,response.reward.reward, "Reward Ads");
+			Spil.SpilPlayerDataInstance.Wallet.Add (25, response.reward.reward,PlayerDataUpdateReasons.RewardAds);
 			rewardSucessPanel.SetActive (true);
-			starsAmountText.text = PlayerData.GetCurrencyAmount (25).ToString();
 		}
 		Spil.Instance.SendrequestRewardVideoEvent ();
 	}

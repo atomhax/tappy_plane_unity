@@ -18,7 +18,7 @@ public class GameOverPanelController : MonoBehaviour {
 		gameoverScoreText.text = "STARS THIS ROUND: " + gameController.playerScore.ToString ();
 		gameoverScoreText.text += "\nHIGHSCORE: " + PlayerPrefs.GetInt ("HighScore", 0).ToString ();
 
-		Spil.SpilPlayerDataInstance.Wallet.Add (25, gameController.playerScore,PlayerDataUpdateReasons.LevelComplete);
+
 
 		gameoverScoreText.text += "\nTOTAL STARS: " + (Spil.SpilPlayerDataInstance.GetCurrencyBalance (25) + gameController.playerScore).ToString ();
 	}

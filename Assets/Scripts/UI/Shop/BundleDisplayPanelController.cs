@@ -40,7 +40,7 @@ public class BundleDisplayPanelController : MonoBehaviour {
 			SpendCurrencyForBundle ();
 			AddItemsToInventory ();
 			buyButton.SetActive (false);
-			GameObject.Find ("GameController").GetComponent<GameController> ().InGamePurchaesSuccess ();
+			GameObject.Find ("GameController").GetComponent<GameController> ().InGamePurchaesSuccess (bundleDisplayed.Name);
 		}
 	}
 		

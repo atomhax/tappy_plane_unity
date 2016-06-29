@@ -20,7 +20,7 @@ public class GameController : MonoBehaviour {
 	// the players score for each round
 	public int playerScore = 0;
 
-	public Text gameTitleText;
+	public Text gameTitleText, purchaceCompleteText;
 
 
 	//the player controller attached to the player gameobject 
@@ -42,7 +42,7 @@ public class GameController : MonoBehaviour {
 	List<GameObject> listOfObsticles = new List<GameObject>();
 
 	//the panels of the UI
-	public GameObject startPanel, ingamePanel, gameoverPanel, shopPanel, skinSelectPanel;
+	public GameObject startPanel, ingamePanel, gameoverPanel, shopPanel, skinSelectPanel, tabsPanel, inGamePurchaseSuccessPanel;
 
 	// Use this for initialization
 	void Start () {
@@ -106,7 +106,7 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void GameOver(){
-		PlayerData.AddToCoins (25,playerScore, "End Of Level");
+		Spil.SpilPlayerDataInstance.Wallet.Add (25, playerScore,PlayerDataUpdateReasons.LevelComplete);
 		CancelInvoke ("SpawnObsticle");
 		UpdateUI (GameStates.GameOver);
 		Spil.Instance.SendplayerDiesEvent ("MainGame");
@@ -129,9 +129,15 @@ public class GameController : MonoBehaviour {
 		shopPanel.SetActive (gameState == GameStates.Shop);
 	}
 
-	public void InGamePurchaesSuccess(){
-		skinSelectPanel.SetActive (true);
+	public void InGamePurchaesSuccess(string bundleName){
+		purchaceCompleteText.text = "Purchase Complete \n" + bundleName;
+		inGamePurchaseSuccessPanel.SetActive (true);
+	}
+
+	public void LoadSkinsPanelAfterPurchase(){
 		UpdateUI (GameStates.Start);
+		skinSelectPanel.SetActive (true);
+		tabsPanel.SetActive (false);
 	}
 
 }
