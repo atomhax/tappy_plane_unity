@@ -135,6 +135,7 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void LoadSkinsPanelAfterPurchase(){
+		inGamePurchaseSuccessPanel.SetActive (false);
 		UpdateUI (GameStates.Start);
 		skinSelectPanel.SetActive (true);
 		tabsPanel.SetActive (false);
