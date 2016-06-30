@@ -26,7 +26,7 @@
     <application>
 
       <provider
-          android:authorities="com.Company.ProductName.google_measurement_service"
+          android:authorities="com.spilgames.tappyplane.google_measurement_service"
           android:name="com.google.android.gms.measurement.AppMeasurementContentProvider"
           android:exported="false"/>
 
