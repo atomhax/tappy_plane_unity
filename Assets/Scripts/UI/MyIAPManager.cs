@@ -16,7 +16,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener {
 	IStoreController m_StoreController;
 	IExtensionProvider m_StoreExtensionProvider;
 
-	public List<string> packageCosts = new List<string>();
+	public Dictionary<string, string> packageCosts = new Dictionary<string,string>();
 
 	public IAPPanelController iapPanelController;
 
@@ -124,8 +124,8 @@ public class MyIAPManager : MonoBehaviour, IStoreListener {
 		m_StoreExtensionProvider = extensions;
 
 		for(int i = 0 ; i < m_StoreController.products.all.Length; i ++ ){
-			packageCosts.Add (m_StoreController.products.all[i].metadata.isoCurrencyCode + m_StoreController.products.all[i].metadata.localizedPriceString);
-			Debug.Log ("PURCHASE INIT: " + m_StoreController.products.all[i].metadata.localizedTitle);
+			packageCosts.Add (m_StoreController.products.all[i].definition.storeSpecificId ,m_StoreController.products.all[i].metadata.localizedPriceString);
+			Debug.Log ("PURCHASE INIT: " + m_StoreController.products.all[i].definition.storeSpecificId);
 		}
 		iapPanelController.SetupIAPButtons ();
 	}

@@ -43,7 +43,8 @@ public class IAPPanelController : MonoBehaviour {
 			Package package = helper.Packages [i];
 			string promotionText = "";
 			string gemAmount = package.Items [0].OriginalValue;
-			string cost = iapManager.packageCosts [i];
+			Debug.Log ("PackageID: " + package.Id);
+			string cost = iapManager.packageCosts[package.Id];
 			if(package.HasActivePromotion()){
 				promotionText = package.PromotionDiscountLabel;
 				gemAmount = package.Items [0].PromotionValue;
