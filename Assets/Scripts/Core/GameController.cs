@@ -46,7 +46,6 @@ public class GameController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		Spil.Instance.OnReward += Spil_Instance_OnReward;
 		GetAndApplyGameConfig ();
 		SetupNewGame ();
 	}
@@ -156,10 +155,6 @@ public class GameController : MonoBehaviour {
 		tabsPanel.SetActive (false);
 	}
 
-	void Spil_Instance_OnReward (RewardData rewardResponse)
-	{
-		Spil.SpilPlayerDataInstance.Wallet.Add (int.Parse( rewardResponse.currencyId ),rewardResponse.reward, PlayerDataUpdateReasons.EventReward);
-	}
 
 
 
