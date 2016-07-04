@@ -33,7 +33,7 @@ public class GameController : MonoBehaviour {
 	public float obsitcleSpawnFrequency;
 	public float obsticleSpawnYVarience;
 	public Transform obsticleSpawnPoint;
-	public GameObject obsticlePrefab;
+	public GameObject obsticlePrefab, obsticleMaster;
 
 	public SpriteRenderer[] backgroundSpriteRenderes;
 	public Sprite[] backgroundSprites;
@@ -117,7 +117,10 @@ public class GameController : MonoBehaviour {
 
 	void SpawnObsticle(){
 		float rand = Random.Range (-obsticleSpawnYVarience, obsticleSpawnYVarience);
-		listOfObsticles.Add((GameObject)Instantiate (obsticlePrefab, new Vector3 (obsticleSpawnPoint.position.x, obsticleSpawnPoint.position.y + rand, 0), transform.rotation));
+
+		GameObject newObsticle = (GameObject)Instantiate (obsticlePrefab, new Vector3 (obsticleSpawnPoint.position.x, obsticleSpawnPoint.position.y + rand, 0), transform.rotation);
+		newObsticle.transform.parent = obsticleMaster.transform;
+		listOfObsticles.Add(newObsticle);
 	}
 
 	public void ToggleShop(){

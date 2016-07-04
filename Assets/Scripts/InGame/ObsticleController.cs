@@ -5,15 +5,11 @@ public class ObsticleController : MonoBehaviour {
 
 
 
-	public float obsticleMoveSpeed;
 
-
-
-
-	// Update is called once per frame
-	void FixedUpdate () {
-	
-		transform.Translate ((obsticleMoveSpeed * Vector2.left) * Time.deltaTime);
-
+	void Start(){
+		Destroy (gameObject, 12);
 	}
+
+
+
 }

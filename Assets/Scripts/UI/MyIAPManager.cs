@@ -134,6 +134,8 @@ public class MyIAPManager : MonoBehaviour, IStoreListener {
 	{
 		// Purchasing set-up has not succeeded. Check error for reason. Consider sharing this reason with the user.
 		Debug.Log("OnInitializeFailed InitializationFailureReason:" + error);
+
+		Invoke ("InitializePurchasing",1);
 	}
 
 	public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs args) 
@@ -150,9 +152,13 @@ public class MyIAPManager : MonoBehaviour, IStoreListener {
 
 		PackagesHelper helper = Spil.Instance.GetPackagesAndPromotions ();
 
+		Debug.Log ("REWARDING PLAYER: " + lastProduct);
+
 		for(int i = 0; i < helper.Packages.Count; i ++){
+			Debug.Log ("VALUE: " + helper.Packages [i].Items [0].GetRealValue ());
 			if(lastProduct == helper.Packages[i].Id){
-				Spil.SpilPlayerDataInstance.Wallet.Add (int.Parse (helper.Packages [i].Items [0].Id), int.Parse (helper.Packages [i].Items [0].GetRealValue ()), PlayerDataUpdateReasons.IAP);
+				Spil.SpilPlayerDataInstance.Wallet.Add (int.Parse (helper.Packages [i].Items [0].Id), int.Parse (helper.Packages [i].Items [0].GetRealValue ().Replace(".0","")), PlayerDataUpdateReasons.IAP);
+				Debug.Log ("REWARDING PLAYER: " + helper.Packages [i].Items [0].GetRealValue ());
 			}
 		}
 
