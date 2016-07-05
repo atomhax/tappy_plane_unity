@@ -174,6 +174,16 @@ namespace SpilGames.Unity.Implementations
 			showMoreAppsNative();
 		}
 
+		/// <summary>
+		/// Method that initiaties a Test Ad.
+		/// This is not essential for developers so could be hidden but it might be handy for some developers so we left it in.
+		/// </summary>
+		/// <param name="adUnitId"></param>
+		public void TestRequestAd(string providerName, string adTypeName, bool parentalGate)
+		{
+			devRequestAdNative(providerName, adTypeName, parentalGate);
+		}
+
 		[DllImport("__Internal")]
 		private static extern void showMoreAppsNative();
 
@@ -324,6 +334,7 @@ namespace SpilGames.Unity.Implementations
 
 		private void CheckForRemoteNotifications()
 		{
+	bool proccessedNotifications = false;
 	#if UNITY_IPHONE
 	#if UNITY_5
 			if (UnityEngine.iOS.NotificationServices.remoteNotificationCount > 0)
@@ -377,7 +388,12 @@ namespace SpilGames.Unity.Implementations
 									notificationPayload.AddField(keyStr,innerJson);
 								}
 							}
-							handlePushNotification(notificationPayload.ToString());
+
+							String notificationJsonForNative = notificationPayload.ToString().Replace("\"","'");
+							if(!proccessedNotifications){									
+								SendCustomEvent("notificationReceived", new Dictionary<string, string>() { { "notificationPayload", notificationJsonForNative}});
+								proccessedNotifications = true;
+							}
 						}
 					}
 				}

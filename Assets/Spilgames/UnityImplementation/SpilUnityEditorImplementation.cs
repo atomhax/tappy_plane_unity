@@ -116,19 +116,27 @@ namespace SpilGames.Unity.Implementations
 				
 			}
 
-			/// <summary>
-			/// Method that requests the "more apps" activity
-			/// </summary>
+            /// <summary>
+            /// Sends the "requestAd" event with the "moreApps" parameter to the native Spil SDK which will send a request to the back-end.
+            /// When a response has been received from the back-end the SDK will fire either an "AdAvailable" or and "AdNotAvailable"
+            /// event to which the developer can subscribe and for instance call PlayVideo(); or PlayMoreApps();
+            /// </summary>
 			public override void RequestMoreApps()
 			{
 				
 			}
 
+			/// <summary>
+			/// When Fyber has shown a reward video and the user goes back to the game to receive his/her reward Fyber can
+			/// automatically show a toast message with information about the reward, for instance "You've received 50 coins". 
+			/// This is disabled by default to allow the developer to create a reward notification for the user.
+			/// Developers can call SetShowToastOnVideoReward(true) to enable Fyber's automatic toast message.
+			/// </summary>
+			public override void SetShowToastOnVideoReward(bool value)
+            {
+               
+            }
 
-			public override void SetShowToastOnVideoReward(bool show)
-			{
-				
-			}
 			#endregion
 			
 			#region Spil Game Objects

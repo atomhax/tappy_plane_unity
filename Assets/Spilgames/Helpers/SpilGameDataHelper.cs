@@ -27,6 +27,7 @@ namespace SpilGames.Unity.Helpers
 			{
 				SpilGameData spilGameData = JsonHelper.getObjectFromJson<SpilGameData> (spilGameDataString);
 				AddDataToHelper (spilGameData.currencies, spilGameData.items, spilGameData.bundles, spilGameData.shop, spilGameData.promotions);
+				Debug.Log ("Spil Game Data Created");
 			}
 		}
 
@@ -86,47 +87,47 @@ namespace SpilGames.Unity.Helpers
 
 		private void AddDataToHelper(List<SpilCurrencyData> currencies , List<SpilItemData> items, List<SpilBundleData> bundles, List<SpilShopTabData> shop, List<SpilShopPromotionData> promotions)
 		{
-			if(!Currencies.Any())
+			Currencies.Clear ();
+
+			if(currencies != null)
 			{
-				Currencies.Clear ();
+				foreach(SpilCurrencyData spilCurrencyData in currencies)
+				{
+					Currencies.Add(new Currency(spilCurrencyData.id, spilCurrencyData.name, spilCurrencyData.type));
+				}
 			}
 
-			foreach(SpilCurrencyData spilCurrencyData in currencies)
+			Items.Clear ();
+
+			if(items != null)
 			{
-				Currencies.Add(new Currency(spilCurrencyData.id, spilCurrencyData.name, spilCurrencyData.type));
+				foreach (SpilItemData spilCurrencyItems in items)
+				{
+					Items.Add(new Item(spilCurrencyItems.id, spilCurrencyItems.name, spilCurrencyItems.type));
+				}
 			}
 
-			if(!Items.Any())
-			{
-				Items.Clear ();
-			}
+			Bundles.Clear ();
 
-			foreach (SpilItemData spilCurrencyItems in items)
+			if(bundles != null)
 			{
-				Items.Add(new Item(spilCurrencyItems.id, spilCurrencyItems.name, spilCurrencyItems.type));
-			}
-
-			if(!Bundles.Any())
-			{
-				Bundles.Clear ();
-			}
-
-			foreach(SpilBundleData spilBundleData in bundles)
-			{
-				Bundles.Add(new Bundle(spilBundleData.id, spilBundleData.name, spilBundleData.prices, spilBundleData.items));
+				foreach(SpilBundleData spilBundleData in bundles)
+				{
+					Bundles.Add(new Bundle(spilBundleData.id, spilBundleData.name, spilBundleData.prices, spilBundleData.items));
+				}
 			}
 
 			//Adding shop data to helper
 			Shop = new Shop(shop);
 
-			if(!Promotions.Any())
-			{
-				Promotions.Clear ();
-			}
+			Promotions.Clear ();
 
-			foreach (SpilShopPromotionData promotion in promotions) 
+			if(promotions != null)
 			{
-				Promotions.Add (new Promotion (promotion.bundleId, promotion.amount, promotion.prices, promotion.discount, promotion.startDate, promotion.endDate));
+				foreach (SpilShopPromotionData promotion in promotions) 
+				{
+					Promotions.Add (new Promotion (promotion.bundleId, promotion.amount, promotion.prices, promotion.discount, promotion.startDate, promotion.endDate));
+				}
 			}
 		}
 
@@ -142,6 +143,7 @@ namespace SpilGames.Unity.Helpers
 			{
 				SpilGameData spilGameData = JsonHelper.getObjectFromJson<SpilGameData> (spilGameDataString);
 				AddDataToHelper (spilGameData.currencies, spilGameData.items, spilGameData.bundles, spilGameData.shop, spilGameData.promotions);
+				Debug.Log ("Spil Game Data Updated");
 			}
 		}
 	}
@@ -243,15 +245,21 @@ namespace SpilGames.Unity.Helpers
 			_Name = name;
 					
 			//Adding Prices for Bundle
-			foreach(SpilBundlePriceData bundlePriceData in prices)
+			if(prices != null)
 			{
-				_Prices.Add(new BundlePrice(bundlePriceData.currencyId, bundlePriceData.value));
+				foreach(SpilBundlePriceData bundlePriceData in prices)
+				{
+					_Prices.Add(new BundlePrice(bundlePriceData.currencyId, bundlePriceData.value));
+				}
 			}
 			
 			//Adding Items to Bundle
-			foreach(SpilBundleItemData bundleItemData in items)
-			{	
-				_Items.Add(new BundleItem(bundleItemData.id, bundleItemData.amount));
+			if(items != null)
+			{
+				foreach(SpilBundleItemData bundleItemData in items)
+				{	
+					_Items.Add(new BundleItem(bundleItemData.id, bundleItemData.amount));
+				}
 			}
 		}
 	}
@@ -317,9 +325,12 @@ namespace SpilGames.Unity.Helpers
 
 		public Shop(List<SpilShopTabData> shop)
 		{
-			foreach (SpilShopTabData tab in shop) 
+			if(shop != null)
 			{
-				_Tabs.Add (new Tab(tab.name, tab.entries));
+				foreach (SpilShopTabData tab in shop) 
+				{
+					_Tabs.Add (new Tab(tab.name, tab.entries));
+				}
 			}
 		}
 	}
@@ -344,10 +355,12 @@ namespace SpilGames.Unity.Helpers
 		public Tab(string name, List<SpilShopEntryData> entries)
 		{
 			_Name = name;
-
-			foreach (SpilShopEntryData entry in entries) 
+			if(entries != null)
 			{
-				_Entries.Add (new Entry(entry.bundleId, entry.label, entry.position));
+				foreach (SpilShopEntryData entry in entries) 
+				{
+					_Entries.Add (new Entry(entry.bundleId, entry.label, entry.position));
+				}
 			}
 		}
 	}
@@ -429,9 +442,12 @@ namespace SpilGames.Unity.Helpers
 			_BundleId = bundleId;
 			_Amount = amount;
 
-			foreach(SpilBundlePriceData bundlePriceData in prices)
+			if(prices != null)
 			{
-				_Prices.Add(new BundlePrice(bundlePriceData.currencyId, bundlePriceData.value));
+				foreach(SpilBundlePriceData bundlePriceData in prices)
+				{
+					_Prices.Add(new BundlePrice(bundlePriceData.currencyId, bundlePriceData.value));
+				}
 			}
 
 			_Discount = discount;

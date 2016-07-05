@@ -116,7 +116,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener {
 	{
 		packageCosts.Clear ();
 		// Purchasing has succeeded initializing. Collect our Purchasing references.
-		Debug.Log("OnInitialized: PASS");
+//		Debug.Log("OnInitialized: PASS");
 
 		// Overall Purchasing system, configured with products for this application.
 		m_StoreController = controller;
@@ -125,7 +125,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener {
 
 		for(int i = 0 ; i < m_StoreController.products.all.Length; i ++ ){
 			packageCosts.Add (m_StoreController.products.all[i].definition.storeSpecificId ,m_StoreController.products.all[i].metadata.localizedPriceString);
-			Debug.Log ("PURCHASE INIT: " + m_StoreController.products.all[i].definition.storeSpecificId);
+//			Debug.Log ("PURCHASE INIT: " + m_StoreController.products.all[i].definition.storeSpecificId);
 		}
 		iapPanelController.SetupIAPButtons ();
 	}
@@ -133,7 +133,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener {
 	public void OnInitializeFailed(InitializationFailureReason error)
 	{
 		// Purchasing set-up has not succeeded. Check error for reason. Consider sharing this reason with the user.
-		Debug.Log("OnInitializeFailed InitializationFailureReason:" + error);
+//		Debug.Log("OnInitializeFailed InitializationFailureReason:" + error);
 
 		Invoke ("InitializePurchasing",1);
 	}
@@ -152,13 +152,13 @@ public class MyIAPManager : MonoBehaviour, IStoreListener {
 
 		PackagesHelper helper = Spil.Instance.GetPackagesAndPromotions ();
 
-		Debug.Log ("REWARDING PLAYER: " + lastProduct);
+//		Debug.Log ("REWARDING PLAYER: " + lastProduct);
 
 		for(int i = 0; i < helper.Packages.Count; i ++){
-			Debug.Log ("VALUE: " + helper.Packages [i].Items [0].GetRealValue ());
+//			Debug.Log ("VALUE: " + helper.Packages [i].Items [0].GetRealValue ());
 			if(lastProduct == helper.Packages[i].Id){
 				Spil.SpilPlayerDataInstance.Wallet.Add (int.Parse (helper.Packages [i].Items [0].Id), int.Parse (helper.Packages [i].Items [0].GetRealValue ().Replace(".0","")), PlayerDataUpdateReasons.IAP);
-				Debug.Log ("REWARDING PLAYER: " + helper.Packages [i].Items [0].GetRealValue ());
+//				Debug.Log ("REWARDING PLAYER: " + helper.Packages [i].Items [0].GetRealValue ());
 			}
 		}
 
@@ -170,7 +170,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener {
 		iapPanelController.PurchaseFailed ();
 		Spil.Instance.SendiapFailedEvent (failureReason.ToString (), product.definition.storeSpecificId);
 		// A product purchase attempt did not succeed. Check failureReason for more detail. Consider sharing this reason with the user.
-		Debug.Log(string.Format("OnPurchaseFailed: FAIL. Product: '{0}', PurchaseFailureReason: {1}",product.definition.storeSpecificId, failureReason));
+//		Debug.Log(string.Format("OnPurchaseFailed: FAIL. Product: '{0}', PurchaseFailureReason: {1}",product.definition.storeSpecificId, failureReason));
 	}
 
 }

@@ -211,7 +211,7 @@ namespace SpilGames.Unity.Implementations
 			
 			#endregion
 
-			public override void SetShowToastOnVideoReward (bool show)
+			public override void SetShowToastOnVideoReward (bool enabled)
 			{
 				
 			}

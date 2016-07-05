@@ -34,15 +34,15 @@ namespace SpilGames.Unity.Utils
         public enumAdType GetTypeAsEnum()
         {
             enumAdType adType = enumAdType.Unknown;
-            if (type.Equals("rewardVideo"))
+            if (type.ToLower().Trim().Equals("rewardvideo"))
             {
                 adType = enumAdType.RewardVideo;
             }
-            else if (type.Equals("interstitial"))
+            else if (type.ToLower().Trim().Equals("interstitial"))
             {
                 adType = enumAdType.Interstitial;
             }
-            else if (type.Equals("moreApps"))
+            else if (type.ToLower().Trim().Equals("moreapps"))
             {
                 adType = enumAdType.MoreApps;
             }
@@ -95,6 +95,33 @@ namespace SpilGames.Unity.Utils
         public string currencyId;
         public int reward;
     }
+
+
+	// Pushnotifications reward classes
+
+	public class PushNotificationRewardResponse : SpilResponse
+	{
+		public NotificationRewardData data;
+	}
+
+	public class NotificationRewardData
+	{
+		public NotificationData notificationData;
+		public string action;
+		public string title;
+		public string message;
+		public string uniqueNotificationID;
+	}
+
+	public class NotificationData{
+		public string currencyName;
+		public int currencyId;
+		public int reward;
+	}
+
+
+
+
 
     #endregion
 
@@ -232,6 +259,12 @@ namespace SpilGames.Unity.Utils
 			public string logic;
 		}
 	
-	#endregion 
+	#endregion
 
+	public class SpilErrorMessage
+	{
+		public int id;
+		public string name;
+		public string message;
+	}	
 }

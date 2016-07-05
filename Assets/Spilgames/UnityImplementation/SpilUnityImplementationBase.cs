@@ -180,7 +180,7 @@ namespace SpilGames.Unity.Implementations
                 // <param name="localCurrency">The currency for the price the user paid (euro, dollar etc)</param>
                 public void SendiapPurchasedEvent(string skuId, string transactionId, string purchaseDate)//, string localPrice, string localCurrency)
                 {
-                    SendCustomEvent("iapPurchased", new Dictionary<string, string>() { { "skuId", skuId }, { "transactionId", transactionId }});
+                    SendCustomEvent("iapPurchased", new Dictionary<string, string>() { { "skuId", skuId }, { "transactionId", transactionId }, { "purchaseDate", purchaseDate }});
                 }
 
                 /// <summary>
@@ -192,7 +192,7 @@ namespace SpilGames.Unity.Implementations
                 /// <param name="originalPurchaseDate">For a transaction that restores a previous transaction, the date of the original transaction. Please use a proper DateTime format!</param>
                 public void SendiapRestoredEvent(string skuId, string originalTransactionId, string originalPurchaseDate)
                 {
-                    SendCustomEvent("iapRestored", new Dictionary<string, string>() { { "originalTransactionId", originalTransactionId }, { "originalPurchaseDate", originalPurchaseDate } });
+                    SendCustomEvent("iapRestored", new Dictionary<string, string>() { { "skuId", skuId }, { "originalTransactionId", originalTransactionId }, { "originalPurchaseDate", originalPurchaseDate } });
                 }
 
                 /// <summary>
@@ -231,7 +231,13 @@ namespace SpilGames.Unity.Implementations
 
             #region Advertisement events
 
-			public abstract void SetShowToastOnVideoReward (bool show);
+                /// <summary>
+                /// When Fyber has shown a reward video and the user goes back to the game to receive his/her reward Fyber can
+                /// automatically show a toast message with information about the reward, for instance "You've received 50 coins". 
+                /// This is disabled by default to allow the developer to create a reward notification for the user.
+                /// Developers can call SetShowToastOnVideoReward(true) to enable Fyber's automatic toast message.
+                /// </summary>
+			    public abstract void SetShowToastOnVideoReward(bool value);
 
                 /// <summary>
                 /// This is fired by the native Spil SDK after it receives a response from the back-end.
@@ -246,14 +252,14 @@ namespace SpilGames.Unity.Implementations
 
                     SpilResponse spilResponse = JsonHelper.getObjectFromJson<SpilResponse>(response);
 
-                    if (spilResponse.type.Equals("reward"))
+			if (spilResponse.type.ToLower().Trim().Equals("notificationreward"))
                     {
-                        RewardResponse rewardResponseData = JsonHelper.getObjectFromJson<RewardResponse>(response);
-                        fireOnRewardEvent(rewardResponseData.data.eventData);
+						PushNotificationRewardResponse rewardResponseData = JsonHelper.getObjectFromJson<PushNotificationRewardResponse>(response);
+                        fireOnRewardEvent(rewardResponseData);
                     }
                 }
 
-                public delegate void RewardEvent(RewardData rewardResponse);
+		public delegate void RewardEvent(PushNotificationRewardResponse rewardResponse);
                 /// <summary>
                 /// This is fired by the Unity Spil SDK after it receives a "Reward" response from the back-end.
                 /// The developer can subscribe to this event to assign the reward and update the UI.
@@ -263,7 +269,7 @@ namespace SpilGames.Unity.Implementations
                 /// <summary>
                 /// This is fired by the Unity Spil SDK after it receives a "Reward" response from the back-end.
                 /// </summary>
-                private static void fireOnRewardEvent(RewardData rewardResponse) {  if (Spil.Instance.OnReward != null) { Spil.Instance.OnReward(rewardResponse); } }
+				private static void fireOnRewardEvent(PushNotificationRewardResponse rewardResponse) {  if (Spil.Instance.OnReward != null) { Spil.Instance.OnReward(rewardResponse); } }
 
                 public delegate void AdAvailableEvent(enumAdType adType);
                 /// <summary>
@@ -282,15 +288,15 @@ namespace SpilGames.Unity.Implementations
 			        Debug.Log ("SpilSDK-Unity Ad " + type + " ready!");
 
                     enumAdType adType = enumAdType.Unknown;
-                    if(type.Equals("rewardVideo"))
+                    if(type.ToLower().Trim().Equals("rewardvideo"))
                     {
                          adType = enumAdType.RewardVideo;
                     }
-                    else if(type.Equals("interstitial"))
+                    else if(type.ToLower().Trim().Equals("interstitial"))
                     {
                         adType = enumAdType.Interstitial;
                     }
-                    else if(type.Equals("moreApps"))
+                    else if(type.ToLower().Trim().Equals("moreapps"))
                     {
                         adType = enumAdType.MoreApps;
                     }
@@ -319,15 +325,15 @@ namespace SpilGames.Unity.Implementations
 		            Debug.Log ("SpilSDK-Unity Ad " + type + " is not available");
 
                     enumAdType adType = enumAdType.Unknown;
-                    if(type.Equals("rewardVideo"))
+                    if(type.ToLower().Trim().Equals("rewardvideo"))
                     {
                          adType = enumAdType.RewardVideo;
                     }
-                    else if(type.Equals("interstitial"))
+                    else if(type.ToLower().Trim().Equals("interstitial"))
                     {
                         adType = enumAdType.Interstitial;
                     }
-                    else if(type.Equals("moreApps"))
+                    else if(type.ToLower().Trim().Equals("moreapps"))
                     {
                         adType = enumAdType.MoreApps;
                     }
@@ -414,19 +420,19 @@ namespace SpilGames.Unity.Implementations
 			if (Spil.Instance.OnSpilGameDataAvailable != null) { Spil.Instance.OnSpilGameDataAvailable(); }
 		}
 		
-		public delegate void SpilGameDataError(string reason);
+		public delegate void SpilGameDataError(SpilErrorMessage errorMessage);
 		/// <summary>
 		/// This is fired by the native Spil SDK after game data has failed to be retrieved.
 		/// The developer can subscribe to this event and check the reason.
 		/// </summary>
 		public event SpilGameDataError OnSpilGameDataError;
 		
-		public static void fireSpilGameDataError(String reason)
+		public static void fireSpilGameDataError(string reason)
 		{
 			Debug.Log ("SpilSDK-Unity Spil Game Data error with reason = " + reason);
 			
-			if (Spil.Instance.OnSpilGameDataError != null) { Spil.Instance.OnSpilGameDataError(reason); }
-		
+			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(reason);
+			if (Spil.Instance.OnSpilGameDataError != null) { Spil.Instance.OnSpilGameDataError(errorMessage); }
 		}
 		
 		public abstract string GetSpilGameDataFromSdk();
@@ -463,36 +469,37 @@ namespace SpilGames.Unity.Implementations
 			
 		}
 		
-		public delegate void PlayerDataUpdated();
+		public delegate void PlayerDataUpdated(string reason);
 		/// <summary>
 		/// This is fired by the native Spil SDK after player data has been updated.
 		/// The developer can subscribe to this event and then request the Player Data (Wallet & Inventory).
 		/// </summary>
 		public event PlayerDataUpdated OnPlayerDataUpdated;
 		
-		public static void firePlayerDataUpdated()
+		public static void firePlayerDataUpdated(string reason)
 		{
 			Spil.SpilPlayerDataInstance.PlayerDataUpdatedHandler ();
 
 			Debug.Log ("SpilSDK-Unity Player Data has been updated");
 
-			if (Spil.Instance.OnPlayerDataUpdated != null) { Spil.Instance.OnPlayerDataUpdated(); }
+			if (Spil.Instance.OnPlayerDataUpdated != null) { Spil.Instance.OnPlayerDataUpdated(reason); }
 			
 		}
 		
-		public delegate void PlayerDataError();
+		public delegate void PlayerDataError(SpilErrorMessage errorMessage);
 		/// <summary>
 		/// This is fired by the native Spil SDK after player data has failed to be retrieved.
 		/// The developer can subscribe to this event and check the reason.
 		/// </summary>
 		public event PlayerDataError OnPlayerDataError;
 		
-		public static void firePlayerDataError(String reason)
+		public static void firePlayerDataError(string reason)
 		{
 			Debug.Log ("SpilSDK-Unity Player Data error with reason = " + reason);
 			
-			if (Spil.Instance.OnPlayerDataUpdated != null) { Spil.Instance.OnPlayerDataUpdated(); }
-			
+			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(reason);
+
+			if (Spil.Instance.OnPlayerDataError != null) { Spil.Instance.OnPlayerDataError(errorMessage); } 	
 		}
 		
 		public abstract string GetWalletFromSdk();

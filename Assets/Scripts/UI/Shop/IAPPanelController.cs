@@ -33,7 +33,7 @@ public class IAPPanelController : MonoBehaviour {
 			iapButtons [i].gameObject.SetActive (false);
 		}
 		PackagesHelper helper = Spil.Instance.GetPackagesAndPromotions ();
-		Debug.Log ("Packages found: " + helper.Packages.Count);
+//		Debug.Log ("Packages found: " + helper.Packages.Count);
 
 		if (helper.Packages.Count == 0) {
 			gameObject.SetActive (false);
@@ -46,7 +46,7 @@ public class IAPPanelController : MonoBehaviour {
 			Package package = helper.Packages [i];
 			string promotionText = "";
 			string gemAmount = package.Items [0].OriginalValue;
-			Debug.Log ("PackageID: " + package.Id);
+//			Debug.Log ("PackageID: " + package.Id);
 			string cost = iapManager.packageCosts[package.Id];
 			if(package.HasActivePromotion()){
 				promotionText = "PROMOTION!\n" + package.PromotionDiscountLabel + " extra gems!";

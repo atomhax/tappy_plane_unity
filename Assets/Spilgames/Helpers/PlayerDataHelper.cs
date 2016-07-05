@@ -230,6 +230,7 @@ namespace SpilGames.Unity.Helpers
 		public static string Trade = "Trade";
 		public static string ClientServerMismatch = "Client-Server Mismatch";
 		public static string ItemPickedUp = "Item Picked Up";
+		public static string ServerUpdate = "Server Update";
 
 		public PlayerDataUpdateReasons ()
 		{

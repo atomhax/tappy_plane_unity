@@ -24,7 +24,7 @@ public class ShopPanelController : MonoBehaviour {
 		getFreeCoinsButton.SetActive (false);
 		Spil.Instance.OnAdAvailable += Spil_Instance_OnAdAvailable;	
 		Spil.Instance.SendrequestRewardVideoEvent ();
-		Spil_Instance_OnPlayerDataUpdated();
+		Spil_Instance_OnPlayerDataUpdated("Opened");
 		ResetShop();
 		CreateShop ();
 		Spil.Instance.OnPlayerDataUpdated += Spil_Instance_OnPlayerDataUpdated;
@@ -69,7 +69,7 @@ public class ShopPanelController : MonoBehaviour {
 		gameController.UpdateSkins ();
 	}
 		
-	void Spil_Instance_OnPlayerDataUpdated ()
+	void Spil_Instance_OnPlayerDataUpdated (string reason)
 	{
 		starsAmountText.text = Spil.SpilPlayerDataInstance.GetCurrencyBalance (25).ToString ();
 		diamonsAmountText.text = Spil.SpilPlayerDataInstance.GetCurrencyBalance (28).ToString ();

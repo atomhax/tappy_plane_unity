@@ -46,8 +46,20 @@ public class GameController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		Spil.Instance.OnReward += Spil_Instance_OnReward;
 		GetAndApplyGameConfig ();
 		SetupNewGame ();
+	}
+
+	void Spil_Instance_OnReward (PushNotificationRewardResponse rewardResponse)
+	{
+		Debug.Log ("DATA: " + rewardResponse.data);
+		Debug.Log ("Message: " + rewardResponse.message);
+		Debug.Log ("notificationData: " + rewardResponse.data.notificationData);
+		Debug.Log ("Currency Name: " + rewardResponse.data.notificationData.currencyName);
+		Debug.Log ("Currency ID: " + rewardResponse.data.notificationData.currencyId);
+		Debug.Log ("Currency Amount: " + rewardResponse.data.notificationData.reward);
+
 	}
 
 
