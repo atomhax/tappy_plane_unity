@@ -53,13 +53,7 @@ public class GameController : MonoBehaviour {
 
 	void Spil_Instance_OnReward (PushNotificationRewardResponse rewardResponse)
 	{
-		Debug.Log ("DATA: " + rewardResponse.data);
-		Debug.Log ("Message: " + rewardResponse.message);
-		Debug.Log ("notificationData: " + rewardResponse.data.notificationData);
-		Debug.Log ("Currency Name: " + rewardResponse.data.notificationData.currencyName);
-		Debug.Log ("Currency ID: " + rewardResponse.data.notificationData.currencyId);
-		Debug.Log ("Currency Amount: " + rewardResponse.data.notificationData.reward);
-
+		Spil.SpilPlayerDataInstance.Wallet.Add (rewardResponse.data.eventData.currencyId,rewardResponse.data.eventData.reward, PlayerDataUpdateReasons.EventReward );
 	}
 
 

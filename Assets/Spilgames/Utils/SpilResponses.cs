@@ -101,19 +101,15 @@ namespace SpilGames.Unity.Utils
 
 	public class PushNotificationRewardResponse : SpilResponse
 	{
-		public NotificationRewardData data;
+		public PushRewardEventData data;
 	}
 
-	public class NotificationRewardData
+	public class PushRewardEventData
 	{
-		public NotificationData notificationData;
-		public string action;
-		public string title;
-		public string message;
-		public string uniqueNotificationID;
+		public NotificationRewardData eventData;
 	}
 
-	public class NotificationData{
+	public class NotificationRewardData{
 		public string currencyName;
 		public int currencyId;
 		public int reward;
