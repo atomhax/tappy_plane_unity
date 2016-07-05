@@ -1,5 +1,10 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
+using System.IO;
+using Newtonsoft.Json;
+using SpilGames.Unity.Utils;
+using SpilGames.Unity.Helpers;
 
 namespace SpilGames.Unity.Implementations
 {
@@ -17,7 +22,8 @@ namespace SpilGames.Unity.Implementations
 			/// <returns></returns>     
 			public override string GetConfigAll()
 			{
-				return "Not Avalible in editorMode";
+				string config = System.IO.File.ReadAllText(Application.streamingAssetsPath + "/defaultGameConfig.json");
+				return config;
 			}
 
 			/// <summary>
@@ -143,7 +149,8 @@ namespace SpilGames.Unity.Implementations
 			
 			public override string GetSpilGameDataFromSdk ()
 			{
-				return CallNativeMethod("getSpilGameData");
+				string gameData = System.IO.File.ReadAllText(Application.streamingAssetsPath + "/defaultGameData.json");
+				return gameData;
 			}
 			
 			#endregion
@@ -152,12 +159,18 @@ namespace SpilGames.Unity.Implementations
 			
 			public override string GetWalletFromSdk()
 			{
-				return CallNativeMethod("getWallet");
+				string playerData = System.IO.File.ReadAllText(Application.streamingAssetsPath + "/defaultPlayerData.json");
+				TempUserInfo temp = JsonHelper.getObjectFromJson<TempUserInfo> (playerData);
+				string wallet = JsonHelper.getJSONFromObject(temp.wallet);
+				return wallet;
 			}
 			
 			public override string GetInvetoryFromSdk()
 			{
-				return CallNativeMethod("getInventory");
+				string playerData = System.IO.File.ReadAllText(Application.streamingAssetsPath + "/defaultPlayerData.json");
+				TempUserInfo temp = JsonHelper.getObjectFromJson<TempUserInfo> (playerData);
+				string inventory = JsonHelper.getJSONFromObject(temp.inventory);
+				return inventory;
 			}
 			
 			public override void AddCurrencyToWallet (int currencyId, int amount, string reason)
@@ -319,4 +332,10 @@ namespace SpilGames.Unity.Implementations
 
         #endregion
     }
+
+	public class TempUserInfo{
+		public WalletData wallet;
+		public InventoryData inventory;
+	}
+
 	}
