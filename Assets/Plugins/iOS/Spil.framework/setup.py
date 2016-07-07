@@ -18,12 +18,19 @@ BOLD = '\033[1m'
 
 # helper methods
 def addBundleResource(src, dst, group):
+	# check if the resource actually exists
+	if not os.path.exists(src):
+		return
+
+	# copy the dir or file
 	if os.path.isdir(src):
 		if os.path.exists(dst):
 			shutil.rmtree(dst)
 		shutil.copytree(src, dst)
 	else:
-		shutil.copy2(src, dst)	
+		shutil.copy2(src, dst)
+	
+	# add it to the xcode project	
 	project.add_file_if_doesnt_exist(dst, parent=bundles, weak=False)
 	return
 
@@ -101,6 +108,9 @@ bundles = project.get_or_create_group('')
 addBundleResource(os.getcwd() + '/Spil.framework/Settings.bundle', os.getcwd() + '/Settings.bundle', bundles)
 addBundleResource(os.getcwd() + '/Spil.framework/Frameworks/Fyber_UnityAds.framework/Resources/UnityAds.bundle', os.getcwd() + '/UnityAds.bundle', bundles)
 addBundleResource(os.getcwd() + '/Spil.framework/project.entitlements', os.getcwd() + '/' + projectname + '.entitlements', bundles)
+addBundleResource(os.getcwd() + '/Data/Raw/defaultGameConfig.json', os.getcwd() + '/defaultGameConfig.json', bundles)
+addBundleResource(os.getcwd() + '/Data/Raw/defaultGameData.json', os.getcwd() + '/defaultGameData.json', bundles)
+addBundleResource(os.getcwd() + '/Data/Raw/defaultPlayerData.json', os.getcwd() + '/defaultPlayerData.json', bundles)
 
 # change build settings
 print 'Modifying project build settings'

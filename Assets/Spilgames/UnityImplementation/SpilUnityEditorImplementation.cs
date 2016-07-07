@@ -1,16 +1,16 @@
-﻿using System.Collections.Generic;
+﻿#if UNITY_EDITOR
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.IO;
 using Newtonsoft.Json;
 using SpilGames.Unity.Utils;
 using SpilGames.Unity.Helpers;
-
 namespace SpilGames.Unity.Implementations
 {
 
 	public class SpilUnityEditorImplementation : SpilUnityImplementationBase {
-
+		
 			#region Inherited members
 
 			#region Game config
@@ -331,11 +331,16 @@ namespace SpilGames.Unity.Implementations
 			}
 
         #endregion
-    }
+    
+	
+
+	}
 
 	public class TempUserInfo{
 		public WalletData wallet;
 		public InventoryData inventory;
 	}
 
+
 	}
+#endif

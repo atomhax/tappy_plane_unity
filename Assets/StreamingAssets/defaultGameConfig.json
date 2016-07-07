@@ -1,5 +1,7 @@
 {
 	"obsitcleSpawnFrequency" : "2",
 	"playerJumpForce" : "25",
-	"gameName" : "Tappy Plane"
+	"gameName" : "Tappy Plane",
+	"chartBoostAppId":"577cafd443150f494d13e377",
+	"chartBoostAppSignature":"4d1d45236ef0bef2b244c71c2b54df010fee32a5"
 }
