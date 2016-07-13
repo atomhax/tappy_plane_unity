@@ -1,6 +1,7 @@
 /*
  * Spil Games Unity SDK 2016
- * Version 2.0.2
+ * Version v2.0.3
+
  * 
  * If you have any questions, don't hesitate to e-mail us at info@spilgames.com
  * Be sure to check the github page for documentation and the latest updates
@@ -26,41 +27,41 @@ namespace SpilGames.Unity
             // defaultGameConfig.json are included in the SpilSDK documentation.
 
             // Call this method before showing ads, for instance in Awake()
-//            void AttachListeners()
-//            {
-//                // Make sure that any existing handlers are removed and add new ones
-//
-//                // When we've requested an ad, if it is available it will call OnAdAvailable
-//                Spil.Instance.OnAdAvailable -= AdAvailableHandler;
-//                Spil.Instance.OnAdAvailable += AdAvailableHandler;
-//
-//                // When we've requested an ad, if it is not available it will call OnAdNotAvailable
-//                Spil.Instance.OnAdNotAvailable -= AdNotAvailableHandler;
-//                Spil.Instance.OnAdNotAvailable += AdNotAvailableHandler;
-//
-//                // When an ad starts it will first call OnAdStarted so music can be muted etc
-//                Spil.Instance.OnAdStarted -= AdStartedHandler;
-//                Spil.Instance.OnAdStarted += AdStartedHandler;
-//
-//                // When an ad finishes or is dismissed it will call OnAdFinished so music can be re-enabled etc
-//                Spil.Instance.OnAdFinished -= AdFinishedHandler;
-//                Spil.Instance.OnAdFinished += AdFinishedHandler;			
-//				
-//				Spil.Instance.OnPlayerDataUpdated -= PlayerDataUpdatedHandler;
-//				Spil.Instance.OnPlayerDataUpdated += PlayerDataUpdatedHandler;
-//
-//				Spil.Instance.OnPlayerDataAvailable -= PlayerDataAvailableHandler;
-//				Spil.Instance.OnPlayerDataAvailable += PlayerDataAvailableHandler;
-//
-//				Spil.Instance.OnSpilGameDataAvailable -= SpilGameDataAvailableHandler;
-//				Spil.Instance.OnSpilGameDataAvailable += SpilGameDataAvailableHandler;
-//
-//				Spil.Instance.OnPlayerDataError -= PlayerDataErrorHandler;
-//				Spil.Instance.OnPlayerDataError += PlayerDataErrorHandler;
-//
-//				Spil.Instance.OnSpilGameDataError -= SpilGameDataErrorHandler;
-//				Spil.Instance.OnSpilGameDataError += SpilGameDataErrorHandler;
-//            }
+            void AttachListeners()
+            {
+                // Make sure that any existing handlers are removed and add new ones
+
+                // When we've requested an ad, if it is available it will call OnAdAvailable
+                Spil.Instance.OnAdAvailable -= AdAvailableHandler;
+                Spil.Instance.OnAdAvailable += AdAvailableHandler;
+
+                // When we've requested an ad, if it is not available it will call OnAdNotAvailable
+                Spil.Instance.OnAdNotAvailable -= AdNotAvailableHandler;
+                Spil.Instance.OnAdNotAvailable += AdNotAvailableHandler;
+
+                // When an ad starts it will first call OnAdStarted so music can be muted etc
+                Spil.Instance.OnAdStarted -= AdStartedHandler;
+                Spil.Instance.OnAdStarted += AdStartedHandler;
+
+                // When an ad finishes or is dismissed it will call OnAdFinished so music can be re-enabled etc
+                Spil.Instance.OnAdFinished -= AdFinishedHandler;
+                Spil.Instance.OnAdFinished += AdFinishedHandler;			
+				
+				Spil.Instance.OnPlayerDataUpdated -= PlayerDataUpdatedHandler;
+				Spil.Instance.OnPlayerDataUpdated += PlayerDataUpdatedHandler;
+
+				Spil.Instance.OnPlayerDataAvailable -= PlayerDataAvailableHandler;
+				Spil.Instance.OnPlayerDataAvailable += PlayerDataAvailableHandler;
+
+				Spil.Instance.OnSpilGameDataAvailable -= SpilGameDataAvailableHandler;
+				Spil.Instance.OnSpilGameDataAvailable += SpilGameDataAvailableHandler;
+
+				Spil.Instance.OnPlayerDataError -= PlayerDataErrorHandler;
+				Spil.Instance.OnPlayerDataError += PlayerDataErrorHandler;
+
+				Spil.Instance.OnSpilGameDataError -= SpilGameDataErrorHandler;
+				Spil.Instance.OnSpilGameDataError += SpilGameDataErrorHandler;
+            }
             
             // Make sure you've called AttachListeners() before calling this method
             public void RequestRewardVideo()
@@ -134,7 +135,7 @@ namespace SpilGames.Unity
 		        }
             }
 			
-			private void PlayerDataUpdatedHandler()
+            private void PlayerDataUpdatedHandler(string reason)
 			{
 			}
 
@@ -196,7 +197,7 @@ namespace SpilGames.Unity
             {
                 Debug.Log("SpilSDK-Unity Init");
 
-                Instance.SpilInit(true);
+				Instance.SpilInit(true);
                 DontDestroyOnLoad(gameObject);
                 gameObject.name = "SpilSDK";
 

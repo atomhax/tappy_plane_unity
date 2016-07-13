@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.Purchasing;
 using SpilGames.Unity;
 using SpilGames.Unity.Helpers;
+
+
 public class MyIAPManager : MonoBehaviour, IStoreListener {
 
 	public string[] googleProductIDs;
@@ -122,6 +124,8 @@ public class MyIAPManager : MonoBehaviour, IStoreListener {
 		m_StoreController = controller;
 		// Store specific subsystem, for accessing device-specific store features.
 		m_StoreExtensionProvider = extensions;
+
+
 
 		for(int i = 0 ; i < m_StoreController.products.all.Length; i ++ ){
 			packageCosts.Add (m_StoreController.products.all[i].definition.storeSpecificId ,m_StoreController.products.all[i].metadata.localizedPriceString);

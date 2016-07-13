@@ -96,7 +96,6 @@ namespace SpilGames.Unity.Utils
         public int reward;
     }
 
-
 	// Pushnotifications reward classes
 
 	public class PushNotificationRewardResponse : SpilResponse
@@ -114,10 +113,6 @@ namespace SpilGames.Unity.Utils
 		public int currencyId;
 		public int reward;
 	}
-
-
-
-
 
     #endregion
 

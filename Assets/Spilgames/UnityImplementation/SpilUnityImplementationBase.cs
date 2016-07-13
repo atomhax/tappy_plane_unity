@@ -252,14 +252,14 @@ namespace SpilGames.Unity.Implementations
 
                     SpilResponse spilResponse = JsonHelper.getObjectFromJson<SpilResponse>(response);
 
-			if (spilResponse.type.ToLower().Trim().Equals("notificationreward"))
+					if (spilResponse.type.ToLower().Trim().Equals("notificationreward"))
                     {
 						PushNotificationRewardResponse rewardResponseData = JsonHelper.getObjectFromJson<PushNotificationRewardResponse>(response);
                         fireOnRewardEvent(rewardResponseData);
                     }
                 }
 
-		public delegate void RewardEvent(PushNotificationRewardResponse rewardResponse);
+				public delegate void RewardEvent(PushNotificationRewardResponse rewardResponse);
                 /// <summary>
                 /// This is fired by the Unity Spil SDK after it receives a "Reward" response from the back-end.
                 /// The developer can subscribe to this event to assign the reward and update the UI.
@@ -394,6 +394,8 @@ namespace SpilGames.Unity.Implementations
 
         public abstract void PlayMoreApps();
 
+		public abstract void TestRequestAd(string providerName, string adType, bool parentalGate);
+		
         /// <summary>
         /// Retrieves the Spil User Id so that developers can show this in-game for users.
         /// If users contact Spil customer service they can supply this Id so that 

@@ -179,9 +179,9 @@ namespace SpilGames.Unity.Implementations
 		/// This is not essential for developers so could be hidden but it might be handy for some developers so we left it in.
 		/// </summary>
 		/// <param name="adUnitId"></param>
-		public void TestRequestAd(string providerName, string adTypeName, bool parentalGate)
+		public override void TestRequestAd(string providerName, string adType, bool parentalGate)
 		{
-			devRequestAdNative(providerName, adTypeName, parentalGate);
+			devRequestAdNative(providerName, adType, parentalGate);
 		}
 
 		[DllImport("__Internal")]
@@ -390,7 +390,6 @@ namespace SpilGames.Unity.Implementations
 							}
 
 							String notificationJsonForNative = notificationPayload.ToString().Replace("\"","'");
-							Debug.Log("notificationJsonForNative: " + notificationJsonForNative);
 							if(!proccessedNotifications){									
 								SendCustomEvent("notificationReceived", new Dictionary<string, string>() { { "notificationPayload", notificationJsonForNative}});
 								proccessedNotifications = true;

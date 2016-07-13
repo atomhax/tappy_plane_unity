@@ -55,7 +55,7 @@ namespace SpilGames.Unity.Helpers
 			if (Wallet != null) {
 				foreach (PlayerCurrency currency in Wallet.Currencies) {
 					if (currency.Id == currencyId) {
-						return currency.CurrrentBalance;
+						return currency.CurrentBalance;
 					}
 				}
 				return -1;
@@ -120,7 +120,7 @@ namespace SpilGames.Unity.Helpers
 	/// </summary>
 	public class PlayerCurrency : Currency
 	{
-		public int CurrrentBalance { get { return currentBalance; } }
+		public int CurrentBalance { get { return currentBalance; } }
 		private int currentBalance;
 		
 		public int Delta { get { return delta; } }

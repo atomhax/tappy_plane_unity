@@ -68,8 +68,6 @@ extern "C" {
     
     void showMoreAppsNative ();
 
-    void showIntersitialNative ();
-
     void playRewardVideoNative ();
     
     void devRequestAdNative(const char* providerName, const char* adTypeName, const bool parentalGate);

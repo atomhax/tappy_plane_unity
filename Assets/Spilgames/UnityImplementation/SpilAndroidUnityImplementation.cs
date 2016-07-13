@@ -262,7 +262,7 @@ namespace SpilGames.Unity.Implementations
                 /// <param name="provider"></param>
                 /// <param name="adType"></param>
                 /// <param name="parentalGate"></param>
-	            public void TestRequestAd(string provider, string adType, bool parentalGate)
+	            public override void TestRequestAd(string provider, string adType, bool parentalGate)
                 {
 				    CallNativeMethod("requestAd", new object[] { provider, adType, parentalGate }, true);
 	            }
@@ -356,7 +356,7 @@ namespace SpilGames.Unity.Implementations
                                 {
                                     value = instance.Call<string>(methodName, realParam);
                                 }
-                                catch (AndroidJavaException ex)
+                                catch (AndroidJavaException)
                                 {
                                     // Method is probably a void method, try calling it without return type
                                     // TODO: This could be confusing and return unexpected results? Could make seperate method for void method calls?
@@ -367,7 +367,7 @@ namespace SpilGames.Unity.Implementations
                                 { 
                                     value = instance.Call<string>(methodName, param1);
                                 }
-                                catch (AndroidJavaException ex)
+                                catch (AndroidJavaException)
                                 {
                                     // Method is probably a void method, try calling it without return type
                                     // TODO: This could be confusing and return unexpected results? Could make seperate method for void method calls?
@@ -379,7 +379,7 @@ namespace SpilGames.Unity.Implementations
                             { 
                                 value = instance.Call<string>(methodName);                                
                             }
-                            catch (AndroidJavaException ex)
+                            catch (AndroidJavaException)
                             {
                                 // Method is probably a void method, try calling it without return type
                                 // TODO: This could be confusing and return unexpected results? Could make seperate method for void method calls?

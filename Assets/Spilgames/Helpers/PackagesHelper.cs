@@ -21,7 +21,7 @@ namespace SpilGames.Unity.Helpers
 			int promotions = 0;
 			
 			// Create package objects with promotion data (if any)
-			List<Package> returnValue = new List<Package>();
+			//List<Package> returnValue = new List<Package>();
 			foreach (PackageData packageData in packages)
 			{            
 				if (packageData.hasPromotion) 

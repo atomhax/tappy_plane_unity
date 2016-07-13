@@ -85,14 +85,20 @@ public class GameController : MonoBehaviour {
 
 
 	void GetAndApplyGameConfig(){
-
-		JSONObject config = new JSONObject( Spil.Instance.GetConfigAll ());
-
-		obsitcleSpawnFrequency = float.Parse( config.GetField ("obsitcleSpawnFrequency").str);
-
-		player.jumpForce = float.Parse (config.GetField ("playerJumpForce").str);
-
-		gameTitleText.text = config.GetField ("gameName").str;
+		try{
+			JSONObject config = new JSONObject( Spil.Instance.GetConfigAll ());
+			if (config.HasField ("obsitcleSpawnFrequency")) {
+				if(float.Parse (config.GetField ("obsitcleSpawnFrequency").str) > 0){
+					obsitcleSpawnFrequency = float.Parse (config.GetField ("obsitcleSpawnFrequency").str);
+				}
+				if(float.Parse (config.GetField ("playerJumpForce").str) > 0){
+					player.jumpForce = float.Parse (config.GetField ("playerJumpForce").str);
+				}
+				gameTitleText.text = config.GetField ("gameName").str;
+			}
+		}catch{
+			Debug.Log ("Setup Config Failed");
+		}
 	}
 
 	public void UpdateSkins(){
