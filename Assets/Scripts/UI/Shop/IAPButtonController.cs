@@ -10,9 +10,6 @@ public class IAPButtonController : MonoBehaviour {
 
 	public MyIAPManager iapManager;
 
-
-
-
 	public void PopulateIAPButton(string gemAmount, string promotionText, string cost, string bundleID){
 		gemAmountText.text = gemAmount;
 		this.promotionText.text = promotionText;
@@ -23,7 +20,5 @@ public class IAPButtonController : MonoBehaviour {
 	public void ButtonClicked(){
 		iapManager.BuyProductID (bundleID);
 	}
-
-
-
+		
 }

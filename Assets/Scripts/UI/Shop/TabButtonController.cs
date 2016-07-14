@@ -10,7 +10,6 @@ public class TabButtonController : MonoBehaviour {
 
 	ShopPanelController shopUIController;
 
-
 	public void TabButtonClicked(){
 		shopUIController.tabsPanel.gameObject.SetActive (true);
 		shopUIController.shopTabs [tabNumber].SetActive (true);
@@ -21,6 +20,5 @@ public class TabButtonController : MonoBehaviour {
 		this.tabNumber = tabNumber;
 		shopUIController = parentController;
 	}
-
 
 }

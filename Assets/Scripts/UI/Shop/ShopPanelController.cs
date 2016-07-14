@@ -19,15 +19,13 @@ public class ShopPanelController : MonoBehaviour {
 
 	public GameObject tabButtonPrefab, tabPrefab;
 
-
 	void OnEnable(){
-		getFreeCoinsButton.SetActive (false);
 		Spil.Instance.OnAdAvailable += Spil_Instance_OnAdAvailable;	
+		Spil.Instance.OnPlayerDataUpdated += Spil_Instance_OnPlayerDataUpdated;
 		Spil.Instance.SendrequestRewardVideoEvent ();
 		Spil_Instance_OnPlayerDataUpdated("Opened");
 		ResetShop();
 		CreateShop ();
-		Spil.Instance.OnPlayerDataUpdated += Spil_Instance_OnPlayerDataUpdated;
 	}
 
 	//this method will take the Spil game data and create the shop from it
@@ -40,6 +38,7 @@ public class ShopPanelController : MonoBehaviour {
 	}
 
 	void ResetShop(){
+		getFreeCoinsButton.SetActive (false);
 		for (int i = 0; i < tabButtons.Count; i++) {
 			Destroy (tabButtons [i]);
 		}
@@ -75,8 +74,6 @@ public class ShopPanelController : MonoBehaviour {
 		diamonsAmountText.text = Spil.SpilPlayerDataInstance.GetCurrencyBalance (28).ToString ();
 	}
 		
-	// REWARDED VIDEO STUFF
-
 	void Spil_Instance_OnAdAvailable (SpilGames.Unity.Utils.enumAdType adType)
 	{
 		if (adType == SpilGames.Unity.Utils.enumAdType.RewardVideo) {

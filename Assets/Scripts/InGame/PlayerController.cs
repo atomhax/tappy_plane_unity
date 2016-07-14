@@ -6,6 +6,10 @@ public class PlayerController : MonoBehaviour {
 
 	public Rigidbody2D playerBody;
 
+	public GameController gameController;
+
+	public RuntimeAnimatorController[] playerSkinAnimators;
+
 	public float jumpForce;
 
 	public float maxYVelocity;
@@ -14,9 +18,6 @@ public class PlayerController : MonoBehaviour {
 
 	public bool idleMode = false;
 
-	public GameController gameController;
-
-	public RuntimeAnimatorController[] playerSkinAnimators;
 
 	void Start(){
 		SetupPlayerSkin ();
@@ -29,7 +30,6 @@ public class PlayerController : MonoBehaviour {
 		}
 		CheckForSpeed ();
 	}
-
 
 	public void Jump(){
 		if(dead && !idleMode){
@@ -70,9 +70,7 @@ public class PlayerController : MonoBehaviour {
 			Jump ();
 		}
 	}
-
-
-
+		
 	public void SetupPlayerSkin(){
 		GetComponent<Animator>().runtimeAnimatorController = playerSkinAnimators[PlayerPrefs.GetInt("Skin",0)];
 	}

@@ -23,5 +23,4 @@ public class SkinSelectPanelController : MonoBehaviour {
 		gameObject.SetActive (false);
 	}
 
-
 }

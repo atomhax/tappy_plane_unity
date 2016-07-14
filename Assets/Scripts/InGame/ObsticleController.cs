@@ -7,7 +7,7 @@ public class ObsticleController : MonoBehaviour {
 
 
 	void Start(){
-		Destroy (gameObject, 12);
+		Destroy (gameObject, 14);
 	}
 
 

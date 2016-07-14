@@ -7,13 +7,11 @@ public class TabController : MonoBehaviour {
 
 	public Text tabTitle;
 
-
 	public Transform listOfEntryButtonsParent;
 
 	public GameObject entryButtonPrefab;
 
 	public BundleDisplayPanelController bundleDisplayPanel;
-
 
 	public void SetupTab(Tab tab){
 		tabTitle.text = tab.Name;
@@ -25,35 +23,21 @@ public class TabController : MonoBehaviour {
 					hasItem = true;
 				}
 			}	
-
 			if (!hasItem) {
 				CreateBundleButton (entry);
 			}
-
 		}
 	}
-
-
+		
 	void CreateBundleButton(Entry entry){
 		GameObject newButton = (GameObject)Instantiate (entryButtonPrefab);
 		newButton.transform.SetParent (listOfEntryButtonsParent);
 		newButton.GetComponent<EntryButtonController> ().SetupButton (entry,this);
 	}
-
-
-
-
+		
 	public void CloseTab(){
 		gameObject.SetActive (false);
 		transform.parent.gameObject.SetActive (false);
 	}
-
-
-
-	public void ShowBundleInfo(Bundle bundle){
-		
-	}
-
-
 
 }

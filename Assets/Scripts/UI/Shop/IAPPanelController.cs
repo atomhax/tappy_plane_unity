@@ -25,28 +25,22 @@ public class IAPPanelController : MonoBehaviour {
 		pleaseWaitPanel.SetActive (false);
 		purchaseFailedPanel.SetActive (true);
 	}
-
-
-
+		
 	public void SetupIAPButtons(){
 		for(int i = 0 ; i < iapButtons.Length; i ++){
 			iapButtons [i].gameObject.SetActive (false);
 		}
 		PackagesHelper helper = Spil.Instance.GetPackagesAndPromotions ();
-//		Debug.Log ("Packages found: " + helper.Packages.Count);
-
 		if (helper.Packages.Count == 0) {
 			gameObject.SetActive (false);
 			return;
 		} else {
 			gameObject.SetActive (true);
 		}
-
 		for (int i = 0; i < helper.Packages.Count; i++) {
 			Package package = helper.Packages [i];
 			string promotionText = "";
 			string gemAmount = package.Items [0].OriginalValue;
-//			Debug.Log ("PackageID: " + package.Id);
 			string cost = iapManager.packageCosts[package.Id];
 			if(package.HasActivePromotion()){
 				promotionText = "PROMOTION!\n" + package.PromotionDiscountLabel + " extra gems!";
@@ -56,11 +50,5 @@ public class IAPPanelController : MonoBehaviour {
 			iapButtons [i].gameObject.SetActive (true);
 		}
 	}
-
-
-
-
-
-
-
+		
 }

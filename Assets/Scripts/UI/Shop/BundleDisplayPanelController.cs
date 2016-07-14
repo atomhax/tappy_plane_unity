@@ -67,6 +67,4 @@ public class BundleDisplayPanelController : MonoBehaviour {
 			Spil.SpilPlayerDataInstance.Inventory.Add (bundleDisplayed.Items [i].Id, bundleDisplayed.Items [i].Amount, PlayerDataUpdateReasons.ItemBought);
 		}
 	}
-
-
 }

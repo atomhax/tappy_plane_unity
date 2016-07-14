@@ -12,9 +12,8 @@ public class MyIAPManager : MonoBehaviour, IStoreListener {
 
 	public string[] appleProductIDs;
 
-	string lastProduct = "";
+	string lastProductSKU = "";
 
-	//the store apa connectors
 	IStoreController m_StoreController;
 	IExtensionProvider m_StoreExtensionProvider;
 
@@ -25,29 +24,19 @@ public class MyIAPManager : MonoBehaviour, IStoreListener {
 
 	void Start()
 	{
-		// If we haven't set up the Unity Purchasing reference
 		if (m_StoreController == null)
 		{
-			// Begin to configure our connection to Purchasing
 			InitializePurchasing();
 		}
-
 	}
-
-
+		
 	public void InitializePurchasing() 
 	{
-		// If we have already connected to Purchasing ...
 		if (IsInitialized())
 		{
-			// ... we are done here.
 			return;
 		}
-		// Create a builder, first passing in a suite of Unity provided stores.
 		var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
-		// Add a product to sell / restore by way of its identifier, associating the general identifier with its store-specific identifiers.
-
-
 		#if UNITY_ANDROID
 		for(int i = 0; i < googleProductIDs.Length; i ++){
 			builder.AddProduct(googleProductIDs[i], ProductType.Consumable);
@@ -58,8 +47,6 @@ public class MyIAPManager : MonoBehaviour, IStoreListener {
 		builder.AddProduct(appleProductIDs[i], ProductType.Consumable);
 		}
 		#endif
-
-
 		UnityPurchasing.Initialize(this, builder);
 	}
 
@@ -72,7 +59,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener {
 	public void BuyProductID(string productId)
 	{
 		iapPanelController.PurchaseStarted ();
-		lastProduct = productId;
+		lastProductSKU = productId;
 		// If the stores throw an unexpected exception, use try..catch to protect my logic here.
 		try
 		{
@@ -110,71 +97,46 @@ public class MyIAPManager : MonoBehaviour, IStoreListener {
 		}
 	}
 
-	//  
-	// --- IStoreListener
-	//
-
 	public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
 	{
 		packageCosts.Clear ();
-		// Purchasing has succeeded initializing. Collect our Purchasing references.
-//		Debug.Log("OnInitialized: PASS");
-
-		// Overall Purchasing system, configured with products for this application.
 		m_StoreController = controller;
-		// Store specific subsystem, for accessing device-specific store features.
 		m_StoreExtensionProvider = extensions;
+		StoreProductPrices ();
+	}
 
-
-
+	void StoreProductPrices(){
 		for(int i = 0 ; i < m_StoreController.products.all.Length; i ++ ){
 			packageCosts.Add (m_StoreController.products.all[i].definition.storeSpecificId ,m_StoreController.products.all[i].metadata.localizedPriceString);
-//			Debug.Log ("PURCHASE INIT: " + m_StoreController.products.all[i].definition.storeSpecificId);
 		}
 		iapPanelController.SetupIAPButtons ();
 	}
 
 	public void OnInitializeFailed(InitializationFailureReason error)
 	{
-		// Purchasing set-up has not succeeded. Check error for reason. Consider sharing this reason with the user.
-//		Debug.Log("OnInitializeFailed InitializationFailureReason:" + error);
-
 		Invoke ("InitializePurchasing",1);
 	}
 
 	public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs args) 
 	{
-
 		RewardPlayer ();
-
 		iapPanelController.PurchaseSuccess(args.purchasedProduct.metadata.localizedTitle);
-
 		return PurchaseProcessingResult.Complete;
 	}
 
 	void RewardPlayer(){
-
 		PackagesHelper helper = Spil.Instance.GetPackagesAndPromotions ();
-
-//		Debug.Log ("REWARDING PLAYER: " + lastProduct);
-
 		for(int i = 0; i < helper.Packages.Count; i ++){
-//			Debug.Log ("VALUE: " + helper.Packages [i].Items [0].GetRealValue ());
-			if(lastProduct == helper.Packages[i].Id){
+			if(lastProductSKU == helper.Packages[i].Id){
 				Spil.SpilPlayerDataInstance.Wallet.Add (int.Parse (helper.Packages [i].Items [0].Id), int.Parse (helper.Packages [i].Items [0].GetRealValue ().Replace(".0","")), PlayerDataUpdateReasons.IAP);
-//				Debug.Log ("REWARDING PLAYER: " + helper.Packages [i].Items [0].GetRealValue ());
 			}
 		}
-
-
 	}
 
 	public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason)
 	{
 		iapPanelController.PurchaseFailed ();
 		Spil.Instance.SendiapFailedEvent (failureReason.ToString (), product.definition.storeSpecificId);
-		// A product purchase attempt did not succeed. Check failureReason for more detail. Consider sharing this reason with the user.
-//		Debug.Log(string.Format("OnPurchaseFailed: FAIL. Product: '{0}', PurchaseFailureReason: {1}",product.definition.storeSpecificId, failureReason));
 	}
 
 }
