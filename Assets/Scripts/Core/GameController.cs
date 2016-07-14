@@ -15,7 +15,7 @@ public class GameController : MonoBehaviour {
 		GameOver,
 		Shop
 	}
-
+		
 	public int playerScore = 0;
 
 	public Text gameTitleText, purchaceCompleteText, purchaceFailText;
