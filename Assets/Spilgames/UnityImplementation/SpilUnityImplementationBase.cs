@@ -15,7 +15,7 @@ namespace SpilGames.Unity.Implementations
             /// The Spil Unity SDK is not packaged as a seperate assembly yet so unfortunately this method is currently visible.
             /// Internal method names start with a lower case so you can easily recognise and avoid them.
             /// </summary>
-			internal abstract void SpilInit(bool pushNotificationsEnabled);  
+			internal abstract void SpilInit();  
 
         #endregion
 
@@ -415,7 +415,7 @@ namespace SpilGames.Unity.Implementations
 
 		public static void fireSpilGameDataAvailable()
 		{
-			Spil.SpilGameDataInstance.SpilGameDataHandler ();
+			Spil.GameData.SpilGameDataHandler ();
 
 			Debug.Log ("SpilSDK-Unity Spil Game Data is available");
 			
@@ -480,7 +480,7 @@ namespace SpilGames.Unity.Implementations
 		
 		public static void firePlayerDataUpdated(string reason)
 		{
-			Spil.SpilPlayerDataInstance.PlayerDataUpdatedHandler ();
+			Spil.PlayerData.PlayerDataUpdatedHandler ();
 
 			Debug.Log ("SpilSDK-Unity Player Data has been updated");
 

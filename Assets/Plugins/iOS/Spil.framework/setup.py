@@ -84,7 +84,7 @@ for root, dirs, files in os.walk(os.getcwd() + "/Spil.framework"):
 print 'Adding system frameworks'
 frameworks = project.get_or_create_group('Frameworks')
 requiredSystemFrameworks = ['Accounts', 'AdSupport', 'AssetsLibrary', 'AudioToolbox', 'AVFoundation', 'EventKit', 'EventKitUI', 'CoreData', 'CoreGraphics', 
-							'CoreLocation', 'CoreMedia', 'CoreMotion', 'CoreTelephony', 'MapKit', 'MediaPlayer', 'MessageUI', 'QuartzCore', 
+							'CoreLocation', 'CoreMedia', 'CoreMotion', 'CoreTelephony', 'iAd', 'MapKit', 'MediaPlayer', 'MessageUI', 'QuartzCore', 
 							'Social', 'StoreKit', 'SystemConfiguration', 'Twitter', 'WebKit']
 for framework in requiredSystemFrameworks:
 	project.add_file_if_doesnt_exist('System/Library/Frameworks/' + framework + '.framework', parent=frameworks, weak=False, tree='SDKROOT')
@@ -94,7 +94,7 @@ for library in requiredSystemLibraries:
 
 # add custom frameworks
 print 'Adding custom frameworks'
-requiredCustomFrameworks = ['Chartboost', 'FBAudienceNetwork', 'Fyber_AdColony', 'Fyber_AppLovin', 'Fyber_UnityAds', 'GoogleMobileAds', 'MMAdSDK']
+requiredCustomFrameworks = ['AdjustSdk', 'Chartboost', 'FBAudienceNetwork', 'Fyber_AdColony', 'Fyber_AppLovin', 'Fyber_UnityAds', 'GoogleMobileAds', 'MMAdSDK']
 project.add_file_if_doesnt_exist('Spil.framework', parent=frameworks, weak=False)
 for framework in requiredCustomFrameworks:
 	project.add_file_if_doesnt_exist('Spil.framework/Frameworks/' + framework + '.framework', parent=frameworks, weak=False)

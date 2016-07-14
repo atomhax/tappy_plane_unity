@@ -31,9 +31,9 @@ public class ShopPanelController : MonoBehaviour {
 	//this method will take the Spil game data and create the shop from it
 	void CreateShop(){
 		//First create the buttons for each shop tab/window
-		for(int i = 0; i < Spil.SpilGameDataInstance.Shop.Tabs.Count; i++ ) {
-			CreateTabButton (Spil.SpilGameDataInstance.Shop.Tabs[i], i);
-			CreateTab (Spil.SpilGameDataInstance.Shop.Tabs [i]);
+		for(int i = 0; i < Spil.GameData.Shop.Tabs.Count; i++ ) {
+			CreateTabButton (Spil.GameData.Shop.Tabs[i], i);
+			CreateTab (Spil.GameData.Shop.Tabs [i]);
 		}
 	}
 
@@ -70,8 +70,8 @@ public class ShopPanelController : MonoBehaviour {
 		
 	void Spil_Instance_OnPlayerDataUpdated (string reason)
 	{
-		starsAmountText.text = Spil.SpilPlayerDataInstance.GetCurrencyBalance (25).ToString ();
-		diamonsAmountText.text = Spil.SpilPlayerDataInstance.GetCurrencyBalance (28).ToString ();
+		starsAmountText.text = Spil.PlayerData.GetCurrencyBalance (25).ToString ();
+		diamonsAmountText.text = Spil.PlayerData.GetCurrencyBalance (28).ToString ();
 	}
 		
 	void Spil_Instance_OnAdAvailable (SpilGames.Unity.Utils.enumAdType adType)
@@ -91,7 +91,7 @@ public class ShopPanelController : MonoBehaviour {
 		getFreeCoinsButton.SetActive (false);
 		if(response.reward != null){
 			starsRewardedText.text = "Thanks!\nStars Rewarded : " + response.reward.reward.ToString ();
-			Spil.SpilPlayerDataInstance.Wallet.Add (25, response.reward.reward,PlayerDataUpdateReasons.RewardAds);
+			Spil.PlayerData.Wallet.Add (25, response.reward.reward,PlayerDataUpdateReasons.RewardAds);
 			rewardSucessPanel.SetActive (true);
 		}
 		Spil.Instance.SendrequestRewardVideoEvent ();

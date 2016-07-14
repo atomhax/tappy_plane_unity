@@ -21,7 +21,8 @@ namespace SpilGames.Unity.Helpers
 		{
 			string walletString = Instance.GetWalletFromSdk();
 			string inventoryString = Instance.GetInvetoryFromSdk();
-			if (walletString != null && inventoryString != null) {
+			if (walletString != null && inventoryString != null)
+            {
 				WalletData walletData = JsonHelper.getObjectFromJson<WalletData> (walletString);
 				InventoryData inventoryData = JsonHelper.getObjectFromJson<InventoryData> (inventoryString);
 
@@ -34,9 +35,12 @@ namespace SpilGames.Unity.Helpers
 		/// </summary>
 		public Boolean InventoryHasItem(int itemId)
 		{
-			if (Inventory != null) {
-				foreach (PlayerItem item in Inventory.Items) {
-					if (item.Id == itemId) {
+			if (Inventory != null)
+            {
+				foreach (PlayerItem item in Inventory.Items)
+                {
+					if (item.Id == itemId)
+                    {
 						return true;
 					}
 				}
@@ -52,9 +56,12 @@ namespace SpilGames.Unity.Helpers
 		/// </summary>
 		public int GetCurrencyBalance(int currencyId)
 		{
-			if (Wallet != null) {
-				foreach (PlayerCurrency currency in Wallet.Currencies) {
-					if (currency.Id == currencyId) {
+			if (Wallet != null)
+            {
+				foreach (PlayerCurrency currency in Wallet.Currencies)
+                {
+					if (currency.Id == currencyId)
+                    {
 						return currency.CurrentBalance;
 					}
 				}
@@ -70,8 +77,10 @@ namespace SpilGames.Unity.Helpers
 		/// </summary>
 		public int GetItemAmount(int itemId)
 		{
-			if (Inventory != null) {
-				foreach (PlayerItem item in Inventory.Items) {
+			if (Inventory != null)
+            {
+				foreach (PlayerItem item in Inventory.Items)
+                {
 					if (item.Id == itemId) {
 						return item.Amount;
 					}
@@ -90,7 +99,8 @@ namespace SpilGames.Unity.Helpers
 			Spil.Instance.ConsumeBundle(bundleId, reason);
 		}
 
-		private void AddDataToHelper(WalletData wallet, InventoryData inventory){
+		private void AddDataToHelper(WalletData wallet, InventoryData inventory)
+        {
 			Wallet = new Wallet(wallet.currencies);
 			Inventory = new Inventory(inventory.items);
 		}
@@ -104,14 +114,14 @@ namespace SpilGames.Unity.Helpers
 		{
 			string walletString = Spil.Instance.GetWalletFromSdk();
 			string inventoryString = Spil.Instance.GetInvetoryFromSdk();
-			if (walletString != null && inventoryString != null) {
+			if (walletString != null && inventoryString != null)
+            {
 				WalletData walletData = JsonHelper.getObjectFromJson<WalletData> (walletString);
 				InventoryData inventoryData = JsonHelper.getObjectFromJson<InventoryData> (inventoryString);
 
 				AddDataToHelper (walletData, inventoryData);
 			}
 		}
-
 	}
 		
 
@@ -145,12 +155,11 @@ namespace SpilGames.Unity.Helpers
 		{
 			currencies = new List<PlayerCurrency>();
 			
-			//Adding currencies of the player
+			// Adding currencies of the player
 			foreach(PlayerCurrencyData playerCurrencyData in currencyData)
 			{
 				currencies.Add(new PlayerCurrency(playerCurrencyData.id, playerCurrencyData.name, playerCurrencyData.type, playerCurrencyData.currentBalance, playerCurrencyData.delta));
-			}
-			
+			}			
 		}
 		
 		public void Add (int currencyId, int amount, string reason)
@@ -232,11 +241,7 @@ namespace SpilGames.Unity.Helpers
 		public static string ItemPickedUp = "Item Picked Up";
 		public static string ServerUpdate = "Server Update";
 
-		public PlayerDataUpdateReasons ()
-		{
-		}
-
-
+		public PlayerDataUpdateReasons () { }
 	}
 }
 

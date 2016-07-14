@@ -22,7 +22,7 @@ public class BundleDisplayPanelController : MonoBehaviour {
 		bundleTitleText.text = bundle.Name;
 		listOfItemsInBundle.text = "ITEMS IN THIS BUNDLE\n";
 		for(int i = 0 ; i < bundle.Items.Count; i++){
-			Item item = Spil.SpilGameDataInstance.GetItem (bundle.Items [i].Id);
+			Item item = Spil.GameData.GetItem (bundle.Items [i].Id);
 			listOfItemsInBundle.text += item.Name + "\n";
 			for(int x = 0; x < bundle.Prices.Count; x ++){
 				if(bundle.Prices[x].CurrencyId == 25){
@@ -49,7 +49,7 @@ public class BundleDisplayPanelController : MonoBehaviour {
 	bool CanAffordBundle(){
 		bool canAfford = true;
 		for(int i = 0 ; i < bundleDisplayed.Prices.Count; i ++){
-			if(Spil.SpilPlayerDataInstance.GetCurrencyBalance(bundleDisplayed.Prices[i].CurrencyId) < bundleDisplayed.Prices[i].Value){
+			if(Spil.PlayerData.GetCurrencyBalance(bundleDisplayed.Prices[i].CurrencyId) < bundleDisplayed.Prices[i].Value){
 				canAfford = false;
 			}
 		}
@@ -58,13 +58,13 @@ public class BundleDisplayPanelController : MonoBehaviour {
 
 	void SpendCurrencyForBundle(){
 		for (int i = 0; i < bundleDisplayed.Prices.Count; i++) {
-			Spil.SpilPlayerDataInstance.Wallet.Subtract (bundleDisplayed.Prices [i].CurrencyId, bundleDisplayed.Prices [i].Value, PlayerDataUpdateReasons.ItemBought);
+			Spil.PlayerData.Wallet.Subtract (bundleDisplayed.Prices [i].CurrencyId, bundleDisplayed.Prices [i].Value, PlayerDataUpdateReasons.ItemBought);
 		}
 	}
 		
 	void AddItemsToInventory(){
 		for(int i = 0; i < bundleDisplayed.Items.Count; i ++){
-			Spil.SpilPlayerDataInstance.Inventory.Add (bundleDisplayed.Items [i].Id, bundleDisplayed.Items [i].Amount, PlayerDataUpdateReasons.ItemBought);
+			Spil.PlayerData.Inventory.Add (bundleDisplayed.Items [i].Id, bundleDisplayed.Items [i].Amount, PlayerDataUpdateReasons.ItemBought);
 		}
 	}
 }

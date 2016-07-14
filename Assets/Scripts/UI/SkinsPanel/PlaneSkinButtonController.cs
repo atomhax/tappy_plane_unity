@@ -36,7 +36,7 @@ public class PlaneSkinButtonController : MonoBehaviour {
 			lockImage.enabled = false;
 			return;
 		}
-		if(Spil.SpilPlayerDataInstance.InventoryHasItem(itemID)){
+		if(Spil.PlayerData.InventoryHasItem(itemID)){
 			lockImage.enabled = false;
 			owned = true;
 		}

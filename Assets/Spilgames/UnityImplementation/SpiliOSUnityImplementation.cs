@@ -10,7 +10,7 @@ namespace SpilGames.Unity.Implementations
 	#if UNITY_IPHONE
 	public class SpiliOSUnityImplementation : SpilUnityImplementationBase
 	{
-		protected bool pushNotificationsEnabled = false;
+        protected bool disableAutomaticRegisterForPushNotifications = false;
 
 		#region Inherited members
 
@@ -91,17 +91,16 @@ namespace SpilGames.Unity.Implementations
 		/// The Spil Unity SDK is not packaged as a seperate assembly yet so this method is currently visible, this will be fixed in the future.
 		/// Internal method names start with a lower case so you can easily recognise and avoid them.
 		/// </summary>
-		internal override void SpilInit(bool pushNotificationsEnabled)
+		internal override void SpilInit()
 		{
 			JSONObject options = new JSONObject();
 			options.AddField ("isUnity",true);
 			initEventTrackerWithOptions(options.ToString());
 			applicationDidBecomeActive();
 
-			this.pushNotificationsEnabled = pushNotificationsEnabled;
-			if (pushNotificationsEnabled) 
+            if (disableAutomaticRegisterForPushNotifications == false) 
 			{
-				RegisterForIosPushNotifications ();
+                RegisterForPushNotifications ();
 				CheckForRemoteNotifications();
 			}
 		}
@@ -304,14 +303,33 @@ namespace SpilGames.Unity.Implementations
 
 		#region Push notifications
 
+        /// <summary>
+        /// Disables the automatic register for push notifications.
+        /// Should be called before SpilInit!
+        /// </summary>
+        public void DisableAutomaticRegisterForPushNotifications()
+        {
+            disableAutomaticRegisterForPushNotifications = true;
+            disableAutomaticRegisterForPushNotificationsNative();
+        }
+
+        [DllImport("__Internal")]
+        private static extern void disableAutomaticRegisterForPushNotificationsNative();
+
+        [DllImport("__Internal")]
+        private static extern void registerForPushNotifications();
+
 		[DllImport("__Internal")]
 		private static extern void setPushNotificationKey(string key);
 
 		[DllImport("__Internal")]
 		private static extern void handlePushNotification(string notificationStringParams);
 
-		//register for ios push notifications
-		private void RegisterForIosPushNotifications()
+        /// <summary>
+        /// Registers for push notifications for iOS.
+        /// Can be used then the automatic registration was disabled using: DisableAutomaticRegisterForPushNotifications();
+        /// </summary>
+		public void RegisterForPushNotifications()
 		{
 			Debug.Log ("UNITY: REGISTERING FOR PUSH NOTIFICATIONS");
 	#if UNITY_IPHONE
@@ -452,10 +470,7 @@ namespace SpilGames.Unity.Implementations
 			if(!pauseStatus)
 			{
 				applicationDidBecomeActive();
-				if (pushNotificationsEnabled)
-				{
-					CheckForRemoteNotifications();
-				}
+				CheckForRemoteNotifications();
 			} else {
 				applicationDidEnterBackground();
 			}

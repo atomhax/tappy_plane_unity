@@ -78,7 +78,7 @@ namespace SpilGames.Unity.Implementations
 			/// The Spil Unity SDK is not packaged as a seperate assembly yet so this method is currently visible, this will be fixed in the future.
 			/// Internal method names start with a lower case so you can easily recognise and avoid them.
 			/// </summary>
-			internal override void SpilInit(bool pushNotificationsEnabled)
+			internal override void SpilInit()
 			{
 				
 			}
@@ -270,6 +270,23 @@ namespace SpilGames.Unity.Implementations
 			{
 				
 			}
+
+			/// <summary>
+            /// Disables the automatic register for push notifications for iOS.
+            /// Should be called before the SpilInit() call!
+            /// </summary>
+            public void DisableAutomaticRegisterForPushNotifications()
+            {
+            
+            }
+
+            /// <summary>
+            /// Registers for push notifications for iOS.
+            /// Can be used then the automatic registration was disabled using: DisableAutomaticRegisterForPushNotifications();
+            /// </summary>
+            public void RegisterForPushNotifications()
+            {
+            }
 
 			#endregion
 

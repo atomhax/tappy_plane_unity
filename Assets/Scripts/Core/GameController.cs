@@ -49,7 +49,7 @@ public class GameController : MonoBehaviour {
 
 	void Spil_Instance_OnReward (PushNotificationRewardResponse rewardResponse)
 	{
-		Spil.SpilPlayerDataInstance.Wallet.Add (rewardResponse.data.eventData.currencyId,rewardResponse.data.eventData.reward, PlayerDataUpdateReasons.EventReward );
+        Spil.PlayerData.Wallet.Add (rewardResponse.data.eventData.currencyId,rewardResponse.data.eventData.reward, PlayerDataUpdateReasons.EventReward );
 	}
 		
 	public void AddToScore(){
@@ -111,7 +111,7 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void GameOver(){
-		Spil.SpilPlayerDataInstance.Wallet.Add (25, playerScore,PlayerDataUpdateReasons.LevelComplete);
+        Spil.PlayerData.Wallet.Add (25, playerScore,PlayerDataUpdateReasons.LevelComplete);
 		CancelInvoke ("SpawnObsticle");
 		UpdateUI (GameStates.GameOver);
 		Spil.Instance.SendplayerDiesEvent ("MainGame");
@@ -139,7 +139,7 @@ public class GameController : MonoBehaviour {
 		purchaceFailText.text = "Purchase Not Possible \n you need \n";
 		for(int i = 0 ; i < bundle.Prices.Count; i ++){
 			if(bundle.Prices[i].Value > 0){
-				purchaceFailText.text += bundle.Prices [i].Value.ToString () + " " + Spil.SpilGameDataInstance.GetCurrency (bundle.Prices [i].CurrencyId).Name;
+                purchaceFailText.text += bundle.Prices [i].Value.ToString () + " " + Spil.GameData.GetCurrency (bundle.Prices [i].CurrencyId).Name;
 			}
 		}
 		inGamePurchaseFailPanel.SetActive (true);

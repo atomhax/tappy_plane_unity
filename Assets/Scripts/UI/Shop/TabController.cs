@@ -17,9 +17,9 @@ public class TabController : MonoBehaviour {
 		tabTitle.text = tab.Name;
 		foreach(Entry entry in tab.Entries){
 			bool hasItem = false;
-			Bundle bundle = Spil.SpilGameDataInstance.GetBundle (entry.BundleId);
+			Bundle bundle = Spil.GameData.GetBundle (entry.BundleId);
 			for (int i = 0; i < bundle.Items.Count; i++) {
-				if(Spil.SpilPlayerDataInstance.InventoryHasItem(bundle.Items[i].Id)){
+				if(Spil.PlayerData.InventoryHasItem(bundle.Items[i].Id)){
 					hasItem = true;
 				}
 			}	

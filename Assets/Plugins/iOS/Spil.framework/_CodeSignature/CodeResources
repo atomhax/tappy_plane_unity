@@ -16,6 +16,10 @@
 		<data>
 		y3Uezfm65mXDcqo7aGEZiL9d7nk=
 		</data>
+		<key>Frameworks/AdjustSdk.framework/AdjustSdk</key>
+		<data>
+		YoxdT7cdQQwDT3BAVNrl0VUomGQ=
+		</data>
 		<key>Frameworks/Chartboost.framework/Chartboost</key>
 		<data>
 		eDdkj28CurV9vnjrQx3EJZX/XCs=
@@ -111,7 +115,7 @@
 		</data>
 		<key>Headers/HookBridge.h</key>
 		<data>
-		+XRTLBxiewkNqemZs4amkOuZ8WM=
+		eedDCooxmhOewKmMgmAw5yHKrCg=
 		</data>
 		<key>Headers/JsonUtil.h</key>
 		<data>
@@ -119,15 +123,11 @@
 		</data>
 		<key>Headers/Spil.h</key>
 		<data>
-		/YILfTQhYaW1Spp22vhiXFW5D5s=
-		</data>
-		<key>Headers/UnityAppController.h</key>
-		<data>
-		ZjOc6wagn8U9FsJ9XZR0Mq/Bnso=
+		5U202Iqt5SLzZ+IOLTEa6feu00E=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		KLD1bKWbmR6VTP6iTwmtBCIzdrg=
+		w7leqkCxWr6HY5mXuhxBSwzVBqY=
 		</data>
 		<key>LICENSE</key>
 		<data>
@@ -135,7 +135,7 @@
 		</data>
 		<key>MPAdBrowserController.nib</key>
 		<data>
-		7lJxZNDS5W0HYNpLo4HI3Y4zly4=
+		MpAHDXNYqKhao6HaIBikuU1NqeM=
 		</data>
 		<key>MPCloseBtn.png</key>
 		<data>
@@ -219,11 +219,11 @@
 		</data>
 		<key>Settings.bundle/DebugMode.plist</key>
 		<data>
-		+5i7xG7ROeajN0KEpYLhKFThJx4=
+		d5LXCJBKL+wM+otcjONjOEik+Jk=
 		</data>
 		<key>Settings.bundle/Root.plist</key>
 		<data>
-		1iNDMoAitVT7Mc+Y6dIv0GNwr+Q=
+		R5trXMzLihmakv5+whC+JJSmTuU=
 		</data>
 		<key>Settings.bundle/en.lproj/Root.strings</key>
 		<dict>
@@ -244,7 +244,7 @@
 		</data>
 		<key>setup.py</key>
 		<data>
-		ZdOHxqvXYFNG/by6g1l8AE+rhpc=
+		UmwqXfRsDs5tyCKus5/2fLjGJ4Y=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -280,6 +280,17 @@
 			<key>hash2</key>
 			<data>
 			6jskTSJ3uCY1X9bDNANoFlEezz4Ix3S5c+bnNYJD9VI=
+			</data>
+		</dict>
+		<key>Frameworks/AdjustSdk.framework/AdjustSdk</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			YoxdT7cdQQwDT3BAVNrl0VUomGQ=
+			</data>
+			<key>hash2</key>
+			<data>
+			YaSgu8u5bJZ5rN1vFJP9mPmNw0BQ3PylpYfWOqTi/qU=
 			</data>
 		</dict>
 		<key>Frameworks/Chartboost.framework/Chartboost</key>
@@ -530,11 +541,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			+XRTLBxiewkNqemZs4amkOuZ8WM=
+			eedDCooxmhOewKmMgmAw5yHKrCg=
 			</data>
 			<key>hash2</key>
 			<data>
-			R3L2sWEvfjEbyGOAYZARX9a/YfX7pqAZDJ56GDznT+A=
+			U23V+t9wTrXdENe3qcKl2kHgqwJrYmFzaCgeRDi0kvE=
 			</data>
 		</dict>
 		<key>Headers/JsonUtil.h</key>
@@ -552,22 +563,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			/YILfTQhYaW1Spp22vhiXFW5D5s=
+			5U202Iqt5SLzZ+IOLTEa6feu00E=
 			</data>
 			<key>hash2</key>
 			<data>
-			dYtbqdQtHr10mh+BBuIcp8GpzUxGNFTjwfDKf8af/G4=
-			</data>
-		</dict>
-		<key>Headers/UnityAppController.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			ZjOc6wagn8U9FsJ9XZR0Mq/Bnso=
-			</data>
-			<key>hash2</key>
-			<data>
-			fmyIdLyGcqIhV0sByohOhzr3N+B06pw4vdw6gFHJIco=
+			oU8T5vhcNg9kBTJXBkYJABpwQjFMEGfP4H/dsT48w4Y=
 			</data>
 		</dict>
 		<key>LICENSE</key>
@@ -585,11 +585,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			7lJxZNDS5W0HYNpLo4HI3Y4zly4=
+			MpAHDXNYqKhao6HaIBikuU1NqeM=
 			</data>
 			<key>hash2</key>
 			<data>
-			pJE1HGLqY+/lRF/cz7YzFN2PApU2AZfvC5r28CVF3F8=
+			BYsE3f5n7bqoyDfzNhxLosO+PTdUPGFAZAA6uT88z9k=
 			</data>
 		</dict>
 		<key>MPCloseBtn.png</key>
@@ -816,22 +816,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			+5i7xG7ROeajN0KEpYLhKFThJx4=
+			d5LXCJBKL+wM+otcjONjOEik+Jk=
 			</data>
 			<key>hash2</key>
 			<data>
-			Xnr8IuykfZ53AuYpb+4AI7QkgLy4MBW13SXjjtTqNI0=
+			siHyFkP9sTqnFJC8B6otLapAFs/oyjk00vEJGS+lucQ=
 			</data>
 		</dict>
 		<key>Settings.bundle/Root.plist</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			1iNDMoAitVT7Mc+Y6dIv0GNwr+Q=
+			R5trXMzLihmakv5+whC+JJSmTuU=
 			</data>
 			<key>hash2</key>
 			<data>
-			Bp8ehYQgPDKTzT3t6F03Qo3EZg1VAsP6PIcaUZoddbM=
+			7W7kFcHmc1e5mzlNOLxnkDR6CY4SsbZKlZ0v6nyPy0Q=
 			</data>
 		</dict>
 		<key>Settings.bundle/en.lproj/Root.strings</key>
@@ -873,11 +873,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			ZdOHxqvXYFNG/by6g1l8AE+rhpc=
+			UmwqXfRsDs5tyCKus5/2fLjGJ4Y=
 			</data>
 			<key>hash2</key>
 			<data>
-			r0r6w76yl5KUp3pD9fhra7oWOFpWwLcC2FMlbzJ+V3w=
+			8hlLUmIFaLAydTOtevEHH9aHGJGStQqlDvC3Kt0WrSk=
 			</data>
 		</dict>
 	</dict>

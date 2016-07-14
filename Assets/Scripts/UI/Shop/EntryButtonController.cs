@@ -14,7 +14,7 @@ public class EntryButtonController : MonoBehaviour {
 
 	public void SetupButton(Entry entry, TabController parent){
 		parentTabController = parent;
-		bundle = Spil.SpilGameDataInstance.GetBundle (entry.BundleId);
+		bundle = Spil.GameData.GetBundle (entry.BundleId);
 		buttonLabel.text = entry.Label;
 	}
 

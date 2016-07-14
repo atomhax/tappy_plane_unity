@@ -28,11 +28,13 @@ extern "C" {
     
     // --- Push messages ---
     
+    void disableAutomaticRegisterForPushNotificationsNative();
+    
+    void registerForPushNotifications();
+    
     void setPushNotificationKey(const char* pushKey);
     
     void handlePushNotification(const char* notificationStringParams);
-    
-    void registerForPushNotifications(const char* obj);
     
     // --- App flow ---
     

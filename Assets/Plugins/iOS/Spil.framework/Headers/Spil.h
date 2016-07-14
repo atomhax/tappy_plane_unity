@@ -9,13 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "JsonUtil.h"
 #import "HookBridge.h"
-#import "UnityAppController.h"
 
-//! Project version number for Spil.
-FOUNDATION_EXPORT double SpilVersionNumber;
-
-//! Project version string for Spil.
-FOUNDATION_EXPORT const unsigned char SpilVersionString[];
+#define SDK_VERSION @"2.0.4"
 
 @class Spil;
 @class UserProfile;
@@ -36,6 +31,9 @@ FOUNDATION_EXPORT const unsigned char SpilVersionString[];
 
 // Notification events
 -(void)notificationReward:(NSDictionary*)reward;
+
+// Config events
+-(void)configUpdated;
 
 // Package events
 -(void)packagesLoaded;
@@ -73,11 +71,11 @@ FOUNDATION_EXPORT const unsigned char SpilVersionString[];
 +(void)startWithOptions:(NSDictionary*)options;
 
 /**
- *  Show debug logs
+ *  Show advanced debug logs
  *
- *  @param debugEnabled Enables or disables the debug logs printed
+ *  @param advancedLoggingEnabled Enables or disables the advanced log printing
  */
-+(void)debug:(BOOL)debugEnabled;
++(void)setAdvancedLogginEnabled:(BOOL)advancedLogginEnabled;
 
 /**
  *  Show a toast when a reward is unlocked
@@ -147,6 +145,13 @@ FOUNDATION_EXPORT const unsigned char SpilVersionString[];
  *  @param parameterString A json string holding the data to send
  */
 +(void)sendMessage:(NSString*)messageName toObject:(NSString*)objectName withString:(NSString*)parameterString;
+
+/**
+ *  Disable the automated registration message for push notifications
+ *  Should be called before [Spil start]
+ *
+ */
++(void)disableAutomaticRegisterForPushNotifications;
 
 /**
  *  Helper function to register for push notifications
@@ -252,7 +257,6 @@ FOUNDATION_EXPORT const unsigned char SpilVersionString[];
 +(void)addItemToInventory:(int)itemId withAmount:(int)amount withReason:(NSString*)reason;
 +(void)subtractItemFromInventory:(int)itemId withAmount:(int)amount withReason:(NSString*)reason;
 +(void)consumeBundle:(int)bundleId withReason:(NSString*)reason;
-
 
 #pragma test methods (dev)
 

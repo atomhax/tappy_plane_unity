@@ -24,9 +24,19 @@
 			<key>DefaultValue</key>
 			<false/>
 			<key>Key</key>
-			<string>spil_usingdebug</string>
+			<string>spil_debugmode</string>
 			<key>Title</key>
-			<string>Debug Mode</string>
+			<string>Debug mode</string>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+		</dict>
+		<dict>
+			<key>DefaultValue</key>
+			<false/>
+			<key>Key</key>
+			<string>spil_advancedloggin</string>
+			<key>Title</key>
+			<string>Advanced loggin</string>
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 		</dict>
