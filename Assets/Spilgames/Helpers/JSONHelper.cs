@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 using Newtonsoft.Json;
 
 namespace SpilGames.Unity.Helpers
@@ -21,7 +22,20 @@ namespace SpilGames.Unity.Helpers
         /// <returns>A new instance (object) of your class containing. all the values from the JSON data</returns>
         public static T getObjectFromJson<T>(string jsonString) where T : new()
         {
-            return JsonConvert.DeserializeObject<T>(jsonString);
+			try
+			{
+				return JsonConvert.DeserializeObject<T>(jsonString);
+			}
+			catch(System.MissingMethodException ex)
+			{
+                Debug.Log("Something has gone wrong while loading NewtonSoft.json. Most likely the file \"link.xml\" is missing from the /Assets directory of your Unity project. Please copy the \"link.xml\" file included with the Unity SpilSDK download to the /Assets folder of your project.");
+                throw new System.Exception();
+			}
+            catch (System.Exception ex)
+            {
+                Debug.Log("Something has gone wrong while loading NewtonSoft.json or parsing the supplied JSON. Exception: " + ex.Message);
+                throw new System.Exception();
+            }
         }
 
         /// <summary>
@@ -31,7 +45,20 @@ namespace SpilGames.Unity.Helpers
         /// <returns></returns>
         public static string getJSONFromObject(object _object)
         {
-            return JsonConvert.SerializeObject(_object);
+            try
+            {
+                return JsonConvert.SerializeObject(_object);
+            }
+            catch (System.MissingMethodException ex)
+            {
+                Debug.Log("Something has gone wrong while loading NewtonSoft.json. Most likely the file \"link.xml\" is missing from the /Assets directory of your Unity project. Please copy the \"link.xml\" file included with the Unity SpilSDK download to the /Assets folder of your project.");
+                throw new System.Exception();
+            }
+            catch (System.Exception ex)
+            {
+                Debug.Log("Something has gone wrong while loading NewtonSoft.json or parsing the supplied JSON. Exception: " + ex.Message);
+                throw new System.Exception();
+            }
         }
     }
 

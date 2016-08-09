@@ -48,7 +48,13 @@ extern "C" {
     
     char* cStringCopy(const char* string);
     
-    char* getSpilUIDNative();
+    char* getSpilUserIdNative();
+    
+    char* getUserIdNative();
+    
+    void setUserIdNative(const char* providerId, const char* userId);
+    
+    void setPluginInformationNative(const char* pluginName, const char* pluginVersion);
 
     // --- Config ---
     
@@ -83,8 +89,6 @@ extern "C" {
     void showToastOnVideoReward(const bool enabled);
     
     // --- Game & Player data ---
-    
-    //char* getUserProfileNative ();
 
     char* getWalletNative ();
     
@@ -101,6 +105,14 @@ extern "C" {
     void subtractItemFromInventoryNative (int itemId, int amount, char* reasonName);
     
     void consumeBundleNative (int itemId, char* reasonName);
+    
+    // --- Customer support ---
+    
+    void showHelpCenterNative();
+    
+    void showContactCenterNative();
+    
+    void showHelpCenterWebviewNative();
 }
 
 #endif

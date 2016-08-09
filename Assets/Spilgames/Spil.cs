@@ -1,6 +1,6 @@
 /*
  * Spil Games Unity SDK 2016
- * Version 2.1.0
+ * Version 2.1.1
  * 
  * If you have any questions, don't hesitate to e-mail us at info@spilgames.com
  * Be sure to check the github page for documentation and the latest updates
@@ -96,6 +96,15 @@ namespace SpilGames.Unity
 			SpilUnityImplementationBase.fireAdNotAvailableEvent(type);
 		}
 
+        /// <summary>
+        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// Developers can subscribe to the Spil.Instance.ConfigUpdated event.
+        /// </summary>
+        public void ConfigUpdated()
+        {
+            SpilUnityImplementationBase.fireConfigUpdatedEvent();
+        }
+
 		/// <summary>
 		/// This method is called by the native Spil SDK, it should not be used by developers.
 		/// </summary>
@@ -131,9 +140,9 @@ namespace SpilGames.Unity
 		/// <summary>
 		/// This method is called by the native Spil SDK, it should not be used by developers.
 		/// </summary>
-		public void PlayerDataUpdated(string reason)
+		public void PlayerDataUpdated(string data)
 		{
-			SpilUnityImplementationBase.firePlayerDataUpdated(reason);
+            SpilUnityImplementationBase.firePlayerDataUpdated(data);
 		}
 		
 		/// <summary>

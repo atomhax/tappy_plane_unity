@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using SpilGames.Unity;
 using SpilGames.Unity.Helpers;
+using SpilGames.Unity.Utils;
+
+
 public class ShopPanelController : MonoBehaviour {
 
 	public GameObject getFreeCoinsButton, rewardSucessPanel;
@@ -23,7 +26,7 @@ public class ShopPanelController : MonoBehaviour {
 		Spil.Instance.OnAdAvailable += Spil_Instance_OnAdAvailable;	
 		Spil.Instance.OnPlayerDataUpdated += Spil_Instance_OnPlayerDataUpdated;
 		Spil.Instance.SendrequestRewardVideoEvent ();
-		Spil_Instance_OnPlayerDataUpdated("Opened");
+		Spil_Instance_OnPlayerDataUpdated("Opened", null);
 		ResetShop();
 		CreateShop ();
 	}
@@ -68,7 +71,7 @@ public class ShopPanelController : MonoBehaviour {
 		gameController.UpdateSkins ();
 	}
 		
-	void Spil_Instance_OnPlayerDataUpdated (string reason)
+	void Spil_Instance_OnPlayerDataUpdated (string reason, PlayerDataUpdatedData updatedData)
 	{
 		starsAmountText.text = Spil.PlayerData.GetCurrencyBalance (25).ToString ();
 		diamonsAmountText.text = Spil.PlayerData.GetCurrencyBalance (28).ToString ();

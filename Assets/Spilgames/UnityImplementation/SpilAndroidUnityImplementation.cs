@@ -10,6 +10,10 @@ namespace SpilGames.Unity.Implementations
     {
         #region Inherited members
 
+        	public override void SetPluginInformation (string PluginName, string PluginVersion)
+		{
+			CallNativeMethod("setPluginInformation", new object[]{ PluginName, PluginVersion }, true);
+		}
             #region Game config
 
                 /// <summary>
@@ -79,6 +83,16 @@ namespace SpilGames.Unity.Implementations
             {
                 RegisterDevice(Spil.Project_ID);
             }
+
+            public override void SetUserId(string providerId, string userId)
+            {
+				CallNativeMethod("getUserId", new object[]{ providerId, userId }, true);
+            }
+
+			public override string GetUserId()
+			{
+				return CallNativeMethod("getUserId");
+			}
 
             /// <summary>
             /// Sends an event to the native Spil SDK which will send a request to the back-end.
@@ -158,9 +172,9 @@ namespace SpilGames.Unity.Implementations
             /// customer support can help them properly. Please make this Id available for users
             /// in one of your game's screens.
             /// </summary>
-	        public override string GetSpilUID()
+			public override string GetSpilUserId()
             {
-                return CallNativeMethod("getSpilUID");
+				return CallNativeMethod("getSpilUserId");
             }
             
 			#region Spil Game Objects
@@ -390,6 +404,25 @@ namespace SpilGames.Unity.Implementations
                 }
                 return value;
             }
+
+        #endregion
+
+        #region Customer support
+
+        public override void ShowHelpCenter() 
+        {
+            CallNativeMethod("showZendeskHelpCenter");
+        }
+
+        public override void ShowContactCenter()
+        {
+            CallNativeMethod("showContactZendeskCenter");
+        }
+
+        public override void ShowHelpCenterWebview()
+        {
+            CallNativeMethod("showZendeskWebViewHelpCenter");
+        }
 
         #endregion
     }

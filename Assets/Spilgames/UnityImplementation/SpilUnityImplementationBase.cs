@@ -8,6 +8,11 @@ namespace SpilGames.Unity.Implementations
 { 
     public abstract class SpilUnityImplementationBase
     {
+	public static string PluginName = "Unity";
+	public static string PluginVersion = "2.1.1";
+
+	public abstract void SetPluginInformation(string PluginName, string PluginVersion);
+
         #region Misc.
 
             /// <summary>
@@ -379,6 +384,22 @@ namespace SpilGames.Unity.Implementations
                     if (Spil.Instance.OnAdFinished != null) { Spil.Instance.OnAdFinished(responseObject); }
 	            }
 
+                public delegate void ConfigUpdatedEvent();
+                /// <summary>
+                /// This is fired by the native Spil SDK when the config was updated.
+                /// The developer can subscribe to this event and for instance re-enable the in-game sound.
+                /// </summary>
+                public event ConfigUpdatedEvent OnConfigUpdated;
+                /// <summary>
+                /// This is called by the native Spil SDK and will fire an ConfigUpdated event to which the developer 
+                /// can subscribe, it will only be called when the config values are different from the previous loaded config.
+                /// </summary>
+                public static void fireConfigUpdatedEvent()
+                {
+                    Debug.Log ("SpilSDK-Unity Config updated!");
+                    if (Spil.Instance.OnConfigUpdated != null) { Spil.Instance.OnConfigUpdated(); }
+                }
+
             #endregion
         
         #endregion
@@ -402,7 +423,11 @@ namespace SpilGames.Unity.Implementations
         /// customer support can help them properly. Please make this Id available for users
         /// in one of your game's screens.
         /// </summary>
-	    public abstract string GetSpilUID();
+		public abstract string GetSpilUserId();
+
+		public abstract void SetUserId (string providerId, string userId);
+
+		public abstract string GetUserId ();
 
 		#region Spil Game Objects
 
@@ -471,20 +496,22 @@ namespace SpilGames.Unity.Implementations
 			
 		}
 		
-		public delegate void PlayerDataUpdated(string reason);
+        public delegate void PlayerDataUpdated(string reason, PlayerDataUpdatedData updatedData);
 		/// <summary>
 		/// This is fired by the native Spil SDK after player data has been updated.
 		/// The developer can subscribe to this event and then request the Player Data (Wallet & Inventory).
 		/// </summary>
 		public event PlayerDataUpdated OnPlayerDataUpdated;
 		
-		public static void firePlayerDataUpdated(string reason)
+        public static void firePlayerDataUpdated(string data)
 		{
+            PlayerDataUpdatedData playerDataUpdatedData = JsonHelper.getObjectFromJson<PlayerDataUpdatedData>(data);
+
 			Spil.PlayerData.PlayerDataUpdatedHandler ();
 
 			Debug.Log ("SpilSDK-Unity Player Data has been updated");
 
-			if (Spil.Instance.OnPlayerDataUpdated != null) { Spil.Instance.OnPlayerDataUpdated(reason); }
+            if (Spil.Instance.OnPlayerDataUpdated != null) { Spil.Instance.OnPlayerDataUpdated(playerDataUpdatedData.reason, playerDataUpdatedData); }
 			
 		}
 		
@@ -535,5 +562,13 @@ namespace SpilGames.Unity.Implementations
 		public abstract void ConsumeBundle(int bundleId, string reason);
 		
 		#endregion
+
+        #region Customer support
+
+        public abstract void ShowHelpCenter();
+        public abstract void ShowContactCenter();
+        public abstract void ShowHelpCenterWebview();
+
+        #endregion
     }
 }

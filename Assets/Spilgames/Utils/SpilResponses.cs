@@ -257,5 +257,12 @@ namespace SpilGames.Unity.Utils
 		public int id;
 		public string name;
 		public string message;
-	}	
+	}
+
+    public class PlayerDataUpdatedData
+    {
+        public string reason;
+        public List<PlayerItemData> items;
+        public List<PlayerCurrencyData> currencies;
+    }   
 }

@@ -6,11 +6,11 @@
 //  Copyright © 2015 Spil Games. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "JsonUtil.h"
 #import "HookBridge.h"
+#import "GAI.h"
 
-#define SDK_VERSION @"2.0.4"
+#define SDK_VERSION @"2.0.6"
 
 @class Spil;
 @class UserProfile;
@@ -19,18 +19,20 @@
 
 @optional
 
-// Ad events
-// >>> type = interstitial/rewardVideo
-// >>> reason = close/dismiss/error etc
-// >>> reward = reward/empty
-// >>> network = DFP/Fyber/Chartboost
--(void)adAvailable:(NSString*)type; // tells developer if an ad is available or not (type defines if it is either an interstitial or reward video)
--(void)adNotAvailable:(NSString*)type; // tells the developer an ad has failed (either to load or no ads available) (type defines if it is either an interstitial or reward video)
--(void)adStart; // tells the developer an ad has started showing
--(void)adFinished:(NSString*)type reason:(NSString*)reason reward:(NSString*)reward network:(NSString*)network; //- tells the developer an ad finished showing ( can either be dismissed and no reward will be given, or the video was watched completely and a reward will be presented)
+/**
+ * Ad events, params:
+ * type = rewardVideo|interstitial|moreApps
+ * reason = error|dismiss|reward
+ * network = ChartBoost|Fyber|DFP
+ * reward = rewardData(Fyber:Integer,Chartboost:Json{reward:"",currencyName:"",currencyId:""})|nil
+ */
+-(void)adAvailable:(NSString*)type; // An ad is available
+-(void)adNotAvailable:(NSString*)type; // An ad is unavailable or did fail to load
+-(void)adStart; // An ad has started
+-(void)adFinished:(NSString*)type reason:(NSString*)reason reward:(NSString*)reward network:(NSString*)network; // An ad has finished (dismissed or an reward was granted)
 
 // Notification events
--(void)notificationReward:(NSDictionary*)reward;
+-(void)grantReward:(NSDictionary*)data;
 
 // Config events
 -(void)configUpdated;
@@ -45,7 +47,7 @@
 // Player data events
 -(void)playerDataAvailable;
 -(void)playerDataError:(NSString*)message;
--(void)playerDataUpdated:(NSString*)reason;
+-(void)playerDataUpdated:(NSString*)reason updatedData:(NSString*)updatedData;
 
 @end
 
@@ -57,6 +59,8 @@
 @property (nonatomic, assign) id  delegate;
 
 +(Spil*)sharedInstance;
+
+#pragma mark General
 
 /**
  *  Initiates the API
@@ -75,12 +79,69 @@
  *
  *  @param advancedLoggingEnabled Enables or disables the advanced log printing
  */
-+(void)setAdvancedLogginEnabled:(BOOL)advancedLogginEnabled;
++(void)setAdvancedLoggingEnabled:(BOOL)advancedLoggingEnabled;
 
 /**
- *  Show a toast when a reward is unlocked
+ *  Get the Spil user id
+ *
  */
-+(void)showToastOnVideoReward:(BOOL)enabled;
++(NSString*)getSpilUserId;
+
+/**
+ *  Get the custom user id
+ *
+ */
++(NSString*)getUserId;
+
+/**
+ *  Set a custom user id for a specified service.
+ *  
+ *  @param userId The social user id to use
+ *  @param providerId The id of the service (e.g. facebook)
+ */
++(void)setUserId:(NSString*)userId forProviderId:(NSString*)providerId;
+
+/**
+ *  Set a plugin name and version for the current session.
+ *
+ *  @param pluginName The plugin name
+ *  @param pluginVersion The plugin version
+ */
++(void)setPluginInformation:(NSString*)pluginName pluginVersion:(NSString*)pluginVersion;
+
+#pragma mark App flow
+
+/**
+ * Forwarding Delegate method to let the Spil framework know when the app was launched
+ *
+ *  @param application Delegate application to be passed
+ *  @param launchOptions Dictionary with launch options
+ */
++(void)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
+
+/**
+ *  Forwarding Delegate method to let the Spil framework know when the app went to the background
+ *
+ *  @param application Delegate application to be passed
+ */
++(void)applicationDidEnterBackground:(UIApplication *)application;
+
+/**
+ *  Forwarding Delegate method to let the Spil framework know when the app became active again after running in background
+ *
+ *  @param application Delegate application to be passed
+ */
++(void)applicationDidBecomeActive:(UIApplication *)application;
+
+/**
+ *  Handle remote notification packages
+ *
+ *  @param Application     Reference to the UIApplication object
+ *  @param userInfo        Reference to the push notification payload
+ */
++(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo;
+
+#pragma mark Event tracking
 
 /**
  *  Track a basic named event
@@ -114,19 +175,7 @@
  */
 +(void) trackEvent:(NSString*)name withParameters:(NSDictionary *)params onResponse:(void (^)(id response))block;
 
-/**
- *  Forwarding Delegate methods to let the Spil framework know when the app went to the background
- *
- *  @param application Delegate application to be passed
- */
-+(void)applicationDidEnterBackground:(UIApplication *)application;
-
-/**
- *  Forwarding Delegate methods to let the Spil framework know when the app became active again after running in background
- *
- *  @param application Delegate application to be passed
- */
-+(void)applicationDidBecomeActive:(UIApplication *)application;
+#pragma mark Send message
 
 /**
  *  Unity message sender
@@ -146,6 +195,8 @@
  */
 +(void)sendMessage:(NSString*)messageName toObject:(NSString*)objectName withString:(NSString*)parameterString;
 
+#pragma mark Push notifications
+
 /**
  *  Disable the automated registration message for push notifications
  *  Should be called before [Spil start]
@@ -164,12 +215,11 @@
 +(void)didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken;
 
 /**
- *  Handle remote notification packages
- *
- *  @param Application     Reference to the UIApplication object
- *  @param userInfo        Reference to the push notification payload
+ *  Show a toast when a reward is unlocked
  */
-+(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo;
++(void)showToastOnVideoReward:(BOOL)enabled;
+
+#pragma mark Config
 
 /**
  * Get the latest stored game configuration, typically a synchronized json object coming from the server.
@@ -185,6 +235,8 @@
  * @return returns the object from a key, only first hiergy
  */
 +(id)getConfigValue:(NSString*)keyString;
+
+#pragma mark Packages
 
 /**
  * Get the latest stored store packages.
@@ -221,44 +273,129 @@
  */
 +(void)requestPackages;
 
-/*
+#pragma mark Ads
+
+/**
  * Show the more apps screen
  */
 +(void)showMoreApps;
 
-/*
- * Show the last requested interstitial
- */
-//+(void)showIntersitial;
-
-/*
+/**
  * Show the last requested reward video
  */
 +(void)playRewardVideo;
 
-/*
+/**
  * Helper method to determine if the ad provider is initialized
  */
 +(BOOL)isAdProviderInitialized:(NSString*)identifier;
 
-# pragma mark UserData
+#pragma mark UserData & GameData
 
+/**
+ * Request the player data
+ */
 +(void)requestPlayerData;
 
+/**
+ * Request the game data
+ */
++(void)requestGameData;
+
+/**
+ * Returns the entire user profile as json
+ */
 +(NSString*)getUserProfile;
+
+/**
+ * Returns the wallet data as json
+ */
 +(NSString*)getWallet;
+
+/**
+ * Returns the player data as json
+ */
 +(NSString*)getSpilGameData;
+
+/**
+ * Returns the inventory data as json
+ */
 +(NSString*)getInventory;
+
+/**
+ * Returns the shop data as json
+ */
 +(NSString*)getShop;
+
+/**
+ * Returns the shop promotions data as json
+ */
 +(NSString*)getShopPromotions;
 
+/**
+ * Add currency to the wallet
+ * @param currencyId    Id of the currency
+ * @param amount        Amount to add
+ * @param reason        The add reason
+ */
 +(void)addCurrencyToWallet:(int)currencyId withAmount:(int)amount withReason:(NSString*)reason;
+
+/**
+ * Subtract currency from the wallet
+ * @param currencyId    Id of the currency
+ * @param amount        Amount to subtract
+ * @param reason        The subtract reason
+ */
 +(void)subtractCurrencyFromWallet:(int)currencyId withAmount:(int)amount withReason:(NSString*)reason;
+
+/**
+ * Add item to the inventory
+ * @param itemId        Id of the item
+ * @param amount        Amount to add
+ * @param reason        The add reason
+ */
 +(void)addItemToInventory:(int)itemId withAmount:(int)amount withReason:(NSString*)reason;
+
+/**
+ * Subtract item to from the inventory
+ * @param itemId        Id of the item
+ * @param amount        Amount to subtract
+ * @param reason        The subtract reason
+ */
 +(void)subtractItemFromInventory:(int)itemId withAmount:(int)amount withReason:(NSString*)reason;
+
+/**
+ * Uses the bundle and will add the items to the inventory and subtract the currency from the wallet
+ * @param bundleId      Id of the bundle
+ * @param reason        The bundle reason
+ */
 +(void)consumeBundle:(int)bundleId withReason:(NSString*)reason;
 
+#pragma mark Customer support
+
+/**
+ * Shows the help center
+ */
++(void)showHelpCenter;
+
+/**
+ * Shows the contact center
+ */
++(void)showContactCenter;
+
+/**
+ * Shows the help center webview version
+ */
++(void)showHelpCenterWebview;
+
 #pragma test methods (dev)
+
+/**
+ * NOTE: Those methods are exposed just for ad testing, they should not be referenced in the final implementation, params:
+ * adProvider: DFP|Fyber|ChartBoost
+ * adType: interstitial|rewardVideo|moreApps
+ * parentalGate: not implemented yet (always false)
+ */
 
 +(void)devRequestAd:(NSString*)provider withAdType:(NSString*)adType withParentalGate:(BOOL)parentalGate;
 +(void)devShowRewardVideo:(NSString*)adProvider;
