@@ -6,3 +6,6 @@ Library/*
 *.userprefs
 
 Temp/*
+
+Library/metadata/*
+
