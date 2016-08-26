@@ -1,0 +1,11 @@
+
+*.meta
+
+Library/*
+
+*.userprefs
+
+Temp/*
+
+Library/metadata/*
+
