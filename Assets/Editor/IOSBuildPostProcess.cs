@@ -17,11 +17,20 @@ public class IOSBuildPostProcess : MonoBehaviour
 			UnityEngine.Debug.Log ("[SPIL] Moving Spil.framework to the root of the project");
 			MoveDirectory (pathToBuildProject + "/Frameworks/Plugins/iOS/Spil.framework", pathToBuildProject + "/Spil.framework");
 
-			UnityEngine.Debug.Log ("[SPIL] Executing: python " + pathToBuildProject + "/Spil.framework/setup.py Unity-iPhone");
+			bool useICloudContainer = EditorPrefs.GetBool ("useICloudContainer");
+			bool useICloudKV = EditorPrefs.GetBool ("useICloudKV");
+			bool usePushNotifications = EditorPrefs.GetBool ("usePushNotifications");
+
+			String arguments = "Unity-iPhone " +
+								   useICloudContainer + " " +
+				                   useICloudKV + " " +
+				                   usePushNotifications;
+
+			UnityEngine.Debug.Log ("[SPIL] Executing: python " + pathToBuildProject + "/Spil.framework/setup.py " + arguments);
 			Process setupProcess = new Process ();
 			setupProcess.StartInfo.WorkingDirectory = pathToBuildProject;
 			setupProcess.StartInfo.FileName = "python";
-			setupProcess.StartInfo.Arguments = "Spil.framework/setup.py Unity-iPhone";
+			setupProcess.StartInfo.Arguments = "Spil.framework/setup.py " + arguments;
 			setupProcess.StartInfo.UseShellExecute = false;
 			setupProcess.StartInfo.RedirectStandardOutput = true;
 			setupProcess.Start (); 

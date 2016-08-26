@@ -3,31 +3,79 @@ using System.Collections;
 using UnityEditor;
 using System.IO;
 using SpilGames.Unity.Utils;
-public class SpilEditor : EditorWindow 
-{
 
-	[MenuItem ("Window/Spilgames", false, 1)]
+public class SpilEditor : EditorWindow {
+	private int tabSelected = 0;
+
+	[MenuItem ("Spilgames/Config", false, 1)]
 	static void Init () {
-		// Get existing open window or if none, make a new one:
-		SpilEditor window = (SpilEditor)EditorWindow.GetWindow( typeof( SpilEditor ) );
+		SpilEditor window = (SpilEditor)EditorWindow.GetWindow (typeof(SpilEditor));
 		window.autoRepaintOnSceneChange = true;
 		window.titleContent.text = "Spilgames";
-		window.Show();
+		window.Show ();
 	}
 
+	void OnGUI () {
+		GUILayout.BeginVertical(); {
+			GUILayout.BeginHorizontal ();
+			{
+				if (GUILayout.Toggle (tabSelected == 0, "General", EditorStyles.toolbarButton)) {
+					tabSelected = 0;
+				}
+				if (GUILayout.Toggle (tabSelected == 1, "iOS", EditorStyles.toolbarButton)) {
+					tabSelected = 1;
+				}
+				if (GUILayout.Toggle (tabSelected == 2, "Android", EditorStyles.toolbarButton)) {
+					tabSelected = 2;
+				}
+			}
+			GUILayout.EndHorizontal ();
 
-	void OnGUI()
-	{
-		GUILayout.Label( "SpilSDK Config Import", EditorStyles.boldLabel );
+			switch (tabSelected) {
+			case 0:
+				DrawGeneral ();
+				break;
+			case 1:
+				DrawIOS ();
+				break;
+			case 2:
+				DrawAndroid ();
+				break;
+			}
+		}
+		GUILayout.EndVertical ();
+	}
+
+	private void DrawGeneral () {
+		GUILayout.Label ("SpilSDK Config Import", EditorStyles.boldLabel);
 		GUILayout.Label ("WARNING: Please make sure to set your bundle ID in your player settings before getting your game data.\nPlease also note that this tool will only work if your build target is set to iOS or Android");
 		if (GUILayout.Button ("Create Default Configs")) {
 			CreateDefaultConfigFiles ();
 		}
 	}
 
+	private void DrawIOS () {
+		GUILayout.Label ("SpilSDK iOS Config", EditorStyles.boldLabel);
 
-	void CreateDefaultConfigFiles(){
-		if(PlayerSettings.bundleIdentifier == ""){
+		bool useICloudContainer = EditorPrefs.GetBool ("useICloudContainer");
+		bool useICloudKV = EditorPrefs.GetBool ("useICloudKV");
+		bool usePushNotifications = EditorPrefs.GetBool ("usePushNotifications");
+
+		useICloudContainer = GUILayout.Toggle (useICloudContainer, "Use iCloud project container");
+		useICloudKV = GUILayout.Toggle (useICloudKV, "Use iCloud key-value store");
+		usePushNotifications = GUILayout.Toggle (usePushNotifications, "Use push notifications");
+
+		EditorPrefs.SetBool ("useICloudContainer", useICloudContainer);
+		EditorPrefs.SetBool ("useICloudKV", useICloudKV);
+		EditorPrefs.SetBool ("usePushNotifications", usePushNotifications);
+	}
+
+	private void DrawAndroid () {
+		GUILayout.Label ("SpilSDK Android Config", EditorStyles.boldLabel);
+	}
+
+	void CreateDefaultConfigFiles () {
+		if (PlayerSettings.bundleIdentifier == "") {
 			throw new UnityException ("Bundle ID is Blank");
 		}
 		Debug.Log ("Getting Default Game Data for: " + PlayerSettings.bundleIdentifier);
@@ -40,12 +88,13 @@ public class SpilEditor : EditorWindow
 		File.WriteAllText (streamingAssetsPath + "/defaultPlayerData.json", GetData ("requestPlayerData"));
 	}
 
-	string GetData(string type){
+	string GetData (string type) {
 		string gameData = "";
 		WWWForm form = GetFormData ();
 		form.AddField ("name", type);
 		WWW request = new WWW ("https://apptracker.spilgames.com/android_event", form);
-		while(!request.isDone);
+		while (!request.isDone)
+			;
 		if (request.error != null) {
 			Debug.LogError ("Error getting game data: " + request.error);  
 		} else { 
@@ -56,32 +105,31 @@ public class SpilEditor : EditorWindow
 		return gameData;
 	}
 
-	WWWForm GetFormData(){
+	WWWForm GetFormData () {
 		JSONObject dummyData = new JSONObject ();
-		dummyData.AddField ("uid","deadbeef");
-		dummyData.AddField ("locale","en");
-		dummyData.AddField ("appVersion","1");
-		dummyData.AddField ("apiVersion","1");
-		dummyData.AddField ("os","Android");
-		dummyData.AddField ("osVersion","1");
-		dummyData.AddField ("deviceModel","Backend");
-		dummyData.AddField ("packageName",PlayerSettings.bundleIdentifier);
-		dummyData.AddField ("tto","0");
-		dummyData.AddField ("sessionId","deadbeef");
-		dummyData.AddField ("timezoneOffset","0");
+		dummyData.AddField ("uid", "deadbeef");
+		dummyData.AddField ("locale", "en");
+		dummyData.AddField ("appVersion", "1");
+		dummyData.AddField ("apiVersion", "1");
+		dummyData.AddField ("os", "Android");
+		dummyData.AddField ("osVersion", "1");
+		dummyData.AddField ("deviceModel", "Backend");
+		dummyData.AddField ("packageName", PlayerSettings.bundleIdentifier);
+		dummyData.AddField ("tto", "0");
+		dummyData.AddField ("sessionId", "deadbeef");
+		dummyData.AddField ("timezoneOffset", "0");
 		JSONObject dummyCustomData = new JSONObject ();
 		JSONObject dummyWallet = new JSONObject ();
 		dummyWallet.AddField ("offset", 0);
 		JSONObject dummyInventory = new JSONObject ();
 		dummyInventory.AddField ("offset", 0);
-		dummyCustomData.AddField ("wallet",dummyWallet);
-		dummyCustomData.AddField ("inventory",dummyInventory);
+		dummyCustomData.AddField ("wallet", dummyWallet);
+		dummyCustomData.AddField ("inventory", dummyInventory);
 		WWWForm form = new WWWForm ();
-		form.AddField ("data",dummyData.ToString());
-		form.AddField ("customData",dummyCustomData.ToString());
+		form.AddField ("data", dummyData.ToString ());
+		form.AddField ("customData", dummyCustomData.ToString ());
 		form.AddField ("ts", "1470057439857");
 		form.AddField ("queued", "0");
 		return form;
 	}
-
 }
