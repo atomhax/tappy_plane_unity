@@ -16,9 +16,9 @@ public class HighScoresPanelController : MonoBehaviour {
 
 	void OnEnable(){
 		highScoreText.text = "No High Scores Recorded";
-		RequestHighScores();
-		Spil.Instance.OnOtherUsersGameStateDataLoaded -= Spil_Instance_OnOtherUsersGameStateDataLoaded;
+		//Spil.Instance.OnOtherUsersGameStateDataLoaded -= Spil_Instance_OnOtherUsersGameStateDataLoaded;
 		Spil.Instance.OnOtherUsersGameStateDataLoaded += Spil_Instance_OnOtherUsersGameStateDataLoaded;
+		RequestHighScores();
 	}
 
 	void RequestHighScores(){

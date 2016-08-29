@@ -40,9 +40,9 @@
 			<key>DefaultValue</key>
 			<false/>
 			<key>Key</key>
-			<string>spil_advancedloggin</string>
+			<string>spil_advancedlogging</string>
 			<key>Title</key>
-			<string>Advanced loggin</string>
+			<string>Advanced logging</string>
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 		</dict>

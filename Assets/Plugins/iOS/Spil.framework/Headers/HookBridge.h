@@ -38,6 +38,8 @@ extern "C" {
     
     // --- App flow ---
     
+    void applicationDidFinishLaunchingWithOptions(const char* launchOptions);
+    
     void applicationDidEnterBackground();
     
     void applicationDidBecomeActive();
@@ -49,10 +51,6 @@ extern "C" {
     char* cStringCopy(const char* string);
     
     char* getSpilUserIdNative();
-    
-    char* getUserIdNative();
-    
-    void setUserIdNative(const char* providerId, const char* userId);
     
     void setPluginInformationNative(const char* pluginName, const char* pluginVersion);
 
@@ -113,6 +111,24 @@ extern "C" {
     void showContactCenterNative();
     
     void showHelpCenterWebviewNative();
+    
+    // --- User data ---
+    
+    char* getUserIdNative();
+    
+    char* getUserProviderNative();
+    
+    void setUserIdNative(const char* providerId, const char* userId);
+
+    void setPrivateGameStateNative(const char* privateData);
+
+    char* getPrivateGameStateNative();
+
+    void setPublicGameStateNative(const char* publicData);
+    
+    char* getPublicGameStateNative();
+
+    void getOtherUsersGameStateNative(const char* provider, const char* userIdsJsonArray);
 }
 
 #endif
