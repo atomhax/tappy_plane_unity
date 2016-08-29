@@ -245,6 +245,73 @@ namespace SpilGames.Unity.Implementations
 		[DllImport("__Internal")]
 		private static extern void setUserIdNative(string providerId, string userId);
 
+		/// <summary>
+		/// Gets the user provider.
+		/// </summary>
+		/// <returns>The user provider native.</returns>
+		public override string GetUserProvider() {
+			return getUserProviderNative ();
+		}
+
+		[DllImport("__Internal")]
+		private static extern string getUserProviderNative();
+
+		/// <summary>
+		/// Sets the state of the private game.
+		/// </summary>
+		/// <param name="privateData">Private data.</param>
+		public override void SetPrivateGameState(string privateData) {
+			setPrivateGameStateNative (privateData);
+		}
+
+		[DllImport("__Internal")]
+		private static extern void setPrivateGameStateNative(string privateData);
+
+		/// <summary>
+		/// Gets the state of the private game.
+		/// </summary>
+		/// <returns>The private game state.</returns>
+		public override string GetPrivateGameState() {
+			return getPrivateGameStateNative();
+		}
+
+		[DllImport("__Internal")]
+		private static extern string getPrivateGameStateNative();
+
+		/// <summary>
+		/// Sets the public game state.
+		/// </summary>
+		/// <param name="publicData">Public data.</param>
+		public override void SetPublicGameState(string publicData) {
+			setPublicGameStateNative(publicData);
+		}
+
+		[DllImport("__Internal")]
+		private static extern void setPublicGameStateNative(string publicData);
+
+		/// <summary>
+		/// Gets the public game state.
+		/// </summary>
+		/// <returns>The public game state.</returns>
+		public override string GetPublicGameState() {
+			return getPublicGameStateNative();
+		}
+
+		[DllImport("__Internal")]
+		private static extern string getPublicGameStateNative();
+
+		/// <summary>
+		/// Gets the public game state of other users.
+		/// </summary>
+		/// <param name="provider">Provider.</param>
+		/// <param name="userIdsJsonArray">User identifiers json array.</param>
+		public override void GetOtherUsersGameState(string provider, string userIdsJsonArray) {
+			getOtherUsersGameStateNative(provider, userIdsJsonArray);
+		}
+
+		[DllImport("__Internal")]
+		private static extern void getOtherUsersGameStateNative(string provider, string userIdsJsonArray);
+
 		#region Spil Game Objects
 
 		public override string GetSpilGameDataFromSdk ()

@@ -152,5 +152,29 @@ namespace SpilGames.Unity
 		{
 			SpilUnityImplementationBase.firePlayerDataError(reason);
 		}
+
+		/// <summary>
+		/// This method is called by the native Spil SDK, it should not be used by developers.
+		/// </summary>
+		public void GameStateUpdated(string access)
+		{
+			SpilUnityImplementationBase.fireGameStateUpdated(access);
+		}
+
+		/// <summary>
+		/// This method is called by the native Spil SDK, it should not be used by developers.
+		/// </summary>
+		public void OtherUsersGameStateLoaded(string message)
+		{
+			SpilUnityImplementationBase.fireOtherUsersGameStateLoaded(message);
+		}
+
+		/// <summary>
+		/// This method is called by the native Spil SDK, it should not be used by developers.
+		/// </summary>
+		public void GameStateError(string message)
+		{
+			SpilUnityImplementationBase.fireGameStateError(message);
+		}
     }
 }

@@ -86,12 +86,61 @@ namespace SpilGames.Unity.Implementations
 
             public override void SetUserId(string providerId, string userId)
             {
-				CallNativeMethod("getUserId", new object[]{ providerId, userId }, true);
+			CallNativeMethod("setUserId", new object[]{ providerId, userId }, true);
             }
 
 			public override string GetUserId()
 			{
 				return CallNativeMethod("getUserId");
+			}
+
+			/// <summary>
+			/// Gets the user provider.
+			/// </summary>
+			/// <returns>The user provider native.</returns>
+			public override string GetUserProvider() {
+				return CallNativeMethod("getUserProvider");
+			}
+
+			/// <summary>
+			/// Sets the state of the private game.
+			/// </summary>
+			/// <param name="privateData">Private data.</param>
+			public override void SetPrivateGameState(string privateData) {
+				CallNativeMethod("setPrivateGameState", new object[]{ privateData}, true);
+			}
+
+			/// <summary>
+			/// Gets the state of the private game.
+			/// </summary>
+			/// <returns>The private game state.</returns>
+			public override string GetPrivateGameState () {
+				return CallNativeMethod("getPrivateGameState");
+			}
+
+			/// <summary>
+			/// Sets the public game state.
+			/// </summary>
+			/// <param name="publicData">Public data.</param>
+			public override void SetPublicGameState (string publicData) {
+				CallNativeMethod("setPublicGameState", new object[]{ publicData}, true);
+			}
+
+			/// <summary>
+			/// Sets the public game state.
+			/// </summary>
+			/// <returns>The public game state.</returns>
+			public override string GetPublicGameState () {
+				return CallNativeMethod("getPublicGameState");
+			}
+
+			/// <summary>
+			/// Gets the public game state of other users.
+			/// </summary>
+			/// <param name="provider">Provider.</param>
+			/// <param name="userIdsJsonArray">User identifiers json array.</param>
+			public override void GetOtherUsersGameState(string provider, string userIdsJsonArray) {
+				CallNativeMethod("getOtherUsersGameState", new object[]{ provider, userIdsJsonArray}, true);
 			}
 
             /// <summary>

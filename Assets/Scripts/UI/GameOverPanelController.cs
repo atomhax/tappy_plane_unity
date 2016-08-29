@@ -21,7 +21,18 @@ public class GameOverPanelController : MonoBehaviour {
 	}
 
 	public void Restart(){
+		SavePublicGameState();
 		SceneManager.LoadScene (0);
+	}
+
+	public void SavePublicGameState(){
+		int highScore = PlayerPrefs.GetInt("HighScore",0);
+
+		PublicGameState gameState = new PublicGameState();
+		gameState.setHighScore(highScore);
+
+		string gameStateJson = JsonHelper.getJSONFromObject(gameState);
+		Spil.Instance.SetPublicGameState(gameStateJson);
 	}
 
 }

@@ -6,10 +6,10 @@
     	"chartBoostAppId":"577cafd443150f494d13e377",
     	"chartBoostAppSignature":"4d1d45236ef0bef2b244c71c2b54df010fee32a5",
     	"googleAnalyticsId": "",
-    	"googleIAPKey": "",
-    	"adjustAppToken": "",
-    	"zendeskSubdomain":"",
-    	"zendeskAppId":"",
-    	"zendeskOauthClientId":""
+    	"googleIAPKey": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAohTfXeH6cbRDuE7BLSUriL6riZirxLp+vE0l+0Dy7rU4mgvfOHod7drnE413S7KuIA2thkEeUFoDh6GiEDpoIuyuuWINplbznezFgMaxrVqSZuF138yAInfHkd/nWZ3DOQ/NLXCUpREHh0ZQgQClOyaAyow11JZHMkuebMuZbD2SnnDhbe4NfbzAYpO69to3sNvB4RLxg9Of1UJ9dBRyOtsW0jDd3FVTqn0iXWnb3w4YfjAUYpxs4gcVSHCk7DbHFXBZH1E013s+NfCJPr0BJRRtalYPD+sg7MI8W9eUPw1omAr9sS7nPrEPSEYg9mmVJgOqwEAYHNn7I3AcbR5oNwIDAQAB",
+    	"adjustAppToken": "6yx92oaxo48w",
+    	"zendeskSubdomain":"https://spilgames.zendesk.com",
+    	"zendeskAppId":"bf4b80b3654a573fb7ae62fb51edffdb8859afadcb9d2caa",
+    	"zendeskOauthClientId":"mobile_sdk_client_275253633ef8d57108f3"
   	}
 }

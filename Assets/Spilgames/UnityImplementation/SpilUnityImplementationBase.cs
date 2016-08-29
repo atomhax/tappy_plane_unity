@@ -181,9 +181,7 @@ namespace SpilGames.Unity.Implementations
                 /// <param name="skuId">The product identifier of the item that was purchased</param>
                 /// <param name="transactionId ">The transaction identifier of the item that was purchased (also called orderId)</param>
                 /// <param name="purchaseDate">Please use a proper DateTime format!</param>
-                // <param name="localPrice">The price the user paid for the product</param>
-                // <param name="localCurrency">The currency for the price the user paid (euro, dollar etc)</param>
-                public void SendiapPurchasedEvent(string skuId, string transactionId, string purchaseDate)//, string localPrice, string localCurrency)
+                public void SendiapPurchasedEvent(string skuId, string transactionId, string purchaseDate)
                 {
                     SendCustomEvent("iapPurchased", new Dictionary<string, string>() { { "skuId", skuId }, { "transactionId", transactionId }, { "purchaseDate", purchaseDate }});
                 }
@@ -211,6 +209,57 @@ namespace SpilGames.Unity.Implementations
                     SendCustomEvent("iapFailed", new Dictionary<string, string>() { { "error", error }, { "skuId", skuId } });
                 }
 
+                /// <summary>
+                /// Sends the "tutorialComplete" event to the native Spil SDK which will send a request to the back-end.
+                /// See https://github.com/spilgames/spil_event_unity_plugin for more information on events.
+                /// </summary>
+                public void SendtutorialCompleteEvent()
+                {
+                    SendCustomEvent("tutorialComplete");
+                }
+
+                /// <summary>
+                /// Sends the "tutorialSkipped" event to the native Spil SDK which will send a request to the back-end.
+                /// See https://github.com/spilgames/spil_event_unity_plugin for more information on events.
+                /// </summary>
+                public void SendtutorialSkippedEvent()
+                {
+                    SendCustomEvent("tutorialSkipped");
+                }
+
+                /// <summary>
+                /// Sends the "tutorialSkipped" event to the native Spil SDK which will send a request to the back-end.
+                /// Should be called after the user completes registration via email, Facebook, Google Plus or other available option. Registration option is assumed.
+                /// See https://github.com/spilgames/spil_event_unity_plugin for more information on events.
+                /// </summary>
+                /// <param name="platform">A string like ‘facebook’ or ’email’</param>
+                public void SendregisterEvent(string platform)
+                {
+                    SendCustomEvent("register", new Dictionary<string, string>() { { "platform", platform } });
+                }
+
+                /// <summary>
+                /// Sends the "share" event to the native Spil SDK which will send a request to the back-end.
+                /// Should be called every time the user shares content on their social media accounts. Social media integration is assumed.
+                /// See https://github.com/spilgames/spil_event_unity_plugin for more information on events.
+                /// </summary>
+                /// <param name="platform">A string like ‘facebook’ or ’email’</param>
+                public void SendshareEvent(string platform)
+                {
+                    SendCustomEvent("share", new Dictionary<string, string>() { { "platform", platform } });
+                }
+
+                /// <summary>
+                /// Sends the "invite" event to the native Spil SDK which will send a request to the back-end.
+                /// Should be called every time the user invites another user. Respective function in-game is assumed.
+                /// See https://github.com/spilgames/spil_event_unity_plugin for more information on events.
+                /// </summary>
+                /// <param name="platform">A string like ‘facebook’ or ’email’</param>
+                public void SendinviteEvent(string platform)
+                {
+                    SendCustomEvent("invite", new Dictionary<string, string>() { { "platform", platform } });
+                }				
+				
             #endregion
 
             [Obsolete("This method is obsolete and has been replaced by SendCustomEvent(string eventName). Please update any references, this method will be removed in the next version.")]
@@ -425,9 +474,55 @@ namespace SpilGames.Unity.Implementations
         /// </summary>
 		public abstract string GetSpilUserId();
 
+		/// <summary>
+		/// Sets the user identifier.
+		/// </summary>
+		/// <param name="providerId">Provider identifier.</param>
+		/// <param name="userId">User identifier.</param>
 		public abstract void SetUserId (string providerId, string userId);
 
+		/// <summary>
+		/// Gets the user identifier.
+		/// </summary>
+		/// <returns>The user identifier.</returns>
 		public abstract string GetUserId ();
+
+		/// <summary>
+		/// Gets the user provider.
+		/// </summary>
+		/// <returns>The user provider native.</returns>
+		public abstract string GetUserProvider();
+
+		/// <summary>
+		/// Sets the state of the private game.
+		/// </summary>
+		/// <param name="privateData">Private data.</param>
+		public abstract void SetPrivateGameState(string privateData);
+
+		/// <summary>
+		/// Gets the state of the private game.
+		/// </summary>
+		/// <returns>The private game state.</returns>
+		public abstract string GetPrivateGameState ();
+
+		/// <summary>
+		/// Sets the public game state.
+		/// </summary>
+		/// <param name="publicData">Public data.</param>
+		public abstract void SetPublicGameState (string publicData);
+
+		/// <summary>
+		/// Gets the public game state.
+		/// </summary>
+		/// <returns>The public game state.</returns>
+		public abstract string GetPublicGameState ();
+
+		/// <summary>
+		/// Gets the public game state of other users.
+		/// </summary>
+		/// <param name="provider">Provider.</param>
+		/// <param name="userIdsJsonArray">User identifiers json array.</param>
+		public abstract void GetOtherUsersGameState(string provider, string userIdsJsonArray);
 
 		#region Spil Game Objects
 
@@ -529,6 +624,52 @@ namespace SpilGames.Unity.Implementations
 			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(reason);
 
 			if (Spil.Instance.OnPlayerDataError != null) { Spil.Instance.OnPlayerDataError(errorMessage); } 	
+		}
+
+		public delegate void GameStateUpdated(String access);
+		/// <summary>
+		/// This is fired by the native Spil SDK after game state was updated.
+		/// The developer can subscribe to this event and check the reason.
+		/// </summary>
+		public event GameStateUpdated OnGameStateUpdated;
+
+		public static void fireGameStateUpdated(String access)
+		{
+			Debug.Log ("SpilSDK-Unity Game State Data updated, access = " + access);
+
+			if (Spil.Instance.OnGameStateUpdated != null) { Spil.Instance.OnGameStateUpdated(access); } 	
+		}
+
+		public delegate void OtherUsersGameStateDataLoaded(OtherUsersGameStateData data);
+		/// <summary>
+		/// This is fired by the native Spil SDK after the game state data of other users was loaded.
+		/// The developer can subscribe to this event and check the reason.
+		/// </summary>
+		public event OtherUsersGameStateDataLoaded OnOtherUsersGameStateDataLoaded;
+
+		public static void fireOtherUsersGameStateLoaded(String message)
+		{
+			Debug.Log ("SpilSDK-Unity Other users game state data loaded, message = " + message);
+
+			OtherUsersGameStateData data = JsonHelper.getObjectFromJson<OtherUsersGameStateData>(message);
+
+			if (Spil.Instance.OnOtherUsersGameStateDataLoaded != null) { Spil.Instance.OnOtherUsersGameStateDataLoaded(data); } 	
+		}
+
+		public delegate void GameStateError(SpilErrorMessage errorMessage);
+		/// <summary>
+		/// This is fired by the native Spil SDK when the game state has failed to be retrieved.
+		/// The developer can subscribe to this event and check the reason.
+		/// </summary>
+		public event GameStateError OnGameStateError;
+
+		public static void fireGameStateError(string reason)
+		{
+			Debug.Log ("SpilSDK-Unity Game State Data error with reason = " + reason);
+
+			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(reason);
+
+			if (Spil.Instance.OnGameStateError != null) { Spil.Instance.OnGameStateError(errorMessage); } 	
 		}
 		
 		public abstract string GetWalletFromSdk();

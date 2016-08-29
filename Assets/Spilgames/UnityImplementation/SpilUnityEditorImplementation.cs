@@ -323,6 +323,58 @@ namespace SpilGames.Unity.Implementations
 			}
 
 			/// <summary>
+			/// Gets the user provider.
+			/// </summary>
+			/// <returns>The user provider native.</returns>
+			public override string GetUserProvider() 
+			{
+				return "1337";
+			}
+
+			/// <summary>
+			/// Sets the state of the private game.
+			/// </summary>
+			/// <param name="privateData">Private data.</param>
+			public override void SetPrivateGameState(string privateData) {
+				// TODO
+			}
+
+			/// <summary>
+			/// Gets the state of the private game.
+			/// </summary>
+			/// <returns>The private game state.</returns>
+			public override string GetPrivateGameState () {
+				// TODO
+				return "";
+			}
+
+			/// <summary>
+			/// Sets the public game state.
+			/// </summary>
+			/// <param name="publicData">Public data.</param>
+			public override void SetPublicGameState (string publicData) {
+				// TODO
+			}
+
+			/// <summary>
+			/// Gets the public game state.
+			/// </summary>
+			/// <returns>The public game state.</returns>
+			public override string GetPublicGameState () {
+				// TODO
+				return "";
+			}
+
+			/// <summary>
+			/// Gets the public game state of other users.
+			/// </summary>
+			/// <param name="provider">Provider.</param>
+			/// <param name="userIdsJsonArray">User identifiers json array.</param>
+			public override void GetOtherUsersGameState(string provider, string userIdsJsonArray) {
+				// TODO
+			}
+
+			/// <summary>
 			/// Used only by the Test app to check that calls were successfully made.
 			/// This method is marked as "internal" and should not be exposed to developers.
 			/// The Spil Unity SDK is not packaged as a seperate assembly yet so this method is currently visible, this will be fixed in the future.

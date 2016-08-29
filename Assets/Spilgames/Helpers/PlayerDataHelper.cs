@@ -26,8 +26,8 @@ namespace SpilGames.Unity.Helpers
 				WalletData walletData = JsonHelper.getObjectFromJson<WalletData> (walletString);
 				InventoryData inventoryData = JsonHelper.getObjectFromJson<InventoryData> (inventoryString);
 
-				AddDataToHelper (walletData, inventoryData);
-			}
+                AddDataToHelper(walletData != null ? walletData.currencies : null, inventoryData != null ? inventoryData.items : null);
+            }
 		}
 
 		/// <summary>
@@ -99,10 +99,10 @@ namespace SpilGames.Unity.Helpers
 			Spil.Instance.ConsumeBundle(bundleId, reason);
 		}
 
-		private void AddDataToHelper(WalletData wallet, InventoryData inventory)
+		private void AddDataToHelper(List<PlayerCurrencyData> walletCurrencies, List<PlayerItemData> inventoryItems)
         {
-			Wallet = new Wallet(wallet.currencies);
-			Inventory = new Inventory(inventory.items);
+			Wallet = new Wallet(walletCurrencies);
+			Inventory = new Inventory(inventoryItems);
 		}
 
 		public void PlayerDataUpdatedHandler()
@@ -119,7 +119,7 @@ namespace SpilGames.Unity.Helpers
 				WalletData walletData = JsonHelper.getObjectFromJson<WalletData> (walletString);
 				InventoryData inventoryData = JsonHelper.getObjectFromJson<InventoryData> (inventoryString);
 
-				AddDataToHelper (walletData, inventoryData);
+				AddDataToHelper(walletData != null ? walletData.currencies : null, inventoryData != null ? inventoryData.items : null);
 			}
 		}
 	}
@@ -154,12 +154,15 @@ namespace SpilGames.Unity.Helpers
 		public Wallet(List<PlayerCurrencyData> currencyData)
 		{
 			currencies = new List<PlayerCurrency>();
-			
-			// Adding currencies of the player
-			foreach(PlayerCurrencyData playerCurrencyData in currencyData)
-			{
-				currencies.Add(new PlayerCurrency(playerCurrencyData.id, playerCurrencyData.name, playerCurrencyData.type, playerCurrencyData.currentBalance, playerCurrencyData.delta));
-			}			
+
+            // Adding currencies of the player
+            if (currencyData != null)
+            {
+                foreach (PlayerCurrencyData playerCurrencyData in currencyData)
+                {
+                    currencies.Add(new PlayerCurrency(playerCurrencyData.id, playerCurrencyData.name, playerCurrencyData.type, playerCurrencyData.currentBalance, playerCurrencyData.delta));
+                }
+            }			
 		}
 		
 		public void Add (int currencyId, int amount, string reason)
@@ -202,12 +205,15 @@ namespace SpilGames.Unity.Helpers
 		public Inventory(List<PlayerItemData> itemData)
 		{
 			items = new List<PlayerItem>();
-			
-			//Adding currencies of the player
-			foreach(PlayerItemData playerItemData in itemData)
-			{
-				items.Add(new PlayerItem(playerItemData.id, playerItemData.name, playerItemData.type, playerItemData.amount, playerItemData.value));
-			}
+
+            //Adding currencies of the player
+            if (itemData != null)
+            {
+                foreach (PlayerItemData playerItemData in itemData)
+                {
+                    items.Add(new PlayerItem(playerItemData.id, playerItemData.name, playerItemData.type, playerItemData.amount, playerItemData.value));
+                }
+            }
 		}
 		
 		public void Add (int itemId, int amount, string reason)

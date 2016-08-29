@@ -252,6 +252,16 @@ namespace SpilGames.Unity.Utils
 	
 	#endregion
 
+	#region Game State Data Objects
+
+		public class OtherUsersGameStateData
+		{
+			public Dictionary<String, String> data;
+			public String provider;
+		}
+
+	#endregion
+
 	public class SpilErrorMessage
 	{
 		public int id;
@@ -264,5 +274,5 @@ namespace SpilGames.Unity.Utils
         public string reason;
         public List<PlayerItemData> items;
         public List<PlayerCurrencyData> currencies;
-    }   
+    }
 }

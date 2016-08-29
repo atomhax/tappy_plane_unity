@@ -5,6 +5,7 @@ using SpilGames.Unity;
 using SpilGames.Unity.Helpers;
 using SpilGames.Unity.Utils;
 using UnityEngine.UI;
+using Facebook.Unity;
 
 public class GameController : MonoBehaviour {
 
@@ -38,7 +39,11 @@ public class GameController : MonoBehaviour {
 
 	List<GameObject> listOfObsticles = new List<GameObject>();
 
-	public GameObject startPanel, ingamePanel, gameoverPanel, shopPanel, skinSelectPanel, tabsPanel, inGamePurchaseSuccessPanel, inGamePurchaseFailPanel;
+	public GameObject startPanel, ingamePanel, gameoverPanel, shopPanel, skinSelectPanel, tabsPanel, inGamePurchaseSuccessPanel, inGamePurchaseFailPanel, highScorePanel;
+
+	void Awake(){
+		FB.Init(this.OnFBInitComplete);
+	}
 
 	// Use this for initialization
 	void Start () {
@@ -68,6 +73,11 @@ public class GameController : MonoBehaviour {
 			spriteRenderer.sprite = backgroundSprites[PlayerPrefs.GetInt("Background",0)];
 		}
 		player.SetupPlayerSkin ();
+
+		Spil.Instance.OnGameStateUpdated -= OnGameStateUpdated;
+		Spil.Instance.OnGameStateUpdated += OnGameStateUpdated;
+
+		SavePrivateGameState();
 	}
 
 	void ClearOutOldObsticles(){
@@ -122,6 +132,10 @@ public class GameController : MonoBehaviour {
 		shopPanel.SetActive (!shopPanel.activeInHierarchy);
 	}
 
+	public void ToggleHighScores(){
+		highScorePanel.SetActive(!highScorePanel.activeInHierarchy);
+	}
+
 	public void UpdateUI(GameStates gameState){
 		startPanel.SetActive (gameState == GameStates.Start);
 		ingamePanel.SetActive (gameState == GameStates.InGame);
@@ -150,5 +164,60 @@ public class GameController : MonoBehaviour {
 		skinSelectPanel.SetActive (true);
 		tabsPanel.SetActive (false);
 	}
+
+	public void OnGameStateUpdated(string access){
+		if(access.Equals("private")){
+			Debug.Log("Private Game State Updated! Request new private game state!");
+			string privateGameState = Spil.Instance.GetPrivateGameState();
+			Debug.Log("New Private Game state: " + privateGameState);
+
+		} else if(access.Equals("public")){
+			Debug.Log("Public Game State Updated! Request new public game state!");
+			string publicGameState = Spil.Instance.GetPublicGameState();
+			Debug.Log("New Public Game state: " + publicGameState);
+		}
+	}
+
+	public void SavePrivateGameState(){
+		int backgroundId = PlayerPrefs.GetInt("Background",0);
+		int skinId = PlayerPrefs.GetInt("Skin",0);
+
+		PrivateGameState gameState = new PrivateGameState();
+		gameState.setBackground(backgroundId);
+		gameState.setSkin(skinId);
+
+		string gameStateJson = JsonHelper.getJSONFromObject(gameState);
+		Spil.Instance.SetPrivateGameState(gameStateJson);
+	}
+
+	public void SavePublicGameState(){
+		int highScore = PlayerPrefs.GetInt("HighScore",0);
+
+		PublicGameState gameState = new PublicGameState();
+		gameState.setHighScore(highScore);
+
+		string gameStateJson = JsonHelper.getJSONFromObject(gameState);
+		Spil.Instance.SetPublicGameState(gameStateJson);
+	}
+
+	private void OnFBInitComplete()
+        {
+            Debug.Log("Facebook Inistialised");
+	    Debug.Log("Requesting Log In information");
+	    FB.LogInWithReadPermissions(new List<string>() { "public_profile", "email", "user_friends" }, this.HandleResult);
+        }
+
+	protected void HandleResult(IResult result)
+        {
+	    if (result.ResultDictionary != null) {
+	        foreach (string key in result.ResultDictionary.Keys) {
+	            Debug.Log(key + " : " + result.ResultDictionary[key].ToString());
+	            if(key.Equals("user_id")){
+	            	Debug.Log("Saving User Id");
+	            	Spil.Instance.SetUserId("Facebook", result.ResultDictionary[key].ToString());
+	            }
+	        }
+    	     }
+        }
 		
 }

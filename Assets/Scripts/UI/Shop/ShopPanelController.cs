@@ -100,4 +100,8 @@ public class ShopPanelController : MonoBehaviour {
 		Spil.Instance.SendrequestRewardVideoEvent ();
 	}
 
+	public void ShowHelpCenter(){
+		Spil.Instance.ShowHelpCenter();
+	}
+
 }

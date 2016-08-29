@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using SpilGames.Unity.Utils;
 using SpilGames.Unity.Implementations;
-
 
 namespace SpilGames.Unity.Helpers
 {
@@ -26,8 +24,13 @@ namespace SpilGames.Unity.Helpers
 			if (spilGameDataString != null) 
 			{
 				SpilGameData spilGameData = JsonHelper.getObjectFromJson<SpilGameData> (spilGameDataString);
-				AddDataToHelper (spilGameData.currencies, spilGameData.items, spilGameData.bundles, spilGameData.shop, spilGameData.promotions);
-				Debug.Log ("Spil Game Data Created");
+                if (spilGameData != null)
+                {
+                    AddDataToHelper(spilGameData.currencies, spilGameData.items, spilGameData.bundles, spilGameData.shop, spilGameData.promotions);
+                    Debug.Log("Spil GameData created");
+                } else {
+                    Debug.Log("Spil GameData not created, Instance.GetSpilGameDataFromsdk() did not return any data.");
+                }				
 			}
 		}
 
