@@ -1,6 +1,6 @@
 # How to use:
 # Add a new 'Run Script' phase - ON TOP - of the Build Phases tab using the following Shell command and build the project: /usr/bin/python Spil.framework/setup.py $(PROJECT_NAME)
-# Or run the shell command from the terminal using the project name: python Spil.framework/setup.py <ProjectName>
+# Or run the shell command from the terminal using the project name: python Spil.framework/setup.py <ProjectName> <UseICloudContainer> <useICloudKV> <UsePushNotifications>
 
 import datetime
 import os
@@ -34,22 +34,48 @@ def addBundleResource(src, dst, group):
 	project.add_file_if_doesnt_exist(dst, parent=bundles, weak=False)
 	return
 
+def str2bool(v):
+  return v.lower() in ("yes", "true", "t", "1")
+
+def inplace_change(filename, old_string, new_string):
+    # Safely read the input filename using 'with'
+    with open(filename) as f:
+        s = f.read()
+        if old_string not in s:
+            print '"{old_string}" not found in {filename}.'.format(**locals())
+            return
+
+    # Safely write the changed content, if found in the file
+    with open(filename, 'w') as f:
+        print 'Changing "{old_string}" to "{new_string}" in {filename}'.format(**locals())
+        s = s.replace(old_string, new_string)
+        f.write(s)
+        
 # determine if the spil sdk is already initialized
 if os.path.exists(os.getcwd() + '/spil.initialized'):
 	print 'Spil SDK was already initialized!'
 	exit(0)
-	
-# try to find the project to modify
+
+# check number of arguments
 if len(sys.argv) < 2:
-    print RED + BOLD + 'ERROR: Missing project name! usage: python spilsdksetup.py <ProjectName>' + END
-    exit(1)
+	print RED + BOLD + 'ERROR: Wrong arguments! Usage: python spilsdksetup.py <ProjectName> <UseICloudContainer> <useICloudKV> <UsePushNotifications>' + END
+	exit(1)
+    
+# try to find the project to modify
+projectname = sys.argv[1]
+if not os.path.isdir(projectname):
+	print RED + BOLD + projectname + '.xcodeproj not found!' + END
+	exit(1)
 else:
-    projectname = sys.argv[1]
-    if not os.path.isdir(projectname):
-		print RED + BOLD + projectname + '.xcodeproj not found!' + END
-		exit(1)
-    else:
-		print 'Modifying XCode project: ' + projectname
+	print 'Modifying XCode project: ' + projectname
+
+# read entitlements arguments
+useICloudContainer = str2bool(sys.argv[2]) if len(sys.argv) > 2 else False;
+useICloudKV = str2bool(sys.argv[3]) if len(sys.argv) > 3 else False;
+usePushNotifications = str2bool(sys.argv[4]) if len(sys.argv) > 4 else False;
+print "useICloudContainer: " + str(useICloudContainer);
+print "useICloudKV: " + str(useICloudKV);
+print "usePushNotifications: " + str(usePushNotifications);
 
 # paths
 projectpath = projectname + '.xcodeproj/'
@@ -58,9 +84,9 @@ backupPath = os.getcwd() + '/ProjectBackups/'
 plistPath = os.getcwd() + '/' + projectname + '/info.plist'
 altPlistPath = os.getcwd() + '/info.plist'
 entitlementsPath = os.getcwd() + '/' + projectname + '/' + projectname + '.entitlements'
-altEntitlementsPath = os.getcwd() + '/' + projectname + '.plist'
+altEntitlementsPath = os.getcwd() + '/' + projectname + '.entitlements'
 
-# load the project file
+# --- load the project file ---
 project = XcodeProject.Load(projectpath + projectfilename)
 
 # backup the project first
@@ -107,12 +133,17 @@ print 'Copying resources and adding them to the XCode project'
 bundles = project.get_or_create_group('')
 addBundleResource(os.getcwd() + '/Spil.framework/Settings.bundle', os.getcwd() + '/Settings.bundle', bundles)
 addBundleResource(os.getcwd() + '/Spil.framework/Frameworks/Fyber_UnityAds.framework/Resources/UnityAds.bundle', os.getcwd() + '/UnityAds.bundle', bundles)
-addBundleResource(os.getcwd() + '/Spil.framework/project.entitlements', os.getcwd() + '/' + projectname + '.entitlements', bundles)
+addBundleResource(os.getcwd() + '/Spil.framework/MRAID.bundle', os.getcwd() + '/MRAID.bundle', bundles)
 addBundleResource(os.getcwd() + '/Data/Raw/defaultGameConfig.json', os.getcwd() + '/defaultGameConfig.json', bundles)
 addBundleResource(os.getcwd() + '/Data/Raw/defaultGameData.json', os.getcwd() + '/defaultGameData.json', bundles)
 addBundleResource(os.getcwd() + '/Data/Raw/defaultPlayerData.json', os.getcwd() + '/defaultPlayerData.json', bundles)
 addBundleResource(os.getcwd() + '/Spil.framework/ZendeskSDK.bundle', os.getcwd() + '/ZendeskSDK.bundle', bundles)
 addBundleResource(os.getcwd() + '/Spil.framework/ZendeskSDKStrings.bundle', os.getcwd() + '/ZendeskSDKStrings.bundle', bundles)
+
+# add png/xib resources
+for file in os.listdir(os.getcwd() + '/Spil.framework'):
+    if file.lower().endswith(".png") or file.lower().endswith(".xib"):
+        addBundleResource(os.getcwd() + '/Spil.framework/' + file, os.getcwd() + '/' + file, bundles)
 
 # change build settings
 print 'Modifying project build settings'
@@ -121,11 +152,7 @@ project.add_other_ldflags(['-ObjC', '-Wl,-U,_UnitySendMessage'])
 project.add_framework_search_paths('$(PROJECT_DIR)', recursive=False)
 project.add_framework_search_paths('$(PROJECT_DIR)/Spil.framework/Frameworks', recursive=False)
 
-# save the project file
-print 'Saving project file'
-project.save()
-
-# try to find the info plist
+# --- try to find the info plist ---
 currentPlistPath = plistPath;
 if not os.path.isfile(plistPath):
 	currentPlistPath = altPlistPath;
@@ -150,6 +177,61 @@ plist['UIBackgroundModes'] = ["remote-notification"]
 print 'Saving info.plist'
 plistlib.writePlist(plist, currentPlistPath)
 
-# mark setup as done
+#  --- try to find the entitlements plist ---
+entitlementsFileCreated = False;
+currentEntitlementsPath = entitlementsPath;
+if not os.path.isfile(entitlementsPath):
+	currentEntitlementsPath = altEntitlementsPath;
+	if not os.path.isfile(altEntitlementsPath):
+		newFile = open(currentEntitlementsPath, 'a');
+		newFile.write('<plist version="1.0"><dict></dict></plist>');
+		newFile.close();
+		entitlementsFileCreated = True;
+if entitlementsFileCreated:
+	print projectname + ".entitlements created at: " + currentEntitlementsPath;
+else:
+	print projectname + ".entitlements found at: " + currentEntitlementsPath;
+
+# backup <projectname>.entitlements first
+print 'Creating ' + projectname + '.entitlements backup'
+sourceEntitlementsPath = os.path.abspath(currentEntitlementsPath)
+destEntitlementsPath = backupPath + projectname + ".entitlements.%s.backup" % (datetime.datetime.now().strftime('%d%m%y-%H%M%S'))
+shutil.copy2(sourceEntitlementsPath, destEntitlementsPath)
+
+# modify entitlements plist
+print 'Modifying ' + projectname + '.entitlements'
+plist = plistlib.readPlist(currentEntitlementsPath)
+
+# add shared application group
+plist['com.apple.security.application-groups'] = ["group.com.spilgames"];
+
+# add iCloud kv store
+if useICloudKV:
+	plist['com.apple.developer.ubiquity-kvstore-identifier'] = "$(TeamIdentifierPrefix)$(CFBundleIdentifier)";
+
+# add iCloud general & game specific document
+plist['com.apple.developer.icloud-services'] = ["CloudDocuments"];
+if useICloudContainer:
+	plist['com.apple.developer.icloud-container-identifiers'] = ["iCloud.$(CFBundleIdentifier)", "iCloud.com.spilgames.shared"];
+	plist['com.apple.developer.ubiquity-container-identifiers'] = ["iCloud.$(CFBundleIdentifier)", "iCloud.com.spilgames.shared"];
+else:
+	plist['com.apple.developer.icloud-container-identifiers'] = ["iCloud.com.spilgames.shared"];
+	plist['com.apple.developer.ubiquity-container-identifiers'] = ["iCloud.com.spilgames.shared"];
+
+# write entitlements plist
+print 'Saving ' + projectname + '.entitlements'
+plistlib.writePlist(plist, currentEntitlementsPath)
+
+# add the entitlements plist file to the xcode project
+project.add_file_if_doesnt_exist(currentEntitlementsPath, parent=None, weak=False)
+project.add_single_valued_flag('CODE_SIGN_ENTITLEMENTS', projectname + '.entitlements')
+
+# save the XCode project file
+print 'Saving the XCode project file'
+project.save()
+
+#inplace_change(os.getcwd() + '/Unity-iPhone.xcodeproj/project.pbxproj', "enabled = 0", "enabled = 1");
+
+# --- mark setup as done ---
 open(os.getcwd() + '/spil.initialized', 'a').close()
 print 'Done!'

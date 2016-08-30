@@ -10,7 +10,7 @@
 #import "HookBridge.h"
 #import "GAI.h"
 
-#define SDK_VERSION @"2.0.7"
+#define SDK_VERSION @"2.0.8"
 
 @class Spil;
 @class UserProfile;
@@ -54,13 +54,16 @@
 -(void)otherUsersGameStateLoaded:(NSDictionary*)data forProvider:(NSString*)provider; // Data: <NSString* userId, NSString* data>
 -(void)gameStateError:(NSString*)message;
 
+// Automated events
+-(void)openGameShop;
+
 @end
 
 @interface Spil : NSObject {
     
 }
 
-// define delegate property
+// Define delegate property
 @property (nonatomic, assign) id  delegate;
 
 +(Spil*)sharedInstance;
@@ -68,7 +71,7 @@
 #pragma mark General
 
 /**
- *  Initiates the API
+ * Initiates the API
  */
 +(void)start;
 
@@ -205,11 +208,6 @@
  */
 +(void)didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken;
 
-/**
- *  Show a toast when a reward is unlocked
- */
-+(void)showToastOnVideoReward:(BOOL)enabled;
-
 #pragma mark Config
 
 /**
@@ -280,6 +278,11 @@
  * Helper method to determine if the ad provider is initialized
  */
 +(BOOL)isAdProviderInitialized:(NSString*)identifier;
+
+/**
+ *  Show a toast when a reward is unlocked
+ */
++(void)showToastOnVideoReward:(BOOL)enabled;
 
 #pragma mark UserData & GameData
 

@@ -203,11 +203,11 @@
 		</data>
 		<key>Headers/Spil.h</key>
 		<data>
-		hEvsAEdmwZizrruOQmiwGYrf2ww=
+		kgcjTDmG7b34iWWMWfXPCxeY5aA=
 		</data>
 		<key>Headers/SpilActionHandler.h</key>
 		<data>
-		J2Y2aHxRlw4cZYrX8xpMofpkjyA=
+		8Ny1MN20wXfFWoBHlUvBQlzPqrE=
 		</data>
 		<key>Info.plist</key>
 		<data>
@@ -217,9 +217,9 @@
 		<data>
 		+k0zFZ5W2a/QqZkA7YecIph4HVI=
 		</data>
-		<key>MPAdBrowserController.nib</key>
+		<key>MPAdBrowserController.xib</key>
 		<data>
-		5PWEJ9IbrOmVV8AKdGdgRBiMhYg=
+		VTzia4KLk7oO2+kRu6m9E4jTXtA=
 		</data>
 		<key>MPCloseBtn.png</key>
 		<data>
@@ -863,7 +863,7 @@
 		</data>
 		<key>setup.py</key>
 		<data>
-		Velcp53nj0a5KsBMR6x2swQPtrI=
+		MqoPIXCsFUw0NTzKYqox4mTJVqg=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -1402,22 +1402,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			hEvsAEdmwZizrruOQmiwGYrf2ww=
+			kgcjTDmG7b34iWWMWfXPCxeY5aA=
 			</data>
 			<key>hash2</key>
 			<data>
-			nfS7wVd+NHNz3QY9Cn4XuvQ+sUGgnHLiJxaC7nrmt4U=
+			Wsuemj6XPC05sb21KsSjs2djNbO9gzYsM+5VwipFwCI=
 			</data>
 		</dict>
 		<key>Headers/SpilActionHandler.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			J2Y2aHxRlw4cZYrX8xpMofpkjyA=
+			8Ny1MN20wXfFWoBHlUvBQlzPqrE=
 			</data>
 			<key>hash2</key>
 			<data>
-			ei9RnQBXdR05cgwlu5IPlW6N+PvKAD2TbSR8j7IYfeA=
+			WTLRz0Sw2+6UqTvJECIP711tujU1J2ELYINzSOjc/LM=
 			</data>
 		</dict>
 		<key>LICENSE</key>
@@ -1431,15 +1431,15 @@
 			D30YlL3ZFtORN9gcy5kWnFrZodu1lqMxL/qCiyXA2Qk=
 			</data>
 		</dict>
-		<key>MPAdBrowserController.nib</key>
+		<key>MPAdBrowserController.xib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			5PWEJ9IbrOmVV8AKdGdgRBiMhYg=
+			VTzia4KLk7oO2+kRu6m9E4jTXtA=
 			</data>
 			<key>hash2</key>
 			<data>
-			QHigLzV12+e3GggIGhNmwubSfXVNyNoKqdwbf56VSik=
+			BzsSmmJmxAUDN9ToP9Ycb4cbxlMyO/kDoSecxEc0QFc=
 			</data>
 		</dict>
 		<key>MPCloseBtn.png</key>
@@ -2971,11 +2971,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			Velcp53nj0a5KsBMR6x2swQPtrI=
+			MqoPIXCsFUw0NTzKYqox4mTJVqg=
 			</data>
 			<key>hash2</key>
 			<data>
-			8LAkPnRajqpPe+u+PpVOxt0UEgn6hu5+MnbLcXFvFoE=
+			u2NM7tkZ9ZLYzvOthuSWHc4P3Cw+78/0jHVZZU9XmlI=
 			</data>
 		</dict>
 	</dict>
