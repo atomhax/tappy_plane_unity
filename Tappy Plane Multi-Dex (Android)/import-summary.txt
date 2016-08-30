@@ -1,0 +1,160 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Risky Project Location:
+-----------------------
+The tools *should* handle project locations in any directory. However,
+due to bugs, placing projects in directories containing spaces in the
+path, or characters like ", ' and &, have had issues. We're working to
+eliminate these bugs, but to save yourself headaches you may want to
+move your project to a location where this is not a problem.
+/Users/sebastian/Work/AndroidProjects/Tappy Plane
+                                           -     
+
+Manifest Merging:
+-----------------
+Your project uses libraries that provide manifests, and your Eclipse
+project did not explicitly turn on manifest merging. In Android Gradle
+projects, manifests are always merged (meaning that contents from your
+libraries' manifests will be merged into the app manifest. If you had
+manually copied contents from library manifests into your app manifest
+you may need to remove these for the app to build correctly.
+
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+From AmazonAppStore:
+* R.txt
+* aapt/
+* aapt/AndroidManifest.xml
+From GoogleAIDL:
+* aapt/
+* aapt/AndroidManifest.xml
+From GooglePlay:
+* R.txt
+* aapt/
+* aapt/AndroidManifest.xml
+From Tappy Plane:
+* proguard-unity.txt
+From cardview-v7-23.4.0:
+* R.txt
+* aapt/
+* aapt/AndroidManifest.xml
+From common:
+* aapt/
+* aapt/AndroidManifest.xml
+From facebook-android-sdk-4.14.0:
+* R.txt
+* aapt/
+* aapt/AndroidManifest.xml
+* proguard.txt
+From facebook-android-wrapper-0.0.0:
+* R.txt
+* aapt/
+* aapt/AndroidManifest.xml
+From support-v4-23.4.0:
+* aapt/
+* aapt/AndroidManifest.xml
+* aidl/
+* aidl/android/
+* aidl/android/support/
+* aidl/android/support/v4/
+* aidl/android/support/v4/media/
+* aidl/android/support/v4/media/MediaMetadataCompat.aidl
+* aidl/android/support/v4/media/RatingCompat.aidl
+* aidl/android/support/v4/media/session/
+* aidl/android/support/v4/media/session/MediaSessionCompat.aidl
+* aidl/android/support/v4/media/session/ParcelableVolumeInfo.aidl
+* aidl/android/support/v4/media/session/PlaybackStateCompat.aidl
+* aidl/android/support/v4/os/
+* aidl/android/support/v4/os/ResultReceiver.aidl
+* annotations.zip
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+In AmazonAppStore:
+* AndroidManifest.xml => amazonAppStore/src/main/AndroidManifest.xml
+* assets/ => amazonAppStore/src/main/assets
+* libs/classes.jar => amazonAppStore/libs/classes.jar
+* libs/in-app-purchasing-2.0.61.jar => amazonAppStore/libs/in-app-purchasing-2.0.61.jar
+* res/ => amazonAppStore/src/main/res/
+* src/ => amazonAppStore/src/main/java
+In GoogleAIDL:
+* AndroidManifest.xml => googleAIDL/src/main/AndroidManifest.xml
+* assets/ => googleAIDL/src/main/assets
+* libs/classes.jar => googleAIDL/libs/classes.jar
+* res/ => googleAIDL/src/main/res
+* src/ => googleAIDL/src/main/java
+In GooglePlay:
+* AndroidManifest.xml => googlePlay/src/main/AndroidManifest.xml
+* assets/ => googlePlay/src/main/assets
+* libs/classes.jar => googlePlay/libs/classes.jar
+* res/ => googlePlay/src/main/res
+* src/ => googlePlay/src/main/java
+In cardview-v7-23.4.0:
+* AndroidManifest.xml => cardviewv72340/src/main/AndroidManifest.xml
+* assets/ => cardviewv72340/src/main/assets
+* libs/classes.jar => cardviewv72340/libs/classes.jar
+* res/ => cardviewv72340/src/main/res/
+* src/ => cardviewv72340/src/main/java
+In common:
+* AndroidManifest.xml => common/src/main/AndroidManifest.xml
+* assets/ => common/src/main/assets
+* libs/classes.jar => common/libs/classes.jar
+* res/ => common/src/main/res
+* src/ => common/src/main/java
+In facebook-android-sdk-4.14.0:
+* AndroidManifest.xml => facebookandroidsdk4140/src/main/AndroidManifest.xml
+* assets/ => facebookandroidsdk4140/src/main/assets
+* libs/classes.jar => facebookandroidsdk4140/libs/classes.jar
+* res/ => facebookandroidsdk4140/src/main/res/
+* src/ => facebookandroidsdk4140/src/main/java
+In facebook-android-wrapper-0.0.0:
+* AndroidManifest.xml => facebookandroidwrapper000/src/main/AndroidManifest.xml
+* assets/ => facebookandroidwrapper000/src/main/assets
+* libs/classes.jar => facebookandroidwrapper000/libs/classes.jar
+* res/ => facebookandroidwrapper000/src/main/res
+* src/ => facebookandroidwrapper000/src/main/java
+In support-v4-23.4.0:
+* AndroidManifest.xml => supportv42340/src/main/AndroidManifest.xml
+* assets/ => supportv42340/src/main/assets
+* libs/classes.jar => supportv42340/libs/classes.jar
+* libs/internal_impl-23.4.0.jar => supportv42340/libs/internal_impl-23.4.0.jar
+* res/ => supportv42340/src/main/res
+* src/ => supportv42340/src/main/java
+In Tappy Plane:
+* AndroidManifest.xml => tappyPlane/src/main/AndroidManifest.xml
+* assets/ => tappyPlane/src/main/assets/
+* libs/armeabi-v7a/libmain.so => tappyPlane/src/main/jniLibs/armeabi-v7a/libmain.so
+* libs/armeabi-v7a/libmono.so => tappyPlane/src/main/jniLibs/armeabi-v7a/libmono.so
+* libs/armeabi-v7a/libunity.so => tappyPlane/src/main/jniLibs/armeabi-v7a/libunity.so
+* libs/bolts-android-1.4.0.jar => tappyPlane/libs/bolts-android-1.4.0.jar
+* libs/bolts-applinks-1.4.0.jar => tappyPlane/libs/bolts-applinks-1.4.0.jar
+* libs/bolts-tasks-1.4.0.jar => tappyPlane/libs/bolts-tasks-1.4.0.jar
+* libs/unity-classes.jar => tappyPlane/libs/unity-classes.jar
+* libs/x86/libmain.so => tappyPlane/src/main/jniLibs/x86/libmain.so
+* libs/x86/libmono.so => tappyPlane/src/main/jniLibs/x86/libmono.so
+* libs/x86/libunity.so => tappyPlane/src/main/jniLibs/x86/libunity.so
+* res/ => tappyPlane/src/main/res/
+* src/ => tappyPlane/src/main/java/
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)

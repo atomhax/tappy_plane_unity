@@ -8,8 +8,8 @@
     	"googleAnalyticsId": "",
     	"googleIAPKey": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAohTfXeH6cbRDuE7BLSUriL6riZirxLp+vE0l+0Dy7rU4mgvfOHod7drnE413S7KuIA2thkEeUFoDh6GiEDpoIuyuuWINplbznezFgMaxrVqSZuF138yAInfHkd/nWZ3DOQ/NLXCUpREHh0ZQgQClOyaAyow11JZHMkuebMuZbD2SnnDhbe4NfbzAYpO69to3sNvB4RLxg9Of1UJ9dBRyOtsW0jDd3FVTqn0iXWnb3w4YfjAUYpxs4gcVSHCk7DbHFXBZH1E013s+NfCJPr0BJRRtalYPD+sg7MI8W9eUPw1omAr9sS7nPrEPSEYg9mmVJgOqwEAYHNn7I3AcbR5oNwIDAQAB",
     	"adjustAppToken": "6yx92oaxo48w",
-    	"zendeskSubdomain":"https://spilgames.zendesk.com",
-    	"zendeskAppId":"bf4b80b3654a573fb7ae62fb51edffdb8859afadcb9d2caa",
-    	"zendeskOauthClientId":"mobile_sdk_client_275253633ef8d57108f3"
+    	"zendeskSubdomain":"https://spilapps.zendesk.com/",
+    	"zendeskAppId":"73fc3647bd842920d20862af48414472ae0c607c9e5d414c",
+    	"zendeskOauthClientId":"mobile_sdk_client_9fcb4e68b1c9094237f8"
   	}
 }

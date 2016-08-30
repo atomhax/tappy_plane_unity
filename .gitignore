@@ -9,3 +9,29 @@ Temp/*
 
 Library/metadata/*
 
+# ============ #
+# Android #
+# ============ #
+
+.idea
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build
+/captures
+local.properties
+captures
+
+spilSDK/.idea
+*.iml
+tappyPlane/.idea/workspace.xml
+tappyPlane/.idea/misc.xml
+tappyPlane/spilSDK.iml
+spil-android-sdk.iml
+.idea/compiler.xml
+.idea/gradle.xml
+.idea/modules.xml
+.idea/encodings.xml
+
