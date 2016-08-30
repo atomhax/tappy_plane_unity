@@ -1,0 +1,6 @@
+include ':amazonAppStore'
+include ':googleAIDL'
+include ':googlePlay'
+include ':common'
+include ':facebookandroidwrapper000'
+include ':tappyPlane'
