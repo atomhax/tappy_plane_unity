@@ -138,9 +138,91 @@
 #pragma mark Event tracking
 
 /**
+ * @param skuId             The product identifier of the item that was purchased
+ * @param transactionId     The transaction identifier of the item that was purchased (also called orderId)
+ * @param purchaseDate      The date and time that the item was purchased
+ */
++(void)trackIAPPurchasedEvent:(NSString*)skuId transactionId:(NSString*)transactionId purchaseDate:(NSString*)purchaseDate;
+
+/**
+ * @param skuId                 The product identifier of the item that was purchased
+ * @param originalTransactionId For a transaction that restores a previous transaction, the transaction identifier of the original transaction. 
+ *                              Otherwise, identical to the transaction identifier
+ * @param originalPurchaseDate  For a transaction that restores a previous transaction, the date of the original transaction
+ */
++(void)trackIAPRestoredEvent:(NSString*)skuId originalTransactionId:(NSString*)originalTransactionId originalPurchaseDate:(NSString*)originalPurchaseDate;
+
+/**
+ * @param skuId     The product identifier of the item that was purchased
+ * @param error     Error description or error code
+ */
++(void)trackIAPFailedEvent:(NSString*)skuId error:(NSString*)error;
+
+/**
+ * @param currencyList  A list containing the currency objects that have been changed with the event. 
+ *                      {@link com.spilgames.spilsdk.models.tracking.TrackingCurrency}
+ * @param itemsList     A list containing the item objects that have been changed with the event. 
+ *                      {@link com.spilgames.spilsdk.models.tracking.TrackingItem}
+ * @param reason        The reason for which the wallet or the inventory has been updated
+ *                      A list of default resons can be found here: {@link com.spilgames.spilsdk.playerdata.PlayerDataUpdateReasons}
+ * @param location      The location where the event occurred (ex.: Shop Screen, End of the level Screen)
+ */
++(void)trackWalletInventoryEvent:(NSString*)currencyList itemsList:(NSString*)itemsList reason:(NSString*)reason location:(NSString*)location;
+
+/**
+ * @param name          The name of the milestone
+ */
++(void)trackMilestoneEvent:(NSString*)name;
+
+/**
+ * @param level         The name of the level
+ */
++(void)trackLevelStartEvent:(NSString*)level;
+
+/**
+ * @param level         The name of the level
+ * @param score         The final score the player achieves at the end of the level
+ * @param stars         The # of stars (or any other rating system) the player achieves at the end of the level
+ * @param turns         The # of moves/turns taken to complete the level
+ */
++(void)trackLevelCompleteEvent:(NSString*)level score:(NSString*)score stars:(NSString*)stars turns:(NSString*)turns;
+
+/**
+ * @param level         The name of the level
+ * @param score         The final score the player achieves at the end of the level
+ * @param turns         The # of moves/turns taken to complete the level
+ */
++(void)trackLevelFailed:(NSString*)level score:(NSString*)score turns:(NSString*)turns;
+
+/**
+ * Track the completion of a tutorial
+ */
++(void)trackTutorialCompleteEvent;
+
+/**
+ * Track the skipping of a tutorial
+ */
++(void)trackTutorialSkippedEvent;
+
+/**
+ * @param platform      The platform for which the registration occurred (ex.: Facebook)
+ */
++(void)trackRegisterEvent:(NSString*)platform;
+
+/**
+ * @param platform      The platform for which the share occurred (ex.: Facebook)
+ */
++(void)trackShareEvent:(NSString*)platform;
+
+/**
+ * @param platform      The platform for which the invite occurred (ex.: Facebook)
+ */
++(void) trackInviteEvent:(NSString*)platform;
+
+/**
  *  Track a basic named event
  *
- *  @param name The name of the event. Replace spaces with an underscore
+ *  @param name         The name of the event. Replace spaces with an underscore
  */
 +(void) trackEvent:(NSString*)name;
 
@@ -168,7 +250,7 @@
  *  @param block  A block with response param that will be executed when the server sends a reponse on the tracked event
  */
 +(void) trackEvent:(NSString*)name withParameters:(NSDictionary *)params onResponse:(void (^)(id response))block;
-
+    
 #pragma mark Send message
 
 /**
