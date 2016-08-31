@@ -270,10 +270,9 @@ namespace SpilGames.Unity.Implementations
                 /// </summary>
                 /// <param name="skuId">The product identifier of the item that was purchased</param>
                 /// <param name="transactionId ">The transaction identifier of the item that was purchased (also called orderId)</param>
-                /// <param name="purchaseDate">Please use a proper DateTime format!</param>
-                public void SendiapPurchasedEvent(string skuId, string transactionId, string purchaseDate)
+                public void SendiapPurchasedEvent(string skuId, string transactionId)
                 {
-                    SendCustomEvent("iapPurchased", new Dictionary<string, string>() { { "skuId", skuId }, { "transactionId", transactionId }, { "purchaseDate", purchaseDate }});
+			SendCustomEvent("iapPurchased", new Dictionary<string, string>() { { "skuId", skuId }, { "transactionId", transactionId }, { "purchaseDate", DateTime.Now.ToString("yyyy-MM-ddTHH\\:mm\\:ss.fffffffzzz") } });
                 }
 
 		/// <summary>
@@ -282,10 +281,9 @@ namespace SpilGames.Unity.Implementations
                 /// </summary>
                 /// <param name="skuId">The product identifier of the item that was purchased</param>
                 /// <param name="transactionId ">The transaction identifier of the item that was purchased (also called orderId)</param>
-                /// <param name="purchaseDate">Please use a proper DateTime format!</param>
-                public void TrackIAPPurchasedEvent(string skuId, string transactionId, string purchaseDate)
+                public void TrackIAPPurchasedEvent(string skuId, string transactionId)
                 {
-                    SendCustomEvent("iapPurchased", new Dictionary<string, string>() { { "skuId", skuId }, { "transactionId", transactionId }, { "purchaseDate", purchaseDate }});
+					SendCustomEvent("iapPurchased", new Dictionary<string, string>() { { "skuId", skuId }, { "transactionId", transactionId }, { "purchaseDate", DateTime.Now.ToString("yyyy-MM-ddTHH\\:mm\\:ss.fffffffzzz")  }});
                 }
 
                 [Obsolete]
@@ -295,8 +293,8 @@ namespace SpilGames.Unity.Implementations
                 /// </summary>
                 /// <param name="skuId">The product identifier of the item that was purchased</param>
                 /// <param name="originalTransactionId ">For a transaction that restores a previous transaction, the transaction identifier of the original transaction. Otherwise, identical to the transaction identifier</param>
-                /// <param name="originalPurchaseDate">For a transaction that restores a previous transaction, the date of the original transaction. Please use a proper DateTime format!</param>
-                public void SendiapRestoredEvent(string skuId, string originalTransactionId, string originalPurchaseDate)
+				/// <param name="originalPurchaseDate">For a transaction that restores a previous transaction, the date of the original transaction. Please use a proper DateTime format (RFC3339), for instance: "2016-08-30T11:54:48.5247936+02:00". If you have a DateTime object you can use: DateTimeObject.ToString("yyyy-MM-ddTHH\\:mm\\:ss.fffffffzzz")</param>                
+				public void SendiapRestoredEvent(string skuId, string originalTransactionId, string originalPurchaseDate)
                 {
                     SendCustomEvent("iapRestored", new Dictionary<string, string>() { { "skuId", skuId }, { "originalTransactionId", originalTransactionId }, { "originalPurchaseDate", originalPurchaseDate } });
                 }
@@ -307,7 +305,7 @@ namespace SpilGames.Unity.Implementations
                 /// </summary>
                 /// <param name="skuId">The product identifier of the item that was purchased</param>
                 /// <param name="originalTransactionId ">For a transaction that restores a previous transaction, the transaction identifier of the original transaction. Otherwise, identical to the transaction identifier</param>
-                /// <param name="originalPurchaseDate">For a transaction that restores a previous transaction, the date of the original transaction. Please use a proper DateTime format!</param>
+		/// <param name="originalPurchaseDate">For a transaction that restores a previous transaction, the date of the original transaction. Please use a proper DateTime format (RFC3339), for instance: "2016-08-30T11:54:48.5247936+02:00". If you have a DateTime object you can use: DateTimeObject.ToString("yyyy-MM-ddTHH\\:mm\\:ss.fffffffzzz")</param>                
                 public void TrackIAPRestoredEvent(string skuId, string originalTransactionId, string originalPurchaseDate)
                 {
                     SendCustomEvent("iapRestored", new Dictionary<string, string>() { { "skuId", skuId }, { "originalTransactionId", originalTransactionId }, { "originalPurchaseDate", originalPurchaseDate } });
