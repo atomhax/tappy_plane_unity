@@ -9,7 +9,7 @@ namespace SpilGames.Unity.Implementations
     public abstract class SpilUnityImplementationBase
     {
 	public static string PluginName = "Unity";
-	public static string PluginVersion = "2.2.0";
+	public static string PluginVersion = "2.2.1";
 
 	public abstract void SetPluginInformation(string PluginName, string PluginVersion);
 
@@ -853,6 +853,20 @@ namespace SpilGames.Unity.Implementations
 			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(reason);
 
 			if (Spil.Instance.OnGameStateError != null) { Spil.Instance.OnGameStateError(errorMessage); } 	
+		}
+
+		public delegate void OpenGameShop();
+		/// <summary>
+		/// This is fired by the native Spil SDK when the game shop should be opened.
+		/// The developer can subscribe to this event and open there own shop implementation.
+		/// </summary>
+		public event OpenGameShop OnOpenGameShop;
+
+		public static void fireOpenGameShop()
+		{
+			Debug.Log ("SpilSDK-Unity Open Game Shop");
+
+			if (Spil.Instance.OnOpenGameShop != null) { Spil.Instance.OnOpenGameShop(); } 	
 		}
 		
 		public abstract string GetWalletFromSdk();

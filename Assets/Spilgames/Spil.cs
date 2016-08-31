@@ -1,6 +1,6 @@
 /*
  * Spil Games Unity SDK 2016
- * Version 2.2.0
+ * Version 2.2.1
  * 
  * If you have any questions, don't hesitate to e-mail us at info@spilgames.com
  * Be sure to check the github page for documentation and the latest updates
@@ -175,6 +175,15 @@ namespace SpilGames.Unity
 		public void GameStateError(string message)
 		{
 			SpilUnityImplementationBase.fireGameStateError(message);
+		}
+
+
+		/// <summary>
+		/// This method is called by the native Spil SDK, it should not be used by developers.
+		/// </summary>
+		public void OpenGameShop()
+		{
+			SpilUnityImplementationBase.fireOpenGameShop();
 		}
     }
 }
