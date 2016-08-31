@@ -275,4 +275,6 @@ namespace SpilGames.Unity.Utils
         public List<PlayerItemData> items;
         public List<PlayerCurrencyData> currencies;
     }
+
+
 }

@@ -64,7 +64,7 @@ public class ExampleCode : MonoBehaviour
 		// loop of reward video's! Every time you close/dismiss the video AdFinishedHandler is called, which 
 		// requests a new video, which calls AdAvailableHandler, which plays the video and so on.
 		// So this is for testing only, easy to adapt for your own purposes though.
-		Spil.Instance.SendrequestRewardVideoEvent();
+		Spil.Instance.SendRequestRewardVideoEvent();
 	}
 
 	// Be sure to call AttachListeners() before calling this method
@@ -114,7 +114,7 @@ public class ExampleCode : MonoBehaviour
 		// When an ad finishes we can immediately request a new one
 		if (response.GetTypeAsEnum() == enumAdType.RewardVideo)
 		{
-			Spil.Instance.SendrequestRewardVideoEvent();
+			Spil.Instance.SendRequestRewardVideoEvent();
 		}
 		if (response.GetTypeAsEnum() == enumAdType.MoreApps)
 		{

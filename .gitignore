@@ -35,3 +35,10 @@ spil-android-sdk.iml
 .idea/modules.xml
 .idea/encodings.xml
 
+
+Tappy Plane Multi-Dex (Android)/tappyPlane/build/*
+Tappy Plane Multi-Dex (Android)/amazonAppStore/build/*
+Tappy Plane Multi-Dex (Android)/facebookandroidwrapper000/build/*
+Tappy Plane Multi-Dex (Android)/googleAIDL/build/*
+Tappy Plane Multi-Dex (Android)/googlePlay/build/*
+Tappy Plane Multi-Dex (Android)/common/build/*

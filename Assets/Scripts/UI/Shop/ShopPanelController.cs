@@ -25,7 +25,7 @@ public class ShopPanelController : MonoBehaviour {
 	void OnEnable(){
 		Spil.Instance.OnAdAvailable += Spil_Instance_OnAdAvailable;	
 		Spil.Instance.OnPlayerDataUpdated += Spil_Instance_OnPlayerDataUpdated;
-		Spil.Instance.SendrequestRewardVideoEvent ();
+		Spil.Instance.SendRequestRewardVideoEvent ();
 		Spil_Instance_OnPlayerDataUpdated("Opened", null);
 		ResetShop();
 		CreateShop ();
@@ -97,7 +97,7 @@ public class ShopPanelController : MonoBehaviour {
 			Spil.PlayerData.Wallet.Add (25, response.reward.reward,PlayerDataUpdateReasons.RewardAds);
 			rewardSucessPanel.SetActive (true);
 		}
-		Spil.Instance.SendrequestRewardVideoEvent ();
+		Spil.Instance.SendRequestRewardVideoEvent ();
 	}
 
 	public void ShowHelpCenter(){
