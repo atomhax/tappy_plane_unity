@@ -244,14 +244,14 @@ namespace SpilGames.Unity.Implementations
                     if(currencyList != null)
                     {
 			string currencyListJSON = JsonHelper.getJSONFromObject(currencyList);
-			string wallet = "{\"currencies\":" + currencyListJSON + "}";
+			string wallet = "{\"currencies\":" + currencyListJSON + ", \"offset\":0}";
 			dictionary.Add("wallet", wallet);
                     }
 
 		    if(itemsList != null)
                     {
 			string itemsListJSON = JsonHelper.getJSONFromObject(itemsList);
-			string inventory = "{\"items\":" + itemsListJSON + "}";
+			string inventory = "{\"items\":" + itemsListJSON + ", \"offset\":0}";
 			dictionary.Add("inventory", inventory);
                     }
 
