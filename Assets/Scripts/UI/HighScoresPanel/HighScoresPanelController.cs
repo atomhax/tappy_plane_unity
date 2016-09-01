@@ -25,25 +25,18 @@ public class HighScoresPanelController : MonoBehaviour {
 	}
 
 	void RequestHighScores(){
-		string facebookIds = Spil.Instance.GetConfigValue("facebookIds");
+		string facebookIds = GameController.GetFriendIdsJson();
 		Spil.Instance.GetOtherUsersGameState("Facebook", facebookIds);
 	}
 
 	void DisplayHighScores(SpilGames.Unity.Utils.OtherUsersGameStateData data){
-
-		int charAmount = Random.Range(3, 3);
 		highScoreText.text = "";
 
+		int pos = 1;
 		foreach(KeyValuePair<string, string> p in data.data){
 			PublicGameState gameState = JsonHelper.getObjectFromJson<PublicGameState>(p.Value);
-
-			string user = "";
-			for(int i=0; i<charAmount; i++)
-			{
-			     user += glyphs[Random.Range(0, glyphs.Length)];
-			}
-
-			highScoreText.text = highScoreText.text + "USER: " + user + " ----- SCORE: " + gameState.HighScore + " \n";
+			highScoreText.text += pos.ToString() + ". " + GameController.GetNameForFbId(p.Key) + " [" + gameState.HighScore + "]\n";
+			pos++;
 		}
 
 	}
