@@ -58,13 +58,23 @@ public class GameController : MonoBehaviour
 		GetAndApplyGameConfig ();
 		SetupNewGame ();
 
-		Spil.Instance.OnWebOpen -= OnWebOpen;
-		Spil.Instance.OnWebOpen += OnWebOpen;
+		Spil.Instance.OnSplashScreenOpen -= OnPopupOpen;
+		Spil.Instance.OnSplashScreenOpen += OnPopupOpen;
+		Spil.Instance.OnSplashScreenClosed -= OnPopupClosed;
+		Spil.Instance.OnSplashScreenClosed += OnPopupClosed;
+		Spil.Instance.OnSplashScreenError -= OnPopupError;
+		Spil.Instance.OnSplashScreenError += OnPopupError;
+		Spil.Instance.OnSplashScreenOpenShop -= OnOpenShop;
+		Spil.Instance.OnSplashScreenOpenShop += OnOpenShop;
 
-		Spil.Instance.OnWebClosed -= OnWebClosed;
-		Spil.Instance.OnWebClosed += OnWebClosed;
-
-
+		Spil.Instance.OnDailyBonusOpen -= OnPopupOpen;
+		Spil.Instance.OnDailyBonusOpen += OnPopupOpen;
+		Spil.Instance.OnDailyBonusClosed -= OnPopupClosed;
+		Spil.Instance.OnDailyBonusClosed += OnPopupClosed;
+		Spil.Instance.OnDailyBonusError -= OnPopupError;
+		Spil.Instance.OnDailyBonusError += OnPopupError;
+		Spil.Instance.OnDailyBonusReward -= OnPopupReward;
+		Spil.Instance.OnDailyBonusReward += OnPopupReward;
 	}
 
 	void Spil_Instance_OnReward (PushNotificationRewardResponse rewardResponse)
@@ -208,12 +218,27 @@ public class GameController : MonoBehaviour
 		}
 	}
 
-	public void OnWebOpen ()
+	public void OnPopupOpen ()
 	{
 		
 	}
 
-	public void OnWebClosed ()
+	public void OnPopupClosed ()
+	{
+		
+	}
+
+	public void OnPopupError (SpilErrorMessage message)
+	{
+
+	}
+
+	public void OnOpenShop ()
+	{
+		
+	}
+
+	public void OnPopupReward (string reward)
 	{
 		
 	}
