@@ -162,6 +162,9 @@ namespace SpilGames.Unity.Implementations
 			#endregion
 			
 			#region Player Data
+
+			public override void UpdatePlayerData() {
+			}
 			
 			public override string GetWalletFromSdk()
 			{
@@ -435,6 +438,20 @@ namespace SpilGames.Unity.Implementations
             }
 
         #endregion
+
+	#region Daily Bonus
+
+        public override void RequestDailyBonus ()
+		{
+		     // TODO
+		}
+
+		public override void RequestSplashScreen() 
+		{
+			// TODO
+		}
+
+	#endregion
     }
 
 	public class TempUserInfo{

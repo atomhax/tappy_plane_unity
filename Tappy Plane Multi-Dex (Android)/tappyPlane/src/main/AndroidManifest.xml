@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="10" android:versionName="10" package="com.spilgames.tappyplane" android:installLocation="preferExternal">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:versionCode="10"
+    android:versionName="10"
+    package="com.spilgames.tappyplane"
+    android:installLocation="preferExternal">
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.WAKE_LOCK" />
   <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
@@ -35,7 +40,7 @@
       </intent-filter>
     </receiver>
     <activity android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen" android:name="com.unity.purchasing.googleplay.PurchaseActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
-    <activity android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation" android:name="com.facebook.FacebookActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+    <activity android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation" android:name="com.facebook.FacebookActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" tools:replace="android:theme" />
     <activity android:exported="true" android:name="com.facebook.CustomTabActivity">
     </activity>
     <!--Include the AdActivity and InAppPurchaseActivity configChanges and themes. -->

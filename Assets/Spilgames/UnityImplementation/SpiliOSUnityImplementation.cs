@@ -326,6 +326,14 @@ namespace SpilGames.Unity.Implementations
 
 		#region Player Data
 
+		public override void UpdatePlayerData ()
+		{
+			updatePlayerDataNative ();
+		}
+
+		[DllImport("__Internal")]
+		private static extern void updatePlayerDataNative();
+
 		public override string GetWalletFromSdk()
 		{
 			return getWalletNative();
@@ -425,6 +433,26 @@ namespace SpilGames.Unity.Implementations
         private static extern void showHelpCenterWebviewNative();
 
         #endregion
+
+	#region Web
+
+        public override void RequestDailyBonus ()
+		{
+			requestDailyBonusNative ();
+		}
+
+		[DllImport("__Internal")]
+		private static extern void requestDailyBonusNative();
+
+		public override void RequestSplashScreen ()
+		{
+			requestSplashScreenNative ();
+		}
+
+		[DllImport("__Internal")]
+		private static extern void requestSplashScreenNative();
+
+	#endregion
 
 		#region Push notifications
 

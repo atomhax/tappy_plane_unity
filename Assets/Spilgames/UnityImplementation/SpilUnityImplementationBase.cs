@@ -9,7 +9,7 @@ namespace SpilGames.Unity.Implementations
     public abstract class SpilUnityImplementationBase
     {
 	public static string PluginName = "Unity";
-	public static string PluginVersion = "2.2.1";
+	public static string PluginVersion = "2.2.2";
 
 	public abstract void SetPluginInformation(string PluginName, string PluginVersion);
 
@@ -656,6 +656,11 @@ namespace SpilGames.Unity.Implementations
 		public abstract string GetSpilUserId();
 
 		/// <summary>
+		/// Updates the player data from the server.
+		/// </summary>
+		public abstract void UpdatePlayerData ();
+
+		/// <summary>
 		/// Sets the user identifier.
 		/// </summary>
 		/// <param name="providerId">Provider identifier.</param>
@@ -704,6 +709,16 @@ namespace SpilGames.Unity.Implementations
 		/// <param name="provider">Provider.</param>
 		/// <param name="userIdsJsonArray">User identifiers json array.</param>
 		public abstract void GetOtherUsersGameState(string provider, string userIdsJsonArray);
+
+		/// <summary>
+		/// Requests the daily bonus screen.
+		/// </summary>
+		public abstract void RequestDailyBonus();
+
+		/// <summary>
+		/// Requests the splashscreen.
+		/// </summary>
+		public abstract void RequestSplashScreen ();
 
 		#region Spil Game Objects
 
@@ -756,7 +771,7 @@ namespace SpilGames.Unity.Implementations
 		#endregion
 		
 		#region Player Data
-		
+
 		public delegate void PlayerDataAvailable();
 		/// <summary>
 		/// This is fired by the native Spil SDK after player data has been received from the server.
@@ -866,7 +881,61 @@ namespace SpilGames.Unity.Implementations
 
 			if (Spil.Instance.OnOpenGameShop != null) { Spil.Instance.OnOpenGameShop(); } 	
 		}
-		
+
+		public delegate void ReceiveWebReward();
+		/// <summary>
+		/// This is fired by the native Spil SDK when the reward is received from the web view.
+		/// The developer can subscribe to this event and provide the reward to the user.
+		/// </summary>
+		public event ReceiveWebReward OnReceiveWebReward;
+
+		public static void fireReceiveReward(String reward)
+		{
+			Debug.Log ("SpilSDK-Unity Received reward = " + reward);
+
+			if (Spil.Instance.OnReceiveWebReward != null) { Spil.Instance.OnReceiveWebReward(); } 	
+		}
+
+		public delegate void WebError(SpilErrorMessage errorMessage);
+		/// <summary>
+		/// This is fired by the native Spil SDK when the web view encounters an error.
+		/// The developer can subscribe to this event and inspect the error.
+		/// </summary>
+		public event WebError OnWebError;
+
+		public static void fireWebError(string reason)
+		{
+			Debug.Log ("SpilSDK-Unity Web Error with reason = " + reason);
+
+			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(reason);
+
+			if (Spil.Instance.OnWebError != null) { Spil.Instance.OnWebError(errorMessage); } 	
+		}
+
+		public static void fireWebOpen() {
+			Debug.Log ("SpilSDK-Unity Web open");
+
+			if (Spil.Instance.OnWebOpen != null) { Spil.Instance.OnWebOpen(); } 
+		}
+
+		public delegate void WebOpen();
+		/// <summary>
+		/// This is fired by the native Spil SDK when the web view opened.
+		/// </summary>
+		public event WebOpen OnWebOpen;
+
+		public static void fireWebClosed() {
+			Debug.Log ("SpilSDK-Unity Web closed");
+
+			if (Spil.Instance.OnWebClosed != null) { Spil.Instance.OnWebClosed(); } 
+		}
+
+		public delegate void WebClosed();
+		/// <summary>
+		/// This is fired by the native Spil SDK when the web view closes.
+		/// </summary>
+		public event WebClosed OnWebClosed;
+
 		public abstract string GetWalletFromSdk();
 		
 		public abstract string GetInvetoryFromSdk();

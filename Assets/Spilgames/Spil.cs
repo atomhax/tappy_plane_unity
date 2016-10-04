@@ -96,14 +96,14 @@ namespace SpilGames.Unity
 			SpilUnityImplementationBase.fireAdNotAvailableEvent(type);
 		}
 
-        /// <summary>
-        /// This method is called by the native Spil SDK, it should not be used by developers.
-        /// Developers can subscribe to the Spil.Instance.ConfigUpdated event.
-        /// </summary>
-        public void ConfigUpdated()
-        {
-            SpilUnityImplementationBase.fireConfigUpdatedEvent();
-        }
+	        /// <summary>
+	        /// This method is called by the native Spil SDK, it should not be used by developers.
+	        /// Developers can subscribe to the Spil.Instance.ConfigUpdated event.
+	        /// </summary>
+	        public void ConfigUpdated()
+	        {
+	            SpilUnityImplementationBase.fireConfigUpdatedEvent();
+	        }
 
 		/// <summary>
 		/// This method is called by the native Spil SDK, it should not be used by developers.
@@ -142,7 +142,7 @@ namespace SpilGames.Unity
 		/// </summary>
 		public void PlayerDataUpdated(string data)
 		{
-            SpilUnityImplementationBase.firePlayerDataUpdated(data);
+            		SpilUnityImplementationBase.firePlayerDataUpdated(data);
 		}
 		
 		/// <summary>
@@ -177,13 +177,44 @@ namespace SpilGames.Unity
 			SpilUnityImplementationBase.fireGameStateError(message);
 		}
 
-
 		/// <summary>
 		/// This method is called by the native Spil SDK, it should not be used by developers.
 		/// </summary>
 		public void OpenGameShop()
 		{
 			SpilUnityImplementationBase.fireOpenGameShop();
+		}
+
+		/// <summary>
+		/// This method is called by the native Spil SDK, it should not be used by developers.
+		/// </summary>
+		public void WebError(string error)
+		{
+			SpilUnityImplementationBase.fireWebError(error);
+		}
+
+		/// <summary>
+		/// This method is called by the native Spil SDK, it should not be used by developers.
+		/// </summary>
+		public void ReceiveWebReward(string reward)
+		{
+			SpilUnityImplementationBase.fireReceiveReward(reward);
+		}
+
+		/// <summary>
+		/// This method is called by the native Spil SDK, it should not be used by developers.
+		/// </summary>
+		public void WebOpen()
+		{
+			SpilUnityImplementationBase.fireWebOpen();
+		}
+
+		/// <summary>
+		/// This method is called by the native Spil SDK, it should not be used by developers.
+		/// </summary>
+		public void WebClosed()
+		{
+			SpilUnityImplementationBase.fireWebClosed();
 		}
     }
 }

@@ -57,6 +57,14 @@ public class GameController : MonoBehaviour
 		Spil.Instance.OnReward += Spil_Instance_OnReward;
 		GetAndApplyGameConfig ();
 		SetupNewGame ();
+
+		Spil.Instance.OnWebOpen -= OnWebOpen;
+		Spil.Instance.OnWebOpen += OnWebOpen;
+
+		Spil.Instance.OnWebClosed -= OnWebClosed;
+		Spil.Instance.OnWebClosed += OnWebClosed;
+
+
 	}
 
 	void Spil_Instance_OnReward (PushNotificationRewardResponse rewardResponse)
@@ -200,6 +208,16 @@ public class GameController : MonoBehaviour
 		}
 	}
 
+	public void OnWebOpen ()
+	{
+		
+	}
+
+	public void OnWebClosed ()
+	{
+		
+	}
+
 	public void SavePrivateGameState ()
 	{
 		int backgroundId = PlayerPrefs.GetInt ("Background", 0);
@@ -264,6 +282,12 @@ public class GameController : MonoBehaviour
 				}
 			}
 		}
+
+		RequestDailyBonus();
+	}
+
+	private void RequestDailyBonus(){
+		Spil.Instance.RequestDailyBonus();
 	}
 
 	public static string GetNameForFbId(string fbId) {
