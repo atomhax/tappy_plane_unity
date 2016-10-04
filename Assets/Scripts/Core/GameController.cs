@@ -220,27 +220,29 @@ public class GameController : MonoBehaviour
 
 	public void OnPopupOpen ()
 	{
-		
+		Debug.Log ("OnPopupOpen");
 	}
 
 	public void OnPopupClosed ()
 	{
-		
+		Debug.Log ("OnPopupClosed");
 	}
 
 	public void OnPopupError (SpilErrorMessage message)
 	{
-
+		Debug.Log ("OnPopupError: " + message);
 	}
 
 	public void OnOpenShop ()
 	{
-		
+		Debug.Log ("OnOpenShop");
+
+		shopPanel.SetActive (true);
 	}
 
 	public void OnPopupReward (string reward)
 	{
-		
+		Debug.Log ("OnPopupReward: " + reward);
 	}
 
 	public void SavePrivateGameState ()
