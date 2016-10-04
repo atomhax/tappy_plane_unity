@@ -113,6 +113,8 @@ extern "C" {
     void showToastOnVideoReward(const bool enabled);
     
     // --- Game & Player data ---
+    
+    void updatePlayerDataNative ();
 
     char* getWalletNative ();
     
@@ -137,6 +139,12 @@ extern "C" {
     void showContactCenterNative();
     
     void showHelpCenterWebviewNative();
+    
+    // --- Web ---
+    
+    void requestDailyBonusNative();
+    
+    void requestSplashScreenNative();
     
     // --- User data ---
     
