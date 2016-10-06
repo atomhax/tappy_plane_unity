@@ -58,11 +58,11 @@ public class GameController : MonoBehaviour
 		GetAndApplyGameConfig ();
 		SetupNewGame ();
 
-		Spil.Instance.OnWebOpen -= OnWebOpen;
-		Spil.Instance.OnWebOpen += OnWebOpen;
+		Spil.Instance.OnDailyBonusOpen -= OnDailyBonusOpen;
+		Spil.Instance.OnDailyBonusOpen += OnDailyBonusOpen;
 
-		Spil.Instance.OnWebClosed -= OnWebClosed;
-		Spil.Instance.OnWebClosed += OnWebClosed;
+		Spil.Instance.OnDailyBonusClosed -= OnDailyBonusClosed;
+		Spil.Instance.OnDailyBonusClosed += OnDailyBonusClosed;
 
 
 	}
@@ -132,7 +132,7 @@ public class GameController : MonoBehaviour
 		player.dead = false;
 		InvokeRepeating ("SpawnObsticle", 0, obsitcleSpawnFrequency);
 		UpdateUI (GameStates.InGame);
-		Spil.Instance.SendlevelStartEvent ("MainGame");
+		Spil.Instance.TrackLevelStartEvent ("MainGame");
 	}
 
 	public void GameOver ()
@@ -140,7 +140,7 @@ public class GameController : MonoBehaviour
 		Spil.PlayerData.Wallet.Add (25, playerScore, PlayerDataUpdateReasons.LevelComplete);
 		CancelInvoke ("SpawnObsticle");
 		UpdateUI (GameStates.GameOver);
-		Spil.Instance.SendplayerDiesEvent ("MainGame");
+		Spil.Instance.TrackPlayerDiesEvent ("MainGame");
 	}
 
 	void SpawnObsticle ()
@@ -208,12 +208,12 @@ public class GameController : MonoBehaviour
 		}
 	}
 
-	public void OnWebOpen ()
+	public void OnDailyBonusOpen ()
 	{
 		
 	}
 
-	public void OnWebClosed ()
+	public void OnDailyBonusClosed ()
 	{
 		
 	}

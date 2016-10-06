@@ -868,73 +868,137 @@ namespace SpilGames.Unity.Implementations
 			if (Spil.Instance.OnGameStateError != null) { Spil.Instance.OnGameStateError(errorMessage); } 	
 		}
 
-		public delegate void OpenGameShop();
+		public delegate void SplashScreenOpen();
+		/// <summary>
+		/// This is fired by the native Spil SDK when the web view opened.
+		/// </summary>
+		public event SplashScreenOpen OnSplashScreenOpen;
+
+		public static void fireSplashScreenOpen() {
+			Debug.Log ("SpilSDK-Unity Web open");
+
+			if (Spil.Instance.OnSplashScreenOpen != null) { Spil.Instance.OnSplashScreenOpen(); } 
+		}
+
+		public delegate void SplashScreenNotAvailable();
+		/// <summary>
+		/// This is fired by the native Spil SDK when the splash screen is not available.
+		/// </summary>
+		public event SplashScreenNotAvailable OnSplashScreenNotAvailable;
+
+		public static void fireSplashScreenNotAvailable() {
+			Debug.Log ("SpilSDK-Unity splash screen not available");
+
+			if (Spil.Instance.OnSplashScreenNotAvailable != null) { Spil.Instance.OnSplashScreenNotAvailable(); } 
+		}
+
+		public delegate void SplashScreenClosed();
+		/// <summary>
+		/// This is fired by the native Spil SDK when the web view closes.
+		/// </summary>
+		public event SplashScreenClosed OnSplashScreenClosed;
+
+		public static void fireSplashScreenClosed() {
+			Debug.Log ("SpilSDK-Unity Web closed");
+
+			if (Spil.Instance.OnSplashScreenClosed != null) { Spil.Instance.OnSplashScreenClosed(); } 
+		}
+
+		public delegate void SplashScreenOpenShop();
 		/// <summary>
 		/// This is fired by the native Spil SDK when the game shop should be opened.
 		/// The developer can subscribe to this event and open there own shop implementation.
 		/// </summary>
-		public event OpenGameShop OnOpenGameShop;
+		public event SplashScreenOpenShop OnSplashScreenOpenShop;
 
-		public static void fireOpenGameShop()
+		public static void fireSplashScreenOpenShop()
 		{
 			Debug.Log ("SpilSDK-Unity Open Game Shop");
 
-			if (Spil.Instance.OnOpenGameShop != null) { Spil.Instance.OnOpenGameShop(); } 	
+			if (Spil.Instance.OnSplashScreenOpenShop != null) { Spil.Instance.OnSplashScreenOpenShop(); } 	
 		}
 
-		public delegate void ReceiveWebReward();
-		/// <summary>
-		/// This is fired by the native Spil SDK when the reward is received from the web view.
-		/// The developer can subscribe to this event and provide the reward to the user.
-		/// </summary>
-		public event ReceiveWebReward OnReceiveWebReward;
-
-		public static void fireReceiveReward(String reward)
-		{
-			Debug.Log ("SpilSDK-Unity Received reward = " + reward);
-
-			if (Spil.Instance.OnReceiveWebReward != null) { Spil.Instance.OnReceiveWebReward(); } 	
-		}
-
-		public delegate void WebError(SpilErrorMessage errorMessage);
+		public delegate void SplashScreenError(SpilErrorMessage errorMessage);
 		/// <summary>
 		/// This is fired by the native Spil SDK when the web view encounters an error.
 		/// The developer can subscribe to this event and inspect the error.
 		/// </summary>
-		public event WebError OnWebError;
+		public event SplashScreenError OnSplashScreenError;
 
-		public static void fireWebError(string reason)
+		public static void fireSplashScreenError(string reason)
 		{
 			Debug.Log ("SpilSDK-Unity Web Error with reason = " + reason);
 
 			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(reason);
 
-			if (Spil.Instance.OnWebError != null) { Spil.Instance.OnWebError(errorMessage); } 	
+			if (Spil.Instance.OnSplashScreenError != null) { Spil.Instance.OnSplashScreenError(errorMessage); } 	
 		}
 
-		public static void fireWebOpen() {
-			Debug.Log ("SpilSDK-Unity Web open");
-
-			if (Spil.Instance.OnWebOpen != null) { Spil.Instance.OnWebOpen(); } 
-		}
-
-		public delegate void WebOpen();
+		public delegate void DailyBonusOpen();
 		/// <summary>
 		/// This is fired by the native Spil SDK when the web view opened.
 		/// </summary>
-		public event WebOpen OnWebOpen;
+		public event DailyBonusOpen OnDailyBonusOpen;
 
-		public static void fireWebClosed() {
-			Debug.Log ("SpilSDK-Unity Web closed");
+		public static void fireDailyBonusOpen() {
+			Debug.Log ("SpilSDK-Unity Web open");
 
-			if (Spil.Instance.OnWebClosed != null) { Spil.Instance.OnWebClosed(); } 
+			if (Spil.Instance.OnDailyBonusOpen != null) { Spil.Instance.OnDailyBonusOpen(); } 
 		}
 
-		public delegate void WebClosed();
+		public delegate void DailyBonusNotAvailable();
+		/// <summary>
+		/// This is fired by the native Spil SDK when the dailybonus screen is not available.
+		/// </summary>
+		public event DailyBonusNotAvailable OnDailyBonusNotAvailable;
+
+		public static void fireDailyBonusNotAvailable() {
+			Debug.Log ("SpilSDK-Unity Daily bonus not available");
+
+			if (Spil.Instance.OnDailyBonusNotAvailable != null) { Spil.Instance.OnDailyBonusNotAvailable(); } 
+		}
+
+		public delegate void DailyBonusClosed();
 		/// <summary>
 		/// This is fired by the native Spil SDK when the web view closes.
 		/// </summary>
-		public event WebClosed OnWebClosed;
+		public event DailyBonusClosed OnDailyBonusClosed;
+
+		public static void fireDailyBonusClosed() {
+			Debug.Log ("SpilSDK-Unity Web closed");
+
+			if (Spil.Instance.OnDailyBonusClosed != null) { Spil.Instance.OnDailyBonusClosed(); } 
+		}
+
+		public delegate void DailyBonusError(SpilErrorMessage errorMessage);
+		/// <summary>
+		/// This is fired by the native Spil SDK when the web view encounters an error.
+		/// The developer can subscribe to this event and inspect the error.
+		/// </summary>
+		public event DailyBonusError OnDailyBonusError;
+
+		public static void fireDailyBonusError(string reason)
+		{
+			Debug.Log ("SpilSDK-Unity Web Error with reason = " + reason);
+
+			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(reason);
+
+			if (Spil.Instance.OnDailyBonusError != null) { Spil.Instance.OnDailyBonusError(errorMessage); } 	
+		}
+
+		public delegate void DailyBonusReward(String rewardList);
+		/// <summary>
+		/// This is fired by the native Spil SDK when the reward is received from the web view.
+		/// The developer can subscribe to this event and provide the reward to the user.
+		/// </summary>
+		public event DailyBonusReward OnDailyBonusReward;
+
+		public static void fireDailyBonusReward(String reward)
+		{
+			Debug.Log ("SpilSDK-Unity Received reward = " + reward);
+
+			if (Spil.Instance.OnDailyBonusReward != null) { Spil.Instance.OnDailyBonusReward(reward); } 	
+		}
 
 		public abstract string GetWalletFromSdk();
 		

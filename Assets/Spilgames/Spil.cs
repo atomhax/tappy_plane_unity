@@ -180,41 +180,81 @@ namespace SpilGames.Unity
 		/// <summary>
 		/// This method is called by the native Spil SDK, it should not be used by developers.
 		/// </summary>
-		public void OpenGameShop()
+		public void SplashScreenOpen()
 		{
-			SpilUnityImplementationBase.fireOpenGameShop();
+			SpilUnityImplementationBase.fireSplashScreenOpen();
 		}
 
 		/// <summary>
 		/// This method is called by the native Spil SDK, it should not be used by developers.
 		/// </summary>
-		public void WebError(string error)
+		public void SplashScreenNotAvailable()
 		{
-			SpilUnityImplementationBase.fireWebError(error);
+			SpilUnityImplementationBase.fireSplashScreenNotAvailable();
 		}
 
 		/// <summary>
 		/// This method is called by the native Spil SDK, it should not be used by developers.
 		/// </summary>
-		public void ReceiveWebReward(string reward)
+		public void SplashScreenClosed()
 		{
-			SpilUnityImplementationBase.fireReceiveReward(reward);
+			SpilUnityImplementationBase.fireSplashScreenClosed();
 		}
 
 		/// <summary>
 		/// This method is called by the native Spil SDK, it should not be used by developers.
 		/// </summary>
-		public void WebOpen()
+		public void SplashScreenOpenShop()
 		{
-			SpilUnityImplementationBase.fireWebOpen();
+			SpilUnityImplementationBase.fireSplashScreenOpenShop();
 		}
 
 		/// <summary>
 		/// This method is called by the native Spil SDK, it should not be used by developers.
 		/// </summary>
-		public void WebClosed()
+		public void SplashScreenError(string error)
 		{
-			SpilUnityImplementationBase.fireWebClosed();
+			SpilUnityImplementationBase.fireSplashScreenError(error);
+		}
+
+		/// <summary>
+		/// This method is called by the native Spil SDK, it should not be used by developers.
+		/// </summary>
+		public void DailyBonusOpen()
+		{
+			SpilUnityImplementationBase.fireDailyBonusOpen();
+		}
+
+		/// <summary>
+		/// This method is called by the native Spil SDK, it should not be used by developers.
+		/// </summary>
+		public void DailyBonusNotAvailable()
+		{
+			SpilUnityImplementationBase.fireDailyBonusNotAvailable();
+		}
+
+		/// <summary>
+		/// This method is called by the native Spil SDK, it should not be used by developers.
+		/// </summary>
+		public void DailyBonusClosed()
+		{
+			SpilUnityImplementationBase.fireDailyBonusClosed();
+		}
+
+		/// <summary>
+		/// This method is called by the native Spil SDK, it should not be used by developers.
+		/// </summary>
+		public void DailyBonusReward(string reward)
+		{
+			SpilUnityImplementationBase.fireDailyBonusReward(reward);
+		}
+
+		/// <summary>
+		/// This method is called by the native Spil SDK, it should not be used by developers.
+		/// </summary>
+		public void DailyBonusError(string error)
+		{
+			SpilUnityImplementationBase.fireDailyBonusError(error);
 		}
     }
 }

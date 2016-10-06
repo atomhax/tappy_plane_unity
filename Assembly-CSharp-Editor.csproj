@@ -48,6 +48,7 @@
      <Compile Include="Assets\Editor\IOSBuildPostProcess.cs" />
      <Compile Include="Assets\Editor\RichardsCuts.cs" />
      <Compile Include="Assets\Editor\SpilEditor.cs" />
+     <None Include="Assets\Plugins\iOS\Spil.framework\Version.txt" />
      <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
      <None Include="Assets\link.xml" />
  <Reference Include="UnityEditor.Advertisements">

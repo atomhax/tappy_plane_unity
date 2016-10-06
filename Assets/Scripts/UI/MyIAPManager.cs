@@ -136,7 +136,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener {
 	public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason)
 	{
 		iapPanelController.PurchaseFailed ();
-		Spil.Instance.SendiapFailedEvent (failureReason.ToString (), product.definition.storeSpecificId);
+		Spil.Instance.TrackIAPFailedEvent (failureReason.ToString (), product.definition.storeSpecificId);
 	}
 
 }

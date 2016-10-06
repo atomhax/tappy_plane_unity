@@ -92,6 +92,7 @@
      <Compile Include="Assets\Spilgames\UnityImplementation\SpiliOSUnityImplementation.cs" />
      <Compile Include="Assets\Spilgames\Utils\JSONObject.cs" />
      <Compile Include="Assets\Spilgames\Utils\SpilResponses.cs" />
+     <None Include="Assets\Plugins\iOS\Spil.framework\Version.txt" />
      <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
      <None Include="Assets\link.xml" />
  <Reference Include="UnityEngine.UI">
