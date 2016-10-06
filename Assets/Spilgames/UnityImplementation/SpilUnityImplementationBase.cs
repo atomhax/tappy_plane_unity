@@ -880,6 +880,7 @@ namespace SpilGames.Unity.Implementations
 			if (Spil.Instance.OnSplashScreenOpen != null) { Spil.Instance.OnSplashScreenOpen(); } 
 		}
 
+<<<<<<< HEAD
 		public delegate void SplashScreenNotAvailable();
 		/// <summary>
 		/// This is fired by the native Spil SDK when the splash screen is not available.
@@ -894,6 +895,10 @@ namespace SpilGames.Unity.Implementations
 
 		public delegate void SplashScreenClosed();
 		/// <summary>
+=======
+		public delegate void SplashScreenClosed();
+		/// <summary>
+>>>>>>> origin/master
 		/// This is fired by the native Spil SDK when the web view closes.
 		/// </summary>
 		public event SplashScreenClosed OnSplashScreenClosed;
@@ -946,6 +951,7 @@ namespace SpilGames.Unity.Implementations
 			if (Spil.Instance.OnDailyBonusOpen != null) { Spil.Instance.OnDailyBonusOpen(); } 
 		}
 
+<<<<<<< HEAD
 		public delegate void DailyBonusNotAvailable();
 		/// <summary>
 		/// This is fired by the native Spil SDK when the dailybonus screen is not available.
@@ -959,9 +965,26 @@ namespace SpilGames.Unity.Implementations
 		}
 
 		public delegate void DailyBonusClosed();
+=======
+		public delegate void DailyBonusClosed();
 		/// <summary>
 		/// This is fired by the native Spil SDK when the web view closes.
 		/// </summary>
+		public event DailyBonusClosed OnDailyBonusClosed;
+
+		public static void fireDailyBonusClosed() {
+			Debug.Log ("SpilSDK-Unity Web closed");
+
+			if (Spil.Instance.OnDailyBonusClosed != null) { Spil.Instance.OnDailyBonusClosed(); } 
+		}
+
+		public delegate void DailyBonusError(SpilErrorMessage errorMessage);
+>>>>>>> origin/master
+		/// <summary>
+		/// This is fired by the native Spil SDK when the web view encounters an error.
+		/// The developer can subscribe to this event and inspect the error.
+		/// </summary>
+<<<<<<< HEAD
 		public event DailyBonusClosed OnDailyBonusClosed;
 
 		public static void fireDailyBonusClosed() {
@@ -975,6 +998,8 @@ namespace SpilGames.Unity.Implementations
 		/// This is fired by the native Spil SDK when the web view encounters an error.
 		/// The developer can subscribe to this event and inspect the error.
 		/// </summary>
+=======
+>>>>>>> origin/master
 		public event DailyBonusError OnDailyBonusError;
 
 		public static void fireDailyBonusError(string reason)

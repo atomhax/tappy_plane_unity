@@ -58,6 +58,7 @@ public class GameController : MonoBehaviour
 		GetAndApplyGameConfig ();
 		SetupNewGame ();
 
+<<<<<<< HEAD
 		Spil.Instance.OnDailyBonusOpen -= OnDailyBonusOpen;
 		Spil.Instance.OnDailyBonusOpen += OnDailyBonusOpen;
 
@@ -65,6 +66,25 @@ public class GameController : MonoBehaviour
 		Spil.Instance.OnDailyBonusClosed += OnDailyBonusClosed;
 
 
+=======
+		Spil.Instance.OnSplashScreenOpen -= OnPopupOpen;
+		Spil.Instance.OnSplashScreenOpen += OnPopupOpen;
+		Spil.Instance.OnSplashScreenClosed -= OnPopupClosed;
+		Spil.Instance.OnSplashScreenClosed += OnPopupClosed;
+		Spil.Instance.OnSplashScreenError -= OnPopupError;
+		Spil.Instance.OnSplashScreenError += OnPopupError;
+		Spil.Instance.OnSplashScreenOpenShop -= OnOpenShop;
+		Spil.Instance.OnSplashScreenOpenShop += OnOpenShop;
+
+		Spil.Instance.OnDailyBonusOpen -= OnPopupOpen;
+		Spil.Instance.OnDailyBonusOpen += OnPopupOpen;
+		Spil.Instance.OnDailyBonusClosed -= OnPopupClosed;
+		Spil.Instance.OnDailyBonusClosed += OnPopupClosed;
+		Spil.Instance.OnDailyBonusError -= OnPopupError;
+		Spil.Instance.OnDailyBonusError += OnPopupError;
+		Spil.Instance.OnDailyBonusReward -= OnPopupReward;
+		Spil.Instance.OnDailyBonusReward += OnPopupReward;
+>>>>>>> origin/master
 	}
 
 	void Spil_Instance_OnReward (PushNotificationRewardResponse rewardResponse)
@@ -208,14 +228,39 @@ public class GameController : MonoBehaviour
 		}
 	}
 
+<<<<<<< HEAD
 	public void OnDailyBonusOpen ()
+=======
+	public void OnPopupOpen ()
+>>>>>>> origin/master
 	{
-		
+		Debug.Log ("OnPopupOpen");
 	}
 
-	public void OnDailyBonusClosed ()
+	public void OnPopupClosed ()
 	{
-		
+		Debug.Log ("OnPopupClosed");
+	}
+
+	public void OnPopupError (SpilErrorMessage message)
+	{
+		Debug.Log ("OnPopupError: " + message);
+	}
+
+	public void OnOpenShop ()
+	{
+		Debug.Log ("OnOpenShop");
+
+		shopPanel.SetActive (true);
+	}
+
+<<<<<<< HEAD
+	public void OnDailyBonusClosed ()
+=======
+	public void OnPopupReward (string reward)
+>>>>>>> origin/master
+	{
+		Debug.Log ("OnPopupReward: " + reward);
 	}
 
 	public void SavePrivateGameState ()
