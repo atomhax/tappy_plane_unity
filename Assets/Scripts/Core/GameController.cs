@@ -58,33 +58,21 @@ public class GameController : MonoBehaviour
 		GetAndApplyGameConfig ();
 		SetupNewGame ();
 
-<<<<<<< HEAD
 		Spil.Instance.OnDailyBonusOpen -= OnDailyBonusOpen;
 		Spil.Instance.OnDailyBonusOpen += OnDailyBonusOpen;
 
 		Spil.Instance.OnDailyBonusClosed -= OnDailyBonusClosed;
 		Spil.Instance.OnDailyBonusClosed += OnDailyBonusClosed;
 
+		Spil.Instance.OnDailyBonusNotAvailable -= OnDailyBonusNotAvailable;
+		Spil.Instance.OnDailyBonusNotAvailable += OnDailyBonusNotAvailable;
 
-=======
-		Spil.Instance.OnSplashScreenOpen -= OnPopupOpen;
-		Spil.Instance.OnSplashScreenOpen += OnPopupOpen;
-		Spil.Instance.OnSplashScreenClosed -= OnPopupClosed;
-		Spil.Instance.OnSplashScreenClosed += OnPopupClosed;
-		Spil.Instance.OnSplashScreenError -= OnPopupError;
-		Spil.Instance.OnSplashScreenError += OnPopupError;
-		Spil.Instance.OnSplashScreenOpenShop -= OnOpenShop;
-		Spil.Instance.OnSplashScreenOpenShop += OnOpenShop;
+		Spil.Instance.OnDailyBonusError -= OnDailyBonusError;
+		Spil.Instance.OnDailyBonusError += OnDailyBonusError;
 
-		Spil.Instance.OnDailyBonusOpen -= OnPopupOpen;
-		Spil.Instance.OnDailyBonusOpen += OnPopupOpen;
-		Spil.Instance.OnDailyBonusClosed -= OnPopupClosed;
-		Spil.Instance.OnDailyBonusClosed += OnPopupClosed;
-		Spil.Instance.OnDailyBonusError -= OnPopupError;
-		Spil.Instance.OnDailyBonusError += OnPopupError;
-		Spil.Instance.OnDailyBonusReward -= OnPopupReward;
-		Spil.Instance.OnDailyBonusReward += OnPopupReward;
->>>>>>> origin/master
+		Spil.Instance.OnDailyBonusReward -= OnDailyBonusReward;
+		Spil.Instance.OnDailyBonusReward += OnDailyBonusReward;
+
 	}
 
 	void Spil_Instance_OnReward (PushNotificationRewardResponse rewardResponse)
@@ -228,39 +216,29 @@ public class GameController : MonoBehaviour
 		}
 	}
 
-<<<<<<< HEAD
 	public void OnDailyBonusOpen ()
-=======
-	public void OnPopupOpen ()
->>>>>>> origin/master
 	{
-		Debug.Log ("OnPopupOpen");
+		Debug.Log ("DailyBonusOpen");
 	}
 
-	public void OnPopupClosed ()
-	{
-		Debug.Log ("OnPopupClosed");
-	}
-
-	public void OnPopupError (SpilErrorMessage message)
-	{
-		Debug.Log ("OnPopupError: " + message);
-	}
-
-	public void OnOpenShop ()
-	{
-		Debug.Log ("OnOpenShop");
-
-		shopPanel.SetActive (true);
-	}
-
-<<<<<<< HEAD
 	public void OnDailyBonusClosed ()
-=======
-	public void OnPopupReward (string reward)
->>>>>>> origin/master
 	{
-		Debug.Log ("OnPopupReward: " + reward);
+		Debug.Log ("DailyBonusClosed");
+	}
+
+	public void OnDailyBonusReward (string reward)
+	{
+		Debug.Log ("DailyBonusReward: " + reward);
+	}
+
+	public void OnDailyBonusError (SpilErrorMessage error)
+	{
+		Debug.Log ("DailyBonusError with reason: " + error.message);
+	}
+
+	public void OnDailyBonusNotAvailable ()
+	{
+		Debug.Log ("DailyBonusNotAvailable");
 	}
 
 	public void SavePrivateGameState ()

@@ -188,49 +188,30 @@ namespace SpilGames.Unity
 		/// <summary>
 		/// This method is called by the native Spil SDK, it should not be used by developers.
 		/// </summary>
-<<<<<<< HEAD
 		public void SplashScreenNotAvailable()
 		{
 			SpilUnityImplementationBase.fireSplashScreenNotAvailable();
-=======
+		}
+
+		/// <summary>
+		/// This method is called by the native Spil SDK, it should not be used by developers.
+		/// </summary>
 		public void SplashScreenClosed()
 		{
 			SpilUnityImplementationBase.fireSplashScreenClosed();
->>>>>>> origin/master
 		}
 
 		/// <summary>
 		/// This method is called by the native Spil SDK, it should not be used by developers.
 		/// </summary>
-<<<<<<< HEAD
-		public void SplashScreenClosed()
-		{
-			SpilUnityImplementationBase.fireSplashScreenClosed();
-=======
 		public void SplashScreenOpenShop()
 		{
 			SpilUnityImplementationBase.fireSplashScreenOpenShop();
->>>>>>> origin/master
 		}
 
 		/// <summary>
 		/// This method is called by the native Spil SDK, it should not be used by developers.
 		/// </summary>
-<<<<<<< HEAD
-		public void SplashScreenOpenShop()
-		{
-			SpilUnityImplementationBase.fireSplashScreenOpenShop();
-=======
-		public void SplashScreenError(string error)
-		{
-			SpilUnityImplementationBase.fireSplashScreenError(error);
->>>>>>> origin/master
-		}
-
-		/// <summary>
-		/// This method is called by the native Spil SDK, it should not be used by developers.
-		/// </summary>
-<<<<<<< HEAD
 		public void SplashScreenError(string error)
 		{
 			SpilUnityImplementationBase.fireSplashScreenError(error);
@@ -241,17 +222,12 @@ namespace SpilGames.Unity
 		/// </summary>
 		public void DailyBonusOpen()
 		{
-=======
-		public void DailyBonusOpen()
-		{
->>>>>>> origin/master
 			SpilUnityImplementationBase.fireDailyBonusOpen();
 		}
 
 		/// <summary>
 		/// This method is called by the native Spil SDK, it should not be used by developers.
 		/// </summary>
-<<<<<<< HEAD
 		public void DailyBonusNotAvailable()
 		{
 			SpilUnityImplementationBase.fireDailyBonusNotAvailable();
@@ -260,8 +236,6 @@ namespace SpilGames.Unity
 		/// <summary>
 		/// This method is called by the native Spil SDK, it should not be used by developers.
 		/// </summary>
-=======
->>>>>>> origin/master
 		public void DailyBonusClosed()
 		{
 			SpilUnityImplementationBase.fireDailyBonusClosed();

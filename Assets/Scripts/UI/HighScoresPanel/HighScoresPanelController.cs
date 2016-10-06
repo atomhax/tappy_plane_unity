@@ -8,8 +8,6 @@ using UnityEngine.SceneManagement;
 
 public class HighScoresPanelController : MonoBehaviour {
 
-	const string glyphs= "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
 	public Text highScoreText;
 
 	public GameController gameController;

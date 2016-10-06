@@ -25,6 +25,22 @@ public class ShopPanelController : MonoBehaviour {
 	void OnEnable(){
 		Spil.Instance.OnAdAvailable += Spil_Instance_OnAdAvailable;	
 		Spil.Instance.OnPlayerDataUpdated += Spil_Instance_OnPlayerDataUpdated;
+
+		Spil.Instance.OnSplashScreenOpen -= OnSplashScreenOpen;
+		Spil.Instance.OnSplashScreenOpen += OnSplashScreenOpen;
+
+		Spil.Instance.OnSplashScreenClosed -= OnSplashScreenClosed;
+		Spil.Instance.OnSplashScreenClosed += OnSplashScreenClosed;
+
+		Spil.Instance.OnSplashScreenNotAvailable -= OnSplashScreenNotAvailable;
+		Spil.Instance.OnSplashScreenNotAvailable += OnSplashScreenNotAvailable;
+
+		Spil.Instance.OnSplashScreenError -= OnSplashScreenError;
+		Spil.Instance.OnSplashScreenError += OnSplashScreenError;
+
+		Spil.Instance.OnSplashScreenOpenShop -= OnSplashScreenOpenShop;
+		Spil.Instance.OnSplashScreenOpenShop += OnSplashScreenOpenShop;
+
 		Spil.Instance.SendRequestRewardVideoEvent ();
 		Spil_Instance_OnPlayerDataUpdated("Opened", null);
 		ResetShop();
@@ -103,6 +119,31 @@ public class ShopPanelController : MonoBehaviour {
 
 	public void ShowHelpCenter(){
 		Spil.Instance.ShowHelpCenter();
+	}
+
+	void OnSplashScreenOpen()
+	{
+		Debug.Log ("SplashScreenOpen");
+	}
+
+	void OnSplashScreenClosed()
+	{
+		Debug.Log ("SplashScreenClosed");
+	}
+
+	void OnSplashScreenNotAvailable()
+	{
+		Debug.Log ("SplashScreenNotAvailable");
+	}
+
+	void OnSplashScreenError(SpilErrorMessage error)
+	{
+		Debug.Log ("SplashScreenError with reason: " + error.message);
+	}
+
+	void OnSplashScreenOpenShop()
+	{
+		Debug.Log ("SplashScreenOpenShop");
 	}
 
 }
