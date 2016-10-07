@@ -31,6 +31,10 @@ namespace SpilGames.Unity
 		private string spilUserIdEditor;
 		public static string SpilUserIdEditor { get; private set; }
 
+		[SerializeField]
+		private string bundleIdEditor;
+		public static string BundleIdEditor { get; private set; }
+
 		#if UNITY_EDITOR
 			
 			public static SpilUnityEditorImplementation Instance = new SpilUnityEditorImplementation ();
@@ -59,6 +63,11 @@ namespace SpilGames.Unity
 			}
 			SpilUserIdEditor = spilUserIdEditor;
 			Debug.Log("SpilSDK-Unity Using SpilUserIdEditor: " + SpilUserIdEditor);
+
+			BundleIdEditor = bundleIdEditor;
+			if (String.IsNullOrEmpty(bundleIdEditor)) {
+				Debug.Assert(!String.IsNullOrEmpty(bundleIdEditor), "SpilSDK-Unity No BundleIdEditor set!");
+			}
 		#endif
 
 			Debug.Log("SpilSDK-Unity Init");
