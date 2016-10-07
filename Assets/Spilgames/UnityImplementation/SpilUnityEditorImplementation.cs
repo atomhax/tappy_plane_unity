@@ -5,6 +5,7 @@ using UnityEditor;
 using System.IO;
 using Newtonsoft.Json;
 using SpilGames.Unity.Utils;
+using SpilGames.Unity.Utils.UnityEditor;
 using SpilGames.Unity.Helpers;
 
 namespace SpilGames.Unity.Implementations
@@ -85,7 +86,9 @@ namespace SpilGames.Unity.Implementations
 			/// </summary>
 			internal override void SpilInit()
 			{
-				
+				SpilEvent eventToTrack = new SpilEvent();
+				eventToTrack.eventName = "test";
+				SpilEvent.TrackEvent(eventToTrack);
 			}
 
 			/// <summary>
