@@ -35,6 +35,8 @@ namespace SpilGames.Unity
 		private string bundleIdEditor;
 		public static string BundleIdEditor { get; private set; }
 
+		public static MonoBehaviour MonoInstance { get { return GameObject.Find("SpilSDK").GetComponent<Spil>() ; } }
+
 		#if UNITY_EDITOR
 			
 			public static SpilUnityEditorImplementation Instance = new SpilUnityEditorImplementation ();

@@ -59,7 +59,11 @@ namespace SpilGames.Unity.Implementations
 
             protected override string GetAllPackages()
             {
-                return "Not Avalible in editorMode";
+				SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent> ();
+				spilEvent.eventName = "requestPackages";
+				spilEvent.Send ();
+
+                return  "Not Avalible in editorMode";
             }
 
             protected override string GetPackage(string key)
@@ -86,9 +90,9 @@ namespace SpilGames.Unity.Implementations
 			/// </summary>
 			internal override void SpilInit()
 			{
-				SpilEvent eventToTrack = new SpilEvent();
-				eventToTrack.eventName = "test";
-				SpilEvent.TrackEvent(eventToTrack);
+				SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent> ();
+				spilEvent.eventName = "test";
+				spilEvent.Send ();
 			}
 
 			/// <summary>

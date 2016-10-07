@@ -7,33 +7,41 @@ using SpilGames.Unity;
 using SpilGames.Unity.Implementations;
 using SpilGames.Unity.Utils;
 using SpilGames.Unity.Helpers;
+using System.Collections;
 
 namespace SpilGames.Unity.Utils.UnityEditor
 {
-
 	public class SpilEvent : MonoBehaviour
 	{
-
 		public string eventName;
-		private JSONObject data;
-		public JSONObject customData;
+		private JSONObject data = new JSONObject ();
+		public JSONObject customData = new JSONObject ();
 		private string queued = "0";
-		private long ts = (Time.time * 1000).ToString();
+		private string ts;
 		private string debug = "&debugMode=true";
 		private string uid = Spil.SpilUserIdEditor;
 
-		public static void TrackEvent(SpilEvent eventToTrack){
-			WWWForm requestForm = new WWWForm ();
+		public void Send() {
+			ts = (Time.time * 1000).ToString();
 
-			requestForm.AddField ("name", eventToTrack.eventName);
-			requestForm.AddField ("data", data.ToString ());
-			requestForm.AddField ("customData", customData.ToString ());
-			requestForm.AddField ("ts", eventToTrack.ts);
+			this.StartCoroutine (SendCoroutine ());
+		}
+
+		public IEnumerator SendCoroutine() {
+			AddDefaultParameters();
+
+			WWWForm requestForm = new WWWForm ();
+			requestForm.AddField ("name", this.eventName);
+			requestForm.AddField ("data", this.data.ToString ());
+			if (!this.customData.IsNull) {
+				requestForm.AddField ("customData", this.customData.ToString ());
+			}
+			requestForm.AddField ("ts", this.ts);
 			requestForm.AddField ("queued", 0);
 
-			WWW request = new WWW ("https://apptracker.spilgames.com/v1/native-events/event/android/" + Spil.BundleIdEditor + "/" + eventToTrack.eventName, requestForm);
-			while (!request.isDone)
-				;
+			WWW request = new WWW ("https://apptracker.spilgames.com/v1/native-events/event/android/" + Spil.BundleIdEditor + "/" + this.eventName, requestForm);
+			yield return request;
+//			while (!request.isDone);	
 			if (request.error != null) {
 				Debug.LogError ("Error getting data: " + request.error);  
 			} else { 
@@ -42,21 +50,18 @@ namespace SpilGames.Unity.Utils.UnityEditor
 			}
 		}
 
-		private Event AddDefaultParameters(SpilEvent eventToTrack){
-			eventToTrack.data.AddField("uid", uid);
-			eventToTrack.data.AddField("locale", "en");
-			eventToTrack.data.AddField("appVersion", "1.0");
-			eventToTrack.data.AddField("apiVersion", SpilUnityImplementationBase.PluginVersion);
-			eventToTrack.data.AddField("osVersion", "1.0");
-			eventToTrack.data.AddField("os", "android");
-			eventToTrack.data.AddField("osVersion", "6.0");
-			eventToTrack.data.AddField("deviceModel", "Editor");
-			eventToTrack.data.AddField("timezoneOffset", "0");
-			eventToTrack.data.AddField("packageName", Spil.BundleIdEditor);
-			eventToTrack.data.AddField ("sessionId", "deadbeef");
+		private void AddDefaultParameters() {
+			this.data.AddField("uid", uid);
+			this.data.AddField("locale", "en");
+			this.data.AddField("appVersion", "1.0");
+			this.data.AddField("apiVersion", SpilUnityImplementationBase.PluginVersion);
+			this.data.AddField("osVersion", "1.0");
+			this.data.AddField("os", "android");
+			this.data.AddField("osVersion", "6.0");
+			this.data.AddField("deviceModel", "Editor");
+			this.data.AddField("timezoneOffset", "0");
+			this.data.AddField("packageName", Spil.BundleIdEditor);
+			this.data.AddField ("sessionId", "deadbeef");
 		}
-
 	}
 }
-
-
