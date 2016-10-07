@@ -36,12 +36,14 @@
 
 // Splash screen events
 -(void)splashScreenOpen;
+-(void)splashScreenNotAvailable;
 -(void)splashScreenClosed;
 -(void)splashScreenOpenShop;
 -(void)splashScreenError:(NSString*)message;
 
 // Daily bonus screen events
 -(void)dailyBonusOpen;
+-(void)dailyBonusNotAvailable;
 -(void)dailyBonusClosed;
 -(void)dailyBonusReward:(NSDictionary*)data;
 -(void)dailyBonusError:(NSString*)message;
@@ -557,6 +559,5 @@
 +(void)devShowRewardVideo:(NSString*)adProvider;
 +(void)devShowInterstitial:(NSString*)adProvider;
 +(void)devShowMoreApps:(NSString*)adProvider;
-+(void)showBanner;
 
 @end

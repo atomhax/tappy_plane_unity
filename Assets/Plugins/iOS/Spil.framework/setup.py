@@ -175,6 +175,18 @@ plist['UIBackgroundModes'] = ["remote-notification"]
 plist['NSCameraUsageDescription'] = "Used to take a photo."
 plist['NSCalendarsUsageDescription'] = "Used to access the calendar."
 plist['NSPhotoLibraryUsageDescription'] = "Used to access the photo library."
+plist['NSAppleMusicUsageDescription'] = "Used to access apple music."
+plist['NSBluetoothPeripheralUsageDescription'] = "Used to communicate between devices using Bluetooth."
+plist['NSContactsUsageDescription'] = "Used to access the phone contacts."
+plist['NSHealthShareUsageDescription'] = "Used to share data with the health app."
+plist['NSHomeKitUsageDescription'] = "Used to access the domotica app information."
+plist['NSLocationAlwaysUsageDescription'] = "Used to access the user location."
+plist['NSLocationWhenInUseUsageDescription'] = "Used to access the user location."
+plist['NSMicrophoneUsageDescription'] = "Used to access the microphone."
+plist['NSMotionUsageDescription'] = "Used to access the phones motion information."
+plist['NSRemindersUsageDescription'] = "Used to access the reminders app information."
+plist['NSSiriUsageDescription'] = "Siri is used for voice control."
+plist['NSSpeechRecognitionUsageDescription'] = "Used to enable speech recognition."
 
 # write plist
 print 'Saving info.plist'
