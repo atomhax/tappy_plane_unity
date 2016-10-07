@@ -11,6 +11,7 @@ using UnityEngine;
 using SpilGames.Unity.Implementations;
 using SpilGames.Unity.Utils;
 using SpilGames.Unity.Helpers;
+using System;
 
 namespace SpilGames.Unity
 { 
@@ -25,6 +26,10 @@ namespace SpilGames.Unity
 
         public static SpilGameDataHelper GameData;
 		public static PlayerDataHelper PlayerData;
+
+		[SerializeField]
+		private string spilUserIdEditor;
+		public static string SpilUserIdEditor { get; private set; }
 
 		#if UNITY_EDITOR
 			
@@ -48,6 +53,14 @@ namespace SpilGames.Unity
 
 		void Awake()
 		{
+		#if UNITY_EDITOR
+			if (String.IsNullOrEmpty(spilUserIdEditor)) {
+				spilUserIdEditor = Guid.NewGuid().ToString();
+			}
+			SpilUserIdEditor = spilUserIdEditor;
+			Debug.Log("SpilSDK-Unity Using SpilUserIdEditor: " + SpilUserIdEditor);
+		#endif
+
 			Debug.Log("SpilSDK-Unity Init");
 
 			Instance.SpilInit();
