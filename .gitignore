@@ -2,6 +2,7 @@
 *.meta
 
 Temp/*
+Library/*
 
 # ============ #
 # Android #
