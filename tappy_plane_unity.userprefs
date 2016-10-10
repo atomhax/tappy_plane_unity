@@ -4,11 +4,11 @@
     <Files>
       <File FileName="Assets/Spilgames/Spil.cs" Line="1" Column="1" />
       <File FileName="Assets/Spilgames/UnityImplementation/SpilUnityEditorImplementation.cs" Line="58" Column="4" />
-      <File FileName="Assets/Spilgames/Utils/UnityEditor/SpilEvent.cs" Line="8" Column="29" />
-      <File FileName="Assets/Editor/SpilEditor.cs" Line="93" Column="33" />
-      <File FileName="Assets/Spilgames/Utils/UnityEditor/ResponseEvent.cs" Line="13" Column="37" />
+      <File FileName="Assets/Spilgames/Utils/UnityEditor/SpilEvent.cs" Line="49" Column="32" />
+      <File FileName="Assets/Spilgames/Utils/UnityEditor/ResponseEvent.cs" Line="47" Column="6" />
       <File FileName="Assets/Spilgames/Helpers/JSONHelper.cs" Line="29" Column="1" />
       <File FileName="Assets/Spilgames/UnityImplementation/SpilUnityImplementationBase.cs" Line="65" Column="71" />
+      <File FileName="Assets/Spilgames/Utils/UnityEditor/Responses/GameStateData.cs" Line="7" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
