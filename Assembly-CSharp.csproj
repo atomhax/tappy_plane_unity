@@ -93,7 +93,11 @@
      <Compile Include="Assets\Spilgames\Utils\JSONObject.cs" />
      <Compile Include="Assets\Spilgames\Utils\SpilResponses.cs" />
      <Compile Include="Assets\Spilgames\Utils\UnityEditor\ResponseEvent.cs" />
+     <Compile Include="Assets\Spilgames\Utils\UnityEditor\Responses\AdvertisementData.cs" />
+     <Compile Include="Assets\Spilgames\Utils\UnityEditor\Responses\ConfigData.cs" />
+     <Compile Include="Assets\Spilgames\Utils\UnityEditor\Responses\Data.cs" />
      <Compile Include="Assets\Spilgames\Utils\UnityEditor\Responses\GameStateData.cs" />
+     <Compile Include="Assets\Spilgames\Utils\UnityEditor\Responses\PackagesData.cs" />
      <Compile Include="Assets\Spilgames\Utils\UnityEditor\SpilEvent.cs" />
      <None Include="Assets\Plugins\iOS\Spil.framework\Version.txt" />
      <None Include="Assets\link.xml" />

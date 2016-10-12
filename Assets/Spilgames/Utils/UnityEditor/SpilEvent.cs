@@ -17,13 +17,9 @@ namespace SpilGames.Unity.Utils.UnityEditor
 		public string eventName;
 		public JSONObject data = new JSONObject ();
 		public JSONObject customData = new JSONObject ();
-		private int ts;
-//		private string debug = "&debugMode=true";
 		private string uid = Spil.SpilUserIdEditor;
 
 		public void Send() {
-			this.ts = (int)(Time.time * 1000);
-
 			this.StartCoroutine (SendCoroutine ());
 		}
 
@@ -34,7 +30,7 @@ namespace SpilGames.Unity.Utils.UnityEditor
 			requestForm.AddField ("name", this.eventName);
 			requestForm.AddField ("data", this.data.ToString ());
 			if (!this.customData.IsNull) {
-				requestForm.AddField ("customData", this.customData.ToString ());
+				requestForm.AddField ("customData", this.customData.Print(false));
 			} else {
 				requestForm.AddField ("customData", "{}");
 			}
@@ -50,10 +46,10 @@ namespace SpilGames.Unity.Utils.UnityEditor
 			if (request.error != null) {
 				Debug.LogError ("Error getting data: " + request.error); 
 				Debug.LogError ("Error getting data: " + request.text);
-				ResponseEvent.Build(new JSONObject(request.text));
 			} else { 
 				JSONObject serverResponse = new JSONObject (request.text);
-				Debug.LogError ("Data returned: " + serverResponse.ToString());
+				Debug.Log ("Data returned: " + serverResponse.ToString());
+				ResponseEvent.Build(serverResponse);
 			}
 		}
 
@@ -70,6 +66,14 @@ namespace SpilGames.Unity.Utils.UnityEditor
 			this.data.AddField("tto", "200");
 			this.data.AddField("packageName", Spil.BundleIdEditor);
 			this.data.AddField ("sessionId", "deadbeef");
+
+			if(Data.provider != null && Data.externalId != null){
+				JSONObject externalUserIdJson = new JSONObject();
+				externalUserIdJson.AddField("provider", Data.provider);
+				externalUserIdJson.AddField("userId", Data.externalId);
+
+				this.data.AddField("externalUserId", externalUserIdJson);
+			}
 		}
 	}
 }

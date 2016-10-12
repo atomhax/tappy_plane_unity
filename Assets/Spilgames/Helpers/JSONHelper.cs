@@ -28,7 +28,7 @@ namespace SpilGames.Unity.Helpers
 			}
 			catch(System.MissingMethodException ex)
 			{
-                Debug.Log("Something has gone wrong while loading NewtonSoft.json. Most likely the file \"link.xml\" is missing from the /Assets directory of your Unity project. Please copy the \"link.xml\" file included with the Unity SpilSDK download to the /Assets folder of your project.");
+                Debug.Log("Something has gone wrong while loading NewtonSoft.json. Most likely the file \"link.xml\" is missing from the /Assets directory of your Unity project. Please copy the \"link.xml\" file included with the Unity SpilSDK download to the /Assets folder of your project.\n" + ex.Message);
                 throw new System.Exception();
 			}
             catch (System.Exception ex)
@@ -51,7 +51,7 @@ namespace SpilGames.Unity.Helpers
             }
             catch (System.MissingMethodException ex)
             {
-                Debug.Log("Something has gone wrong while loading NewtonSoft.json. Most likely the file \"link.xml\" is missing from the /Assets directory of your Unity project. Please copy the \"link.xml\" file included with the Unity SpilSDK download to the /Assets folder of your project.");
+				Debug.Log("Something has gone wrong while loading NewtonSoft.json. Most likely the file \"link.xml\" is missing from the /Assets directory of your Unity project. Please copy the \"link.xml\" file included with the Unity SpilSDK download to the /Assets folder of your project.\n" + ex.Message);
                 throw new System.Exception();
             }
             catch (System.Exception ex)

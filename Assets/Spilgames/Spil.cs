@@ -14,40 +14,62 @@ using SpilGames.Unity.Helpers;
 using System;
 
 namespace SpilGames.Unity
-{ 
-    public class Spil : MonoBehaviour
-    {
-        /// <summary>
-        /// The project ID assigned to your project by Spil games.
-        /// You can get your project id from your contact person.
-        /// The project ID is used for push notifications.
-        /// </summary>
-        public static string Project_ID = "127433475057";
+{
+	public class Spil : MonoBehaviour
+	{
+		/// <summary>
+		/// The project ID assigned to your project by Spil games.
+		/// You can get your project id from your contact person.
+		/// The project ID is used for push notifications.
+		/// </summary>
+		public static string Project_ID = "127433475057";
 
-        public static SpilGameDataHelper GameData;
+		public static SpilGameDataHelper GameData;
 		public static PlayerDataHelper PlayerData;
+
+		[Header("App Settings")]
 
 		[SerializeField]
 		private string spilUserIdEditor;
+
 		public static string SpilUserIdEditor { get; private set; }
 
 		[SerializeField]
 		private string bundleIdEditor;
+
 		public static string BundleIdEditor { get; private set; }
 
-		public static MonoBehaviour MonoInstance { get { return GameObject.Find("SpilSDK").GetComponent<Spil>() ; } }
+		[Header("Reward Video Settings")]
+
+		[SerializeField]
+		private string currencyName;
+
+		public static string CurrencyName { get; private set; }
+
+		[SerializeField]
+		private string currencyId;
+
+		public static string CurrencyId { get; private set; }
+
+		[SerializeField]
+		private int reward = 0;
+
+		public static int Reward { get; private set; }
+
+		public static Spil MonoInstance { get { return GameObject.Find ("SpilSDK").GetComponent<Spil> (); } }
 
 		#if UNITY_EDITOR
 			
-			public static SpilUnityEditorImplementation Instance = new SpilUnityEditorImplementation ();
+		public static SpilUnityEditorImplementation Instance = new SpilUnityEditorImplementation ();
 
 
 		#elif UNITY_ANDROID
-
+		
 			public static SpilAndroidUnityImplementation Instance = new SpilAndroidUnityImplementation();
 
+		
 		#elif UNITY_IPHONE
-
+		
 			/// <summary>
 			/// Use this object to access all Spil related functionality.
 			/// </summary>
@@ -57,228 +79,233 @@ namespace SpilGames.Unity
 
 		#endif
 
-		void Awake()
+		void Awake ()
 		{
-		#if UNITY_EDITOR
-			if (String.IsNullOrEmpty(spilUserIdEditor)) {
-				spilUserIdEditor = Guid.NewGuid().ToString();
+			#if UNITY_EDITOR
+			if (String.IsNullOrEmpty (spilUserIdEditor)) {
+				spilUserIdEditor = Guid.NewGuid ().ToString ();
 			}
 			SpilUserIdEditor = spilUserIdEditor;
-			Debug.Log("SpilSDK-Unity Using SpilUserIdEditor: " + SpilUserIdEditor);
+			Debug.Log ("SpilSDK-Unity Using SpilUserIdEditor: " + SpilUserIdEditor);
 
 			BundleIdEditor = bundleIdEditor;
-			if (String.IsNullOrEmpty(bundleIdEditor)) {
-				Debug.Assert(!String.IsNullOrEmpty(bundleIdEditor), "SpilSDK-Unity No BundleIdEditor set!");
+			if (String.IsNullOrEmpty (bundleIdEditor)) {
+				Debug.Assert (!String.IsNullOrEmpty (bundleIdEditor), "SpilSDK-Unity No BundleIdEditor set!");
 			}
-		#endif
 
-			Debug.Log("SpilSDK-Unity Init");
+			CurrencyName = currencyName;
+			CurrencyId = currencyId;
+			Reward = reward;
 
-			Instance.SpilInit();
-			DontDestroyOnLoad(gameObject);
+			#endif
+
+			Debug.Log ("SpilSDK-Unity Init");
+
+			Instance.SpilInit ();
+			DontDestroyOnLoad (gameObject);
 			gameObject.name = "SpilSDK";
 
-			Instance.UpdatePackagesAndPromotions();
+			Instance.UpdatePackagesAndPromotions ();
 
-			GameData = new SpilGameDataHelper(Instance);
-			PlayerData = new PlayerDataHelper(Instance);
+			GameData = new SpilGameDataHelper (Instance);
+			PlayerData = new PlayerDataHelper (Instance);
 		}
 
 		/// <summary>
 		/// This method is called by the native Spil SDK, it should not be used by developers.
 		/// Developers can subscribe to the Spil.Instance.AdStarted event.
 		/// </summary>
-		public void AdStart()
+		public void AdStart ()
 		{
-			SpilUnityImplementationBase.fireAdStartedEvent();
+			SpilUnityImplementationBase.fireAdStartedEvent ();
 		}
 
 		/// <summary>
 		/// This method is called by the native Spil SDK, it should not be used by developers.
 		/// Developers can subscribe to the Spil.Instance.AdFinished event.
 		/// </summary>
-		public void AdFinished(string response)
+		public void AdFinished (string response)
 		{
-			SpilUnityImplementationBase.fireAdFinishedEvent(response);
+			SpilUnityImplementationBase.fireAdFinishedEvent (response);
 		}
 
 		/// <summary>
 		/// This method is called by the native Spil SDK, it should not be used by developers.
 		/// Developers can subscribe to the Spil.Instance.AdAvailable event.
 		/// </summary>
-		public void AdAvailable(string type)
+		public void AdAvailable (string type)
 		{
-			SpilUnityImplementationBase.fireAdAvailableEvent(type);            
+			SpilUnityImplementationBase.fireAdAvailableEvent (type);            
 		}
 
 		/// <summary>
 		/// This method is called by the native Spil SDK, it should not be used by developers.
 		/// Developers can subscribe to the Spil.Instance.AdNotAvailable event.
 		/// </summary>
-		public void AdNotAvailable(string type)
+		public void AdNotAvailable (string type)
 		{
-			SpilUnityImplementationBase.fireAdNotAvailableEvent(type);
+			SpilUnityImplementationBase.fireAdNotAvailableEvent (type);
 		}
 
-	        /// <summary>
-	        /// This method is called by the native Spil SDK, it should not be used by developers.
-	        /// Developers can subscribe to the Spil.Instance.ConfigUpdated event.
-	        /// </summary>
-	        public void ConfigUpdated()
-	        {
-	            SpilUnityImplementationBase.fireConfigUpdatedEvent();
-	        }
-
 		/// <summary>
 		/// This method is called by the native Spil SDK, it should not be used by developers.
+		/// Developers can subscribe to the Spil.Instance.ConfigUpdated event.
 		/// </summary>
-		public void OnResponseReceived(string response)
+		public void ConfigUpdated ()
 		{
-			SpilUnityImplementationBase.OnResponseReceived(response);
-		}
-		
-		/// <summary>
-		/// This method is called by the native Spil SDK, it should not be used by developers.
-		/// </summary>
-		public void SpilGameDataAvailable()
-		{
-			SpilUnityImplementationBase.fireSpilGameDataAvailable();
-		}
-		
-		/// <summary>
-		/// This method is called by the native Spil SDK, it should not be used by developers.
-		/// </summary>
-		public void SpilGameDataError(string reason)
-		{
-			SpilUnityImplementationBase.fireSpilGameDataError(reason);
-		}
-		
-		/// <summary>
-		/// This method is called by the native Spil SDK, it should not be used by developers.
-		/// </summary>
-		public void PlayerDataAvailable()
-		{
-			SpilUnityImplementationBase.firePlayerDataAvailable();
-		}
-		
-		/// <summary>
-		/// This method is called by the native Spil SDK, it should not be used by developers.
-		/// </summary>
-		public void PlayerDataUpdated(string data)
-		{
-            		SpilUnityImplementationBase.firePlayerDataUpdated(data);
-		}
-		
-		/// <summary>
-		/// This method is called by the native Spil SDK, it should not be used by developers.
-		/// </summary>
-		public void PlayerDataError(string reason)
-		{
-			SpilUnityImplementationBase.firePlayerDataError(reason);
+			SpilUnityImplementationBase.fireConfigUpdatedEvent ();
 		}
 
 		/// <summary>
 		/// This method is called by the native Spil SDK, it should not be used by developers.
 		/// </summary>
-		public void GameStateUpdated(string access)
+		public void OnResponseReceived (string response)
 		{
-			SpilUnityImplementationBase.fireGameStateUpdated(access);
+			SpilUnityImplementationBase.OnResponseReceived (response);
 		}
 
 		/// <summary>
 		/// This method is called by the native Spil SDK, it should not be used by developers.
 		/// </summary>
-		public void OtherUsersGameStateLoaded(string message)
+		public void SpilGameDataAvailable ()
 		{
-			SpilUnityImplementationBase.fireOtherUsersGameStateLoaded(message);
+			SpilUnityImplementationBase.fireSpilGameDataAvailable ();
 		}
 
 		/// <summary>
 		/// This method is called by the native Spil SDK, it should not be used by developers.
 		/// </summary>
-		public void GameStateError(string message)
+		public void SpilGameDataError (string reason)
 		{
-			SpilUnityImplementationBase.fireGameStateError(message);
+			SpilUnityImplementationBase.fireSpilGameDataError (reason);
 		}
 
 		/// <summary>
 		/// This method is called by the native Spil SDK, it should not be used by developers.
 		/// </summary>
-		public void SplashScreenOpen()
+		public void PlayerDataAvailable ()
 		{
-			SpilUnityImplementationBase.fireSplashScreenOpen();
+			SpilUnityImplementationBase.firePlayerDataAvailable ();
 		}
 
 		/// <summary>
 		/// This method is called by the native Spil SDK, it should not be used by developers.
 		/// </summary>
-		public void SplashScreenNotAvailable()
+		public void PlayerDataUpdated (string data)
 		{
-			SpilUnityImplementationBase.fireSplashScreenNotAvailable();
+			SpilUnityImplementationBase.firePlayerDataUpdated (data);
 		}
 
 		/// <summary>
 		/// This method is called by the native Spil SDK, it should not be used by developers.
 		/// </summary>
-		public void SplashScreenClosed()
+		public void PlayerDataError (string reason)
 		{
-			SpilUnityImplementationBase.fireSplashScreenClosed();
+			SpilUnityImplementationBase.firePlayerDataError (reason);
 		}
 
 		/// <summary>
 		/// This method is called by the native Spil SDK, it should not be used by developers.
 		/// </summary>
-		public void SplashScreenOpenShop()
+		public void GameStateUpdated (string access)
 		{
-			SpilUnityImplementationBase.fireSplashScreenOpenShop();
+			SpilUnityImplementationBase.fireGameStateUpdated (access);
 		}
 
 		/// <summary>
 		/// This method is called by the native Spil SDK, it should not be used by developers.
 		/// </summary>
-		public void SplashScreenError(string error)
+		public void OtherUsersGameStateLoaded (string message)
 		{
-			SpilUnityImplementationBase.fireSplashScreenError(error);
+			SpilUnityImplementationBase.fireOtherUsersGameStateLoaded (message);
 		}
 
 		/// <summary>
 		/// This method is called by the native Spil SDK, it should not be used by developers.
 		/// </summary>
-		public void DailyBonusOpen()
+		public void GameStateError (string message)
 		{
-			SpilUnityImplementationBase.fireDailyBonusOpen();
+			SpilUnityImplementationBase.fireGameStateError (message);
 		}
 
 		/// <summary>
 		/// This method is called by the native Spil SDK, it should not be used by developers.
 		/// </summary>
-		public void DailyBonusNotAvailable()
+		public void SplashScreenOpen ()
 		{
-			SpilUnityImplementationBase.fireDailyBonusNotAvailable();
+			SpilUnityImplementationBase.fireSplashScreenOpen ();
 		}
 
 		/// <summary>
 		/// This method is called by the native Spil SDK, it should not be used by developers.
 		/// </summary>
-		public void DailyBonusClosed()
+		public void SplashScreenNotAvailable ()
 		{
-			SpilUnityImplementationBase.fireDailyBonusClosed();
+			SpilUnityImplementationBase.fireSplashScreenNotAvailable ();
 		}
 
 		/// <summary>
 		/// This method is called by the native Spil SDK, it should not be used by developers.
 		/// </summary>
-		public void DailyBonusReward(string reward)
+		public void SplashScreenClosed ()
 		{
-			SpilUnityImplementationBase.fireDailyBonusReward(reward);
+			SpilUnityImplementationBase.fireSplashScreenClosed ();
 		}
 
 		/// <summary>
 		/// This method is called by the native Spil SDK, it should not be used by developers.
 		/// </summary>
-		public void DailyBonusError(string error)
+		public void SplashScreenOpenShop ()
 		{
-			SpilUnityImplementationBase.fireDailyBonusError(error);
+			SpilUnityImplementationBase.fireSplashScreenOpenShop ();
 		}
-    }
+
+		/// <summary>
+		/// This method is called by the native Spil SDK, it should not be used by developers.
+		/// </summary>
+		public void SplashScreenError (string error)
+		{
+			SpilUnityImplementationBase.fireSplashScreenError (error);
+		}
+
+		/// <summary>
+		/// This method is called by the native Spil SDK, it should not be used by developers.
+		/// </summary>
+		public void DailyBonusOpen ()
+		{
+			SpilUnityImplementationBase.fireDailyBonusOpen ();
+		}
+
+		/// <summary>
+		/// This method is called by the native Spil SDK, it should not be used by developers.
+		/// </summary>
+		public void DailyBonusNotAvailable ()
+		{
+			SpilUnityImplementationBase.fireDailyBonusNotAvailable ();
+		}
+
+		/// <summary>
+		/// This method is called by the native Spil SDK, it should not be used by developers.
+		/// </summary>
+		public void DailyBonusClosed ()
+		{
+			SpilUnityImplementationBase.fireDailyBonusClosed ();
+		}
+
+		/// <summary>
+		/// This method is called by the native Spil SDK, it should not be used by developers.
+		/// </summary>
+		public void DailyBonusReward (string reward)
+		{
+			SpilUnityImplementationBase.fireDailyBonusReward (reward);
+		}
+
+		/// <summary>
+		/// This method is called by the native Spil SDK, it should not be used by developers.
+		/// </summary>
+		public void DailyBonusError (string error)
+		{
+			SpilUnityImplementationBase.fireDailyBonusError (error);
+		}
+	}
 }
