@@ -31,24 +31,27 @@ public class IAPPanelController : MonoBehaviour {
 			iapButtons [i].gameObject.SetActive (false);
 		}
 		PackagesHelper helper = Spil.Instance.GetPackagesAndPromotions ();
-		if (helper.Packages.Count == 0) {
+		if(helper != null){
+			if (helper.Packages.Count == 0) {
 			gameObject.SetActive (false);
 			return;
-		} else {
-			gameObject.SetActive (true);
-		}
-		for (int i = 0; i < helper.Packages.Count; i++) {
-			Package package = helper.Packages [i];
-			string promotionText = "";
-			string gemAmount = package.Items [0].OriginalValue;
-			string cost = iapManager.packageCosts[package.Id];
-			if(package.HasActivePromotion()){
-				promotionText = "PROMOTION!\n" + package.PromotionDiscountLabel + " extra gems!";
-				gemAmount = package.Items [0].PromotionValue.Replace(".0","");
+			} else {
+				gameObject.SetActive (true);
 			}
-			iapButtons [i].PopulateIAPButton (gemAmount, promotionText, cost, package.Id);
-			iapButtons [i].gameObject.SetActive (true);
+			for (int i = 0; i < helper.Packages.Count; i++) {
+				Package package = helper.Packages [i];
+				string promotionText = "";
+				string gemAmount = package.Items [0].OriginalValue;
+				string cost = iapManager.packageCosts[package.Id];
+				if(package.HasActivePromotion()){
+					promotionText = "PROMOTION!\n" + package.PromotionDiscountLabel + " extra gems!";
+					gemAmount = package.Items [0].PromotionValue.Replace(".0","");
+				}
+				iapButtons [i].PopulateIAPButton (gemAmount, promotionText, cost, package.Id);
+				iapButtons [i].gameObject.SetActive (true);
+			}
 		}
+
 	}
 		
 }
