@@ -164,6 +164,11 @@ public class GameController : MonoBehaviour
 		shopPanel.SetActive (!shopPanel.activeInHierarchy);
 	}
 
+	public void OpenShop ()
+	{
+		shopPanel.SetActive (true);
+	}
+
 	public void ToggleHighScores ()
 	{
 		highScorePanel.SetActive (!highScorePanel.activeInHierarchy);

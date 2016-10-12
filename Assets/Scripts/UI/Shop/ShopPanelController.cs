@@ -45,7 +45,6 @@ public class ShopPanelController : MonoBehaviour {
 		Spil_Instance_OnPlayerDataUpdated("Opened", null);
 		ResetShop();
 		CreateShop ();
-		Spil.Instance.RequestSplashScreen();
 	}
 
 	//this method will take the Spil game data and create the shop from it
@@ -144,6 +143,7 @@ public class ShopPanelController : MonoBehaviour {
 	void OnSplashScreenOpenShop()
 	{
 		Debug.Log ("SplashScreenOpenShop");
+		gameController.OpenShop ();
 	}
 
 }
