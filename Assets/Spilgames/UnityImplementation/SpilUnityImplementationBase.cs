@@ -9,7 +9,7 @@ namespace SpilGames.Unity.Implementations
     public abstract class SpilUnityImplementationBase
     {
 	public static string PluginName = "Unity";
-	public static string PluginVersion = "2.2.2";
+	public static string PluginVersion = "2.2.3";
 
 	public abstract void SetPluginInformation(string PluginName, string PluginVersion);
 
@@ -796,15 +796,13 @@ namespace SpilGames.Unity.Implementations
 		
         public static void firePlayerDataUpdated(string data)
 		{
-			Debug.Log ("SpilSDK-Unity Player Data has been updated, data:" + data);
-
-			PlayerDataUpdatedData playerDataUpdatedData = JsonHelper.getObjectFromJson<PlayerDataUpdatedData>(data);
+            PlayerDataUpdatedData playerDataUpdatedData = JsonHelper.getObjectFromJson<PlayerDataUpdatedData>(data);
 
 			Spil.PlayerData.PlayerDataUpdatedHandler ();
 
-            if (Spil.Instance.OnPlayerDataUpdated != null) { 
-				Spil.Instance.OnPlayerDataUpdated(playerDataUpdatedData.reason, playerDataUpdatedData); 
-			}
+			Debug.Log ("SpilSDK-Unity Player Data has been updated");
+
+            if (Spil.Instance.OnPlayerDataUpdated != null) { Spil.Instance.OnPlayerDataUpdated(playerDataUpdatedData.reason, playerDataUpdatedData); }
 			
 		}
 		
