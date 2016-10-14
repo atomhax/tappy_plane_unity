@@ -11,5 +11,26 @@
     	"zendeskSubdomain":"https://spilapps.zendesk.com/",
     	"zendeskAppId":"73fc3647bd842920d20862af48414472ae0c607c9e5d414c",
     	"zendeskOauthClientId":"mobile_sdk_client_9fcb4e68b1c9094237f8"
-  	}
+  	},
+  "iosSdkConfig": {
+    "googleAnalyticsId": "UA-68569711-48",
+    "adjustAppToken": "odry2f9glreo",
+    "zendeskAppId": "73fc3647bd842920d20862af48414472ae0c607c9e5d414c",
+    "zendeskSubdomain": "https://spilapps.zendesk.com",
+    "zendeskCustomTheme": {
+      "navBarTintColor": "#FFFFFF",
+      "inputFieldBackgroundColor": "#FFFFFF",
+      "separatorColor": "#555555",
+      "metaTextColor": "#111111",
+      "navBarItemsColor": "#000000",
+      "customizeNavBar": "true",
+      "primaryTextColor": "#000000",
+      "emptyBackgroundColor": "#AAAAAA",
+      "navBarTextColor": "#000000",
+      "primaryBackgroundColor": "#FFFFFF",
+      "inputFieldTextColor": "#000000",
+      "secondaryBackgroundColor": "#DDDDDD"
+    },
+    "zendeskOauthClientId": "mobile_sdk_client_9fcb4e68b1c9094237f8"
+  }
 }

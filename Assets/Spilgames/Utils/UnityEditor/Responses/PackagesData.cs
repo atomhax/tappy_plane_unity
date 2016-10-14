@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#if UNITY_EDITOR
+using UnityEngine;
 using System.Collections;
 using SpilGames.Unity.Helpers;
 using SpilGames.Unity.Utils;
@@ -52,5 +53,4 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 
 	}
 }
-
-
+#endif
