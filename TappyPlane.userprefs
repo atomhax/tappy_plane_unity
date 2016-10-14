@@ -1,17 +1,14 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UI/Shop/ShopPanelController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Spilgames/Utils/SpilResponses.cs">
     <Files>
-      <File FileName="Assets/Scripts/Core/GameController.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/UI/HighScoresPanel/HighScoresPanelController.cs" Line="37" Column="33" />
-      <File FileName="Assets/Scripts/UI/GameOverPanelController.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/UI/SkinsPanel/SkinSelectPanelController.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/UI/Shop/ShopPanelController.cs" Line="103" Column="31" />
-      <File FileName="Assets/Spilgames/UnityImplementation/SpiliOSUnityImplementation.cs" Line="203" Column="4" />
-      <File FileName="Assets/Spilgames/UnityImplementation/SpilUnityImplementationBase.cs" Line="1" Column="1" />
-      <File FileName="Assets/Spilgames/UnityImplementation/SpilUnityEditorImplementation.cs" Line="1" Column="1" />
-      <File FileName="Assets/Spilgames/Spil.cs" Line="43" Column="44" />
-      <File FileName="Assets/Spilgames/UnityImplementation/SpilAndroidUnityImplementation.cs" Line="461" Column="44" />
+      <File FileName="Assets/Scripts/UI/Shop/ShopPanelController.cs" Line="156" Column="65" />
+      <File FileName="Assets/Scripts/UI/HighScoresPanel/HighScoresPanelController.cs" Line="34" Column="27" />
+      <File FileName="Assets/Spilgames/UnityImplementation/SpilUnityEditorImplementation.cs" Line="416" Column="16" />
+      <File FileName="Assets/Spilgames/Spil.cs" Line="196" Column="43" />
+      <File FileName="Assets/Spilgames/UnityImplementation/SpilUnityImplementationBase.cs" Line="801" Column="93" />
+      <File FileName="Assets/Scripts/Core/GameController.cs" Line="256" Column="60" />
+      <File FileName="Assets/Spilgames/Utils/SpilResponses.cs" Line="229" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -21,6 +21,7 @@ public class ShopPanelController : MonoBehaviour {
 	public Transform tabButtonPanel, tabsPanel;
 
 	public GameObject tabButtonPrefab, tabPrefab;
+	private bool closeShopAfterReward;
 
 	void OnEnable(){
 		Spil.Instance.OnAdAvailable += Spil_Instance_OnAdAvailable;	
@@ -109,11 +110,28 @@ public class ShopPanelController : MonoBehaviour {
 	{
 		getFreeCoinsButton.SetActive (false);
 		if(response.reward != null){
+			closeShopAfterReward = false;
 			starsRewardedText.text = "Thanks!\nStars Rewarded : " + response.reward.reward.ToString ();
 			Spil.PlayerData.Wallet.Add (25, response.reward.reward,PlayerDataUpdateReasons.RewardAds);
 			rewardSucessPanel.SetActive (true);
 		}
 		Spil.Instance.SendRequestRewardVideoEvent ();
+	}
+
+	public void ShowReward(PlayerCurrencyData currency) {
+		closeShopAfterReward = true;
+		starsRewardedText.text = "Rewarded: " + currency.delta + " " + currency.name + "!";
+		rewardSucessPanel.SetActive (true);
+	}
+
+	public void RewardScreenClosed() {
+		if (closeShopAfterReward) {
+			rewardSucessPanel.SetActive (false);
+			this.gameObject.SetActive (false);
+			closeShopAfterReward = false;
+		} else {
+			rewardSucessPanel.SetActive (false);
+		}
 	}
 
 	public void ShowHelpCenter(){

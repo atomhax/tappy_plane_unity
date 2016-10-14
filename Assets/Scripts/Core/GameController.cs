@@ -73,6 +73,8 @@ public class GameController : MonoBehaviour
 		Spil.Instance.OnDailyBonusReward -= OnDailyBonusReward;
 		Spil.Instance.OnDailyBonusReward += OnDailyBonusReward;
 
+		Spil.Instance.OnPlayerDataUpdated -= OnPlayerDataUpdated;
+		Spil.Instance.OnPlayerDataUpdated += OnPlayerDataUpdated;
 	}
 
 	void Spil_Instance_OnReward (PushNotificationRewardResponse rewardResponse)
@@ -169,6 +171,11 @@ public class GameController : MonoBehaviour
 		shopPanel.SetActive (true);
 	}
 
+	public void OpenShop (PlayerCurrencyData currency) {
+		shopPanel.SetActive (true);
+		shopPanel.GetComponent<ShopPanelController>().ShowReward (currency);
+	}
+
 	public void ToggleHighScores ()
 	{
 		highScorePanel.SetActive (!highScorePanel.activeInHierarchy);
@@ -244,6 +251,13 @@ public class GameController : MonoBehaviour
 	public void OnDailyBonusNotAvailable ()
 	{
 		Debug.Log ("DailyBonusNotAvailable");
+	}
+
+	public void OnPlayerDataUpdated(string reason, PlayerDataUpdatedData updatedData) {
+		if (reason == "Daily Bonus From Client") {
+			PlayerCurrencyData currency = updatedData.currencies [0];
+			OpenShop (currency);
+		}
 	}
 
 	public void SavePrivateGameState ()

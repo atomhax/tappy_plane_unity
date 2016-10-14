@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using SpilGames.Unity;
 using SpilGames.Unity.Helpers;
 using UnityEngine.SceneManagement;
+using SpilGames.Unity.Utils;
 
 public class HighScoresPanelController : MonoBehaviour {
 
@@ -37,7 +38,6 @@ public class HighScoresPanelController : MonoBehaviour {
 			highScoreText.text += pos.ToString() + ". " + GameController.GetNameForFbId(p.Key) + " [" + gameState.HighScore + "]\n";
 			pos++;
 		}
-
 	}
 
 	void Spil_Instance_OnOtherUsersGameStateDataLoaded (SpilGames.Unity.Utils.OtherUsersGameStateData data){
