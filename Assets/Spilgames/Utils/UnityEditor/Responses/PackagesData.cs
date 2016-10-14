@@ -9,6 +9,7 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 {
 	public class PackagesData : Data
 	{
+		#if UNITY_EDITOR
 
 		public static List<PackageData> GamePackagesData;
 		public static List<PromotionData> GamePromotionData;
@@ -50,6 +51,7 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 			return null;
 		}
 
+		#endif
 	}
 }
 

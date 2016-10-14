@@ -4,11 +4,14 @@ using SpilGames.Unity;
 using System;
 using System.Collections.Generic;
 using SpilGames.Unity.Implementations;
+using SpilGames.Unity.Utils.UnityEditor;
 
 namespace SpilGames.Unity.Utils.UnityEditor.Responses
 {
 	public class GameStateData : Data
 	{
+		#if UNITY_EDITOR
+		
 		public static string PublicGameStateData;
 
 		public static string PrivateGameStateData;
@@ -115,6 +118,8 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 			}
 
 		}
+
+		#endif
 
 	}
 }

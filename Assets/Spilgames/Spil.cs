@@ -17,17 +17,23 @@ namespace SpilGames.Unity
 {
 	public class Spil : MonoBehaviour
 	{
-		/// <summary>
-		/// The project ID assigned to your project by Spil games.
-		/// You can get your project id from your contact person.
-		/// The project ID is used for push notifications.
-		/// </summary>
-		public static string Project_ID = "127433475057";
 
 		public static SpilGameDataHelper GameData;
 		public static PlayerDataHelper PlayerData;
 
 		[Header("App Settings")]
+
+		#if UNITY_ANDROID || UNITY_EDITOR
+		[SerializeField]
+		private string projectId;
+
+		/// <summary>
+		/// The project ID assigned to your project by Spil games.
+		/// You can get your project id from your contact person.
+		/// The project ID is used for push notifications.
+		/// </summary>
+		public static string Project_ID { get; private set; }
+		#endif
 
 		[SerializeField]
 		private string spilUserIdEditor;
@@ -97,6 +103,14 @@ namespace SpilGames.Unity
 			CurrencyId = currencyId;
 			Reward = reward;
 
+			#endif
+
+			#if UNITY_ANDROID || UNITY_EDITOR
+			if(projectId != null){
+				Project_ID = projectId;
+			} else{
+				Debug.LogError("Project ID not set!! Please set your Project Id with the id provided by the Spil representative!");
+			}
 			#endif
 
 			Debug.Log ("SpilSDK-Unity Init");
