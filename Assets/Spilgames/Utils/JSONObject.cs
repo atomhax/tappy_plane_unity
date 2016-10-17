@@ -315,7 +315,10 @@ namespace SpilGames.Unity.Utils
 						    if(System.Array.IndexOf(WHITESPACE, str[offset]) > -1)
 							    continue;
 						    if(str[offset] == '\\')
-							    offset += 2;
+                            {
+                                offset += 1;
+                                continue;
+                            }
 						    if(str[offset] == '"') {
 							    if(openQuote) {
 								    if(!inProp && depth == 0 && type == Type.OBJECT)
