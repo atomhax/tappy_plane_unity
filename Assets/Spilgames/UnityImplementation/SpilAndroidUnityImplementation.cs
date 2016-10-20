@@ -5,7 +5,7 @@ using SpilGames.Unity.Utils;
 
 namespace SpilGames.Unity.Implementations
 {
-    #if UNITY_ANDROID
+//    #if UNITY_ANDROID
     public class SpilAndroidUnityImplementation : SpilUnityImplementationBase
     {
         #region Inherited members
@@ -81,7 +81,9 @@ namespace SpilGames.Unity.Implementations
             /// </summary>
 			internal override void SpilInit()
             {
+			#if UNITY_ANDROID
                 RegisterDevice(Spil.Project_ID);
+			#endif
             }
 
             public override void SetUserId(string providerId, string userId)
@@ -494,5 +496,5 @@ namespace SpilGames.Unity.Implementations
 
 		#endregion
     }
-    #endif
+//    #endif
 }
