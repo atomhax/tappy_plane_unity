@@ -24,7 +24,10 @@ public class ShopPanelController : MonoBehaviour {
 	private bool closeShopAfterReward;
 
 	void OnEnable(){
-		Spil.Instance.OnAdAvailable += Spil_Instance_OnAdAvailable;	
+		Spil.Instance.OnAdAvailable -= Spil_Instance_OnAdAvailable;
+		Spil.Instance.OnAdAvailable += Spil_Instance_OnAdAvailable;
+
+		Spil.Instance.OnPlayerDataUpdated -= Spil_Instance_OnPlayerDataUpdated;	
 		Spil.Instance.OnPlayerDataUpdated += Spil_Instance_OnPlayerDataUpdated;
 
 		Spil.Instance.OnSplashScreenOpen -= OnSplashScreenOpen;
