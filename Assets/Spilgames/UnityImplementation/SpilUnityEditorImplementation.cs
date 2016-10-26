@@ -16,6 +16,15 @@ namespace SpilGames.Unity.Implementations
 	public class SpilUnityEditorImplementation : SpilUnityImplementationBase
 	{
 
+		public static PlayerData pData;
+		public static GameObjectsData gData;
+
+		public SpilUnityEditorImplementation(){
+			pData = new PlayerData();
+			gData = new GameObjectsData();
+		}
+
+
 		#region Inherited members
 
 		public override void SetPluginInformation (string PluginName, string PluginVersion)
@@ -90,17 +99,11 @@ namespace SpilGames.Unity.Implementations
 		/// </summary>
 		internal override void SpilInit ()
 		{
-			RequestPackages ();
 			RequestConfig ();
 			RequestGameData ();
 			RequestPlayerData ();
 			RequestGameState ();
 			AdvertisementInit ();
-		}
-
-		internal void RequestPackages ()
-		{
-
 		}
 
 		internal void RequestConfig ()
@@ -113,12 +116,29 @@ namespace SpilGames.Unity.Implementations
 
 		internal void RequestGameData ()
 		{
+			SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent> ();
+			spilEvent.eventName = "requestGameData";
 
+			spilEvent.Send ();
 		}
 
 		internal void RequestPlayerData ()
 		{
+			pData.Wallet = pData.InitWallet();
+			pData.Inventory = pData.InitInventory();
 			
+			SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent> ();
+			spilEvent.eventName = "requestPlayerData";
+
+			JSONObject j1 = new JSONObject();
+			j1.AddField("offset", pData.Wallet.offset);
+			spilEvent.customData.AddField("wallet", j1);
+
+			JSONObject j2 = new JSONObject();
+			j2.AddField("offset", pData.Inventory.offset);
+			spilEvent.customData.AddField("inventory", j2);
+
+			spilEvent.Send ();
 		}
 
 		internal void RequestGameState ()
@@ -166,8 +186,21 @@ namespace SpilGames.Unity.Implementations
 			spilEvent.eventName = eventName;
 
 			if (dict != null) {
+				if(dict.ContainsKey("trackingOnly")){
+					spilEvent.customData.AddField ("trackingOnly", (dict["trackingOnly"].Equals("true")));
+					dict.Remove("trackingOnly");
+				}
 				foreach (KeyValuePair<string, string> dictValue in dict) {
-					spilEvent.customData.AddField (dictValue.Key, dictValue.Value);
+
+					if(dictValue.Key.Equals("wallet") || dictValue.Key.Equals("inventory")){
+						JSONObject json = new JSONObject(dictValue.Value);
+						spilEvent.customData.AddField(dictValue.Key, json);
+					} else{
+						spilEvent.customData.AddField (dictValue.Key, dictValue.Value);
+					}
+
+
+
 				}
 			}
 
@@ -194,7 +227,7 @@ namespace SpilGames.Unity.Implementations
 		/// </summary>
 		public override void PlayMoreApps ()
 		{
-				
+			AdvertisementData.PlayMoreApps();	
 		}
 
 		/// <summary>
@@ -204,7 +237,7 @@ namespace SpilGames.Unity.Implementations
 		/// </summary>
 		public override void RequestMoreApps ()
 		{
-				
+			SpilUnityImplementationBase.fireAdAvailableEvent ("moreApps");	
 		}
 
 		/// <summary>
@@ -215,7 +248,7 @@ namespace SpilGames.Unity.Implementations
 		/// </summary>
 		public override void SetShowToastOnVideoReward (bool value)
 		{
-               
+               		
 		}
 
 		#endregion
@@ -224,8 +257,12 @@ namespace SpilGames.Unity.Implementations
 
 		public override string GetSpilGameDataFromSdk ()
 		{
-			string gameData = System.IO.File.ReadAllText (Application.streamingAssetsPath + "/defaultGameData.json");
-			return gameData;
+			return gData.GetGameObjects();
+		}
+
+		public void RefreshSpilGameData(){
+			Spil.GameData = null;
+			Spil.GameData = new SpilGameDataHelper(this);
 		}
 
 		#endregion
@@ -234,63 +271,42 @@ namespace SpilGames.Unity.Implementations
 
 		public override void UpdatePlayerData ()
 		{
+			
 		}
 
 		public override string GetWalletFromSdk ()
 		{
-			string playerData = System.IO.File.ReadAllText (Application.streamingAssetsPath + "/defaultPlayerData.json");
-			TempUserInfo temp = JsonHelper.getObjectFromJson<TempUserInfo> (playerData);
-			string wallet = JsonHelper.getJSONFromObject (temp.wallet);
-			return wallet;
+			return JsonHelper.getJSONFromObject(pData.Wallet);
 		}
 
 		public override string GetInvetoryFromSdk ()
 		{
-			string playerData = System.IO.File.ReadAllText (Application.streamingAssetsPath + "/defaultPlayerData.json");
-			TempUserInfo temp = JsonHelper.getObjectFromJson<TempUserInfo> (playerData);
-			string inventory = JsonHelper.getJSONFromObject (temp.inventory);
-			return inventory;
+			return JsonHelper.getJSONFromObject(pData.Inventory);
 		}
 
 		public override void AddCurrencyToWallet (int currencyId, int amount, string reason)
 		{
-			CallNativeMethod ("addCurrencyToWallet", new object[] {
-				currencyId,
-				amount,
-				reason
-			});
+			pData.WalletOperation("add", currencyId, amount, reason);
 		}
 
 		public override void SubtractCurrencyFromWallet (int currencyId, int amount, string reason)
 		{
-			CallNativeMethod ("subtractCurrencyFromWallet", new object[] {
-				currencyId,
-				amount,
-				reason
-			});
+			pData.WalletOperation("subtract", currencyId, amount, reason);
 		}
 
 		public override void AddItemToInventory (int itemId, int amount, string reason)
 		{
-			CallNativeMethod ("addItemToInventory", new object[] {
-				itemId,
-				amount,
-				reason
-			});
+			pData.InventoryOperation("add", itemId, amount, reason);
 		}
 
 		public override void SubtractItemFromInventory (int itemId, int amount, string reason)
 		{
-			CallNativeMethod ("subtractItemFromInventory", new object[] {
-				itemId,
-				amount,
-				reason
-			});
+			pData.InventoryOperation("subtract", itemId, amount, reason);
 		}
 
 		public override void ConsumeBundle (int bundleId, string reason)
 		{
-			CallNativeMethod ("consumeBundle", new object[]{ bundleId, reason });
+			pData.ConsumeBundle(bundleId, reason);
 		}
 
 		#endregion
@@ -556,12 +572,6 @@ namespace SpilGames.Unity.Implementations
 		}
 
 		#endregion
-	}
-
-	public class TempUserInfo
-	{
-		public WalletData wallet;
-		public InventoryData inventory;
 	}
 
 }

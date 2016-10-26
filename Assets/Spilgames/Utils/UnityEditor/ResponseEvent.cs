@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections;
 using SpilGames.Unity.Utils.UnityEditor.Responses;
+using SpilGames.Unity.Implementations;
 
 namespace SpilGames.Unity.Utils.UnityEditor
 {
@@ -46,8 +47,10 @@ namespace SpilGames.Unity.Utils.UnityEditor
 					case "notification":
 						break;
 					case "playerdata":
+						SpilUnityEditorImplementation.pData.ProcessPlayerData(responseEvent);
 						break;
 					case "gamedata":
+						SpilUnityEditorImplementation.gData.ProcessGameObjects(responseEvent);
 						break;
 					case "gamestate":
 						GameStateData.ProcessGameState (responseEvent);

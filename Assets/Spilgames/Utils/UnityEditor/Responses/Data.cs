@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Data
+public class Data 
 {
 
 	public static string provider;

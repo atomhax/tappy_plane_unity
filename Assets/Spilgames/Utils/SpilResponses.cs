@@ -235,6 +235,7 @@ namespace SpilGames.Unity.Utils
 	public class PlayerItemData : SpilItemData
 	{
 		public int amount;
+		public int delta;
 		public int value;
 	}
 
@@ -267,8 +268,8 @@ namespace SpilGames.Unity.Utils
 	public class PlayerDataUpdatedData
 	{
 		public string reason;
-		public List<PlayerItemData> items;
-		public List<PlayerCurrencyData> currencies;
+		public List<PlayerItemData> items = new List<PlayerItemData>();
+		public List<PlayerCurrencyData> currencies = new List<PlayerCurrencyData>();
 	}
 
 

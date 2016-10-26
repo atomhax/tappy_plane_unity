@@ -75,6 +75,8 @@ public class GameController : MonoBehaviour
 
 		Spil.Instance.OnPlayerDataUpdated -= OnPlayerDataUpdated;
 		Spil.Instance.OnPlayerDataUpdated += OnPlayerDataUpdated;
+
+		FireTrackEventSample();
 	}
 
 	void Spil_Instance_OnReward (PushNotificationRewardResponse rewardResponse)
@@ -362,5 +364,31 @@ public class GameController : MonoBehaviour
 
 		json += "]";
 		return json; 
+	}
+
+	public void FireTrackEventSample(){
+
+		List<TrackingCurrency> currencies = new List<TrackingCurrency>();
+
+		TrackingCurrency currency1 = new TrackingCurrency();
+		currency1.name = "TestCurrency";
+		currency1.currentBalance = 110;
+		currency1.delta = 10;
+		currency1.type = 0;
+		currencies.Add(currency1);
+
+		List<TrackingItem> items = new List<TrackingItem>();
+
+		TrackingItem item1 = new TrackingItem();
+		item1.name = "TestItem";
+		item1.amount = 2;
+		item1.delta = 1;
+		item1.type = 0;
+		items.Add(item1);
+
+//		Spil.Instance.TrackWalletInventoryEvent("Test1", "GameStart", currencies, null);
+//		Spil.Instance.TrackWalletInventoryEvent("Test2", "GameStart", null, items);
+//		Spil.Instance.TrackWalletInventoryEvent("Test3", "GameStart", currencies, items);
+
 	}
 }

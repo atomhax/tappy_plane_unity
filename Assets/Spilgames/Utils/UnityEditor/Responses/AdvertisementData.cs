@@ -98,6 +98,14 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 			SpilUnityImplementationBase.fireAdStartedEvent();
 		}
 
+		public static void PlayMoreApps(){
+			GameObject overlay = GameObject.CreatePrimitive (PrimitiveType.Cube);
+			AdOverlay ad = overlay.AddComponent<AdOverlay> ();
+			ad.provider = provider;
+			ad.adType = "moreApps";
+			SpilUnityImplementationBase.fireAdStartedEvent();
+		}
+
 		public class AdOverlay : MonoBehaviour
 		{
 			public string provider;
