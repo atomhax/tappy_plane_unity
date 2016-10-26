@@ -72,6 +72,8 @@ extern "C" {
     
     // --- Util ---
     
+    void setCustomBundleIdNative(const char* bundleId);
+    
     void UnitySendMessage(const char* obj, const char* method, const char* msg);
     
     char* cStringCopy(const char* string);

@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEditor;
 using System.IO;
 using SpilGames.Unity.Utils;
+using SpilGames.Unity;
 
 public class SpilEditor : EditorWindow {
 	private int tabSelected = 0;
@@ -57,17 +58,35 @@ public class SpilEditor : EditorWindow {
 	private void DrawIOS () {
 		GUILayout.Label ("SpilSDK iOS Config", EditorStyles.boldLabel);
 
+		string customUserId = "<< Spil component not found in scene! >>";
+		bool exportDefaultEntitlements = EditorPrefs.GetBool ("exportDefaultEntitlements");
 		bool useICloudContainer = EditorPrefs.GetBool ("useICloudContainer");
 		bool useICloudKV = EditorPrefs.GetBool ("useICloudKV");
 		bool usePushNotifications = EditorPrefs.GetBool ("usePushNotifications");
 
+		Spil spil = GameObject.FindObjectOfType<Spil> ();
+		if (spil != null) {
+			customUserId = spil.CustomBundleId;
+		}
+		GUILayout.Label ("Custom bundle id: (Useful when the bundle id used to build is\n" +
+			"not the same as the one connecting to the Spil Games backend)");
+		customUserId = GUILayout.TextField (customUserId);
+
+		GUILayout.Space (4);
+		GUILayout.Label ("Entitlements:", EditorStyles.boldLabel);
+		exportDefaultEntitlements = GUILayout.Toggle (exportDefaultEntitlements, "Export Spil Games entitlements");
 		useICloudContainer = GUILayout.Toggle (useICloudContainer, "Use iCloud project container");
 		useICloudKV = GUILayout.Toggle (useICloudKV, "Use iCloud key-value store");
 		usePushNotifications = GUILayout.Toggle (usePushNotifications, "Use push notifications");
 
+		EditorPrefs.SetBool ("exportDefaultEntitlements", exportDefaultEntitlements);
 		EditorPrefs.SetBool ("useICloudContainer", useICloudContainer);
 		EditorPrefs.SetBool ("useICloudKV", useICloudKV);
 		EditorPrefs.SetBool ("usePushNotifications", usePushNotifications);
+
+		if (spil != null) {
+			spil.CustomBundleId = customUserId;
+		}
 	}
 
 	private void DrawAndroid () {
