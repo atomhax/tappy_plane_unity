@@ -58,7 +58,7 @@ if os.path.exists(os.getcwd() + '/spil.initialized'):
 
 # check number of arguments
 if len(sys.argv) < 2:
-	print RED + BOLD + 'ERROR: Wrong arguments! Usage: python spilsdksetup.py <ProjectName> <UseICloudContainer> <useICloudKV> <UsePushNotifications>' + END
+	print RED + BOLD + 'ERROR: Wrong arguments! Usage: python spilsdksetup.py <ProjectName> <ExportSpilGamesEntitlements> <UseICloudContainer> <useICloudKV> <UsePushNotifications>' + END
 	exit(1)
     
 # try to find the project to modify
@@ -70,9 +70,11 @@ else:
 	print 'Modifying XCode project: ' + projectname
 
 # read entitlements arguments
-useICloudContainer = str2bool(sys.argv[2]) if len(sys.argv) > 2 else False;
-useICloudKV = str2bool(sys.argv[3]) if len(sys.argv) > 3 else False;
-usePushNotifications = str2bool(sys.argv[4]) if len(sys.argv) > 4 else False;
+exportSpilGamesEntitlements = str2bool(sys.argv[2]) if len(sys.argv) > 2 else False;
+useICloudContainer = str2bool(sys.argv[3]) if len(sys.argv) > 3 else False;
+useICloudKV = str2bool(sys.argv[4]) if len(sys.argv) > 4 else False;
+usePushNotifications = str2bool(sys.argv[5]) if len(sys.argv) > 5 else False;
+print "exportSpilGamesEntitlements: " + str(exportSpilGamesEntitlements);
 print "useICloudContainer: " + str(useICloudContainer);
 print "useICloudKV: " + str(useICloudKV);
 print "usePushNotifications: " + str(usePushNotifications);
@@ -193,53 +195,54 @@ print 'Saving info.plist'
 plistlib.writePlist(plist, currentPlistPath)
 
 #  --- try to find the entitlements plist ---
-entitlementsFileCreated = False;
-currentEntitlementsPath = entitlementsPath;
-if not os.path.isfile(entitlementsPath):
-	currentEntitlementsPath = altEntitlementsPath;
-	if not os.path.isfile(altEntitlementsPath):
-		newFile = open(currentEntitlementsPath, 'a');
-		newFile.write('<plist version="1.0"><dict></dict></plist>');
-		newFile.close();
-		entitlementsFileCreated = True;
-if entitlementsFileCreated:
-	print projectname + ".entitlements created at: " + currentEntitlementsPath;
-else:
-	print projectname + ".entitlements found at: " + currentEntitlementsPath;
+if exportSpilGamesEntitlements:
+	entitlementsFileCreated = False;
+	currentEntitlementsPath = entitlementsPath;
+	if not os.path.isfile(entitlementsPath):
+		currentEntitlementsPath = altEntitlementsPath;
+		if not os.path.isfile(altEntitlementsPath):
+			newFile = open(currentEntitlementsPath, 'a');
+			newFile.write('<plist version="1.0"><dict></dict></plist>');
+			newFile.close();
+			entitlementsFileCreated = True;
+	if entitlementsFileCreated:
+		print projectname + ".entitlements created at: " + currentEntitlementsPath;
+	else:
+		print projectname + ".entitlements found at: " + currentEntitlementsPath;
 
-# backup <projectname>.entitlements first
-print 'Creating ' + projectname + '.entitlements backup'
-sourceEntitlementsPath = os.path.abspath(currentEntitlementsPath)
-destEntitlementsPath = backupPath + projectname + ".entitlements.%s.backup" % (datetime.datetime.now().strftime('%d%m%y-%H%M%S'))
-shutil.copy2(sourceEntitlementsPath, destEntitlementsPath)
+	# backup <projectname>.entitlements first
+	print 'Creating ' + projectname + '.entitlements backup'
+	sourceEntitlementsPath = os.path.abspath(currentEntitlementsPath)
+	destEntitlementsPath = backupPath + projectname + ".entitlements.%s.backup" % (datetime.datetime.now().strftime('%d%m%y-%H%M%S'))
+	shutil.copy2(sourceEntitlementsPath, destEntitlementsPath)
 
-# modify entitlements plist
-print 'Modifying ' + projectname + '.entitlements'
-plist = plistlib.readPlist(currentEntitlementsPath)
+	# modify entitlements plist
+	print 'Modifying ' + projectname + '.entitlements'
+	plist = plistlib.readPlist(currentEntitlementsPath)
 
-# add shared application group
-plist['com.apple.security.application-groups'] = ["group.com.spilgames"];
+	# add shared application group
+	plist['com.apple.security.application-groups'] = ["group.com.spilgames"];
 
-# add iCloud kv store
-if useICloudKV:
-	plist['com.apple.developer.ubiquity-kvstore-identifier'] = "$(TeamIdentifierPrefix)$(CFBundleIdentifier)";
+	# add iCloud kv store
+	if useICloudKV:
+		plist['com.apple.developer.ubiquity-kvstore-identifier'] = "$(TeamIdentifierPrefix)$(CFBundleIdentifier)";
 
-# add iCloud general & game specific document
-plist['com.apple.developer.icloud-services'] = ["CloudDocuments"];
-if useICloudContainer:
-	plist['com.apple.developer.icloud-container-identifiers'] = ["iCloud.$(CFBundleIdentifier)", "iCloud.com.spilgames.shared"];
-	plist['com.apple.developer.ubiquity-container-identifiers'] = ["iCloud.$(CFBundleIdentifier)", "iCloud.com.spilgames.shared"];
-else:
-	plist['com.apple.developer.icloud-container-identifiers'] = ["iCloud.com.spilgames.shared"];
-	plist['com.apple.developer.ubiquity-container-identifiers'] = ["iCloud.com.spilgames.shared"];
+	# add iCloud general & game specific document
+	plist['com.apple.developer.icloud-services'] = ["CloudDocuments"];
+	if useICloudContainer:
+		plist['com.apple.developer.icloud-container-identifiers'] = ["iCloud.$(CFBundleIdentifier)", "iCloud.com.spilgames.shared"];
+		plist['com.apple.developer.ubiquity-container-identifiers'] = ["iCloud.$(CFBundleIdentifier)", "iCloud.com.spilgames.shared"];
+	else:
+		plist['com.apple.developer.icloud-container-identifiers'] = ["iCloud.com.spilgames.shared"];
+		plist['com.apple.developer.ubiquity-container-identifiers'] = ["iCloud.com.spilgames.shared"];
 
-# write entitlements plist
-print 'Saving ' + projectname + '.entitlements'
-plistlib.writePlist(plist, currentEntitlementsPath)
+	# write entitlements plist
+	print 'Saving ' + projectname + '.entitlements'
+	plistlib.writePlist(plist, currentEntitlementsPath)
 
-# add the entitlements plist file to the xcode project
-project.add_file_if_doesnt_exist(currentEntitlementsPath, parent=None, weak=False)
-project.add_single_valued_flag('CODE_SIGN_ENTITLEMENTS', projectname + '.entitlements')
+	# add the entitlements plist file to the xcode project
+	project.add_file_if_doesnt_exist(currentEntitlementsPath, parent=None, weak=False)
+	project.add_single_valued_flag('CODE_SIGN_ENTITLEMENTS', projectname + '.entitlements')
 
 # save the XCode project file
 print 'Saving the XCode project file'

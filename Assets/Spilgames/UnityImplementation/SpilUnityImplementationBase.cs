@@ -674,6 +674,13 @@ namespace SpilGames.Unity.Implementations
 		public abstract string GetUserId ();
 
 		/// <summary>
+		/// Sets the custom bundle identifier.
+		/// Use this when the bundle id used to connect to our backend differs from the one used to build.
+		/// </summary>
+		/// <param name="bundleId">Bundle identifier.</param>
+		public abstract void SetCustomBundleId (string bundleId);
+
+		/// <summary>
 		/// Gets the user provider.
 		/// </summary>
 		/// <returns>The user provider native.</returns>

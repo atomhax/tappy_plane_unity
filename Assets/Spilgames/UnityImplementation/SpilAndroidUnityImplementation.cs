@@ -96,6 +96,10 @@ namespace SpilGames.Unity.Implementations
 				return CallNativeMethod("getUserId");
 			}
 
+			public override void SetCustomBundleId (string bundleId) {
+				// TODO
+			}
+
 			/// <summary>
 			/// Gets the user provider.
 			/// </summary>

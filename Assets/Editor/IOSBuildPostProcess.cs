@@ -17,11 +17,13 @@ public class IOSBuildPostProcess : MonoBehaviour
 			UnityEngine.Debug.Log ("[SPIL] Moving Spil.framework to the root of the project");
 			MoveDirectory (pathToBuildProject + "/Frameworks/Plugins/iOS/Spil.framework", pathToBuildProject + "/Spil.framework");
 
+			bool exportDefaultEntitlements = EditorPrefs.GetBool ("exportDefaultEntitlements");
 			bool useICloudContainer = EditorPrefs.GetBool ("useICloudContainer");
 			bool useICloudKV = EditorPrefs.GetBool ("useICloudKV");
 			bool usePushNotifications = EditorPrefs.GetBool ("usePushNotifications");
 
 			String arguments = "Unity-iPhone " +
+								   exportDefaultEntitlements + " " +
 								   useICloudContainer + " " +
 				                   useICloudKV + " " +
 				                   usePushNotifications;

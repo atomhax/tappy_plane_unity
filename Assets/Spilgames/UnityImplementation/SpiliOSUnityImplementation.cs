@@ -242,6 +242,13 @@ namespace SpilGames.Unity.Implementations
 			setUserIdNative(providerId, userId);
 		}
 
+		public override void SetCustomBundleId (string bundleId) {
+			setCustomBundleIdNative (bundleId);
+		}
+
+		[DllImport("__Internal")]
+		private static extern void setCustomBundleIdNative(string bundleId);
+
 		[DllImport("__Internal")]
 		private static extern void setUserIdNative(string providerId, string userId);
 
@@ -639,7 +646,6 @@ namespace SpilGames.Unity.Implementations
 
 		[DllImport("__Internal")]
 		private static extern void trackEventWithParamsNative(string eventName, string jsonStringParams);
-
 		#endregion
 	}        
 	#endif

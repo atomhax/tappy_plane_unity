@@ -15,13 +15,14 @@ using System;
 
 namespace SpilGames.Unity
 {
+	[HelpURL("http://www.spilgames.com/developers/integration/unity/unity-get-started/")]
 	public class Spil : MonoBehaviour
 	{
 
 		public static SpilGameDataHelper GameData;
 		public static PlayerDataHelper PlayerData;
 
-		[Header("App Settings")]
+		[Header("Android Settings")]
 
 		#if UNITY_ANDROID || UNITY_EDITOR
 		[SerializeField]
@@ -35,31 +36,32 @@ namespace SpilGames.Unity
 		public static string Project_ID { get; private set; }
 		#endif
 
+		[Header("iOS Settings")]
+		[SerializeField]
+		public string CustomBundleId;
+
+		[Header("Editor Settings")]
+
 		[SerializeField]
 		private string spilUserIdEditor;
-
 		public static string SpilUserIdEditor { get; private set; }
 
 		[SerializeField]
 		private string bundleIdEditor;
-
 		public static string BundleIdEditor { get; private set; }
 
 		[Header("Reward Video Settings")]
 
 		[SerializeField]
 		private string currencyName;
-
 		public static string CurrencyName { get; private set; }
 
 		[SerializeField]
 		private string currencyId;
-
 		public static string CurrencyId { get; private set; }
 
 		[SerializeField]
 		private int reward = 0;
-
 		public static int Reward { get; private set; }
 
 		public static Spil MonoInstance { get { return GameObject.Find ("SpilSDK").GetComponent<Spil> (); } }
@@ -101,8 +103,7 @@ namespace SpilGames.Unity
 
 			CurrencyName = currencyName;
 			CurrencyId = currencyId;
-			Reward = reward;
-
+		Reward = reward;
 			#endif
 
 			#if UNITY_ANDROID || UNITY_EDITOR
@@ -110,6 +111,12 @@ namespace SpilGames.Unity
 				Project_ID = projectId;
 			} else{
 				Debug.LogError("Project ID not set!! Please set your Project Id with the id provided by the Spil representative!");
+			}
+			#endif
+
+			#if UNITY_IOS
+			if (!string.IsNullOrEmpty(CustomBundleId)) {
+				Instance.SetCustomBundleId(CustomBundleId);
 			}
 			#endif
 
