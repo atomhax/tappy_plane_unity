@@ -9,15 +9,14 @@ using SpilGames.Unity.Utils.UnityEditor;
 
 namespace SpilGames.Unity.Utils.UnityEditor.Responses
 {
-	public class GameStateData : Data
+	public class GameStateResponse : Response
 	{
-		#if UNITY_EDITOR
 		
 		public static string PublicGameStateData;
 
 		public static string PrivateGameStateData;
 
-		public static void ProcessGameState (ResponseEvent response)
+		public static void ProcessGameStateResponse (ResponseEvent response)
 		{
 			if (response.action != null) {
 				if (response.action.ToLower ().Trim ().Equals ("update")) {
@@ -97,7 +96,7 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 		public static void SetPublicGameState (String gameState)
 		{
 
-			if (Data.externalId != null && Data.provider != null) {
+			if (Response.externalId != null && Response.provider != null) {
 				PublicGameStateData = gameState;
 
 				SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent> ();
@@ -119,8 +118,6 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 			}
 
 		}
-
-		#endif
 
 	}
 }

@@ -7,15 +7,14 @@ using SpilGames.Unity.Utils.UnityEditor;
 
 namespace SpilGames.Unity.Utils.UnityEditor.Responses
 {
-	public class AdvertisementData : Data
+	public class AdvertisementResponse : Response
 	{
-		#if UNITY_EDITOR
 
 		public static bool DFPEnabled = false;
 		public static bool FyberEnabled = false;
 		public static bool ChartboostEnabled = false;
 
-		public static void ProcessAdvertisement (ResponseEvent response)
+		public static void ProcessAdvertisementResponse (ResponseEvent response)
 		{
 
 			if (response.action.Equals ("init")) {
@@ -156,7 +155,6 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 			public string currencyId;
 			public int reward;
 		}
-		#endif
 	}
 
 }

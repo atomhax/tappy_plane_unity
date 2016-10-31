@@ -66,11 +66,13 @@ namespace SpilGames.Unity.Utils.UnityEditor
 			this.data.AddField("tto", "200");
 			this.data.AddField("packageName", Spil.BundleIdEditor);
 			this.data.AddField ("sessionId", "deadbeef");
+			this.data.AddField("pluginName", Response.pluginName);
+			this.data.AddField("pluginVersion", Response.pluginVersion);
 
-			if(Data.provider != null && Data.externalId != null){
+			if(Response.provider != null && Response.externalId != null){
 				JSONObject externalUserIdJson = new JSONObject();
-				externalUserIdJson.AddField("provider", Data.provider);
-				externalUserIdJson.AddField("userId", Data.externalId);
+				externalUserIdJson.AddField("provider", Response.provider);
+				externalUserIdJson.AddField("userId", Response.externalId);
 
 				this.data.AddField("externalUserId", externalUserIdJson);
 			}

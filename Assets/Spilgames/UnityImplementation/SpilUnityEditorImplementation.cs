@@ -16,12 +16,14 @@ namespace SpilGames.Unity.Implementations
 	public class SpilUnityEditorImplementation : SpilUnityImplementationBase
 	{
 
-		public static PlayerData pData;
-		public static GameObjectsData gData;
+		public static PlayerDataResponse pData;
+		public static GameObjectsResponse gData;
 
 		public SpilUnityEditorImplementation(){
-			pData = new PlayerData();
-			gData = new GameObjectsData();
+			pData = new PlayerDataResponse();
+			gData = new GameObjectsResponse();
+
+			SetPluginInformation(PluginName, PluginVersion);
 		}
 
 
@@ -29,7 +31,8 @@ namespace SpilGames.Unity.Implementations
 
 		public override void SetPluginInformation (string PluginName, string PluginVersion)
 		{
-			
+			Response.pluginName = PluginName;
+			Response.pluginVersion = PluginVersion;
 		}
 
 		#region Game config
@@ -41,7 +44,7 @@ namespace SpilGames.Unity.Implementations
 		/// <returns></returns>     
 		public override string GetConfigAll ()
 		{
-			return ConfigData.getConfigAll();
+			return ConfigResponse.getConfigAll();
 		}
 
 		/// <summary>
@@ -51,7 +54,7 @@ namespace SpilGames.Unity.Implementations
 		/// <returns></returns>
 		public override string GetConfigValue (string key)
 		{
-			return ConfigData.getConfigValue(key);
+			return ConfigResponse.getConfigValue(key);
 		}
 
 		#endregion
@@ -72,12 +75,12 @@ namespace SpilGames.Unity.Implementations
 
 		protected override string GetAllPackages ()
 		{
-			return  JsonHelper.getJSONFromObject (PackagesData.GamePackagesData);
+			return  JsonHelper.getJSONFromObject (PackagesResponse.GamePackagesData);
 		}
 
 		protected override string GetPackage (string key)
 		{
-			return PackagesData.getPackage (key);
+			return PackagesResponse.getPackage (key);
 		}
 
 		/// <summary>
@@ -87,7 +90,7 @@ namespace SpilGames.Unity.Implementations
 		/// </summary>
 		internal override string getPromotion (string key)
 		{
-			return PackagesData.getPromotion (key);
+			return PackagesResponse.getPromotion (key);
 		}
 
 		#endregion
@@ -149,7 +152,7 @@ namespace SpilGames.Unity.Implementations
 			JSONObject json = new JSONObject (JSONObject.Type.ARRAY);
 			json.Add ("private");
 
-			if (Data.externalId != null && Data.provider != null) {
+			if (Response.externalId != null && Response.provider != null) {
 				json.Add ("public");
 			}
 
@@ -216,7 +219,7 @@ namespace SpilGames.Unity.Implementations
 		/// </summary>
 		public override void PlayVideo ()
 		{
-			AdvertisementData.PlayVideo();	
+			AdvertisementResponse.PlayVideo();	
 		}
 
 		/// <summary>
@@ -227,7 +230,7 @@ namespace SpilGames.Unity.Implementations
 		/// </summary>
 		public override void PlayMoreApps ()
 		{
-			AdvertisementData.PlayMoreApps();	
+			AdvertisementResponse.PlayMoreApps();	
 		}
 
 		/// <summary>
@@ -258,11 +261,6 @@ namespace SpilGames.Unity.Implementations
 		public override string GetSpilGameDataFromSdk ()
 		{
 			return gData.GetGameObjects();
-		}
-
-		public void RefreshSpilGameData(){
-			Spil.GameData = null;
-			Spil.GameData = new SpilGameDataHelper(this);
 		}
 
 		#endregion
@@ -419,13 +417,13 @@ namespace SpilGames.Unity.Implementations
 
 		public override void SetUserId (string providerId, string userId)
 		{
-			Data.provider = providerId;
-			Data.externalId = userId;
+			Response.provider = providerId;
+			Response.externalId = userId;
 		}
 
 		public override string GetUserId ()
 		{
-			return Data.externalId;
+			return Response.externalId;
 		}
 
 		public override void SetCustomBundleId (string bundleId) {
@@ -438,7 +436,7 @@ namespace SpilGames.Unity.Implementations
 		/// <returns>The user provider native.</returns>
 		public override string GetUserProvider ()
 		{
-			return Data.provider;
+			return Response.provider;
 		}
 
 		/// <summary>
@@ -447,7 +445,7 @@ namespace SpilGames.Unity.Implementations
 		/// <param name="privateData">Private data.</param>
 		public override void SetPrivateGameState (string privateData)
 		{
-			GameStateData.SetPrivateGameState (privateData);
+			GameStateResponse.SetPrivateGameState (privateData);
 		}
 
 		/// <summary>
@@ -456,7 +454,7 @@ namespace SpilGames.Unity.Implementations
 		/// <returns>The private game state.</returns>
 		public override string GetPrivateGameState ()
 		{
-			return GameStateData.PrivateGameStateData;
+			return GameStateResponse.PrivateGameStateData;
 		}
 
 		/// <summary>
@@ -465,7 +463,7 @@ namespace SpilGames.Unity.Implementations
 		/// <param name="publicData">Public data.</param>
 		public override void SetPublicGameState (string publicData)
 		{
-			GameStateData.SetPublicGameState (publicData);
+			GameStateResponse.SetPublicGameState (publicData);
 		}
 
 		/// <summary>
@@ -474,7 +472,7 @@ namespace SpilGames.Unity.Implementations
 		/// <returns>The public game state.</returns>
 		public override string GetPublicGameState ()
 		{
-			return GameStateData.PublicGameStateData;
+			return GameStateResponse.PublicGameStateData;
 		}
 
 		/// <summary>
@@ -567,12 +565,18 @@ namespace SpilGames.Unity.Implementations
 
 		public override void RequestDailyBonus ()
 		{
-			// TODO
+			SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent> ();
+			spilEvent.eventName = "requestDailyBonus";
+
+			spilEvent.Send ();
 		}
 
 		public override void RequestSplashScreen ()
 		{
-			// TODO
+			SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent> ();
+			spilEvent.eventName = "requestSplashscreen";
+
+			spilEvent.Send ();
 		}
 
 		#endregion

@@ -1,17 +1,19 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Spilgames/Utils/UnityEditor/Responses/GameObjectsData.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Spilgames/UnityImplementation/SpilUnityEditorImplementation.cs">
     <Files>
-      <File FileName="Assets/Spilgames/Spil.cs" Line="1" Column="1" />
-      <File FileName="Assets/Spilgames/Utils/UnityEditor/ResponseEvent.cs" Line="50" Column="42" />
-      <File FileName="Assets/Spilgames/Utils/UnityEditor/Responses/GameObjectsData.cs" Line="64" Column="6" />
-      <File FileName="Assets/Spilgames/UnityImplementation/SpilUnityEditorImplementation.cs" Line="1" Column="1" />
-      <File FileName="Assets/Spilgames/Utils/UnityEditor/Responses/PlayerData.cs" Line="85" Column="25" />
-      <File FileName="Assets/Spilgames/Helpers/SpilGameDataHelper.cs" Line="490" Column="45" />
-      <File FileName="Assets/Scripts/UI/HighScoresPanel/HighScoresPanelController.cs" Line="38" Column="1" />
-      <File FileName="Assets/Spilgames/UnityImplementation/SpilUnityImplementationBase.cs" Line="1" Column="1" />
-      <File FileName="Assets/Spilgames/Helpers/PlayerDataHelper.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/UI/Shop/BundleDisplayPanelController.cs" Line="1" Column="1" />
+      <File FileName="Assets/Spilgames/Spil.cs" Line="23" Column="24" />
+      <File FileName="Assets/Spilgames/UnityImplementation/SpilUnityEditorImplementation.cs" Line="26" Column="52" />
+      <File FileName="Assets/Spilgames/Utils/UnityEditor/SpilEvent.cs" Line="32" Column="34" />
+      <File FileName="Assets/Spilgames/Utils/UnityEditor/ResponseEvent.cs" Line="7" Column="44" />
+      <File FileName="Assets/Spilgames/Utils/UnityEditor/Responses/GameObjectsData.cs" Line="93" Column="1" />
+      <File FileName="Assets/Spilgames/Utils/UnityEditor/Responses/PlayerData.cs" Line="603" Column="17" />
+      <File FileName="Assets/Spilgames/Helpers/SpilGameDataHelper.cs" Line="36" Column="1" />
+      <File FileName="Assets/Spilgames/UnityImplementation/SpilUnityImplementationBase.cs" Line="14" Column="23" />
+      <File FileName="Assets/Scripts/UI/Shop/ShopPanelController.cs" Line="12" Column="20" />
+      <File FileName="Assets/Spilgames/Utils/SpilResponses.cs" Line="203" Column="25" />
+      <File FileName="Assets/Spilgames/Utils/UnityEditor/Responses/Data.cs" Line="10" Column="37" />
+      <File FileName="Assets/Spilgames/UnityImplementation/SpilAndroidUnityImplementation.cs" Line="13" Column="41" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

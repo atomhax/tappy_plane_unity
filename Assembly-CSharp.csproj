@@ -38,10 +38,10 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="UnityEngine">
-      <HintPath>/Applications/Unity_5.4/Unity.app/Contents/Managed/UnityEngine.dll</HintPath>
+      <HintPath>/Applications/Unity_5.4.0f3/Unity.app/Contents/Managed/UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor">
-      <HintPath>/Applications/Unity_5.4/Unity.app/Contents/Managed/UnityEditor.dll</HintPath>
+      <HintPath>/Applications/Unity_5.4.0f3/Unity.app/Contents/Managed/UnityEditor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -93,28 +93,29 @@
      <Compile Include="Assets\Spilgames\Utils\JSONObject.cs" />
      <Compile Include="Assets\Spilgames\Utils\SpilResponses.cs" />
      <Compile Include="Assets\Spilgames\Utils\UnityEditor\ResponseEvent.cs" />
-     <Compile Include="Assets\Spilgames\Utils\UnityEditor\Responses\AdvertisementData.cs" />
-     <Compile Include="Assets\Spilgames\Utils\UnityEditor\Responses\ConfigData.cs" />
-     <Compile Include="Assets\Spilgames\Utils\UnityEditor\Responses\Data.cs" />
-     <Compile Include="Assets\Spilgames\Utils\UnityEditor\Responses\GameObjectsData.cs" />
-     <Compile Include="Assets\Spilgames\Utils\UnityEditor\Responses\GameStateData.cs" />
-     <Compile Include="Assets\Spilgames\Utils\UnityEditor\Responses\PackagesData.cs" />
-     <Compile Include="Assets\Spilgames\Utils\UnityEditor\Responses\PlayerData.cs" />
+     <Compile Include="Assets\Spilgames\Utils\UnityEditor\Responses\AdvertisementResponse.cs" />
+     <Compile Include="Assets\Spilgames\Utils\UnityEditor\Responses\ConfigResponse.cs" />
+     <Compile Include="Assets\Spilgames\Utils\UnityEditor\Responses\GameObjectsResponse.cs" />
+     <Compile Include="Assets\Spilgames\Utils\UnityEditor\Responses\GameStateResponse.cs" />
+     <Compile Include="Assets\Spilgames\Utils\UnityEditor\Responses\OverlayResponse.cs" />
+     <Compile Include="Assets\Spilgames\Utils\UnityEditor\Responses\PackagesResponse.cs" />
+     <Compile Include="Assets\Spilgames\Utils\UnityEditor\Responses\PlayerDataResponse.cs" />
+     <Compile Include="Assets\Spilgames\Utils\UnityEditor\Responses\Response.cs" />
      <Compile Include="Assets\Spilgames\Utils\UnityEditor\SpilEvent.cs" />
      <None Include="Assets\Plugins\iOS\Spil.framework\Version.txt" />
      <None Include="Assets\link.xml" />
      <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
  <Reference Include="UnityEngine.UI">
- <HintPath>/Applications/Unity_5.4/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ <HintPath>/Applications/Unity_5.4.0f3/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
- <HintPath>/Applications/Unity_5.4/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ <HintPath>/Applications/Unity_5.4.0f3/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Analytics">
- <HintPath>/Applications/Unity_5.4/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
+ <HintPath>/Applications/Unity_5.4.0f3/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Purchasing">
- <HintPath>/Applications/Unity_5.4/Unity.app/Contents/UnityExtensions/Unity/UnityPurchasing/UnityEngine.Purchasing.dll</HintPath>
+ <HintPath>/Applications/Unity_5.4.0f3/Unity.app/Contents/UnityExtensions/Unity/UnityPurchasing/UnityEngine.Purchasing.dll</HintPath>
  </Reference>
  <Reference Include="Facebook.Unity">
  <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/FacebookSDK/Plugins/Facebook.Unity.dll</HintPath>

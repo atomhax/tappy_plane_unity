@@ -8,14 +8,13 @@ using System.Collections.Generic;
 
 namespace SpilGames.Unity.Utils.UnityEditor.Responses
 {
-	public class PackagesData : Data
+	public class PackagesResponse : Response
 	{
-		#if UNITY_EDITOR
 
 		public static List<PackageData> GamePackagesData;
 		public static List<PromotionData> GamePromotionData;
 
-		public static void ProcessPackagesData(ResponseEvent response){
+		public static void ProcessPackagesResponse(ResponseEvent response){
 			if(response.data != null){
 				if(response.data.HasField("packages")){
 					JSONObject json = new JSONObject();
@@ -51,8 +50,6 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 
 			return null;
 		}
-
-		#endif
 	}
 }
 #endif

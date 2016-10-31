@@ -577,7 +577,7 @@ namespace SpilGames.Unity.Implementations
                         Debug.Log ("SpilSDK-Unity AdNotAvailable event fired but type is unknown. Type: " + type);
                     }
                     if (Spil.Instance.OnAdNotAvailable != null) { Spil.Instance.OnAdNotAvailable(adType); }
-	            }            
+	        }            
 
                 public delegate void AdStartedEvent();
                 /// <summary>

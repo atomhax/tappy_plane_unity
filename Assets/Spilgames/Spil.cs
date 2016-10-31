@@ -63,6 +63,24 @@ namespace SpilGames.Unity
 		[SerializeField]
 		private int reward = 0;
 		public static int Reward { get; private set; }
+	
+
+		[Header("Daily Bonus Settings")]
+
+		[SerializeField]
+		private int dbId;
+		public static int DBId { get; private set; }
+
+		[SerializeField]
+		private string dbExternalId;
+		public static string DBExternalId { get; private set; }
+
+		[SerializeField]
+		private int dbAmount;
+		public static int DBAmount { get; private set; }
+
+		public enum DailyBonusRewardType { CURRENCY, ITEM, EXTERNAL };
+		public DailyBonusRewardType DBRewardType;
 
 		public static Spil MonoInstance { get { return GameObject.Find ("SpilSDK").GetComponent<Spil> (); } }
 
@@ -103,7 +121,11 @@ namespace SpilGames.Unity
 
 			CurrencyName = currencyName;
 			CurrencyId = currencyId;
-		Reward = reward;
+			Reward = reward;
+
+			DBId = dbId;
+			DBExternalId = dbExternalId;
+			DBAmount = dbAmount;
 			#endif
 
 			#if UNITY_ANDROID || UNITY_EDITOR

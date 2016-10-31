@@ -34,28 +34,27 @@ namespace SpilGames.Unity.Utils.UnityEditor
 			if (responseEvent.type != null) {
 				switch (responseEvent.type.ToLower ().Trim ()) {
 					case "advertisement":
-						AdvertisementData.ProcessAdvertisement(responseEvent);
+						AdvertisementResponse.ProcessAdvertisementResponse(responseEvent);
 						break;
 					case "overlay":
+						OverlayResponse.ProcessOverlayResponse(responseEvent);
 						break;
 					case "gameconfig":
-						ConfigData.ProcessConfig(responseEvent);
+						ConfigResponse.ProcessConfigResponse(responseEvent);
 						break;
 					case "packages":
-						PackagesData.ProcessPackagesData (responseEvent);
+						PackagesResponse.ProcessPackagesResponse (responseEvent);
 						break;
 					case "notification":
 						break;
 					case "playerdata":
-						SpilUnityEditorImplementation.pData.ProcessPlayerData(responseEvent);
+						SpilUnityEditorImplementation.pData.ProcessPlayerDataResponse(responseEvent);
 						break;
 					case "gamedata":
-						SpilUnityEditorImplementation.gData.ProcessGameObjects(responseEvent);
+						SpilUnityEditorImplementation.gData.ProcessGameObjectsResponse(responseEvent);
 						break;
 					case "gamestate":
-						GameStateData.ProcessGameState (responseEvent);
-						break;
-					case "reward":
+						GameStateResponse.ProcessGameStateResponse (responseEvent);
 						break;
 					}
 			}

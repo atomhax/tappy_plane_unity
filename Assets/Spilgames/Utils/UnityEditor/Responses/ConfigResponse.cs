@@ -7,13 +7,12 @@ using SpilGames.Unity.Utils.UnityEditor;
 namespace SpilGames.Unity.Utils.UnityEditor.Responses
 {
 
-	public class ConfigData : Data
+	public class ConfigResponse : Response
 	{
-		#if UNITY_EDITOR
 
 		public static string GameConfigData;
 
-		public static void ProcessConfig(ResponseEvent response){
+		public static void ProcessConfigResponse(ResponseEvent response){
 			if(response.data != null){
 				GameConfigData = response.data.Print(false);
 				SpilUnityImplementationBase.fireConfigUpdatedEvent();
@@ -44,8 +43,6 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 
 			return config;
 		}
-
-		#endif
 	
 	}
 
