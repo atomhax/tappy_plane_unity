@@ -45,9 +45,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Editor\IOSBuildPostProcess.cs" />
      <Compile Include="Assets\Editor\RichardsCuts.cs" />
-     <Compile Include="Assets\Editor\SpilEditor.cs" />
+     <Compile Include="Assets\Editor\SpilAndroidBuildPostProcess.cs" />
+     <Compile Include="Assets\Editor\SpilEditorConfig.cs" />
+     <Compile Include="Assets\Editor\SpilEditorDocumentation.cs" />
+     <Compile Include="Assets\Editor\SpilEditorReleases.cs" />
+     <Compile Include="Assets\Editor\SpilIOSBuildPostProcess.cs" />
      <None Include="Assets\Plugins\iOS\Spil.framework\Version.txt" />
      <None Include="Assets\link.xml" />
      <None Include="Assets\Plugins\Android\AndroidManifest.xml" />

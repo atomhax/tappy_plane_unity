@@ -526,7 +526,7 @@ namespace SpilGames.Unity.Helpers
 		public int delta;
 
 		/// <summary>
-		/// The type of item. Should be 100 or higher
+		/// The type of item. Should be -1 - +99
 		/// </summary>
 		public int type;
 	}

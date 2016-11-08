@@ -11,6 +11,9 @@ namespace SpilGames.Unity.Implementations
 	public static string PluginName = "Unity";
 	public static string PluginVersion = "2.2.5";
 
+	public static string AndroidVersion = "2.2.4";
+	public static string iOSVersion = "2.1.2";
+
 	public abstract void SetPluginInformation(string PluginName, string PluginVersion);
 
         #region Misc.

@@ -11,7 +11,7 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 	public class OverlayResponse : Response
 	{
 
-		private static Spil.DailyBonusRewardType rewardType = Spil.MonoInstance.DBRewardType;
+		private static Spil.DailyBonusRewardTypeEnum rewardType = Spil.MonoInstance.DailyBonusRewardType;
 
 		public static void ProcessOverlayResponse (ResponseEvent response){
 
@@ -89,12 +89,12 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 
 					if (GUI.Button (new Rect (10, Screen.height/2, (Screen.width-20), (Screen.height-20)/2), "Collect Reward")){
 
-						if(rewardType.Equals(Spil.DailyBonusRewardType.EXTERNAL)){
+						if(rewardType.Equals(Spil.DailyBonusRewardTypeEnum.EXTERNAL)){
 							List<Reward> rewards = new List<Reward>();
 
 							Reward reward = new Reward();
-							reward.externalId = Spil.DBExternalId;
-							reward.amount = Spil.DBAmount;
+							reward.externalId = Spil.DailyBonusExternalId;
+							reward.amount = Spil.DailyBonusAmount;
 
 							rewards.Add(reward);
 
@@ -105,12 +105,12 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 
 							SpilUnityEditorImplementation.fireDailyBonusReward(json.Print(false));
 						} else{
-							int id = Spil.DBId;
-							int amount = Spil.DBAmount;
+							int id = Spil.DailyBonusId;
+							int amount = Spil.DailyBonusAmount;
 
-							if(rewardType.Equals(Spil.DailyBonusRewardType.CURRENCY)){
+							if(rewardType.Equals(Spil.DailyBonusRewardTypeEnum.CURRENCY)){
 								SpilUnityEditorImplementation.pData.WalletOperation("add", id, amount, PlayerDataUpdateReasons.DailyBonus);
-							} else if (rewardType.Equals(Spil.DailyBonusRewardType.EXTERNAL)){
+							} else if (rewardType.Equals(Spil.DailyBonusRewardTypeEnum.EXTERNAL)){
 								SpilUnityEditorImplementation.pData.InventoryOperation("add", id, amount, PlayerDataUpdateReasons.DailyBonus);
 							}
 						}

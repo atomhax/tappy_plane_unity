@@ -239,6 +239,11 @@ namespace SpilGames.Unity.Helpers
 		public static string ItemPickedUp = "Item Picked Up";
 		public static string ServerUpdate = "Server Update";
 		public static string DailyBonus = "Daily Bonus From Client";
+		public static string Rush = "Rush";
+		public static string Gift = "Gift";
+		public static string Cancel = "Cancel";
+		public static string Collection = "Collection";
+
 
 		public PlayerDataUpdateReasons ()
 		{

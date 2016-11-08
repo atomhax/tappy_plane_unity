@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using SpilGames.Unity.Implementations;
 using SpilGames.Unity.Utils.UnityEditor;
 using SpilGames.Unity.Helpers;
+using System.IO;
 
 namespace SpilGames.Unity.Utils.UnityEditor.Responses
 {
@@ -87,8 +88,14 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 		public string GetGameObjects(){
 			//ToDo Initalise values
 			if(!updatedFromServer){
-				string gameData = System.IO.File.ReadAllText (Application.streamingAssetsPath + "/defaultGameData.json");
-				return gameData;
+				try{
+					string gameData = System.IO.File.ReadAllText (Application.streamingAssetsPath + "/defaultGameData.json");
+					return gameData;
+				} catch(FileNotFoundException e){
+					Debug.Log("defaultGameData.json not found. Creating a placeholder!" + e.ToString());
+					string placeholder = "{\"currencies\": [],\"promotions\": [],\"shop\": [],\"bundles\": [],\"items\": []}";
+					return placeholder;
+				}
 			} else{
 				return JsonHelper.getJSONFromObject(this);
 			}

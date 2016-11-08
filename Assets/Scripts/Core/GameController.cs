@@ -48,8 +48,7 @@ public class GameController : MonoBehaviour
 
 	void Awake ()
 	{
-		RequestDailyBonus();
-		//FB.Init (this.OnFBInitComplete);
+		FB.Init (this.OnFBInitComplete);
 	}
 
 	// Use this for initialization

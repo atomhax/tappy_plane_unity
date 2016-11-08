@@ -7,6 +7,7 @@ using SpilGames.Unity.Helpers;
 using SpilGames.Unity.Utils.UnityEditor;
 using System.Collections.Generic;
 using System;
+using System.IO;
 
 namespace SpilGames.Unity.Utils.UnityEditor.Responses
 {
@@ -84,8 +85,16 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 		{
 
 			if (Wallet == null) {
-				string playerData = System.IO.File.ReadAllText (Application.streamingAssetsPath + "/defaultPlayerData.json");
-				TempUserInfo temp = JsonHelper.getObjectFromJson<TempUserInfo> (playerData);
+				TempUserInfo temp;
+				try{
+					string playerData = System.IO.File.ReadAllText (Application.streamingAssetsPath + "/defaultPlayerData.json");
+					temp = JsonHelper.getObjectFromJson<TempUserInfo> (playerData);
+				} catch(FileNotFoundException e){
+					Debug.Log("defaultPlayerData.json not found. Creating a placeholder!" + e.ToString());
+					string placeholder = "{\"wallet\":{\"currencies\":[],\"offset\": 0,\"logic\": \"CLIENT\"},\"inventory\":{\"items\":[],\"offset\":0,\"logic\": \"\"}}";
+					temp = JsonHelper.getObjectFromJson<TempUserInfo> (placeholder);
+				}
+
 
 				return temp.wallet;
 			}
@@ -97,8 +106,17 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 		{
 
 			if (Inventory == null) {
-				string playerData = System.IO.File.ReadAllText (Application.streamingAssetsPath + "/defaultPlayerData.json");
-				TempUserInfo temp = JsonHelper.getObjectFromJson<TempUserInfo> (playerData);
+				TempUserInfo temp;
+				try{
+					string playerData = System.IO.File.ReadAllText (Application.streamingAssetsPath + "/defaultPlayerData.json");
+					temp = JsonHelper.getObjectFromJson<TempUserInfo> (playerData);
+				} catch(FileNotFoundException e){
+					Debug.Log("defaultPlayerData.json not found. Creating a placeholder! " + e.ToString());
+					string placeholder = "{\"wallet\":{\"currencies\":[],\"offset\": 0,\"logic\": \"CLIENT\"},\"inventory\":{\"items\":[],\"offset\":0,\"logic\": \"\"}}";
+					temp = JsonHelper.getObjectFromJson<TempUserInfo> (placeholder);
+				}
+
+
 				return temp.inventory;
 			}
 

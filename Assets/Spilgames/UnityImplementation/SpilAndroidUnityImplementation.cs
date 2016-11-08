@@ -82,7 +82,8 @@ namespace SpilGames.Unity.Implementations
 			internal override void SpilInit()
             {
 			#if UNITY_ANDROID
-                RegisterDevice(Spil.Project_ID);
+				Spil spil = GameObject.FindObjectOfType<Spil> ();
+                		RegisterDevice(spil.ProjectId);
 			#endif
             }
 

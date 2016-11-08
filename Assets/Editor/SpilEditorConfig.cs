@@ -1,0 +1,450 @@
+﻿using UnityEngine;
+using System.Collections;
+using UnityEditor;
+using System.IO;
+using SpilGames.Unity.Utils;
+using SpilGames.Unity;
+using System.Xml;
+using SpilGames.Unity.Implementations;
+
+public class SpilEditorConfig : EditorWindow {
+
+	private int tabSelected = 0;
+	private static Spil spil;
+	Vector2 scrollPos;
+
+	[MenuItem ("Spil SDK/Configuration", false, 1)]
+	static void Init () {
+		spil = GameObject.FindObjectOfType<Spil> ();
+		SpilEditorConfig window = (SpilEditorConfig)EditorWindow.GetWindow (typeof(SpilEditorConfig));
+		window.autoRepaintOnSceneChange = true;
+		window.titleContent.text = "Configuration";
+		window.Show ();
+	}
+
+	void OnGUI () {
+		GUILayout.BeginVertical();
+		scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width (position.width), GUILayout.Height (position.height)); {
+			GUILayout.BeginHorizontal ();
+			{
+				if (GUILayout.Toggle (tabSelected == 0, "General", EditorStyles.toolbarButton)) {
+					tabSelected = 0;
+				}
+				if (GUILayout.Toggle (tabSelected == 1, "iOS", EditorStyles.toolbarButton)) {
+					tabSelected = 1;
+				}
+				if (GUILayout.Toggle (tabSelected == 2, "Android", EditorStyles.toolbarButton)) {
+					tabSelected = 2;
+				}
+				if (GUILayout.Toggle (tabSelected == 3, "Editor", EditorStyles.toolbarButton)) {
+					tabSelected = 3;
+				}
+			}
+			GUILayout.EndHorizontal ();
+
+			switch (tabSelected) {
+				case 0:
+					DrawGeneral ();
+					break;
+				case 1:
+					DrawIOS ();
+					break;
+				case 2:
+					DrawAndroid ();
+					break;
+				case 3:
+					DrawEditor();
+					break;
+			}
+		}
+
+		EditorGUILayout.EndScrollView();
+		GUILayout.EndVertical ();
+	}
+
+	private void DrawGeneral () {
+		GUILayout.Label("");
+		GUILayout.Label ("WARNING: Please make sure to set your bundle ID in your player settings before getting your game data.\nPlease also note that this tool will only work if your build target is set to iOS or Android", EditorStyles.wordWrappedLabel);
+		GUILayout.Label("");
+		GUILayout.Label("The button below will create the following configuration files:" , EditorStyles.wordWrappedLabel);
+		GUILayout.Label(" • defaultGameConfig.json", EditorStyles.boldLabel);
+		GUILayout.Label(" • defaultPlayerData.json", EditorStyles.boldLabel);
+		GUILayout.Label(" • defaultGameData.json", EditorStyles.boldLabel);
+		GUILayout.Label("These files can be located in the StreamingAssets folder", EditorStyles.wordWrappedLabel);
+		GUILayout.Label("");
+		if (GUILayout.Button ("Create Default Configuration Files")) {
+			CreateDefaultConfigFiles ();
+		}
+
+
+		if(File.Exists(Application.streamingAssetsPath + "/defaultGameConfig.json")){
+			GUILayout.Label("");
+			GUILayout.Label("DefaultGameConfig Values:", EditorStyles.boldLabel);
+			GUILayout.Label("");
+			JSONObject configJSON = new JSONObject(System.IO.File.ReadAllText (Application.streamingAssetsPath + "/defaultGameConfig.json"));
+
+			if(configJSON.HasField("androidSdkConfig")){
+				JSONObject android = new JSONObject(configJSON.GetField("androidSdkConfig").Print(false));
+				GUILayout.Label("Android", EditorStyles.boldLabel);
+				string androidConfig = "";
+
+				for(int i = 0; i < android.Count; i++){
+					androidConfig = androidConfig + android.keys[i] + ": " + android.list[i].Print(false) + "\n";
+				}
+				GUILayout.Label(androidConfig, EditorStyles.wordWrappedLabel);
+			}
+			GUILayout.Label("");
+			if(configJSON.HasField("iosSdkConfig")){
+				JSONObject ios = new JSONObject(configJSON.GetField("iosSdkConfig").Print(false));
+				GUILayout.Label("iOS", EditorStyles.boldLabel);
+				string iosConfig = "";
+
+				for(int i = 0; i < ios.Count; i++){
+					iosConfig = iosConfig + ios.keys[i] + ": " + ios.list[i].Print(false) + "\n";
+				}
+				GUILayout.Label(iosConfig, EditorStyles.wordWrappedLabel);
+			}
+
+
+		}
+
+	}
+
+	private void DrawIOS () {
+
+		GUILayout.Label("This tab contains configuration information specific to iOS", EditorStyles.boldLabel);
+		GUILayout.Label("");
+
+		string customUserId = "<< Spil component not found in scene! >>";
+		bool exportDefaultEntitlements = EditorPrefs.GetBool ("exportDefaultEntitlements");
+		bool useICloudContainer = EditorPrefs.GetBool ("useICloudContainer");
+		bool useICloudKV = EditorPrefs.GetBool ("useICloudKV");
+		bool usePushNotifications = EditorPrefs.GetBool ("usePushNotifications");
+
+
+		if (spil != null) {
+			customUserId = spil.CustomBundleId;
+		}
+
+		GUILayout.Label ("Custom bundle id: (Useful when the bundle id used to build is\n" +
+			"not the same as the one connecting to the Spil Games backend)");
+		customUserId = GUILayout.TextField (customUserId);
+
+		GUILayout.Space (4);
+		GUILayout.Label ("Entitlements:", EditorStyles.boldLabel);
+		exportDefaultEntitlements = GUILayout.Toggle (exportDefaultEntitlements, "Export Spil Games entitlements");
+		useICloudContainer = GUILayout.Toggle (useICloudContainer, "Use iCloud project container");
+		useICloudKV = GUILayout.Toggle (useICloudKV, "Use iCloud key-value store");
+		usePushNotifications = GUILayout.Toggle (usePushNotifications, "Use push notifications");
+
+		EditorPrefs.SetBool ("exportDefaultEntitlements", exportDefaultEntitlements);
+		EditorPrefs.SetBool ("useICloudContainer", useICloudContainer);
+		EditorPrefs.SetBool ("useICloudKV", useICloudKV);
+		EditorPrefs.SetBool ("usePushNotifications", usePushNotifications);
+
+		if (spil != null) {
+			spil.CustomBundleId = customUserId;
+		}
+	}
+
+	private void DrawAndroid () {
+		GUILayout.Label("This tab contains configuration information specific to Android", EditorStyles.boldLabel);
+		GUILayout.Label("");
+
+		GUILayout.Label("Installed Modules:", EditorStyles.boldLabel);
+
+		string androidFolder = "Assets/Plugins/Android/";
+		string spilSDK = "spilsdk-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
+		string spilSDKAdjust = "spilsdk-adjust-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
+		string spilSDKChartboost = "spilsdk-chartboost-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
+		string spilSDKDFP = "spilsdk-dfp-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
+		string spilSDKFyber = "spilsdk-fyber-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
+		string spilSDKZendesk = "spilsdk-zendesk-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
+
+		var styleGreen = new GUIStyle(EditorStyles.label);
+		Color green = new Color();
+		ColorUtility.TryParseHtmlString("#006400", out green);
+		styleGreen.normal.textColor = green;
+
+		var styleRed = new GUIStyle(EditorStyles.label);
+		styleRed.normal.textColor = Color.red;
+
+		string spilSDKCheck = "";
+		string spilSDKAdjustCheck = "";
+		string spilSDKChartboostCheck = "";
+		string spilSDKDFPCheck = "";
+		string spilSDKFyberCheck = "";
+		string spilSDKZendeskCheck = "";
+
+		if(!File.Exists(androidFolder + spilSDK)){
+			spilSDKCheck = " - False";
+			GUILayout.Label(" • SDK Main Module:" + spilSDKCheck, styleRed);
+		} else {
+			spilSDKCheck = " - True";
+			GUILayout.Label(" • SDK Main Module:" + spilSDKCheck, styleGreen);
+		}
+
+		if(!File.Exists(androidFolder + spilSDKAdjust)){
+			spilSDKAdjustCheck = " - False";
+			GUILayout.Label(" • Adjust (Analytics):" + spilSDKAdjustCheck, styleRed);
+		} else {
+			spilSDKAdjustCheck = " - True";
+			GUILayout.Label(" • Adjust (Analytics):" + spilSDKAdjustCheck, styleGreen);
+		}
+
+		if(!File.Exists(androidFolder + spilSDKChartboost)){
+			spilSDKChartboostCheck = " - False";
+			GUILayout.Label(" • Chartboost (Advertising):" + spilSDKChartboostCheck, styleRed);
+		} else {
+			spilSDKChartboostCheck = " - True";
+			GUILayout.Label(" • Chartboost (Advertising):" + spilSDKChartboostCheck, styleGreen);
+		}
+
+		if(!File.Exists(androidFolder + spilSDKDFP)){
+			spilSDKDFPCheck = " - False";
+			GUILayout.Label(" • DFP (Advertising):" + spilSDKDFPCheck, styleRed);
+		} else {
+			spilSDKDFPCheck = " - True";
+			GUILayout.Label(" • DFP (Advertising):" + spilSDKDFPCheck, styleGreen);
+		}
+
+		if(!File.Exists(androidFolder + spilSDKFyber)){
+			spilSDKFyberCheck = " - False";
+			GUILayout.Label(" • Fyber (Advertising):" + spilSDKFyberCheck, styleRed);
+		} else {
+			spilSDKFyberCheck = " - True";
+			GUILayout.Label(" • Fyber (Advertising):" + spilSDKFyberCheck, styleGreen);
+		}
+
+		if(!File.Exists(androidFolder + spilSDKZendesk)){
+			spilSDKZendeskCheck = " - False";
+			GUILayout.Label(" • Zendesk (Customer Support):" + spilSDKZendeskCheck, styleRed);
+		} else {
+			spilSDKZendeskCheck = " - True";
+			GUILayout.Label(" • Zendesk (Customer Support):" + spilSDKZendeskCheck, styleGreen);
+		}
+
+
+		GUILayout.Label("");
+
+		GUILayout.Label("Android Project Id:", EditorStyles.boldLabel);
+
+		string projectId = "<< Spil component not found in scene! >>";
+		if (spil != null) {
+			projectId = spil.ProjectId;
+		}
+
+		projectId = GUILayout.TextField(projectId);
+
+		if (spil != null) {
+			spil.ProjectId = projectId;
+		}
+
+		GUILayout.Label("");
+
+		if(GUILayout.Button("Verify Android Setup")){
+			VerifyAndroidSetup();
+		}
+	}
+
+	void DrawEditor(){
+		GUILayout.Label("This tab contains configuration information specific to the Unity Editor", EditorStyles.boldLabel);
+		GUILayout.Label("");
+
+		GUILayout.Label("Spil User Id:", EditorStyles.boldLabel);
+
+		string editorUserId = "<< Spil component not found in scene! >>";
+		if (spil != null) {
+			editorUserId = spil.spilUserIdEditor;
+		}
+
+		editorUserId = GUILayout.TextField(editorUserId);
+
+		if (spil != null) {
+			spil.spilUserIdEditor = editorUserId;
+		}
+
+		GUILayout.Label("Bundle Id:", EditorStyles.boldLabel);
+
+		string bundleIdEditor = "<< Spil component not found in scene! >>";
+		if (spil != null) {
+			bundleIdEditor = spil.bundleIdEditor;
+		}
+
+		bundleIdEditor = GUILayout.TextField(bundleIdEditor);
+
+		if (spil != null) {
+			spil.bundleIdEditor = bundleIdEditor;
+		}
+
+		GUILayout.Label("");
+		if(GUILayout.Button("Detailed Editor Configuration")){
+			Selection.activeGameObject = spil.gameObject;
+		}
+
+	}
+
+	void CreateDefaultConfigFiles () {
+		if (PlayerSettings.bundleIdentifier == "") {
+			throw new UnityException ("Bundle ID is Blank");
+		}
+		Debug.Log ("Getting Default Game Data for: " + PlayerSettings.bundleIdentifier);
+		string streamingAssetsPath = Application.dataPath + "/StreamingAssets";
+		if (!File.Exists (streamingAssetsPath)) {
+			Directory.CreateDirectory (streamingAssetsPath);
+		}
+		if(!File.Exists(streamingAssetsPath + "/defaultGamedata.json")){
+			File.WriteAllText (streamingAssetsPath + "/defaultGamedata.json", GetData ("requestGameData"));
+		}
+
+		if(!File.Exists(streamingAssetsPath + "/defaultGameConfig.json")){
+			File.WriteAllText (streamingAssetsPath + "/defaultGameConfig.json", GetData ("requestConfig"));
+
+		}
+
+		if(!File.Exists(streamingAssetsPath + "/defaultPlayerData.json")){
+			File.WriteAllText (streamingAssetsPath + "/defaultPlayerData.json", GetData ("requestPlayerData"));
+		}
+
+	}
+
+	string GetData (string type) {
+		string gameData = "";
+
+		if(type.Equals("requestConfig")){
+			JSONObject combined = null;
+
+			WWWForm form = GetFormData ("Android");
+			form.AddField ("name", type);
+			WWW request = new WWW ("https://apptracker.spilgames.com/android_event", form);
+			while (!request.isDone)
+				;
+			if (request.error != null) {
+				Debug.LogError ("Error getting game data: " + request.error);  
+			} else { 
+				combined = new JSONObject (request.text).GetField ("data");
+			}
+
+			WWWForm form2 = GetFormData ("ios");
+			form2.AddField ("name", type);
+			WWW request2 = new WWW ("https://apptracker.spilgames.com/apple_event", form2);
+			while (!request2.isDone)
+				;
+			if (request2.error != null) {
+				Debug.LogError ("Error getting game data: " + request2.error);  
+			} else { 
+				combined.AddField("iosSdkConfig", new JSONObject (request2.text).GetField("data").GetField("iosSdkConfig"));
+			}
+			gameData = combined.Print(false);
+
+		} else {
+			WWWForm form = GetFormData ("Android");
+			form.AddField ("name", type);
+			WWW request = new WWW ("https://apptracker.spilgames.com/android_event", form);
+			while (!request.isDone)
+				;
+			if (request.error != null) {
+				Debug.LogError ("Error getting game data: " + request.error);  
+			} else { 
+				Debug.Log (type + " Data returned: " + request.text);
+				JSONObject serverResponce = new JSONObject (request.text);
+				gameData = serverResponce.GetField ("data").ToString ();
+			}
+		}
+
+
+
+		return gameData;
+	}
+
+	WWWForm GetFormData (string platform) {
+		JSONObject dummyData = new JSONObject ();
+		dummyData.AddField ("uid", "deadbeef");
+		dummyData.AddField ("locale", "en");
+		dummyData.AddField ("appVersion", "1");
+		dummyData.AddField ("apiVersion", "1");
+		dummyData.AddField ("os", platform);
+		dummyData.AddField ("osVersion", "1");
+		dummyData.AddField ("deviceModel", "Backend");
+		if(platform.Equals("Android")){
+			dummyData.AddField ("packageName", PlayerSettings.bundleIdentifier);
+		} else {
+			dummyData.AddField ("bundleId", PlayerSettings.bundleIdentifier);
+		}
+
+		dummyData.AddField ("tto", "0");
+		dummyData.AddField ("sessionId", "deadbeef");
+		dummyData.AddField ("timezoneOffset", "0");
+		JSONObject dummyCustomData = new JSONObject ();
+		JSONObject dummyWallet = new JSONObject ();
+		dummyWallet.AddField ("offset", 0);
+		JSONObject dummyInventory = new JSONObject ();
+		dummyInventory.AddField ("offset", 0);
+		dummyCustomData.AddField ("wallet", dummyWallet);
+		dummyCustomData.AddField ("inventory", dummyInventory);
+		WWWForm form = new WWWForm ();
+		form.AddField ("data", dummyData.ToString ());
+		form.AddField ("customData", dummyCustomData.ToString ());
+		form.AddField ("ts", "1470057439857");
+		form.AddField ("queued", "0");
+		return form;
+	}
+
+	void VerifyAndroidSetup(){
+
+		string androidFolder = "Assets/Plugins/Android/";
+
+		if(Directory.Exists(androidFolder + "GooglePlayServices")){
+			Debug.LogError("The contents of the GooglePlayServices folder should be copied into 'Assets/Plugins/Android/' and afterwards the folder should be removed");
+		}
+
+		string appManifestPath = androidFolder + "AndroidManifest.xml";
+
+		// Let's open the app's AndroidManifest.xml file.
+            	XmlDocument manifestFile = new XmlDocument();
+            	manifestFile.Load(appManifestPath);
+
+		XmlElement manifestRoot = manifestFile.DocumentElement;
+	        XmlNode applicationNode = null;
+
+	        foreach(XmlNode node in manifestRoot.ChildNodes) {
+	            if (node.Name == "application") {
+	                applicationNode = node;
+	                break;
+	            }
+	        }
+
+	        // If there's no applicatio node, something is really wrong with your AndroidManifest.xml.
+	        if (applicationNode == null) {
+	        	Debug.LogError("Your app's AndroidManifest.xml file does not contain \"<application>\" node.");
+	                Debug.LogError("Unable to verify if the values were correct");
+
+	            return;
+	        }
+
+		if(!(applicationNode.Attributes["android:name"].Value.Equals("com.spilgames.spilsdk.activities.SpilSDKApplication")) && !(applicationNode.Attributes["android:name"].Value.Equals("com.spilgames.spilsdk.activities.SpilSDKApplicationWithFabric"))){
+			Debug.LogError("The application name from your \"AndroidManifest.xml\" file is set incorrectly. Please set it to either \"com.spilgames.spilsdk.activities.SpilSDKApplication\" or \"com.spilgames.spilsdk.activities.SpilSDKApplicationWithFabric\" (if you are using Crashlytics) if you want for the Spil SDK to function correctly");
+		}
+
+		foreach(XmlNode node in applicationNode.ChildNodes){
+
+			if(node.Name.Equals("activity")){
+				foreach(XmlNode subNode in node.ChildNodes){
+					if(subNode.Name.Equals("intent-filter")){
+						foreach(XmlNode bottomNode in subNode.ChildNodes){
+							if(bottomNode.Name.Equals("action") && bottomNode.Attributes["android:name"].Value.Equals("android.intent.action.MAIN")){
+								if(!(node.Attributes["android:name"].Value.Equals("com.spilgames.spilsdk.activities.SpilUnityActivity")) && !(node.Attributes["android:name"].Value.Equals("com.spilgames.spilsdk.activities.SpilUnityActivityWithPrime")) && !(node.Attributes["android:name"].Value.Equals("com.spilgames.spilsdk.activities.SpilUnityActivityWithAN"))){
+									Debug.LogError("The Main Activity name from your \"AndroidManifest.xml\" file is set incorrectly. Please set it to either \"com.spilgames.spilsdk.activities.SpilUnityActivity\", \"com.spilgames.spilsdk.activities.SpilUnityActivityWithPrime\" (if you are using Prime31 Plugin) or \"com.spilgames.spilsdk.activities.SpilUnityActivityWithAN\" (if you are using Android Native Plugin) if you want for the Spil SDK to function correctly");
+								}
+							}
+						}
+					}
+				}
+			}
+
+		}
+
+		Debug.Log("Verification Complete! The Spil SDK for Android is configured correctly!");
+
+	}
+}
