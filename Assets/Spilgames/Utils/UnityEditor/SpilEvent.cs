@@ -61,7 +61,6 @@ namespace SpilGames.Unity.Utils.UnityEditor
 			this.data.AddField("apiVersion", SpilUnityImplementationBase.PluginVersion);
 			this.data.AddField("osVersion", "1.0");
 			this.data.AddField("os", "android");
-			this.data.AddField("osVersion", "6.0");
 			this.data.AddField("deviceModel", "Editor");
 			this.data.AddField("timezoneOffset", "0");
 			this.data.AddField("tto", "200");
