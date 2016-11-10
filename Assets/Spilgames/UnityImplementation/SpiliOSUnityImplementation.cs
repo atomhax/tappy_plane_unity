@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using SpilGames.Unity.Utils;
 using System.Collections;
+using SpilGames.Unity.Helpers;
+using Newtonsoft.Json;
+using System.Runtime.Serialization.Formatters;
 
 namespace SpilGames.Unity.Implementations
 {
@@ -130,13 +133,45 @@ namespace SpilGames.Unity.Implementations
 		{
 			if (dict != null)
 			{
-				//creat a json object using the JSONobject library
-				JSONObject jsonString = new JSONObject(JSONObject.Type.STRING);
-				foreach(var item in dict)
-				{
-					jsonString.AddField(item.Key,item.Value);
+				// Create a new dict json string
+				string jsonString = "{";
+
+				// Add each passed kv to the json dict
+				foreach (var item in dict) {
+					string key = item.Key;
+					object value = item.Value;
+					jsonString += "\"" + key + "\":";
+
+					// Detect the value type
+					try {
+						string jsonInputString = item.Value.Replace("\\\"", "\"").Trim(new char[]{'\"'});
+						JSONObject inputJsonObject = new JSONObject(jsonInputString);
+						if (inputJsonObject.IsArray || inputJsonObject.IsObject) {
+							jsonString += jsonInputString;
+						} else {
+							jsonString += "\"" + value + "\"";
+						}
+					} catch (Exception e) {
+						Debug.Log ("---JSON DETECTION FAILED" + e.Message);
+						jsonString += "\"" + value + "\"";
+					}
+
+					jsonString += ",";
 				}
-				trackEventWithParamsNative (eventName, jsonString.ToString());
+
+				// Close the json dict
+				if (jsonString.EndsWith(",")){
+					jsonString = jsonString.Substring(0, jsonString.Length - 1);
+				}
+				jsonString += "}";
+
+				Debug.Log ("---JSON BUILDED:" + jsonString);
+
+				if (jsonString != "{}") {
+					trackEventWithParamsNative (eventName, jsonString);
+				} else {
+					trackEventNative(eventName);
+				}
 			} else {
 				trackEventNative(eventName);
 			}
