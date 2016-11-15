@@ -31,7 +31,7 @@ namespace SpilGames.Unity
 		/// The project ID is used for push notifications.
 		/// </summary>
 		[SerializeField]
-		public string ProjectId;
+		public string ProjectId = "";
 
 		#endif
 
