@@ -20,6 +20,9 @@ public class GameController : MonoBehaviour
 
 	public int playerScore = 0;
 
+	public int latestRewardAmount = 0;
+	public string latestRewardType = "";
+
 	public Text gameTitleText, purchaceCompleteText, purchaceFailText;
 
 	public PlayerController player;
@@ -391,4 +394,23 @@ public class GameController : MonoBehaviour
 //		Spil.Instance.TrackWalletInventoryEvent("Test3", "GameStart", currencies, items);
 
 	}
+
+	public void FBShare ()
+	{
+		System.Uri url = new System.Uri ("http://files.cdn.spilcloud.com/10/1479133368_tappy_logo.png");
+		FB.ShareLink (url, "Tappy Plane", "Check out Tappy Plane for iOS and Android!", url, null);
+	}
+
+	/*public void FBShareScore ()
+	{
+		System.Uri url = new System.Uri ("http://files.cdn.spilcloud.com/10/1479133368_tappy_logo.png");
+		FB.ShareLink (url, "Tappy Plane", "I've just completed Tappy Plane and collected " + playerScore.ToString() + " stars!", null, null);
+	}
+
+	public void FBShareReward ()
+	{
+		FB.FeedShare
+		System.Uri url = new System.Uri ("http://files.cdn.spilcloud.com/10/1479133368_tappy_logo.png");
+		FB.ShareLink (url, "Tappy Plane", "I've just been awarded with " + latestRewardAmount.ToString() + " free " + latestRewardType + "!", null, null);
+	}*/
 }
