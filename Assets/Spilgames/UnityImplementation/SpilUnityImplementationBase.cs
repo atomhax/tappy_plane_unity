@@ -477,6 +477,11 @@ namespace SpilGames.Unity.Implementations
                 /// </summary>
 			    public abstract void SetShowToastOnVideoReward(bool value);
 
+				/// <summary>
+				/// Call to inform the SDK that the parental gate was (not) passes
+				/// </summary>
+				public abstract void ClosedParentalGate(bool pass);
+
                 /// <summary>
                 /// This is fired by the native Spil SDK after it receives a response from the back-end.
                 /// This method is exposed only for use by the native Spil SDK and should not be used by the developer!
@@ -580,7 +585,27 @@ namespace SpilGames.Unity.Implementations
                         Debug.Log ("SpilSDK-Unity AdNotAvailable event fired but type is unknown. Type: " + type);
                     }
                     if (Spil.Instance.OnAdNotAvailable != null) { Spil.Instance.OnAdNotAvailable(adType); }
-	        }            
+	        }         
+
+				public delegate void OpenParentalGateEvent();
+				/// <summary>
+				/// This is fired by the native Spil SDK after it receives an "OpenParentalGate" response from the back-end.
+				/// The developer can subscribe to this event and for instance NOT call "Spil.Instance.PlayVideo();" or "Spil.Instance.PlayMoreApps()"
+				/// but do something else instead.
+				/// </summary>
+				public event OpenParentalGateEvent OnOpenParentalGate;
+				/// <summary>
+				/// This is called by the native Spil SDK and will fire an OpenParentalGate event to which the developer 
+				/// can subscribe and for instance NOT call "Spil.Instance.PlayVideo();" or "Spil.Instance.PlayMoreApps()" but do something else instead.
+				/// This method is exposed only for use by the native Spil SDK and should not be used by the developer!
+				/// </summary>
+				/// <param name="type"></param>
+				public static void fireOpenParentalGateEvent()
+				{		
+					Debug.Log ("SpilSDK-Unity OpenParentalGate");
+
+					if (Spil.Instance.OnOpenParentalGate != null) { Spil.Instance.OnOpenParentalGate(); }
+				}
 
                 public delegate void AdStartedEvent();
                 /// <summary>
