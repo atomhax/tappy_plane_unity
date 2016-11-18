@@ -114,6 +114,8 @@ extern "C" {
 
     void showToastOnVideoReward(const bool enabled);
     
+    void closedParentalGateNative(const bool pass);
+    
     // --- Game & Player data ---
     
     void updatePlayerDataNative ();

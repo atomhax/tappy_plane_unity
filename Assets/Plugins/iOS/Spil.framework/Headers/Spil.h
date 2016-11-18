@@ -10,7 +10,7 @@
 #import "HookBridge.h"
 #import "GAI.h"
 
-#define SDK_VERSION @"2.1.2"
+#define SDK_VERSION @"2.1.4"
 
 @class Spil;
 @class UserProfile;
@@ -30,6 +30,7 @@
 -(void)adNotAvailable:(NSString*)type; // An ad is unavailable or did fail to load
 -(void)adStart; // An ad has started
 -(void)adFinished:(NSString*)type reason:(NSString*)reason reward:(NSString*)reward network:(NSString*)network; // An ad has finished (dismissed or an reward was granted)
+-(void)openParentalGate; // The ad requires a parental gate check to continue, present the parental gate in this method and call the closedParentalGate method to pass the result back to the Spil SDK.
 
 // Notification events
 -(void)grantReward:(NSDictionary*)data;
@@ -392,6 +393,11 @@
  *  Show a toast when a reward is unlocked
  */
 +(void)showToastOnVideoReward:(BOOL)enabled;
+
+/**
+ *  Call to inform the SDK that the parental gate was (not) passes
+ */
++(void)closedParentalGate:(BOOL)pass;
 
 #pragma mark UserData & GameData
 

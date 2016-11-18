@@ -227,15 +227,19 @@
 		</data>
 		<key>Headers/HookBridge.h</key>
 		<data>
-		FORYO5pKWxH8hWueDbN3DmDQn8Y=
+		CV3N2ohiDJdeYgnVToBRHtYCHCE=
 		</data>
 		<key>Headers/JsonUtil.h</key>
 		<data>
 		IVqiTMNXLQpMDxpcN7BM7zDW5lM=
 		</data>
+		<key>Headers/NSString+Extensions.h</key>
+		<data>
+		73R/2zEr+iIlcrab2/GzOOx/Pfo=
+		</data>
 		<key>Headers/Spil.h</key>
 		<data>
-		uHpjcDpwByrGCXzny7lL3DYIYYc=
+		g6MCjtHRChTtWrMDMZvolwgb3B8=
 		</data>
 		<key>Headers/SpilActionHandler.h</key>
 		<data>
@@ -247,7 +251,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		ZixdRR+KKqEz1tYcNhGCVQygMEU=
+		XeTGohwje228qOe01hUXMJwmEYc=
 		</data>
 		<key>LICENSE</key>
 		<data>
@@ -255,7 +259,7 @@
 		</data>
 		<key>MPAdBrowserController.nib</key>
 		<data>
-		74bcJh+94ThA69OQWZ4TFuPbAP4=
+		Ft5t4mcbbV7AQSy9HhhFCYBDACc=
 		</data>
 		<key>MPAdBrowserController.xib</key>
 		<data>
@@ -907,7 +911,7 @@
 		</data>
 		<key>setup.py</key>
 		<data>
-		J9A7I5fKZfT5gmzTij82t3mgRs0=
+		6CihtbxjuZ04p0bxo4zyn8hjrNw=
 		</data>
 		<key>vg_close.png</key>
 		<data>
@@ -1532,11 +1536,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			FORYO5pKWxH8hWueDbN3DmDQn8Y=
+			CV3N2ohiDJdeYgnVToBRHtYCHCE=
 			</data>
 			<key>hash2</key>
 			<data>
-			E7Ail5kqWpNkS4QzGwS6pH8FScFhHNHy61COdLIcRP4=
+			+dWUEjqT2KowZ+dKjZmq2WR5XPnuJMS/Jwku+VaDL9M=
 			</data>
 		</dict>
 		<key>Headers/JsonUtil.h</key>
@@ -1550,15 +1554,26 @@
 			7Mgp3BC9JYDb/IcAHVZadiBQcPsIvZ5tfu3ViSPJHIY=
 			</data>
 		</dict>
+		<key>Headers/NSString+Extensions.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			73R/2zEr+iIlcrab2/GzOOx/Pfo=
+			</data>
+			<key>hash2</key>
+			<data>
+			hLsk3S/RnPx8n/yoUWCQ1UE6Fo2Q6ES7szkf8m5IEGg=
+			</data>
+		</dict>
 		<key>Headers/Spil.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			uHpjcDpwByrGCXzny7lL3DYIYYc=
+			g6MCjtHRChTtWrMDMZvolwgb3B8=
 			</data>
 			<key>hash2</key>
 			<data>
-			tC/pXdFL490VYxzVtjJg0v0vABlsvi+FUAjIBwXhgIc=
+			GGN+V9rz7S79Sy0A0tcVKqe+HFhUqxIYrm2+bZ7BHVo=
 			</data>
 		</dict>
 		<key>Headers/SpilActionHandler.h</key>
@@ -1598,11 +1613,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			74bcJh+94ThA69OQWZ4TFuPbAP4=
+			Ft5t4mcbbV7AQSy9HhhFCYBDACc=
 			</data>
 			<key>hash2</key>
 			<data>
-			JarXk/hLD7UL57Z19D3/vmRv05h7VECj1CI7X36IsLU=
+			qccnMfEuo6Wcfimkb3+quX2CfE+9L0fOc1jACSlQNjo=
 			</data>
 		</dict>
 		<key>MPAdBrowserController.xib</key>
@@ -3156,11 +3171,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			J9A7I5fKZfT5gmzTij82t3mgRs0=
+			6CihtbxjuZ04p0bxo4zyn8hjrNw=
 			</data>
 			<key>hash2</key>
 			<data>
-			NWgUPmmdhiyqht7b9LSQ23D24GJ8FW23zdiHHHPecow=
+			5rK75eIf96mTuR3r39aWjJWwnSCVhLe3rmHXIbSAvtM=
 			</data>
 		</dict>
 		<key>vg_close.png</key>
