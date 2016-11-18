@@ -65,7 +65,7 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 						PlayerItemData item = new PlayerItemData ();
 
 						item.id = (int)itemsJSON.list [i].GetField ("id").n;
-						item.amount = (int)itemsJSON.list [i].GetField ("ammount").n;
+						item.amount = (int)itemsJSON.list [i].GetField ("amount").n;
 						item.delta = (int)itemsJSON.list [i].GetField ("delta").n;
 
 						receivedInventory.items.Add (item);

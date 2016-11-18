@@ -19,7 +19,10 @@ namespace SpilGames.Unity
 	public class Spil : MonoBehaviour
 	{
 
+		private SpilGameDataHelper GameDataObject;
 		public static SpilGameDataHelper GameData;
+
+		private PlayerDataHelper PlayerDataObject;
 		public static PlayerDataHelper PlayerData;
 
 		[Header("Android Settings")]
@@ -150,11 +153,16 @@ namespace SpilGames.Unity
 
 			Instance.UpdatePackagesAndPromotions ();
 
-			GameData = new SpilGameDataHelper (Instance);
-			PlayerData = new PlayerDataHelper (Instance);
+			GameDataObject = new SpilGameDataHelper (Instance);
+			GameData = GameDataObject;
+
+			PlayerDataObject = new PlayerDataHelper (Instance);
+			PlayerData = PlayerDataObject;
 		}
 
+		void Start(){
 
+		}
 
 		/// <summary>
 		/// This method is called by the native Spil SDK, it should not be used by developers.
