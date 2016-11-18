@@ -242,7 +242,15 @@ public class SpilEditorConfig : EditorWindow {
 
 		GUILayout.Label("");
 
-		GUILayout.Toggle(CheckAutomaticPermissionRequest(), " Automatic request of dangerous permissions");
+		GUILayout.Label("Permissions", EditorStyles.boldLabel);
+
+		if(CheckAutomaticPermissionRequest()){
+			GUILayout.Label("Spil SDK Automatic Runtime Requesting of dangerous permissions - True", styleGreen);
+		} else{
+			GUILayout.Label("Spil SDK Automatic Runtime Requesting of dangerous permissions - False", styleRed);
+		}
+
+		GUILayout.Label("The label above tells if the Spil SDK will automatically request all the dangerous permissions at the start of your game. If you want to disable it please check your \"AndroidManifest.xml\" file.", EditorStyles.wordWrappedLabel);
 
 		GUILayout.Label("");
 
