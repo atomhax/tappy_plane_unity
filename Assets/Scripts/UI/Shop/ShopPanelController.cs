@@ -113,6 +113,9 @@ public class ShopPanelController : MonoBehaviour {
 	{
 		getFreeCoinsButton.SetActive (false);
 		if(response.reward != null){
+			gameController.latestRewardAmount = response.reward.reward;
+			gameController.latestRewardType = "stars";
+
 			closeShopAfterReward = false;
 			starsRewardedText.text = "Thanks!\nStars Rewarded : " + response.reward.reward.ToString ();
 			Spil.PlayerData.Wallet.Add (25, response.reward.reward,PlayerDataUpdateReasons.RewardAds);
@@ -122,6 +125,9 @@ public class ShopPanelController : MonoBehaviour {
 	}
 
 	public void ShowReward(PlayerCurrencyData currency) {
+		gameController.latestRewardAmount = currency.delta;
+		gameController.latestRewardType = currency.name;
+
 		closeShopAfterReward = true;
 		starsRewardedText.text = "Rewarded: " + currency.delta + " " + currency.name + "!";
 		rewardSucessPanel.SetActive (true);
