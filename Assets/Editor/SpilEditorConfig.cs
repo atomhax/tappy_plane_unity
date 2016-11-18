@@ -242,6 +242,10 @@ public class SpilEditorConfig : EditorWindow {
 
 		GUILayout.Label("");
 
+		GUILayout.Toggle(CheckAutomaticPermissionRequest(), " Automatic request of dangerous permissions");
+
+		GUILayout.Label("");
+
 		if(GUILayout.Button("Verify Android Setup")){
 			VerifyAndroidSetup();
 		}
@@ -392,10 +396,13 @@ public class SpilEditorConfig : EditorWindow {
 
 	void VerifyAndroidSetup(){
 
+		bool isEverythingCorrect = true;
+
 		string androidFolder = "Assets/Plugins/Android/";
 
 		if(Directory.Exists(androidFolder + "GooglePlayServices")){
 			Debug.LogError("The contents of the GooglePlayServices folder should be copied into 'Assets/Plugins/Android/' and afterwards the folder should be removed");
+			isEverythingCorrect = false;
 		}
 
 		string appManifestPath = androidFolder + "AndroidManifest.xml";
@@ -424,7 +431,10 @@ public class SpilEditorConfig : EditorWindow {
 
 		if(!(applicationNode.Attributes["android:name"].Value.Equals("com.spilgames.spilsdk.activities.SpilSDKApplication")) && !(applicationNode.Attributes["android:name"].Value.Equals("com.spilgames.spilsdk.activities.SpilSDKApplicationWithFabric"))){
 			Debug.LogError("The application name from your \"AndroidManifest.xml\" file is set incorrectly. Please set it to either \"com.spilgames.spilsdk.activities.SpilSDKApplication\" or \"com.spilgames.spilsdk.activities.SpilSDKApplicationWithFabric\" (if you are using Crashlytics) if you want for the Spil SDK to function correctly");
+			isEverythingCorrect = false;
 		}
+
+		bool isUnityRequestPermissionDisabled = false;
 
 		foreach(XmlNode node in applicationNode.ChildNodes){
 
@@ -435,6 +445,7 @@ public class SpilEditorConfig : EditorWindow {
 							if(bottomNode.Name.Equals("action") && bottomNode.Attributes["android:name"].Value.Equals("android.intent.action.MAIN")){
 								if(!(node.Attributes["android:name"].Value.Equals("com.spilgames.spilsdk.activities.SpilUnityActivity")) && !(node.Attributes["android:name"].Value.Equals("com.spilgames.spilsdk.activities.SpilUnityActivityWithPrime")) && !(node.Attributes["android:name"].Value.Equals("com.spilgames.spilsdk.activities.SpilUnityActivityWithAN"))){
 									Debug.LogError("The Main Activity name from your \"AndroidManifest.xml\" file is set incorrectly. Please set it to either \"com.spilgames.spilsdk.activities.SpilUnityActivity\", \"com.spilgames.spilsdk.activities.SpilUnityActivityWithPrime\" (if you are using Prime31 Plugin) or \"com.spilgames.spilsdk.activities.SpilUnityActivityWithAN\" (if you are using Android Native Plugin) if you want for the Spil SDK to function correctly");
+									isEverythingCorrect = false;
 								}
 							}
 						}
@@ -442,9 +453,62 @@ public class SpilEditorConfig : EditorWindow {
 				}
 			}
 
+			if(node.Name.Equals("meta-data")){
+				if(node.Attributes["android:name"].Value.Equals("unityplayer.SkipPermissionsDialog") && node.Attributes["android:value"].Value.Equals("true")){
+					isUnityRequestPermissionDisabled = true;
+					isEverythingCorrect = false;
+				}
+			}
+
 		}
 
-		Debug.Log("Verification Complete! The Spil SDK for Android is configured correctly!");
+		if(!isUnityRequestPermissionDisabled){
+			Debug.LogError("You did not disable the automatic Unity permission request. Please add the following line to your \"applicaiton\" tag: \"<meta-data android:name=\"unityplayer.SkipPermissionsDialog\" android:value=\"true\" />\". This is required in order to not have any problems with the Spil SDK's permission system. Keep in mind that all your dangerous permissions will be handled by the Spil SDK automatically");
+		}
 
+		if(!isEverythingCorrect){
+			Debug.Log("Verification Complete! The Spil SDK for Android is configured correctly!");
+		} else {
+			Debug.LogError("Verification Complete! Something was not configured correctly!! Please check the logs");
+		}
+
+
+	}
+
+	bool CheckAutomaticPermissionRequest(){
+		string androidFolder = "Assets/Plugins/Android/";
+		string appManifestPath = androidFolder + "AndroidManifest.xml";
+
+		// Let's open the app's AndroidManifest.xml file.
+            	XmlDocument manifestFile = new XmlDocument();
+            	manifestFile.Load(appManifestPath);
+
+		XmlElement manifestRoot = manifestFile.DocumentElement;
+	        XmlNode applicationNode = null;
+
+	        foreach(XmlNode node in manifestRoot.ChildNodes) {
+	            if (node.Name == "application") {
+	                applicationNode = node;
+	                break;
+	            }
+	        }
+
+	        // If there's no applicatio node, something is really wrong with your AndroidManifest.xml.
+	        if (applicationNode == null) {
+	        	Debug.LogError("Your app's AndroidManifest.xml file does not contain \"<application>\" node.");
+	                Debug.LogError("Unable to verify if the values were correct");
+
+	            return true;
+	        }
+
+		foreach(XmlNode node in applicationNode.ChildNodes){
+			if(node.Name.Equals("meta-data")){
+				if(node.Attributes["android:name"].Value.Equals("spil.permissions.DisableAutoRequest") && node.Attributes["android:value"].Value.Equals("true")){
+					return false;
+				}
+			}
+		}
+
+		return true;
 	}
 }

@@ -49,6 +49,9 @@ public class SpilEditorDocumentation : EditorWindow
 				if (GUILayout.Toggle (tabSelected == 9, "Game State", EditorStyles.toolbarButton)) {
 					tabSelected = 9;
 				}
+				if (GUILayout.Toggle (tabSelected == 10, "Daily Bonus and Splash Screen", EditorStyles.toolbarButton)) {
+					tabSelected = 10;
+				}
 			}
 		GUILayout.EndVertical();
 		GUILayout.EndArea();
@@ -86,6 +89,9 @@ public class SpilEditorDocumentation : EditorWindow
 					break;
 				case 9:
 					DrawGameState ();
+					break;
+				case 10:
+					DrawSplashScreenDailyBonus();
 					break;
 			}
 		GUILayout.EndVertical();
@@ -135,7 +141,7 @@ public class SpilEditorDocumentation : EditorWindow
 		GUILayout.Label("The Spil SDK automatically asks users for their permission to receive push notifications for iOS. Also the Unity Spil Plugin automatically collects the GCM Id or the ‘device’ token and sends it to the Spil servers. By default, using the Spil SDK, Spil Games can send textual push notification without you having to implement any additional logic.",  EditorStyles.wordWrappedLabel);
 		GUILayout.Label("");
 		GUILayout.Label("You can find more push notification information here:",  EditorStyles.wordWrappedLabel);
-		if (GUILayout.Button ("Spil SDK Advertisement", GUILayout.Width (400))) {
+		if (GUILayout.Button ("Spil SDK Push Notification", GUILayout.Width (400))) {
 			Application.OpenURL("http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-push-notifications/");
 		}
 	}
@@ -144,7 +150,7 @@ public class SpilEditorDocumentation : EditorWindow
 		GUILayout.Label("When a user contacts Spil customer support he/she may be asked for a Spil user id. Spil currently does not require registration for users and so cannot link an email to a Spil user id. All users are essentially guest users and thus have an anonymous user-id.",  EditorStyles.wordWrappedLabel);
 		GUILayout.Label("");
 		GUILayout.Label("You can find more Spil User Id information here:",  EditorStyles.wordWrappedLabel);
-		if (GUILayout.Button ("Spil SDK Advertisement", GUILayout.Width (400))) {
+		if (GUILayout.Button ("Spil SDK User Id", GUILayout.Width (400))) {
 			Application.OpenURL("http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-user-id/");
 		}
 	}
@@ -156,7 +162,7 @@ public class SpilEditorDocumentation : EditorWindow
 
 		GUILayout.Label("");
 		GUILayout.Label("You can find more Wallet, Inventory or Shop information here:",  EditorStyles.wordWrappedLabel);
-		if (GUILayout.Button ("Spil SDK Advertisement", GUILayout.Width (400))) {
+		if (GUILayout.Button ("Spil SDK Wallet, Shop & Inventory", GUILayout.Width (400))) {
 			Application.OpenURL("http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-wallet-shop-inventory/");
 		}
 	}
@@ -165,7 +171,7 @@ public class SpilEditorDocumentation : EditorWindow
 		GUILayout.Label("The Packages and Promotions feature of the Spil SDK (not to be confused with the information contained in the Shop feature) are related to the IAP contained inside your game. The SDK requests automatically the information when the application starts.",  EditorStyles.wordWrappedLabel);
 		GUILayout.Label("");
 		GUILayout.Label("You can find more IAP Packages information here:",  EditorStyles.wordWrappedLabel);
-		if (GUILayout.Button ("Spil SDK Advertisement", GUILayout.Width (400))) {
+		if (GUILayout.Button ("Spil SDK IAP Packages", GUILayout.Width (400))) {
 			Application.OpenURL("http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/sdk-iap-packages-promotions/");
 		}
 	}
@@ -174,7 +180,7 @@ public class SpilEditorDocumentation : EditorWindow
 		GUILayout.Label("Zendesk is integrated within the Spil SDK and can be used to offer customer support features.",  EditorStyles.wordWrappedLabel);
 		GUILayout.Label("");
 		GUILayout.Label("You can find more Customer Support integration information here:",  EditorStyles.wordWrappedLabel);
-		if (GUILayout.Button ("Spil SDK Advertisement", GUILayout.Width (400))) {
+		if (GUILayout.Button ("Spil SDK Cutomer Support", GUILayout.Width (400))) {
 			Application.OpenURL("http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-customer-support/");
 		}
 	}
@@ -183,8 +189,17 @@ public class SpilEditorDocumentation : EditorWindow
 		GUILayout.Label("The Spil SDK also allows the saving of custom data blobs, e.g. game states, that can be associated to a specific user. These game states come in two flavors, public and private. Private game states can be saved at any time, and that game state will be associated with the Spil guest user id. If you plan on saving a public game state, then you are required to provide a custom user id and provider.",  EditorStyles.wordWrappedLabel);
 		GUILayout.Label("");
 		GUILayout.Label("You can find more Game State information here:",  EditorStyles.wordWrappedLabel);
-		if (GUILayout.Button ("Spil SDK Advertisement", GUILayout.Width (400))) {
+		if (GUILayout.Button ("Spil SDK Game State", GUILayout.Width (400))) {
 			Application.OpenURL("http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-game-state/");
+		}
+	}
+
+	private void DrawSplashScreenDailyBonus(){
+		GUILayout.Label("The Spil SDK offers the possibility of supporting Splash Screens, such as special offers inside a game, and Daily Bonus Screens, where the user is rewarded each time (based on timing) he returns to the game. Both screens are showed automatically by the SDK when they are requested.",  EditorStyles.wordWrappedLabel);
+		GUILayout.Label("");
+		GUILayout.Label("You can find more Daily Bonus and Splash Screen information here:",  EditorStyles.wordWrappedLabel);
+		if (GUILayout.Button ("Spil SDK Daily Bonus and Splash Screen", GUILayout.Width (400))) {
+			Application.OpenURL("http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-splash-daily-bonus-screen/");
 		}
 	}
 

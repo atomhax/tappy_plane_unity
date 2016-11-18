@@ -1,22 +1,20 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Spilgames/UnityImplementation/SpilUnityImplementationBase.cs">
     <Files>
       <File FileName="Assets/Spilgames/Utils/UnityEditor/Responses/GameObjectsResponse.cs" Line="1" Column="1" />
       <File FileName="Assets/Spilgames/UnityImplementation/SpilUnityEditorImplementation.cs" Line="1" Column="1" />
-      <File FileName="Assets/Spilgames/Utils/UnityEditor/SpilEvent.cs" Line="1" Column="1" />
-      <File FileName="Assets/Spilgames/Utils/UnityEditor/ResponseEvent.cs" Line="1" Column="1" />
-      <File FileName="Assets/Spilgames/Utils/UnityEditor/Responses/AdvertisementResponse.cs" Line="1" Column="1" />
       <File FileName="Assets/Spilgames/Spil.cs" Line="1" Column="1" />
-      <File FileName="Assets/Spilgames/UnityImplementation/SpilUnityImplementationBase.cs" Line="1" Column="1" />
-      <File FileName="Assets/Spilgames/Utils/UnityEditor/Responses/PlayerDataResponse.cs" Line="1" Column="1" />
-      <File FileName="Assets/Spilgames/Helpers/PlayerDataHelper.cs" Line="1" Column="1" />
-      <File FileName="Assets/Editor/SpilAndroidBuildPostProcess.cs" Line="1" Column="1" />
-      <File FileName="Assets/Spilgames/UnityImplementation/SpilAndroidUnityImplementation.cs" Line="1" Column="1" />
-      <File FileName="Assets/Spilgames/Utils/UnityEditor/Responses/ConfigResponse.cs" Line="1" Column="1" />
-      <File FileName="Assets/Editor/SpilIOSBuildPostProcess.cs" Line="1" Column="1" />
       <File FileName="Assets/Editor/SpilEditorConfig.cs" Line="1" Column="1" />
       <File FileName="Assets/Spilgames/Helpers/PackagesHelper.cs" Line="1" Column="1" />
+      <File FileName="Assets/Editor/SpilEditorDocumentation.cs" Line="1" Column="1" />
+      <File FileName="Assets/Plugins/Android/AndroidManifest.xml" Line="1" Column="1" />
+      <File FileName="Assets/Editor/SpilAndroidBuildPostProcess.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Core/GameController.cs" Line="1" Column="1" />
+      <File FileName="Assets/Spilgames/UnityImplementation/SpilAndroidUnityImplementation.cs" Line="180" Column="1" />
+      <File FileName="Assets/Spilgames/Helpers/SpilGameDataHelper.cs" Line="1" Column="1" />
+      <File FileName="Assets/Spilgames/UnityImplementation/SpilUnityImplementationBase.cs" Line="468" Column="39" />
+      <File FileName="Assets/Spilgames/Utils/UnityEditor/SpilEvent.cs" Line="70" Column="64" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -580,6 +580,14 @@ namespace SpilGames.Unity.Implementations
 		}
 
 		#endregion
+
+		#region Permissions
+
+		public void RequestDangerousPermission(string permission, string rationale){
+			Debug.Log("Requested permission: " + permission);
+		}
+
+		#endregion
 	}
 
 }

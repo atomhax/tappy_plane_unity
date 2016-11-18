@@ -9,10 +9,10 @@ namespace SpilGames.Unity.Implementations
     public abstract class SpilUnityImplementationBase
     {
 	public static string PluginName = "Unity";
-	public static string PluginVersion = "2.2.5";
+	public static string PluginVersion = "2.2.6";
 
-	public static string AndroidVersion = "2.2.4";
-	public static string iOSVersion = "2.1.2";
+	public static string AndroidVersion = "2.2.5";
+	public static string iOSVersion = "2.1.4";
 
 	public abstract void SetPluginInformation(string PluginName, string PluginVersion);
 
@@ -197,7 +197,7 @@ namespace SpilGames.Unity.Implementations
                 /// <summary>
                 /// Sends the "requestRewardVideo" event to the native Spil SDK which will send a request to the back-end.
                 /// When a response has been received from the back-end the SDK will fire either an "AdAvailable" or and "AdNotAvailable"
-                /// event to which the developer can subscribe and for instance call PlayVideo(); or PlayMoreApps();
+                /// event to which the developer can subscribe and for instance call PlayVideo();
 		/// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
                 /// </summary>
                 public void SendRequestRewardVideoEvent(string rewardType = null)
@@ -209,7 +209,7 @@ namespace SpilGames.Unity.Implementations
                 /// <summary>
                 /// Sends the "requestRewardVideo" event to the native Spil SDK which will send a request to the back-end.
                 /// When a response has been received from the back-end the SDK will fire either an "AdAvailable" or and "AdNotAvailable"
-                /// event to which the developer can subscribe and for instance call PlayVideo(); or PlayMoreApps();
+                /// event to which the developer can subscribe and for instance call PlayVideo(); 
                 /// </summary>
                 [Obsolete("ShowRewardedVideo() is deprecated, please use SendRequestRewardVideoEvent() instead. This method will be removed in the next version.")]                
                 public void ShowRewardedVideo()

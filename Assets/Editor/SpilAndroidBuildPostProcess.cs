@@ -107,6 +107,8 @@ public class SpilAndroidBuildPostProcess : MonoBehaviour
 			Debug.LogError("The application name from your \"AndroidManifest.xml\" file is set incorrectly. Please set it to either \"com.spilgames.spilsdk.activities.SpilSDKApplication\" or \"com.spilgames.spilsdk.activities.SpilSDKApplicationWithFabric\" (if you are using Crashlytics) if you want for the Spil SDK to function correctly");
 		}
 
+		bool isUnityRequestPermissionDisabled = false;
+
 		foreach(XmlNode node in applicationNode.ChildNodes){
 
 			if(node.Name.Equals("activity")){
@@ -122,7 +124,16 @@ public class SpilAndroidBuildPostProcess : MonoBehaviour
 					}
 				}
 			}
+			if(node.Name.Equals("meta-data")){
+				if(node.Attributes["android:name"].Value.Equals("unityplayer.SkipPermissionsDialog") && node.Attributes["android:value"].Value.Equals("true")){
+					isUnityRequestPermissionDisabled = true;
+				}
+			}
 
+		}
+
+		if(!isUnityRequestPermissionDisabled){
+			Debug.LogError("You did not disable the automatic Unity permission request. Please add the following line to your \"applicaiton\" tag: \"<meta-data android:name=\"unityplayer.SkipPermissionsDialog\" android:value=\"true\" />\". This is required in order to not have any problems with the Spil SDK's permission system. Keep in mind that all your dangerous permissions will be handled by the Spil SDK automatically");
 		}
 	}
 
