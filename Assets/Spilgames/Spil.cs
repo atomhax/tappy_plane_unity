@@ -1,6 +1,10 @@
 /*
  * Spil Games Unity SDK 2016
+<<<<<<< HEAD
  * Version 2.2.7
+=======
+ * Version 2.2.6
+>>>>>>> origin/master
  * 
  * If you have any questions, don't hesitate to e-mail us at info@spilgames.com
  * Be sure to check the github page for documentation and the latest updates
@@ -198,6 +202,15 @@ namespace SpilGames.Unity
 		public void AdNotAvailable (string type)
 		{
 			SpilUnityImplementationBase.fireAdNotAvailableEvent (type);
+		}
+
+		/// <summary>
+		/// This method is called by the native Spil SDK, it should not be used by developers.
+		/// Developers can subscribe to the Spil.Instance.OpenParentalGate event.
+		/// </summary>
+		public void OpenParentalGate ()
+		{
+			SpilUnityImplementationBase.fireOpenParentalGateEvent ();
 		}
 
 		/// <summary>

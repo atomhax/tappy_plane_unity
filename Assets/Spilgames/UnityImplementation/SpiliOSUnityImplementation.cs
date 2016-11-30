@@ -206,6 +206,17 @@ namespace SpilGames.Unity.Implementations
 		private static extern void showToastOnVideoReward(bool show);		
 
 		/// <summary>
+		/// Call to inform the SDK that the parental gate was (not) passes
+		/// </summary>
+		public override void ClosedParentalGate(bool pass)
+		{
+			closedParentalGateNative (pass);
+		}
+
+		[DllImport("__Internal")]
+		private static extern void closedParentalGateNative(bool pass);
+
+		/// <summary>
 		/// This can be called to show the "more apps" activity, for instance after calling "RequestMoreApps()"
 		/// and receiving an "AdAvailable" event the developer could call this method from the event handler.
 		/// When calling this method "RequestMoreApps()" must first have been called to request and cache a video.

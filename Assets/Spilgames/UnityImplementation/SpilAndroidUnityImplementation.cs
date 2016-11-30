@@ -249,6 +249,14 @@ namespace SpilGames.Unity.Implementations
 			return CallNativeMethod ("getSpilUserId");
 		}
 
+		/// <summary>
+		/// Call to inform the SDK that the parental gate was (not) passes
+		/// </summary>
+		public override void ClosedParentalGate(bool pass)
+		{
+
+		}
+
 		#region Spil Game Objects
 
 		public override string GetSpilGameDataFromSdk ()
