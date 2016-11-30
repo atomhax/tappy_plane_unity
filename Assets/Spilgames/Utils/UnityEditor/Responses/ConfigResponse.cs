@@ -31,7 +31,7 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 			JSONObject config = new JSONObject(GameConfigData);
 
 			if(config.HasField("key")){
-				return config.GetField("key").Print(false);
+				return config.GetField(key).Print(false);
 			}
 
 			return null;

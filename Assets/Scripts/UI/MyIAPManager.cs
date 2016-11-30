@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Purchasing;
 using SpilGames.Unity;
 using SpilGames.Unity.Helpers;
+using SpilGames.Unity.Utils;
 
 
 public class MyIAPManager : MonoBehaviour, IStoreListener {
@@ -120,6 +121,25 @@ public class MyIAPManager : MonoBehaviour, IStoreListener {
 	public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs args) 
 	{
 		RewardPlayer ();
+
+		#if UNITY_ANDROID
+
+		//parse the json
+		Dictionary<String,object> hashOfReceipt = args.purchasedProduct.receipt.HashtableFromJson ();
+		String stringOfPayload = hashOfReceipt ["Payload"].ToString ();
+		JSONObject jsonFromObject = new JSONObject(stringOfPayload);
+		String jsonFieldString = jsonFromObject.GetField ("json").str;
+		jsonFieldString = jsonFieldString.Replace (@"\", "");
+		JSONObject finalJsonObject = new JSONObject (jsonFieldString);
+
+	        //the info to track
+	        String skuId = finalJsonObject.GetField ("productId").str;
+		String transactionID = finalJsonObject.GetField ("orderId").str;
+
+	        Spil.Instance.TrackIAPPurchasedEvent(skuId,transactionID);
+
+		#endif
+
 		iapPanelController.PurchaseSuccess(args.purchasedProduct.metadata.localizedTitle);
 		return PurchaseProcessingResult.Complete;
 	}
