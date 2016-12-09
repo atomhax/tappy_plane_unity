@@ -36,3 +36,7 @@
 /Users/sebastian/Work/Unity Projects/tappy_plane_unity/Temp/bin/Debug/Unity.CecilTools.dll
 /Users/sebastian/Work/Unity Projects/tappy_plane_unity/Temp/bin/Debug/Mono.Cecil.Pdb.dll
 /Users/sebastian/Work/Unity Projects/tappy_plane_unity/Temp/bin/Debug/Mono.Cecil.Mdb.dll
+/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Temp/bin/Debug/Assembly-CSharp-Editor.dll.mdb
+/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Temp/bin/Debug/Assembly-CSharp-Editor.dll
+/Users/sebastian/Work/Unity Projects/tappy_plane_unity/obj/Debug/Assembly-CSharp-Editor.dll
+/Users/sebastian/Work/Unity Projects/tappy_plane_unity/obj/Debug/Assembly-CSharp-Editor.dll.mdb

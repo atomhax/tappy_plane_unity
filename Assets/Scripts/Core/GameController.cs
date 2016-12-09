@@ -53,10 +53,6 @@ public class GameController : MonoBehaviour
 	void Awake ()
 	{
 		FB.Init (this.OnFBInitComplete);
-
-		#if UNITY_ANDROID
-//		Spil.Instance.RequestDangerousPermission(SpilAndroidUnityImplementation.Permissions.WRITE_EXTERNAL_STORAGE, "This is needed!");
-		#endif
 	}
 
 	// Use this for initialization

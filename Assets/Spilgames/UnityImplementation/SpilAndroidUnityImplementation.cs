@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SpilGames.Unity.Utils;
+using SpilGames.Unity.Helpers;
 
 namespace SpilGames.Unity.Implementations
 {
@@ -88,6 +89,7 @@ namespace SpilGames.Unity.Implementations
 			#if UNITY_ANDROID
 			Spil spil = GameObject.FindObjectOfType<Spil> ();
 			RegisterDevice (spil.ProjectId);
+			SetPluginInformation(PluginName, PluginVersion);
 			#endif
 		}
 
@@ -177,29 +179,16 @@ namespace SpilGames.Unity.Implementations
 		/// </summary>
 		/// <param name="eventName"></param>
 		/// <param name="dict"></param>
-		public override void SendCustomEvent (string eventName, Dictionary<string, string> dict)
+		public override void SendCustomEvent (string eventName, Dictionary<string, object> dict)
 		{
 			Debug.Log ("SpilSDK-Unity SendCustomEvent " + eventName);
 
-			using (AndroidJavaObject obj_HashMap = new AndroidJavaObject ("java.util.HashMap")) {
-				IntPtr method_Put = AndroidJNIHelper.GetMethodID (obj_HashMap.GetRawClass (), "put", "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;");
-				object[] args = new object[2];
-				if (dict != null) {
-					foreach (KeyValuePair<string, string> kvp in dict) {
-						using (AndroidJavaObject k = new AndroidJavaObject ("java.lang.String", kvp.Key)) {
-							using (AndroidJavaObject v = new AndroidJavaObject ("java.lang.String", kvp.Value)) {
-								args [0] = k;
-								args [1] = v;
-								AndroidJNI.CallObjectMethod (obj_HashMap.GetRawObject (), method_Put, AndroidJNIHelper.CreateJNIArgArray (args));
-							}
-						}
-					}
-				}
-				CallNativeMethod ("trackEvent", new object[] {
+			String parameters = JsonHelper.getJSONFromObject(dict);
+			CallNativeMethod ("trackEvent", new object[] {
 					eventName,
-					obj_HashMap
-				}, true);
-			}
+					parameters
+			}, true);
+
 		}
 
 		/// <summary>
