@@ -71,7 +71,7 @@ namespace SpilGames.Unity.Utils
 	// When we actually do start using the OnReward handler and know what a proper
 	// RewardResponse JSON string will look like update these classes!!
 
-	// Example reward JSON string (contains RewardResponse object): "{ \"name\":\"reward\",\"action\":\"receive\",\"type\":\"reward\",\"data\":{ \"eventData\":{ \"currencyName\":\"Coins\",\"currencyId\":\"coins\",\"reward\":\"50\"} } }";
+	// Example reward JSON string (contains RewardResponse object): "{ \"name\":\"reward\",\"action\":\"receive\",\"type\":\"notificationreward\",\"data\":{ \"eventData\":{ \"currencyName\":\"Coins\",\"currencyId\":\"coins\",\"reward\":50} } }";
 
 	public class RewardResponse : SpilResponse
 	{

@@ -1236,7 +1236,7 @@ namespace SpilGames.Unity.Implementations
 
 		public abstract void SubtractItemFromInventory (int itemId, int amount, string reason);
 
-		public abstract void ConsumeBundle (int bundleId, string reason);
+		public abstract void BuyBundle (int bundleId, string reason);
 
 		#endregion
 

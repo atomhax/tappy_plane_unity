@@ -305,17 +305,60 @@ public class SpilEditorConfig : EditorWindow {
 		if (!File.Exists (streamingAssetsPath)) {
 			Directory.CreateDirectory (streamingAssetsPath);
 		}
-		if(!File.Exists(streamingAssetsPath + "/defaultGamedata.json")){
-			File.WriteAllText (streamingAssetsPath + "/defaultGamedata.json", GetData ("requestGameData"));
+		if(!File.Exists(streamingAssetsPath + "/defaultGameData.json")){
+			File.WriteAllText (streamingAssetsPath + "/defaultGameData.json", GetData ("requestGameData"));
+		} else {
+			File.Delete(streamingAssetsPath + "/defaultGameData.json");
+			File.WriteAllText (streamingAssetsPath + "/defaultGameData.json", GetData ("requestGameData"));
 		}
 
 		if(!File.Exists(streamingAssetsPath + "/defaultGameConfig.json")){
 			File.WriteAllText (streamingAssetsPath + "/defaultGameConfig.json", GetData ("requestConfig"));
-
+		} else {
+			File.Delete(streamingAssetsPath + "/defaultGameConfig.json");
+			File.WriteAllText (streamingAssetsPath + "/defaultGameConfig.json", GetData ("requestConfig"));
 		}
 
 		if(!File.Exists(streamingAssetsPath + "/defaultPlayerData.json")){
-			File.WriteAllText (streamingAssetsPath + "/defaultPlayerData.json", GetData ("requestPlayerData"));
+			JSONObject gameData = new JSONObject(GetData ("requestGameData"));
+			JSONObject playerData = new JSONObject(GetData ("requestPlayerData"));
+
+			for (int i = 0; i < gameData.GetField("currencies").Count; i++){
+				JSONObject currency = new JSONObject();
+				currency.AddField("id", gameData.GetField("currencies").list[i].GetField("id"));
+				currency.AddField("currentBalance", 0);
+				currency.AddField("delta", 0);
+
+				playerData.GetField("wallet").GetField("currencies").Add(currency);
+			}
+
+			playerData.GetField("wallet").RemoveField("offset");
+			playerData.GetField("wallet").AddField("offset", 0);
+
+			playerData.GetField("inventory").RemoveField("offset");
+			playerData.GetField("inventory").AddField("offset", 0);
+
+			File.WriteAllText (streamingAssetsPath + "/defaultPlayerData.json", playerData.Print(false));
+		} else {
+			File.Delete(streamingAssetsPath + "/defaultPlayerData.json");
+
+			JSONObject gameData = new JSONObject(GetData ("requestGameData"));
+			JSONObject playerData = new JSONObject(GetData ("requestPlayerData"));
+
+			for (int i = 0; i < gameData.GetField("currencies").Count; i++){
+				JSONObject currency = new JSONObject();
+				currency.AddField("id", gameData.GetField("currencies").list[i].GetField("id"));
+				currency.AddField("currentBalance", 0);
+				currency.AddField("delta", 0);
+
+				playerData.GetField("wallet").GetField("currencies").Add(currency);
+			}
+
+			playerData.GetField("wallet").AddField("offset", 0);
+
+			playerData.GetField("inventory").AddField("offset", 0);
+
+			File.WriteAllText (streamingAssetsPath + "/defaultPlayerData.json", playerData.Print(false));
 		}
 
 	}
