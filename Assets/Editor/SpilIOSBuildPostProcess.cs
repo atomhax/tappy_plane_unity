@@ -16,8 +16,10 @@ public class SpilIOSBuildPostProcess : MonoBehaviour
 		if (target == BuildTarget.iOS) {
 			UnityEngine.Debug.Log ("[SPIL] Starting custom post process build script." + pathToBuildProject);
 
-			CheckLatestPluginVersion();
-			CheckSlotGameConifg();
+			try {
+				CheckLatestPluginVersion();
+				CheckSlotGameConifg();
+			} catch (Exception) {}
 
 			UnityEngine.Debug.Log ("[SPIL] Moving Spil.framework to the root of the project");
 			MoveDirectory (pathToBuildProject + "/Frameworks/Plugins/iOS/Spil.framework", pathToBuildProject + "/Spil.framework");
