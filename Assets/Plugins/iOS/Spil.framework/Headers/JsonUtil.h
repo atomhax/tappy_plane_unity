@@ -15,5 +15,6 @@
 
 +(id)convertStringToObject:(NSString*) jsonString;
 +(NSString*)convertObjectToJson:(id) object;
++(NSString*)convertObjectToReadableJson:(id) object;
 
 @end

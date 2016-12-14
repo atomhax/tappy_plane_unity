@@ -26,17 +26,13 @@
 -(BOOL)debugModeEnabled;
 
 -(void) trackEvent:(NSString*)name;
--(void) trackEvent:(NSString*)name withParameters:(NSDictionary *)params;
+-(void) trackEvent:(NSString*)name withParameters:(NSDictionary *)parameters;
+
 -(void) trackEvent:(NSString*)name onResponse:(void (^)(id response))block;
--(void) trackEvent:(NSString*)name withParameters:(NSDictionary *)params onResponse:(void (^)(id response))block;
--(void) trackEvent:(NSString*)name withParameters:(NSDictionary *)params alterRootDataWithKeys:(NSDictionary *)rootParams onResponse:(void (^)(id response))block;  // todo: make private
+-(void) trackEvent:(NSString*)name withParameters:(NSDictionary *)parameters onResponse:(void (^)(id response))block;
 
-
--(void)applicationWillResignActive:(UIApplication *)application;
--(void)applicationDidEnterBackground:(UIApplication *)application; // important
--(void)applicationWillEnterForeground:(UIApplication *)application;
--(void)applicationDidBecomeActive:(UIApplication *)application;  // important
--(void)applicationWillTerminate:(UIApplication *)application;
+-(void)applicationDidEnterBackground:(UIApplication *)application;
+-(void)applicationDidBecomeActive:(UIApplication *)application;
 
 -(void)registerBlock:(id)blockToSave forUID:(NSString*)UID;
 -(void)executeBlockWithUID:(NSString*)UID withResponse:(id)response;

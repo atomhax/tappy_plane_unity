@@ -134,7 +134,7 @@ extern "C" {
     
     void subtractItemFromInventoryNative (int itemId, int amount, char* reasonName);
     
-    void consumeBundleNative (int itemId, char* reasonName);
+    void buyBundleNative (int itemId, char* reasonName);
     
     // --- Customer support ---
     

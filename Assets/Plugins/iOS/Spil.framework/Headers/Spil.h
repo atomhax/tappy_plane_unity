@@ -10,7 +10,7 @@
 #import "HookBridge.h"
 #import "GAI.h"
 
-#define SDK_VERSION @"2.1.4"
+#define SDK_VERSION @"2.1.6"
 
 @class Spil;
 @class UserProfile;
@@ -483,7 +483,7 @@
  * @param bundleId      Id of the bundle
  * @param reason        The bundle reason
  */
-+(void)consumeBundle:(int)bundleId withReason:(NSString*)reason;
++(void)buyBundleNative:(int)bundleId withReason:(NSString*)reason;
 
 #pragma mark Customer support
 
