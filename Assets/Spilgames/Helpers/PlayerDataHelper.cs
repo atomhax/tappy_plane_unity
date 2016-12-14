@@ -85,9 +85,9 @@ namespace SpilGames.Unity.Helpers
 		/// <summary>
 		/// Helper method that consumes the bundle given a bundleId and a reason
 		/// </summary>
-		public void ConsumeBundle (int bundleId, string reason)
+		public void BuyBundle (int bundleId, string reason)
 		{
-			Spil.Instance.ConsumeBundle (bundleId, reason);
+			Spil.Instance.BuyBundle (bundleId, reason);
 		}
 
 		private void AddDataToHelper (List<PlayerCurrencyData> walletCurrencies, List<PlayerItemData> inventoryItems)

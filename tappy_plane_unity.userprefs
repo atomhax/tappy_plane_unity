@@ -5,13 +5,13 @@
       <File FileName="Assets/Spilgames/Utils/UnityEditor/Responses/GameObjectsResponse.cs" Line="1" Column="1" />
       <File FileName="Assets/Spilgames/Helpers/SpilGameDataHelper.cs" Line="1" Column="1" />
       <File FileName="Assets/Spilgames/Helpers/PlayerDataHelper.cs" Line="1" Column="1" />
-      <File FileName="Assets/Spilgames/UnityImplementation/SpilUnityImplementationBase.cs" Line="209" Column="36" />
+      <File FileName="Assets/Spilgames/UnityImplementation/SpilUnityImplementationBase.cs" Line="1209" Column="4" />
       <File FileName="Assets/Scripts/UI/Shop/IAPPanelController.cs" Line="1" Column="1" />
-      <File FileName="Assets/Spilgames/Spil.cs" Line="1" Column="1" />
-      <File FileName="Assets/Spilgames/UnityImplementation/SpilAndroidUnityImplementation.cs" Line="468" Column="3" />
-      <File FileName="Assets/Scripts/Core/GameController.cs" Line="402" Column="3" />
+      <File FileName="Assets/Spilgames/Spil.cs" Line="22" Column="45" />
+      <File FileName="Assets/Spilgames/UnityImplementation/SpilAndroidUnityImplementation.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Core/GameController.cs" Line="55" Column="35" />
       <File FileName="Assets/Scripts/UI/MyIAPManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Plugins/Android/EtceteraAndroid/EtceteraAndroidManager.cs" Line="5" Column="1" />
+      <File FileName="Assets/Spilgames/UnityImplementation/SpilUnityEditorImplementation.cs" Line="28" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

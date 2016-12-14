@@ -308,9 +308,9 @@ namespace SpilGames.Unity.Implementations
 			}, true);
 		}
 
-		public override void ConsumeBundle (int bundleId, string reason)
+		public override void BuyBundle (int bundleId, string reason)
 		{
-			CallNativeMethod ("consumeBundle", new object[]{ bundleId, reason }, true);
+			CallNativeMethod ("buyBundle", new object[]{ bundleId, reason }, true);
 		}
 
 		#endregion

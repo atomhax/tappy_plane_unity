@@ -15,7 +15,7 @@ using System;
 
 namespace SpilGames.Unity
 {
-	[HelpURL("http://www.spilgames.com/developers/integration/unity/unity-get-started/")]
+	[HelpURL ("http://www.spilgames.com/developers/integration/unity/unity-get-started/")]
 	public class Spil : MonoBehaviour
 	{
 
@@ -25,7 +25,10 @@ namespace SpilGames.Unity
 		private PlayerDataHelper PlayerDataObject;
 		public static PlayerDataHelper PlayerData;
 
-		[Header("Android Settings")]
+		[SerializeField]
+		public bool initializeOnAwake = true;
+
+		[Header ("Android Settings")]
 
 		#if UNITY_ANDROID || UNITY_EDITOR
 		/// <summary>
@@ -38,53 +41,76 @@ namespace SpilGames.Unity
 
 		#endif
 
-		[Header("iOS Settings")]
+		[Header ("iOS Settings")]
 		[SerializeField]
 		public string CustomBundleId;
 
-		[Header("Editor Settings")]
+		[Header ("Editor Settings")]
 
 		[SerializeField]
 		public string spilUserIdEditor;
+
 		public static string SpilUserIdEditor { get; private set; }
 
 		[SerializeField]
 		public string bundleIdEditor;
+
 		public static string BundleIdEditor { get; private set; }
 
-		[Header("Reward Video Settings")]
+		[Header ("Reward Video Settings")]
 
 		[SerializeField]
 		private string currencyName;
+
 		public static string CurrencyName { get; private set; }
 
 		[SerializeField]
 		private string currencyId;
+
 		public static string CurrencyId { get; private set; }
 
 		[SerializeField]
 		private int reward = 0;
-		public static int Reward { get; private set; }
-	
 
-		[Header("Daily Bonus Settings")]
+		public static int Reward { get; private set; }
+
+
+		[Header ("Daily Bonus Settings")]
 
 		[SerializeField]
 		private int dailyBonusId;
+
 		public static int DailyBonusId { get; private set; }
 
 		[SerializeField]
 		private string dailyBonusExternalId;
+
 		public static string DailyBonusExternalId { get; private set; }
 
 		[SerializeField]
 		private int dailyBonusAmount;
+
 		public static int DailyBonusAmount { get; private set; }
 
-		public enum DailyBonusRewardTypeEnum { CURRENCY, ITEM, EXTERNAL };
+		public enum DailyBonusRewardTypeEnum
+		{
+			CURRENCY,
+			ITEM,
+			EXTERNAL}
+
+		;
+
 		public DailyBonusRewardTypeEnum DailyBonusRewardType;
 
-		public static Spil MonoInstance { get { return GameObject.Find ("SpilSDK").GetComponent<Spil> (); } }
+		public static Spil MonoInstance { 
+			get { 
+				GameObject spilSDKObject = GameObject.Find ("SpilSDK");
+				if (spilSDKObject == null) { 
+					throw new NullReferenceException ("Could not find a gameobject in the scene named \"SpilSDK\".");
+				}
+				return spilSDKObject.GetComponent<Spil> (); 
+			} 
+		}
 
 		#if UNITY_EDITOR
 			
@@ -96,18 +122,37 @@ namespace SpilGames.Unity
 			public static SpilAndroidUnityImplementation Instance = new SpilAndroidUnityImplementation();
 
 		
+		
 		#elif UNITY_IPHONE
 		
-			/// <summary>
-			/// Use this object to access all Spil related functionality.
-			/// </summary>
-			public static SpiliOSUnityImplementation Instance = new SpiliOSUnityImplementation();
+		/// <summary>
+		/// Use this object to access all Spil related functionality.
+		/// </summary>
+		public static SpiliOSUnityImplementation Instance = new SpiliOSUnityImplementation();
 
-			void Update() { Instance.SendNotificationTokenToSpil(); }
+		private DateTime lastTimeChecked = DateTime.Now;
+
+		void Update()
+		    {
+		      Instance.SendNotificationTokenToSpil();
+
+		      if ((DateTime.Now - lastTimeChecked).TotalMilliseconds > 30000)
+		      {
+		        Spil.Instance.CheckForRemoteNotifications();
+		        lastTimeChecked = DateTime.Now;
+		      }
+		}
 
 		#endif
 
 		void Awake ()
+		{
+			if (initializeOnAwake) {
+				Initialize ();
+			}
+		}
+
+		public void Initialize ()
 		{
 			#if UNITY_EDITOR
 			if (String.IsNullOrEmpty (spilUserIdEditor)) {
@@ -139,15 +184,15 @@ namespace SpilGames.Unity
 			#if UNITY_ANDROID
 
 			//Check if Project Id is set
-			if(ProjectId == null){
-				throw new UnityException("Project ID not set!! Please set your Project Id with the id provided by the Spil representative!");
+			if (ProjectId == null) {
+				throw new UnityException ("Project ID not set!! Please set your Project Id with the id provided by the Spil representative!");
 			}
 
 			#endif
 
 			Debug.Log ("SpilSDK-Unity Init");
 
-			Instance.SetPluginInformation(SpilUnityImplementationBase.PluginName, SpilUnityImplementationBase.PluginVersion);
+			Instance.SetPluginInformation (SpilUnityImplementationBase.PluginName, SpilUnityImplementationBase.PluginVersion);
 
 			Instance.SpilInit ();
 			DontDestroyOnLoad (gameObject);
@@ -162,7 +207,8 @@ namespace SpilGames.Unity
 			PlayerData = PlayerDataObject;
 		}
 
-		void Start(){
+		void Start ()
+		{
 
 		}
 

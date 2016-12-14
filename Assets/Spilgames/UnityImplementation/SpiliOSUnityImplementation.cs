@@ -580,7 +580,7 @@ namespace SpilGames.Unity.Implementations
 	#endif
 		}
 
-		private void CheckForRemoteNotifications()
+		internal void CheckForRemoteNotifications()
 		{
 	bool proccessedNotifications = false;
 	#if UNITY_IPHONE || UNITY_TVOS
