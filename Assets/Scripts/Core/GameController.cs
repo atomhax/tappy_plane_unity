@@ -44,20 +44,28 @@ public class GameController : MonoBehaviour
 
 	List<GameObject> listOfObsticles = new List<GameObject> ();
 
-	public GameObject startPanel, ingamePanel, gameoverPanel, shopPanel, skinSelectPanel, tabsPanel, inGamePurchaseSuccessPanel, inGamePurchaseFailPanel, highScorePanel;
+	public GameObject startPanel, ingamePanel, gameoverPanel, shopPanel, skinSelectPanel, tabsPanel, inGamePurchaseSuccessPanel, inGamePurchaseFailPanel, highScorePanel, moreGamesButton;
 
 	// Facebook
 	public static List<string> userIds = new List<string> ();
 	public static List<string> userNames = new List<string> ();
 
+	private Vector3 initialPosition;
+ 	private Quaternion initialRotation;
+
 	void Awake ()
 	{
 		FB.Init (this.OnFBInitComplete);
+
 	}
 
 	// Use this for initialization
 	void Start ()
 	{
+
+		initialPosition = player.gameObject.transform.position;
+     		initialRotation = player.gameObject.transform.rotation;
+
 		Spil.Instance.OnReward += Spil_Instance_OnReward;
 		GetAndApplyGameConfig ();
 		SetupNewGame ();
@@ -80,7 +88,11 @@ public class GameController : MonoBehaviour
 		Spil.Instance.OnPlayerDataUpdated -= OnPlayerDataUpdated;
 		Spil.Instance.OnPlayerDataUpdated += OnPlayerDataUpdated;
 
+		Spil.Instance.OnReward -= RewardHandler;
+        	Spil.Instance.OnReward += RewardHandler;
+
 		FireTrackEventSample();
+
 	}
 
 	void Spil_Instance_OnReward (PushNotificationRewardResponse rewardResponse)
@@ -100,7 +112,15 @@ public class GameController : MonoBehaviour
 	{
 		ClearOutOldObsticles ();
 		playerScore = 0;
+
+		player.dead = false;
 		player.idleMode = true;
+
+		player.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+		player.gameObject.GetComponent<Rigidbody2D>().angularVelocity = 0; 
+		player.gameObject.transform.position = initialPosition;
+		player.gameObject.transform.rotation = initialRotation;
+
 		UpdateUI (GameStates.Start);
 		foreach (SpriteRenderer spriteRenderer in backgroundSpriteRenderes) {
 			spriteRenderer.sprite = backgroundSprites [PlayerPrefs.GetInt ("Background", 0)];
@@ -111,6 +131,17 @@ public class GameController : MonoBehaviour
 		Spil.Instance.OnGameStateUpdated += OnGameStateUpdated;
 
 		SavePrivateGameState ();
+
+		Spil.Instance.OnAdAvailable -= Spil_Instance_OnAdAvailable;
+		Spil.Instance.OnAdAvailable += Spil_Instance_OnAdAvailable;
+
+		Spil.Instance.OnAdNotAvailable -= Spil_Instance_OnAdNotAvailable;
+		Spil.Instance.OnAdNotAvailable += Spil_Instance_OnAdNotAvailable;
+
+		Spil.Instance.OnAdFinished -= Spil_Instance_OnAdFinished;
+		Spil.Instance.OnAdFinished += Spil_Instance_OnAdFinished;
+
+		RequestMoreApps();
 	}
 
 	void ClearOutOldObsticles ()
@@ -149,6 +180,7 @@ public class GameController : MonoBehaviour
 		InvokeRepeating ("SpawnObsticle", 0, obsitcleSpawnFrequency);
 		UpdateUI (GameStates.InGame);
 		Spil.Instance.TrackLevelStartEvent ("MainGame");
+
 	}
 
 	public void GameOver ()
@@ -157,6 +189,8 @@ public class GameController : MonoBehaviour
 		CancelInvoke ("SpawnObsticle");
 		UpdateUI (GameStates.GameOver);
 		Spil.Instance.TrackPlayerDiesEvent ("MainGame");
+
+
 	}
 
 	void SpawnObsticle ()
@@ -396,10 +430,43 @@ public class GameController : MonoBehaviour
 
 	}
 
+	void RewardHandler(PushNotificationRewardResponse rewardResponse)
+    	{
+        	Debug.Log("Push notification reward received. CurrencyName: " + rewardResponse.data.eventData.currencyName + " CurrencyId: " + rewardResponse.data.eventData.currencyId + " Reward: " + rewardResponse.data.eventData.reward);
+    	}
+
+
 	public void FBShare ()
 	{
 		System.Uri url = new System.Uri ("http://files.cdn.spilcloud.com/10/1479133368_tappy_logo.png");
 		FB.ShareLink (url, "Tappy Plane", "Check out Tappy Plane for iOS and Android!", url, null);
+	}
+
+	void Spil_Instance_OnAdAvailable (SpilGames.Unity.Utils.enumAdType adType)
+	{
+		if(adType == SpilGames.Unity.Utils.enumAdType.MoreApps){
+			moreGamesButton.SetActive(true);
+		}
+	}
+
+	void Spil_Instance_OnAdNotAvailable (SpilGames.Unity.Utils.enumAdType adType){
+		if(adType == SpilGames.Unity.Utils.enumAdType.MoreApps){
+			moreGamesButton.SetActive(false);
+		}
+	}
+
+	void Spil_Instance_OnAdFinished(SpilAdFinishedResponse adResponse){
+		if(adResponse.type.Equals("moreApps")){
+			RequestMoreApps();
+		}
+	}
+
+	public void RequestMoreApps(){
+		Spil.Instance.RequestMoreApps();
+	}
+
+	public void ShowMoreApps(){
+		Spil.Instance.PlayMoreApps();
 	}
 
 	/*public void FBShareScore ()

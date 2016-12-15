@@ -22,7 +22,7 @@ public class GameOverPanelController : MonoBehaviour {
 
 	public void Restart(){
 		SavePublicGameState();
-		SceneManager.LoadScene (0);
+		gameController.SetupNewGame();
 	}
 
 	public void SavePublicGameState(){

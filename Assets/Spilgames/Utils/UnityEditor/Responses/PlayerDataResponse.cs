@@ -139,17 +139,20 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 					for (int i = 0; i < receivedWallet.currencies.Count; i++) {
 						for (int j = 0; j < Wallet.currencies.Count; j++) {
 							if (receivedWallet.logic.Equals ("CLIENT")) {
-								if (Wallet.currencies [j].id == receivedWallet.currencies [i].id && receivedWallet.currencies [i].delta != 0) {
+								if (Wallet.currencies [j].id == receivedWallet.currencies [i].id) {
 									int updatedBalance = 0;
 
 									if (Wallet.offset == 0 && receivedWallet.offset != 0) {
 										updatedBalance = receivedWallet.currencies [i].currentBalance;
 									} else {
-										updatedBalance = Wallet.currencies [j].currentBalance + receivedWallet.currencies [i].delta;
+										if(receivedWallet.currencies [i].delta != 0){
+											updatedBalance = Wallet.currencies [j].currentBalance + receivedWallet.currencies [i].delta;
 
-										if (updatedBalance < 0) {
-											updatedBalance = 0;
+											if (updatedBalance < 0) {
+												updatedBalance = 0;
+											}
 										}
+
 									}
 
 									Wallet.currencies [j].currentBalance = updatedBalance;
