@@ -138,6 +138,10 @@ public class MyIAPManager : MonoBehaviour, IStoreListener {
 
 	        Spil.Instance.TrackIAPPurchasedEvent(skuId,transactionID);
 
+		#elif UNITY_IOS
+
+		Spil.Instance.TrackIAPPurchasedEvent(args.purchasedProduct.definition.storeSpecificId, args.purchasedProduct.transactionID);
+
 		#endif
 
 		iapPanelController.PurchaseSuccess(args.purchasedProduct.metadata.localizedTitle);

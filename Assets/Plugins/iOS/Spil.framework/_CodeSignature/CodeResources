@@ -279,7 +279,7 @@
 		</data>
 		<key>MPAdBrowserController.nib</key>
 		<data>
-		JB944ga70QjdTg1ZGHZ/aCZ9XaE=
+		5haqt6KSlsJsF4b/VZTAW9fDl4M=
 		</data>
 		<key>MPAdBrowserController.xib</key>
 		<data>
@@ -357,7 +357,7 @@
 		<data>
 		Prqij/pK+QCOu4BjBVRlV+hkpLo=
 		</data>
-		<key>MRAID.bundle/mraid.js</key>
+		<key>MRAID.bundle/mraid.jss</key>
 		<data>
 		oX1mrmbjet4tPIjvQNiaVb7qTBk=
 		</data>
@@ -1688,11 +1688,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			JB944ga70QjdTg1ZGHZ/aCZ9XaE=
+			5haqt6KSlsJsF4b/VZTAW9fDl4M=
 			</data>
 			<key>hash2</key>
 			<data>
-			DMBjV/Zsh2juGwbMTHwBowiu+FdHt9a7AZTEm4UzQ38=
+			CHxaruQ6qwbjTDuBFAkqZUbZmWpBtFPadWcPXiLE8uc=
 			</data>
 		</dict>
 		<key>MPAdBrowserController.xib</key>
@@ -1904,7 +1904,7 @@
 			Gs88M7OSMeYipwt+NclYc6wA1x/r26n4ubg4DxCC83A=
 			</data>
 		</dict>
-		<key>MRAID.bundle/mraid.js</key>
+		<key>MRAID.bundle/mraid.jss</key>
 		<dict>
 			<key>hash</key>
 			<data>

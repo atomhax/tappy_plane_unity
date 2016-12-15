@@ -3,13 +3,14 @@ from __future__ import print_function
 # Add a new 'Run Script' phase - ON TOP - of the Build Phases tab using the following Shell command and build the project: /usr/bin/python Spil.framework/setup.py $(PROJECT_NAME)
 # Or run the shell command from the terminal using the project name: python Spil.framework/setup.py <ProjectName> <UseICloudContainer> <useICloudKV> <UsePushNotifications>
 
-from builtins import str
 import datetime
 import os
 import re
 import plistlib
 import shutil
 import sys
+if sys.hexversion >= 0x3000000:
+	from builtins import str
 from mod_pbxproj import XcodeProject
 
 # font consts
