@@ -24,11 +24,7 @@ namespace SpilGames.Unity.Helpers
         {
 			try
 			{
-				return JsonConvert.DeserializeObject<T>(jsonString, new JsonSerializerSettings
-				{
-					TypeNameHandling = TypeNameHandling.All,
-					MetadataPropertyHandling = MetadataPropertyHandling.ReadAhead
-				});
+				return JsonConvert.DeserializeObject<T>(jsonString);
 			}
 			catch(System.MissingMethodException ex)
 			{
