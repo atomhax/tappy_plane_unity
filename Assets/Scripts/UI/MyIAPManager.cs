@@ -152,7 +152,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener {
 		PackagesHelper helper = Spil.Instance.GetPackagesAndPromotions ();
 		for(int i = 0; i < helper.Packages.Count; i ++){
 			if(lastProductSKU == helper.Packages[i].Id){
-                Spil.PlayerData.Wallet.Add (int.Parse (helper.Packages [i].Items [0].Id), int.Parse (helper.Packages [i].Items [0].GetRealValue ().Replace(".0","")), PlayerDataUpdateReasons.IAP);
+                Spil.PlayerData.Wallet.Add (int.Parse (helper.Packages [i].Items [0].Id), int.Parse (helper.Packages [i].Items [0].GetRealValue ().Replace(".0","")), PlayerDataUpdateReasons.IAP, "Shop");
 			}
 		}
 	}

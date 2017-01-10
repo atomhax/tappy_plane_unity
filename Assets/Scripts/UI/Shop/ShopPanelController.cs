@@ -118,7 +118,7 @@ public class ShopPanelController : MonoBehaviour {
 
 			closeShopAfterReward = false;
 			starsRewardedText.text = "Thanks!\nStars Rewarded : " + response.reward.reward.ToString ();
-			Spil.PlayerData.Wallet.Add (25, response.reward.reward,PlayerDataUpdateReasons.RewardAds);
+			Spil.PlayerData.Wallet.Add (25, response.reward.reward,PlayerDataUpdateReasons.RewardAds, "Shop");
 			rewardSucessPanel.SetActive (true);
 		}
 		Spil.Instance.SendRequestRewardVideoEvent ();
@@ -144,7 +144,8 @@ public class ShopPanelController : MonoBehaviour {
 	}
 
 	public void ShowHelpCenter(){
-		Spil.Instance.ShowHelpCenter();
+//		Spil.Instance.ShowHelpCenter();
+		Spil.Instance.ResetWallet();
 	}
 
 	void OnSplashScreenOpen()

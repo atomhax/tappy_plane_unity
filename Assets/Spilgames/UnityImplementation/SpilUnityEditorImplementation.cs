@@ -291,29 +291,44 @@ namespace SpilGames.Unity.Implementations
 			return JsonHelper.getJSONFromObject(pData.Inventory);
 		}
 
-		public override void AddCurrencyToWallet (int currencyId, int amount, string reason)
+		public override void AddCurrencyToWallet (int currencyId, int amount, string reason, string location)
 		{
-			pData.WalletOperation("add", currencyId, amount, reason);
+			pData.WalletOperation("add", currencyId, amount, reason, location);
 		}
 
-		public override void SubtractCurrencyFromWallet (int currencyId, int amount, string reason)
+		public override void SubtractCurrencyFromWallet (int currencyId, int amount, string reason, string location)
 		{
-			pData.WalletOperation("subtract", currencyId, amount, reason);
+			pData.WalletOperation("subtract", currencyId, amount, reason, location);
 		}
 
-		public override void AddItemToInventory (int itemId, int amount, string reason)
+		public override void AddItemToInventory (int itemId, int amount, string reason, string location)
 		{
-			pData.InventoryOperation("add", itemId, amount, reason);
+			pData.InventoryOperation("add", itemId, amount, reason, location);
 		}
 
-		public override void SubtractItemFromInventory (int itemId, int amount, string reason)
+		public override void SubtractItemFromInventory (int itemId, int amount, string reason, string location)
 		{
-			pData.InventoryOperation("subtract", itemId, amount, reason);
+			pData.InventoryOperation("subtract", itemId, amount, reason, location);
 		}
 
-		public override void BuyBundle (int bundleId, string reason)
+		public override void BuyBundle (int bundleId, string reason, string location)
 		{
-			pData.ConsumeBundle(bundleId, reason);
+			pData.ConsumeBundle(bundleId, reason, location);
+		}
+
+		public override void ResetPlayerData () 
+		{
+			// TODO
+		}
+
+		public override void ResetInventory () 
+		{
+			// TODO
+		}
+
+		public override void ResetWallet () 
+		{
+			// TODO
 		}
 
 		#endregion

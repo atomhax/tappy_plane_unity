@@ -9,10 +9,10 @@ namespace SpilGames.Unity.Implementations
 	public abstract class SpilUnityImplementationBase
 	{
 		public static string PluginName = "Unity";
-		public static string PluginVersion = "2.2.7";
+		public static string PluginVersion = "2.2.8";
 
-		public static string AndroidVersion = "2.2.6";
-		public static string iOSVersion = "2.1.4";
+		public static string AndroidVersion = "2.2.7";
+		public static string iOSVersion = "2.1.6";
 
 		public abstract void SetPluginInformation (string PluginName, string PluginVersion);
 
@@ -1228,15 +1228,21 @@ namespace SpilGames.Unity.Implementations
 		//			return helper;
 		//		}
 		
-		public abstract void AddCurrencyToWallet (int currencyId, int amount, string reason);
+		public abstract void AddCurrencyToWallet (int currencyId, int amount, string reason, string location);
 
-		public abstract void SubtractCurrencyFromWallet (int currencyId, int amount, string reason);
+		public abstract void SubtractCurrencyFromWallet (int currencyId, int amount, string reason, string location);
 
-		public abstract void AddItemToInventory (int itemId, int amount, string reason);
+		public abstract void AddItemToInventory (int itemId, int amount, string reason, string location);
 
-		public abstract void SubtractItemFromInventory (int itemId, int amount, string reason);
+		public abstract void SubtractItemFromInventory (int itemId, int amount, string reason, string location);
 
-		public abstract void BuyBundle (int bundleId, string reason);
+		public abstract void BuyBundle (int bundleId, string reason, string location);
+
+		public abstract void ResetPlayerData ();
+
+		public abstract void ResetInventory ();
+
+		public abstract void ResetWallet ();
 
 		#endregion
 

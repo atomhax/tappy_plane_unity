@@ -1,1 +1,1 @@
-{"wallet":{"logic":"CLIENT","offset":1,"currencies":[{"id":28,"currentBalance":0,"delta":0},{"id":55,"currentBalance":0,"delta":0},{"id":25,"currentBalance":0,"delta":0}],"offset":0},"inventory":{"logic":"CLIENT","items":[],"offset":1,"offset":0}}
+{"wallet":{"logic":"CLIENT","currencies":[{"id":28,"currentBalance":0,"delta":0},{"id":55,"currentBalance":0,"delta":0},{"id":25,"currentBalance":0,"delta":0}],"offset":1,"offset":0},"inventory":{"items":[],"logic":"CLIENT","offset":1,"offset":0}}

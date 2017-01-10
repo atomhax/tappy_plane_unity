@@ -109,9 +109,9 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 							int amount = Spil.DailyBonusAmount;
 
 							if(rewardType.Equals(Spil.DailyBonusRewardTypeEnum.CURRENCY)){
-								SpilUnityEditorImplementation.pData.WalletOperation("add", id, amount, PlayerDataUpdateReasons.DailyBonus);
+								SpilUnityEditorImplementation.pData.WalletOperation("add", id, amount, PlayerDataUpdateReasons.DailyBonus, "DailyBonus");
 							} else if (rewardType.Equals(Spil.DailyBonusRewardTypeEnum.EXTERNAL)){
-								SpilUnityEditorImplementation.pData.InventoryOperation("add", id, amount, PlayerDataUpdateReasons.DailyBonus);
+								SpilUnityEditorImplementation.pData.InventoryOperation("add", id, amount, PlayerDataUpdateReasons.DailyBonus, "DailyBonus");
 							}
 						}
 

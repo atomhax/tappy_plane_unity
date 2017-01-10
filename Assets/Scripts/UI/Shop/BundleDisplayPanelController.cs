@@ -58,13 +58,13 @@ public class BundleDisplayPanelController : MonoBehaviour {
 
 	void SpendCurrencyForBundle(){
 		for (int i = 0; i < bundleDisplayed.Prices.Count; i++) {
-			Spil.PlayerData.Wallet.Subtract (bundleDisplayed.Prices [i].CurrencyId, bundleDisplayed.Prices [i].Value, PlayerDataUpdateReasons.ItemBought);
+			Spil.PlayerData.Wallet.Subtract (bundleDisplayed.Prices [i].CurrencyId, bundleDisplayed.Prices [i].Value, PlayerDataUpdateReasons.ItemBought, "Shop");
 		}
 	}
 		
 	void AddItemsToInventory(){
 		for(int i = 0; i < bundleDisplayed.Items.Count; i ++){
-			Spil.PlayerData.Inventory.Add (bundleDisplayed.Items [i].Id, bundleDisplayed.Items [i].Amount, PlayerDataUpdateReasons.ItemBought);
+			Spil.PlayerData.Inventory.Add (bundleDisplayed.Items [i].Id, bundleDisplayed.Items [i].Amount, PlayerDataUpdateReasons.ItemBought, "Shop");
 		}
 	}
 }

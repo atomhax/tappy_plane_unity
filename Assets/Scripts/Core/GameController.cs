@@ -97,7 +97,7 @@ public class GameController : MonoBehaviour
 
 	void Spil_Instance_OnReward (PushNotificationRewardResponse rewardResponse)
 	{
-		Spil.PlayerData.Wallet.Add (rewardResponse.data.eventData.currencyId, rewardResponse.data.eventData.reward, PlayerDataUpdateReasons.EventReward);
+		Spil.PlayerData.Wallet.Add (rewardResponse.data.eventData.currencyId, rewardResponse.data.eventData.reward, PlayerDataUpdateReasons.EventReward, "Push Notification");
 	}
 
 	public void AddToScore ()
@@ -185,7 +185,7 @@ public class GameController : MonoBehaviour
 
 	public void GameOver ()
 	{
-		Spil.PlayerData.Wallet.Add (25, playerScore, PlayerDataUpdateReasons.LevelComplete);
+		Spil.PlayerData.Wallet.Add (25, playerScore, PlayerDataUpdateReasons.LevelComplete, "Game Over Screen");
 		CancelInvoke ("SpawnObsticle");
 		UpdateUI (GameStates.GameOver);
 		Spil.Instance.TrackPlayerDiesEvent ("MainGame");

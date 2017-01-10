@@ -53,11 +53,11 @@ dependencies {
     compile 'com.google.android.gms:play-services-analytics:9.6.1'
     compile 'com.android.support:multidex:1.0.1'
 
-    compile(name: 'spilsdk-2.2.5', ext: 'aar')
-    compile(name: 'spilsdk-adjust-2.2.5', ext: 'aar')
-    compile(name: 'spilsdk-chartboost-2.2.5', ext: 'aar')
-    compile(name: 'spilsdk-dfp-2.2.5', ext: 'aar')
-    compile(name: 'spilsdk-fyber-2.2.5', ext: 'aar')
-    compile(name: 'spilsdk-zendesk-2.2.5', ext: 'aar')
+    compile(name: 'spilsdk-2.2.7', ext: 'aar')
+    compile(name: 'spilsdk-adjust-2.2.7', ext: 'aar')
+    compile(name: 'spilsdk-chartboost-2.2.7', ext: 'aar')
+    compile(name: 'spilsdk-dfp-2.2.7', ext: 'aar')
+    compile(name: 'spilsdk-fyber-2.2.7', ext: 'aar')
+    compile(name: 'spilsdk-zendesk-2.2.7', ext: 'aar')
 
 }

@@ -230,10 +230,9 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 
 				SpilUnityImplementationBase.firePlayerDataUpdated (JsonHelper.getJSONFromObject (updatedData));
 			}
-
 		}
 
-		public void WalletOperation (string action, int currencyId, int amount, string reason)
+		public void WalletOperation (string action, int currencyId, int amount, string reason, string location)
 		{
 
 			if(currencyId <= 0 || reason == null){
@@ -283,6 +282,7 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 				PlayerDataUpdatedData updatedData = new PlayerDataUpdatedData ();
 				updatedData.currencies.Add (currency);
 				updatedData.reason = reason;
+				updatedData.location = location;
 
 				SpilUnityImplementationBase.firePlayerDataUpdated (JsonHelper.getJSONFromObject (updatedData));
 
@@ -314,7 +314,7 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 			}
 		}
 
-		public void InventoryOperation (string action, int itemId, int amount, string reason)
+		public void InventoryOperation (string action, int itemId, int amount, string reason, string location)
 		{
 			SpilItemData gameItem = GetItemFromObjects(itemId);
 
@@ -360,6 +360,7 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 			PlayerDataUpdatedData updatedData = new PlayerDataUpdatedData();
 			updatedData.items.Add(item);
 			updatedData.reason = reason;
+			updatedData.location = location;
 
 			SpilUnityImplementationBase.firePlayerDataUpdated (JsonHelper.getJSONFromObject (updatedData));
 
@@ -397,7 +398,7 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 			}
 		}
 
-		public void ConsumeBundle (int bundleId, string reason)
+		public void ConsumeBundle (int bundleId, string reason, string location)
 		{
 			PlayerDataUpdatedData updatedData = new PlayerDataUpdatedData();
 
@@ -500,6 +501,7 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 			}
 
 			updatedData.reason = reason;
+			updatedData.location = location;
 
 			SpilUnityImplementationBase.firePlayerDataUpdated (JsonHelper.getJSONFromObject (updatedData));
 

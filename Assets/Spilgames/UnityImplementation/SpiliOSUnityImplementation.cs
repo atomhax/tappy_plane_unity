@@ -427,45 +427,69 @@ namespace SpilGames.Unity.Implementations
 		[DllImport("__Internal")]
 		private static extern string getInventoryNative();
 
-		public override void AddCurrencyToWallet (int currencyId, int amount, string reason)
+		public override void AddCurrencyToWallet (int currencyId, int amount, string reason, string location)
 		{
-			addCurrencyToWalletNative(currencyId, amount, reason);
+			addCurrencyToWalletNative(currencyId, amount, reason, location);
 		}
 
 		[DllImport("__Internal")]
-		private static extern void addCurrencyToWalletNative(int currencyId, int amount, string reason);
+		private static extern void addCurrencyToWalletNative(int currencyId, int amount, string reason, string location);
 
-		public override void SubtractCurrencyFromWallet (int currencyId, int amount, string reason)
+		public override void SubtractCurrencyFromWallet (int currencyId, int amount, string reason, string location)
 		{
-			subtractCurrencyFromWalletNative(currencyId, amount, reason);
+			subtractCurrencyFromWalletNative(currencyId, amount, reason, location);
 		}
 
 		[DllImport("__Internal")]
-		private static extern void subtractCurrencyFromWalletNative(int currencyId, int amount, string reason);
+		private static extern void subtractCurrencyFromWalletNative(int currencyId, int amount, string reason, string location);
 
-		public override void AddItemToInventory (int itemId, int amount, string reason)
+		public override void AddItemToInventory (int itemId, int amount, string reason, string location)
 		{
-			addItemToInventoryNative(itemId, amount, reason);
+			addItemToInventoryNative(itemId, amount, reason, location);
 		}
 
 		[DllImport("__Internal")]
-		private static extern void addItemToInventoryNative (int itemId, int amount, string reason);
+		private static extern void addItemToInventoryNative (int itemId, int amount, string reason, string location);
 
-		public override void SubtractItemFromInventory (int itemId, int amount, string reason)
+		public override void SubtractItemFromInventory (int itemId, int amount, string reason, string location)
 		{
-			subtractItemFromInventoryNative(itemId, amount, reason);
+			subtractItemFromInventoryNative(itemId, amount, reason, location);
 		}
 
 		[DllImport("__Internal")]
-		private static extern void subtractItemFromInventoryNative (int itemId, int amount, string reason);
+		private static extern void subtractItemFromInventoryNative (int itemId, int amount, string reason, string location);
 
-		public override void BuyBundle (int bundleId, string reason)
+		public override void BuyBundle (int bundleId, string reason, string location)
 		{
-			buyBundleNative(bundleId, reason);
+			buyBundleNative(bundleId, reason, location);
 		}
 
 		[DllImport("__Internal")]
-		private static extern void buyBundleNative (int bundleId, string reason);
+		private static extern void buyBundleNative (int bundleId, string reason, string location);
+
+		public override void ResetPlayerData () 
+		{
+			resetPlayerData ();
+		}
+
+		[DllImport("__Internal")]
+		private static extern void resetPlayerData ();
+
+		public override void ResetInventory () 
+		{
+			resetInventoryNative ();
+		}
+
+		[DllImport("__Internal")]
+		private static extern void resetInventoryNative ();
+
+		public override void ResetWallet () 
+		{
+			resetWalletNative ();
+		}
+
+		[DllImport("__Internal")]
+		private static extern void resetWalletNative ();
 
 		#endregion
 

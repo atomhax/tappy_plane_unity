@@ -85,9 +85,9 @@ namespace SpilGames.Unity.Helpers
 		/// <summary>
 		/// Helper method that consumes the bundle given a bundleId and a reason
 		/// </summary>
-		public void BuyBundle (int bundleId, string reason)
+		public void BuyBundle (int bundleId, string reason, string location)
 		{
-			Spil.Instance.BuyBundle (bundleId, reason);
+			Spil.Instance.BuyBundle (bundleId, reason, location);
 		}
 
 		private void AddDataToHelper (List<PlayerCurrencyData> walletCurrencies, List<PlayerItemData> inventoryItems)
@@ -156,14 +156,14 @@ namespace SpilGames.Unity.Helpers
 			}			
 		}
 
-		public void Add (int currencyId, int amount, string reason)
+		public void Add (int currencyId, int amount, string reason, string location)
 		{
-			Spil.Instance.AddCurrencyToWallet (currencyId, amount, reason);
+			Spil.Instance.AddCurrencyToWallet (currencyId, amount, reason, location);
 		}
 
-		public void Subtract (int currencyId, int amount, string reason)
+		public void Subtract (int currencyId, int amount, string reason, string location)
 		{
-			Spil.Instance.SubtractCurrencyFromWallet (currencyId, amount, reason);
+			Spil.Instance.SubtractCurrencyFromWallet (currencyId, amount, reason, location);
 		}
 	}
 
@@ -208,14 +208,14 @@ namespace SpilGames.Unity.Helpers
 			}
 		}
 
-		public void Add (int itemId, int amount, string reason)
+		public void Add (int itemId, int amount, string reason, string location)
 		{
-			Spil.Instance.AddItemToInventory (itemId, amount, reason);
+			Spil.Instance.AddItemToInventory (itemId, amount, reason, location);
 		}
 
-		public void Subtract (int itemId, int amount, string reason)
+		public void Subtract (int itemId, int amount, string reason, string location)
 		{
-			Spil.Instance.SubtractItemFromInventory (itemId, amount, reason);
+			Spil.Instance.SubtractItemFromInventory (itemId, amount, reason, location);
 		}
 	}
 

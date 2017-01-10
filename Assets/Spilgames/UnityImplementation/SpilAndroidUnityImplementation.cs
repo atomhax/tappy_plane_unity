@@ -272,45 +272,64 @@ namespace SpilGames.Unity.Implementations
 			return CallNativeMethod ("getInventory");
 		}
 
-		public override void AddCurrencyToWallet (int currencyId, int amount, string reason)
+		public override void AddCurrencyToWallet (int currencyId, int amount, string reason, string location)
 		{
 			CallNativeMethod ("addCurrencyToWallet", new object[] {
 				currencyId,
 				amount,
-				reason
+				reason,
+				location
 			}, true);
 		}
 
-		public override void SubtractCurrencyFromWallet (int currencyId, int amount, string reason)
+		public override void SubtractCurrencyFromWallet (int currencyId, int amount, string reason, string location)
 		{
 			CallNativeMethod ("subtractCurrencyFromWallet", new object[] {
 				currencyId,
 				amount,
-				reason
+				reason,
+				location
 			}, true);
 		}
 
-		public override void AddItemToInventory (int itemId, int amount, string reason)
+		public override void AddItemToInventory (int itemId, int amount, string reason, string location)
 		{
 			CallNativeMethod ("addItemToInventory", new object[] {
 				itemId,
 				amount,
-				reason
+				reason,
+				location
 			}, true);
 		}
 
-		public override void SubtractItemFromInventory (int itemId, int amount, string reason)
+		public override void SubtractItemFromInventory (int itemId, int amount, string reason, string location)
 		{
 			CallNativeMethod ("subtractItemFromInventory", new object[] {
 				itemId,
 				amount,
-				reason
+				reason,
+				location
 			}, true);
 		}
 
-		public override void BuyBundle (int bundleId, string reason)
+		public override void BuyBundle (int bundleId, string reason, string location)
 		{
-			CallNativeMethod ("buyBundle", new object[]{ bundleId, reason }, true);
+			CallNativeMethod ("buyBundle", new object[]{ bundleId, reason, location }, true);
+		}
+
+		public override void ResetPlayerData () 
+		{
+			CallNativeMethod ("resetWallet");
+		}
+
+		public override void ResetInventory () 
+		{
+			CallNativeMethod ("resetInventory");
+		}
+
+		public override void ResetWallet () 
+		{
+			CallNativeMethod ("resetPlayerData");
 		}
 
 		#endregion
