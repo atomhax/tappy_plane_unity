@@ -126,15 +126,21 @@ extern "C" {
     
     char* getInventoryNative ();
     
-    void addCurrencyToWalletNative (int currencyId, int amount, char* reasonName);
+    void addCurrencyToWalletNative (int currencyId, int amount, char* reasonName, char* location);
     
-    void subtractCurrencyFromWalletNative(int currencyId, int amount, char* reasonName);
+    void subtractCurrencyFromWalletNative(int currencyId, int amount, char* reasonName, char* location);
     
-    void addItemToInventoryNative (int itemId, int amount, char* reasonName);
+    void addItemToInventoryNative (int itemId, int amount, char* reasonName, char* location);
     
-    void subtractItemFromInventoryNative (int itemId, int amount, char* reasonName);
+    void subtractItemFromInventoryNative (int itemId, int amount, char* reasonName, char* location);
     
-    void buyBundleNative (int itemId, char* reasonName);
+    void buyBundleNative (int itemId, char* reasonName, char* location);
+    
+    void resetPlayerDataNative ();
+    
+    void resetInventoryNative ();
+    
+    void resetWalletNative ();
     
     // --- Customer support ---
     

@@ -469,11 +469,11 @@ namespace SpilGames.Unity.Implementations
 
 		public override void ResetPlayerData () 
 		{
-			resetPlayerData ();
+			resetPlayerDataNative ();
 		}
 
 		[DllImport("__Internal")]
-		private static extern void resetPlayerData ();
+		private static extern void resetPlayerDataNative ();
 
 		public override void ResetInventory () 
 		{

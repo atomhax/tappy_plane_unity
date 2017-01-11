@@ -10,10 +10,11 @@
 #import "HookBridge.h"
 #import "GAI.h"
 
-#define SDK_VERSION @"2.1.6"
+#define SDK_VERSION @"2.1.7"
 
 @class Spil;
 @class UserProfile;
+@class SpilEventTracker;
 
 @protocol SpilDelegate
 
@@ -427,7 +428,7 @@
 +(NSString*)getWallet;
 
 /**
- * Returns the player data as json
+ * Returns the configured game data as json
  */
 +(NSString*)getSpilGameData;
 
@@ -452,7 +453,7 @@
  * @param amount        Amount to add
  * @param reason        The add reason
  */
-+(void)addCurrencyToWallet:(int)currencyId withAmount:(int)amount withReason:(NSString*)reason;
++(void)addCurrencyToWallet:(int)currencyId withAmount:(int)amount withReason:(NSString*)reason withLocation:(NSString*)location;
 
 /**
  * Subtract currency from the wallet
@@ -460,7 +461,7 @@
  * @param amount        Amount to subtract
  * @param reason        The subtract reason
  */
-+(void)subtractCurrencyFromWallet:(int)currencyId withAmount:(int)amount withReason:(NSString*)reason;
++(void)subtractCurrencyFromWallet:(int)currencyId withAmount:(int)amount withReason:(NSString*)reason withLocation:(NSString*)location;
 
 /**
  * Add item to the inventory
@@ -468,7 +469,7 @@
  * @param amount        Amount to add
  * @param reason        The add reason
  */
-+(void)addItemToInventory:(int)itemId withAmount:(int)amount withReason:(NSString*)reason;
++(void)addItemToInventory:(int)itemId withAmount:(int)amount withReason:(NSString*)reason withLocation:(NSString*)location;
 
 /**
  * Subtract item to from the inventory
@@ -476,14 +477,32 @@
  * @param amount        Amount to subtract
  * @param reason        The subtract reason
  */
-+(void)subtractItemFromInventory:(int)itemId withAmount:(int)amount withReason:(NSString*)reason;
++(void)subtractItemFromInventory:(int)itemId withAmount:(int)amount withReason:(NSString*)reason withLocation:(NSString*)location;
 
 /**
  * Uses the bundle and will add the items to the inventory and subtract the currency from the wallet
  * @param bundleId      Id of the bundle
  * @param reason        The bundle reason
  */
-+(void)buyBundleNative:(int)bundleId withReason:(NSString*)reason;
++(void)buyBundleNative:(int)bundleId withReason:(NSString*)reason withLocation:(NSString*)location;
+
+/**
+ *
+ * Resets all the player data
+ */
++(void)resetPlayerData;
+
+/**
+ *
+ * Resets the inventory data
+ */
++(void)resetInventory;
+
+/**
+ *
+ * Resets the wallet data
+ */
++(void)resetWallet;
 
 #pragma mark Customer support
 
