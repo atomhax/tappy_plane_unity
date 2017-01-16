@@ -319,7 +319,7 @@ namespace SpilGames.Unity.Implementations
 
 		public override void ResetPlayerData () 
 		{
-			CallNativeMethod ("resetWallet");
+			CallNativeMethod ("resetPlayerData");
 		}
 
 		public override void ResetInventory () 
@@ -329,7 +329,7 @@ namespace SpilGames.Unity.Implementations
 
 		public override void ResetWallet () 
 		{
-			CallNativeMethod ("resetPlayerData");
+			CallNativeMethod ("resetWallet");
 		}
 
 		#endregion

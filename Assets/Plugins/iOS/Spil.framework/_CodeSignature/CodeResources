@@ -247,7 +247,7 @@
 		</data>
 		<key>Headers/HookBridge.h</key>
 		<data>
-		CnB7DqHCIMbfT+8yM6gy97oXqSg=
+		zf5lISV5Odw5vuQudxHie4f+4qU=
 		</data>
 		<key>Headers/JsonUtil.h</key>
 		<data>
@@ -259,7 +259,7 @@
 		</data>
 		<key>Headers/Spil.h</key>
 		<data>
-		P9Uu3c+aZdbg7qfu9qxbg8V6y5c=
+		v4pLJw7LK5q2TNWg6l1zPNoc+z0=
 		</data>
 		<key>Headers/SpilActionHandler.h</key>
 		<data>
@@ -279,7 +279,7 @@
 		</data>
 		<key>MPAdBrowserController.nib</key>
 		<data>
-		og+0ZrIq9XG6f10uAKXYk4pc70U=
+		Rw59ihDOrYIZNixo4lehB5hiBJ8=
 		</data>
 		<key>MPAdBrowserController.xib</key>
 		<data>
@@ -1611,11 +1611,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			CnB7DqHCIMbfT+8yM6gy97oXqSg=
+			zf5lISV5Odw5vuQudxHie4f+4qU=
 			</data>
 			<key>hash2</key>
 			<data>
-			okXErOJBZigKCjM/ciLJtV/WJV0+UTI89bYnH6jqKxw=
+			PfRdVK2hhQhIh0icugXK/d/BS7kUGebg+D2+xjJuTG4=
 			</data>
 		</dict>
 		<key>Headers/JsonUtil.h</key>
@@ -1644,11 +1644,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			P9Uu3c+aZdbg7qfu9qxbg8V6y5c=
+			v4pLJw7LK5q2TNWg6l1zPNoc+z0=
 			</data>
 			<key>hash2</key>
 			<data>
-			SE11L0KIX8klgAO/dDR2lO/8qofYPgR9foWJrTs5mEo=
+			bSP+KDfW7sk/EIFI54tarA5mC0DOr6AKfyqXrtYIRx4=
 			</data>
 		</dict>
 		<key>Headers/SpilActionHandler.h</key>
@@ -1688,11 +1688,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			og+0ZrIq9XG6f10uAKXYk4pc70U=
+			Rw59ihDOrYIZNixo4lehB5hiBJ8=
 			</data>
 			<key>hash2</key>
 			<data>
-			JfRP5akKl9gzVEOlGDW6res8STdBPbcK/F0HtNJkAB4=
+			O+p2GmPKD1eET/YLQA++bQ1F65Rt9dpl+Cz5hJh/gLo=
 			</data>
 		</dict>
 		<key>MPAdBrowserController.xib</key>

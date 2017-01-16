@@ -23,23 +23,27 @@ namespace SpilGames.Unity.Helpers
 			// Create package objects with promotion data (if any)
 			//List<Package> returnValue = new List<Package>();
 			if (packages != null) {
-				foreach (PackageData packageData in packages) {            
-					if (packageData.hasPromotion) {
-						string promotionString = Spil.Instance.getPromotion (packageData.packageId);
-						if (!string.IsNullOrEmpty (promotionString)) {
-							PromotionData promotionData = JsonHelper.getObjectFromJson<PromotionData> (promotionString);
-							
+				foreach (PackageData packageData in packages)
+				{            
+					if (packageData.hasPromotion) 
+					{
+						string promotionString = Spil.Instance.getPromotion(packageData.packageId);
+						if (!string.IsNullOrEmpty(promotionString))
+						{
+							PromotionData promotionData = JsonHelper.getObjectFromJson<PromotionData>(promotionString);
+						
 							// Check datetime, even though the server shouldn't send inactive promotions the data we're using might be old.
 							DateTime currentTime = DateTime.Now;
-							if (currentTime >= promotionData.startTime && currentTime <= promotionData.endTime) {
+							if (currentTime >= promotionData.startTime && currentTime <= promotionData.endTime)
+							{
 								promotions += 1;
-								Packages.Add (new Package (packageData.packageId, packageData.discountLabel, packageData.items, promotionData.items, promotionData.discountLabel, promotionData.startTime.ToString (), promotionData.endTime.ToString ()));
+								Packages.Add(new Package(packageData.packageId, packageData.discountLabel, packageData.items, promotionData.items, promotionData.discountLabel, promotionData.startTime.ToString(), promotionData.endTime.ToString()));
 							} else {
-								Packages.Add (new Package (packageData.packageId, packageData.discountLabel, packageData.items));
+								Packages.Add(new Package(packageData.packageId, packageData.discountLabel, packageData.items));
 							}
 						}
 					} else {
-						Packages.Add (new Package (packageData.packageId, packageData.discountLabel, packageData.items));
+						Packages.Add(new Package(packageData.packageId, packageData.discountLabel, packageData.items));
 					}
 				}
 			}

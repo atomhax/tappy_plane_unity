@@ -10,7 +10,7 @@
 #import "HookBridge.h"
 #import "GAI.h"
 
-#define SDK_VERSION @"2.1.7"
+#define SDK_VERSION @"2.1.8"
 
 @class Spil;
 @class UserProfile;
@@ -120,7 +120,6 @@
 
 /**
  *  Get the Spil user id
- *
  */
 +(NSString*)getSpilUserId;
 
@@ -167,6 +166,137 @@
 #pragma mark Event tracking
 
 /**
+ * Track a milstone achieved event
+ *
+ * @param name          The name of the milestone
+ */
++(void)trackMilestoneAchievedEvent:(NSString*)name;
+
+/**
+ * Track a level start
+ *
+ * @param level         The name of the level
+ * @param score         The score at the start of the level
+ * @param stars         The stars at the start of the level
+ * @param turns         The turns at the start of the level
+ * @param customCreated Indictating if the level was custom created
+ * @param creatorId     The id of the creator of the level
+ */
++(void)trackLevelStartEvent:(NSString*)level score:(double)score stars:(int)stars turns:(int)turns customCreated:(bool)customCreated creatorId:(NSString*)creatorId;
+
+/**
+ * Track a level complete
+ *
+ * @param level         The name of the level
+ * @param score         The final score the player achieves at the end of the level
+ * @param stars         The # of stars (or any other rating system) the player achieves at the end of the level
+ * @param turns         The # of moves/turns taken to complete the level
+ * @param customCreated Indictating if the level was custom created
+ * @param creatorId     The id of the creator of the level
+ */
++(void)trackLevelCompleteEvent:(NSString*)level score:(double)score stars:(int)stars turns:(int)turns customCreated:(bool)customCreated creatorId:(NSString*)creatorId;
+
+/**
+ * Track a level fail
+ *
+ * @param level         The name of the level
+ * @param score         The final score the player achieves at the end of the level
+ * @param stars         The # of stars (or any other rating system) the player achieves at the end of the level
+ * @param turns         The # of moves/turns taken to complete the level
+ * @param customCreated Indictating if the level was custom created
+ * @param creatorId     The id of the creator of the level
+ */
++(void)trackLevelFailedEvent:(NSString*)level score:(double)score stars:(int)stars turns:(int)turns customCreated:(bool)customCreated creatorId:(NSString*)creatorId;
+
+/**
+ * Track a level up
+ *
+ * @param level         The name of the level
+ * @param score         The final score the player achieves at the end of the level
+ * @param objectId      The level up object identifier
+ * @param skillId       The skill id
+ */
++(void)trackLevelUpEvent:(NSString*)level objectId:(NSString*)objectId skillId:(NSString*)skillId;
+
+/**
+ * Track an item equip
+ *
+ * @param equippedItem  The id of the equipped item
+ * @param equippedTo    The id of were the item will be equipped to
+ */
++(void)trackEquipEvent:(NSString*)equippedItem equippedTo:(NSString*)equippedTo;
+
+/**
+ * Track an item upgrade
+ *
+ * @param upgradeId     The id of the upgraded item
+ * @param level         The level in which the upgrade happened
+ * @param reason        The upgrade reason
+ * @param iteration     The upgrade iteration
+ */
++(void)trackUpgradeEvent:(NSString*)upgradeId level:(NSString*)level reason:(NSString*)reason iteration:(int)iteration;
+
+/**
+ * Track a level create event
+ *
+ * @param levelId       The id of the created level
+ * @param creatorId     The id of the level creator
+ */
++(void)trackLevelCreateEvent:(NSString*)levelId creatorId:(NSString*)creatorId;
+
+/**
+ * Track a download event
+ *
+ * @param levelId       The id of the downloaded level
+ * @param creatorId     The id of the level creator
+ * @param rating        The level rating
+ */
++(void)trackLevelDownloadEvent:(NSString*)levelId creatorId:(NSString*)creatorId rating:(int)rating;
+
+/**
+ * Track a level rate event
+ *
+ * @param levelId       The id of the rated level
+ * @param creatorId     The id of the level creator
+ * @param rating        The level rating
+ */
++(void)trackLevelRateEvent:(NSString*)levelId creatorId:(NSString*)creatorId rating:(int)rating;
+
+/**
+ * Track the start of an endless level
+ */
++(void)trackEndlessModeStartEvent;
+
+/**
+ * Track the end of an endless mode level
+ *
+ * @param level         The distance completed in the endless level
+ */
++(void)trackEndlessModeEndEvent:(int)distance;
+
+/**
+ * Track a player dies event
+ *
+ * @param level         The name of the level in which the player dies
+ */
++(void)trackPlayerDiesEvent:(NSString*)level;
+
+/**
+ * Track a wallet/inventory update
+ *
+ * @param reason        The reason for which the wallet or the inventory has been updated
+ *                      A list of default resons can be found here: {@link com.spilgames.spilsdk.playerdata.PlayerDataUpdateReasons}
+ * @param location      The location where the event occurred (ex.: Shop Screen, End of the level Screen)
+ * @param currencyList  A list containing the currency objects that have been changed with the event.
+ *                      {@link com.spilgames.spilsdk.models.tracking.TrackingCurrency}
+ * @param itemsList     A list containing the item objects that have been changed with the event.
+ *                      {@link com.spilgames.spilsdk.models.tracking.TrackingItem}
+ */
++(void)trackWalletInventoryEvent:(NSString*)reason location:(NSString*)location currencyList:(NSString*)currencyList itemList:(NSString*)itemsList;
+
+/**
+ * Track a successful iap
+ *
  * @param skuId             The product identifier of the item that was purchased
  * @param transactionId     The transaction identifier of the item that was purchased (also called orderId)
  * @param purchaseDate      The date and time that the item was purchased
@@ -174,54 +304,22 @@
 +(void)trackIAPPurchasedEvent:(NSString*)skuId transactionId:(NSString*)transactionId purchaseDate:(NSString*)purchaseDate;
 
 /**
+ * Track a restored iap
+ *
  * @param skuId                 The product identifier of the item that was purchased
- * @param originalTransactionId For a transaction that restores a previous transaction, the transaction identifier of the original transaction. 
+ * @param originalTransactionId For a transaction that restores a previous transaction, the transaction identifier of the original transaction.
  *                              Otherwise, identical to the transaction identifier
  * @param originalPurchaseDate  For a transaction that restores a previous transaction, the date of the original transaction
  */
 +(void)trackIAPRestoredEvent:(NSString*)skuId originalTransactionId:(NSString*)originalTransactionId originalPurchaseDate:(NSString*)originalPurchaseDate;
 
 /**
+ * Track a failed iap
+ *
  * @param skuId     The product identifier of the item that was purchased
  * @param error     Error description or error code
  */
 +(void)trackIAPFailedEvent:(NSString*)skuId error:(NSString*)error;
-
-/**
- * @param currencyList  A list containing the currency objects that have been changed with the event. 
- *                      {@link com.spilgames.spilsdk.models.tracking.TrackingCurrency}
- * @param itemsList     A list containing the item objects that have been changed with the event. 
- *                      {@link com.spilgames.spilsdk.models.tracking.TrackingItem}
- * @param reason        The reason for which the wallet or the inventory has been updated
- *                      A list of default resons can be found here: {@link com.spilgames.spilsdk.playerdata.PlayerDataUpdateReasons}
- * @param location      The location where the event occurred (ex.: Shop Screen, End of the level Screen)
- */
-+(void)trackWalletInventoryEvent:(NSString*)currencyList itemsList:(NSString*)itemsList reason:(NSString*)reason location:(NSString*)location;
-
-/**
- * @param name          The name of the milestone
- */
-+(void)trackMilestoneEvent:(NSString*)name;
-
-/**
- * @param level         The name of the level
- */
-+(void)trackLevelStartEvent:(NSString*)level;
-
-/**
- * @param level         The name of the level
- * @param score         The final score the player achieves at the end of the level
- * @param stars         The # of stars (or any other rating system) the player achieves at the end of the level
- * @param turns         The # of moves/turns taken to complete the level
- */
-+(void)trackLevelCompleteEvent:(NSString*)level score:(NSString*)score stars:(NSString*)stars turns:(NSString*)turns;
-
-/**
- * @param level         The name of the level
- * @param score         The final score the player achieves at the end of the level
- * @param turns         The # of moves/turns taken to complete the level
- */
-+(void)trackLevelFailed:(NSString*)level score:(NSString*)score turns:(NSString*)turns;
 
 /**
  * Track the completion of a tutorial
@@ -229,24 +327,32 @@
 +(void)trackTutorialCompleteEvent;
 
 /**
+ * Track a skipped tutorial
+ *
  * Track the skipping of a tutorial
  */
 +(void)trackTutorialSkippedEvent;
 
 /**
+ * Track a register
+ *
  * @param platform      The platform for which the registration occurred (ex.: Facebook)
  */
 +(void)trackRegisterEvent:(NSString*)platform;
 
 /**
+ * Track a share
+ *
  * @param platform      The platform for which the share occurred (ex.: Facebook)
  */
 +(void)trackShareEvent:(NSString*)platform;
 
 /**
+ * Track an invite
+ *
  * @param platform      The platform for which the invite occurred (ex.: Facebook)
  */
-+(void) trackInviteEvent:(NSString*)platform;
++(void)trackInviteEvent:(NSString*)platform;
 
 /**
  *  Track a basic named event
@@ -305,7 +411,6 @@
 /**
  *  Disable the automated registration message for push notifications
  *  Should be called before [Spil start]
- *
  */
 +(void)disableAutomaticRegisterForPushNotifications;
 
@@ -379,6 +484,13 @@
  * Show the more apps screen
  */
 +(void)showMoreApps;
+
+/**
+ * Request a reward video
+ *
+ * @param rewardType    The expected reward type (optional)
+ */
++(void)requestRewardVideo:(NSString*)rewardType;
 
 /**
  * Show the last requested reward video
@@ -487,19 +599,16 @@
 +(void)buyBundleNative:(int)bundleId withReason:(NSString*)reason withLocation:(NSString*)location;
 
 /**
- *
  * Resets all the player data
  */
 +(void)resetPlayerData;
 
 /**
- *
  * Resets the inventory data
  */
 +(void)resetInventory;
 
 /**
- *
  * Resets the wallet data
  */
 +(void)resetWallet;

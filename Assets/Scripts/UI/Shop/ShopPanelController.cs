@@ -144,8 +144,8 @@ public class ShopPanelController : MonoBehaviour {
 	}
 
 	public void ShowHelpCenter(){
-//		Spil.Instance.ShowHelpCenter();
-		Spil.Instance.ResetWallet();
+		Spil.Instance.ShowHelpCenter();
+//		Spil.Instance.ResetWallet();
 	}
 
 	void OnSplashScreenOpen()
