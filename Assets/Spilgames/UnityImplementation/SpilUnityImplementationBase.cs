@@ -408,7 +408,7 @@ namespace SpilGames.Unity.Implementations
 
 			dictionary.Add ("reason", reason);
 			dictionary.Add ("location", location);
-			dictionary.Add ("trackingOnly", "true");
+			dictionary.Add ("trackingOnly", true);
 
 			SendCustomEvent ("updatePlayerData", dictionary);
 
