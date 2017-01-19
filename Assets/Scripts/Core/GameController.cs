@@ -5,7 +5,12 @@ using SpilGames.Unity;
 using SpilGames.Unity.Helpers;
 using SpilGames.Unity.Utils;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+
+
+#if !UNITY_TVOS
 using Facebook.Unity;
+#endif
 using SpilGames.Unity.Implementations;
 
 public class GameController : MonoBehaviour
@@ -55,9 +60,38 @@ public class GameController : MonoBehaviour
 
 	void Awake ()
 	{
+		#if !UNITY_TVOS
 		FB.Init (this.OnFBInitComplete);
-
+		#endif
 	}
+
+	#if UNITY_TVOS
+	void FixedUpdate ()
+	{
+		if (player.idleMode) 
+		{
+			if(Input.GetKeyDown(KeyCode.Joystick1Button15))
+			{
+				Debug.Log ("New game!");
+				StartNewGame ();
+			}
+		} 
+		else 
+		{
+			Debug.LogWarning ("Check!");
+			if(Input.GetKeyDown(KeyCode.Joystick1Button14) || Input.GetKeyDown(KeyCode.Joystick1Button15))
+			{
+				Debug.Log ("Jump!");
+				if (GameObject.Find ("GameOverPanel")) {
+					Debug.LogWarning ("found!");
+					GameObject.Find ("GameOverPanel").GetComponent<GameOverPanelController> ().Restart ();
+				} else {
+					player.Jump ();
+				}
+			}
+		}
+	}
+	#endif
 
 	// Use this for initialization
 	void Start ()
@@ -142,6 +176,8 @@ public class GameController : MonoBehaviour
 		Spil.Instance.OnAdFinished += Spil_Instance_OnAdFinished;
 
 		RequestMoreApps();
+
+		UpdateUI (GameStates.Start);
 	}
 
 	void ClearOutOldObsticles ()
@@ -219,6 +255,10 @@ public class GameController : MonoBehaviour
 	public void ToggleHighScores ()
 	{
 		highScorePanel.SetActive (!highScorePanel.activeInHierarchy);
+		#if UNITY_TVOS
+		EventSystem eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
+		eventSystem.firstSelectedGameObject = GameObject.Find("GoBackToStartButton");
+		#endif
 	}
 
 	public void UpdateUI (GameStates gameState)
@@ -227,6 +267,28 @@ public class GameController : MonoBehaviour
 		ingamePanel.SetActive (gameState == GameStates.InGame);
 		gameoverPanel.SetActive (gameState == GameStates.GameOver);
 		shopPanel.SetActive (gameState == GameStates.Shop);
+
+		#if UNITY_TVOS
+		EventSystem eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
+		switch (gameState) {
+			case GameStates.Start:
+				eventSystem.firstSelectedGameObject = GameObject.Find("ShopButton");
+				GameObject.Find("FBShareButton").SetActive(false);
+				break;
+			case GameStates.InGame:
+				//eventSystem.firstSelectedGameObject = GameObject.Find("ShopButton");
+				break;
+			case GameStates.GameOver:
+				eventSystem.firstSelectedGameObject = GameObject.Find("RestartButton");
+				break;
+			case GameStates.Shop:
+				GameObject.Find("HelpCenterButton").SetActive(false);
+				eventSystem.firstSelectedGameObject = GameObject.Find("BackButton");
+				break;
+			default:
+				break;
+		}
+		#endif
 	}
 
 	public void InGamePurchaesFail (Bundle bundle)
@@ -244,6 +306,10 @@ public class GameController : MonoBehaviour
 	{
 		purchaceCompleteText.text = "Purchase Complete \n" + bundleName;
 		inGamePurchaseSuccessPanel.SetActive (true);
+		#if UNITY_TVOS
+		EventSystem eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
+		eventSystem.firstSelectedGameObject = GameObject.Find("OkButton");
+		#endif
 	}
 
 	public void LoadSkinsPanelAfterPurchase ()
@@ -328,9 +394,12 @@ public class GameController : MonoBehaviour
 	{
 		Debug.Log ("Facebook Inistialised");
 		Debug.Log ("Requesting Log In information");
+		#if !UNITY_TVOS
 		FB.LogInWithReadPermissions (new List<string> () { "public_profile", "email", "user_friends" }, this.HandleResult);
+		#endif
 	}
 
+	#if !UNITY_TVOS
 	protected void HandleResult (IResult result)
 	{
 		if (result.ResultDictionary != null) {
@@ -367,6 +436,7 @@ public class GameController : MonoBehaviour
 
 		RequestDailyBonus();
 	}
+	#endif
 
 	private void RequestDailyBonus(){
 		Spil.Instance.RequestDailyBonus();
@@ -438,8 +508,10 @@ public class GameController : MonoBehaviour
 
 	public void FBShare ()
 	{
+		#if !UNITY_TVOS
 		System.Uri url = new System.Uri ("http://files.cdn.spilcloud.com/10/1479133368_tappy_logo.png");
 		FB.ShareLink (url, "Tappy Plane", "Check out Tappy Plane for iOS and Android!", url, null);
+		#endif
 	}
 
 	void Spil_Instance_OnAdAvailable (SpilGames.Unity.Utils.enumAdType adType)

@@ -6,11 +6,11 @@
 	<dict>
 		<key>Headers/HookBridge.h</key>
 		<data>
-		CV3N2ohiDJdeYgnVToBRHtYCHCE=
+		zf5lISV5Odw5vuQudxHie4f+4qU=
 		</data>
 		<key>Headers/JsonUtil.h</key>
 		<data>
-		IVqiTMNXLQpMDxpcN7BM7zDW5lM=
+		+DbTRQaGFl2B8QeVoXZocaLRs98=
 		</data>
 		<key>Headers/NSString+Extensions.h</key>
 		<data>
@@ -18,7 +18,7 @@
 		</data>
 		<key>Headers/Spil.h</key>
 		<data>
-		Z8aeO47e2F0drBaJ1QD7gcbi6lI=
+		7mtIS0lNppwkUU6aZHTEeHOMyS8=
 		</data>
 		<key>Headers/SpilActionHandler.h</key>
 		<data>
@@ -30,7 +30,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		PCJaqKf9MoltKhoINRF02E2zZPg=
+		8sUmv6q5iIcUwTNAf92o/S5GA3o=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -72,22 +72,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			CV3N2ohiDJdeYgnVToBRHtYCHCE=
+			zf5lISV5Odw5vuQudxHie4f+4qU=
 			</data>
 			<key>hash2</key>
 			<data>
-			+dWUEjqT2KowZ+dKjZmq2WR5XPnuJMS/Jwku+VaDL9M=
+			PfRdVK2hhQhIh0icugXK/d/BS7kUGebg+D2+xjJuTG4=
 			</data>
 		</dict>
 		<key>Headers/JsonUtil.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			IVqiTMNXLQpMDxpcN7BM7zDW5lM=
+			+DbTRQaGFl2B8QeVoXZocaLRs98=
 			</data>
 			<key>hash2</key>
 			<data>
-			7Mgp3BC9JYDb/IcAHVZadiBQcPsIvZ5tfu3ViSPJHIY=
+			sBLW8SKyq9vWZW2EjwlipiIJnKo2OxdYGd1u3r5qkyI=
 			</data>
 		</dict>
 		<key>Headers/NSString+Extensions.h</key>
@@ -105,11 +105,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			Z8aeO47e2F0drBaJ1QD7gcbi6lI=
+			7mtIS0lNppwkUU6aZHTEeHOMyS8=
 			</data>
 			<key>hash2</key>
 			<data>
-			yU2jQvhofCOgkrZaPcIehBbin73RKoQpQgg4Lj2Mklc=
+			lQKGjmdT5XLEsMVKZg85oPXY46B0wfbY7Cu0Gp7tZ/M=
 			</data>
 		</dict>
 		<key>Headers/SpilActionHandler.h</key>

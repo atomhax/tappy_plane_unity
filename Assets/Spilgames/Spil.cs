@@ -123,7 +123,7 @@ namespace SpilGames.Unity
 
 		
 		
-		#elif UNITY_IPHONE
+		#elif UNITY_IPHONE || UNITY_TVOS
 		
 		/// <summary>
 		/// Use this object to access all Spil related functionality.

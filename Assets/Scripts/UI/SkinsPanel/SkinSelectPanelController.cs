@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using SpilGames.Unity;
 using SpilGames.Unity.Utils;
 using SpilGames.Unity.Helpers;
+using UnityEngine.EventSystems;
 
 public class SkinSelectPanelController : MonoBehaviour {
 
@@ -12,6 +13,13 @@ public class SkinSelectPanelController : MonoBehaviour {
 	public PlaneSkinButtonController[] skinButtons;
 
 	public GameController gameController;
+
+	public void OnEnable() {
+		#if UNITY_TVOS
+		EventSystem eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
+		eventSystem.firstSelectedGameObject = GameObject.Find("BackButtonSkin");
+		#endif
+	}
 
 	public void UpdateButtons(){
 		for (int i = 0; i < backgroundButtons.Length; i++) {

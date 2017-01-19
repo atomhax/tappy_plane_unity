@@ -25,6 +25,10 @@ public class MyIAPManager : MonoBehaviour, IStoreListener {
 
 	void Start()
 	{
+		#if UNITY_TVOS
+		return;
+		#endif
+
 		if (m_StoreController == null)
 		{
 			InitializePurchasing();
@@ -33,6 +37,10 @@ public class MyIAPManager : MonoBehaviour, IStoreListener {
 		
 	public void InitializePurchasing() 
 	{
+		#if UNITY_TVOS
+		return;
+		#endif
+
 		if (IsInitialized())
 		{
 			return;
@@ -53,12 +61,20 @@ public class MyIAPManager : MonoBehaviour, IStoreListener {
 
 	private bool IsInitialized()
 	{
+		#if UNITY_TVOS
+		return false;
+		#endif
+
 		// Only say we are initialized if both the Purchasing references are set.
 		return m_StoreController != null && m_StoreExtensionProvider != null;
 	}
 
 	public void BuyProductID(string productId)
 	{
+		#if UNITY_TVOS
+		return;
+		#endif
+
 		iapPanelController.PurchaseStarted ();
 		lastProductSKU = productId;
 		// If the stores throw an unexpected exception, use try..catch to protect my logic here.
@@ -100,6 +116,10 @@ public class MyIAPManager : MonoBehaviour, IStoreListener {
 
 	public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
 	{
+		#if UNITY_TVOS
+		return;
+		#endif
+
 		packageCosts.Clear ();
 		m_StoreController = controller;
 		m_StoreExtensionProvider = extensions;
@@ -107,6 +127,10 @@ public class MyIAPManager : MonoBehaviour, IStoreListener {
 	}
 
 	void StoreProductPrices(){
+		#if UNITY_TVOS
+		return;
+		#endif
+
 		for(int i = 0 ; i < m_StoreController.products.all.Length; i ++ ){
 			packageCosts.Add (m_StoreController.products.all[i].definition.storeSpecificId ,m_StoreController.products.all[i].metadata.localizedPriceString);
 		}
@@ -115,11 +139,19 @@ public class MyIAPManager : MonoBehaviour, IStoreListener {
 
 	public void OnInitializeFailed(InitializationFailureReason error)
 	{
+		#if UNITY_TVOS
+		return;
+		#endif
+
 		Invoke ("InitializePurchasing",1);
 	}
 
 	public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs args) 
 	{
+		#if UNITY_TVOS
+		return PurchaseProcessingResult.Complete;
+		#endif
+
 		RewardPlayer ();
 
 		#if UNITY_ANDROID
@@ -149,6 +181,10 @@ public class MyIAPManager : MonoBehaviour, IStoreListener {
 	}
 
 	void RewardPlayer(){
+		#if UNITY_TVOS
+		return;
+		#endif
+
 		PackagesHelper helper = Spil.Instance.GetPackagesAndPromotions ();
 		for(int i = 0; i < helper.Packages.Count; i ++){
 			if(lastProductSKU == helper.Packages[i].Id){
@@ -159,6 +195,10 @@ public class MyIAPManager : MonoBehaviour, IStoreListener {
 
 	public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason)
 	{
+		#if UNITY_TVOS
+		return;
+		#endif
+
 		iapPanelController.PurchaseFailed ();
 		Spil.Instance.TrackIAPFailedEvent (failureReason.ToString (), product.definition.storeSpecificId);
 	}
