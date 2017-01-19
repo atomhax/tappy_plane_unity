@@ -8,6 +8,7 @@ using SpilGames.Unity.Utils.UnityEditor;
 using System.Collections.Generic;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace SpilGames.Unity.Utils.UnityEditor.Responses
 {
@@ -137,32 +138,35 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 				if (Wallet.offset < receivedWallet.offset && receivedWallet.currencies.Count > 0) {
 
 					for (int i = 0; i < receivedWallet.currencies.Count; i++) {
-						for (int j = 0; j < Wallet.currencies.Count; j++) {
-							if (receivedWallet.logic.Equals ("CLIENT")) {
-								if (Wallet.currencies [j].id == receivedWallet.currencies [i].id) {
-									int updatedBalance = 0;
+						if (receivedWallet.logic.Equals ("CLIENT")) {
 
-									if (Wallet.offset == 0 && receivedWallet.offset != 0) {
-										updatedBalance = receivedWallet.currencies [i].currentBalance;
-									} else {
-										if(receivedWallet.currencies [i].delta != 0){
-											updatedBalance = Wallet.currencies [j].currentBalance + receivedWallet.currencies [i].delta;
+							PlayerCurrencyData currency = Wallet.currencies.FirstOrDefault(a => a.id == receivedWallet.currencies[i].id);
 
-											if (updatedBalance < 0) {
-												updatedBalance = 0;
-											}
+							if(currency != null){
+								int updatedBalance = 0;
+
+								if (Wallet.offset == 0 && receivedWallet.offset != 0) {
+									updatedBalance = receivedWallet.currencies [i].currentBalance;
+								} else {
+									if(receivedWallet.currencies [i].delta != 0){
+										updatedBalance = currency.currentBalance + receivedWallet.currencies [i].delta;
+
+										if (updatedBalance < 0) {
+											updatedBalance = 0;
 										}
-
 									}
 
-									Wallet.currencies [j].currentBalance = updatedBalance;
-
-									updated = true;
-									updatedData.currencies.Add (Wallet.currencies [j]);
 								}
-							} else if (receivedWallet.logic.Equals ("SERVER")) {
-								
+
+								currency.currentBalance = updatedBalance;
+
+								updated = true;
+								updatedData.currencies.Add (currency);
 							}
+
+							
+						} else if (receivedWallet.logic.Equals ("SERVER")) {
+							
 						}
 					}
 
@@ -182,20 +186,17 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 					List<PlayerItemData> itemsToBeAdded = new List<PlayerItemData>();
 
 					for(int i = 0; i < receivedInventory.items.Count; i++){
-						for(int j = 0; j < Inventory.items.Count; j++){
-							if(receivedInventory.logic.Equals("CLIENT")){
-								if(Inventory.items[j].id == receivedInventory.items[i].id && receivedInventory.items[i].delta != 0){
-									int updatedAmount = Inventory.items[j].amount + receivedInventory.items[i].delta;
-
-									Inventory.items[j].amount = updatedAmount;
-								} else {
-									itemsToBeAdded.Add(receivedInventory.items[i]);
-								}
-
-								updated = true;
-							} else if(receivedInventory.logic.Equals("SERVER")){
-
+						if(receivedInventory.logic.Equals("CLIENT")){
+							PlayerItemData item = Inventory.items.FirstOrDefault(a => a.id == receivedInventory.items[i].id);
+							if(item != null && receivedInventory.items[i].delta != 0){
+								item.amount = item.amount + receivedInventory.items[i].delta;
+							} else {
+								itemsToBeAdded.Add(receivedInventory.items[i]);
 							}
+
+							updated = true;
+						} else if(receivedInventory.logic.Equals("SERVER")){
+
 						}
 
 						updatedData.items.Add(receivedInventory.items[i]);

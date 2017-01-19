@@ -9,10 +9,10 @@ namespace SpilGames.Unity.Implementations
 	public abstract class SpilUnityImplementationBase
 	{
 		public static string PluginName = "Unity";
-		public static string PluginVersion = "2.2.8";
+		public static string PluginVersion = "2.2.9";
 
-		public static string AndroidVersion = "2.2.7";
-		public static string iOSVersion = "2.1.6";
+		public static string AndroidVersion = "2.2.8";
+		public static string iOSVersion = "2.1.7";
 
 		public abstract void SetPluginInformation (string PluginName, string PluginVersion);
 
