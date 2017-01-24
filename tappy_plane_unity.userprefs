@@ -1,17 +1,24 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Spilgames/UnityImplementation/SpilUnityImplementationBase.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Editor/SpilAndroidBuildPostProcess.cs">
     <Files>
       <File FileName="Assets/Spilgames/Spil.cs" Line="1" Column="1" />
-      <File FileName="Assets/Spilgames/Utils/UnityEditor/Responses/PlayerDataResponse.cs" Line="345" Column="64" />
-      <File FileName="Assets/Spilgames/Helpers/JSONHelper.cs" Line="1" Column="1" />
-      <File FileName="Assets/Spilgames/UnityImplementation/SpilUnityImplementationBase.cs" Line="400" Column="29" />
+      <File FileName="Assets/Spilgames/Utils/UnityEditor/Responses/PlayerDataResponse.cs" Line="159" Column="66" />
+      <File FileName="Assets/Spilgames/Utils/UnityEditor/Responses/GameObjectsResponse.cs" Line="113" Column="6" />
+      <File FileName="Assets/Spilgames/UnityImplementation/SpilUnityImplementationBase.cs" Line="949" Column="1" />
+      <File FileName="Assets/Spilgames/UnityImplementation/SpilUnityEditorImplementation.cs" Line="171" Column="4" />
+      <File FileName="Assets/Spilgames/Utils/SpilResponses.cs" Line="1" Column="1" />
+      <File FileName="Assets/Spilgames/Helpers/PlayerDataHelper.cs" Line="1" Column="1" />
+      <File FileName="Assets/Spilgames/Helpers/SpilGameDataHelper.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/UI/Shop/ShopPanelController.cs" Line="1" Column="1" />
+      <File FileName="Assets/Spilgames/Utils/UnityEditor/SpilEvent.cs" Line="1" Column="1" />
+      <File FileName="Assets/Spilgames/UnityImplementation/SpilAndroidUnityImplementation.cs" Line="1" Column="1" />
+      <File FileName="Assets/StreamingAssets/defaultGameData.json" Line="1" Column="1" />
+      <File FileName="Assets/Editor/SpilAndroidBuildPostProcess.cs" Line="82" Column="30" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Spilgames/UnityImplementation/SpilUnityEditorImplementation.cs" line="107" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

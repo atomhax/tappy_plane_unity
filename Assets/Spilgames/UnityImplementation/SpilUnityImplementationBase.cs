@@ -111,18 +111,10 @@ namespace SpilGames.Unity.Implementations
 		/// <param name="turns">Turns.</param>
 		/// <param name="customCreated">If set to <c>true</c> custom created.</param>
 		/// <param name="creatorId">Creator identifier.</param>
-		public void TrackLevelStartEvent (string levelName, double score = 0, int stars = 0, int turns = 0, bool customCreated = false, string creatorId = null)
+		public void TrackLevelStartEvent (string levelName, int turns = 0, bool customCreated = false, string creatorId = null)
 		{
 			Dictionary<string, object> dict = new Dictionary<string, object>();
-			dict.Add("levelName", levelName);
-
-			if(score != 0){
-				dict.Add("score", score);
-			}
-
-			if(stars != 0){
-				dict.Add("stars", stars);
-			}
+			dict.Add("level", levelName);
 
 			if(turns != 0){
 				dict.Add("turns", turns);
@@ -152,7 +144,7 @@ namespace SpilGames.Unity.Implementations
 		public void TrackLevelCompleteEvent (string levelName, double score = 0, int stars = 0, int turns = 0, bool customCreated = false, string creatorId = null)
 		{
 			Dictionary<string, object> dict = new Dictionary<string, object>();
-			dict.Add("levelName", levelName);
+			dict.Add("level", levelName);
 
 			if(score != 0){
 				dict.Add("score", score);
@@ -196,7 +188,7 @@ namespace SpilGames.Unity.Implementations
 		public void TrackLevelFailedEvent (string levelName, double score = 0, int stars = 0, int turns = 0, bool customCreated = false, string creatorId = null)
 		{
 			Dictionary<string, object> dict = new Dictionary<string, object>();
-			dict.Add("levelName", levelName);
+			dict.Add("level", levelName);
 
 			if(score != 0){
 				dict.Add("score", score);

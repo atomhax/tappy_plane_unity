@@ -22,7 +22,14 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 
 		public void ProcessGameObjectsResponse(ResponseEvent response){
 			if(response.data.HasField("currencies")){
-				currencies = new List<SpilCurrencyData>();
+
+				if(currencies == null){
+					currencies = new List<SpilCurrencyData>();
+				}
+
+				if(currencies.Count > 0){
+					currencies.Clear();
+				}
 
 				JSONObject currenciesJSON = response.data.GetField("currencies");
 
@@ -35,7 +42,14 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 			}
 
 			if(response.data.HasField("items")){
-				items = new List<SpilItemData>();
+
+				if(items == null){
+					items = new List<SpilItemData>();
+				}
+
+				if(items.Count > 0){
+					items.Clear();
+				}
 
 				JSONObject itemsJSON = response.data.GetField("items");
 
@@ -46,7 +60,14 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 			}
 
 			if(response.data.HasField("bundles")){
-				bundles = new List<SpilBundleData>();
+
+				if(bundles == null){
+					bundles = new List<SpilBundleData>();
+				}
+
+				if(bundles.Count > 0){
+					bundles.Clear();
+				}
 
 				JSONObject bundlesJSON = response.data.GetField("bundles");
 
@@ -57,7 +78,14 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 			}
 
 			if(response.data.HasField("shop")){
-				shop = new List<SpilShopTabData>();
+
+				if(shop == null){
+					shop = new List<SpilShopTabData>();
+				}
+
+				if(shop.Count > 0){
+					shop.Clear();
+				}
 
 				JSONObject shopJSON = response.data.GetField("shop");
 
@@ -69,7 +97,14 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 			}
 
 			if(response.data.HasField("promotions")){
-				promotions = new List<SpilShopPromotionData>();
+
+				if(promotions == null){
+					promotions = new List<SpilShopPromotionData>();
+				}
+
+				if(promotions.Count > 0){
+					promotions.Clear();
+				}
 
 				JSONObject promotionsJSON = response.data.GetField("promotions");
 
@@ -86,7 +121,6 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 		}
 
 		public string GetGameObjects(){
-			//ToDo Initalise values
 			if(!updatedFromServer){
 				try{
 					string gameData = System.IO.File.ReadAllText (Application.streamingAssetsPath + "/defaultGameData.json");
@@ -101,7 +135,11 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 			}
 		}	
 
+		public GameObjectsResponse InitialiseGameObjects(){
+			string gameData = GetGameObjects();
 
+			return JsonHelper.getObjectFromJson<GameObjectsResponse>(gameData);
+		}
 
 	}
 }

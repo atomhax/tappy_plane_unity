@@ -243,7 +243,8 @@ namespace SpilGames.Unity.Helpers
 		public static string Gift = "Gift";
 		public static string Cancel = "Cancel";
 		public static string Collection = "Collection";
-
+		public static string Reset = "Reset";
+    		public static string InitialValue = "Initial Value";
 
 		public PlayerDataUpdateReasons ()
 		{

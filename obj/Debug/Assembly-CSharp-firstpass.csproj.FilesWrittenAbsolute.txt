@@ -26,3 +26,6 @@
 /Users/sebastian/Work/Unity Projects/tappy_plane_unity/Temp/bin/Debug/Unity.CecilTools.dll
 /Users/sebastian/Work/Unity Projects/tappy_plane_unity/Temp/bin/Debug/Mono.Cecil.Pdb.dll
 /Users/sebastian/Work/Unity Projects/tappy_plane_unity/Temp/bin/Debug/Mono.Cecil.Mdb.dll
+/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Temp/bin/Debug/UnityEngine.PlaymodeTestsRunner.dll
+/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Temp/bin/Debug/UnityEngine.HoloLens.dll
+/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Temp/bin/Debug/UnityEngine.VR.dll

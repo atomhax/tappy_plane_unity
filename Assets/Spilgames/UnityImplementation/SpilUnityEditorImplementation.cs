@@ -20,8 +20,8 @@ namespace SpilGames.Unity.Implementations
 		public static GameObjectsResponse gData;
 
 		public SpilUnityEditorImplementation(){
-			pData = new PlayerDataResponse();
 			gData = new GameObjectsResponse();
+			pData = new PlayerDataResponse();
 
 			SetPluginInformation(PluginName, PluginVersion);
 		}
@@ -119,6 +119,10 @@ namespace SpilGames.Unity.Implementations
 
 		internal void RequestGameData ()
 		{
+			gData = gData.InitialiseGameObjects();
+
+			Spil.GameData = new SpilGameDataHelper (this);
+
 			SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent> ();
 			spilEvent.eventName = "requestGameData";
 
@@ -129,7 +133,12 @@ namespace SpilGames.Unity.Implementations
 		{
 			pData.Wallet = pData.InitWallet();
 			pData.Inventory = pData.InitInventory();
-			
+
+			Spil.PlayerData = new PlayerDataHelper(this);
+
+			pData.SetInitalWalletValues();
+			pData.SetInitalInventoryValues();
+
 			SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent> ();
 			spilEvent.eventName = "requestPlayerData";
 
