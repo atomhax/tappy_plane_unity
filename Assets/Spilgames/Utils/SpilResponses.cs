@@ -149,6 +149,7 @@ namespace SpilGames.Unity.Utils
 	{
 		public int id;
 		public string name;
+		public int initialValue;
 		public int type;
 	}
 
@@ -156,6 +157,7 @@ namespace SpilGames.Unity.Utils
 	{
 		public int id;
 		public string name;
+		public int initialValue;
 		public int type;
 	}
 

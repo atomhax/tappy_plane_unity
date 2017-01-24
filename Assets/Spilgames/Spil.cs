@@ -200,11 +200,13 @@ namespace SpilGames.Unity
 
 			Instance.UpdatePackagesAndPromotions ();
 
+			#if !UNITY_EDITOR
 			GameDataObject = new SpilGameDataHelper (Instance);
 			GameData = GameDataObject;
 
 			PlayerDataObject = new PlayerDataHelper (Instance);
 			PlayerData = PlayerDataObject;
+			#endif
 		}
 
 		void Start ()
