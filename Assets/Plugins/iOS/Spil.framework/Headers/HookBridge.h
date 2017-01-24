@@ -30,7 +30,7 @@ extern "C" {
     
     void trackMilestoneAchievedEvent(const char* name);
     
-    void trackLevelStartEvent(const char* level, int score, int stars, int turns, bool customCreated, const char* creatorId);
+    void trackLevelStartEvent(const char* level, bool customCreated, const char* creatorId);
     
     void trackLevelCompleteEvent(const char* level, int score, int stars, int turns, bool customCreated, const char* creatorId);
     

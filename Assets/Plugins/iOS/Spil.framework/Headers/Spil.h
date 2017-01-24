@@ -176,13 +176,10 @@
  * Track a level start
  *
  * @param level         The name of the level
- * @param score         The score at the start of the level
- * @param stars         The stars at the start of the level
- * @param turns         The turns at the start of the level
  * @param customCreated Indictating if the level was custom created
  * @param creatorId     The id of the creator of the level
  */
-+(void)trackLevelStartEvent:(NSString*)level score:(double)score stars:(int)stars turns:(int)turns customCreated:(bool)customCreated creatorId:(NSString*)creatorId;
++(void)trackLevelStartEvent:(NSString*)level customCreated:(bool)customCreated creatorId:(NSString*)creatorId;
 
 /**
  * Track a level complete
