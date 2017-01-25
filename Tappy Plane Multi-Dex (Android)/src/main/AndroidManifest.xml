@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<manifest package="com.spilgames.tappyplane" xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="14" android:versionCode="14" android:installLocation="preferExternal">
+  <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.WAKE_LOCK" />
+  <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+  <uses-permission android:name="android.permission.VIBRATE" />
+  <uses-feature android:glEsVersion="0x00020000" android:required="false" />
+  <application android:icon="@drawable/app_icon" android:label="@string/app_name" android:name="com.spilgames.spilsdk.activities.SpilSDKApplication" android:isGame="true" android:banner="@drawable/app_banner">
+    <activity android:label="@string/app_name" android:name="com.spilgames.spilsdk.activities.SpilUnityActivity" android:screenOrientation="sensorLandscape" android:launchMode="singleTask" android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|fontScale">
+      <meta-data android:name="unityplayer.UnityActivity" android:value="true" />
+      <meta-data android:name="unityplayer.ForwardNativeEventsToDalvik" android:value="true" />
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+        <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+      </intent-filter>
+    </activity>
+    <meta-data android:name="unityplayer.SkipPermissionsDialog" android:value="true" />
+    <!--    Uncomment the code below if you want to disable automatic permission requesting from the Spil SDK-->
+    <!--    <meta-data android:name="spil.permissions.DisableAutoRequest" android:value="true" />-->
+    <activity android:name="com.facebook.unity.FBUnityLoginActivity" android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen" android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
+    <activity android:name="com.facebook.unity.FBUnityDialogsActivity" android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen" android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
+    <activity android:name="com.facebook.unity.FBUnityAppLinkActivity" android:exported="true" />
+    <activity android:name="com.facebook.unity.FBUnityDeepLinkingActivity" android:exported="true" />
+    <activity android:name="com.facebook.unity.FBUnityGameRequestActivity" />
+    <activity android:name="com.facebook.unity.FBUnityCreateGameGroupActivity" />
+    <activity android:name="com.facebook.unity.FBUnityJoinGameGroupActivity" />
+    <activity android:name="com.facebook.unity.AppInviteDialogActivity" />
+    <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="fb1210711722283789" />
+    <provider android:name="com.facebook.FacebookContentProvider" android:authorities="com.facebook.app.FacebookContentProvider1210711722283789" android:exported="true" />
+  </application>
+  <uses-sdk android:minSdkVersion="17" android:targetSdkVersion="25" />
+  <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
+  <uses-feature android:name="android.hardware.touchscreen.multitouch" android:required="false" />
+  <uses-feature android:name="android.hardware.touchscreen.multitouch.distinct" android:required="false" />
+</manifest>
