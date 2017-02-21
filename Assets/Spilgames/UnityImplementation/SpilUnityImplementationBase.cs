@@ -111,14 +111,10 @@ namespace SpilGames.Unity.Implementations
 		/// <param name="turns">Turns.</param>
 		/// <param name="customCreated">If set to <c>true</c> custom created.</param>
 		/// <param name="creatorId">Creator identifier.</param>
-		public void TrackLevelStartEvent (string levelName, int turns = 0, bool customCreated = false, string creatorId = null)
+		public void TrackLevelStartEvent (string levelName, bool customCreated = false, string creatorId = null)
 		{
 			Dictionary<string, object> dict = new Dictionary<string, object>();
 			dict.Add("level", levelName);
-
-			if(turns != 0){
-				dict.Add("turns", turns);
-			}
 
 			if(customCreated){
 				dict.Add("customCreated", customCreated);

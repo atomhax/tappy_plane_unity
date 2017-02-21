@@ -21,9 +21,9 @@ captures
 
 spilSDK/.idea
 *.iml
-tappyPlane/.idea/workspace.xml
-tappyPlane/.idea/misc.xml
-tappyPlane/spilSDK.iml
+Tappy Plane Multi-Dex (Android)/.idea/workspace.xml
+Tappy Plane Multi-Dex (Android)/.idea/misc.xml
+Tappy Plane Multi-Dex (Android)/spilSDK.iml
 spil-android-sdk.iml
 .idea/compiler.xml
 .idea/gradle.xml
@@ -31,7 +31,7 @@ spil-android-sdk.iml
 .idea/encodings.xml
 
 
-Tappy Plane Multi-Dex (Android)/tappyPlane/build/*
+Tappy Plane Multi-Dex (Android)/build/*
 Tappy Plane Multi-Dex (Android)/amazonAppStore/build/*
 Tappy Plane Multi-Dex (Android)/facebookandroidwrapper000/build/*
 Tappy Plane Multi-Dex (Android)/googleAIDL/build/*
