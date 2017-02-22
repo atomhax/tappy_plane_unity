@@ -402,9 +402,6 @@ namespace SpilGames.Unity.Implementations
 
     #region Image loading
 
-    	[DllImport("__Internal")]
-		private static extern bool hasImageNative(string url);
-
         /// <summary>
         /// Used to get the image from the cache, based on the url provided.
         /// </summary>
@@ -449,13 +446,6 @@ namespace SpilGames.Unity.Implementations
     	[DllImport("__Internal")]
 		private static extern void preloadItemAndBundleImagesNative();
 
-        /// <summary>
-        /// Used to determine if an image has been cached in the local disk cache.
-        /// </summary>
-        public override bool HasImage(string url)
-        {
-            return hasImageNative(url);
-        }
 
     #endregion
 
