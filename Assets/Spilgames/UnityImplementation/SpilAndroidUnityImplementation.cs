@@ -6,7 +6,7 @@ using SpilGames.Unity.Helpers;
 
 namespace SpilGames.Unity.Implementations
 {
-#if UNITY_ANDROID
+	#if UNITY_ANDROID
 	public class SpilAndroidUnityImplementation : SpilUnityImplementationBase
 	{
 		#region Inherited members
@@ -89,7 +89,7 @@ namespace SpilGames.Unity.Implementations
 			#if UNITY_ANDROID
 			Spil spil = GameObject.FindObjectOfType<Spil> ();
 			RegisterDevice (spil.ProjectId);
-			SetPluginInformation(PluginName, PluginVersion);
+			SetPluginInformation (PluginName, PluginVersion);
 			#endif
 		}
 
@@ -183,10 +183,10 @@ namespace SpilGames.Unity.Implementations
 		{
 			Debug.Log ("SpilSDK-Unity SendCustomEvent " + eventName);
 
-			String parameters = JsonHelper.getJSONFromObject(dict);
+			String parameters = JsonHelper.getJSONFromObject (dict);
 			CallNativeMethod ("trackEvent", new object[] {
-					eventName,
-					parameters
+				eventName,
+				parameters
 			}, true);
 
 		}
@@ -241,7 +241,7 @@ namespace SpilGames.Unity.Implementations
 		/// <summary>
 		/// Call to inform the SDK that the parental gate was (not) passes
 		/// </summary>
-		public override void ClosedParentalGate(bool pass)
+		public override void ClosedParentalGate (bool pass)
 		{
 
 		}
@@ -272,62 +272,66 @@ namespace SpilGames.Unity.Implementations
 			return CallNativeMethod ("getInventory");
 		}
 
-		public override void AddCurrencyToWallet (int currencyId, int amount, string reason, string location)
+		public override void AddCurrencyToWallet (int currencyId, int amount, string reason, string location, string transactionId)
 		{
 			CallNativeMethod ("addCurrencyToWallet", new object[] {
 				currencyId,
 				amount,
 				reason,
-				location
+				location,
+				transactionId
 			}, true);
 		}
 
-		public override void SubtractCurrencyFromWallet (int currencyId, int amount, string reason, string location)
+		public override void SubtractCurrencyFromWallet (int currencyId, int amount, string reason, string location, string transactionId)
 		{
 			CallNativeMethod ("subtractCurrencyFromWallet", new object[] {
 				currencyId,
 				amount,
 				reason,
-				location
+				location,
+				transactionId
 			}, true);
 		}
 
-		public override void AddItemToInventory (int itemId, int amount, string reason, string location)
+		public override void AddItemToInventory (int itemId, int amount, string reason, string location, string transactionId)
 		{
 			CallNativeMethod ("addItemToInventory", new object[] {
 				itemId,
 				amount,
 				reason,
-				location
+				location,
+				transactionId
 			}, true);
 		}
 
-		public override void SubtractItemFromInventory (int itemId, int amount, string reason, string location)
+		public override void SubtractItemFromInventory (int itemId, int amount, string reason, string location, string transactionId)
 		{
 			CallNativeMethod ("subtractItemFromInventory", new object[] {
 				itemId,
 				amount,
 				reason,
-				location
+				location,
+				transactionId
 			}, true);
 		}
 
-		public override void BuyBundle (int bundleId, string reason, string location)
+		public override void BuyBundle (int bundleId, string reason, string location, string transactionId)
 		{
-			CallNativeMethod ("buyBundle", new object[]{ bundleId, reason, location }, true);
+			CallNativeMethod ("buyBundle", new object[]{ bundleId, reason, location, transactionId }, true);
 		}
 
-		public override void ResetPlayerData () 
+		public override void ResetPlayerData ()
 		{
 			CallNativeMethod ("resetPlayerData");
 		}
 
-		public override void ResetInventory () 
+		public override void ResetInventory ()
 		{
 			CallNativeMethod ("resetInventory");
 		}
 
-		public override void ResetWallet () 
+		public override void ResetWallet ()
 		{
 			CallNativeMethod ("resetWallet");
 		}
@@ -338,6 +342,47 @@ namespace SpilGames.Unity.Implementations
 		{
 				
 		}
+
+		#region Image loading
+
+		/// <summary>
+		/// Used to get the image from the cache, based on the url provided.
+		/// </summary>
+		public override string GetImagePath (string url)
+		{
+			return CallNativeMethod ("getImagePath", new object[] { url }, true);
+		}
+
+		/// <summary>
+		/// Used to get the image from the cache, based on the url provided. ImageContext will be imageType = custom when it's not provided as parameter
+		/// </summary>
+		public override void RequestImage (string url, int id, string imageType)
+		{
+			CallNativeMethod ("requestImage", new object[] {
+				url,
+				id,
+				imageType
+			}, true);
+		}
+
+		/// <summary>
+		/// Clears the cache, useful in case when a lot of items have been updated.
+		/// </summary>
+		public override void ClearDiskCache ()
+		{
+			CallNativeMethod ("clearDiskCache");
+		}
+
+		/// <summary>
+		/// This method loops through all the items and bundles and adds urls to images (if any) to a download queue if those images have not yet been download and saved to local storage.
+		/// </summary>
+		public override void PreloadItemAndBundleImages ()
+		{
+			CallNativeMethod ("preloadItemAndBundleImages");
+		}
+
+		#endregion
+
 
 		#endregion
 
@@ -547,11 +592,16 @@ namespace SpilGames.Unity.Implementations
 
 		#region Permissions
 
-		public void RequestDangerousPermission(string permission, string rationale){
-			CallNativeMethod ("requestDangerousPermission", new object[]{ permission, rationale }, true);
+		public void RequestDangerousPermission (string permission, string rationale)
+		{
+			CallNativeMethod ("requestDangerousPermission", new object[] {
+				permission,
+				rationale
+			}, true);
 		}
 
-		public class Permissions {
+		public class Permissions
+		{
 			public static string READ_CALENDAR = "android.permission.READ_CALENDAR";
 			public static string WRITE_CALENDAR = "android.permission.WRITE_CALENDAR";
 			public static string CAMERA = "android.permission.CAMERA";
@@ -572,5 +622,5 @@ namespace SpilGames.Unity.Implementations
 
 		#endregion
 	}
-#endif
+	#endif
 }

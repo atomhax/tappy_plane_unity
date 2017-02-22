@@ -85,9 +85,9 @@ namespace SpilGames.Unity.Helpers
 		/// <summary>
 		/// Helper method that consumes the bundle given a bundleId and a reason
 		/// </summary>
-		public void BuyBundle (int bundleId, string reason, string location)
+		public void BuyBundle (int bundleId, string reason, string location, string transactionId = null)
 		{
-			Spil.Instance.BuyBundle (bundleId, reason, location);
+			Spil.Instance.BuyBundle (bundleId, reason, location, transactionId);
 		}
 
 		private void AddDataToHelper (List<PlayerCurrencyData> walletCurrencies, List<PlayerItemData> inventoryItems)
@@ -156,14 +156,14 @@ namespace SpilGames.Unity.Helpers
 			}			
 		}
 
-		public void Add (int currencyId, int amount, string reason, string location)
+		public void Add (int currencyId, int amount, string reason, string location, string transactionId = null)
 		{
-			Spil.Instance.AddCurrencyToWallet (currencyId, amount, reason, location);
+			Spil.Instance.AddCurrencyToWallet (currencyId, amount, reason, location, transactionId);
 		}
 
-		public void Subtract (int currencyId, int amount, string reason, string location)
+		public void Subtract (int currencyId, int amount, string reason, string location, string transactionId = null)
 		{
-			Spil.Instance.SubtractCurrencyFromWallet (currencyId, amount, reason, location);
+			Spil.Instance.SubtractCurrencyFromWallet (currencyId, amount, reason, location, transactionId);
 		}
 	}
 
@@ -180,7 +180,7 @@ namespace SpilGames.Unity.Helpers
 
 		private int value;
 
-		public PlayerItem (int id, string name, int type, int amount, int value) : base (id, name, type)
+		public PlayerItem (int id, string name, int type, int amount, int value, string imageURL) : base (id, name, type, imageURL)
 		{
 			this.amount = amount;
 			this.value = value;
@@ -203,19 +203,19 @@ namespace SpilGames.Unity.Helpers
 			//Adding currencies of the player
 			if (itemData != null) {
 				foreach (PlayerItemData playerItemData in itemData) {
-					items.Add (new PlayerItem (playerItemData.id, playerItemData.name, playerItemData.type, playerItemData.amount, playerItemData.value));
+					items.Add (new PlayerItem (playerItemData.id, playerItemData.name, playerItemData.type, playerItemData.amount, playerItemData.value, playerItemData.imageURL));
 				}
 			}
 		}
 
-		public void Add (int itemId, int amount, string reason, string location)
+		public void Add (int itemId, int amount, string reason, string location, string transactionId = null)
 		{
-			Spil.Instance.AddItemToInventory (itemId, amount, reason, location);
+			Spil.Instance.AddItemToInventory (itemId, amount, reason, location, transactionId);
 		}
 
-		public void Subtract (int itemId, int amount, string reason, string location)
+		public void Subtract (int itemId, int amount, string reason, string location, string transactionId = null)
 		{
-			Spil.Instance.SubtractItemFromInventory (itemId, amount, reason, location);
+			Spil.Instance.SubtractItemFromInventory (itemId, amount, reason, location, transactionId);
 		}
 	}
 

@@ -159,6 +159,7 @@ namespace SpilGames.Unity.Utils
 		public string name;
 		public int initialValue;
 		public int type;
+		public string imageUrl;
 	}
 
 	public class SpilBundlePriceData
@@ -179,6 +180,7 @@ namespace SpilGames.Unity.Utils
 		public string name;
 		public List<SpilBundlePriceData> prices;
 		public List<SpilBundleItemData> items;
+		public string imageUrl;
 	}
 
 	public class SpilGameData
@@ -239,6 +241,7 @@ namespace SpilGames.Unity.Utils
 		public int amount;
 		public int delta;
 		public int value;
+		public string imageURL;
 	}
 
 	public class InventoryData
@@ -271,8 +274,29 @@ namespace SpilGames.Unity.Utils
 	{
 		public string location;
 		public string reason;
-		public List<PlayerItemData> items = new List<PlayerItemData>();
-		public List<PlayerCurrencyData> currencies = new List<PlayerCurrencyData>();
+		public List<PlayerItemData> items = new List<PlayerItemData> ();
+		public List<PlayerCurrencyData> currencies = new List<PlayerCurrencyData> ();
+	}
+
+	/// <summary>
+	/// ImageContext is used to store general context information about an  image being loaded.
+	/// </summary>
+	public class ImageContext
+	{
+		/// <summary>
+		/// Can be: item, bundle or custom.
+		/// </summary>
+		public string imageType;
+
+		/// <summary>
+		/// Id of the item or bundle.
+		/// </summary>
+		public string id;
+
+		/// <summary>
+		/// Original web url as set in SLOT 
+		/// </summary>
+		public string imageUrl;
 	}
 
 
