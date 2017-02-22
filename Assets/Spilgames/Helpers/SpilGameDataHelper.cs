@@ -32,7 +32,8 @@ namespace SpilGames.Unity.Helpers
 			}
 		}
 
-		public void RefreshData(SpilUnityImplementationBase Instance){
+		public void RefreshData (SpilUnityImplementationBase Instance)
+		{
 			string spilGameDataString = Instance.GetSpilGameDataFromSdk ();
 			if (spilGameDataString != null) {
 				SpilGameData spilGameData = JsonHelper.getObjectFromJson<SpilGameData> (spilGameDataString);
@@ -112,8 +113,8 @@ namespace SpilGames.Unity.Helpers
 			Items.Clear ();
 
 			if (items != null) {
-				foreach (SpilItemData spilCurrencyItems in items) {
-					Items.Add (new Item (spilCurrencyItems.id, spilCurrencyItems.name, spilCurrencyItems.type));
+				foreach (SpilItemData spilItemsData in items) {
+					Items.Add (new Item (spilItemsData.id, spilItemsData.name, spilItemsData.type, spilItemsData.imageUrl));
 				}
 			}
 
@@ -121,7 +122,7 @@ namespace SpilGames.Unity.Helpers
 
 			if (bundles != null) {
 				foreach (SpilBundleData spilBundleData in bundles) {
-					Bundles.Add (new Bundle (spilBundleData.id, spilBundleData.name, spilBundleData.prices, spilBundleData.items));
+					Bundles.Add (new Bundle (spilBundleData.id, spilBundleData.name, spilBundleData.prices, spilBundleData.items, spilBundleData.imageUrl));
 				}
 			}
 
@@ -213,11 +214,37 @@ namespace SpilGames.Unity.Helpers
 
 		public int _Type;
 
-		public Item (int id, string name, int type)
+		private string _imageURL;
+
+		/// <summary>
+		/// Get the local image path of the item. (disk cache)
+		/// </summary>
+		public string GetImagePath ()
+		{
+			string imagePath = Spil.Instance.GetImagePath (_imageURL);
+
+			if(imagePath != null){
+				return imagePath;
+			} else {
+				Spil.Instance.RequestImage(_imageURL, _Id, "item");
+				return null;
+			} 
+		}
+
+		/// <summary>
+		/// Checks if there is an image defined for the item.
+		/// </summary>
+		public bool HasImage ()
+		{
+			return !String.IsNullOrEmpty (_imageURL);
+		}
+
+		public Item (int id, string name, int type, string imageURL)
 		{
 			_Id = id;
 			_Name = name;
 			_Type = type;
+			_imageURL = imageURL;
 		}
 	}
 
@@ -254,10 +281,36 @@ namespace SpilGames.Unity.Helpers
 
 		private List<BundleItem> _Items = new List<BundleItem> ();
 
-		public Bundle (int id, string name, List<SpilBundlePriceData> prices, List<SpilBundleItemData> items)
+		private string _imageURL;
+
+		/// <summary>
+		/// Get the local image path of the item. (disk cache)
+		/// </summary>
+		public string GetImagePath ()
+		{
+			string imagePath = Spil.Instance.GetImagePath (_imageURL);
+
+			if(imagePath != null){
+				return imagePath;
+			} else {
+				Spil.Instance.RequestImage(_imageURL, _Id, "bundle");
+				return null;
+			} 
+		}
+
+		/// <summary>
+		/// Checks if there is an image defined for the item.
+		/// </summary>
+		public bool HasImage ()
+		{
+			return !String.IsNullOrEmpty (_imageURL);
+		}
+
+		public Bundle (int id, string name, List<SpilBundlePriceData> prices, List<SpilBundleItemData> items, string imageURL)
 		{
 			_Id = id;
 			_Name = name;
+			_imageURL = imageURL;
 					
 			//Adding Prices for Bundle
 			if (prices != null) {
@@ -268,7 +321,7 @@ namespace SpilGames.Unity.Helpers
 			
 			//Adding Items to Bundle
 			if (items != null) {
-				foreach (SpilBundleItemData bundleItemData in items) {	
+				foreach (SpilBundleItemData bundleItemData in items) { 	
 					_Items.Add (new BundleItem (bundleItemData.id, bundleItemData.amount));
 				}
 			}

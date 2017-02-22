@@ -123,7 +123,8 @@ namespace SpilGames.Unity
 
 		
 		
-		#elif UNITY_IPHONE || UNITY_TVOS
+		
+#elif UNITY_IPHONE || UNITY_TVOS
 		
 		/// <summary>
 		/// Use this object to access all Spil related functionality.
@@ -176,8 +177,8 @@ namespace SpilGames.Unity
 			#endif
 
 			#if UNITY_IOS
-			if (!string.IsNullOrEmpty(CustomBundleId)) {
-				Instance.SetCustomBundleId(CustomBundleId);
+			if (!string.IsNullOrEmpty (CustomBundleId)) {
+				Instance.SetCustomBundleId (CustomBundleId);
 			}
 			#endif
 
@@ -418,6 +419,30 @@ namespace SpilGames.Unity
 		public void DailyBonusError (string error)
 		{
 			SpilUnityImplementationBase.fireDailyBonusError (error);
+		}
+
+		/// <summary>
+		/// This event will be called when an image has been downloaded.
+		/// </summary>
+		public void ImageLoadSuccess (string response)
+		{
+			SpilUnityImplementationBase.fireImageLoadSuccess (response);
+		}
+
+		/// <summary>
+		/// This event will be called when an image has failed downloadibg.
+		/// </summary>
+		public void ImageLoadFailed (string response)
+		{
+			SpilUnityImplementationBase.fireImageLoadFailed (response);
+		}
+
+		/// <summary>
+		/// This event indicates that the operation for preloading item and bundle images has been completed.
+		/// </summary>
+		public void ImagePreloadingCompleted ()
+		{
+			SpilUnityImplementationBase.fireImagePreloadingCompleted ();
 		}
 	}
 }

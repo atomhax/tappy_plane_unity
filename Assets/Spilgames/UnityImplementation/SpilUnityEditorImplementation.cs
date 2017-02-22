@@ -19,11 +19,12 @@ namespace SpilGames.Unity.Implementations
 		public static PlayerDataResponse pData;
 		public static GameObjectsResponse gData;
 
-		public SpilUnityEditorImplementation(){
-			gData = new GameObjectsResponse();
-			pData = new PlayerDataResponse();
+		public SpilUnityEditorImplementation ()
+		{
+			gData = new GameObjectsResponse ();
+			pData = new PlayerDataResponse ();
 
-			SetPluginInformation(PluginName, PluginVersion);
+			SetPluginInformation (PluginName, PluginVersion);
 		}
 
 
@@ -44,7 +45,7 @@ namespace SpilGames.Unity.Implementations
 		/// <returns></returns>     
 		public override string GetConfigAll ()
 		{
-			return ConfigResponse.getConfigAll();
+			return ConfigResponse.getConfigAll ();
 		}
 
 		/// <summary>
@@ -54,7 +55,7 @@ namespace SpilGames.Unity.Implementations
 		/// <returns></returns>
 		public override string GetConfigValue (string key)
 		{
-			return ConfigResponse.getConfigValue(key);
+			return ConfigResponse.getConfigValue (key);
 		}
 
 		#endregion
@@ -119,7 +120,7 @@ namespace SpilGames.Unity.Implementations
 
 		internal void RequestGameData ()
 		{
-			gData = gData.InitialiseGameObjects();
+			gData = gData.InitialiseGameObjects ();
 
 			Spil.GameData = new SpilGameDataHelper (this);
 
@@ -131,24 +132,24 @@ namespace SpilGames.Unity.Implementations
 
 		internal void RequestPlayerData ()
 		{
-			pData.Wallet = pData.InitWallet();
-			pData.Inventory = pData.InitInventory();
+			pData.Wallet = pData.InitWallet ();
+			pData.Inventory = pData.InitInventory ();
 
-			Spil.PlayerData = new PlayerDataHelper(this);
+			Spil.PlayerData = new PlayerDataHelper (this);
 
-			pData.SetInitalWalletValues();
-			pData.SetInitalInventoryValues();
+			pData.SetInitalWalletValues ();
+			pData.SetInitalInventoryValues ();
 
 			SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent> ();
 			spilEvent.eventName = "requestPlayerData";
 
-			JSONObject j1 = new JSONObject();
-			j1.AddField("offset", pData.Wallet.offset);
-			spilEvent.customData.AddField("wallet", j1);
+			JSONObject j1 = new JSONObject ();
+			j1.AddField ("offset", pData.Wallet.offset);
+			spilEvent.customData.AddField ("wallet", j1);
 
-			JSONObject j2 = new JSONObject();
-			j2.AddField("offset", pData.Inventory.offset);
-			spilEvent.customData.AddField("inventory", j2);
+			JSONObject j2 = new JSONObject ();
+			j2.AddField ("offset", pData.Inventory.offset);
+			spilEvent.customData.AddField ("inventory", j2);
 
 			spilEvent.Send ();
 		}
@@ -198,17 +199,17 @@ namespace SpilGames.Unity.Implementations
 			spilEvent.eventName = eventName;
 
 			if (dict != null) {
-				if(dict.ContainsKey("trackingOnly")){
-					spilEvent.customData.AddField ("trackingOnly", (dict["trackingOnly"].Equals("true")));
-					dict.Remove("trackingOnly");
+				if (dict.ContainsKey ("trackingOnly")) {
+					spilEvent.customData.AddField ("trackingOnly", (dict ["trackingOnly"].Equals ("true")));
+					dict.Remove ("trackingOnly");
 				}
 				foreach (KeyValuePair<string, object> dictValue in dict) {
 
-					if(dictValue.Key.Equals("wallet") || dictValue.Key.Equals("inventory")){
-						JSONObject json = new JSONObject((string)dictValue.Value);
-						spilEvent.customData.AddField(dictValue.Key, json);
-					} else{
-						spilEvent.customData.AddField (dictValue.Key, dictValue.Value.ToString());
+					if (dictValue.Key.Equals ("wallet") || dictValue.Key.Equals ("inventory")) {
+						JSONObject json = new JSONObject ((string)dictValue.Value);
+						spilEvent.customData.AddField (dictValue.Key, json);
+					} else {
+						spilEvent.customData.AddField (dictValue.Key, dictValue.Value.ToString ());
 					}
 
 
@@ -228,7 +229,7 @@ namespace SpilGames.Unity.Implementations
 		/// </summary>
 		public override void PlayVideo ()
 		{
-			AdvertisementResponse.PlayVideo();	
+			AdvertisementResponse.PlayVideo ();	
 		}
 
 		/// <summary>
@@ -239,7 +240,7 @@ namespace SpilGames.Unity.Implementations
 		/// </summary>
 		public override void PlayMoreApps ()
 		{
-			AdvertisementResponse.PlayMoreApps();	
+			AdvertisementResponse.PlayMoreApps ();	
 		}
 
 		/// <summary>
@@ -266,7 +267,7 @@ namespace SpilGames.Unity.Implementations
 		/// <summary>
 		/// Call to inform the SDK that the parental gate was (not) passes
 		/// </summary>
-		public override void ClosedParentalGate(bool pass)
+		public override void ClosedParentalGate (bool pass)
 		{
 
 		}
@@ -278,7 +279,53 @@ namespace SpilGames.Unity.Implementations
 
 		public override string GetSpilGameDataFromSdk ()
 		{
-			return gData.GetGameObjects();
+			return gData.GetGameObjects ();
+		}
+
+		#endregion
+
+		#region Image loading
+
+		/// <summary>
+		/// Used to get the image from the cache, based on the url provided.
+		/// </summary>
+		public override string GetImagePath (string url)
+		{
+			return url;
+		}
+
+		/// <summary>
+		/// Used to get the image from the cache, based on the url provided.ImageContext will be imageType = custom when it's not provided as parameter
+		/// </summary>
+		public override void RequestImage (string url, int id, string imageType)
+		{
+			JSONObject jsonObject = new JSONObject();
+	                jsonObject.AddField("localPath", url);
+
+			JSONObject imageContextJSON = new JSONObject();
+			imageContextJSON.AddField("id", id);
+			imageContextJSON.AddField("imageType", imageType);
+			imageContextJSON.AddField("imageUrl", url);
+
+	                jsonObject.AddField("imageContext", imageContextJSON);
+
+	                SpilUnityImplementationBase.fireImageLoadSuccess(jsonObject.Print());
+		}
+
+		/// <summary>
+		/// Clears the cache, useful in case when a lot of items have been updated.
+		/// </summary>
+		public override void ClearDiskCache ()
+		{
+			
+		}
+
+		/// <summary>
+		/// This method loops through all the items and bundles and adds urls to images (if any) to a download queue if those images have not yet been download and saved to local storage.
+		/// </summary>
+		public override void PreloadItemAndBundleImages ()
+		{
+			SpilUnityImplementationBase.fireImagePreloadingCompleted();
 		}
 
 		#endregion
@@ -292,52 +339,55 @@ namespace SpilGames.Unity.Implementations
 
 		public override string GetWalletFromSdk ()
 		{
-			return JsonHelper.getJSONFromObject(pData.Wallet);
+			return JsonHelper.getJSONFromObject (pData.Wallet);
 		}
 
 		public override string GetInvetoryFromSdk ()
 		{
-			return JsonHelper.getJSONFromObject(pData.Inventory);
+			return JsonHelper.getJSONFromObject (pData.Inventory);
 		}
 
-		public override void AddCurrencyToWallet (int currencyId, int amount, string reason, string location)
+		public override void AddCurrencyToWallet (int currencyId, int amount, string reason, string location, string transactionId)
 		{
-			pData.WalletOperation("add", currencyId, amount, reason, location);
+			pData.WalletOperation ("add", currencyId, amount, reason, location, transactionId);
 		}
 
-		public override void SubtractCurrencyFromWallet (int currencyId, int amount, string reason, string location)
+		public override void SubtractCurrencyFromWallet (int currencyId, int amount, string reason, string location, string transactionId)
 		{
-			pData.WalletOperation("subtract", currencyId, amount, reason, location);
+			pData.WalletOperation ("subtract", currencyId, amount, reason, location, transactionId);
 		}
 
-		public override void AddItemToInventory (int itemId, int amount, string reason, string location)
+		public override void AddItemToInventory (int itemId, int amount, string reason, string location, string transactionId)
 		{
-			pData.InventoryOperation("add", itemId, amount, reason, location);
+			pData.InventoryOperation ("add", itemId, amount, reason, location, transactionId);
 		}
 
-		public override void SubtractItemFromInventory (int itemId, int amount, string reason, string location)
+		public override void SubtractItemFromInventory (int itemId, int amount, string reason, string location, string transactionId)
 		{
-			pData.InventoryOperation("subtract", itemId, amount, reason, location);
+			pData.InventoryOperation ("subtract", itemId, amount, reason, location, transactionId);
 		}
 
-		public override void BuyBundle (int bundleId, string reason, string location)
+		public override void BuyBundle (int bundleId, string reason, string location, string transactionId)
 		{
-			pData.ConsumeBundle(bundleId, reason, location);
+			pData.BuyBundle (bundleId, reason, location, transactionId);
 		}
 
-		public override void ResetPlayerData () 
+		public override void ResetPlayerData ()
 		{
-			// TODO
+			pData.ResetPlayerData();
+			pData.SendUpdatePlayerDataEvent(true, true, PlayerDataUpdateReasons.Reset);
 		}
 
-		public override void ResetInventory () 
+		public override void ResetInventory ()
 		{
-			// TODO
+			pData.ResetInventory();
+			pData.SendUpdatePlayerDataEvent(false, true, PlayerDataUpdateReasons.Reset);
 		}
 
-		public override void ResetWallet () 
+		public override void ResetWallet ()
 		{
-			// TODO
+			pData.ResetWallet();
+			pData.SendUpdatePlayerDataEvent(true, false, PlayerDataUpdateReasons.Reset);
 		}
 
 		#endregion
@@ -459,7 +509,8 @@ namespace SpilGames.Unity.Implementations
 			return Response.externalId;
 		}
 
-		public override void SetCustomBundleId (string bundleId) {
+		public override void SetCustomBundleId (string bundleId)
+		{
 			// TODO
 		}
 
@@ -616,8 +667,9 @@ namespace SpilGames.Unity.Implementations
 
 		#region Permissions
 
-		public void RequestDangerousPermission(string permission, string rationale){
-			Debug.Log("Requested permission: " + permission);
+		public void RequestDangerousPermission (string permission, string rationale)
+		{
+			Debug.Log ("Requested permission: " + permission);
 		}
 
 		#endregion

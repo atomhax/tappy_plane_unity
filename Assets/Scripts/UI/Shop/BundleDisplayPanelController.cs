@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using SpilGames.Unity;
 using SpilGames.Unity.Helpers;
+using SpilGames.Unity.Utils;
 
 public class BundleDisplayPanelController : MonoBehaviour {
 
@@ -15,6 +16,8 @@ public class BundleDisplayPanelController : MonoBehaviour {
 	Bundle bundleDisplayed;
 
 	public GameObject buyButton;
+
+	public Image bundleImage;
 
 	public void SetupBundleDisplayPanel(Bundle bundle){
 		bundleDisplayed = bundle;
@@ -32,7 +35,24 @@ public class BundleDisplayPanelController : MonoBehaviour {
 				}
 			}
 		}
+		   
 		gameObject.SetActive (true);
+
+		Spil.Instance.OnImageLoaded -= OnImageLoaded;
+		Spil.Instance.OnImageLoaded += OnImageLoaded;
+
+		Spil.Instance.OnImageLoadSuccess -= OnImageLoadSuccess;
+		Spil.Instance.OnImageLoadSuccess += OnImageLoadSuccess;
+
+		if(bundle.HasImage()){
+			string imagePath = bundle.GetImagePath();
+
+			if(imagePath != null){
+				Debug.Log("Image already preloaded with path: " + imagePath);
+				Spil.Instance.LoadImage(this, imagePath);
+			} 
+		}
+
 	}
 
 	public void BuyBundle(){
@@ -65,6 +85,17 @@ public class BundleDisplayPanelController : MonoBehaviour {
 	void AddItemsToInventory(){
 		for(int i = 0; i < bundleDisplayed.Items.Count; i ++){
 			Spil.PlayerData.Inventory.Add (bundleDisplayed.Items [i].Id, bundleDisplayed.Items [i].Amount, PlayerDataUpdateReasons.ItemBought, "Shop");
+		}
+	}
+
+	public void OnImageLoaded(Texture2D image, string localPath){
+		bundleImage.sprite = Sprite.Create(image, new Rect(0, 0, image.width, image.height), new Vector2());
+	}
+
+	public void OnImageLoadSuccess(string localPath, ImageContext imageContext){
+		if(localPath != null){
+			Debug.Log("Finished downloading image with local path: " + localPath);
+			Spil.Instance.LoadImage(this, localPath);
 		}
 	}
 }

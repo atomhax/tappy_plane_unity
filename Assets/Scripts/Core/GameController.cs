@@ -127,6 +127,7 @@ public class GameController : MonoBehaviour
 
 		FireTrackEventSample();
 
+//		Spil.Instance.PreloadItemAndBundleImages();
 	}
 
 	void Spil_Instance_OnReward (PushNotificationRewardResponse rewardResponse)
@@ -494,9 +495,9 @@ public class GameController : MonoBehaviour
 		item1.type = 0;
 		items.Add(item1);
 
-//		Spil.Instance.TrackWalletInventoryEvent("Test1", "GameStart", currencies, null);
-//		Spil.Instance.TrackWalletInventoryEvent("Test2", "GameStart", null, items);
-//		Spil.Instance.TrackWalletInventoryEvent("Test3", "GameStart", currencies, items);
+//		Spil.Instance.TrackWalletInventoryEvent("Test1", "GameStart", null, currencies, null);
+//		Spil.Instance.TrackWalletInventoryEvent("Test2", "GameStart", null, null, items);
+//		Spil.Instance.TrackWalletInventoryEvent("Test3", "GameStart", "GPA.1234-5678-9123-45678", currencies, items);
 
 	}
 
