@@ -374,17 +374,20 @@ namespace SpilGames.Unity.Implementations
 
 		public override void ResetPlayerData ()
 		{
-			// TODO
+			pData.ResetPlayerData();
+			pData.SendUpdatePlayerDataEvent(true, true, PlayerDataUpdateReasons.Reset);
 		}
 
 		public override void ResetInventory ()
 		{
-			// TODO
+			pData.ResetInventory();
+			pData.SendUpdatePlayerDataEvent(false, true, PlayerDataUpdateReasons.Reset);
 		}
 
 		public override void ResetWallet ()
 		{
-			// TODO
+			pData.ResetWallet();
+			pData.SendUpdatePlayerDataEvent(true, false, PlayerDataUpdateReasons.Reset);
 		}
 
 		#endregion
