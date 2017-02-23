@@ -241,7 +241,6 @@ namespace SpilGames.Unity.Utils
 		public int amount;
 		public int delta;
 		public int value;
-		public string imageURL;
 	}
 
 	public class InventoryData

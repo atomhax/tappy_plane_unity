@@ -203,7 +203,7 @@ namespace SpilGames.Unity.Helpers
 			//Adding currencies of the player
 			if (itemData != null) {
 				foreach (PlayerItemData playerItemData in itemData) {
-					items.Add (new PlayerItem (playerItemData.id, playerItemData.name, playerItemData.type, playerItemData.amount, playerItemData.value, playerItemData.imageURL));
+					items.Add (new PlayerItem (playerItemData.id, playerItemData.name, playerItemData.type, playerItemData.amount, playerItemData.value, playerItemData.imageUrl));
 				}
 			}
 		}

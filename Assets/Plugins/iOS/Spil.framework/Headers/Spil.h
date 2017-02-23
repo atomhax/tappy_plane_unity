@@ -10,8 +10,9 @@
 #import "HookBridge.h"
 #import "GAI.h"
 
-#define SDK_VERSION @"2.1.8"
+#define SDK_VERSION @"2.1.9"
 
+@class ImageContext;
 @class Spil;
 @class UserProfile;
 @class SpilEventTracker;
@@ -69,6 +70,11 @@
 -(void)gameStateUpdated:(NSString*)access; // Access: private|public
 -(void)otherUsersGameStateLoaded:(NSDictionary*)data forProvider:(NSString*)provider; // Data: <NSString* userId, NSString* data>
 -(void)gameStateError:(NSString*)message;
+
+// Image cache
+-(void)imageLoadSuccess:(NSString*)localPath imageContext:(ImageContext*)imageContext;
+-(void)imageLoadFailed:(ImageContext*)imageContext withError:(NSString*)error;
+-(void)imagePreloadingCompleted;
 
 @end
 
@@ -561,39 +567,44 @@
  * @param currencyId    Id of the currency
  * @param amount        Amount to add
  * @param reason        The add reason
+ * @param transactionId The transaction id used
  */
-+(void)addCurrencyToWallet:(int)currencyId withAmount:(int)amount withReason:(NSString*)reason withLocation:(NSString*)location;
++(void)addCurrencyToWallet:(int)currencyId withAmount:(int)amount withReason:(NSString*)reason withLocation:(NSString*)location withTransactionId:(NSString*)transactionId;
 
 /**
  * Subtract currency from the wallet
  * @param currencyId    Id of the currency
  * @param amount        Amount to subtract
  * @param reason        The subtract reason
+ * @param transactionId The transaction id used
  */
-+(void)subtractCurrencyFromWallet:(int)currencyId withAmount:(int)amount withReason:(NSString*)reason withLocation:(NSString*)location;
++(void)subtractCurrencyFromWallet:(int)currencyId withAmount:(int)amount withReason:(NSString*)reason withLocation:(NSString*)location withTransactionId:(NSString*)transactionId;
 
 /**
  * Add item to the inventory
  * @param itemId        Id of the item
  * @param amount        Amount to add
  * @param reason        The add reason
+ * @param transactionId The transaction id used
  */
-+(void)addItemToInventory:(int)itemId withAmount:(int)amount withReason:(NSString*)reason withLocation:(NSString*)location;
++(void)addItemToInventory:(int)itemId withAmount:(int)amount withReason:(NSString*)reason withLocation:(NSString*)location withTransactionId:(NSString*)transactionId;
 
 /**
  * Subtract item to from the inventory
  * @param itemId        Id of the item
  * @param amount        Amount to subtract
  * @param reason        The subtract reason
+ * @param transactionId The transaction id used
  */
-+(void)subtractItemFromInventory:(int)itemId withAmount:(int)amount withReason:(NSString*)reason withLocation:(NSString*)location;
++(void)subtractItemFromInventory:(int)itemId withAmount:(int)amount withReason:(NSString*)reason withLocation:(NSString*)location withTransactionId:(NSString*)transactionId;
 
 /**
  * Uses the bundle and will add the items to the inventory and subtract the currency from the wallet
  * @param bundleId      Id of the bundle
  * @param reason        The bundle reason
+ * @param transactionId The transaction id used
  */
-+(void)buyBundleNative:(int)bundleId withReason:(NSString*)reason withLocation:(NSString*)location;
++(void)buyBundle:(int)bundleId withReason:(NSString*)reason withLocation:(NSString*)location withTransactionId:(NSString*)transactionId;
 
 /**
  * Resets all the player data
@@ -693,6 +704,36 @@
  */
 +(void)getOtherUsersGameState:(NSString*)provider userIds:(NSArray*)userIds;
 
+#pragma image cache
+
+/**
+ *  Converts a web url to local file path
+ *
+ *  @param url The image url
+ *
+ *  Return the local image path, returns nil if their is no local file path for the url
+ */
++(NSString*)getImagePathForUrl:(NSString*)url;
+
+/**
+ *  Requests an image based on the url provided
+ *
+ *  @param url The URL to load
+ *  @param idx The id this image belongs to (optional)
+ *  @param imageType The image type of this image (optional)
+ */
++(void)requestImage:(NSString*)url withId:(int)idx withImageType:(NSString*)imageType;
+
+/**
+ *  Removes all images from the disk cache
+ */
++(void)clearDiskCache;
+
+/**
+ *  Automatically preloads all images for all items and bundles
+ */
++(void)preloadItemAndBundleImages;
+
 #pragma test methods (dev)
 
 /**
@@ -706,5 +747,6 @@
 +(void)devShowRewardVideo:(NSString*)adProvider;
 +(void)devShowInterstitial:(NSString*)adProvider;
 +(void)devShowMoreApps:(NSString*)adProvider;
++(NSString*)getRawAdProvidersData;
 
 @end

@@ -168,7 +168,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 
 		#endif
 
-		RewardPlayer (transactionID);
+		RewardPlayer (args.purchasedProduct.transactionID);
 
 		iapPanelController.PurchaseSuccess (args.purchasedProduct.metadata.localizedTitle);
 		return PurchaseProcessingResult.Complete;

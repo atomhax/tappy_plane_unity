@@ -429,7 +429,7 @@ namespace SpilGames.Unity.Implementations
         /// </summary>
         public override void ClearDiskCache()
         {
-            clearDiskCacheNative()
+			clearDiskCacheNative ();
         }
 
     	[DllImport("__Internal")]

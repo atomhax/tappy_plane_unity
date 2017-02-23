@@ -148,15 +148,15 @@ extern "C" {
     
     char* getInventoryNative();
     
-    void addCurrencyToWalletNative(int currencyId, int amount, char* reasonName, char* location);
+    void addCurrencyToWalletNative(int currencyId, int amount, char* reasonName, char* location, char* transactionId);
     
-    void subtractCurrencyFromWalletNative(int currencyId, int amount, char* reasonName, char* location);
+    void subtractCurrencyFromWalletNative(int currencyId, int amount, char* reasonName, char* location, char* transactionId);
     
-    void addItemToInventoryNative(int itemId, int amount, char* reasonName, char* location);
+    void addItemToInventoryNative(int itemId, int amount, char* reasonName, char* location, char* transactionId);
     
-    void subtractItemFromInventoryNative(int itemId, int amount, char* reasonName, char* location);
+    void subtractItemFromInventoryNative(int itemId, int amount, char* reasonName, char* location, char* transactionId);
     
-    void buyBundleNative(int itemId, char* reasonName, char* location);
+    void buyBundleNative(int itemId, char* reasonName, char* location, char* transactionId);
     
     void resetPlayerDataNative();
     
@@ -195,6 +195,16 @@ extern "C" {
     char* getPublicGameStateNative();
 
     void getOtherUsersGameStateNative(const char* provider, const char* userIdsJsonArray);
+    
+    // --- Image cache ---
+    
+    char* getImagePathNative(char* url);
+        
+    void requestImageNative(char* url, int idx, char* imageType);
+    
+    void clearDiskCacheNative();
+    
+    void preloadItemAndBundleImagesNative();
 }
 
 #endif
