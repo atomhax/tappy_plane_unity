@@ -407,7 +407,11 @@ namespace SpilGames.Unity.Implementations
         /// </summary>
         public override string GetImagePath(string url)
         {
-            return getImagePathNative(url);
+			if (!string.IsNullOrEmpty (getImagePathNative (url))) {
+				return "file://" + getImagePathNative (url);
+			} else {
+				return null;
+			}
         }
 
     	[DllImport("__Internal")]
