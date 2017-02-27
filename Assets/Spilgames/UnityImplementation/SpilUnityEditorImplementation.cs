@@ -200,7 +200,7 @@ namespace SpilGames.Unity.Implementations
 
 			if (dict != null) {
 				if (dict.ContainsKey ("trackingOnly")) {
-					spilEvent.customData.AddField ("trackingOnly", (dict ["trackingOnly"].Equals ("true")));
+					spilEvent.customData.AddField ("trackingOnly", true);
 					dict.Remove ("trackingOnly");
 				}
 				foreach (KeyValuePair<string, object> dictValue in dict) {
