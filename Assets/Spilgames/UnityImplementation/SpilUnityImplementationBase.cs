@@ -388,9 +388,11 @@ namespace SpilGames.Unity.Implementations
 		/// </summary>
 		/// <param name="reason">The reason for which the event occured. You can also use the PlayerDataUpdateReasons class to pass one of the default reasons</param>
 		/// <param name="location">The location where the event occured (ex.: Shop Screen, End of the level)</param>
+		/// <param name="reasonDetails">Additional parameter used to describe the details of why the event happened</param>
+		/// <param name="transactionId">The transactionId if the update was due to an IAP</param>
 		/// <param name="currencyList">A list of TrackingCurrency objects that defines all the currencies that have been changed with this event. This parameter can also be omited if no currencies have been updated</param>
 		/// <param name="itemsList">A list of TrackingItems objects that defines all the items that have been changed with this event. This parameter can also be omited if no items have been updated</param>
-		public void TrackWalletInventoryEvent (string reason, string location, string transactionId = null, List<TrackingCurrency> currencyList = null, List<TrackingItem> itemsList = null)
+		public void TrackWalletInventoryEvent (string reason, string location, List<TrackingCurrency> currencyList = null, List<TrackingItem> itemsList = null,  string reasonDetails = null, string transactionId = null)
 		{
 			Dictionary<string, object> dictionary = new Dictionary<string, object> ();
 			if (currencyList != null) {
@@ -408,6 +410,10 @@ namespace SpilGames.Unity.Implementations
 			dictionary.Add ("reason", reason);
 			dictionary.Add ("location", location);
 			dictionary.Add ("trackingOnly", true);
+
+			if(reasonDetails != null){
+				dictionary.Add("reasonDetails", reasonDetails);
+			}
 
 			if(transactionId != null){
 				dictionary.Add ("transactionId", transactionId);
@@ -1335,7 +1341,7 @@ namespace SpilGames.Unity.Implementations
 		public abstract string GetWalletFromSdk ();
 
 		public abstract string GetInvetoryFromSdk ();
-		
+
 		//		public PlayerDataHelper GetPlayerData()
 		//		{
 		//			PlayerDataHelper helper = null;
@@ -1352,15 +1358,15 @@ namespace SpilGames.Unity.Implementations
 		//			return helper;
 		//		}
 		
-		public abstract void AddCurrencyToWallet (int currencyId, int amount, string reason, string location, string transcationId = null);
+		public abstract void AddCurrencyToWallet (int currencyId, int amount, string reason, string location, string reasonDetails = null, string transcationId = null);
 
-		public abstract void SubtractCurrencyFromWallet (int currencyId, int amount, string reason, string location, string transcationId = null);
+		public abstract void SubtractCurrencyFromWallet (int currencyId, int amount, string reason, string location, string reasonDetails = null, string transcationId = null);
 
-		public abstract void AddItemToInventory (int itemId, int amount, string reason, string location, string transcationId = null);
+		public abstract void AddItemToInventory (int itemId, int amount, string reason, string location, string reasonDetails = null, string transcationId = null);
 
-		public abstract void SubtractItemFromInventory (int itemId, int amount, string reason, string location, string transcationId = null);
+		public abstract void SubtractItemFromInventory (int itemId, int amount, string reason, string location, string reasonDetails = null, string transcationId = null);
 
-		public abstract void BuyBundle (int bundleId, string reason, string location, string transcationId = null);
+		public abstract void BuyBundle (int bundleId, string reason, string location, string reasonDetails = null, string transcationId = null);
 
 		public abstract void ResetPlayerData ();
 

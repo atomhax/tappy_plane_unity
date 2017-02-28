@@ -481,45 +481,45 @@ namespace SpilGames.Unity.Implementations
 		[DllImport("__Internal")]
 		private static extern string getInventoryNative();
 
-		public override void AddCurrencyToWallet (int currencyId, int amount, string reason, string location, string transactionId)
+		public override void AddCurrencyToWallet (int currencyId, int amount, string reason, string location, string reasonDetails, string transactionId)
 		{
-			addCurrencyToWalletNative(currencyId, amount, reason, location, transactionId);
+			addCurrencyToWalletNative(currencyId, amount, reason, location, reasonDetails, transactionId);
 		}
 
 		[DllImport("__Internal")]
-		private static extern void addCurrencyToWalletNative(int currencyId, int amount, string reason, string location, string transactionId);
+		private static extern void addCurrencyToWalletNative(int currencyId, int amount, string reason, string location, string reasonDetails, string transactionId);
 
-		public override void SubtractCurrencyFromWallet (int currencyId, int amount, string reason, string location, string transactionId)
+		public override void SubtractCurrencyFromWallet (int currencyId, int amount, string reason, string location, string reasonDetails, string transactionId)
 		{
-			subtractCurrencyFromWalletNative(currencyId, amount, reason, location, transactionId);
+			subtractCurrencyFromWalletNative(currencyId, amount, reason, location, reasonDetails, transactionId);
 		}
 
 		[DllImport("__Internal")]
-		private static extern void subtractCurrencyFromWalletNative(int currencyId, int amount, string reason, string location, string transactionId);
+		private static extern void subtractCurrencyFromWalletNative(int currencyId, int amount, string reason, string location, string reasonDetails, string transactionId);
 
-		public override void AddItemToInventory (int itemId, int amount, string reason, string location, string transactionId)
+		public override void AddItemToInventory (int itemId, int amount, string reason, string location, string reasonDetails, string transactionId)
 		{
-			addItemToInventoryNative(itemId, amount, reason, location, transactionId);
+			addItemToInventoryNative(itemId, amount, reason, location, reasonDetails, transactionId);
 		}
 
 		[DllImport("__Internal")]
-		private static extern void addItemToInventoryNative (int itemId, int amount, string reason, string location, string transactionId);
+		private static extern void addItemToInventoryNative (int itemId, int amount, string reason, string location, string reasonDetails, string transactionId);
 
-		public override void SubtractItemFromInventory (int itemId, int amount, string reason, string location, string transactionId)
+		public override void SubtractItemFromInventory (int itemId, int amount, string reason, string location, string reasonDetails, string transactionId)
 		{
-			subtractItemFromInventoryNative(itemId, amount, reason, location, transactionId);
+			subtractItemFromInventoryNative(itemId, amount, reason, location, reasonDetails, transactionId);
 		}
 
 		[DllImport("__Internal")]
-		private static extern void subtractItemFromInventoryNative (int itemId, int amount, string reason, string location, string transactionId);
+		private static extern void subtractItemFromInventoryNative (int itemId, int amount, string reason, string location, string reasonDetails, string transactionId);
 
-		public override void BuyBundle (int bundleId, string reason, string location, string transactionId)
+		public override void BuyBundle (int bundleId, string reason, string location, string reasonDetails, string transactionId)
 		{
-			buyBundleNative(bundleId, reason, location, transactionId);
+			buyBundleNative(bundleId, reason, location, reasonDetails, transactionId);
 		}
 
 		[DllImport("__Internal")]
-		private static extern void buyBundleNative (int bundleId, string reason, string location, string transactionId);
+		private static extern void buyBundleNative (int bundleId, string reason, string location, string reasonDetails, string transactionId);
 
 		public override void ResetPlayerData () 
 		{

@@ -111,7 +111,7 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 
 				for(int i = 0; i < SpilUnityEditorImplementation.gData.currencies.Count; i++){
 					if(SpilUnityEditorImplementation.gData.currencies[i].initialValue > 0){
-						WalletOperation("add", SpilUnityEditorImplementation.gData.currencies[i].id, SpilUnityEditorImplementation.gData.currencies[i].initialValue, PlayerDataUpdateReasons.InitialValue, "", null);
+						WalletOperation("add", SpilUnityEditorImplementation.gData.currencies[i].id, SpilUnityEditorImplementation.gData.currencies[i].initialValue, PlayerDataUpdateReasons.InitialValue, null, "sdk", null);
 					}
 				}
 
@@ -160,7 +160,7 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 
 				for(int i = 0; i < SpilUnityEditorImplementation.gData.items.Count; i++){
 					if(SpilUnityEditorImplementation.gData.items[i].initialValue > 0){
-						InventoryOperation("add", SpilUnityEditorImplementation.gData.items[i].id, SpilUnityEditorImplementation.gData.items[i].initialValue, PlayerDataUpdateReasons.InitialValue, "", null);
+						InventoryOperation("add", SpilUnityEditorImplementation.gData.items[i].id, SpilUnityEditorImplementation.gData.items[i].initialValue, PlayerDataUpdateReasons.InitialValue, null, "sdk", null);
 					}
 				}
 
@@ -293,7 +293,7 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 			}
 		}
 
-		public void WalletOperation (string action, int currencyId, int amount, string reason, string location, string transactionId = null)
+		public void WalletOperation (string action, int currencyId, int amount, string reason, string reasonDetails, string location, string transactionId)
 		{
 
 			if(currencyId <= 0 || reason == null){
@@ -347,7 +347,7 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 
 				SpilUnityImplementationBase.firePlayerDataUpdated (JsonHelper.getJSONFromObject (updatedData));
 
-				SendUpdatePlayerDataEvent (reason, location, transactionId);
+				SendUpdatePlayerDataEvent (reason, reasonDetails, location, transactionId);
 
 			} else if (Wallet.logic.Equals ("SERVER")) {
 
@@ -375,7 +375,7 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 			}
 		}
 
-		public void InventoryOperation (string action, int itemId, int amount, string reason, string location, string transactionId = null)
+		public void InventoryOperation (string action, int itemId, int amount, string reason, string reasonDetails, string location, string transactionId)
 		{
 			SpilItemData gameItem = GetItemFromObjects(itemId);
 
@@ -425,7 +425,7 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 
 			SpilUnityImplementationBase.firePlayerDataUpdated (JsonHelper.getJSONFromObject (updatedData));
 
-			SendUpdatePlayerDataEvent(item, reason, location, transactionId);
+			SendUpdatePlayerDataEvent(item, reason, reasonDetails, location, transactionId);
 
 
 		}
@@ -459,7 +459,7 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 			}
 		}
 
-		public void BuyBundle (int bundleId, string reason, string location, string transactionId)
+		public void BuyBundle (int bundleId, string reason, string reasonDetails, string location, string transactionId)
 		{
 			PlayerDataUpdatedData updatedData = new PlayerDataUpdatedData();
 
@@ -566,7 +566,7 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 
 			SpilUnityImplementationBase.firePlayerDataUpdated (JsonHelper.getJSONFromObject (updatedData));
 
-			SendUpdatePlayerDataEvent(bundle, reason, location, transactionId);
+			SendUpdatePlayerDataEvent(bundle, reason, reasonDetails, location, transactionId);
 		}
 
 		private SpilBundleData GetBundleFromObjects(int bundleId){
@@ -598,7 +598,7 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 			return false;
 		}
 
-		private void SendUpdatePlayerDataEvent (string reason, string location, string transationId){
+		private void SendUpdatePlayerDataEvent (string reason, string reasonDetails, string location, string transationId){
 			SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent> ();
 			spilEvent.eventName = "updatePlayerData";
 
@@ -639,7 +639,7 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 			spilEvent.Send ();
 		}
 
-		private void SendUpdatePlayerDataEvent (PlayerItemData item, string reason, string location, string transationId)
+		private void SendUpdatePlayerDataEvent (PlayerItemData item, string reason, string reasonDetails, string location, string transationId)
 		{
 			SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent> ();
 			spilEvent.eventName = "updatePlayerData";
@@ -662,6 +662,10 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 
 			spilEvent.customData.AddField("reason", reason);
 
+			if(reasonDetails != null){
+				spilEvent.customData.AddField("reasonDetails", reasonDetails);
+			}
+
 			if(location != null){
 				spilEvent.customData.AddField ("location", location);
 			}
@@ -673,7 +677,7 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 			spilEvent.Send();
 		}
 
-		private void SendUpdatePlayerDataEvent (SpilBundleData bundle, string reason, string location, string transationId)
+		private void SendUpdatePlayerDataEvent (SpilBundleData bundle, string reason, string reasonDetails, string location, string transationId)
 		{
 			SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent> ();
 			spilEvent.eventName = "updatePlayerData";
@@ -699,6 +703,10 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 			spilEvent.customData.AddField("bundle", new JSONObject(JsonHelper.getJSONFromObject(bundle)));
 
 			spilEvent.customData.AddField("reason", reason);
+
+			if(reasonDetails != null){
+				spilEvent.customData.AddField("reasonDetails", reasonDetails);
+			}
 
 			if(location != null){
 				spilEvent.customData.AddField ("location", location);

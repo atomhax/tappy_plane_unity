@@ -347,29 +347,29 @@ namespace SpilGames.Unity.Implementations
 			return JsonHelper.getJSONFromObject (pData.Inventory);
 		}
 
-		public override void AddCurrencyToWallet (int currencyId, int amount, string reason, string location, string transactionId)
+		public override void AddCurrencyToWallet (int currencyId, int amount, string reason, string location, string reasonDetails, string transactionId)
 		{
-			pData.WalletOperation ("add", currencyId, amount, reason, location, transactionId);
+			pData.WalletOperation ("add", currencyId, amount, reason, reasonDetails, location, transactionId);
 		}
 
-		public override void SubtractCurrencyFromWallet (int currencyId, int amount, string reason, string location, string transactionId)
+		public override void SubtractCurrencyFromWallet (int currencyId, int amount, string reason, string location, string reasonDetails, string transactionId)
 		{
-			pData.WalletOperation ("subtract", currencyId, amount, reason, location, transactionId);
+			pData.WalletOperation ("subtract", currencyId, amount, reason, reasonDetails, location, transactionId);
 		}
 
-		public override void AddItemToInventory (int itemId, int amount, string reason, string location, string transactionId)
+		public override void AddItemToInventory (int itemId, int amount, string reason, string location, string reasonDetails, string transactionId)
 		{
-			pData.InventoryOperation ("add", itemId, amount, reason, location, transactionId);
+			pData.InventoryOperation ("add", itemId, amount, reason, reasonDetails, location, transactionId);
 		}
 
-		public override void SubtractItemFromInventory (int itemId, int amount, string reason, string location, string transactionId)
+		public override void SubtractItemFromInventory (int itemId, int amount, string reason, string location, string reasonDetails, string transactionId)
 		{
-			pData.InventoryOperation ("subtract", itemId, amount, reason, location, transactionId);
+			pData.InventoryOperation ("subtract", itemId, amount, reason, reasonDetails, location, transactionId);
 		}
 
-		public override void BuyBundle (int bundleId, string reason, string location, string transactionId)
+		public override void BuyBundle (int bundleId, string reason, string location, string reasonDetails, string transactionId)
 		{
-			pData.BuyBundle (bundleId, reason, location, transactionId);
+			pData.BuyBundle (bundleId, reason, reasonDetails, location, transactionId);
 		}
 
 		public override void ResetPlayerData ()
