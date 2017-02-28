@@ -1,14 +1,15 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Spilgames/UnityImplementation/SpilUnityEditorImplementation.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Spilgames/UnityImplementation/SpiliOSUnityImplementation.cs">
     <Files>
-      <File FileName="Assets/Spilgames/UnityImplementation/SpilUnityEditorImplementation.cs" Line="203" Column="6" />
-      <File FileName="Assets/Spilgames/Utils/UnityEditor/Responses/PlayerDataResponse.cs" Line="1" Column="1" />
-      <File FileName="Assets/Spilgames/UnityImplementation/SpilUnityImplementationBase.cs" Line="409" Column="42" />
-      <File FileName="Assets/Spilgames/UnityImplementation/SpiliOSUnityImplementation.cs" Line="1" Column="1" />
-      <File FileName="Assets/Spilgames/UnityImplementation/SpilAndroidUnityImplementation.cs" Line="1" Column="1" />
-      <File FileName="Assets/Spilgames/Spil.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Core/GameController.cs" Line="494" Column="19" />
+      <File FileName="Assets/Spilgames/UnityImplementation/SpilUnityImplementationBase.cs" Line="395" Column="73" />
+      <File FileName="Assets/Spilgames/UnityImplementation/SpilAndroidUnityImplementation.cs" Line="270" Column="47" />
+      <File FileName="Assets/Spilgames/UnityImplementation/SpilUnityEditorImplementation.cs" Line="356" Column="4" />
+      <File FileName="Assets/Spilgames/Utils/UnityEditor/Responses/PlayerDataResponse.cs" Line="562" Column="5" />
+      <File FileName="Assets/Spilgames/Helpers/PlayerDataHelper.cs" Line="209" Column="4" />
+      <File FileName="Assets/Scripts/Core/GameController.cs" Line="498" Column="3" />
+      <File FileName="Assets/Spilgames/Utils/UnityEditor/Responses/OverlayResponse.cs" Line="110" Column="8" />
+      <File FileName="Assets/Spilgames/UnityImplementation/SpiliOSUnityImplementation.cs" Line="518" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

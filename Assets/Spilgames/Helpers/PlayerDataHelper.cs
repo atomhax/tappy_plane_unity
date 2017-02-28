@@ -85,9 +85,9 @@ namespace SpilGames.Unity.Helpers
 		/// <summary>
 		/// Helper method that consumes the bundle given a bundleId and a reason
 		/// </summary>
-		public void BuyBundle (int bundleId, string reason, string location, string transactionId = null)
+		public void BuyBundle (int bundleId, string reason, string location, string reasonDetails = null, string transactionId = null)
 		{
-			Spil.Instance.BuyBundle (bundleId, reason, location, transactionId);
+			Spil.Instance.BuyBundle (bundleId, reason, location, reasonDetails, transactionId);
 		}
 
 		private void AddDataToHelper (List<PlayerCurrencyData> walletCurrencies, List<PlayerItemData> inventoryItems)
@@ -156,14 +156,14 @@ namespace SpilGames.Unity.Helpers
 			}			
 		}
 
-		public void Add (int currencyId, int amount, string reason, string location, string transactionId = null)
+		public void Add (int currencyId, int amount, string reason, string location, string reasonDetails = null, string transactionId = null)
 		{
-			Spil.Instance.AddCurrencyToWallet (currencyId, amount, reason, location, transactionId);
+			Spil.Instance.AddCurrencyToWallet (currencyId, amount, reason, location, reasonDetails, transactionId);
 		}
 
-		public void Subtract (int currencyId, int amount, string reason, string location, string transactionId = null)
+		public void Subtract (int currencyId, int amount, string reason, string location, string reasonDetails = null, string transactionId = null)
 		{
-			Spil.Instance.SubtractCurrencyFromWallet (currencyId, amount, reason, location, transactionId);
+			Spil.Instance.SubtractCurrencyFromWallet (currencyId, amount, reason, location, reasonDetails, transactionId);
 		}
 	}
 
@@ -208,14 +208,14 @@ namespace SpilGames.Unity.Helpers
 			}
 		}
 
-		public void Add (int itemId, int amount, string reason, string location, string transactionId = null)
+		public void Add (int itemId, int amount, string reason, string location, string reasonDetails = null, string transactionId = null)
 		{
-			Spil.Instance.AddItemToInventory (itemId, amount, reason, location, transactionId);
+			Spil.Instance.AddItemToInventory (itemId, amount, reason, location, reasonDetails, transactionId);
 		}
 
-		public void Subtract (int itemId, int amount, string reason, string location, string transactionId = null)
+		public void Subtract (int itemId, int amount, string reason, string location, string reasonDetails = null, string transactionId = null)
 		{
-			Spil.Instance.SubtractItemFromInventory (itemId, amount, reason, location, transactionId);
+			Spil.Instance.SubtractItemFromInventory (itemId, amount, reason, location, reasonDetails, transactionId);
 		}
 	}
 
