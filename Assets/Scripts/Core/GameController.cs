@@ -54,6 +54,7 @@ public class GameController : MonoBehaviour
 	// Facebook
 	public static List<string> userIds = new List<string> ();
 	public static List<string> userNames = new List<string> ();
+	public bool fbLoggedIn = false;
 
 	private Vector3 initialPosition;
  	private Quaternion initialRotation;
@@ -128,6 +129,8 @@ public class GameController : MonoBehaviour
 		FireTrackEventSample();
 
 //		Spil.Instance.PreloadItemAndBundleImages();
+
+		Invoke ("RequestDailyBonus", 1);
 	}
 
 	void Spil_Instance_OnReward (PushNotificationRewardResponse rewardResponse)
@@ -260,6 +263,14 @@ public class GameController : MonoBehaviour
 		EventSystem eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
 		eventSystem.firstSelectedGameObject = GameObject.Find("GoBackToStartButton");
 		#endif
+
+		if (highScorePanel.activeInHierarchy) {
+			if (fbLoggedIn == false) {
+				FacebookLogin ();
+			} else {
+				highScorePanel.GetComponent<HighScoresPanelController>().RequestHighScores ();
+			}
+		}
 	}
 
 	public void UpdateUI (GameStates gameState)
@@ -394,6 +405,10 @@ public class GameController : MonoBehaviour
 	private void OnFBInitComplete ()
 	{
 		Debug.Log ("Facebook Inistialised");
+	}
+
+	private void FacebookLogin() 
+	{
 		Debug.Log ("Requesting Log In information");
 		#if !UNITY_TVOS
 		FB.LogInWithReadPermissions (new List<string> () { "public_profile", "email", "user_friends" }, this.HandleResult);
@@ -403,6 +418,7 @@ public class GameController : MonoBehaviour
 	#if !UNITY_TVOS
 	protected void HandleResult (IResult result)
 	{
+		fbLoggedIn = true;
 		if (result.ResultDictionary != null) {
 			foreach (string key in result.ResultDictionary.Keys) {
 				Debug.Log(key + " : " + result.ResultDictionary [key].ToString());
@@ -435,7 +451,10 @@ public class GameController : MonoBehaviour
 			}
 		}
 
-		RequestDailyBonus();
+		if (highScorePanel.activeInHierarchy) {
+			highScorePanel.GetComponent<HighScoresPanelController> ().RequestHighScores ();
+			Spil.Instance.RequestSplashScreen();
+		}
 	}
 	#endif
 

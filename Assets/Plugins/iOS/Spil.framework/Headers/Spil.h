@@ -169,6 +169,25 @@
  */
 +(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo;
 
+/**
+ *  Forwarding Delegate method to let the Spil framework handle deeplinks
+ *
+ *  @param Application          Reference to the UIApplication object
+ *  @param openURL              The deeplink url
+ *  @param sourceApplication    The app name which triggered the deeplink
+ *  @param annotation           The anotation of the deeplink
+ */
++(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation;
+
+/**
+ *  Forwarding Delegate method to let the Spil framework handle deeplinks
+ *
+ *  @param Application          Reference to the UIApplication object
+ *  @param continueUserActivity The user activity object
+ *  @param restorationHandler   The restoration handler
+ */
++(BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *))restorationHandler;
+
 #pragma mark Event tracking
 
 /**
@@ -295,7 +314,7 @@
  * @param itemsList     A list containing the item objects that have been changed with the event.
  *                      {@link com.spilgames.spilsdk.models.tracking.TrackingItem}
  */
-+(void)trackWalletInventoryEvent:(NSString*)reason location:(NSString*)location currencyList:(NSString*)currencyList itemList:(NSString*)itemsList;
++(void)trackWalletInventoryEvent:(NSString*)reason withReasonDetails:(NSString*)reasonDetails location:(NSString*)location currencyList:(NSString*)currencyList itemList:(NSString*)itemsList;
 
 /**
  * Track a successful iap
@@ -569,7 +588,7 @@
  * @param reason        The add reason
  * @param transactionId The transaction id used
  */
-+(void)addCurrencyToWallet:(int)currencyId withAmount:(int)amount withReason:(NSString*)reason withLocation:(NSString*)location withTransactionId:(NSString*)transactionId;
++(void)addCurrencyToWallet:(int)currencyId withAmount:(int)amount withReason:(NSString*)reason withReasonDetails:(NSString*)reasonDetails withLocation:(NSString*)location withTransactionId:(NSString*)transactionId;
 
 /**
  * Subtract currency from the wallet
@@ -578,7 +597,7 @@
  * @param reason        The subtract reason
  * @param transactionId The transaction id used
  */
-+(void)subtractCurrencyFromWallet:(int)currencyId withAmount:(int)amount withReason:(NSString*)reason withLocation:(NSString*)location withTransactionId:(NSString*)transactionId;
++(void)subtractCurrencyFromWallet:(int)currencyId withAmount:(int)amount withReason:(NSString*)reason withReasonDetails:(NSString*)reasonDetails withLocation:(NSString*)location withTransactionId:(NSString*)transactionId;
 
 /**
  * Add item to the inventory
@@ -587,7 +606,7 @@
  * @param reason        The add reason
  * @param transactionId The transaction id used
  */
-+(void)addItemToInventory:(int)itemId withAmount:(int)amount withReason:(NSString*)reason withLocation:(NSString*)location withTransactionId:(NSString*)transactionId;
++(void)addItemToInventory:(int)itemId withAmount:(int)amount withReason:(NSString*)reason withReasonDetails:(NSString*)reasonDetails withLocation:(NSString*)location withTransactionId:(NSString*)transactionId;
 
 /**
  * Subtract item to from the inventory
@@ -596,7 +615,7 @@
  * @param reason        The subtract reason
  * @param transactionId The transaction id used
  */
-+(void)subtractItemFromInventory:(int)itemId withAmount:(int)amount withReason:(NSString*)reason withLocation:(NSString*)location withTransactionId:(NSString*)transactionId;
++(void)subtractItemFromInventory:(int)itemId withAmount:(int)amount withReason:(NSString*)reason withReasonDetails:(NSString*)reasonDetails withLocation:(NSString*)location withTransactionId:(NSString*)transactionId;
 
 /**
  * Uses the bundle and will add the items to the inventory and subtract the currency from the wallet
@@ -604,7 +623,7 @@
  * @param reason        The bundle reason
  * @param transactionId The transaction id used
  */
-+(void)buyBundle:(int)bundleId withReason:(NSString*)reason withLocation:(NSString*)location withTransactionId:(NSString*)transactionId;
++(void)buyBundle:(int)bundleId withReason:(NSString*)reason withReasonDetails:(NSString*)reasonDetails withLocation:(NSString*)location withTransactionId:(NSString*)transactionId;
 
 /**
  * Resets all the player data
