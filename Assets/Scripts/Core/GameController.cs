@@ -521,9 +521,16 @@ public class GameController : MonoBehaviour
 	}
 
 	void RewardHandler(PushNotificationRewardResponse rewardResponse)
-    	{
-        	Debug.Log("Push notification reward received. CurrencyName: " + rewardResponse.data.eventData.currencyName + " CurrencyId: " + rewardResponse.data.eventData.currencyId + " Reward: " + rewardResponse.data.eventData.reward);
-    	}
+	{
+    	Debug.Log("Push notification reward received. CurrencyName: " + rewardResponse.data.eventData.currencyName + " CurrencyId: " + rewardResponse.data.eventData.currencyId + " Reward: " + rewardResponse.data.eventData.reward);
+
+		// Show the reward
+		PlayerCurrencyData currency = new PlayerCurrencyData ();
+		currency.id = rewardResponse.data.eventData.currencyId;
+		currency.name = rewardResponse.data.eventData.currencyName;
+		currency.delta = rewardResponse.data.eventData.reward;
+		OpenShop (currency);
+	}
 
 
 	public void FBShare ()

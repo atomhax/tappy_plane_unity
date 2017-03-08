@@ -1,9 +1,11 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UI/HighScoresPanel/HighScoresPanelController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Spilgames/Spil.cs">
     <Files>
-      <File FileName="Assets/Scripts/Core/GameController.cs" Line="451" Column="3" />
-      <File FileName="Assets/Scripts/UI/HighScoresPanel/HighScoresPanelController.cs" Line="27" Column="34" />
+      <File FileName="Assets/Scripts/Core/GameController.cs" Line="518" Column="15" />
+      <File FileName="Assets/Scripts/UI/Shop/ShopPanelController.cs" Line="127" Column="43" />
+      <File FileName="Assets/Spilgames/Utils/SpilResponses.cs" Line="148" Column="31" />
+      <File FileName="Assets/Spilgames/Spil.cs" Line="395" Column="29" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
