@@ -121,28 +121,9 @@ namespace SpilGames.Unity
 		
 			public static SpilAndroidUnityImplementation Instance = new SpilAndroidUnityImplementation();
 
-		
-		
-		
-#elif UNITY_IPHONE || UNITY_TVOS
-		
-		/// <summary>
-		/// Use this object to access all Spil related functionality.
-		/// </summary>
-		public static SpiliOSUnityImplementation Instance = new SpiliOSUnityImplementation();
+		#elif UNITY_IPHONE || UNITY_TVOS
 
-		private DateTime lastTimeChecked = DateTime.Now;
-
-		void Update()
-		    {
-		      Instance.SendNotificationTokenToSpil();
-
-		      if ((DateTime.Now - lastTimeChecked).TotalMilliseconds > 30000)
-		      {
-		        Spil.Instance.CheckForRemoteNotifications();
-		        lastTimeChecked = DateTime.Now;
-		      }
-		}
+			public static SpiliOSUnityImplementation Instance = new SpiliOSUnityImplementation();
 
 		#endif
 

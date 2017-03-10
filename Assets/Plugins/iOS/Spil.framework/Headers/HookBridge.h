@@ -84,7 +84,8 @@ extern "C" {
     
     // --- App flow ---
     
-    void applicationDidFinishLaunchingWithOptions(const char* launchOptions);
+    // Not used
+    //void applicationDidFinishLaunchingWithOptions(const char* launchOptions);
     
     void applicationDidEnterBackground();
     

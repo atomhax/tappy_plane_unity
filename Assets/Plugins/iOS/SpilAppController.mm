@@ -4,12 +4,37 @@
 @interface SpilAppController : UnityAppController {
 }
 
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken;
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler;
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *, id> *)options;
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation;
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *))restorationHandler;
 
 @end
 
 @implementation SpilAppController
+
+// Used to setup the spil sdk
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [Spil application:application didFinishLaunchingWithOptions:launchOptions];
+    return [super application:application didFinishLaunchingWithOptions:launchOptions];
+}
+
+// Used to register for push notifications using the Spil SDK
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    [Spil didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+}
+
+// Used to handle push notification using the Spil SDK
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler {
+    [Spil application:application didReceiveRemoteNotification:userInfo];
+}
+
+// Used to handle deeplinking, through a url scheme
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *, id> *)options {
+    return [self application:app openURL:url sourceApplication:nil annotation:@{}];
+}
 
 // Used to handle deeplinking, through a url scheme
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {

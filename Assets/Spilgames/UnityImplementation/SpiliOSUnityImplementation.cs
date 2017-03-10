@@ -13,8 +13,6 @@ namespace SpilGames.Unity.Implementations
 #if UNITY_IPHONE || UNITY_TVOS
 	public class SpiliOSUnityImplementation : SpilUnityImplementationBase
 	{
-        protected bool disableAutomaticRegisterForPushNotifications = false;
-
     #region Inherited members
 
 		public override void SetPluginInformation (string PluginName, string PluginVersion)
@@ -108,12 +106,6 @@ namespace SpilGames.Unity.Implementations
 			options.AddField ("isUnity",true);
 			initEventTrackerWithOptions(options.ToString());
 			applicationDidBecomeActive();
-
-            if (disableAutomaticRegisterForPushNotifications == false) 
-			{
-                RegisterForPushNotifications ();
-				CheckForRemoteNotifications();
-			}
 		}
 
 		/// <summary>
@@ -617,21 +609,13 @@ namespace SpilGames.Unity.Implementations
         /// </summary>
         public void DisableAutomaticRegisterForPushNotifications()
         {
-            disableAutomaticRegisterForPushNotifications = true;
+			Debug.Log ("UNITY: DisableAutomaticRegisterForPushNotifications");
+
             disableAutomaticRegisterForPushNotificationsNative();
         }
 
         [DllImport("__Internal")]
         private static extern void disableAutomaticRegisterForPushNotificationsNative();
-
-        [DllImport("__Internal")]
-        private static extern void registerForPushNotifications();
-
-		[DllImport("__Internal")]
-		private static extern void setPushNotificationKey(string key);
-
-		[DllImport("__Internal")]
-		private static extern void handlePushNotification(string notificationStringParams);
 
         /// <summary>
         /// Registers for push notifications for iOS.
@@ -639,129 +623,13 @@ namespace SpilGames.Unity.Implementations
         /// </summary>
 		public void RegisterForPushNotifications()
 		{
-			Debug.Log ("UNITY: REGISTERING FOR PUSH NOTIFICATIONS");
-#if UNITY_IPHONE || UNITY_TVOS
-#if UNITY_5
-			UnityEngine.iOS.NotificationServices.RegisterForNotifications(
-				UnityEngine.iOS.NotificationType.Alert |
-				UnityEngine.iOS.NotificationType.Badge |
-				UnityEngine.iOS.NotificationType.Sound,
-				true
-			);
-#else
-	NotificationServices.RegisterForRemoteNotificationTypes (
-	RemoteNotificationType.Alert|
-	RemoteNotificationType.Badge|
-	RemoteNotificationType.Sound
-	);
-#endif
-#endif
+			Debug.Log ("UNITY: RegisterForPushNotifications");
+
+			registerForPushNotifications ();
 		}
 
-		internal void CheckForRemoteNotifications()
-		{
-	bool proccessedNotifications = false;
-#if UNITY_IPHONE || UNITY_TVOS
-#if UNITY_5
-			if (UnityEngine.iOS.NotificationServices.remoteNotificationCount > 0)
-			{			
-				foreach(UnityEngine.iOS.RemoteNotification notification in 	UnityEngine.iOS.NotificationServices.remoteNotifications)
-				{
-#else
-	if (UnityEngine.NotificationServices.remoteNotificationCount > 0)
-	{			
-	foreach(UnityEngine.RemoteNotification notification in 	UnityEngine.NotificationServices.remoteNotifications)
-	{
-#endif
-					foreach(var key in notification.userInfo.Keys)
-					{
-						if(notification.userInfo[key].GetType() == typeof(Hashtable))
-						{
-							Hashtable userInfo = (Hashtable) notification.userInfo[key];
-							JSONObject notificationPayload = new JSONObject();
-							foreach(var pKey in userInfo.Keys)
-							{
-								if(userInfo[pKey].GetType() == typeof(string))
-								{
-									string keyStr = pKey.ToString();
-									string value = userInfo[pKey].ToString();
-									notificationPayload.AddField(keyStr,value);
-								}
-								if(userInfo[pKey].GetType() == typeof(Hashtable))
-								{
-									JSONObject innerJson = new JSONObject();
-									Hashtable innerTable = (Hashtable)userInfo[pKey];
-									foreach(var iKey in innerTable.Keys)
-									{
-										string iKeyStr = iKey.ToString();
-										if(innerTable[iKey].GetType() == typeof(Hashtable))
-										{
-											Hashtable innerTableB = (Hashtable)innerTable[iKey];
-											JSONObject innerJsonB = new JSONObject();
-											foreach(var bKey in innerTableB.Keys)
-											{
-												innerJsonB.AddField(bKey.ToString(),innerTableB[bKey].ToString());
-											}
-											innerJson.AddField(iKeyStr,innerJsonB);
-										}
-										if(innerTable[iKey].GetType() == typeof(string))
-										{
-											string iValue = innerTable[iKey].ToString();
-											innerJson.AddField(iKeyStr,iValue);
-										}
-									}
-									string keyStr = pKey.ToString();
-									notificationPayload.AddField(keyStr,innerJson);
-								}
-							}
-
-							String notificationJsonForNative = notificationPayload.ToString().Replace("'","\"");
-							if(!proccessedNotifications){									
-								SendCustomEvent("notificationOpened", new Dictionary<string, object>() { { "notificationPayload", notificationJsonForNative}});
-								proccessedNotifications = true;
-							}
-						}
-					}
-				}
-#if UNITY_5
-				UnityEngine.iOS.NotificationServices.ClearRemoteNotifications();
-#else
-	UnityEngine.NotificationServices.ClearRemoteNotifications();
-#endif
-			} else {
-				Debug.Log("NO REMOTE NOTIFICATIONS FOUND");
-			}
-#endif
-		}
-
-		//is the IOS notification service token sent
-		private bool tokenSent;
-
-		/// This method is marked as internal and should not be exposed to developers.
-		/// The Spil Unity SDK is not packaged as a seperate assembly yet so this method is currently visible, this will be fixed in the future.
-		/// Internal method names start with a lower case so you can easily recognise and avoid them.
-		internal void SendNotificationTokenToSpil()
-		{
-			if (!tokenSent)
-			{
-#if UNITY_IPHONE || UNITY_TVOS
-#if UNITY_5
-				byte[] token = UnityEngine.iOS.NotificationServices.deviceToken;
-#else
-	byte[] token = UnityEngine.NotificationServices.deviceToken;
-#endif
-				if (token != null)
-				{
-					// send token to a provider
-					string tokenToBeSent = System.BitConverter.ToString (token).Replace ("-", "");
-					Dictionary<string,string> param = new Dictionary<string, string> ();
-					param.Add ("regId", tokenToBeSent);
-					setPushNotificationKey (tokenToBeSent);
-					tokenSent = true;
-				}
-#endif
-			}
-		}
+		[DllImport("__Internal")]
+		private static extern void registerForPushNotifications();
 
     #endregion
 
@@ -778,7 +646,6 @@ namespace SpilGames.Unity.Implementations
 			if(!pauseStatus)
 			{
 				applicationDidBecomeActive();
-				CheckForRemoteNotifications();
 			} else {
 				applicationDidEnterBackground();
 			}
