@@ -33,14 +33,19 @@
 
 // Used to handle deeplinking, through a url scheme
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *, id> *)options {
-    return [self application:app openURL:url sourceApplication:nil annotation:@{}];
+    NSString *sourceApplication = options[UIApplicationOpenURLOptionsSourceApplicationKey];
+    NSString *annotation = options[UIApplicationOpenURLOptionsAnnotationKey];
+    return [self application:app openURL:url sourceApplication:sourceApplication annotation:annotation];
 }
 
 // Used to handle deeplinking, through a url scheme
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    // Temp: added to prevent a fb sdk login crash when annotation is nil
+    // Temp: added to prevent a fb sdk login crash when sourceApplication or annotation is nil
     if (annotation == nil) {
         annotation = [NSNull null];
+    }
+    if (sourceApplication == nil) {
+        sourceApplication = @"";
     }
     [Spil application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
     return [super application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
