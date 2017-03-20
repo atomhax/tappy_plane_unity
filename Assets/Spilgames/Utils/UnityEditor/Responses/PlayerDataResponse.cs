@@ -556,7 +556,7 @@ namespace SpilGames.Unity.Utils.UnityEditor.Responses
 
 						Inventory.items.Add(item);
 
-						updatedData.items.Add(inventoryItem);
+						updatedData.items.Add(item);
 					}
 				} 
 			}

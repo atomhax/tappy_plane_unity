@@ -272,7 +272,7 @@ namespace SpilGames.Unity.Implementations
 			return CallNativeMethod ("getInventory");
 		}
 
-		public override void AddCurrencyToWallet (int currencyId, int amount, string reason, string location, string reasonDetails, string transactionId)
+		public override void AddCurrencyToWallet (int currencyId, int amount, string reason, string location, string reasonDetails = null, string transactionId = null)
 		{
 			CallNativeMethod ("addCurrencyToWallet", new object[] {
 				currencyId,
@@ -284,7 +284,7 @@ namespace SpilGames.Unity.Implementations
 			}, true);
 		}
 
-		public override void SubtractCurrencyFromWallet (int currencyId, int amount, string reason, string location, string reasonDetails, string transactionId)
+		public override void SubtractCurrencyFromWallet (int currencyId, int amount, string reason, string location, string reasonDetails = null, string transactionId = null)
 		{
 			CallNativeMethod ("subtractCurrencyFromWallet", new object[] {
 				currencyId,
@@ -296,7 +296,7 @@ namespace SpilGames.Unity.Implementations
 			}, true);
 		}
 
-		public override void AddItemToInventory (int itemId, int amount, string reason, string location, string reasonDetails, string transactionId)
+		public override void AddItemToInventory (int itemId, int amount, string reason, string location, string reasonDetails = null, string transactionId = null)
 		{
 			CallNativeMethod ("addItemToInventory", new object[] {
 				itemId,
@@ -308,7 +308,7 @@ namespace SpilGames.Unity.Implementations
 			}, true);
 		}
 
-		public override void SubtractItemFromInventory (int itemId, int amount, string reason, string location, string reasonDetails, string transactionId)
+		public override void SubtractItemFromInventory (int itemId, int amount, string reason, string location, string reasonDetails = null, string transactionId = null)
 		{
 			CallNativeMethod ("subtractItemFromInventory", new object[] {
 				itemId,
@@ -320,7 +320,7 @@ namespace SpilGames.Unity.Implementations
 			}, true);
 		}
 
-		public override void BuyBundle (int bundleId, string reason, string location, string reasonDetails, string transactionId)
+		public override void BuyBundle (int bundleId, string reason, string location, string reasonDetails = null, string transactionId = null)
 		{
 			CallNativeMethod ("buyBundle", new object[]{ bundleId, reason, location, reasonDetails, transactionId }, true);
 		}

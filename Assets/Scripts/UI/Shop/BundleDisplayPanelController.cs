@@ -57,8 +57,9 @@ public class BundleDisplayPanelController : MonoBehaviour {
 
 	public void BuyBundle(){
 		if (CanAffordBundle ()) {
-			SpendCurrencyForBundle ();
-			AddItemsToInventory ();
+//			SpendCurrencyForBundle ();
+//			AddItemsToInventory ();
+			BuyBundleFromSDK();
 			buyButton.SetActive (false);
 			GameObject.Find ("GameController").GetComponent<GameController> ().InGamePurchaesSuccess (bundleDisplayed.Name);
 		} else {
@@ -76,16 +77,8 @@ public class BundleDisplayPanelController : MonoBehaviour {
 		return canAfford;
 	}
 
-	void SpendCurrencyForBundle(){
-		for (int i = 0; i < bundleDisplayed.Prices.Count; i++) {
-			Spil.PlayerData.Wallet.Subtract (bundleDisplayed.Prices [i].CurrencyId, bundleDisplayed.Prices [i].Value, PlayerDataUpdateReasons.ItemBought, "Shop");
-		}
-	}
-		
-	void AddItemsToInventory(){
-		for(int i = 0; i < bundleDisplayed.Items.Count; i ++){
-			Spil.PlayerData.Inventory.Add (bundleDisplayed.Items [i].Id, bundleDisplayed.Items [i].Amount, PlayerDataUpdateReasons.ItemBought, "Shop");
-		}
+	void BuyBundleFromSDK(){
+		Spil.Instance.BuyBundle(bundleDisplayed.Id, PlayerDataUpdateReasons.ItemBought, "Shop");
 	}
 
 	public void OnImageLoaded(Texture2D image, string localPath){

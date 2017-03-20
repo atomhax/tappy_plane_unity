@@ -75,6 +75,8 @@ public class SpilAndroidBuildPostProcess : MonoBehaviour
 		if(!File.Exists(androidFolder + spilSDKZendesk)){
 			Debug.Log("The Spil SDK Zendesk aar file is missing from your 'Assets/Plugins/Android/'. If you want to use the Spil SDK Zendesk please make sure to included to that location");
 		}
+
+		CheckSlotGameConifg();
 	}
 
 	public static void VerifyManifest(){
@@ -154,7 +156,7 @@ public class SpilAndroidBuildPostProcess : MonoBehaviour
 		string data = "";
 		WWWForm form = GetFormData ();
 		form.AddField ("name", type);
-		WWW request = new WWW ("https://apptracker.spilgames.com/android_event", form);
+		WWW request = new WWW ("https://apptracker.spilgames.com/v1/native-events/event/android/" + PlayerSettings.bundleIdentifier + "/" + type, form);
 		while (!request.isDone)
 			;
 		if (request.error != null) {
@@ -171,11 +173,11 @@ public class SpilAndroidBuildPostProcess : MonoBehaviour
 		JSONObject dummyData = new JSONObject ();
 		dummyData.AddField ("uid", "deadbeef");
 		dummyData.AddField ("locale", "en");
-		dummyData.AddField ("appVersion", "1");
-		dummyData.AddField ("apiVersion", "1");
+		dummyData.AddField ("appVersion", PlayerSettings.bundleVersion);
+		dummyData.AddField ("apiVersion", SpilUnityImplementationBase.PluginVersion);
 		dummyData.AddField ("os", "Android");
 		dummyData.AddField ("osVersion", "1");
-		dummyData.AddField ("deviceModel", "Backend");
+		dummyData.AddField ("deviceModel", "Editor");
 		dummyData.AddField ("packageName", PlayerSettings.bundleIdentifier);
 		dummyData.AddField ("tto", "0");
 		dummyData.AddField ("sessionId", "deadbeef");

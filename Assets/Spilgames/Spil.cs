@@ -121,10 +121,7 @@ namespace SpilGames.Unity
 		
 			public static SpilAndroidUnityImplementation Instance = new SpilAndroidUnityImplementation();
 
-		
-		
-		
-#elif UNITY_IPHONE || UNITY_TVOS
+		#elif UNITY_IPHONE || UNITY_TVOS
 		
 		/// <summary>
 		/// Use this object to access all Spil related functionality.

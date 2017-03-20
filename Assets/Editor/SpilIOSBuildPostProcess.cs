@@ -7,6 +7,7 @@ using System.IO;
 using System.Collections.Generic;
 using SpilGames.Unity.Utils;
 using SpilGames.Unity.Implementations;
+using SpilGames.Unity;
 
 public class SpilIOSBuildPostProcess : MonoBehaviour
 {
@@ -106,7 +107,7 @@ public class SpilIOSBuildPostProcess : MonoBehaviour
 		string data = "";
 		WWWForm form = GetFormData ();
 		form.AddField ("name", type);
-		WWW request = new WWW ("https://apptracker.spilgames.com/android_event", form);
+		WWW request = new WWW ("https://apptracker.spilgames.com/v1/native-events/event/ios/" + PlayerSettings.bundleIdentifier + "/" + type, form);
 		while (!request.isDone)
 			;
 		if (request.error != null) {
@@ -123,12 +124,12 @@ public class SpilIOSBuildPostProcess : MonoBehaviour
 		JSONObject dummyData = new JSONObject ();
 		dummyData.AddField ("uid", "deadbeef");
 		dummyData.AddField ("locale", "en");
-		dummyData.AddField ("appVersion", "1");
-		dummyData.AddField ("apiVersion", "1");
-		dummyData.AddField ("os", "Android");
+		dummyData.AddField ("appVersion", PlayerSettings.bundleVersion);
+		dummyData.AddField ("apiVersion", SpilUnityImplementationBase.PluginVersion);
+		dummyData.AddField ("os", "ios");
 		dummyData.AddField ("osVersion", "1");
-		dummyData.AddField ("deviceModel", "Backend");
-		dummyData.AddField ("packageName", PlayerSettings.bundleIdentifier);
+		dummyData.AddField ("deviceModel", "Editor");
+		dummyData.AddField ("bundleId", PlayerSettings.bundleIdentifier);
 		dummyData.AddField ("tto", "0");
 		dummyData.AddField ("sessionId", "deadbeef");
 		dummyData.AddField ("timezoneOffset", "0");

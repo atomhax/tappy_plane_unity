@@ -13,7 +13,7 @@ public class SpilEditorConfig : EditorWindow {
 	private static Spil spil;
 	Vector2 scrollPos;
 
-	[MenuItem ("Spil SDK/Configuration", false, 1)]
+	[MenuItem ("Spil SDK/Configuration", false, 0)]
 	static void Init () {
 		spil = GameObject.FindObjectOfType<Spil> ();
 		SpilEditorConfig window = (SpilEditorConfig)EditorWindow.GetWindow (typeof(SpilEditorConfig));
@@ -369,9 +369,9 @@ public class SpilEditorConfig : EditorWindow {
 		if(type.Equals("requestConfig")){
 			JSONObject combined = null;
 
-			WWWForm form = GetFormData ("Android");
+			WWWForm form = GetFormData ("android");
 			form.AddField ("name", type);
-			WWW request = new WWW ("https://apptracker.spilgames.com/android_event", form);
+			WWW request = new WWW ("https://apptracker.spilgames.com/v1/native-events/event/android/" + PlayerSettings.bundleIdentifier + "/" + type, form);
 			while (!request.isDone)
 				;
 			if (request.error != null) {
@@ -382,7 +382,7 @@ public class SpilEditorConfig : EditorWindow {
 
 			WWWForm form2 = GetFormData ("ios");
 			form2.AddField ("name", type);
-			WWW request2 = new WWW ("https://apptracker.spilgames.com/apple_event", form2);
+			WWW request2 = new WWW ("https://apptracker.spilgames.com/v1/native-events/event/ios/" + PlayerSettings.bundleIdentifier + "/" + type, form2);
 			while (!request2.isDone)
 				;
 			if (request2.error != null) {
@@ -393,13 +393,13 @@ public class SpilEditorConfig : EditorWindow {
 			gameData = combined.Print(false);
 
 		} else {
-			WWWForm form = GetFormData ("Android");
+			WWWForm form = GetFormData (EditorUserBuildSettings.activeBuildTarget.ToString().Trim().ToLower());
 			form.AddField ("name", type);
-			WWW request = new WWW ("https://apptracker.spilgames.com/android_event", form);
+			WWW request = new WWW ("https://apptracker.spilgames.com/v1/native-events/event/" + EditorUserBuildSettings.activeBuildTarget.ToString().Trim().ToLower() + "/" + PlayerSettings.bundleIdentifier + "/" + type, form);
 			while (!request.isDone)
 				;
 			if (request.error != null) {
-				Debug.LogError ("Error getting game data: " + request.error);  
+				Debug.LogError ("Error getting game data: " + request.error + " " + request.text);  
 			} else { 
 				Debug.Log (type + " Data returned: " + request.text);
 				JSONObject serverResponce = new JSONObject (request.text);
@@ -416,17 +416,16 @@ public class SpilEditorConfig : EditorWindow {
 		JSONObject dummyData = new JSONObject ();
 		dummyData.AddField ("uid", "deadbeef");
 		dummyData.AddField ("locale", "en");
-		dummyData.AddField ("appVersion", "1");
-		dummyData.AddField ("apiVersion", "1");
+		dummyData.AddField ("appVersion", PlayerSettings.bundleVersion);
+		dummyData.AddField ("apiVersion", SpilUnityImplementationBase.PluginVersion);
 		dummyData.AddField ("os", platform);
 		dummyData.AddField ("osVersion", "1");
-		dummyData.AddField ("deviceModel", "Backend");
-		if(platform.Equals("Android")){
+		dummyData.AddField ("deviceModel", "Editor");
+		if(platform.Equals("android")){
 			dummyData.AddField ("packageName", PlayerSettings.bundleIdentifier);
 		} else {
 			dummyData.AddField ("bundleId", PlayerSettings.bundleIdentifier);
 		}
-
 		dummyData.AddField ("tto", "0");
 		dummyData.AddField ("sessionId", "deadbeef");
 		dummyData.AddField ("timezoneOffset", "0");

@@ -58,7 +58,7 @@ namespace SpilGames.Unity.Utils.UnityEditor
 						break;
 					}
 			}
-
+			GameObject.Destroy(responseEvent);
 		}
 	}
 }

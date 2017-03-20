@@ -10,10 +10,10 @@ namespace SpilGames.Unity.Implementations
 	public abstract class SpilUnityImplementationBase
 	{
 		public static string PluginName = "Unity";
-		public static string PluginVersion = "2.2.9";
+		public static string PluginVersion = "2.2.10";
 
-		public static string AndroidVersion = "2.2.8";
-		public static string iOSVersion = "2.1.7";
+		public static string AndroidVersion = "2.2.9";
+		public static string iOSVersion = "2.1.9";
 
 		public abstract void SetPluginInformation (string PluginName, string PluginVersion);
 
@@ -166,12 +166,6 @@ namespace SpilGames.Unity.Implementations
 
 			SendCustomEvent ("levelComplete", dict);
 		}
-
-		/// <summary>
-
-		/// </summary>
-		/// <param name="levelName"></param>
-
 
 		/// <summary>
 		/// Sends the "levelFailed" event to the native Spil SDK which will send a request to the back-end.
@@ -591,8 +585,6 @@ namespace SpilGames.Unity.Implementations
 		{
 			Debug.Log ("SpilSDK-Unity OnResponseReceived " + response);
 
-			// Rewards are now received via the AdFinished event (in Android). Leave this in for now for iOS and legacy users (?)
-
 			SpilResponse spilResponse = JsonHelper.getObjectFromJson<SpilResponse> (response);
 
 			if (spilResponse.type.ToLower ().Trim ().Equals ("notificationreward")) {
@@ -780,7 +772,6 @@ namespace SpilGames.Unity.Implementations
 
 		#endregion
 
-
 		/// <summary>
 		/// Method that requests the "more apps" activity
 		/// </summary>
@@ -912,19 +903,6 @@ namespace SpilGames.Unity.Implementations
 		}
 
 		public abstract string GetSpilGameDataFromSdk ();
-		
-		//		public SpilGameDataHelper GetSpilGameData()
-		//		{
-		//			SpilGameDataHelper helper = null;
-		//			string spilGameDataString = GetSpilGameDataFromSdk();
-		//			Debug.Log ("Spil Game Data: " + spilGameDataString);
-		//			if(spilGameDataString != null)
-		//			{
-		//				SpilGameData spilGameData = JsonHelper.getObjectFromJson<SpilGameData>(spilGameDataString);
-		//				helper = new SpilGameDataHelper(spilGameData.currencies, spilGameData.items, spilGameData.bundles, spilGameData.shop, spilGameData.promotions);
-		//			}
-		//			return helper;
-		//		}
 
 		#endregion
 
@@ -962,7 +940,7 @@ namespace SpilGames.Unity.Implementations
 
 			Spil.PlayerData.PlayerDataUpdatedHandler ();
 
-			Debug.Log ("SpilSDK-Unity Player Data has been updated");
+			Debug.Log ("SpilSDK-Unity Player Data has been updated with data: " + data);
 
 			if (Spil.Instance.OnPlayerDataUpdated != null) {
 				Spil.Instance.OnPlayerDataUpdated (playerDataUpdatedData.reason, playerDataUpdatedData);
@@ -1341,32 +1319,16 @@ namespace SpilGames.Unity.Implementations
 		public abstract string GetWalletFromSdk ();
 
 		public abstract string GetInvetoryFromSdk ();
-
-		//		public PlayerDataHelper GetPlayerData()
-		//		{
-		//			PlayerDataHelper helper = null;
-		//			string walletString = GetWalletFromSdk();
-		//			string inventoryString = GetInvetoryFromSdk();
-		//			if(walletString != null && inventoryString != null)
-		//			{
-		//				WalletData walletData = JsonHelper.getObjectFromJson<WalletData>(walletString);
-		//				InventoryData inventoryData = JsonHelper.getObjectFromJson<InventoryData>(inventoryString);
-		//
-		//				helper = new PlayerDataHelper(walletData, inventoryData);
-		//
-		//			}
-		//			return helper;
-		//		}
 		
-		public abstract void AddCurrencyToWallet (int currencyId, int amount, string reason, string location, string reasonDetails = null, string transcationId = null);
+		public abstract void AddCurrencyToWallet (int currencyId, int amount, string reason, string location, string reasonDetails = null, string transactionId = null);
 
-		public abstract void SubtractCurrencyFromWallet (int currencyId, int amount, string reason, string location, string reasonDetails = null, string transcationId = null);
+		public abstract void SubtractCurrencyFromWallet (int currencyId, int amount, string reason, string location, string reasonDetails = null, string transactionId = null);
 
-		public abstract void AddItemToInventory (int itemId, int amount, string reason, string location, string reasonDetails = null, string transcationId = null);
+		public abstract void AddItemToInventory (int itemId, int amount, string reason, string location, string reasonDetails = null, string transactionId = null);
 
-		public abstract void SubtractItemFromInventory (int itemId, int amount, string reason, string location, string reasonDetails = null, string transcationId = null);
+		public abstract void SubtractItemFromInventory (int itemId, int amount, string reason, string location, string reasonDetails = null, string transactionId = null);
 
-		public abstract void BuyBundle (int bundleId, string reason, string location, string reasonDetails = null, string transcationId = null);
+		public abstract void BuyBundle (int bundleId, string reason, string location, string reasonDetails = null, string transactionId = null);
 
 		public abstract void ResetPlayerData ();
 

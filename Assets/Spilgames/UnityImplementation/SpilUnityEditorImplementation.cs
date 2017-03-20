@@ -347,27 +347,27 @@ namespace SpilGames.Unity.Implementations
 			return JsonHelper.getJSONFromObject (pData.Inventory);
 		}
 
-		public override void AddCurrencyToWallet (int currencyId, int amount, string reason, string location, string reasonDetails, string transactionId)
+		public override void AddCurrencyToWallet (int currencyId, int amount, string reason, string location, string reasonDetails = null, string transactionId = null)
 		{
 			pData.WalletOperation ("add", currencyId, amount, reason, reasonDetails, location, transactionId);
 		}
 
-		public override void SubtractCurrencyFromWallet (int currencyId, int amount, string reason, string location, string reasonDetails, string transactionId)
+		public override void SubtractCurrencyFromWallet (int currencyId, int amount, string reason, string location, string reasonDetails = null, string transactionId = null)
 		{
 			pData.WalletOperation ("subtract", currencyId, amount, reason, reasonDetails, location, transactionId);
 		}
 
-		public override void AddItemToInventory (int itemId, int amount, string reason, string location, string reasonDetails, string transactionId)
+		public override void AddItemToInventory (int itemId, int amount, string reason, string location, string reasonDetails = null, string transactionId = null)
 		{
 			pData.InventoryOperation ("add", itemId, amount, reason, reasonDetails, location, transactionId);
 		}
 
-		public override void SubtractItemFromInventory (int itemId, int amount, string reason, string location, string reasonDetails, string transactionId)
+		public override void SubtractItemFromInventory (int itemId, int amount, string reason, string location, string reasonDetails = null, string transactionId = null)
 		{
 			pData.InventoryOperation ("subtract", itemId, amount, reason, reasonDetails, location, transactionId);
 		}
 
-		public override void BuyBundle (int bundleId, string reason, string location, string reasonDetails, string transactionId)
+		public override void BuyBundle (int bundleId, string reason, string location, string reasonDetails = null, string transactionId = null)
 		{
 			pData.BuyBundle (bundleId, reason, reasonDetails, location, transactionId);
 		}

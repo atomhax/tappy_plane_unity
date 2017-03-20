@@ -51,6 +51,7 @@
      <Compile Include="Assets\Editor\SpilEditorConfig.cs" />
      <Compile Include="Assets\Editor\SpilEditorDocumentation.cs" />
      <Compile Include="Assets\Editor\SpilEditorReleases.cs" />
+     <Compile Include="Assets\Editor\SpilEditorReportIssue.cs" />
      <Compile Include="Assets\Editor\SpilIOSBuildPostProcess.cs" />
      <Compile Include="Assets\Editor\TVOSBuildPostProcess.cs" />
      <None Include="Assets\Plugins\iOS\Spil.framework\Version.txt" />
