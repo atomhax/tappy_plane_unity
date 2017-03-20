@@ -41,12 +41,12 @@ dependencies {
 	compile(name: 'play-services-gcm-10.0.1', ext:'aar')
 	compile(name: 'play-services-iid-10.0.1', ext:'aar')
 	compile(name: 'play-services-tasks-10.0.1', ext:'aar')
-	compile(name: 'spilsdk-2.2.8', ext:'aar')
-	compile(name: 'spilsdk-adjust-2.2.8', ext:'aar')
-	compile(name: 'spilsdk-chartboost-2.2.8', ext:'aar')
-	compile(name: 'spilsdk-dfp-2.2.8', ext:'aar')
-	compile(name: 'spilsdk-fyber-2.2.8', ext:'aar')
-	compile(name: 'spilsdk-zendesk-2.2.8', ext:'aar')
+	compile(name: 'spilsdk-2.2.9', ext:'aar')
+	compile(name: 'spilsdk-adjust-2.2.9', ext:'aar')
+	compile(name: 'spilsdk-chartboost-2.2.9', ext:'aar')
+	compile(name: 'spilsdk-dfp-2.2.9', ext:'aar')
+	compile(name: 'spilsdk-fyber-2.2.9', ext:'aar')
+	compile(name: 'spilsdk-zendesk-2.2.9', ext:'aar')
 	compile 'com.android.support:multidex:1.0.1'
 	//compile project(':unity-android-resources')
 }

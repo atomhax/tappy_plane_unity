@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<manifest package="com.spilgames.tappyplane" xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="14" android:versionCode="14" android:installLocation="preferExternal">
+<manifest package="com.spilgames.tappyplane" xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="15" android:versionCode="15" android:installLocation="preferExternal">
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.WAKE_LOCK" />
   <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
