@@ -17,14 +17,13 @@ public class HighScoresPanelController : MonoBehaviour {
 		highScoreText.text = "No High Scores Recorded";
 		Spil.Instance.OnOtherUsersGameStateDataLoaded += Spil_Instance_OnOtherUsersGameStateDataLoaded;
 		RequestHighScores();
-		Spil.Instance.RequestSplashScreen();
 	}
 
 	void OnDisable(){
 		Spil.Instance.OnOtherUsersGameStateDataLoaded -= Spil_Instance_OnOtherUsersGameStateDataLoaded;
 	}
 
-	void RequestHighScores(){
+	public void RequestHighScores(){
 		string facebookIds = GameController.GetFriendIdsJson();
 		Spil.Instance.GetOtherUsersGameState("Facebook", facebookIds);
 	}

@@ -1309,7 +1309,7 @@ namespace SpilGames.Unity.Implementations
 		{
 			Debug.Log ("SpilSDK-Unity fireImagePreloadingCompleted");
 
-			if (Spil.Instance.OnImageLoadFailed != null) {
+			if (Spil.Instance.OnImagePreloadingCompleted != null) {
 				Spil.Instance.OnImagePreloadingCompleted ();
 			}
 		}

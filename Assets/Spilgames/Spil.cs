@@ -1,10 +1,10 @@
 /*
  * Spil Games Unity SDK 2016
  * Version 2.2.9
- * 
+ *
  * If you have any questions, don't hesitate to e-mail us at info@spilgames.com
  * Be sure to check the github page for documentation and the latest updates
- * https://github.com/spilgames/spil_event_unity_plugin 
+ * https://github.com/spilgames/spil_event_unity_plugin
 */
 
 using UnityEngine;
@@ -102,44 +102,30 @@ namespace SpilGames.Unity
 
 		public DailyBonusRewardTypeEnum DailyBonusRewardType;
 
-		public static Spil MonoInstance { 
-			get { 
+		public static Spil MonoInstance {
+			get {
 				GameObject spilSDKObject = GameObject.Find ("SpilSDK");
-				if (spilSDKObject == null) { 
+				if (spilSDKObject == null) {
 					throw new NullReferenceException ("Could not find a gameobject in the scene named \"SpilSDK\".");
 				}
-				return spilSDKObject.GetComponent<Spil> (); 
-			} 
+				return spilSDKObject.GetComponent<Spil> ();
+			}
 		}
 
 		#if UNITY_EDITOR
-			
+
 		public static SpilUnityEditorImplementation Instance = new SpilUnityEditorImplementation ();
 
 
 		#elif UNITY_ANDROID
-		
+
 			public static SpilAndroidUnityImplementation Instance = new SpilAndroidUnityImplementation();
 
 		#elif UNITY_IPHONE || UNITY_TVOS
-		
 		/// <summary>
 		/// Use this object to access all Spil related functionality.
 		/// </summary>
 		public static SpiliOSUnityImplementation Instance = new SpiliOSUnityImplementation();
-
-		private DateTime lastTimeChecked = DateTime.Now;
-
-		void Update()
-		    {
-		      Instance.SendNotificationTokenToSpil();
-
-		      if ((DateTime.Now - lastTimeChecked).TotalMilliseconds > 30000)
-		      {
-		        Spil.Instance.CheckForRemoteNotifications();
-		        lastTimeChecked = DateTime.Now;
-		      }
-		}
 
 		#endif
 
@@ -236,7 +222,7 @@ namespace SpilGames.Unity
 		/// </summary>
 		public void AdAvailable (string type)
 		{
-			SpilUnityImplementationBase.fireAdAvailableEvent (type);            
+			SpilUnityImplementationBase.fireAdAvailableEvent (type);
 		}
 
 		/// <summary>

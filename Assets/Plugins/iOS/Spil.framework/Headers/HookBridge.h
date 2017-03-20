@@ -84,7 +84,8 @@ extern "C" {
     
     // --- App flow ---
     
-    void applicationDidFinishLaunchingWithOptions(const char* launchOptions);
+    // Not used
+    //void applicationDidFinishLaunchingWithOptions(const char* launchOptions);
     
     void applicationDidEnterBackground();
     
@@ -148,15 +149,15 @@ extern "C" {
     
     char* getInventoryNative();
     
-    void addCurrencyToWalletNative(int currencyId, int amount, char* reasonName, char* location, char* transactionId);
+    void addCurrencyToWalletNative(int currencyId, int amount, char* reasonName, char* location, char* reasonDetails, char* transactionId);
     
-    void subtractCurrencyFromWalletNative(int currencyId, int amount, char* reasonName, char* location, char* transactionId);
+    void subtractCurrencyFromWalletNative(int currencyId, int amount, char* reasonName, char* location, char* reasonDetails, char* transactionId);
     
-    void addItemToInventoryNative(int itemId, int amount, char* reasonName, char* location, char* transactionId);
+    void addItemToInventoryNative(int itemId, int amount, char* reasonName, char* location, char* reasonDetails, char* transactionId);
     
-    void subtractItemFromInventoryNative(int itemId, int amount, char* reasonName, char* location, char* transactionId);
+    void subtractItemFromInventoryNative(int itemId, int amount, char* reasonName, char* location, char* reasonDetails, char* transactionId);
     
-    void buyBundleNative(int itemId, char* reasonName, char* location, char* transactionId);
+    void buyBundleNative(int itemId, char* reasonName, char* location, char* reasonDetails, char* transactionId);
     
     void resetPlayerDataNative();
     
