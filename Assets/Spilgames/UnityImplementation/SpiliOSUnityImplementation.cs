@@ -503,15 +503,15 @@ namespace SpilGames.Unity.Implementations
 		}
 
 		[DllImport("__Internal")]
-		private static extern void subtractItemFromInventoryNative (int itemId, int amount, string reason, string location, string reasonDetails = null, string transactionId = null);
+		private static extern void subtractItemFromInventoryNative (int itemId, int amount, string reason, string location, string reasonDetails, string transactionId);
 
-		public override void BuyBundle (int bundleId, string reason, string location, string reasonDetails, string transactionId)
+		public override void BuyBundle (int bundleId, string reason, string location, string reasonDetails = null, string transactionId = null)
 		{
 			buyBundleNative(bundleId, reason, location, reasonDetails, transactionId);
 		}
 
 		[DllImport("__Internal")]
-		private static extern void buyBundleNative (int bundleId, string reason, string location, string reasonDetails = null, string transactionId = null);
+		private static extern void buyBundleNative (int bundleId, string reason, string location, string reasonDetails, string transactionId);
 
 		public override void ResetPlayerData () 
 		{
