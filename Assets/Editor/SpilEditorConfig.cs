@@ -6,12 +6,20 @@ using SpilGames.Unity.Utils;
 using SpilGames.Unity;
 using System.Xml;
 using SpilGames.Unity.Implementations;
+using SpilGames.Unity.Utils;
 
 public class SpilEditorConfig : EditorWindow {
 
 	private int tabSelected = 0;
 	private static Spil spil;
 	Vector2 scrollPos;
+
+	private static JSONObject configJSON;
+	private static JSONObject android;
+	private static JSONObject ios;
+
+	private static string androidGameVersion = "";
+	private static string iosGameVersion = "";
 
 	[MenuItem ("Spil SDK/Configuration", false, 0)]
 	static void Init () {
@@ -20,6 +28,10 @@ public class SpilEditorConfig : EditorWindow {
 		window.autoRepaintOnSceneChange = true;
 		window.titleContent.text = "Configuration";
 		window.Show ();
+
+		androidGameVersion = PlayerSettings.bundleVersion;
+		iosGameVersion = PlayerSettings.bundleVersion;
+
 	}
 
 	void OnGUI () {
@@ -72,6 +84,14 @@ public class SpilEditorConfig : EditorWindow {
 		GUILayout.Label(" • defaultGameData.json", EditorStyles.boldLabel);
 		GUILayout.Label("These files can be located in the StreamingAssets folder", EditorStyles.wordWrappedLabel);
 		GUILayout.Label("");
+
+		GUILayout.Label("Android Game Version", EditorStyles.boldLabel);
+		androidGameVersion = GUILayout.TextField(androidGameVersion);
+
+		GUILayout.Label("iOS Game Version", EditorStyles.boldLabel);
+		iosGameVersion = GUILayout.TextField(iosGameVersion);
+
+		GUILayout.Label("");
 		if (GUILayout.Button ("Create Default Configuration Files")) {
 			CreateDefaultConfigFiles ();
 		}
@@ -80,11 +100,17 @@ public class SpilEditorConfig : EditorWindow {
 		if(File.Exists(Application.streamingAssetsPath + "/defaultGameConfig.json")){
 			GUILayout.Label("");
 			GUILayout.Label("DefaultGameConfig Values:", EditorStyles.boldLabel);
-			GUILayout.Label("");
-			JSONObject configJSON = new JSONObject(System.IO.File.ReadAllText (Application.streamingAssetsPath + "/defaultGameConfig.json"));
 
+			if(configJSON == null){
+				configJSON = new JSONObject(System.IO.File.ReadAllText (Application.streamingAssetsPath + "/defaultGameConfig.json"));
+			}
+
+			GUILayout.Label("");
 			if(configJSON.HasField("androidSdkConfig")){
-				JSONObject android = new JSONObject(configJSON.GetField("androidSdkConfig").Print(false));
+				if(android == null){
+					android = new JSONObject(configJSON.GetField("androidSdkConfig").Print(false));
+				}
+				 
 				GUILayout.Label("Android", EditorStyles.boldLabel);
 				string androidConfig = "";
 
@@ -95,7 +121,10 @@ public class SpilEditorConfig : EditorWindow {
 			}
 			GUILayout.Label("");
 			if(configJSON.HasField("iosSdkConfig")){
-				JSONObject ios = new JSONObject(configJSON.GetField("iosSdkConfig").Print(false));
+				if(ios == null){
+					ios = new JSONObject(configJSON.GetField("iosSdkConfig").Print(false));
+				}
+
 				GUILayout.Label("iOS", EditorStyles.boldLabel);
 				string iosConfig = "";
 
@@ -313,10 +342,20 @@ public class SpilEditorConfig : EditorWindow {
 		}
 
 		if(!File.Exists(streamingAssetsPath + "/defaultGameConfig.json")){
-			File.WriteAllText (streamingAssetsPath + "/defaultGameConfig.json", GetData ("requestConfig"));
+			string configResponse = GetData ("requestConfig");
+			File.WriteAllText (streamingAssetsPath + "/defaultGameConfig.json", configResponse);
+			configJSON = new JSONObject(configResponse);
+
+			android = null;
+			ios = null;
 		} else {
 			File.Delete(streamingAssetsPath + "/defaultGameConfig.json");
-			File.WriteAllText (streamingAssetsPath + "/defaultGameConfig.json", GetData ("requestConfig"));
+			string configResponse = GetData ("requestConfig");
+			File.WriteAllText (streamingAssetsPath + "/defaultGameConfig.json", configResponse);
+			configJSON = new JSONObject(configResponse);
+
+			android = null;
+			ios = null;
 		}
 
 		if(!File.Exists(streamingAssetsPath + "/defaultPlayerData.json")){
@@ -375,7 +414,8 @@ public class SpilEditorConfig : EditorWindow {
 			while (!request.isDone)
 				;
 			if (request.error != null) {
-				Debug.LogError ("Error getting game data: " + request.error);  
+				Debug.LogError ("Error getting game data: " + request.error);
+				combined.AddField("androidSdkConfig", "");    
 			} else { 
 				combined = new JSONObject (request.text).GetField ("data");
 			}
@@ -386,7 +426,8 @@ public class SpilEditorConfig : EditorWindow {
 			while (!request2.isDone)
 				;
 			if (request2.error != null) {
-				Debug.LogError ("Error getting game data: " + request2.error);  
+				Debug.LogError ("Error getting game data: " + request2.error);
+				combined.AddField("iosSdkConfig", "");  
 			} else { 
 				combined.AddField("iosSdkConfig", new JSONObject (request2.text).GetField("data").GetField("iosSdkConfig"));
 			}
@@ -413,22 +454,32 @@ public class SpilEditorConfig : EditorWindow {
 	}
 
 	WWWForm GetFormData (string platform) {
+
 		JSONObject dummyData = new JSONObject ();
 		dummyData.AddField ("uid", "deadbeef");
 		dummyData.AddField ("locale", "en");
-		dummyData.AddField ("appVersion", PlayerSettings.bundleVersion);
+
+		if(platform.Equals("android")){
+			dummyData.AddField ("appVersion", androidGameVersion);
+		} else {
+			dummyData.AddField ("appVersion", iosGameVersion);
+		}
+
 		dummyData.AddField ("apiVersion", SpilUnityImplementationBase.PluginVersion);
 		dummyData.AddField ("os", platform);
 		dummyData.AddField ("osVersion", "1");
 		dummyData.AddField ("deviceModel", "Editor");
+
 		if(platform.Equals("android")){
 			dummyData.AddField ("packageName", PlayerSettings.bundleIdentifier);
 		} else {
 			dummyData.AddField ("bundleId", PlayerSettings.bundleIdentifier);
 		}
+
 		dummyData.AddField ("tto", "0");
 		dummyData.AddField ("sessionId", "deadbeef");
 		dummyData.AddField ("timezoneOffset", "0");
+
 		JSONObject dummyCustomData = new JSONObject ();
 		JSONObject dummyWallet = new JSONObject ();
 		dummyWallet.AddField ("offset", 0);
@@ -436,6 +487,7 @@ public class SpilEditorConfig : EditorWindow {
 		dummyInventory.AddField ("offset", 0);
 		dummyCustomData.AddField ("wallet", dummyWallet);
 		dummyCustomData.AddField ("inventory", dummyInventory);
+
 		WWWForm form = new WWWForm ();
 		form.AddField ("data", dummyData.ToString ());
 		form.AddField ("customData", dummyCustomData.ToString ());

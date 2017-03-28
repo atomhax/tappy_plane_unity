@@ -36,6 +36,7 @@ public class TabController : MonoBehaviour {
 	}
 		
 	public void CloseTab(){
+		bundleDisplayPanel.gameObject.SetActive(false);
 		gameObject.SetActive (false);
 		transform.parent.gameObject.SetActive (false);
 	}

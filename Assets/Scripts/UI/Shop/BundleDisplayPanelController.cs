@@ -5,9 +5,10 @@ using SpilGames.Unity;
 using SpilGames.Unity.Helpers;
 using SpilGames.Unity.Utils;
 
-public class BundleDisplayPanelController : MonoBehaviour {
+public class BundleDisplayPanelController : MonoBehaviour
+{
 
-	public Text bundleTitleText;
+	public Text bundleTitleText, bundleDescriptionText;
 
 	public Text starsCostText, diamondCostText;
 
@@ -19,19 +20,32 @@ public class BundleDisplayPanelController : MonoBehaviour {
 
 	public Image bundleImage;
 
-	public void SetupBundleDisplayPanel(Bundle bundle){
+	public void SetupBundleDisplayPanel (Bundle bundle)
+	{
 		bundleDisplayed = bundle;
 		starsCostText.text = diamondCostText.text = "0";
-		bundleTitleText.text = bundle.Name;
-		listOfItemsInBundle.text = "ITEMS IN THIS BUNDLE\n";
-		for(int i = 0 ; i < bundle.Items.Count; i++){
+
+		if (bundle.DisplayName != null && !bundle.DisplayName.Equals ("")) {
+			bundleTitleText.text = bundle.DisplayName;
+		} else {
+			bundleTitleText.text = bundle.Name;
+		}
+
+		if (bundle.DisplayDescription != null && !bundle.DisplayDescription.Equals ("")) {
+			bundleDescriptionText.text = bundle.DisplayDescription;
+		} else {
+			bundleDescriptionText.text = "";
+		}
+
+		listOfItemsInBundle.text = "Contains:";
+		for (int i = 0; i < bundle.Items.Count; i++) {
 			Item item = Spil.GameData.GetItem (bundle.Items [i].Id);
-			listOfItemsInBundle.text += item.Name + "\n";
-			for(int x = 0; x < bundle.Prices.Count; x ++){
-				if(bundle.Prices[x].CurrencyId == 25){
-					starsCostText.text = bundle.Prices [x].Value.ToString();
-				}else if(bundle.Prices[x].CurrencyId == 28){
-					diamondCostText.text = bundle.Prices [x].Value.ToString();
+			listOfItemsInBundle.text += "\n" + "• " + item.Name;
+			for (int x = 0; x < bundle.Prices.Count; x++) {
+				if (bundle.Prices [x].CurrencyId == 25) {
+					starsCostText.text = bundle.Prices [x].Value.ToString ();
+				} else if (bundle.Prices [x].CurrencyId == 28) {
+					diamondCostText.text = bundle.Prices [x].Value.ToString ();
 				}
 			}
 		}
@@ -44,51 +58,58 @@ public class BundleDisplayPanelController : MonoBehaviour {
 		Spil.Instance.OnImageLoadSuccess -= OnImageLoadSuccess;
 		Spil.Instance.OnImageLoadSuccess += OnImageLoadSuccess;
 
-		if(bundle.HasImage()){
-			string imagePath = bundle.GetImagePath();
+		if (bundle.HasImage ()) {
+			string imagePath = bundle.GetImagePath ();
 
-			if(imagePath != null){
-				Debug.Log("Image already preloaded with path: " + imagePath);
-				Spil.Instance.LoadImage(this, imagePath);
+			if (imagePath != null) {
+				Debug.Log ("Image already preloaded with path: " + imagePath);
+				Spil.Instance.LoadImage (this, imagePath);
 			} 
+		} else {
+			bundleImage.sprite = null;
 		}
 
 	}
 
-	public void BuyBundle(){
+	public void BuyBundle ()
+	{
 		if (CanAffordBundle ()) {
 //			SpendCurrencyForBundle ();
 //			AddItemsToInventory ();
-			BuyBundleFromSDK();
+			BuyBundleFromSDK ();
 			buyButton.SetActive (false);
 			GameObject.Find ("GameController").GetComponent<GameController> ().InGamePurchaesSuccess (bundleDisplayed.Name);
 		} else {
 			GameObject.Find ("GameController").GetComponent<GameController> ().InGamePurchaesFail (bundleDisplayed);
 		}
 	}
-		
-	bool CanAffordBundle(){
+
+	bool CanAffordBundle ()
+	{
 		bool canAfford = true;
-		for(int i = 0 ; i < bundleDisplayed.Prices.Count; i ++){
-			if(Spil.PlayerData.GetCurrencyBalance(bundleDisplayed.Prices[i].CurrencyId) < bundleDisplayed.Prices[i].Value){
+		for (int i = 0; i < bundleDisplayed.Prices.Count; i++) {
+			if (Spil.PlayerData.GetCurrencyBalance (bundleDisplayed.Prices [i].CurrencyId) < bundleDisplayed.Prices [i].Value) {
 				canAfford = false;
 			}
 		}
 		return canAfford;
 	}
 
-	void BuyBundleFromSDK(){
-		Spil.Instance.BuyBundle(bundleDisplayed.Id, PlayerDataUpdateReasons.ItemBought, "Shop");
+	void BuyBundleFromSDK ()
+	{
+		Spil.Instance.BuyBundle (bundleDisplayed.Id, PlayerDataUpdateReasons.ItemBought, "Shop");
 	}
 
-	public void OnImageLoaded(Texture2D image, string localPath){
-		bundleImage.sprite = Sprite.Create(image, new Rect(0, 0, image.width, image.height), new Vector2());
+	public void OnImageLoaded (Texture2D image, string localPath)
+	{
+		bundleImage.sprite = Sprite.Create (image, new Rect (0, 0, image.width, image.height), new Vector2 ());
 	}
 
-	public void OnImageLoadSuccess(string localPath, ImageContext imageContext){
-		if(localPath != null){
-			Debug.Log("Finished downloading image with local path: " + localPath);
-			Spil.Instance.LoadImage(this, localPath);
+	public void OnImageLoadSuccess (string localPath, ImageContext imageContext)
+	{
+		if (localPath != null) {
+			Debug.Log ("Finished downloading image with local path: " + localPath);
+			Spil.Instance.LoadImage (this, localPath);
 		}
 	}
 }

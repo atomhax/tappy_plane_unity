@@ -151,6 +151,9 @@ namespace SpilGames.Unity.Utils
 		public string name;
 		public int initialValue;
 		public int type;
+		public string imageUrl;
+		public string displayName;
+		public string displayDescription;
 	}
 
 	public class SpilItemData
@@ -160,6 +163,8 @@ namespace SpilGames.Unity.Utils
 		public int initialValue;
 		public int type;
 		public string imageUrl;
+		public string displayName;
+		public string displayDescription;
 	}
 
 	public class SpilBundlePriceData
@@ -181,6 +186,8 @@ namespace SpilGames.Unity.Utils
 		public List<SpilBundlePriceData> prices;
 		public List<SpilBundleItemData> items;
 		public string imageUrl;
+		public string displayName;
+		public string displayDescription;
 	}
 
 	public class SpilGameData

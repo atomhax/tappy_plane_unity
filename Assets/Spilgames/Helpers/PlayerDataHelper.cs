@@ -128,7 +128,7 @@ namespace SpilGames.Unity.Helpers
 
 		private int delta;
 
-		public PlayerCurrency (int id, string name, int type, int currentBalance, int delta) : base (id, name, type)
+		public PlayerCurrency (int id, string name, int type, int currentBalance, int delta, string imageURL, string displayName, string displayDescription) : base (id, name, type, imageURL, displayName, displayDescription)
 		{
 			this.currentBalance = currentBalance;
 			this.delta = delta;
@@ -151,7 +151,7 @@ namespace SpilGames.Unity.Helpers
 			// Adding currencies of the player
 			if (currencyData != null) {
 				foreach (PlayerCurrencyData playerCurrencyData in currencyData) {
-					currencies.Add (new PlayerCurrency (playerCurrencyData.id, playerCurrencyData.name, playerCurrencyData.type, playerCurrencyData.currentBalance, playerCurrencyData.delta));
+					currencies.Add (new PlayerCurrency (playerCurrencyData.id, playerCurrencyData.name, playerCurrencyData.type, playerCurrencyData.currentBalance, playerCurrencyData.delta, playerCurrencyData.imageUrl, playerCurrencyData.displayName, playerCurrencyData.displayDescription));
 				}
 			}			
 		}
@@ -180,7 +180,7 @@ namespace SpilGames.Unity.Helpers
 
 		private int value;
 
-		public PlayerItem (int id, string name, int type, int amount, int value, string imageURL) : base (id, name, type, imageURL)
+		public PlayerItem (int id, string name, int type, int amount, int value, string imageURL, string displayName, string displayDescription) : base (id, name, type, imageURL, displayName, displayDescription)
 		{
 			this.amount = amount;
 			this.value = value;
@@ -203,7 +203,7 @@ namespace SpilGames.Unity.Helpers
 			//Adding currencies of the player
 			if (itemData != null) {
 				foreach (PlayerItemData playerItemData in itemData) {
-					items.Add (new PlayerItem (playerItemData.id, playerItemData.name, playerItemData.type, playerItemData.amount, playerItemData.value, playerItemData.imageUrl));
+					items.Add (new PlayerItem (playerItemData.id, playerItemData.name, playerItemData.type, playerItemData.amount, playerItemData.value, playerItemData.imageUrl, playerItemData.displayName, playerItemData.displayDescription));
 				}
 			}
 		}
