@@ -8,6 +8,8 @@ using SpilGames.Unity.Utils;
 public class BundleDisplayPanelController : MonoBehaviour
 {
 
+	public static BundleDisplayPanelController panelInstance;
+
 	public Text bundleTitleText, bundleDescriptionText;
 
 	public Text starsCostText, diamondCostText;
@@ -22,6 +24,7 @@ public class BundleDisplayPanelController : MonoBehaviour
 
 	public void SetupBundleDisplayPanel (Bundle bundle)
 	{
+		panelInstance = this;
 		bundleDisplayed = bundle;
 		starsCostText.text = diamondCostText.text = "0";
 
@@ -49,7 +52,7 @@ public class BundleDisplayPanelController : MonoBehaviour
 				}
 			}
 		}
-		   
+
 		gameObject.SetActive (true);
 
 		Spil.Instance.OnImageLoaded -= OnImageLoaded;
@@ -68,6 +71,7 @@ public class BundleDisplayPanelController : MonoBehaviour
 		} else {
 			bundleImage.sprite = null;
 		}
+
 
 	}
 
@@ -102,7 +106,7 @@ public class BundleDisplayPanelController : MonoBehaviour
 
 	public void OnImageLoaded (Texture2D image, string localPath)
 	{
-		bundleImage.sprite = Sprite.Create (image, new Rect (0, 0, image.width, image.height), new Vector2 ());
+		panelInstance.bundleImage.sprite = Sprite.Create (image, new Rect (0, 0, image.width, image.height), new Vector2 ());
 	}
 
 	public void OnImageLoadSuccess (string localPath, ImageContext imageContext)

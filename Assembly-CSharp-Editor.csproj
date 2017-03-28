@@ -57,9 +57,6 @@
      <None Include="Assets\Plugins\iOS\Spil.framework\Version.txt" />
      <None Include="Assets\link.xml" />
      <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
- <Reference Include="UnityEngine.Advertisements">
- <HintPath>/Applications/Unity_5.5.0f3/Unity.app/Contents/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>
- </Reference>
  <Reference Include="UnityEditor.Advertisements">
  <HintPath>/Applications/Unity_5.5.0f3/Unity.app/Contents/UnityExtensions/Unity/Advertisements/Editor/UnityEditor.Advertisements.dll</HintPath>
  </Reference>

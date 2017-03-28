@@ -1,20 +1,12 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UI/Shop/ShopPanelController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UI/Shop/BundleDisplayPanelController.cs">
     <Files>
-      <File FileName="Assets/Editor/SpilAndroidBuildPostProcess.cs" Line="1" Column="1" />
-      <File FileName="Assets/Spilgames/Spil.cs" Line="1" Column="1" />
-      <File FileName="Assets/Spilgames/UnityImplementation/SpilUnityImplementationBase.cs" Line="1" Column="1" />
-      <File FileName="Assets/Spilgames/Helpers/SpilGameDataHelper.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/UI/Shop/BundleDisplayPanelController.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Core/GameController.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/UI/Shop/EntryButtonController.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/UI/Shop/TabController.cs" Line="39" Column="50" />
-      <File FileName="Assets/Scripts/UI/Shop/ShopPanelController.cs" Line="1" Column="1" />
-      <File FileName="Assets/Spilgames/Helpers/PlayerDataHelper.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/UI/GameOverPanelController.cs" Line="1" Column="1" />
-      <File FileName="Assets/Editor/SpilEditorConfig.cs" Line="1" Column="1" />
-      <File FileName="Assets/Spilgames/Utils/UnityEditor/SpilEvent.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/UI/Shop/BundleDisplayPanelController.cs" Line="104" Column="25" />
+      <File FileName="Assets/Scripts/UI/Shop/ShopPanelController.cs" Line="147" Column="34" />
+      <File FileName="Assets/Scripts/UI/Shop/EntryButtonController.cs" Line="23" Column="1" />
+      <File FileName="Assets/Scripts/UI/Shop/TabButtonController.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/UI/Shop/TabController.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
