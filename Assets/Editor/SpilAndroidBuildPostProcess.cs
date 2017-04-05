@@ -13,6 +13,13 @@ public class SpilAndroidBuildPostProcess : MonoBehaviour
 
 	private static string androidFolder = "Assets/Plugins/Android/";
 
+	#if UNITY_5_6_OR_NEWER
+	private static string bundleIdentifier = PlayerSettings.applicationIdentifier;
+	#elif UNITY_5_3_OR_NEWER
+	private static string bundleIdentifier = PlayerSettings.bundleIdentifier;
+	#endif
+
+
 	[PostProcessBuild]
 	public static void OnPostprocessBuild (BuildTarget target, string pathToBuildProject){
 
@@ -156,7 +163,7 @@ public class SpilAndroidBuildPostProcess : MonoBehaviour
 		string data = "";
 		WWWForm form = GetFormData ();
 		form.AddField ("name", type);
-		WWW request = new WWW ("https://apptracker.spilgames.com/v1/native-events/event/android/" + PlayerSettings.bundleIdentifier + "/" + type, form);
+		WWW request = new WWW ("https://apptracker.spilgames.com/v1/native-events/event/android/" + bundleIdentifier + "/" + type, form);
 		while (!request.isDone)
 			;
 		if (request.error != null) {
@@ -178,7 +185,7 @@ public class SpilAndroidBuildPostProcess : MonoBehaviour
 		dummyData.AddField ("os", "Android");
 		dummyData.AddField ("osVersion", "1");
 		dummyData.AddField ("deviceModel", "Editor");
-		dummyData.AddField ("packageName", PlayerSettings.bundleIdentifier);
+		dummyData.AddField ("packageName", bundleIdentifier);
 		dummyData.AddField ("tto", "0");
 		dummyData.AddField ("sessionId", "deadbeef");
 		dummyData.AddField ("timezoneOffset", "0");

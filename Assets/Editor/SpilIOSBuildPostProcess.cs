@@ -11,6 +11,12 @@ using SpilGames.Unity;
 
 public class SpilIOSBuildPostProcess : MonoBehaviour
 {
+	#if UNITY_5_6_OR_NEWER
+	private static string bundleIdentifier = PlayerSettings.applicationIdentifier;
+	#elif UNITY_5_3_OR_NEWER
+	private static string bundleIdentifier = PlayerSettings.bundleIdentifier;
+	#endif
+
 	[PostProcessBuild]
 	public static void OnPostprocessBuild (BuildTarget target, string pathToBuildProject)
 	{
@@ -107,7 +113,7 @@ public class SpilIOSBuildPostProcess : MonoBehaviour
 		string data = "";
 		WWWForm form = GetFormData ();
 		form.AddField ("name", type);
-		WWW request = new WWW ("https://apptracker.spilgames.com/v1/native-events/event/ios/" + PlayerSettings.bundleIdentifier + "/" + type, form);
+		WWW request = new WWW ("https://apptracker.spilgames.com/v1/native-events/event/ios/" + bundleIdentifier + "/" + type, form);
 		while (!request.isDone)
 			;
 		if (request.error != null) {
@@ -129,7 +135,7 @@ public class SpilIOSBuildPostProcess : MonoBehaviour
 		dummyData.AddField ("os", "ios");
 		dummyData.AddField ("osVersion", "1");
 		dummyData.AddField ("deviceModel", "Editor");
-		dummyData.AddField ("bundleId", PlayerSettings.bundleIdentifier);
+		dummyData.AddField ("bundleId", bundleIdentifier);
 		dummyData.AddField ("tto", "0");
 		dummyData.AddField ("sessionId", "deadbeef");
 		dummyData.AddField ("timezoneOffset", "0");

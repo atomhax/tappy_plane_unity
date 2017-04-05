@@ -1316,6 +1316,42 @@ namespace SpilGames.Unity.Implementations
 
 		#endregion
 
+		#region IAP validation
+
+		public delegate void IAPValid (string data);
+
+		/// <summary>
+		/// This event indicates that the IAP has been validated with the SLOT backend.
+		/// </summary>
+		public event IAPValid OnIAPValid;
+
+		public static void fireIAPValid (string data)
+		{
+			Debug.Log ("SpilSDK-Unity fireIAPValid with data: " + data);
+
+			if (Spil.Instance.OnIAPValid != null) {
+				Spil.Instance.OnIAPValid (data);
+			}
+		}
+
+		public delegate void IAPInvalid (string message);
+
+		/// <summary>
+		/// This event indicates that the IAP has been validated with the SLOT backend.
+		/// </summary>
+		public event IAPInvalid OnIAPInvalid;
+
+		public static void fireIAPInvalid (string message)
+		{
+			Debug.Log ("SpilSDK-Unity fireIAPInvalid with data: " + message);
+
+			if (Spil.Instance.OnIAPInvalid != null) {
+				Spil.Instance.OnIAPInvalid (message);
+			}
+		}
+
+		#endregion
+
 		public abstract string GetWalletFromSdk ();
 
 		public abstract string GetInvetoryFromSdk ();

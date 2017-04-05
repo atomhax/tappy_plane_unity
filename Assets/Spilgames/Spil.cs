@@ -427,5 +427,21 @@ namespace SpilGames.Unity
 		{
 			SpilUnityImplementationBase.fireImagePreloadingCompleted ();
 		}
+
+		/// <summary>
+		/// This event indicates that the IAP has been validated with the SLOT backend.
+		/// </summary>
+		public void IAPValid (string data)
+		{
+			SpilUnityImplementationBase.fireIAPValid (data);
+		}
+
+		/// <summary>
+		/// This event indicates that the IAP was invalid when checked with the SLOT backend.
+		/// </summary>
+		public void IAPInvalid (string message)
+		{
+			SpilUnityImplementationBase.fireIAPInvalid (message); 
+		}
 	}
 }

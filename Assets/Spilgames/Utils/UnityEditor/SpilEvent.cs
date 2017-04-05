@@ -23,6 +23,12 @@ namespace SpilGames.Unity.Utils.UnityEditor
 
 		private string platform;
 
+		#if UNITY_5_6_OR_NEWER
+		private string bundleIdentifier = PlayerSettings.applicationIdentifier;
+		#elif UNITY_5_3_OR_NEWER
+		private string bundleIdentifier = PlayerSettings.bundleIdentifier;
+		#endif
+
 		public void Send() {
 			this.StartCoroutine (SendCoroutine ());
 		}
@@ -75,9 +81,9 @@ namespace SpilGames.Unity.Utils.UnityEditor
 			this.data.AddField("timezoneOffset", "0");
 			this.data.AddField("tto", "200");
 			if(platform.Equals("android")){
-				this.data.AddField ("packageName", PlayerSettings.bundleIdentifier);
+				this.data.AddField ("packageName", bundleIdentifier);
 			} else {
-				this.data.AddField ("bundleId", PlayerSettings.bundleIdentifier);
+				this.data.AddField ("bundleId", bundleIdentifier);
 			}
 			this.data.AddField ("sessionId", "deadbeef");
 			this.data.AddField("pluginName", Response.pluginName);

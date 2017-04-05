@@ -21,6 +21,12 @@ public class SpilEditorConfig : EditorWindow {
 	private static string androidGameVersion = "";
 	private static string iosGameVersion = "";
 
+	#if UNITY_5_6_OR_NEWER
+	private static string bundleIdentifier = PlayerSettings.applicationIdentifier;
+	#elif UNITY_5_3_OR_NEWER
+	private static string bundleIdentifier = PlayerSettings.bundleIdentifier;
+	#endif
+
 	[MenuItem ("Spil SDK/Configuration", false, 0)]
 	static void Init () {
 		spil = GameObject.FindObjectOfType<Spil> ();
@@ -326,10 +332,10 @@ public class SpilEditorConfig : EditorWindow {
 	}
 
 	void CreateDefaultConfigFiles () {
-		if (PlayerSettings.bundleIdentifier == "") {
+		if (bundleIdentifier == "") {
 			throw new UnityException ("Bundle ID is Blank");
 		}
-		Debug.Log ("Getting Default Game Data for: " + PlayerSettings.bundleIdentifier);
+		Debug.Log ("Getting Default Game Data for: " + bundleIdentifier);
 		string streamingAssetsPath = Application.dataPath + "/StreamingAssets";
 		if (!File.Exists (streamingAssetsPath)) {
 			Directory.CreateDirectory (streamingAssetsPath);
@@ -410,7 +416,7 @@ public class SpilEditorConfig : EditorWindow {
 
 			WWWForm form = GetFormData ("android");
 			form.AddField ("name", type);
-			WWW request = new WWW ("https://apptracker.spilgames.com/v1/native-events/event/android/" + PlayerSettings.bundleIdentifier + "/" + type, form);
+			WWW request = new WWW ("https://apptracker.spilgames.com/v1/native-events/event/android/" + bundleIdentifier + "/" + type, form);
 			while (!request.isDone)
 				;
 			if (request.error != null) {
@@ -422,7 +428,7 @@ public class SpilEditorConfig : EditorWindow {
 
 			WWWForm form2 = GetFormData ("ios");
 			form2.AddField ("name", type);
-			WWW request2 = new WWW ("https://apptracker.spilgames.com/v1/native-events/event/ios/" + PlayerSettings.bundleIdentifier + "/" + type, form2);
+			WWW request2 = new WWW ("https://apptracker.spilgames.com/v1/native-events/event/ios/" + bundleIdentifier + "/" + type, form2);
 			while (!request2.isDone)
 				;
 			if (request2.error != null) {
@@ -436,7 +442,7 @@ public class SpilEditorConfig : EditorWindow {
 		} else {
 			WWWForm form = GetFormData (EditorUserBuildSettings.activeBuildTarget.ToString().Trim().ToLower());
 			form.AddField ("name", type);
-			WWW request = new WWW ("https://apptracker.spilgames.com/v1/native-events/event/" + EditorUserBuildSettings.activeBuildTarget.ToString().Trim().ToLower() + "/" + PlayerSettings.bundleIdentifier + "/" + type, form);
+			WWW request = new WWW ("https://apptracker.spilgames.com/v1/native-events/event/" + EditorUserBuildSettings.activeBuildTarget.ToString().Trim().ToLower() + "/" + bundleIdentifier + "/" + type, form);
 			while (!request.isDone)
 				;
 			if (request.error != null) {
@@ -471,9 +477,9 @@ public class SpilEditorConfig : EditorWindow {
 		dummyData.AddField ("deviceModel", "Editor");
 
 		if(platform.Equals("android")){
-			dummyData.AddField ("packageName", PlayerSettings.bundleIdentifier);
+			dummyData.AddField ("packageName", bundleIdentifier);
 		} else {
-			dummyData.AddField ("bundleId", PlayerSettings.bundleIdentifier);
+			dummyData.AddField ("bundleId", bundleIdentifier);
 		}
 
 		dummyData.AddField ("tto", "0");
