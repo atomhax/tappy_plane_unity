@@ -157,8 +157,13 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 		JSONObject finalJsonObject = new JSONObject (jsonFieldString);
 
 		//the info to track
+
 		String skuId = finalJsonObject.GetField ("productId").str;
-		String transactionID = finalJsonObject.GetField ("orderId").str;
+		String transactionID = args.purchasedProduct.transactionID;
+
+		if(transactionID == null || transactionID.Equals("")){
+			transactionID = finalJsonObject.GetField ("purchaseToken").str;
+		}
 
 		Spil.Instance.TrackIAPPurchasedEvent (skuId, transactionID);
 

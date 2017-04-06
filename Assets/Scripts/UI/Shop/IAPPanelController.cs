@@ -27,6 +27,13 @@ public class IAPPanelController : MonoBehaviour {
 	}
 		
 	public void SetupIAPButtons(){
+
+		Spil.Instance.OnIAPValid -= OnIAPValid;
+		Spil.Instance.OnIAPValid += OnIAPValid;
+
+		Spil.Instance.OnIAPInvalid -= OnIAPInvalid;
+		Spil.Instance.OnIAPInvalid += OnIAPInvalid;
+
 		for(int i = 0 ; i < iapButtons.Length; i ++){
 			iapButtons [i].gameObject.SetActive (false);
 		}
@@ -52,6 +59,14 @@ public class IAPPanelController : MonoBehaviour {
 			}
 		}
 
+	}
+
+	public void OnIAPValid(string data){
+		Debug.Log("IAP valid with data: " + data);
+	}
+
+	public void OnIAPInvalid(string message){
+		Debug.Log("IAP invalid with response: " + message);
 	}
 		
 }

@@ -19,7 +19,6 @@ public class SpilAndroidBuildPostProcess : MonoBehaviour
 	private static string bundleIdentifier = PlayerSettings.bundleIdentifier;
 	#endif
 
-
 	[PostProcessBuild]
 	public static void OnPostprocessBuild (BuildTarget target, string pathToBuildProject){
 
