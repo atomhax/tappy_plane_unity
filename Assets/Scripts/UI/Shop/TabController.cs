@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using SpilGames.Unity;
-using SpilGames.Unity.Helpers;
+using SpilGames.Unity.Helpers.GameData;
 using UnityEngine.UI;
 public class TabController : MonoBehaviour {
 

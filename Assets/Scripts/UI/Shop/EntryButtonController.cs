@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using SpilGames.Unity;
-using SpilGames.Unity.Helpers;
+using SpilGames.Unity.Helpers.GameData;
 
 public class EntryButtonController : MonoBehaviour {
 

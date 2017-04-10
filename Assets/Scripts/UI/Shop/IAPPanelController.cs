@@ -3,6 +3,9 @@ using System.Collections;
 using UnityEngine.UI;
 using SpilGames.Unity;
 using SpilGames.Unity.Helpers;
+using SpilGames.Unity.Helpers.IAPPackages;
+
+
 public class IAPPanelController : MonoBehaviour {
 
 	public IAPButtonController[] iapButtons;

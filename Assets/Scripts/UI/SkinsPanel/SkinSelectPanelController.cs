@@ -2,9 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using SpilGames.Unity;
-using SpilGames.Unity.Utils;
 using SpilGames.Unity.Helpers;
 using UnityEngine.EventSystems;
+using SpilGames.Unity.Json;
 
 public class SkinSelectPanelController : MonoBehaviour {
 

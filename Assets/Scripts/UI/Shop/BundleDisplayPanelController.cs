@@ -2,8 +2,9 @@
 using System.Collections;
 using UnityEngine.UI;
 using SpilGames.Unity;
-using SpilGames.Unity.Helpers;
-using SpilGames.Unity.Utils;
+using SpilGames.Unity.Helpers.GameData;
+using SpilGames.Unity.Base.SDK;
+using SpilGames.Unity.Helpers.PlayerData;
 
 public class BundleDisplayPanelController : MonoBehaviour
 {

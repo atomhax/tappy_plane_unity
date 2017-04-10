@@ -2,16 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using SpilGames.Unity;
-using SpilGames.Unity.Helpers;
-using SpilGames.Unity.Utils;
+using SpilGames.Unity.Helpers.GameData;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using SpilGames.Unity.Base.SDK;
+using SpilGames.Unity.Json;
+using SpilGames.Unity.Helpers.PlayerData;
 
 
 #if !UNITY_TVOS
 using Facebook.Unity;
 #endif
-using SpilGames.Unity.Implementations;
+using SpilGames.Unity.Base.Implementations;
 
 public class GameController : MonoBehaviour
 {
@@ -541,15 +543,15 @@ public class GameController : MonoBehaviour
 		#endif
 	}
 
-	void Spil_Instance_OnAdAvailable (SpilGames.Unity.Utils.enumAdType adType)
+	void Spil_Instance_OnAdAvailable (SpilGames.Unity.Base.SDK.enumAdType adType)
 	{
-		if(adType == SpilGames.Unity.Utils.enumAdType.MoreApps){
+		if(adType == SpilGames.Unity.Base.SDK.enumAdType.MoreApps){
 			moreGamesButton.SetActive(true);
 		}
 	}
 
-	void Spil_Instance_OnAdNotAvailable (SpilGames.Unity.Utils.enumAdType adType){
-		if(adType == SpilGames.Unity.Utils.enumAdType.MoreApps){
+	void Spil_Instance_OnAdNotAvailable (SpilGames.Unity.Base.SDK.enumAdType adType){
+		if(adType == SpilGames.Unity.Base.SDK.enumAdType.MoreApps){
 			moreGamesButton.SetActive(false);
 		}
 	}

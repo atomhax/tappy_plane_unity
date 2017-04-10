@@ -4,7 +4,9 @@ using UnityEngine;
 using UnityEngine.Purchasing;
 using SpilGames.Unity;
 using SpilGames.Unity.Helpers;
-using SpilGames.Unity.Utils;
+using SpilGames.Unity.Json;
+using SpilGames.Unity.Helpers.IAPPackages;
+using SpilGames.Unity.Helpers.PlayerData;
 
 
 public class MyIAPManager : MonoBehaviour, IStoreListener

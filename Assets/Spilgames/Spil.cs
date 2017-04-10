@@ -8,10 +8,10 @@
 */
 
 using UnityEngine;
-using SpilGames.Unity.Implementations;
-using SpilGames.Unity.Utils;
-using SpilGames.Unity.Helpers;
+using SpilGames.Unity.Base.Implementations;
+using SpilGames.Unity.Helpers.GameData;
 using System;
+using SpilGames.Unity.Helpers.PlayerData;
 
 namespace SpilGames.Unity
 {
@@ -96,9 +96,8 @@ namespace SpilGames.Unity
 		{
 			CURRENCY,
 			ITEM,
-			EXTERNAL}
-
-		;
+			EXTERNAL
+		};
 
 		public DailyBonusRewardTypeEnum DailyBonusRewardType;
 
@@ -119,12 +118,10 @@ namespace SpilGames.Unity
 
 		#elif UNITY_ANDROID
 
-			public static SpilAndroidUnityImplementation Instance = new SpilAndroidUnityImplementation();
+		public static SpilAndroidUnityImplementation Instance = new SpilAndroidUnityImplementation();
 
 		#elif UNITY_IPHONE || UNITY_TVOS
-		/// <summary>
-		/// Use this object to access all Spil related functionality.
-		/// </summary>
+
 		public static SpiliOSUnityImplementation Instance = new SpiliOSUnityImplementation();
 
 		#endif
@@ -138,7 +135,50 @@ namespace SpilGames.Unity
 
 		public void Initialize ()
 		{
+			Debug.Log ("SpilSDK-Unity Init");
+
+			Instance.SetPluginInformation (SpilUnityImplementationBase.PluginName, SpilUnityImplementationBase.PluginVersion);
+
 			#if UNITY_EDITOR
+
+			InitEditor();
+
+			#endif
+
+			#if UNITY_IOS
+
+			if (!string.IsNullOrEmpty (CustomBundleId)) {
+				Instance.SetCustomBundleId (CustomBundleId);
+			}
+
+			#endif
+
+			#if UNITY_ANDROID
+
+			//Check if Project Id is set
+			if (ProjectId == null) {
+				throw new UnityException ("Project ID not set!! Please set your Project Id with the id provided by the Spil representative!");
+			}
+
+			#endif
+
+			Instance.SpilInit ();
+			DontDestroyOnLoad (gameObject);
+			gameObject.name = "SpilSDK";
+
+			#if !UNITY_EDITOR
+
+			GameDataObject = new SpilGameDataHelper (Instance);
+			GameData = GameDataObject;
+
+			PlayerDataObject = new PlayerDataHelper (Instance);
+			PlayerData = PlayerDataObject;
+
+			#endif
+		}
+
+		public void InitEditor()
+		{
 			if (String.IsNullOrEmpty (spilUserIdEditor)) {
 				spilUserIdEditor = Guid.NewGuid ().ToString ();
 			}
@@ -157,45 +197,6 @@ namespace SpilGames.Unity
 			DailyBonusId = dailyBonusId;
 			DailyBonusExternalId = dailyBonusExternalId;
 			DailyBonusAmount = dailyBonusAmount;
-			#endif
-
-			#if UNITY_IOS
-			if (!string.IsNullOrEmpty (CustomBundleId)) {
-				Instance.SetCustomBundleId (CustomBundleId);
-			}
-			#endif
-
-			#if UNITY_ANDROID
-
-			//Check if Project Id is set
-			if (ProjectId == null) {
-				throw new UnityException ("Project ID not set!! Please set your Project Id with the id provided by the Spil representative!");
-			}
-
-			#endif
-
-			Debug.Log ("SpilSDK-Unity Init");
-
-			Instance.SetPluginInformation (SpilUnityImplementationBase.PluginName, SpilUnityImplementationBase.PluginVersion);
-
-			Instance.SpilInit ();
-			DontDestroyOnLoad (gameObject);
-			gameObject.name = "SpilSDK";
-
-			Instance.UpdatePackagesAndPromotions ();
-
-			#if !UNITY_EDITOR
-			GameDataObject = new SpilGameDataHelper (Instance);
-			GameData = GameDataObject;
-
-			PlayerDataObject = new PlayerDataHelper (Instance);
-			PlayerData = PlayerDataObject;
-			#endif
-		}
-
-		void Start ()
-		{
-
 		}
 
 		/// <summary>

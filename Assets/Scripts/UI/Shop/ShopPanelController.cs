@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using SpilGames.Unity;
-using SpilGames.Unity.Helpers;
-using SpilGames.Unity.Utils;
+using SpilGames.Unity.Helpers.GameData;
+using SpilGames.Unity.Base.SDK;
+using SpilGames.Unity.Helpers.PlayerData;
 
 
 public class ShopPanelController : MonoBehaviour {
@@ -97,9 +98,9 @@ public class ShopPanelController : MonoBehaviour {
 		diamonsAmountText.text = Spil.PlayerData.GetCurrencyBalance (28).ToString ();
 	}
 		
-	void Spil_Instance_OnAdAvailable (SpilGames.Unity.Utils.enumAdType adType)
+	void Spil_Instance_OnAdAvailable (SpilGames.Unity.Base.SDK.enumAdType adType)
 	{
-		if (adType == SpilGames.Unity.Utils.enumAdType.RewardVideo) {
+		if (adType == SpilGames.Unity.Base.SDK.enumAdType.RewardVideo) {
 			getFreeCoinsButton.SetActive (true);
 		}
 	}
@@ -109,7 +110,7 @@ public class ShopPanelController : MonoBehaviour {
 		Spil.Instance.PlayVideo ();
 	}
 
-	void Spil_Instance_OnAdFinished (SpilGames.Unity.Utils.SpilAdFinishedResponse response)
+	void Spil_Instance_OnAdFinished (SpilAdFinishedResponse response)
 	{
 		getFreeCoinsButton.SetActive (false);
 		if(response.reward != null){
@@ -118,7 +119,7 @@ public class ShopPanelController : MonoBehaviour {
 
 			closeShopAfterReward = false;
 			starsRewardedText.text = "Thanks!\nStars Rewarded : " + response.reward.reward.ToString ();
-			Spil.PlayerData.Wallet.Add (25, response.reward.reward,PlayerDataUpdateReasons.RewardAds, "Shop");
+			Spil.PlayerData.Wallet.Add (25, response.reward.reward, PlayerDataUpdateReasons.RewardAds, "Shop");
 			rewardSucessPanel.SetActive (true);
 		}
 		Spil.Instance.SendRequestRewardVideoEvent ();

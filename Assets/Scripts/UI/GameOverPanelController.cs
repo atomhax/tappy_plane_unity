@@ -4,6 +4,9 @@ using UnityEngine.UI;
 using SpilGames.Unity;
 using SpilGames.Unity.Helpers;
 using UnityEngine.SceneManagement;
+using SpilGames.Unity.Json;
+
+
 public class GameOverPanelController : MonoBehaviour {
 
 	public Text gameoverScoreText;

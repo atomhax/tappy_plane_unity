@@ -5,7 +5,8 @@ using UnityEngine.UI;
 using SpilGames.Unity;
 using SpilGames.Unity.Helpers;
 using UnityEngine.SceneManagement;
-using SpilGames.Unity.Utils;
+using SpilGames.Unity.Base.SDK;
+using SpilGames.Unity.Json;
 
 public class HighScoresPanelController : MonoBehaviour {
 
@@ -28,7 +29,7 @@ public class HighScoresPanelController : MonoBehaviour {
 		Spil.Instance.GetOtherUsersGameState("Facebook", facebookIds);
 	}
 
-	void DisplayHighScores(SpilGames.Unity.Utils.OtherUsersGameStateData data){
+	void DisplayHighScores(OtherUsersGameStateData data){
 		highScoreText.text = "";
 
 		int pos = 1;
@@ -39,7 +40,7 @@ public class HighScoresPanelController : MonoBehaviour {
 		}
 	}
 
-	void Spil_Instance_OnOtherUsersGameStateDataLoaded (SpilGames.Unity.Utils.OtherUsersGameStateData data){
+	void Spil_Instance_OnOtherUsersGameStateDataLoaded (OtherUsersGameStateData data){
 		DisplayHighScores(data);
 	}
 
