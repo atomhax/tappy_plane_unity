@@ -625,6 +625,29 @@ namespace SpilGames.Unity.Implementations
 		}
 
 		#endregion
+
+		#region Environemnt Changing
+
+		/// <summary>
+		/// Sets the production environment for SLOT.
+		/// Internal purposes only.
+		/// </summary>
+		public void SetProductionEnvironment()
+		{
+			CallNativeMethod ("setProductionEnvironment");
+		}
+
+		/// <summary>
+		/// Sets the staging environment for SLOT.
+		/// Internal purposes only.
+		/// Not to be confused with Production Testing Environment.
+		/// </summary>
+		public void SetStagingEnvironment()
+		{
+			CallNativeMethod ("setStagingEnvironment");
+		}
+
+		#endregion
 	}
 	#endif
 }

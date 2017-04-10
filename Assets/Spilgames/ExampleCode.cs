@@ -11,12 +11,12 @@ public class ExampleCode : MonoBehaviour
 	// Here's some example methods to show what can be done
 
 	// Note: Be sure to include a defaultGameConfig.json file with your chartboost
-	// id and signature in the /StreamingAssets directory. ChartBoost videos and 
+	// id and signature in the /StreamingAssets directory. ChartBoost videos and
 	// more apps screens won't work without them. Instructions for creating a
 	// defaultGameConfig.json are included in the SpilSDK documentation.
 
 	// Call this method before showing ads, for instance in Awake()
-	void AttachListeners()
+	void AttachListeners ()
 	{
 		// Make sure that any existing handlers are removed and add new ones
 
@@ -58,35 +58,32 @@ public class ExampleCode : MonoBehaviour
 	}
 	
 	// Make sure you've called AttachListeners() before calling this method
-	public void RequestRewardVideo()
+	public void RequestRewardVideo ()
 	{
 		// Because of all the event handlers we've attached using AttachListeners() this will cause an infinite 
 		// loop of reward video's! Every time you close/dismiss the video AdFinishedHandler is called, which 
 		// requests a new video, which calls AdAvailableHandler, which plays the video and so on.
 		// So this is for testing only, easy to adapt for your own purposes though.
-		Spil.Instance.SendRequestRewardVideoEvent();
+		Spil.Instance.SendRequestRewardVideoEvent ();
 	}
 
 	// Be sure to call AttachListeners() before calling this method
-	public void RequestMoreApps()
+	public void RequestMoreApps ()
 	{
 		// Because of all the event handlers we've attached using AttachListeners() this will cause an infinite 
 		// loop of more apps! Every time you close/dismiss the more apps screen AdFinishedHandler is called, which 
 		// requests a new video, which should call AdAvailableHandler, which shows the more apps menu and so on.
 		// So this is for testing only, easy to adapt for your own purposes though.
-		Spil.Instance.RequestMoreApps();
+		Spil.Instance.RequestMoreApps ();
 	}
 
 	// When an ad is available it can be shown
-	void AdAvailableHandler(enumAdType adType)
+	void AdAvailableHandler (enumAdType adType)
 	{
-		if (adType == enumAdType.RewardVideo)
-		{
-			Spil.Instance.PlayVideo();
-		}
-		else if(adType == enumAdType.MoreApps)
-		{
-			Spil.Instance.PlayMoreApps();
+		if (adType == enumAdType.RewardVideo) {
+			Spil.Instance.PlayVideo ();
+		} else if (adType == enumAdType.MoreApps) {
+			Spil.Instance.PlayMoreApps ();
 		}
 
 		// Interstitials aren't played on command but are automatically played by the SpilSDK 
@@ -97,39 +94,36 @@ public class ExampleCode : MonoBehaviour
 
 	// When an ad is not available the UI may have to be updated,
 	// for instance to hide a button.
-	void AdNotAvailableHandler(enumAdType adType)
+	void AdNotAvailableHandler (enumAdType adType)
 	{
-		Debug.Log("Ad was not available");
+		Debug.Log ("Ad was not available");
 	}
 
-	void AdStartedHandler()
+	void AdStartedHandler ()
 	{
 		// Mute the game music etc.
 	}
 
-	void AdFinishedHandler(SpilAdFinishedResponse response)
+	void AdFinishedHandler (SpilAdFinishedResponse response)
 	{
 		// Re-enable the game music etc.
 
 		// When an ad finishes we can immediately request a new one
-		if (response.GetTypeAsEnum() == enumAdType.RewardVideo)
-		{
-			Spil.Instance.SendRequestRewardVideoEvent();
+		if (response.GetTypeAsEnum () == enumAdType.RewardVideo) {
+			Spil.Instance.SendRequestRewardVideoEvent ();
 		}
-		if (response.GetTypeAsEnum() == enumAdType.MoreApps)
-		{
-			Spil.Instance.RequestMoreApps();
+		if (response.GetTypeAsEnum () == enumAdType.MoreApps) {
+			Spil.Instance.RequestMoreApps ();
 		}
 
 		// Reward video's may also send a reward in the response if the video wasn't dismissed
-		if (response.reward != null)
-		{
+		if (response.reward != null) {
 			int rewardAmount = response.reward.reward;
 			Debug.Log ("Rewarded " + rewardAmount + (response.reward.currencyName != null ? " " + response.reward.currencyName : " credits"));
 		}
 	}
 
-    private void PlayerDataUpdatedHandler(string reason, PlayerDataUpdatedData updatedData)
+	private void PlayerDataUpdatedHandler (string reason, PlayerDataUpdatedData updatedData)
 	{
 		// Check reason and inform the player for instance if a purchase was successfull
 		// The reason that is returned is the same as the reason that was passed as a parameter
@@ -139,26 +133,26 @@ public class ExampleCode : MonoBehaviour
 		// for standard reasons.
 	}
 
-	private void PlayerDataErrorHandler(SpilErrorMessage errorMessage)
+	private void PlayerDataErrorHandler (SpilErrorMessage errorMessage)
 	{			
 		// Check the errorMessage and inform the player for instance if there was not enough money to purchase an item.
 	}
 
-	private void SpilGameDataErrorHandler(SpilErrorMessage errorMessage)
+	private void SpilGameDataErrorHandler (SpilErrorMessage errorMessage)
 	{
 		// This shouldn't happen in a live environment and should hopefully only be used for debugging.
 		// Can also be used to provide a fallback and/or present a message to the user and update the UI
 		// should the game data be corrupted or unavailable for some reason.
 	}
 
-	private void SpilGameDataAvailableHandler()
+	private void SpilGameDataAvailableHandler ()
 	{
 		// New game data (items, currencies, shop information) was received from the back-end.
 		// Update the UI and player wallet / inventory if necessary.
 	}
 
-    void Awake()
-    {
-        AttachListeners();
-    }
+	void Awake ()
+	{
+		AttachListeners ();
+	}
 }

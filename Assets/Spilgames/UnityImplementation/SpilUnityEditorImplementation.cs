@@ -673,6 +673,20 @@ namespace SpilGames.Unity.Implementations
 		}
 
 		#endregion
+
+		#region Environemnt Changing
+
+		public void SetProductionEnvironment()
+		{
+			Debug.Log ("Set environment: production!");
+		}
+
+		public void SetStagingEnvironment()
+		{
+			Debug.Log ("Set environment: staging!");
+		}
+
+		#endregion
 	}
 
 }

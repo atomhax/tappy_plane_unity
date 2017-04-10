@@ -21,13 +21,9 @@ namespace SpilGames.Unity.Utils.UnityEditor
 		public JSONObject customData = new JSONObject ();
 		private string uid = Spil.SpilUserIdEditor;
 
-		private string platform;
+		private string bundleIdentifier;
 
-		#if UNITY_5_6_OR_NEWER
-		private string bundleIdentifier = PlayerSettings.applicationIdentifier;
-		#elif UNITY_5_3_OR_NEWER
-		private string bundleIdentifier = PlayerSettings.bundleIdentifier;
-		#endif
+		private string platform;
 
 		public void Send() {
 			this.StartCoroutine (SendCoroutine ());
@@ -36,6 +32,12 @@ namespace SpilGames.Unity.Utils.UnityEditor
 		public IEnumerator SendCoroutine() {
 
 			platform = EditorUserBuildSettings.activeBuildTarget.ToString().Trim().ToLower();
+
+			#if UNITY_5_6_OR_NEWER
+			bundleIdentifier = PlayerSettings.applicationIdentifier;
+			#elif UNITY_5_3_OR_NEWER
+			bundleIdentifier = PlayerSettings.bundleIdentifier;
+			#endif
 
 			AddDefaultParameters();
 
