@@ -45,6 +45,7 @@
 -(void)UnityListenerDidReceiveRemoteNotification:(NSNotification *)note;
 #endif
 
+-(NSString*)getPushKey;
 -(void)setPushKey:(NSString*)pushKey;
 
 -(void)isUnity:(BOOL)unityEnabled;

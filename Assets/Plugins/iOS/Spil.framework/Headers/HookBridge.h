@@ -96,13 +96,15 @@ extern "C" {
     void setCustomBundleIdNative(const char* bundleId);
     
     void UnitySendMessage(const char* obj, const char* method, const char* msg);
-    
+
     char* cStringCopy(const char* string);
     
     char* getSpilUserIdNative();
     
     void setPluginInformationNative(const char* pluginName, const char* pluginVersion);
 
+    char* getLocalSecretEx();
+    
     // --- Config ---
     
     char* getConfigNative();
@@ -211,5 +213,6 @@ extern "C" {
 #endif
 
 + (void)sendMessage:(NSString*)messageName toObject:(NSString*)objectName withParameter:(NSString*)parameterString;
++ (NSString*) getLocalSecret;
 
 @end

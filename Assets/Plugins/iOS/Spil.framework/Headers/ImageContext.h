@@ -14,7 +14,7 @@
 @property (nonatomic, retain) NSString *imageType;
 @property (nonatomic, retain) NSString *imageUrl;
 
--(id)initWithIdx:(int)idx imageType:(NSString*)imageType url:(NSString*)url;
+-(id)initWithIdx:(int)idx imageType:(NSString*)imageTypeId url:(NSString*)url;
 
 -(NSMutableDictionary*)toJSONObject;
 

@@ -10,12 +10,17 @@
 #import "HookBridge.h"
 #import "GAI.h"
 
-#define SDK_VERSION @"2.1.9"
+#define SDK_VERSION @"2.2.0"
 
 @class ImageContext;
 @class Spil;
 @class UserProfile;
 @class SpilEventTracker;
+@class Bundle;
+@class PlayerCurrency;
+@class PlayerItem;
+@class Wallet;
+@class Inventory;
 
 @protocol SpilDelegate
 
@@ -28,28 +33,28 @@
  * network = ChartBoost|Fyber|DFP
  * reward = rewardData(Fyber:Integer,Chartboost:Json{reward:"",currencyName:"",currencyId:""})|nil
  */
--(void)adAvailable:(NSString*)type; // An ad is available
--(void)adNotAvailable:(NSString*)type; // An ad is unavailable or did fail to load
+-(void)adAvailable:(nonnull NSString*)type; // An ad is available
+-(void)adNotAvailable:(nonnull NSString*)type; // An ad is unavailable or did fail to load
 -(void)adStart; // An ad has started
--(void)adFinished:(NSString*)type reason:(NSString*)reason reward:(NSString*)reward network:(NSString*)network; // An ad has finished (dismissed or an reward was granted)
+-(void)adFinished:(nonnull NSString*)type reason:(nonnull NSString*)reason reward:(nonnull NSString*)reward network:(nonnull NSString*)network; // An ad has finished (dismissed or an reward was granted)
 -(void)openParentalGate; // The ad requires a parental gate check to continue, present the parental gate in this method and call the closedParentalGate method to pass the result back to the Spil SDK.
 
 // Notification events
--(void)grantReward:(NSDictionary*)data;
+-(void)grantReward:(nonnull NSDictionary*)data;
 
 // Splash screen events
 -(void)splashScreenOpen;
 -(void)splashScreenNotAvailable;
 -(void)splashScreenClosed;
 -(void)splashScreenOpenShop;
--(void)splashScreenError:(NSString*)message;
+-(void)splashScreenError:(nonnull NSString*)message;
 
 // Daily bonus screen events
 -(void)dailyBonusOpen;
 -(void)dailyBonusNotAvailable;
 -(void)dailyBonusClosed;
--(void)dailyBonusReward:(NSDictionary*)data;
--(void)dailyBonusError:(NSString*)message;
+-(void)dailyBonusReward:(nonnull NSDictionary*)data;
+-(void)dailyBonusError:(nonnull NSString*)message;
 
 // Config events
 -(void)configUpdated;
@@ -59,22 +64,26 @@
 
 // Game data events
 -(void)spilGameDataAvailable;
--(void)spilGameDataError:(NSString*)message;
+-(void)spilGameDataError:(nonnull NSString*)message;
 
 // Player data events
 -(void)playerDataAvailable;
--(void)playerDataError:(NSString*)message;
--(void)playerDataUpdated:(NSString*)reason updatedData:(NSString*)updatedData;
+-(void)playerDataError:(nonnull NSString*)message;
+-(void)playerDataUpdated:(nonnull NSString*)reason updatedData:(nonnull NSString*)updatedData;
 
 // User data events
--(void)gameStateUpdated:(NSString*)access; // Access: private|public
--(void)otherUsersGameStateLoaded:(NSDictionary*)data forProvider:(NSString*)provider; // Data: <NSString* userId, NSString* data>
--(void)gameStateError:(NSString*)message;
+-(void)gameStateUpdated:(nonnull NSString*)access; // Access: private|public
+-(void)otherUsersGameStateLoaded:(nonnull NSDictionary*)data forProvider:(nonnull NSString*)provider; // Data: <NSString* userId, NSString* data>
+-(void)gameStateError:(nonnull NSString*)message;
 
 // Image cache
--(void)imageLoadSuccess:(NSString*)localPath imageContext:(ImageContext*)imageContext;
--(void)imageLoadFailed:(ImageContext*)imageContext withError:(NSString*)error;
+-(void)imageLoadSuccess:(nonnull NSString*)localPath imageContext:(nonnull ImageContext*)imageContext;
+-(void)imageLoadFailed:(nonnull ImageContext*)imageContext withError:(nonnull NSString*)error;
 -(void)imagePreloadingCompleted;
+
+// IAP validation
+-(void)iapValid:(nonnull NSArray*)items;
+-(void)iapInvalid:(nonnull NSString*)message;
 
 @end
 
@@ -83,9 +92,9 @@
 }
 
 // Define delegate property
-@property (nonatomic, assign) id  delegate;
+@property (nonatomic, assign, nullable) id  delegate;
 
-+(Spil*)sharedInstance;
++(nonnull Spil*)sharedInstance;
 
 #pragma mark General
 
@@ -99,7 +108,7 @@
  *
  *  @param options holds a dictionary with options like "isUnity"
  */
-+(void)startWithOptions:(NSDictionary*)options;
++(void)startWithOptions:(nonnull NSDictionary*)options;
 
 /**
  *  Show advanced debug logs
@@ -115,19 +124,24 @@
  *
  *  @param The message to log
  */
-+(void)log:(NSString*)message;
++(void)log:(nonnull NSString*)message;
 
 /**
  *  Method to set a custom bundle id, useful during debugging.
  *
  *  @param The custom bundle id to use
  */
-+(void)setCustomBundleId:(NSString*)bundleId;
++(void)setCustomBundleId:(nonnull NSString*)bundleId;
 
 /**
  *  Get the Spil user id
  */
-+(NSString*)getSpilUserId;
++(nullable NSString*)getSpilUserId;
+
+/**
+ *  Get the registered push notification token
+ */
++(nullable NSString*)getPushToken;
 
 /**
  *  Set a plugin name and version for the current session.
@@ -135,7 +149,7 @@
  *  @param pluginName The plugin name
  *  @param pluginVersion The plugin version
  */
-+(void)setPluginInformation:(NSString*)pluginName pluginVersion:(NSString*)pluginVersion;
++(void)setPluginInformation:(nonnull NSString*)pluginName pluginVersion:(nonnull NSString*)pluginVersion;
 
 #pragma mark App flow
 
@@ -145,21 +159,21 @@
  *  @param application Delegate application to be passed
  *  @param launchOptions Dictionary with launch options
  */
-+(void)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
++(void)application:(nullable UIApplication *)application didFinishLaunchingWithOptions:(nullable NSDictionary *)launchOptions;
 
 /**
  *  Forwarding Delegate method to let the Spil framework know when the app went to the background
  *
  *  @param application Delegate application to be passed
  */
-+(void)applicationDidEnterBackground:(UIApplication *)application;
++(void)applicationDidEnterBackground:(nullable UIApplication *)application;
 
 /**
  *  Forwarding Delegate method to let the Spil framework know when the app became active again after running in background
  *
  *  @param application Delegate application to be passed
  */
-+(void)applicationDidBecomeActive:(UIApplication *)application;
++(void)applicationDidBecomeActive:(nullable UIApplication *)application;
 
 /**
  *  Handle remote notification packages
@@ -167,7 +181,7 @@
  *  @param Application     Reference to the UIApplication object
  *  @param userInfo        Reference to the push notification payload
  */
-+(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo;
++(void)application:(nullable UIApplication *)application didReceiveRemoteNotification:(nullable NSDictionary *)userInfo;
 
 /**
  *  Forwarding Delegate method to let the Spil framework handle deeplinks
@@ -177,7 +191,10 @@
  *  @param sourceApplication    The app name which triggered the deeplink
  *  @param annotation           The anotation of the deeplink
  */
-+(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation;
++(BOOL)application:(nullable UIApplication *)application openURL:(nullable NSURL *)url sourceApplication:(nullable NSString *)sourceApplication annotation:(nullable id)annotation;
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnullability-completeness"
 
 /**
  *  Forwarding Delegate method to let the Spil framework handle deeplinks
@@ -186,7 +203,9 @@
  *  @param continueUserActivity The user activity object
  *  @param restorationHandler   The restoration handler
  */
-+(BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *))restorationHandler;
++(BOOL)application:(nullable UIApplication *)application continueUserActivity:(nullable NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *))restorationHandler;
+
+#pragma clang diagnostic pop
 
 #pragma mark Event tracking
 
@@ -195,7 +214,7 @@
  *
  * @param name          The name of the milestone
  */
-+(void)trackMilestoneAchievedEvent:(NSString*)name;
++(void)trackMilestoneAchievedEvent:(nonnull NSString*)name;
 
 /**
  * Track a level start
@@ -204,7 +223,7 @@
  * @param customCreated Indictating if the level was custom created
  * @param creatorId     The id of the creator of the level
  */
-+(void)trackLevelStartEvent:(NSString*)level customCreated:(bool)customCreated creatorId:(NSString*)creatorId;
++(void)trackLevelStartEvent:(nonnull NSString*)level customCreated:(bool)customCreated creatorId:(nonnull NSString*)creatorId;
 
 /**
  * Track a level complete
@@ -216,7 +235,7 @@
  * @param customCreated Indictating if the level was custom created
  * @param creatorId     The id of the creator of the level
  */
-+(void)trackLevelCompleteEvent:(NSString*)level score:(double)score stars:(int)stars turns:(int)turns customCreated:(bool)customCreated creatorId:(NSString*)creatorId;
++(void)trackLevelCompleteEvent:(nonnull NSString*)level score:(double)score stars:(int)stars turns:(int)turns customCreated:(bool)customCreated creatorId:(nonnull NSString*)creatorId;
 
 /**
  * Track a level fail
@@ -228,7 +247,7 @@
  * @param customCreated Indictating if the level was custom created
  * @param creatorId     The id of the creator of the level
  */
-+(void)trackLevelFailedEvent:(NSString*)level score:(double)score stars:(int)stars turns:(int)turns customCreated:(bool)customCreated creatorId:(NSString*)creatorId;
++(void)trackLevelFailedEvent:(nonnull NSString*)level score:(double)score stars:(int)stars turns:(int)turns customCreated:(bool)customCreated creatorId:(nonnull NSString*)creatorId;
 
 /**
  * Track a level up
@@ -238,7 +257,7 @@
  * @param objectId      The level up object identifier
  * @param skillId       The skill id
  */
-+(void)trackLevelUpEvent:(NSString*)level objectId:(NSString*)objectId skillId:(NSString*)skillId;
++(void)trackLevelUpEvent:(nonnull NSString*)level objectId:(nonnull NSString*)objectId skillId:(nonnull NSString*)skillId;
 
 /**
  * Track an item equip
@@ -246,7 +265,7 @@
  * @param equippedItem  The id of the equipped item
  * @param equippedTo    The id of were the item will be equipped to
  */
-+(void)trackEquipEvent:(NSString*)equippedItem equippedTo:(NSString*)equippedTo;
++(void)trackEquipEvent:(nonnull NSString*)equippedItem equippedTo:(nonnull NSString*)equippedTo;
 
 /**
  * Track an item upgrade
@@ -256,7 +275,7 @@
  * @param reason        The upgrade reason
  * @param iteration     The upgrade iteration
  */
-+(void)trackUpgradeEvent:(NSString*)upgradeId level:(NSString*)level reason:(NSString*)reason iteration:(int)iteration;
++(void)trackUpgradeEvent:(nonnull NSString*)upgradeId level:(nonnull NSString*)level reason:(nonnull NSString*)reason iteration:(int)iteration;
 
 /**
  * Track a level create event
@@ -264,7 +283,7 @@
  * @param levelId       The id of the created level
  * @param creatorId     The id of the level creator
  */
-+(void)trackLevelCreateEvent:(NSString*)levelId creatorId:(NSString*)creatorId;
++(void)trackLevelCreateEvent:(nonnull NSString*)levelId creatorId:(nonnull NSString*)creatorId;
 
 /**
  * Track a download event
@@ -273,7 +292,7 @@
  * @param creatorId     The id of the level creator
  * @param rating        The level rating
  */
-+(void)trackLevelDownloadEvent:(NSString*)levelId creatorId:(NSString*)creatorId rating:(int)rating;
++(void)trackLevelDownloadEvent:(nonnull NSString*)levelId creatorId:(nonnull NSString*)creatorId rating:(int)rating;
 
 /**
  * Track a level rate event
@@ -282,7 +301,7 @@
  * @param creatorId     The id of the level creator
  * @param rating        The level rating
  */
-+(void)trackLevelRateEvent:(NSString*)levelId creatorId:(NSString*)creatorId rating:(int)rating;
++(void)trackLevelRateEvent:(nonnull NSString*)levelId creatorId:(nonnull NSString*)creatorId rating:(int)rating;
 
 /**
  * Track the start of an endless level
@@ -301,7 +320,7 @@
  *
  * @param level         The name of the level in which the player dies
  */
-+(void)trackPlayerDiesEvent:(NSString*)level;
++(void)trackPlayerDiesEvent:(nonnull NSString*)level;
 
 /**
  * Track a wallet/inventory update
@@ -314,7 +333,7 @@
  * @param itemsList     A list containing the item objects that have been changed with the event.
  *                      {@link com.spilgames.spilsdk.models.tracking.TrackingItem}
  */
-+(void)trackWalletInventoryEvent:(NSString*)reason withReasonDetails:(NSString*)reasonDetails location:(NSString*)location currencyList:(NSString*)currencyList itemList:(NSString*)itemsList;
++(void)trackWalletInventoryEvent:(nonnull NSString*)reason withReasonDetails:(nullable NSString*)reasonDetails location:(nullable NSString*)location currencyList:(nullable NSString*)currencyList itemList:(nullable NSString*)itemsList;
 
 /**
  * Track a successful iap
@@ -323,7 +342,7 @@
  * @param transactionId     The transaction identifier of the item that was purchased (also called orderId)
  * @param purchaseDate      The date and time that the item was purchased
  */
-+(void)trackIAPPurchasedEvent:(NSString*)skuId transactionId:(NSString*)transactionId purchaseDate:(NSString*)purchaseDate;
++(void)trackIAPPurchasedEvent:(nonnull NSString*)skuId transactionId:(nonnull NSString*)transactionId purchaseDate:(nonnull NSString*)purchaseDate;
 
 /**
  * Track a restored iap
@@ -333,7 +352,7 @@
  *                              Otherwise, identical to the transaction identifier
  * @param originalPurchaseDate  For a transaction that restores a previous transaction, the date of the original transaction
  */
-+(void)trackIAPRestoredEvent:(NSString*)skuId originalTransactionId:(NSString*)originalTransactionId originalPurchaseDate:(NSString*)originalPurchaseDate;
++(void)trackIAPRestoredEvent:(nonnull NSString*)skuId originalTransactionId:(nonnull NSString*)originalTransactionId originalPurchaseDate:(nonnull NSString*)originalPurchaseDate;
 
 /**
  * Track a failed iap
@@ -341,7 +360,7 @@
  * @param skuId     The product identifier of the item that was purchased
  * @param error     Error description or error code
  */
-+(void)trackIAPFailedEvent:(NSString*)skuId error:(NSString*)error;
++(void)trackIAPFailedEvent:(nonnull NSString*)skuId error:(nonnull NSString*)error;
 
 /**
  * Track the completion of a tutorial
@@ -360,28 +379,28 @@
  *
  * @param platform      The platform for which the registration occurred (ex.: Facebook)
  */
-+(void)trackRegisterEvent:(NSString*)platform;
++(void)trackRegisterEvent:(nonnull NSString*)platform;
 
 /**
  * Track a share
  *
  * @param platform      The platform for which the share occurred (ex.: Facebook)
  */
-+(void)trackShareEvent:(NSString*)platform;
++(void)trackShareEvent:(nonnull NSString*)platform;
 
 /**
  * Track an invite
  *
  * @param platform      The platform for which the invite occurred (ex.: Facebook)
  */
-+(void)trackInviteEvent:(NSString*)platform;
++(void)trackInviteEvent:(nonnull NSString*)platform;
 
 /**
  *  Track a basic named event
  *
  *  @param name         The name of the event. Replace spaces with an underscore
  */
-+(void) trackEvent:(NSString*)name;
++(void) trackEvent:(nonnull NSString*)name;
 
 /**
  *  Track a named events with a key / value object
@@ -389,7 +408,10 @@
  *  @param name The name of the event. Replace spaces with an underscore
  *  @param params A key value dictionary holding the params
  */
-+(void) trackEvent:(NSString*)name withParameters:(NSDictionary *)params;
++(void) trackEvent:(nonnull NSString*)name withParameters:(nullable NSDictionary *)params;
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnullability-completeness"
 
 /**
  *  Track a basic named event with a response
@@ -397,7 +419,7 @@
  *  @param name  The name of the event. Replace spaces with an underscore
  *  @param block A block with response param that will be executed when the server sends a reponse on the tracked event
  */
-+(void) trackEvent:(NSString*)name onResponse:(void (^)(id response))block;
++(void) trackEvent:(nonnull NSString*)name onResponse:(void (^)(id response))block;
 
 /**
  *  Track a named event params and a response
@@ -406,8 +428,10 @@
  *  @param params A key value dictionary holding the params
  *  @param block  A block with response param that will be executed when the server sends a reponse on the tracked event
  */
-+(void) trackEvent:(NSString*)name withParameters:(NSDictionary *)params onResponse:(void (^)(id response))block;
-    
++(void) trackEvent:(nonnull NSString*)name withParameters:(nonnull NSDictionary *)params onResponse:(void (^)(id response))block;
+
+#pragma clang diagnostic pop
+
 #pragma mark Send message
 
 /**
@@ -417,7 +441,7 @@
  *  @param objectName      The name of the spil object where the script is attached to. In most cases "SpilSDK"
  *  @param data            An object which can be serialized to json
  */
-+(void)sendMessage:(NSString*)messageName toObject:(NSString*)objectName withData:(id)data;
++(void)sendMessage:(nonnull NSString*)messageName toObject:(nonnull NSString*)objectName withData:(nonnull id)data;
 
 /**
  *  Unity message sender
@@ -426,7 +450,7 @@
  *  @param objectName      The name of the spil object where the script is attached to. In most cases "SpilSDK"
  *  @param parameterString A json string holding the data to send
  */
-+(void)sendMessage:(NSString*)messageName toObject:(NSString*)objectName withString:(NSString*)parameterString;
++(void)sendMessage:(nonnull NSString*)messageName toObject:(nonnull NSString*)objectName withString:(nonnull NSString*)parameterString;
 
 #pragma mark Push notifications
 
@@ -444,7 +468,7 @@
 /**
  *  Helper function to forward the app delegate listener on the deviceToken
  */
-+(void)didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken;
++(void)didRegisterForRemoteNotificationsWithDeviceToken:(nonnull NSData*)deviceToken;
 
 #pragma mark Config
 
@@ -453,7 +477,7 @@
  *
  * @return NSDictionary object representation from the stored game configuration
  */
-+(NSDictionary*)getConfig;
++(nullable NSDictionary*)getConfig;
 
 /**
  * Get a specific value from a particular key from the game configuration
@@ -461,7 +485,7 @@
  * @param Name of the key. Type must be NSString.
  * @return returns the object from a key, only first hiergy
  */
-+(id)getConfigValue:(NSString*)keyString;
++(nullable id)getConfigValue:(nonnull NSString*)keyString;
 
 #pragma mark Packages
 
@@ -470,7 +494,7 @@
  *
  * @return NSArray object representation from the stored store packages
  */
-+(NSArray*)getAllPackages;
++(nullable NSArray*)getAllPackages;
 
 /**
  * Get a specific package from the store
@@ -478,14 +502,14 @@
  * @param Name of the key. Type must be NSString.
  * @return returns the store package, or nil if not found
  */
-+(NSDictionary*)getPackageByID:(NSString*)keyString;
++(nullable NSDictionary*)getPackageByID:(nonnull NSString*)keyString;
 
 /**
  * Get the latest stored store promotions.
  *
  * @return NSArray object representation from the stored store promotions
  */
-+(NSArray*)getAllPromotions;
++(nullable NSArray*)getAllPromotions;
 
 /**
  * Get a specific promotion from the store
@@ -493,7 +517,7 @@
  * @param Name of the key. Type must be NSString.
  * @return returns the store promotion, or nil if not found
  */
-+(NSDictionary*)getPromotionByID:(NSString*)keyString;
++(nullable NSDictionary*)getPromotionByID:(nonnull NSString*)keyString;
 
 /**
  * Refresh the package and promotion data
@@ -512,7 +536,7 @@
  *
  * @param rewardType    The expected reward type (optional)
  */
-+(void)requestRewardVideo:(NSString*)rewardType;
++(void)requestRewardVideo:(nonnull NSString*)rewardType;
 
 /**
  * Show the last requested reward video
@@ -522,7 +546,7 @@
 /**
  * Helper method to determine if the ad provider is initialized
  */
-+(BOOL)isAdProviderInitialized:(NSString*)identifier;
++(BOOL)isAdProviderInitialized:(nonnull NSString*)identifier;
 
 /**
  *  Show a toast when a reward is unlocked
@@ -554,76 +578,122 @@
 /**
  * Returns the entire user profile as json
  */
-+(NSString*)getUserProfile;
++(nullable NSString*)getUserProfile;
+
+/**
+ * Returns the wallet data as an object
+ */
++(nullable Wallet*)getWalletData;
 
 /**
  * Returns the wallet data as json
  */
-+(NSString*)getWallet;
++(nullable NSString*)getWallet;
 
 /**
  * Returns the configured game data as json
  */
-+(NSString*)getSpilGameData;
++(nullable NSString*)getSpilGameData;
+
+/**
+ * Returns the inventory data as an object
+ */
++(nullable Inventory*)getInventoryData;
 
 /**
  * Returns the inventory data as json
  */
-+(NSString*)getInventory;
++(nullable NSString*)getInventory;
 
 /**
  * Returns the shop data as json
  */
-+(NSString*)getShop;
++(nullable NSString*)getShop;
 
 /**
  * Returns the shop promotions data as json
  */
-+(NSString*)getShopPromotions;
++(nullable NSString*)getShopPromotions;
 
 /**
  * Add currency to the wallet
  * @param currencyId    Id of the currency
  * @param amount        Amount to add
  * @param reason        The add reason
+ * @param location      The location where the event happened, for example level1
  * @param transactionId The transaction id used
  */
-+(void)addCurrencyToWallet:(int)currencyId withAmount:(int)amount withReason:(NSString*)reason withReasonDetails:(NSString*)reasonDetails withLocation:(NSString*)location withTransactionId:(NSString*)transactionId;
++(void)addCurrencyToWallet:(int)currencyId withAmount:(int)amount withReason:(nonnull NSString*)reason withReasonDetails:(nullable NSString*)reasonDetails withLocation:(nullable NSString*)location withTransactionId:(nullable NSString*)transactionId;
 
 /**
  * Subtract currency from the wallet
  * @param currencyId    Id of the currency
  * @param amount        Amount to subtract
  * @param reason        The subtract reason
+ * @param location      The location where the event happened, for example level1
  * @param transactionId The transaction id used
  */
-+(void)subtractCurrencyFromWallet:(int)currencyId withAmount:(int)amount withReason:(NSString*)reason withReasonDetails:(NSString*)reasonDetails withLocation:(NSString*)location withTransactionId:(NSString*)transactionId;
++(void)subtractCurrencyFromWallet:(int)currencyId withAmount:(int)amount withReason:(nonnull NSString*)reason withReasonDetails:(nullable NSString*)reasonDetails withLocation:(nullable NSString*)location withTransactionId:(nullable NSString*)transactionId;
 
 /**
  * Add item to the inventory
  * @param itemId        Id of the item
  * @param amount        Amount to add
  * @param reason        The add reason
+ * @param location      The location where the event happened, for example level1
  * @param transactionId The transaction id used
  */
-+(void)addItemToInventory:(int)itemId withAmount:(int)amount withReason:(NSString*)reason withReasonDetails:(NSString*)reasonDetails withLocation:(NSString*)location withTransactionId:(NSString*)transactionId;
++(void)addItemToInventory:(int)itemId withAmount:(int)amount withReason:(nonnull NSString*)reason withReasonDetails:(nullable NSString*)reasonDetails withLocation:(nullable NSString*)location withTransactionId:(nullable NSString*)transactionId;
 
 /**
  * Subtract item to from the inventory
  * @param itemId        Id of the item
  * @param amount        Amount to subtract
  * @param reason        The subtract reason
+ * @param location      The location where the event happened, for example level1
  * @param transactionId The transaction id used
  */
-+(void)subtractItemFromInventory:(int)itemId withAmount:(int)amount withReason:(NSString*)reason withReasonDetails:(NSString*)reasonDetails withLocation:(NSString*)location withTransactionId:(NSString*)transactionId;
++(void)subtractItemFromInventory:(int)itemId withAmount:(int)amount withReason:(nonnull NSString*)reason withReasonDetails:(nullable NSString*)reasonDetails withLocation:(nullable NSString*)location withTransactionId:(nullable NSString*)transactionId;
 
 /**
  * Uses the bundle and will add the items to the inventory and subtract the currency from the wallet
  * @param bundleId      Id of the bundle
  * @param reason        The bundle reason
+ * @param location      The location where the event happened, for example level1
  * @param transactionId The transaction id used
  */
-+(void)buyBundle:(int)bundleId withReason:(NSString*)reason withReasonDetails:(NSString*)reasonDetails withLocation:(NSString*)location withTransactionId:(NSString*)transactionId;
++(void)buyBundle:(int)bundleId withReason:(nonnull NSString*)reason withReasonDetails:(nullable NSString*)reasonDetails withLocation:(nullable NSString*)location withTransactionId:(nullable NSString*)transactionId;
+
+/**
+ * Get all the shop tabs
+ *
+ * Returns an array with ShopTab objects
+ */
++(nonnull NSMutableArray*)getShopTabs;
+
+/**
+ * Get a bundle by bundle id
+ * @param bundleId      Id of the bundle
+ *
+ * Returns a bundle matching the provided bundle id
+ */
++(nullable Bundle*)getBundle:(int)bundleId;
+
+/**
+ * Get an item by id
+ * @param itemId        Id of the item
+ *
+ * Returns an item matching the provided item id
+ */
++(nullable PlayerItem*)getItem:(int)itemId;
+
+/**
+ * Get a currency by the provided currency id
+ * @param currencyId    Id of the currency
+ *
+ * Returns a currency matching the provided currency id
+ */
++(nullable PlayerCurrency*)getCurrency:(int)currencyId;
 
 /**
  * Resets all the player data
@@ -674,12 +744,12 @@
 /**
  * Get the custom user id
  */
-+(NSString*)getUserId;
++(nullable NSString*)getUserId;
 
 /**
  * Get the custom provider id
  */
-+(NSString*)getUserProvider;
++(nullable NSString*)getUserProvider;
 
 /**
  *  Set a custom user id for a specified service.
@@ -687,32 +757,32 @@
  *  @param userId The social user id to use
  *  @param providerId The id of the service (e.g. facebook)
  */
-+(void)setUserId:(NSString*)userId forProviderId:(NSString*)providerId;
++(void)setUserId:(nonnull NSString*)userId forProviderId:(nonnull NSString*)providerId;
 
 /**
  *  Set private game state data.
  *
  *  @param privateData The private data to store
  */
-+(void)setPrivateGameState:(NSString*)privateData;
++(void)setPrivateGameState:(nonnull NSString*)privateData;
 
 /**
  *  Get private game state data.
  *
  */
-+(NSString*)getPrivateGameState;
++(nullable NSString*)getPrivateGameState;
 
 /**
  *  Set public game state data.
  *
  *  @param publicData The public data to store
  */
-+(void)setPublicGameState:(NSString*)publicData;
++(void)setPublicGameState:(nonnull NSString*)publicData;
 
 /**
  *  Get public game state data.
  */
-+(NSString*)getPublicGameState;
++(nullable NSString*)getPublicGameState;
 
 /**
  *  Get the public game state data of other users, 
@@ -721,7 +791,7 @@
  *  @param provider The provider to request the data from
  *  @param userIds The user ids
  */
-+(void)getOtherUsersGameState:(NSString*)provider userIds:(NSArray*)userIds;
++(void)getOtherUsersGameState:(nonnull NSString*)provider userIds:(nonnull NSArray*)userIds;
 
 #pragma image cache
 
@@ -732,7 +802,7 @@
  *
  *  Return the local image path, returns nil if their is no local file path for the url
  */
-+(NSString*)getImagePathForUrl:(NSString*)url;
++(nullable NSString*)getImagePathForUrl:(nonnull NSString*)url;
 
 /**
  *  Requests an image based on the url provided
@@ -741,7 +811,7 @@
  *  @param idx The id this image belongs to (optional)
  *  @param imageType The image type of this image (optional)
  */
-+(void)requestImage:(NSString*)url withId:(int)idx withImageType:(NSString*)imageType;
++(void)requestImage:(nonnull NSString*)url withId:(int)idx withImageType:(nullable NSString*)imageType;
 
 /**
  *  Removes all images from the disk cache
@@ -762,10 +832,10 @@
  * parentalGate: not implemented yet (always false)
  */
 
-+(void)devRequestAd:(NSString*)provider withAdType:(NSString*)adType withParentalGate:(BOOL)parentalGate;
-+(void)devShowRewardVideo:(NSString*)adProvider;
-+(void)devShowInterstitial:(NSString*)adProvider;
-+(void)devShowMoreApps:(NSString*)adProvider;
-+(NSString*)getRawAdProvidersData;
++(void)devRequestAd:(nonnull NSString*)provider withAdType:(nonnull NSString*)adType withParentalGate:(BOOL)parentalGate;
++(void)devShowRewardVideo:(nonnull NSString*)adProvider;
++(void)devShowInterstitial:(nonnull NSString*)adProvider;
++(void)devShowMoreApps:(nonnull NSString*)adProvider;
++(nullable NSString*)getRawAdProvidersData;
 
 @end

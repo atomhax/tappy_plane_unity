@@ -18,19 +18,19 @@
 		</data>
 		<key>FYBIntegrationAnalyzerViewController~ipad.nib/objects-8.0+.nib</key>
 		<data>
-		FDe6CXIQEwt0gU7UOmuDP4tT6AI=
+		ytDZ4NyL0909j3/G+RJKv9zw2Sw=
 		</data>
 		<key>FYBIntegrationAnalyzerViewController~ipad.nib/runtime.nib</key>
 		<data>
-		fDEYYwEEoGAopGIGUb/AKTLhmCM=
+		mhz2wecT/EPzIWCU3FIlNqzVY7Q=
 		</data>
 		<key>FYBIntegrationAnalyzerViewController~iphone.nib/objects-8.0+.nib</key>
 		<data>
-		9VQHE8vaK/VU2Xh+OmlgxlqZTNU=
+		FC/A10y8pE1aUuZ3ctHMiO+/+yU=
 		</data>
 		<key>FYBIntegrationAnalyzerViewController~iphone.nib/runtime.nib</key>
 		<data>
-		19sSPaED/L5XI59lZlIXINV0YgM=
+		V3cWNznyeO92Uyp5zvLyK2OO8ok=
 		</data>
 		<key>Frameworks/AdjustSdk.framework/AdjustSdk</key>
 		<data>
@@ -229,6 +229,22 @@
 		<data>
 		wEZAPByQFEExFVCHwu+d3oxWnks=
 		</data>
+		<key>Headers/Bundle.h</key>
+		<data>
+		nVgkKtOA5jntODx4a9g+XZOLp6Y=
+		</data>
+		<key>Headers/BundleItem.h</key>
+		<data>
+		98EGHc/LD4qywZV/HB9Pun0J0Pg=
+		</data>
+		<key>Headers/BundlePrice.h</key>
+		<data>
+		kkXobtCzh1c4uMpX4iWn9XlCD1o=
+		</data>
+		<key>Headers/Currency.h</key>
+		<data>
+		QasW/GpduqSEcVS1VcmZE7y5SHQ=
+		</data>
 		<key>Headers/GAI.h</key>
 		<data>
 		5fr84HTy9iWMjRaaC8b0+AzLjoo=
@@ -247,23 +263,47 @@
 		</data>
 		<key>Headers/HookBridge.h</key>
 		<data>
-		nDp+8znGYU871gP7/UGD5rOhVfA=
+		RohvcEcjqILd9BEyibEVn6Wif6c=
 		</data>
 		<key>Headers/ImageContext.h</key>
 		<data>
-		E4eI8zz5lv68eL+xrtbkMusK8Lc=
+		+fstDyuAfwBs0HLOZhDO4iqTNHQ=
+		</data>
+		<key>Headers/Inventory.h</key>
+		<data>
+		sKZi6TlylG8d2+Ywj7qEv6bvzdI=
+		</data>
+		<key>Headers/Item.h</key>
+		<data>
+		KdqgFTMQxf7jl6s3Ng7/ZYR7kjs=
 		</data>
 		<key>Headers/JsonUtil.h</key>
 		<data>
 		+DbTRQaGFl2B8QeVoXZocaLRs98=
 		</data>
-		<key>Headers/NSString+Extensions.h</key>
+		<key>Headers/PlayerCurrency.h</key>
 		<data>
-		73R/2zEr+iIlcrab2/GzOOx/Pfo=
+		z2lLOl+OtqWjYWtxSkY6L8PcgX4=
+		</data>
+		<key>Headers/PlayerItem.h</key>
+		<data>
+		nm6vBsIhZ4uPtwKAgBuFBW+gUK8=
+		</data>
+		<key>Headers/ShopEntry.h</key>
+		<data>
+		VDKyycwq0dDv20oPF8p3rbS7vA0=
+		</data>
+		<key>Headers/ShopPromotion.h</key>
+		<data>
+		iqaG3ToAqD/5CtQxa9UvahlvpHs=
+		</data>
+		<key>Headers/ShopTab.h</key>
+		<data>
+		FM4iu18H+4OzKOAJ4WJxYUK1KLE=
 		</data>
 		<key>Headers/Spil.h</key>
 		<data>
-		yrLYdjNxdaBL654xuLZhUpUaPX0=
+		IHjKLdkB/THvunGbwpqLKIi5I+M=
 		</data>
 		<key>Headers/SpilActionHandler.h</key>
 		<data>
@@ -271,11 +311,15 @@
 		</data>
 		<key>Headers/SpilEventTracker.h</key>
 		<data>
-		EjwZCR1s6xlCbqbz/hW6FRxHfZw=
+		NiT5M130feVK2V0cx1fobWpyeto=
+		</data>
+		<key>Headers/Wallet.h</key>
+		<data>
+		4micT3BUP/Nnjv76Cz5kID5QQkQ=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		+jqpYKXkzyLVMo3SjzD+U5bdTDw=
+		jLHDvtIZe2XVqYaqt3k8A+ywcWY=
 		</data>
 		<key>LICENSE</key>
 		<data>
@@ -283,7 +327,7 @@
 		</data>
 		<key>MPAdBrowserController.nib</key>
 		<data>
-		bsE5fwQSZ/lZLhbim6oxowTZ7kE=
+		aNKmq7lkJTge1i6LdCzB4qAAI4o=
 		</data>
 		<key>MPAdBrowserController.xib</key>
 		<data>
@@ -1009,44 +1053,44 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			FDe6CXIQEwt0gU7UOmuDP4tT6AI=
+			ytDZ4NyL0909j3/G+RJKv9zw2Sw=
 			</data>
 			<key>hash2</key>
 			<data>
-			r7uDM80HP7I9S+v+OebCrA6hUtRw/1caRit1GVLssHc=
+			+qsdoFGRLTkCoCtWtxdLkXkS0UHOvD5PCO6Wgze5pCo=
 			</data>
 		</dict>
 		<key>FYBIntegrationAnalyzerViewController~ipad.nib/runtime.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			fDEYYwEEoGAopGIGUb/AKTLhmCM=
+			mhz2wecT/EPzIWCU3FIlNqzVY7Q=
 			</data>
 			<key>hash2</key>
 			<data>
-			Of9DCtHCMVxqSwdat9qxH45xj0TUAKIBh/ksf6vXiIo=
+			oBX/isCrrU9tjd9v9a6n22+hYLYNT12CgvoJYBwMFbI=
 			</data>
 		</dict>
 		<key>FYBIntegrationAnalyzerViewController~iphone.nib/objects-8.0+.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			9VQHE8vaK/VU2Xh+OmlgxlqZTNU=
+			FC/A10y8pE1aUuZ3ctHMiO+/+yU=
 			</data>
 			<key>hash2</key>
 			<data>
-			85YhlboubVBqGlQUBdhMSciAE6wvhzD2dh2pWsUkfdU=
+			QOW9gYusd/GcKGRcatLXLxazYejYNVpDCO873MK1knI=
 			</data>
 		</dict>
 		<key>FYBIntegrationAnalyzerViewController~iphone.nib/runtime.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			19sSPaED/L5XI59lZlIXINV0YgM=
+			V3cWNznyeO92Uyp5zvLyK2OO8ok=
 			</data>
 			<key>hash2</key>
 			<data>
-			OAfhiFe234SQJaHF3cTnMxIkcmd8o25O/DelD4nNsrE=
+			CfcU8Ha3L+E4f5SoSe3eFzJFZZB1ljGIO/eCCrRgmGA=
 			</data>
 		</dict>
 		<key>Frameworks/AdjustSdk.framework/AdjustSdk</key>
@@ -1579,6 +1623,50 @@
 			fB9IS9v2UDjmCSQnn6A9giG2JFA0kya1zncBCyIxkSE=
 			</data>
 		</dict>
+		<key>Headers/Bundle.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			nVgkKtOA5jntODx4a9g+XZOLp6Y=
+			</data>
+			<key>hash2</key>
+			<data>
+			eCCwgB/o1Vkv6yAdpHmUUCy7P4bow90IuXD8E0Hl2d4=
+			</data>
+		</dict>
+		<key>Headers/BundleItem.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			98EGHc/LD4qywZV/HB9Pun0J0Pg=
+			</data>
+			<key>hash2</key>
+			<data>
+			6FoHfRelvN28fCurMpzNJqw5Wx/UCPcaHNXkZ8g2vHQ=
+			</data>
+		</dict>
+		<key>Headers/BundlePrice.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			kkXobtCzh1c4uMpX4iWn9XlCD1o=
+			</data>
+			<key>hash2</key>
+			<data>
+			7j/A5Czq5nKcR88FkSqvrw6cCHhzURJXZLT8EpX93Xg=
+			</data>
+		</dict>
+		<key>Headers/Currency.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			QasW/GpduqSEcVS1VcmZE7y5SHQ=
+			</data>
+			<key>hash2</key>
+			<data>
+			+WDBwo4giUZtYyQoc+eSMobXK/grCHsMHxP4wYCa2o0=
+			</data>
+		</dict>
 		<key>Headers/GAI.h</key>
 		<dict>
 			<key>hash</key>
@@ -1627,22 +1715,44 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			nDp+8znGYU871gP7/UGD5rOhVfA=
+			RohvcEcjqILd9BEyibEVn6Wif6c=
 			</data>
 			<key>hash2</key>
 			<data>
-			HasXp/V/sm7qIZdoTJHRHx0UmY9r3s36DsJz6m1pt0I=
+			nHEfSnNg6c8VbrhkRqmiDC7zXbW70onuAUzoh5Iadcw=
 			</data>
 		</dict>
 		<key>Headers/ImageContext.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			E4eI8zz5lv68eL+xrtbkMusK8Lc=
+			+fstDyuAfwBs0HLOZhDO4iqTNHQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			OUcYn9YTgK57epSmAl2BboYfZwF3S5Wk3M3zR47uuEQ=
+			DdUP9N6fLydm/0vnycY8DVFoUdJQWYcB7m/a1jLwmMU=
+			</data>
+		</dict>
+		<key>Headers/Inventory.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			sKZi6TlylG8d2+Ywj7qEv6bvzdI=
+			</data>
+			<key>hash2</key>
+			<data>
+			X/WnSNIH2HUH5AFZEilmoEkgT+HOiT3Js87r5BEwYig=
+			</data>
+		</dict>
+		<key>Headers/Item.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			KdqgFTMQxf7jl6s3Ng7/ZYR7kjs=
+			</data>
+			<key>hash2</key>
+			<data>
+			di4kumhVqfE8ZtNMudcC/ygXCulmVzoMAaWdZcD7Qnw=
 			</data>
 		</dict>
 		<key>Headers/JsonUtil.h</key>
@@ -1656,26 +1766,70 @@
 			sBLW8SKyq9vWZW2EjwlipiIJnKo2OxdYGd1u3r5qkyI=
 			</data>
 		</dict>
-		<key>Headers/NSString+Extensions.h</key>
+		<key>Headers/PlayerCurrency.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			73R/2zEr+iIlcrab2/GzOOx/Pfo=
+			z2lLOl+OtqWjYWtxSkY6L8PcgX4=
 			</data>
 			<key>hash2</key>
 			<data>
-			hLsk3S/RnPx8n/yoUWCQ1UE6Fo2Q6ES7szkf8m5IEGg=
+			53hVSR9PVMGor69sb0UtopsYCoKTGFYki0XtgtiqiHw=
+			</data>
+		</dict>
+		<key>Headers/PlayerItem.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			nm6vBsIhZ4uPtwKAgBuFBW+gUK8=
+			</data>
+			<key>hash2</key>
+			<data>
+			bp3kTm1si7ho5TdFYFNtvxIWqF4JiOO0RNVELJyMUKw=
+			</data>
+		</dict>
+		<key>Headers/ShopEntry.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			VDKyycwq0dDv20oPF8p3rbS7vA0=
+			</data>
+			<key>hash2</key>
+			<data>
+			npx72b5zg9P8Fp+HDiKPAIlrxCfa/OflE3DKQS1KpEw=
+			</data>
+		</dict>
+		<key>Headers/ShopPromotion.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			iqaG3ToAqD/5CtQxa9UvahlvpHs=
+			</data>
+			<key>hash2</key>
+			<data>
+			/io8OfGheZU+42ZEooZgxKf/j8lVmXt5tA6UlL+sTcU=
+			</data>
+		</dict>
+		<key>Headers/ShopTab.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			FM4iu18H+4OzKOAJ4WJxYUK1KLE=
+			</data>
+			<key>hash2</key>
+			<data>
+			qfPpgO92hyJPcSqmsz1SLwsTv/dW6fXv8AD0ojE5pu4=
 			</data>
 		</dict>
 		<key>Headers/Spil.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			yrLYdjNxdaBL654xuLZhUpUaPX0=
+			IHjKLdkB/THvunGbwpqLKIi5I+M=
 			</data>
 			<key>hash2</key>
 			<data>
-			sGKrQN4FSxCrXekhFqzH1DudGhI8VvwUycT6a9G6Mks=
+			ALrp50R9xq0y+pgvAQRJu0jhkwvaPskY5Vsc+tdP8FU=
 			</data>
 		</dict>
 		<key>Headers/SpilActionHandler.h</key>
@@ -1693,11 +1847,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			EjwZCR1s6xlCbqbz/hW6FRxHfZw=
+			NiT5M130feVK2V0cx1fobWpyeto=
 			</data>
 			<key>hash2</key>
 			<data>
-			GcXm4UwnhKuJKLalMbCMz8ggEveG0vAKkncFIvk4ZaI=
+			YBD/jqVgDXoK5uQt6JEtNbWPYGfARNaQ3pPWsBEre4o=
+			</data>
+		</dict>
+		<key>Headers/Wallet.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			4micT3BUP/Nnjv76Cz5kID5QQkQ=
+			</data>
+			<key>hash2</key>
+			<data>
+			stCTJXsLy7LV95N4b0/Hrx6/cVoI7MoO9Q4naF6ua3U=
 			</data>
 		</dict>
 		<key>LICENSE</key>
@@ -1715,11 +1880,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			bsE5fwQSZ/lZLhbim6oxowTZ7kE=
+			aNKmq7lkJTge1i6LdCzB4qAAI4o=
 			</data>
 			<key>hash2</key>
 			<data>
-			Zv1/1z/erVBw/hbGUNfjclMsSKN9EatLTMrmZCyQ49o=
+			y53mWumr8Jh/PR5smZyi9LYORuYmyicwk2PgTIRmU+8=
 			</data>
 		</dict>
 		<key>MPAdBrowserController.xib</key>
@@ -3387,6 +3552,11 @@
 			<key>weight</key>
 			<real>1100</real>
 		</dict>
+		<key>^Base\.lproj/</key>
+		<dict>
+			<key>weight</key>
+			<real>1010</real>
+		</dict>
 		<key>^version.plist$</key>
 		<true/>
 	</dict>
@@ -3431,6 +3601,11 @@
 			<true/>
 			<key>weight</key>
 			<real>1100</real>
+		</dict>
+		<key>^Base\.lproj/</key>
+		<dict>
+			<key>weight</key>
+			<real>1010</real>
 		</dict>
 		<key>^Info\.plist$</key>
 		<dict>
