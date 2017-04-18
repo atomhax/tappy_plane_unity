@@ -80,7 +80,7 @@ namespace SpilGames.Unity.Base.Implementations
 		/// The Spil Unity SDK is not packaged as a seperate assembly yet so this method is currently visible, this will be fixed in the future.
 		/// Internal method names start with a lower case so you can easily recognise and avoid them.
 		/// </summary>
-		internal override string getPromotion(string key)
+		internal override string GetPromotion(string key)
 		{
 			return getPromotionNative(key);
 		}
@@ -571,9 +571,20 @@ namespace SpilGames.Unity.Base.Implementations
     
 		#endregion
 	
-    
+		#region Reward
+
+		[DllImport("__Internal")]
+	        private static extern void claimToken(string token, string rewardType);
+
+		public override void ClaimToken (string token, string rewardType)
+		{
+			claimToken(token, rewardType);
+		}
+
+		#endregion
+
 		#region Customer support
-	
+
 	        public override void ShowHelpCenter() {
 	            showHelpCenterNative();
 	        }

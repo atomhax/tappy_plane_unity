@@ -43,7 +43,7 @@ namespace SpilGames.Unity.Base.SDK
 		/// <summary>
 		/// reward / empty
 		/// </summary>
-		public RewardData reward;
+		public AdvertisementRewardData reward;
 
 		/// <summary>
 		/// DFP / Fyber / Chartboost

@@ -28,7 +28,7 @@ namespace SpilGames.Unity.Helpers.IAPPackages
 				{            
 					if (packageData.hasPromotion) 
 					{
-						string promotionString = Spil.Instance.getPromotion(packageData.packageId);
+						string promotionString = Spil.Instance.GetPromotion(packageData.packageId);
 						if (!string.IsNullOrEmpty(promotionString))
 						{
 							PromotionData promotionData = JsonHelper.getObjectFromJson<PromotionData>(promotionString);

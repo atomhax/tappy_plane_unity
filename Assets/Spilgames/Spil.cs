@@ -406,6 +406,30 @@ namespace SpilGames.Unity
 		}
 
 		/// <summary>
+		/// This method is called by the native Spil SDK, it should not be used by developers.
+		/// </summary>
+		public void RewardTokenReceived (string response)
+		{
+			SpilUnityImplementationBase.fireRewardTokenReceived (response);
+		}
+
+		/// <summary>
+		/// This method is called by the native Spil SDK, it should not be used by developers.
+		/// </summary>
+		public void RewardTokenClaimed (string response)
+		{
+			SpilUnityImplementationBase.fireRewardTokenClaimed (response);
+		}
+
+		/// <summary>
+		/// This method is called by the native Spil SDK, it should not be used by developers.
+		/// </summary>
+		public void RewardTokenClaimFailed (string response)
+		{
+			SpilUnityImplementationBase.fireRewardTokenClaimFailed (response);
+		}
+
+		/// <summary>
 		/// This event will be called when an image has been downloaded.
 		/// </summary>
 		public void ImageLoadSuccess (string response)

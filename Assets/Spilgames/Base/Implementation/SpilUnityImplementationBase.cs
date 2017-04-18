@@ -17,19 +17,6 @@ namespace SpilGames.Unity.Base.Implementations
 		public static string AndroidVersion = "2.2.9";
 		public static string iOSVersion = "2.1.9";
 
-		public abstract void SetPluginInformation (string PluginName, string PluginVersion);
-
-		#region Init
-
-		/// <summary>
-		/// This method is marked as internal and should not be exposed to developers.
-		/// The Spil Unity SDK is not packaged as a seperate assembly yet so unfortunately this method is currently visible.
-		/// Internal method names start with a lower case so you can easily recognise and avoid them.
-		/// </summary>
-		internal abstract void SpilInit ();
-
-		#endregion
-
 		#region Game config
 
 		/// <summary>
@@ -47,16 +34,9 @@ namespace SpilGames.Unity.Base.Implementations
 			return JsonHelper.getObjectFromJson<T> (GetConfigAll ());
 		}
 
-		public abstract string GetConfigAll ();
-
-		public abstract string GetConfigValue (string key);
-
 		#endregion
 
 		#region Packages and promotions
-
-		// This is not essential so could be removed but might be handy for some developers so we left it in.
-		public abstract void UpdatePackagesAndPromotions ();
 
 		/// <summary>
 		/// Fetch packages and promotions locally. Packages and promotions are requested from the server when the app starts and are cached.
@@ -72,18 +52,6 @@ namespace SpilGames.Unity.Base.Implementations
 			}
 			return helper;
 		}
-
-		protected abstract string GetAllPackages ();
-
-		//Method that returns a package based on key
-		protected abstract string GetPackage (string key);
-
-		/// <summary>
-		/// This method is marked as internal and should not be exposed to developers.
-		/// The Spil Unity SDK is not packaged as a seperate assembly yet so this method is currently visible, this will be fixed in the future.
-		/// Internal method names start with a lower case so you can easily recognise and avoid them.
-		/// </summary>
-		internal abstract string getPromotion (string key);
 
 		#endregion
 
@@ -555,28 +523,7 @@ namespace SpilGames.Unity.Base.Implementations
 			SendCustomEvent (eventName, null);
 		}
 
-		/// <summary>
-		/// Sends an event to the native Spil SDK which will send a request to the back-end.
-		/// Track an event with params 
-		/// </summary>
-		/// <param name="eventName"></param>
-		/// <param name="eventParams"></param>
-		public abstract void SendCustomEvent (string eventName, Dictionary<string, object> eventParams);
-
 		#region Advertisement events
-
-		/// <summary>
-		/// When Fyber has shown a reward video and the user goes back to the game to receive his/her reward Fyber can
-		/// automatically show a toast message with information about the reward, for instance "You've received 50 coins". 
-		/// This is disabled by default to allow the developer to create a reward notification for the user.
-		/// Developers can call SetShowToastOnVideoReward(true) to enable Fyber's automatic toast message.
-		/// </summary>
-		public abstract void SetShowToastOnVideoReward (bool value);
-
-		/// <summary>
-		/// Call to inform the SDK that the parental gate was (not) passes
-		/// </summary>
-		public abstract void ClosedParentalGate (bool pass);
 
 		/// <summary>
 		/// This is fired by the native Spil SDK after it receives a response from the back-end.
@@ -750,6 +697,7 @@ namespace SpilGames.Unity.Base.Implementations
 			}
 		}
 
+
 		public delegate void ConfigUpdatedEvent ();
 
 		/// <summary>
@@ -812,8 +760,6 @@ namespace SpilGames.Unity.Base.Implementations
 				Spil.Instance.OnSpilGameDataError (errorMessage);
 			}
 		}
-
-		public abstract string GetSpilGameDataFromSdk ();
 
 		#endregion
 
@@ -1101,17 +1047,66 @@ namespace SpilGames.Unity.Base.Implementations
 			} 	
 		}
 
+		public delegate void RewardTokenReceived (String token, List<RewardObject> reward, String rewardType);
+
+		/// <summary>
+		/// This is fired by the native Spil SDK when the reward is received.
+		/// The developer can subscribe to this event and provide the reward to the user.
+		/// </summary>
+		public event RewardTokenReceived OnRewardTokenReceived;
+
+		public static void fireRewardTokenReceived (String response)
+		{
+			Debug.Log ("SpilSDK-Unity Received reward token = " + response);
+
+			RewardResponse rewardResponse = JsonHelper.getObjectFromJson<RewardResponse> (response);
+
+			if (Spil.Instance.OnRewardTokenReceived != null) {
+				Spil.Instance.OnRewardTokenReceived (rewardResponse.token, rewardResponse.reward, rewardResponse.rewardType);
+			} 	
+		}
+
+		public delegate void RewardTokenClaimed (List<RewardObject> reward, String rewardType);
+
+		/// <summary>
+		/// This is fired by the native Spil SDK when the reward has been claimed successfully from SLOT.
+		/// The developer can subscribe to this event and provide the reward to the user.
+		/// </summary>
+		public event RewardTokenClaimed OnRewardTokenClaimed;
+
+		public static void fireRewardTokenClaimed (String response)
+		{
+			Debug.Log ("SpilSDK-Unity Received reward token = " + response);
+
+			RewardResponse rewardResponse = JsonHelper.getObjectFromJson<RewardResponse> (response);
+
+			if (Spil.Instance.OnRewardTokenClaimed != null) {
+				Spil.Instance.OnRewardTokenClaimed (rewardResponse.reward, rewardResponse.rewardType);
+			} 	
+		}
+
+		public delegate void RewardTokenClaimFailed (String rewardType, SpilErrorMessage error);
+
+		/// <summary>
+		/// This is fired by the native Spil SDK when the reward claiming has failed in SLOT.
+		/// The developer can subscribe to this event and provide the reward to the user.
+		/// </summary>
+		public event RewardTokenClaimFailed OnRewardTokenClaimFailed;
+
+		public static void fireRewardTokenClaimFailed (String response)
+		{
+			Debug.Log ("SpilSDK-Unity Received reward token = " + response);
+
+			RewardResponse rewardResponse = JsonHelper.getObjectFromJson<RewardResponse> (response);
+
+			if (Spil.Instance.OnRewardTokenClaimFailed != null) {
+				Spil.Instance.OnRewardTokenClaimFailed (rewardResponse.rewardType, rewardResponse.error);
+			} 	
+		}
+
 		#region Image loading
 
-		/// <summary>
-		/// Used to get the image from the cache, based on the url provided.
-		/// </summary>
-		public abstract string GetImagePath (string url);
 
-		/// <summary>
-		/// Used to get the image from the cache, based on the url provided.ImageContext will be imageType = custom when it's not provided as parameter
-		/// </summary>
-		public abstract void RequestImage (string url, int id, string imageType);
 
 		//Get the image URL of the item.
 		/// <summary>
@@ -1139,16 +1134,6 @@ namespace SpilGames.Unity.Base.Implementations
 
 			fireImageLoaded (tex, localPath);
 		}
-
-		/// <summary>
-		/// Clears the cache, useful in case when a lot of items have been updated.
-		/// </summary>
-		public abstract void ClearDiskCache ();
-
-		/// <summary>
-		/// This method loops through all the items and bundles and adds urls to images (if any) to a download queue if those images have not yet been download and saved to local storage.
-		/// </summary>
-		public abstract void PreloadItemAndBundleImages ();
 
 		public delegate void ImageLoaded (Texture2D image,string localPath);
 
@@ -1268,6 +1253,37 @@ namespace SpilGames.Unity.Base.Implementations
 		#region Abstract Methods
 
 		/// <summary>
+		/// Sends an event to the native Spil SDK which will send a request to the back-end.
+		/// Track an event with params 
+		/// </summary>
+		/// <param name="eventName"></param>
+		/// <param name="eventParams"></param>
+		public abstract void SendCustomEvent (string eventName, Dictionary<string, object> eventParams);
+
+		#region Init
+
+		/// <summary>
+		/// This method is marked as internal and should not be exposed to developers.
+		/// The Spil Unity SDK is not packaged as a seperate assembly yet so unfortunately this method is currently visible.
+		/// Internal method names start with a lower case so you can easily recognise and avoid them.
+		/// </summary>
+		internal abstract void SpilInit ();
+
+		public abstract void SetPluginInformation (string PluginName, string PluginVersion);
+
+		#endregion
+
+		#region Config
+
+		public abstract string GetConfigAll ();
+
+		public abstract string GetConfigValue (string key);
+
+		#endregion
+
+		#region Advertisement
+
+		/// <summary>
 		/// Method that requests the "more apps" activity
 		/// </summary>
 		public abstract void RequestMoreApps ();
@@ -1279,17 +1295,48 @@ namespace SpilGames.Unity.Base.Implementations
 		public abstract void TestRequestAd (string providerName, string adType, bool parentalGate);
 
 		/// <summary>
+		/// When Fyber has shown a reward video and the user goes back to the game to receive his/her reward Fyber can
+		/// automatically show a toast message with information about the reward, for instance "You've received 50 coins". 
+		/// This is disabled by default to allow the developer to create a reward notification for the user.
+		/// Developers can call SetShowToastOnVideoReward(true) to enable Fyber's automatic toast message.
+		/// </summary>
+		public abstract void SetShowToastOnVideoReward (bool value);
+
+		/// <summary>
+		/// Call to inform the SDK that the parental gate was (not) passes
+		/// </summary>
+		public abstract void ClosedParentalGate (bool pass);
+
+		#endregion
+
+		#region Packages
+
+		protected abstract string GetAllPackages ();
+
+		//Method that returns a package based on key
+		protected abstract string GetPackage (string key);
+
+		/// <summary>
+		/// This method is marked as internal and should not be exposed to developers.
+		/// The Spil Unity SDK is not packaged as a seperate assembly yet so this method is currently visible, this will be fixed in the future.
+		/// Internal method names start with a lower case so you can easily recognise and avoid them.
+		/// </summary>
+		internal abstract string GetPromotion (string key);
+
+		// This is not essential so could be removed but might be handy for some developers so we left it in.
+		public abstract void UpdatePackagesAndPromotions ();
+
+		#endregion
+
+		#region User Id
+
+		/// <summary>
 		/// Retrieves the Spil User Id so that developers can show this in-game for users.
 		/// If users contact Spil customer service they can supply this Id so that 
 		/// customer support can help them properly. Please make this Id available for users
 		/// in one of your game's screens.
 		/// </summary>
 		public abstract string GetSpilUserId ();
-
-		/// <summary>
-		/// Updates the player data from the server.
-		/// </summary>
-		public abstract void UpdatePlayerData ();
 
 		/// <summary>
 		/// Sets the user identifier.
@@ -1316,6 +1363,10 @@ namespace SpilGames.Unity.Base.Implementations
 		/// </summary>
 		/// <returns>The user provider native.</returns>
 		public abstract string GetUserProvider ();
+
+		#endregion
+
+		#region Game State
 
 		/// <summary>
 		/// Sets the state of the private game.
@@ -1348,6 +1399,10 @@ namespace SpilGames.Unity.Base.Implementations
 		/// <param name="userIdsJsonArray">User identifiers json array.</param>
 		public abstract void GetOtherUsersGameState (string provider, string userIdsJsonArray);
 
+		#endregion
+
+		#region Daily Bonus and Splash Screen
+
 		/// <summary>
 		/// Requests the daily bonus screen.
 		/// </summary>
@@ -1357,6 +1412,36 @@ namespace SpilGames.Unity.Base.Implementations
 		/// Requests the splashscreen.
 		/// </summary>
 		public abstract void RequestSplashScreen ();
+
+		#endregion
+
+		#region Image Processing
+
+		/// <summary>
+		/// Used to get the image from the cache, based on the url provided.
+		/// </summary>
+		public abstract string GetImagePath (string url);
+
+		/// <summary>
+		/// Used to get the image from the cache, based on the url provided.ImageContext will be imageType = custom when it's not provided as parameter
+		/// </summary>
+		public abstract void RequestImage (string url, int id, string imageType);
+
+		/// <summary>
+		/// Clears the cache, useful in case when a lot of items have been updated.
+		/// </summary>
+		public abstract void ClearDiskCache ();
+
+		/// <summary>
+		/// This method loops through all the items and bundles and adds urls to images (if any) to a download queue if those images have not yet been download and saved to local storage.
+		/// </summary>
+		public abstract void PreloadItemAndBundleImages ();
+
+		#endregion
+
+		#region Player Data and Game Data
+
+		public abstract string GetSpilGameDataFromSdk ();
 
 		public abstract string GetWalletFromSdk ();
 
@@ -1378,11 +1463,28 @@ namespace SpilGames.Unity.Base.Implementations
 
 		public abstract void ResetWallet ();
 
+		/// <summary>
+		/// Updates the player data from the server.
+		/// </summary>
+		public abstract void UpdatePlayerData ();
+
+		#endregion
+
+		#region Customer Support
+
 		public abstract void ShowHelpCenter ();
 
 		public abstract void ShowContactCenter ();
 
 		public abstract void ShowHelpCenterWebview ();
+
+		#endregion
+
+		#region Reward
+
+		public abstract void ClaimToken(string token, string rewardType);
+
+		#endregion
 
 		#endregion
 	}
