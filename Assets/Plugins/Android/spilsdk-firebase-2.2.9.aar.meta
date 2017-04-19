@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: ebae82ac129fb4356a7b34910e121534
-timeCreated: 1492591787
+guid: 44046772e6570454f8e01956506dc57f
+timeCreated: 1492589586
 licenseType: Free
 PluginImporter:
   serializedVersion: 2
@@ -11,15 +11,15 @@ PluginImporter:
   platformData:
     data:
       first:
-        '': data
-      second:
-        enabled: 0
-        settings: {}
-    data:
-      first:
         Android: Android
       second:
         enabled: 1
+        settings: {}
+    data:
+      first:
+        Any: 
+      second:
+        enabled: 0
         settings: {}
     data:
       first:

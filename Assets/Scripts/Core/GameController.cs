@@ -103,7 +103,9 @@ public class GameController : MonoBehaviour
 		initialPosition = player.gameObject.transform.position;
      		initialRotation = player.gameObject.transform.rotation;
 
+     		Spil.Instance.OnReward -= Spil_Instance_OnReward;
 		Spil.Instance.OnReward += Spil_Instance_OnReward;
+
 		GetAndApplyGameConfig ();
 		SetupNewGame ();
 
@@ -127,6 +129,15 @@ public class GameController : MonoBehaviour
 
 		Spil.Instance.OnReward -= RewardHandler;
         	Spil.Instance.OnReward += RewardHandler;
+
+        	Spil.Instance.OnRewardTokenReceived -= OnRewardTokenReceived;
+		Spil.Instance.OnRewardTokenReceived += OnRewardTokenReceived;
+
+		Spil.Instance.OnRewardTokenClaimed -= OnRewardTokenClaimed;
+		Spil.Instance.OnRewardTokenClaimed += OnRewardTokenClaimed;
+
+		Spil.Instance.OnRewardTokenClaimFailed -= OnRewardTokenClaimFailed;
+		Spil.Instance.OnRewardTokenClaimFailed += OnRewardTokenClaimFailed;
 
 		FireTrackEventSample();
 
@@ -524,7 +535,7 @@ public class GameController : MonoBehaviour
 
 	void RewardHandler(PushNotificationRewardResponse rewardResponse)
 	{
-    	Debug.Log("Push notification reward received. CurrencyName: " + rewardResponse.data.eventData.currencyName + " CurrencyId: " + rewardResponse.data.eventData.currencyId + " Reward: " + rewardResponse.data.eventData.reward);
+    		Debug.Log("Push notification reward received. CurrencyName: " + rewardResponse.data.eventData.currencyName + " CurrencyId: " + rewardResponse.data.eventData.currencyId + " Reward: " + rewardResponse.data.eventData.reward);
 
 		// Show the reward
 		PlayerCurrencyData currency = new PlayerCurrencyData ();
@@ -560,6 +571,22 @@ public class GameController : MonoBehaviour
 		if(adResponse.type.Equals("moreApps")){
 			RequestMoreApps();
 		}
+	}
+
+	void OnRewardTokenReceived (string token, List<RewardObject> reward, string rewardType)
+	{
+		Debug.Log("Received reward with token: " + token + "-- Rewards: " + JsonHelper.getJSONFromObject(reward) + "-- For Type: " + rewardType);
+		Spil.Instance.ClaimToken(token, rewardType);
+	}
+
+	void OnRewardTokenClaimed (List<RewardObject> reward, string rewardType)
+	{
+		Debug.Log("Claimed reward for: " + rewardType + "-- And reward: " + JsonHelper.getJSONFromObject(reward));
+	}
+
+	void OnRewardTokenClaimFailed (string rewardType, SpilErrorMessage error)
+	{
+		Debug.Log("Error claiming reward for: " + rewardType + "-- With message: " + error.message);
 	}
 
 	public void RequestMoreApps(){

@@ -1057,7 +1057,7 @@ namespace SpilGames.Unity.Base.Implementations
 
 		public static void fireRewardTokenReceived (String response)
 		{
-			Debug.Log ("SpilSDK-Unity Received reward token = " + response);
+			Debug.Log ("SpilSDK-Unity Received reward = " + response);
 
 			RewardResponse rewardResponse = JsonHelper.getObjectFromJson<RewardResponse> (response);
 
@@ -1076,7 +1076,7 @@ namespace SpilGames.Unity.Base.Implementations
 
 		public static void fireRewardTokenClaimed (String response)
 		{
-			Debug.Log ("SpilSDK-Unity Received reward token = " + response);
+			Debug.Log ("SpilSDK-Unity Claimed reward = " + response);
 
 			RewardResponse rewardResponse = JsonHelper.getObjectFromJson<RewardResponse> (response);
 
@@ -1095,7 +1095,7 @@ namespace SpilGames.Unity.Base.Implementations
 
 		public static void fireRewardTokenClaimFailed (String response)
 		{
-			Debug.Log ("SpilSDK-Unity Received reward token = " + response);
+			Debug.Log ("SpilSDK-Unity Claim failed for = " + response);
 
 			RewardResponse rewardResponse = JsonHelper.getObjectFromJson<RewardResponse> (response);
 
@@ -1476,7 +1476,7 @@ namespace SpilGames.Unity.Base.Implementations
 
 		public abstract void ShowContactCenter ();
 
-		public abstract void ShowHelpCenterWebview ();
+		public abstract void ShowHelpCenterWebview (string url);
 
 		#endregion
 

@@ -641,7 +641,7 @@ namespace SpilGames.Unity.Base.Implementations
 			// TODO
 		}
 
-		public override void ShowHelpCenterWebview ()
+		public override void ShowHelpCenterWebview (string url)
 		{
 			// TODO
 		}

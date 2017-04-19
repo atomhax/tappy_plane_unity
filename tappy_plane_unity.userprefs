@@ -1,6 +1,16 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Spilgames/Base/Implementation/SpilUnityImplementationBase.cs">
+    <Files>
+      <File FileName="Assets/Spilgames/Spil.cs" Line="429" Column="58" />
+      <File FileName="Assets/Spilgames/Base/SDK/Responses/RewardResponse.cs" Line="22" Column="10" />
+      <File FileName="Assets/Spilgames/Base/SDK/Responses/AdvertisementResponse.cs" Line="45" Column="17" />
+      <File FileName="Assets/Spilgames/Base/Implementation/SpilUnityImplementationBase.cs" Line="1479" Column="59" />
+      <File FileName="Assets/Spilgames/Base/Implementation/SpilAndroidUnityImplementation.cs" Line="588" Column="3" />
+      <File FileName="Assets/Spilgames/Base/Implementation/SpilUnityEditorImplementation.cs" Line="667" Column="4" />
+      <File FileName="Assets/Spilgames/Base/Implementation/SpiliOSUnityImplementation.cs" Line="702" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Spilgames/Utils/UnityEditor/SpilEvent.cs" line="84" column="1" />
