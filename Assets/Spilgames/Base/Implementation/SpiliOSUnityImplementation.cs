@@ -574,11 +574,11 @@ namespace SpilGames.Unity.Base.Implementations
 		#region Reward
 
 		[DllImport("__Internal")]
-	        private static extern void claimToken(string token, string rewardType);
+		private static extern void claimTokenNative(string token, string rewardType);
 
 		public override void ClaimToken (string token, string rewardType)
 		{
-			claimToken(token, rewardType);
+			claimTokenNative(token, rewardType);
 		}
 
 		#endregion
@@ -599,13 +599,13 @@ namespace SpilGames.Unity.Base.Implementations
 	        [DllImport("__Internal")]
 	        private static extern void showContactCenterNative();
 
-	        public override void ShowHelpCenterWebview()
+	        public override void ShowHelpCenterWebview(string url)
 	        {
-	            showHelpCenterWebviewNative();
+				showHelpCenterWebviewNative(url);
 	        }
 
 	        [DllImport("__Internal")]
-	        private static extern void showHelpCenterWebviewNative();
+			private static extern void showHelpCenterWebviewNative(string url);
 
     
 		#endregion
