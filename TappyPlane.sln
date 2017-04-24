@@ -1,11 +1,11 @@
+﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2008
-
-Project("{847C3A1B-EAE1-9077-B553-C7D1A4726692}") = "TappyPlane", "Assembly-CSharp-firstpass.csproj", "{835344B5-D482-29B1-1E0D-943F475887E4}"
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TappyPlane", "Assembly-CSharp-firstpass.csproj", "{835344B5-D482-29B1-1E0D-943F475887E4}"
 EndProject
-Project("{847C3A1B-EAE1-9077-B553-C7D1A4726692}") = "TappyPlane", "Assembly-CSharp.csproj", "{FCF3EBED-1117-7C63-5D4A-C0589384D5DC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TappyPlane", "Assembly-CSharp.csproj", "{FCF3EBED-1117-7C63-5D4A-C0589384D5DC}"
 EndProject
-Project("{847C3A1B-EAE1-9077-B553-C7D1A4726692}") = "TappyPlane", "Assembly-CSharp-Editor.csproj", "{DCB45D98-5928-650C-AB8A-A01FDDBF8AC3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TappyPlane", "Assembly-CSharp-Editor.csproj", "{DCB45D98-5928-650C-AB8A-A01FDDBF8AC3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

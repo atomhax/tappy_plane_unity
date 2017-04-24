@@ -10,7 +10,7 @@
 #import "HookBridge.h"
 #import "GAI.h"
 
-#define SDK_VERSION @"2.2.0"
+#define SDK_VERSION @"2.2.2"
 
 @class ImageContext;
 @class Spil;
@@ -84,6 +84,11 @@
 // IAP validation
 -(void)iapValid:(nonnull NSArray*)items;
 -(void)iapInvalid:(nonnull NSString*)message;
+
+// Token claiming
+-(void)rewardTokenReceived:(nonnull NSString*)token rewardData:(nonnull NSArray*)rewardJsonObject withRewardType:(nonnull NSString*)rewardType;
+-(void)rewardTokenClaimed:(nonnull NSString*)rewardType reward:(nonnull NSArray*)reward;
+-(void)rewardTokenClaimFailed:(nonnull NSString*)rewardType error:(nonnull NSString*)error;
 
 @end
 
@@ -470,6 +475,15 @@
  */
 +(void)didRegisterForRemoteNotificationsWithDeviceToken:(nonnull NSData*)deviceToken;
 
+#pragma mark Token claiming
+
+/**
+ *  Used to claim the reward token from the backend
+ *  @param token      The token to claim
+ *  @param rewardType The reward type to which the token belongs
+ */
++(void)claimToken:(nonnull NSString*)token withRewardType:(nonnull NSString*)rewardType;
+
 #pragma mark Config
 
 /**
@@ -724,8 +738,9 @@
 
 /**
  * Shows the help center webview version
+ * @param url   The url to open
  */
-+(void)showHelpCenterWebview;
++(void)showHelpCenterWebview:(NSString*)url;
 
 #pragma mark Web
 

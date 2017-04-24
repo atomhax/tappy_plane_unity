@@ -389,6 +389,11 @@ public class GameController : MonoBehaviour
 			PlayerCurrencyData currency = updatedData.currencies [0];
 			OpenShop (currency);
 		}
+
+		if (reason == "Deeplink From Client" && updatedData.currencies.Count > 0) {
+			PlayerCurrencyData currency = updatedData.currencies [0];
+			OpenShop (currency);
+		}
 	}
 
 	public void SavePrivateGameState ()

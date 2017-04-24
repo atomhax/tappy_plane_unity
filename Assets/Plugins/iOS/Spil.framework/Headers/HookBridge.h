@@ -26,7 +26,7 @@ extern "C" {
     
     void trackEventWithParamsNative(const char* eventName, const char* jsonStringParams);
     
-    // --- Default events (Not used by the unity plugin, it uses the generic track event methods ---
+    // --- Default events (Not used by the unity plugin, it uses the generic track event methods) ---
     
     void trackMilestoneAchievedEvent(const char* name);
     
@@ -81,6 +81,10 @@ extern "C" {
     void setPushNotificationKey(const char* pushKey);
     
     void handlePushNotification(const char* notificationStringParams);
+    
+    // --- Token claiming ---
+    
+    void claimTokenNative(const char* token, const char* rewardType);
     
     // --- App flow ---
     
@@ -173,7 +177,7 @@ extern "C" {
     
     void showContactCenterNative();
     
-    void showHelpCenterWebviewNative();
+    void showHelpCenterWebviewNative(char* url);
     
     // --- Web ---
     
