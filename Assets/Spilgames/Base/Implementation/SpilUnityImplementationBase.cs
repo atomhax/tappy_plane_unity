@@ -697,6 +697,7 @@ namespace SpilGames.Unity.Base.Implementations
 			}
 		}
 
+		#endregion
 
 		public delegate void ConfigUpdatedEvent ();
 
@@ -718,7 +719,27 @@ namespace SpilGames.Unity.Base.Implementations
 			}
 		}
 
-		#endregion
+		public delegate void ConfigError (SpilErrorMessage errorMessage);
+
+		/// <summary>
+		/// This is fired by the native Spil SDK when the config was updated.
+		/// The developer can subscribe to this event and for instance re-enable the in-game sound.
+		/// </summary>
+		public event ConfigError OnConfigError;
+
+		/// <summary>
+		/// This is called by the native Spil SDK and will fire an ConfigUpdated event to which the developer 
+		/// can subscribe, it will only be called when the config values are different from the previous loaded config.
+		/// </summary>
+		public static void fireConfigError (string error)
+		{
+			Debug.Log ("SpilSDK-Unity Config updated!");
+
+			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage> (error);
+			if (Spil.Instance.OnConfigUpdated != null) {
+				Spil.Instance.OnConfigError (errorMessage);
+			}
+		}
 
 		#endregion
 
@@ -1243,6 +1264,23 @@ namespace SpilGames.Unity.Base.Implementations
 
 			if (Spil.Instance.OnIAPInvalid != null) {
 				Spil.Instance.OnIAPInvalid (message);
+			}
+		}
+
+		public delegate void IAPServerError (SpilErrorMessage errorMessage);
+
+		/// <summary>
+		/// This event indicates that the IAP has been validated with the SLOT backend.
+		/// </summary>
+		public event IAPServerError OnIAPServerError;
+
+		public static void fireIAPServerError (string error)
+		{
+			Debug.Log ("SpilSDK-Unity fireIAPServerError with data: " + error);
+
+			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage> (error);
+			if (Spil.Instance.OnIAPInvalid != null) {
+				Spil.Instance.OnIAPServerError (errorMessage);
 			}
 		}
 

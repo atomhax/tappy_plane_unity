@@ -255,6 +255,15 @@ namespace SpilGames.Unity
 
 		/// <summary>
 		/// This method is called by the native Spil SDK, it should not be used by developers.
+		/// Developers can subscribe to the Spil.Instance.ConfigUpdated event.
+		/// </summary>
+		public void ConfigError (string error)
+		{
+			SpilUnityImplementationBase.fireConfigError (error);
+		}
+
+		/// <summary>
+		/// This method is called by the native Spil SDK, it should not be used by developers.
 		/// </summary>
 		public void OnResponseReceived (string response)
 		{
@@ -467,6 +476,14 @@ namespace SpilGames.Unity
 		public void IAPInvalid (string message)
 		{
 			SpilUnityImplementationBase.fireIAPInvalid (message); 
+		}
+
+		/// <summary>
+		/// This event indicates that the IAP was invalid when checked with the SLOT backend.
+		/// </summary>
+		public void IAPServerError (string error)
+		{
+			SpilUnityImplementationBase.fireIAPServerError (error); 
 		}
 	}
 }
