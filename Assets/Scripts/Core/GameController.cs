@@ -59,7 +59,7 @@ public class GameController : MonoBehaviour
 	public bool fbLoggedIn = false;
 
 	private Vector3 initialPosition;
- 	private Quaternion initialRotation;
+	private Quaternion initialRotation;
 
 	void Awake ()
 	{
@@ -101,9 +101,9 @@ public class GameController : MonoBehaviour
 	{
 
 		initialPosition = player.gameObject.transform.position;
-     		initialRotation = player.gameObject.transform.rotation;
+		initialRotation = player.gameObject.transform.rotation;
 
-     		Spil.Instance.OnReward -= Spil_Instance_OnReward;
+		Spil.Instance.OnReward -= Spil_Instance_OnReward;
 		Spil.Instance.OnReward += Spil_Instance_OnReward;
 
 		GetAndApplyGameConfig ();
@@ -128,9 +128,9 @@ public class GameController : MonoBehaviour
 		Spil.Instance.OnPlayerDataUpdated += OnPlayerDataUpdated;
 
 		Spil.Instance.OnReward -= RewardHandler;
-        	Spil.Instance.OnReward += RewardHandler;
+		Spil.Instance.OnReward += RewardHandler;
 
-        	Spil.Instance.OnRewardTokenReceived -= OnRewardTokenReceived;
+		Spil.Instance.OnRewardTokenReceived -= OnRewardTokenReceived;
 		Spil.Instance.OnRewardTokenReceived += OnRewardTokenReceived;
 
 		Spil.Instance.OnRewardTokenClaimed -= OnRewardTokenClaimed;
@@ -139,11 +139,18 @@ public class GameController : MonoBehaviour
 		Spil.Instance.OnRewardTokenClaimFailed -= OnRewardTokenClaimFailed;
 		Spil.Instance.OnRewardTokenClaimFailed += OnRewardTokenClaimFailed;
 
-		FireTrackEventSample();
+		Spil.Instance.OnServerTimeRequestSuccess -= OnServerTimeRequestSuccess;
+		Spil.Instance.OnServerTimeRequestSuccess += OnServerTimeRequestSuccess;
+
+		Spil.Instance.OnServerTimeRequestFailed -= OnServerTimeRequestFailed;
+		Spil.Instance.OnServerTimeRequestFailed += OnServerTimeRequestFailed;
+
+		FireTrackEventSample ();
 
 //		Spil.Instance.PreloadItemAndBundleImages();
 
 		Invoke ("RequestDailyBonus", 1);
+		Spil.Instance.RequestServerTime ();
 	}
 
 	void Spil_Instance_OnReward (PushNotificationRewardResponse rewardResponse)
@@ -167,8 +174,8 @@ public class GameController : MonoBehaviour
 		player.dead = false;
 		player.idleMode = true;
 
-		player.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-		player.gameObject.GetComponent<Rigidbody2D>().angularVelocity = 0; 
+		player.gameObject.GetComponent<Rigidbody2D> ().velocity = Vector2.zero;
+		player.gameObject.GetComponent<Rigidbody2D> ().angularVelocity = 0; 
 		player.gameObject.transform.position = initialPosition;
 		player.gameObject.transform.rotation = initialRotation;
 
@@ -192,7 +199,7 @@ public class GameController : MonoBehaviour
 		Spil.Instance.OnAdFinished -= Spil_Instance_OnAdFinished;
 		Spil.Instance.OnAdFinished += Spil_Instance_OnAdFinished;
 
-		RequestMoreApps();
+		RequestMoreApps ();
 
 		UpdateUI (GameStates.Start);
 	}
@@ -264,9 +271,10 @@ public class GameController : MonoBehaviour
 		shopPanel.SetActive (true);
 	}
 
-	public void OpenShop (PlayerCurrencyData currency) {
+	public void OpenShop (PlayerCurrencyData currency)
+	{
 		shopPanel.SetActive (true);
-		shopPanel.GetComponent<ShopPanelController>().ShowReward (currency);
+		shopPanel.GetComponent<ShopPanelController> ().ShowReward (currency);
 	}
 
 	public void ToggleHighScores ()
@@ -281,7 +289,7 @@ public class GameController : MonoBehaviour
 			if (fbLoggedIn == false) {
 				FacebookLogin ();
 			} else {
-				highScorePanel.GetComponent<HighScoresPanelController>().RequestHighScores ();
+				highScorePanel.GetComponent<HighScoresPanelController> ().RequestHighScores ();
 			}
 		}
 	}
@@ -384,13 +392,14 @@ public class GameController : MonoBehaviour
 		Debug.Log ("DailyBonusNotAvailable");
 	}
 
-	public void OnPlayerDataUpdated(string reason, PlayerDataUpdatedData updatedData) {
-		if (reason == "Daily Bonus From Client") {
+	public void OnPlayerDataUpdated (string reason, PlayerDataUpdatedData updatedData)
+	{
+		if (reason.Equals ("Daily Bonus From Client")) {
 			PlayerCurrencyData currency = updatedData.currencies [0];
 			OpenShop (currency);
 		}
 
-		if (reason == "Deeplink From Client" && updatedData.currencies.Count > 0) {
+		if (reason.Equals ("Deeplink From Client") && updatedData.currencies.Count > 0) {
 			PlayerCurrencyData currency = updatedData.currencies [0];
 			OpenShop (currency);
 		}
@@ -425,11 +434,15 @@ public class GameController : MonoBehaviour
 		Debug.Log ("Facebook Inistialised");
 	}
 
-	private void FacebookLogin() 
+	private void FacebookLogin ()
 	{
 		Debug.Log ("Requesting Log In information");
 		#if !UNITY_TVOS
-		FB.LogInWithReadPermissions (new List<string> () { "public_profile", "email", "user_friends" }, this.HandleResult);
+		FB.LogInWithReadPermissions (new List<string> () {
+			"public_profile",
+			"email",
+			"user_friends"
+		}, this.HandleResult);
 		#endif
 	}
 
@@ -439,13 +452,13 @@ public class GameController : MonoBehaviour
 		fbLoggedIn = true;
 		if (result.ResultDictionary != null) {
 			foreach (string key in result.ResultDictionary.Keys) {
-				Debug.Log(key + " : " + result.ResultDictionary [key].ToString());
-				if (key.Equals("user_id")) {
-					Debug.Log("Saving User Id");
-					Spil.Instance.SetUserId("Facebook", result.ResultDictionary [key].ToString());
+				Debug.Log (key + " : " + result.ResultDictionary [key].ToString ());
+				if (key.Equals ("user_id")) {
+					Debug.Log ("Saving User Id");
+					Spil.Instance.SetUserId ("Facebook", result.ResultDictionary [key].ToString ());
 
-					Debug.Log("Requesting friends list");
-					FB.API("/me/friends?fields=id,name", HttpMethod.GET, HandleFriendsLoaded);
+					Debug.Log ("Requesting friends list");
+					FB.API ("/me/friends?fields=id,name", HttpMethod.GET, HandleFriendsLoaded);
 				}
 			}
 		}
@@ -453,16 +466,16 @@ public class GameController : MonoBehaviour
 
 	protected void HandleFriendsLoaded (IResult result)
 	{
-		Debug.Log("FB friends loaded!");
+		Debug.Log ("FB friends loaded!");
 
 		if (result.ResultDictionary != null) {
 			if (result.ResultDictionary.ContainsKey ("data")) {
-				List<object> data = (List<object>)result.ResultDictionary["data"];
-				Debug.Log("FB friend count: " + data.Count);
+				List<object> data = (List<object>)result.ResultDictionary ["data"];
+				Debug.Log ("FB friend count: " + data.Count);
 				for (int i = 0; i < data.Count; i++) {
-					Dictionary<string,object> userData = data[i] as Dictionary<string,object>;
-					string userId = userData["id"] as string;
-					string userName = userData["name"] as string;
+					Dictionary<string,object> userData = data [i] as Dictionary<string,object>;
+					string userId = userData ["id"] as string;
+					string userName = userData ["name"] as string;
 					GameController.userIds.Add (userId);
 					GameController.userNames.Add (userName);
 				}
@@ -471,16 +484,18 @@ public class GameController : MonoBehaviour
 
 		if (highScorePanel.activeInHierarchy) {
 			highScorePanel.GetComponent<HighScoresPanelController> ().RequestHighScores ();
-			Spil.Instance.RequestSplashScreen();
+			Spil.Instance.RequestSplashScreen ();
 		}
 	}
 	#endif
 
-	private void RequestDailyBonus(){
-		Spil.Instance.RequestDailyBonus();
+	private void RequestDailyBonus ()
+	{
+		Spil.Instance.RequestDailyBonus ();
 	}
 
-	public static string GetNameForFbId(string fbId) {
+	public static string GetNameForFbId (string fbId)
+	{
 		for (int i = 0; i < GameController.userIds.Count; i++) {
 			string id = GameController.userIds [i];
 			if (id == fbId) {
@@ -490,11 +505,12 @@ public class GameController : MonoBehaviour
 		return "Me"; 
 	}
 
-	public static string GetFriendIdsJson() {
+	public static string GetFriendIdsJson ()
+	{
 		string json = "[";
 
 		// Add the own user id
-		json += "\"" + Spil.Instance.GetUserId() + "\"";
+		json += "\"" + Spil.Instance.GetUserId () + "\"";
 		if (GameController.userIds.Count > 0) {
 			json += ",";
 		}
@@ -512,25 +528,26 @@ public class GameController : MonoBehaviour
 		return json; 
 	}
 
-	public void FireTrackEventSample(){
+	public void FireTrackEventSample ()
+	{
 
-		List<TrackingCurrency> currencies = new List<TrackingCurrency>();
+		List<TrackingCurrency> currencies = new List<TrackingCurrency> ();
 
-		TrackingCurrency currency1 = new TrackingCurrency();
+		TrackingCurrency currency1 = new TrackingCurrency ();
 		currency1.name = "TestCurrency";
 		currency1.currentBalance = 110;
 		currency1.delta = 10;
 		currency1.type = 0;
-		currencies.Add(currency1);
+		currencies.Add (currency1);
 
-		List<TrackingItem> items = new List<TrackingItem>();
+		List<TrackingItem> items = new List<TrackingItem> ();
 
-		TrackingItem item1 = new TrackingItem();
+		TrackingItem item1 = new TrackingItem ();
 		item1.name = "TestItem";
 		item1.amount = 2;
 		item1.delta = 1;
 		item1.type = 0;
-		items.Add(item1);
+		items.Add (item1);
 
 //		Spil.Instance.TrackWalletInventoryEvent("Test1", "GameStart", currencies);
 //		Spil.Instance.TrackWalletInventoryEvent("Test2", "GameStart", null, items);
@@ -538,9 +555,9 @@ public class GameController : MonoBehaviour
 
 	}
 
-	void RewardHandler(PushNotificationRewardResponse rewardResponse)
+	void RewardHandler (PushNotificationRewardResponse rewardResponse)
 	{
-    		Debug.Log("Push notification reward received. CurrencyName: " + rewardResponse.data.eventData.currencyName + " CurrencyId: " + rewardResponse.data.eventData.currencyId + " Reward: " + rewardResponse.data.eventData.reward);
+		Debug.Log ("Push notification reward received. CurrencyName: " + rewardResponse.data.eventData.currencyName + " CurrencyId: " + rewardResponse.data.eventData.currencyId + " Reward: " + rewardResponse.data.eventData.reward);
 
 		// Show the reward
 		PlayerCurrencyData currency = new PlayerCurrencyData ();
@@ -561,45 +578,59 @@ public class GameController : MonoBehaviour
 
 	void Spil_Instance_OnAdAvailable (SpilGames.Unity.Base.SDK.enumAdType adType)
 	{
-		if(adType == SpilGames.Unity.Base.SDK.enumAdType.MoreApps){
-			moreGamesButton.SetActive(true);
+		if (adType == SpilGames.Unity.Base.SDK.enumAdType.MoreApps) {
+			moreGamesButton.SetActive (true);
 		}
 	}
 
-	void Spil_Instance_OnAdNotAvailable (SpilGames.Unity.Base.SDK.enumAdType adType){
-		if(adType == SpilGames.Unity.Base.SDK.enumAdType.MoreApps){
-			moreGamesButton.SetActive(false);
+	void Spil_Instance_OnAdNotAvailable (SpilGames.Unity.Base.SDK.enumAdType adType)
+	{
+		if (adType == SpilGames.Unity.Base.SDK.enumAdType.MoreApps) {
+			moreGamesButton.SetActive (false);
 		}
 	}
 
-	void Spil_Instance_OnAdFinished(SpilAdFinishedResponse adResponse){
-		if(adResponse.type.Equals("moreApps")){
-			RequestMoreApps();
+	void Spil_Instance_OnAdFinished (SpilAdFinishedResponse adResponse)
+	{
+		if (adResponse.type.Equals ("moreApps")) {
+			RequestMoreApps ();
 		}
 	}
 
 	void OnRewardTokenReceived (string token, List<RewardObject> reward, string rewardType)
 	{
-		Debug.Log("Received reward with token: " + token + "-- Rewards: " + JsonHelper.getJSONFromObject(reward) + "-- For Type: " + rewardType);
-		Spil.Instance.ClaimToken(token, rewardType);
+		Debug.Log ("Received reward with token: " + token + "-- Rewards: " + JsonHelper.getJSONFromObject (reward) + "-- For Type: " + rewardType);
+		Spil.Instance.ClaimToken (token, rewardType);
 	}
 
 	void OnRewardTokenClaimed (List<RewardObject> reward, string rewardType)
 	{
-		Debug.Log("Claimed reward for: " + rewardType + "-- And reward: " + JsonHelper.getJSONFromObject(reward));
+		Debug.Log ("Claimed reward for: " + rewardType + "-- And reward: " + JsonHelper.getJSONFromObject (reward));
 	}
 
 	void OnRewardTokenClaimFailed (string rewardType, SpilErrorMessage error)
 	{
-		Debug.Log("Error claiming reward for: " + rewardType + "-- With message: " + error.message);
+		Debug.Log ("Error claiming reward for: " + rewardType + "-- With message: " + error.message);
 	}
 
-	public void RequestMoreApps(){
-		Spil.Instance.RequestMoreApps();
+	void OnServerTimeRequestSuccess (long time)
+	{
+		Debug.Log ("Server time is: " + time);
 	}
 
-	public void ShowMoreApps(){
-		Spil.Instance.PlayMoreApps();
+	void OnServerTimeRequestFailed (SpilErrorMessage errorMessage)
+	{
+		Debug.Log ("Server failed to retrieve with error: " + errorMessage.message);
+	}
+
+	public void RequestMoreApps ()
+	{
+		Spil.Instance.RequestMoreApps ();
+	}
+
+	public void ShowMoreApps ()
+	{
+		Spil.Instance.PlayMoreApps ();
 	}
 
 	/*public void FBShareScore ()

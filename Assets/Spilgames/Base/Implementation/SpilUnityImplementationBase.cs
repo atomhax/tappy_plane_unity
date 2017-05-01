@@ -814,11 +814,11 @@ namespace SpilGames.Unity.Base.Implementations
 
 		public static void firePlayerDataUpdated (string data)
 		{
+			Debug.Log ("SpilSDK-Unity Player Data has been updated with data: " + data);
+
 			PlayerDataUpdatedData playerDataUpdatedData = JsonHelper.getObjectFromJson<PlayerDataUpdatedData> (data);
 
 			Spil.PlayerData.PlayerDataUpdatedHandler ();
-
-			Debug.Log ("SpilSDK-Unity Player Data has been updated with data: " + data);
 
 			if (Spil.Instance.OnPlayerDataUpdated != null) {
 				Spil.Instance.OnPlayerDataUpdated (playerDataUpdatedData.reason, playerDataUpdatedData);
@@ -1286,6 +1286,45 @@ namespace SpilGames.Unity.Base.Implementations
 
 		#endregion
 
+		#region Server Time
+
+		public delegate void ServerTimeRequestSuccess (long time);
+
+		/// <summary>
+		/// This event indicates that the IAP has been validated with the SLOT backend.
+		/// </summary>
+		public event ServerTimeRequestSuccess OnServerTimeRequestSuccess;
+
+		public static void fireServerTimeRequestSuccess (string timeString)
+		{
+			Debug.Log ("SpilSDK-Unity fireServerTimeRequestSuccess with data: " + timeString);
+
+			long time = long.Parse(timeString);
+
+			if (Spil.Instance.OnServerTimeRequestSuccess != null) {
+				Spil.Instance.OnServerTimeRequestSuccess (time);
+			}
+		}
+
+		public delegate void ServerTimeRequestFailed (SpilErrorMessage errorMessage);
+
+		/// <summary>
+		/// This event indicates that the IAP has been validated with the SLOT backend.
+		/// </summary>
+		public event ServerTimeRequestFailed OnServerTimeRequestFailed;
+
+		public static void fireServerTimeRequestFailed (string error)
+		{
+			Debug.Log ("SpilSDK-Unity fireServerTimeRequestFailed with data: " + error);
+
+			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage> (error);
+			if (Spil.Instance.OnServerTimeRequestFailed != null) {
+				Spil.Instance.OnServerTimeRequestFailed (errorMessage);
+			}
+		}
+
+		#endregion
+
 		#endregion
 
 		#region Abstract Methods
@@ -1521,6 +1560,12 @@ namespace SpilGames.Unity.Base.Implementations
 		#region Reward
 
 		public abstract void ClaimToken(string token, string rewardType);
+
+		#endregion
+
+		#region Server Time
+
+		public abstract void RequestServerTime();
 
 		#endregion
 

@@ -583,6 +583,18 @@ namespace SpilGames.Unity.Base.Implementations
 
 		#endregion
 
+		#region Server Time
+
+		[DllImport("__Internal")]
+		private static extern void requestServerTimeNative();
+
+		public override void RequestServerTime ()
+		{
+			requestServerTimeNative();
+		}
+
+		#endregion
+
 		#region Customer support
 
 	        public override void ShowHelpCenter() {

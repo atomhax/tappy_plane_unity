@@ -464,6 +464,15 @@ namespace SpilGames.Unity.Base.Implementations
 
 		#endregion
 
+		#region Server Time
+
+		public override void RequestServerTime ()
+		{
+			CallNativeMethod ("requestServerTime");
+		}
+
+		#endregion
+
 		#region Push notifications
 
 		/// <summary>

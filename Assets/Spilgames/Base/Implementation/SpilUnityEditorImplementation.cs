@@ -21,15 +21,6 @@ namespace SpilGames.Unity.Base.Implementations
 		public static PlayerDataResponse pData;
 		public static GameDataResponse gData;
 
-		public SpilUnityEditorImplementation ()
-		{
-			gData = new GameDataResponse ();
-			pData = new PlayerDataResponse ();
-
-			SetPluginInformation (PluginName, PluginVersion);
-		}
-
-
 		#region Inherited members
 
 		public override void SetPluginInformation (string PluginName, string PluginVersion)
@@ -105,6 +96,11 @@ namespace SpilGames.Unity.Base.Implementations
 		/// </summary>
 		internal override void SpilInit ()
 		{
+			gData = new GameDataResponse ();
+			pData = new PlayerDataResponse ();
+
+			SetPluginInformation (PluginName, PluginVersion);
+
 			RequestConfig ();
 			RequestGameData ();
 			RequestPlayerData ();
@@ -696,6 +692,17 @@ namespace SpilGames.Unity.Base.Implementations
 		public void SetStagingEnvironment()
 		{
 			Debug.Log ("Set environment: staging!");
+		}
+
+		#endregion
+
+		#region Server Time
+
+		public override void RequestServerTime ()
+		{	
+			int currentTime = (int)(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now) - new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc)).TotalSeconds;
+			string time = currentTime.ToString();
+			fireServerTimeRequestSuccess(time);
 		}
 
 		#endregion

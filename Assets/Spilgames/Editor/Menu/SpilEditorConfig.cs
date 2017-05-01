@@ -7,7 +7,8 @@ using System.Xml;
 using SpilGames.Unity.Base.Implementations;
 using SpilGames.Unity.Json;
 
-public class SpilEditorConfig : EditorWindow {
+public class SpilEditorConfig : EditorWindow
+{
 
 	private int tabSelected = 0;
 	private static Spil spil;
@@ -27,7 +28,8 @@ public class SpilEditorConfig : EditorWindow {
 	#endif
 
 	[MenuItem ("Spil SDK/Configuration", false, 0)]
-	static void Init () {
+	static void Init ()
+	{
 		spil = GameObject.FindObjectOfType<Spil> ();
 		SpilEditorConfig window = (SpilEditorConfig)EditorWindow.GetWindow (typeof(SpilEditorConfig));
 		window.autoRepaintOnSceneChange = true;
@@ -39,9 +41,11 @@ public class SpilEditorConfig : EditorWindow {
 
 	}
 
-	void OnGUI () {
-		GUILayout.BeginVertical();
-		scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width (position.width), GUILayout.Height (position.height)); {
+	void OnGUI ()
+	{
+		GUILayout.BeginVertical ();
+		scrollPos = EditorGUILayout.BeginScrollView (scrollPos, GUILayout.Width (position.width), GUILayout.Height (position.height));
+		{
 			GUILayout.BeginHorizontal ();
 			{
 				if (GUILayout.Toggle (tabSelected == 0, "General", EditorStyles.toolbarButton)) {
@@ -60,83 +64,84 @@ public class SpilEditorConfig : EditorWindow {
 			GUILayout.EndHorizontal ();
 
 			switch (tabSelected) {
-				case 0:
-					DrawGeneral ();
-					break;
-				case 1:
-					DrawIOS ();
-					break;
-				case 2:
-					DrawAndroid ();
-					break;
-				case 3:
-					DrawEditor();
-					break;
+			case 0:
+				DrawGeneral ();
+				break;
+			case 1:
+				DrawIOS ();
+				break;
+			case 2:
+				DrawAndroid ();
+				break;
+			case 3:
+				DrawEditor ();
+				break;
 			}
 		}
 
-		EditorGUILayout.EndScrollView();
+		EditorGUILayout.EndScrollView ();
 		GUILayout.EndVertical ();
 	}
 
-	private void DrawGeneral () {
-		GUILayout.Label("");
+	private void DrawGeneral ()
+	{
+		GUILayout.Label ("");
 		GUILayout.Label ("WARNING: Please make sure to set your bundle ID in your player settings before getting your game data.\nPlease also note that this tool will only work if your build target is set to iOS or Android", EditorStyles.wordWrappedLabel);
-		GUILayout.Label("");
-		GUILayout.Label("The button below will create the following configuration files:" , EditorStyles.wordWrappedLabel);
-		GUILayout.Label(" • defaultGameConfig.json", EditorStyles.boldLabel);
-		GUILayout.Label(" • defaultPlayerData.json", EditorStyles.boldLabel);
-		GUILayout.Label(" • defaultGameData.json", EditorStyles.boldLabel);
-		GUILayout.Label("These files can be located in the StreamingAssets folder", EditorStyles.wordWrappedLabel);
-		GUILayout.Label("");
+		GUILayout.Label ("");
+		GUILayout.Label ("The button below will create the following configuration files:", EditorStyles.wordWrappedLabel);
+		GUILayout.Label (" • defaultGameConfig.json", EditorStyles.boldLabel);
+		GUILayout.Label (" • defaultPlayerData.json", EditorStyles.boldLabel);
+		GUILayout.Label (" • defaultGameData.json", EditorStyles.boldLabel);
+		GUILayout.Label ("These files can be located in the StreamingAssets folder", EditorStyles.wordWrappedLabel);
+		GUILayout.Label ("");
 
-		GUILayout.Label("Android Game Version", EditorStyles.boldLabel);
-		androidGameVersion = GUILayout.TextField(androidGameVersion);
+		GUILayout.Label ("Android Game Version", EditorStyles.boldLabel);
+		androidGameVersion = GUILayout.TextField (androidGameVersion);
 
-		GUILayout.Label("iOS Game Version", EditorStyles.boldLabel);
-		iosGameVersion = GUILayout.TextField(iosGameVersion);
+		GUILayout.Label ("iOS Game Version", EditorStyles.boldLabel);
+		iosGameVersion = GUILayout.TextField (iosGameVersion);
 
-		GUILayout.Label("");
+		GUILayout.Label ("");
 		if (GUILayout.Button ("Create Default Configuration Files")) {
 			CreateDefaultConfigFiles ();
 		}
 
 
-		if(File.Exists(Application.streamingAssetsPath + "/defaultGameConfig.json")){
-			GUILayout.Label("");
-			GUILayout.Label("DefaultGameConfig Values:", EditorStyles.boldLabel);
+		if (File.Exists (Application.streamingAssetsPath + "/defaultGameConfig.json")) {
+			GUILayout.Label ("");
+			GUILayout.Label ("DefaultGameConfig Values:", EditorStyles.boldLabel);
 
-			if(configJSON == null){
-				configJSON = new JSONObject(System.IO.File.ReadAllText (Application.streamingAssetsPath + "/defaultGameConfig.json"));
+			if (configJSON == null) {
+				configJSON = new JSONObject (System.IO.File.ReadAllText (Application.streamingAssetsPath + "/defaultGameConfig.json"));
 			}
 
-			GUILayout.Label("");
-			if(configJSON.HasField("androidSdkConfig")){
-				if(android == null){
-					android = new JSONObject(configJSON.GetField("androidSdkConfig").Print(false));
+			GUILayout.Label ("");
+			if (configJSON.HasField ("androidSdkConfig")) {
+				if (android == null) {
+					android = new JSONObject (configJSON.GetField ("androidSdkConfig").Print (false));
 				}
 				 
-				GUILayout.Label("Android", EditorStyles.boldLabel);
+				GUILayout.Label ("Android", EditorStyles.boldLabel);
 				string androidConfig = "";
 
-				for(int i = 0; i < android.Count; i++){
-					androidConfig = androidConfig + android.keys[i] + ": " + android.list[i].Print(false) + "\n";
+				for (int i = 0; i < android.Count; i++) {
+					androidConfig = androidConfig + android.keys [i] + ": " + android.list [i].Print (false) + "\n";
 				}
-				GUILayout.Label(androidConfig, EditorStyles.wordWrappedLabel);
+				GUILayout.Label (androidConfig, EditorStyles.wordWrappedLabel);
 			}
-			GUILayout.Label("");
-			if(configJSON.HasField("iosSdkConfig")){
-				if(ios == null){
-					ios = new JSONObject(configJSON.GetField("iosSdkConfig").Print(false));
+			GUILayout.Label ("");
+			if (configJSON.HasField ("iosSdkConfig")) {
+				if (ios == null) {
+					ios = new JSONObject (configJSON.GetField ("iosSdkConfig").Print (false));
 				}
 
-				GUILayout.Label("iOS", EditorStyles.boldLabel);
+				GUILayout.Label ("iOS", EditorStyles.boldLabel);
 				string iosConfig = "";
 
-				for(int i = 0; i < ios.Count; i++){
-					iosConfig = iosConfig + ios.keys[i] + ": " + ios.list[i].Print(false) + "\n";
+				for (int i = 0; i < ios.Count; i++) {
+					iosConfig = iosConfig + ios.keys [i] + ": " + ios.list [i].Print (false) + "\n";
 				}
-				GUILayout.Label(iosConfig, EditorStyles.wordWrappedLabel);
+				GUILayout.Label (iosConfig, EditorStyles.wordWrappedLabel);
 			}
 
 
@@ -144,10 +149,11 @@ public class SpilEditorConfig : EditorWindow {
 
 	}
 
-	private void DrawIOS () {
+	private void DrawIOS ()
+	{
 
-		GUILayout.Label("This tab contains configuration information specific to iOS", EditorStyles.boldLabel);
-		GUILayout.Label("");
+		GUILayout.Label ("This tab contains configuration information specific to iOS", EditorStyles.boldLabel);
+		GUILayout.Label ("");
 
 		string customUserId = "<< Spil component not found in scene! >>";
 		bool exportDefaultEntitlements = EditorPrefs.GetBool ("exportDefaultEntitlements");
@@ -161,7 +167,7 @@ public class SpilEditorConfig : EditorWindow {
 		}
 
 		GUILayout.Label ("Custom bundle id: (Useful when the bundle id used to build is\n" +
-			"not the same as the one connecting to the Spil Games backend)");
+		"not the same as the one connecting to the Spil Games backend)");
 		customUserId = GUILayout.TextField (customUserId);
 
 		GUILayout.Space (4);
@@ -181,11 +187,12 @@ public class SpilEditorConfig : EditorWindow {
 		}
 	}
 
-	private void DrawAndroid () {
-		GUILayout.Label("This tab contains configuration information specific to Android", EditorStyles.boldLabel);
-		GUILayout.Label("");
+	private void DrawAndroid ()
+	{
+		GUILayout.Label ("This tab contains configuration information specific to Android", EditorStyles.boldLabel);
+		GUILayout.Label ("");
 
-		GUILayout.Label("Installed Modules:", EditorStyles.boldLabel);
+		GUILayout.Label ("Installed Modules:", EditorStyles.boldLabel);
 
 		string androidFolder = "Assets/Plugins/Android/";
 		string spilSDK = "spilsdk-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
@@ -195,12 +202,12 @@ public class SpilEditorConfig : EditorWindow {
 		string spilSDKFyber = "spilsdk-fyber-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
 		string spilSDKZendesk = "spilsdk-zendesk-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
 
-		var styleGreen = new GUIStyle(EditorStyles.label);
-		Color green = new Color();
-		ColorUtility.TryParseHtmlString("#006400", out green);
+		var styleGreen = new GUIStyle (EditorStyles.label);
+		Color green = new Color ();
+		ColorUtility.TryParseHtmlString ("#006400", out green);
 		styleGreen.normal.textColor = green;
 
-		var styleRed = new GUIStyle(EditorStyles.label);
+		var styleRed = new GUIStyle (EditorStyles.label);
 		styleRed.normal.textColor = Color.red;
 
 		string spilSDKCheck = "";
@@ -210,127 +217,129 @@ public class SpilEditorConfig : EditorWindow {
 		string spilSDKFyberCheck = "";
 		string spilSDKZendeskCheck = "";
 
-		if(!File.Exists(androidFolder + spilSDK)){
+		if (!File.Exists (androidFolder + spilSDK)) {
 			spilSDKCheck = " - False";
-			GUILayout.Label(" • SDK Main Module:" + spilSDKCheck, styleRed);
+			GUILayout.Label (" • SDK Main Module:" + spilSDKCheck, styleRed);
 		} else {
 			spilSDKCheck = " - True";
-			GUILayout.Label(" • SDK Main Module:" + spilSDKCheck, styleGreen);
+			GUILayout.Label (" • SDK Main Module:" + spilSDKCheck, styleGreen);
 		}
 
-		if(!File.Exists(androidFolder + spilSDKAdjust)){
+		if (!File.Exists (androidFolder + spilSDKAdjust)) {
 			spilSDKAdjustCheck = " - False";
-			GUILayout.Label(" • Adjust (Analytics):" + spilSDKAdjustCheck, styleRed);
+			GUILayout.Label (" • Adjust (Analytics):" + spilSDKAdjustCheck, styleRed);
 		} else {
 			spilSDKAdjustCheck = " - True";
-			GUILayout.Label(" • Adjust (Analytics):" + spilSDKAdjustCheck, styleGreen);
+			GUILayout.Label (" • Adjust (Analytics):" + spilSDKAdjustCheck, styleGreen);
 		}
 
-		if(!File.Exists(androidFolder + spilSDKChartboost)){
+		if (!File.Exists (androidFolder + spilSDKChartboost)) {
 			spilSDKChartboostCheck = " - False";
-			GUILayout.Label(" • Chartboost (Advertising):" + spilSDKChartboostCheck, styleRed);
+			GUILayout.Label (" • Chartboost (Advertising):" + spilSDKChartboostCheck, styleRed);
 		} else {
 			spilSDKChartboostCheck = " - True";
-			GUILayout.Label(" • Chartboost (Advertising):" + spilSDKChartboostCheck, styleGreen);
+			GUILayout.Label (" • Chartboost (Advertising):" + spilSDKChartboostCheck, styleGreen);
 		}
 
-		if(!File.Exists(androidFolder + spilSDKDFP)){
+		if (!File.Exists (androidFolder + spilSDKDFP)) {
 			spilSDKDFPCheck = " - False";
-			GUILayout.Label(" • DFP (Advertising):" + spilSDKDFPCheck, styleRed);
+			GUILayout.Label (" • DFP (Advertising):" + spilSDKDFPCheck, styleRed);
 		} else {
 			spilSDKDFPCheck = " - True";
-			GUILayout.Label(" • DFP (Advertising):" + spilSDKDFPCheck, styleGreen);
+			GUILayout.Label (" • DFP (Advertising):" + spilSDKDFPCheck, styleGreen);
 		}
 
-		if(!File.Exists(androidFolder + spilSDKFyber)){
+		if (!File.Exists (androidFolder + spilSDKFyber)) {
 			spilSDKFyberCheck = " - False";
-			GUILayout.Label(" • Fyber (Advertising):" + spilSDKFyberCheck, styleRed);
+			GUILayout.Label (" • Fyber (Advertising):" + spilSDKFyberCheck, styleRed);
 		} else {
 			spilSDKFyberCheck = " - True";
-			GUILayout.Label(" • Fyber (Advertising):" + spilSDKFyberCheck, styleGreen);
+			GUILayout.Label (" • Fyber (Advertising):" + spilSDKFyberCheck, styleGreen);
 		}
 
-		if(!File.Exists(androidFolder + spilSDKZendesk)){
+		if (!File.Exists (androidFolder + spilSDKZendesk)) {
 			spilSDKZendeskCheck = " - False";
-			GUILayout.Label(" • Zendesk (Customer Support):" + spilSDKZendeskCheck, styleRed);
+			GUILayout.Label (" • Zendesk (Customer Support):" + spilSDKZendeskCheck, styleRed);
 		} else {
 			spilSDKZendeskCheck = " - True";
-			GUILayout.Label(" • Zendesk (Customer Support):" + spilSDKZendeskCheck, styleGreen);
+			GUILayout.Label (" • Zendesk (Customer Support):" + spilSDKZendeskCheck, styleGreen);
 		}
 
 
-		GUILayout.Label("");
+		GUILayout.Label ("");
 
-		GUILayout.Label("Android Project Id:", EditorStyles.boldLabel);
+		GUILayout.Label ("Android Project Id:", EditorStyles.boldLabel);
 
 		string projectId = "<< Spil component not found in scene! >>";
 		if (spil != null) {
 			projectId = spil.ProjectId;
 		}
 
-		projectId = GUILayout.TextField(projectId);
+		projectId = GUILayout.TextField (projectId);
 
 		if (spil != null) {
 			spil.ProjectId = projectId;
 		}
 
-		GUILayout.Label("");
+		GUILayout.Label ("");
 
-		GUILayout.Label("Permissions", EditorStyles.boldLabel);
+		GUILayout.Label ("Permissions", EditorStyles.boldLabel);
 
-		if(CheckAutomaticPermissionRequest()){
-			GUILayout.Label("Spil SDK Automatic Runtime Requesting of dangerous permissions - True", styleGreen);
-		} else{
-			GUILayout.Label("Spil SDK Automatic Runtime Requesting of dangerous permissions - False", styleRed);
+		if (CheckAutomaticPermissionRequest ()) {
+			GUILayout.Label ("Spil SDK Automatic Runtime Requesting of dangerous permissions - True", styleGreen);
+		} else {
+			GUILayout.Label ("Spil SDK Automatic Runtime Requesting of dangerous permissions - False", styleRed);
 		}
 
-		GUILayout.Label("The label above tells if the Spil SDK will automatically request all the dangerous permissions at the start of your game. If you want to disable it please check your \"AndroidManifest.xml\" file.", EditorStyles.wordWrappedLabel);
+		GUILayout.Label ("The label above tells if the Spil SDK will automatically request all the dangerous permissions at the start of your game. If you want to disable it please check your \"AndroidManifest.xml\" file.", EditorStyles.wordWrappedLabel);
 
-		GUILayout.Label("");
+		GUILayout.Label ("");
 
-		if(GUILayout.Button("Verify Android Setup")){
-			VerifyAndroidSetup();
+		if (GUILayout.Button ("Verify Android Setup")) {
+			VerifyAndroidSetup ();
 		}
 	}
 
-	void DrawEditor(){
-		GUILayout.Label("This tab contains configuration information specific to the Unity Editor", EditorStyles.boldLabel);
-		GUILayout.Label("");
+	void DrawEditor ()
+	{
+		GUILayout.Label ("This tab contains configuration information specific to the Unity Editor", EditorStyles.boldLabel);
+		GUILayout.Label ("");
 
-		GUILayout.Label("Spil User Id:", EditorStyles.boldLabel);
+		GUILayout.Label ("Spil User Id:", EditorStyles.boldLabel);
 
 		string editorUserId = "<< Spil component not found in scene! >>";
 		if (spil != null) {
 			editorUserId = spil.spilUserIdEditor;
 		}
 
-		editorUserId = GUILayout.TextField(editorUserId);
+		editorUserId = GUILayout.TextField (editorUserId);
 
 		if (spil != null) {
 			spil.spilUserIdEditor = editorUserId;
 		}
 
-		GUILayout.Label("Bundle Id:", EditorStyles.boldLabel);
+		GUILayout.Label ("Bundle Id:", EditorStyles.boldLabel);
 
 		string bundleIdEditor = "<< Spil component not found in scene! >>";
 		if (spil != null) {
 			bundleIdEditor = spil.bundleIdEditor;
 		}
 
-		bundleIdEditor = GUILayout.TextField(bundleIdEditor);
+		bundleIdEditor = GUILayout.TextField (bundleIdEditor);
 
 		if (spil != null) {
 			spil.bundleIdEditor = bundleIdEditor;
 		}
 
-		GUILayout.Label("");
-		if(GUILayout.Button("Detailed Editor Configuration")){
+		GUILayout.Label ("");
+		if (GUILayout.Button ("Detailed Editor Configuration")) {
 			Selection.activeGameObject = spil.gameObject;
 		}
 
 	}
 
-	void CreateDefaultConfigFiles () {
+	void CreateDefaultConfigFiles ()
+	{
 		if (bundleIdentifier == "") {
 			throw new UnityException ("Bundle ID is Blank");
 		}
@@ -339,78 +348,79 @@ public class SpilEditorConfig : EditorWindow {
 		if (!File.Exists (streamingAssetsPath)) {
 			Directory.CreateDirectory (streamingAssetsPath);
 		}
-		if(!File.Exists(streamingAssetsPath + "/defaultGameData.json")){
+		if (!File.Exists (streamingAssetsPath + "/defaultGameData.json")) {
 			File.WriteAllText (streamingAssetsPath + "/defaultGameData.json", GetData ("requestGameData"));
 		} else {
-			File.Delete(streamingAssetsPath + "/defaultGameData.json");
+			File.Delete (streamingAssetsPath + "/defaultGameData.json");
 			File.WriteAllText (streamingAssetsPath + "/defaultGameData.json", GetData ("requestGameData"));
 		}
 
-		if(!File.Exists(streamingAssetsPath + "/defaultGameConfig.json")){
+		if (!File.Exists (streamingAssetsPath + "/defaultGameConfig.json")) {
 			string configResponse = GetData ("requestConfig");
 			File.WriteAllText (streamingAssetsPath + "/defaultGameConfig.json", configResponse);
-			configJSON = new JSONObject(configResponse);
+			configJSON = new JSONObject (configResponse);
 
 			android = null;
 			ios = null;
 		} else {
-			File.Delete(streamingAssetsPath + "/defaultGameConfig.json");
+			File.Delete (streamingAssetsPath + "/defaultGameConfig.json");
 			string configResponse = GetData ("requestConfig");
 			File.WriteAllText (streamingAssetsPath + "/defaultGameConfig.json", configResponse);
-			configJSON = new JSONObject(configResponse);
+			configJSON = new JSONObject (configResponse);
 
 			android = null;
 			ios = null;
 		}
 
-		if(!File.Exists(streamingAssetsPath + "/defaultPlayerData.json")){
-			JSONObject gameData = new JSONObject(GetData ("requestGameData"));
-			JSONObject playerData = new JSONObject(GetData ("requestPlayerData"));
+		if (!File.Exists (streamingAssetsPath + "/defaultPlayerData.json")) {
+			JSONObject gameData = new JSONObject (GetData ("requestGameData"));
+			JSONObject playerData = new JSONObject (GetData ("requestPlayerData"));
 
-			for (int i = 0; i < gameData.GetField("currencies").Count; i++){
-				JSONObject currency = new JSONObject();
-				currency.AddField("id", gameData.GetField("currencies").list[i].GetField("id"));
-				currency.AddField("currentBalance", 0);
-				currency.AddField("delta", 0);
+			for (int i = 0; i < gameData.GetField ("currencies").Count; i++) {
+				JSONObject currency = new JSONObject ();
+				currency.AddField ("id", gameData.GetField ("currencies").list [i].GetField ("id"));
+				currency.AddField ("currentBalance", 0);
+				currency.AddField ("delta", 0);
 
-				playerData.GetField("wallet").GetField("currencies").Add(currency);
+				playerData.GetField ("wallet").GetField ("currencies").Add (currency);
 			}
 
-			playerData.GetField("wallet").RemoveField("offset");
-			playerData.GetField("wallet").AddField("offset", 0);
+			playerData.GetField ("wallet").RemoveField ("offset");
+			playerData.GetField ("wallet").AddField ("offset", 0);
 
-			playerData.GetField("inventory").RemoveField("offset");
-			playerData.GetField("inventory").AddField("offset", 0);
+			playerData.GetField ("inventory").RemoveField ("offset");
+			playerData.GetField ("inventory").AddField ("offset", 0);
 
-			File.WriteAllText (streamingAssetsPath + "/defaultPlayerData.json", playerData.Print(false));
+			File.WriteAllText (streamingAssetsPath + "/defaultPlayerData.json", playerData.Print (false));
 		} else {
-			File.Delete(streamingAssetsPath + "/defaultPlayerData.json");
+			File.Delete (streamingAssetsPath + "/defaultPlayerData.json");
 
-			JSONObject gameData = new JSONObject(GetData ("requestGameData"));
-			JSONObject playerData = new JSONObject(GetData ("requestPlayerData"));
+			JSONObject gameData = new JSONObject (GetData ("requestGameData"));
+			JSONObject playerData = new JSONObject (GetData ("requestPlayerData"));
 
-			for (int i = 0; i < gameData.GetField("currencies").Count; i++){
-				JSONObject currency = new JSONObject();
-				currency.AddField("id", gameData.GetField("currencies").list[i].GetField("id"));
-				currency.AddField("currentBalance", 0);
-				currency.AddField("delta", 0);
+			for (int i = 0; i < gameData.GetField ("currencies").Count; i++) {
+				JSONObject currency = new JSONObject ();
+				currency.AddField ("id", gameData.GetField ("currencies").list [i].GetField ("id"));
+				currency.AddField ("currentBalance", 0);
+				currency.AddField ("delta", 0);
 
-				playerData.GetField("wallet").GetField("currencies").Add(currency);
+				playerData.GetField ("wallet").GetField ("currencies").Add (currency);
 			}
 
-			playerData.GetField("wallet").AddField("offset", 0);
+			playerData.GetField ("wallet").AddField ("offset", 0);
 
-			playerData.GetField("inventory").AddField("offset", 0);
+			playerData.GetField ("inventory").AddField ("offset", 0);
 
-			File.WriteAllText (streamingAssetsPath + "/defaultPlayerData.json", playerData.Print(false));
+			File.WriteAllText (streamingAssetsPath + "/defaultPlayerData.json", playerData.Print (false));
 		}
 
 	}
 
-	string GetData (string type) {
+	string GetData (string type)
+	{
 		string gameData = "";
 
-		if(type.Equals("requestConfig")){
+		if (type.Equals ("requestConfig")) {
 			JSONObject combined = null;
 
 			WWWForm form = GetFormData ("android");
@@ -420,7 +430,7 @@ public class SpilEditorConfig : EditorWindow {
 				;
 			if (request.error != null) {
 				Debug.LogError ("Error getting game data: " + request.error);
-				combined.AddField("androidSdkConfig", "");    
+				combined.AddField ("androidSdkConfig", "");    
 			} else { 
 				combined = new JSONObject (request.text).GetField ("data");
 			}
@@ -432,16 +442,19 @@ public class SpilEditorConfig : EditorWindow {
 				;
 			if (request2.error != null) {
 				Debug.LogError ("Error getting game data: " + request2.error);
-				combined.AddField("iosSdkConfig", "");  
-			} else { 
-				combined.AddField("iosSdkConfig", new JSONObject (request2.text).GetField("data").GetField("iosSdkConfig"));
+				combined.AddField ("iosSdkConfig", "");  
+			} else {
+				if (combined.HasField ("iosSdkConfig")) {
+					combined.RemoveField ("iosSdkConfig");
+				}
+				combined.AddField ("iosSdkConfig", new JSONObject (request2.text).GetField ("data").GetField ("iosSdkConfig"));
 			}
-			gameData = combined.Print(false);
+			gameData = combined.Print (false);
 
 		} else {
-			WWWForm form = GetFormData (EditorUserBuildSettings.activeBuildTarget.ToString().Trim().ToLower());
+			WWWForm form = GetFormData (EditorUserBuildSettings.activeBuildTarget.ToString ().Trim ().ToLower ());
 			form.AddField ("name", type);
-			WWW request = new WWW ("https://apptracker.spilgames.com/v1/native-events/event/" + EditorUserBuildSettings.activeBuildTarget.ToString().Trim().ToLower() + "/" + bundleIdentifier + "/" + type, form);
+			WWW request = new WWW ("https://apptracker.spilgames.com/v1/native-events/event/" + EditorUserBuildSettings.activeBuildTarget.ToString ().Trim ().ToLower () + "/" + bundleIdentifier + "/" + type, form);
 			while (!request.isDone)
 				;
 			if (request.error != null) {
@@ -458,13 +471,14 @@ public class SpilEditorConfig : EditorWindow {
 		return gameData;
 	}
 
-	WWWForm GetFormData (string platform) {
+	WWWForm GetFormData (string platform)
+	{
 
 		JSONObject dummyData = new JSONObject ();
 		dummyData.AddField ("uid", "deadbeef");
 		dummyData.AddField ("locale", "en");
 
-		if(platform.Equals("android")){
+		if (platform.Equals ("android")) {
 			dummyData.AddField ("appVersion", androidGameVersion);
 		} else {
 			dummyData.AddField ("appVersion", iosGameVersion);
@@ -475,7 +489,7 @@ public class SpilEditorConfig : EditorWindow {
 		dummyData.AddField ("osVersion", "1");
 		dummyData.AddField ("deviceModel", "Editor");
 
-		if(platform.Equals("android")){
+		if (platform.Equals ("android")) {
 			dummyData.AddField ("packageName", bundleIdentifier);
 		} else {
 			dummyData.AddField ("bundleId", bundleIdentifier);
@@ -501,57 +515,58 @@ public class SpilEditorConfig : EditorWindow {
 		return form;
 	}
 
-	void VerifyAndroidSetup(){
+	void VerifyAndroidSetup ()
+	{
 
 		bool isEverythingCorrect = true;
 
 		string androidFolder = "Assets/Plugins/Android/";
 
-		if(Directory.Exists(androidFolder + "GooglePlayServices")){
-			Debug.LogError("The contents of the GooglePlayServices folder should be copied into 'Assets/Plugins/Android/' and afterwards the folder should be removed");
+		if (Directory.Exists (androidFolder + "GooglePlayServices")) {
+			Debug.LogError ("The contents of the GooglePlayServices folder should be copied into 'Assets/Plugins/Android/' and afterwards the folder should be removed");
 			isEverythingCorrect = false;
 		}
 
 		string appManifestPath = androidFolder + "AndroidManifest.xml";
 
 		// Let's open the app's AndroidManifest.xml file.
-            	XmlDocument manifestFile = new XmlDocument();
-            	manifestFile.Load(appManifestPath);
+		XmlDocument manifestFile = new XmlDocument ();
+		manifestFile.Load (appManifestPath);
 
 		XmlElement manifestRoot = manifestFile.DocumentElement;
-	        XmlNode applicationNode = null;
+		XmlNode applicationNode = null;
 
-	        foreach(XmlNode node in manifestRoot.ChildNodes) {
-	            if (node.Name == "application") {
-	                applicationNode = node;
-	                break;
-	            }
-	        }
+		foreach (XmlNode node in manifestRoot.ChildNodes) {
+			if (node.Name == "application") {
+				applicationNode = node;
+				break;
+			}
+		}
 
-	        // If there's no applicatio node, something is really wrong with your AndroidManifest.xml.
-	        if (applicationNode == null) {
-	        	Debug.LogError("Your app's AndroidManifest.xml file does not contain \"<application>\" node.");
-	                Debug.LogError("Unable to verify if the values were correct");
+		// If there's no applicatio node, something is really wrong with your AndroidManifest.xml.
+		if (applicationNode == null) {
+			Debug.LogError ("Your app's AndroidManifest.xml file does not contain \"<application>\" node.");
+			Debug.LogError ("Unable to verify if the values were correct");
 
-	            return;
-	        }
+			return;
+		}
 
-		if(!(applicationNode.Attributes["android:name"].Value.Equals("com.spilgames.spilsdk.activities.SpilSDKApplication")) && !(applicationNode.Attributes["android:name"].Value.Equals("com.spilgames.spilsdk.activities.SpilSDKApplicationWithFabric"))){
-			Debug.LogError("The application name from your \"AndroidManifest.xml\" file is set incorrectly. Please set it to either \"com.spilgames.spilsdk.activities.SpilSDKApplication\" or \"com.spilgames.spilsdk.activities.SpilSDKApplicationWithFabric\" (if you are using Crashlytics) if you want for the Spil SDK to function correctly");
+		if (!(applicationNode.Attributes ["android:name"].Value.Equals ("com.spilgames.spilsdk.activities.SpilSDKApplication")) && !(applicationNode.Attributes ["android:name"].Value.Equals ("com.spilgames.spilsdk.activities.SpilSDKApplicationWithFabric"))) {
+			Debug.LogError ("The application name from your \"AndroidManifest.xml\" file is set incorrectly. Please set it to either \"com.spilgames.spilsdk.activities.SpilSDKApplication\" or \"com.spilgames.spilsdk.activities.SpilSDKApplicationWithFabric\" (if you are using Crashlytics) if you want for the Spil SDK to function correctly");
 			isEverythingCorrect = false;
 		}
 
 		bool isUnityRequestPermissionDisabled = false;
 
-		foreach(XmlNode node in applicationNode.ChildNodes){
+		foreach (XmlNode node in applicationNode.ChildNodes) {
 
-			if(node.Name.Equals("activity")){
-				foreach(XmlNode subNode in node.ChildNodes){
-					if(subNode.Name.Equals("intent-filter")){
-						foreach(XmlNode bottomNode in subNode.ChildNodes){
-							if(bottomNode.Name.Equals("action") && bottomNode.Attributes["android:name"].Value.Equals("android.intent.action.MAIN")){
-								if(!(node.Attributes["android:name"].Value.Equals("com.spilgames.spilsdk.activities.SpilUnityActivity")) && !(node.Attributes["android:name"].Value.Equals("com.spilgames.spilsdk.activities.SpilUnityActivityWithPrime")) && !(node.Attributes["android:name"].Value.Equals("com.spilgames.spilsdk.activities.SpilUnityActivityWithAN"))){
-									Debug.LogError("The Main Activity name from your \"AndroidManifest.xml\" file is set incorrectly. Please set it to either \"com.spilgames.spilsdk.activities.SpilUnityActivity\", \"com.spilgames.spilsdk.activities.SpilUnityActivityWithPrime\" (if you are using Prime31 Plugin) or \"com.spilgames.spilsdk.activities.SpilUnityActivityWithAN\" (if you are using Android Native Plugin) if you want for the Spil SDK to function correctly");
+			if (node.Name.Equals ("activity")) {
+				foreach (XmlNode subNode in node.ChildNodes) {
+					if (subNode.Name.Equals ("intent-filter")) {
+						foreach (XmlNode bottomNode in subNode.ChildNodes) {
+							if (bottomNode.Name.Equals ("action") && bottomNode.Attributes ["android:name"].Value.Equals ("android.intent.action.MAIN")) {
+								if (!(node.Attributes ["android:name"].Value.Equals ("com.spilgames.spilsdk.activities.SpilUnityActivity")) && !(node.Attributes ["android:name"].Value.Equals ("com.spilgames.spilsdk.activities.SpilUnityActivityWithPrime")) && !(node.Attributes ["android:name"].Value.Equals ("com.spilgames.spilsdk.activities.SpilUnityActivityWithAN"))) {
+									Debug.LogError ("The Main Activity name from your \"AndroidManifest.xml\" file is set incorrectly. Please set it to either \"com.spilgames.spilsdk.activities.SpilUnityActivity\", \"com.spilgames.spilsdk.activities.SpilUnityActivityWithPrime\" (if you are using Prime31 Plugin) or \"com.spilgames.spilsdk.activities.SpilUnityActivityWithAN\" (if you are using Android Native Plugin) if you want for the Spil SDK to function correctly");
 									isEverythingCorrect = false;
 								}
 							}
@@ -560,8 +575,8 @@ public class SpilEditorConfig : EditorWindow {
 				}
 			}
 
-			if(node.Name.Equals("meta-data")){
-				if(node.Attributes["android:name"].Value.Equals("unityplayer.SkipPermissionsDialog") && node.Attributes["android:value"].Value.Equals("true")){
+			if (node.Name.Equals ("meta-data")) {
+				if (node.Attributes ["android:name"].Value.Equals ("unityplayer.SkipPermissionsDialog") && node.Attributes ["android:value"].Value.Equals ("true")) {
 					isUnityRequestPermissionDisabled = true;
 					isEverythingCorrect = false;
 				}
@@ -569,48 +584,49 @@ public class SpilEditorConfig : EditorWindow {
 
 		}
 
-		if(!isUnityRequestPermissionDisabled){
-			Debug.LogError("You did not disable the automatic Unity permission request. Please add the following line to your \"applicaiton\" tag: \"<meta-data android:name=\"unityplayer.SkipPermissionsDialog\" android:value=\"true\" />\". This is required in order to not have any problems with the Spil SDK's permission system. Keep in mind that all your dangerous permissions will be handled by the Spil SDK automatically");
+		if (!isUnityRequestPermissionDisabled) {
+			Debug.LogError ("You did not disable the automatic Unity permission request. Please add the following line to your \"applicaiton\" tag: \"<meta-data android:name=\"unityplayer.SkipPermissionsDialog\" android:value=\"true\" />\". This is required in order to not have any problems with the Spil SDK's permission system. Keep in mind that all your dangerous permissions will be handled by the Spil SDK automatically");
 		}
 
-		if(!isEverythingCorrect){
-			Debug.Log("Verification Complete! The Spil SDK for Android is configured correctly!");
+		if (!isEverythingCorrect) {
+			Debug.Log ("Verification Complete! The Spil SDK for Android is configured correctly!");
 		} else {
-			Debug.LogError("Verification Complete! Something was not configured correctly!! Please check the logs");
+			Debug.LogError ("Verification Complete! Something was not configured correctly!! Please check the logs");
 		}
 
 
 	}
 
-	bool CheckAutomaticPermissionRequest(){
+	bool CheckAutomaticPermissionRequest ()
+	{
 		string androidFolder = "Assets/Plugins/Android/";
 		string appManifestPath = androidFolder + "AndroidManifest.xml";
 
 		// Let's open the app's AndroidManifest.xml file.
-            	XmlDocument manifestFile = new XmlDocument();
-            	manifestFile.Load(appManifestPath);
+		XmlDocument manifestFile = new XmlDocument ();
+		manifestFile.Load (appManifestPath);
 
 		XmlElement manifestRoot = manifestFile.DocumentElement;
-	        XmlNode applicationNode = null;
+		XmlNode applicationNode = null;
 
-	        foreach(XmlNode node in manifestRoot.ChildNodes) {
-	            if (node.Name == "application") {
-	                applicationNode = node;
-	                break;
-	            }
-	        }
+		foreach (XmlNode node in manifestRoot.ChildNodes) {
+			if (node.Name == "application") {
+				applicationNode = node;
+				break;
+			}
+		}
 
-	        // If there's no applicatio node, something is really wrong with your AndroidManifest.xml.
-	        if (applicationNode == null) {
-	        	Debug.LogError("Your app's AndroidManifest.xml file does not contain \"<application>\" node.");
-	                Debug.LogError("Unable to verify if the values were correct");
+		// If there's no applicatio node, something is really wrong with your AndroidManifest.xml.
+		if (applicationNode == null) {
+			Debug.LogError ("Your app's AndroidManifest.xml file does not contain \"<application>\" node.");
+			Debug.LogError ("Unable to verify if the values were correct");
 
-	            return true;
-	        }
+			return true;
+		}
 
-		foreach(XmlNode node in applicationNode.ChildNodes){
-			if(node.Name.Equals("meta-data")){
-				if(node.Attributes["android:name"].Value.Equals("spil.permissions.DisableAutoRequest") && node.Attributes["android:value"].Value.Equals("true")){
+		foreach (XmlNode node in applicationNode.ChildNodes) {
+			if (node.Name.Equals ("meta-data")) {
+				if (node.Attributes ["android:name"].Value.Equals ("spil.permissions.DisableAutoRequest") && node.Attributes ["android:value"].Value.Equals ("true")) {
 					return false;
 				}
 			}

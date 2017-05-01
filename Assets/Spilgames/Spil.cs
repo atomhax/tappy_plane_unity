@@ -115,7 +115,6 @@ namespace SpilGames.Unity
 
 		public static SpilUnityEditorImplementation Instance = new SpilUnityEditorImplementation ();
 
-
 		#elif UNITY_ANDROID
 
 		public static SpilAndroidUnityImplementation Instance = new SpilAndroidUnityImplementation();
@@ -484,6 +483,22 @@ namespace SpilGames.Unity
 		public void IAPServerError (string error)
 		{
 			SpilUnityImplementationBase.fireIAPServerError (error); 
+		}
+
+		/// <summary>
+		/// This event indicates that the IAP was invalid when checked with the SLOT backend.
+		/// </summary>
+		public void ServerTimeRequestSuccess (string time)
+		{
+			SpilUnityImplementationBase.fireServerTimeRequestSuccess (time); 
+		}
+
+		/// <summary>
+		/// This event indicates that the IAP was invalid when checked with the SLOT backend.
+		/// </summary>
+		public void ServerTimeRequestFailed (string error)
+		{
+			SpilUnityImplementationBase.fireServerTimeRequestFailed (error); 
 		}
 	}
 }
