@@ -109,6 +109,8 @@ extern "C" {
 
     char* getLocalSecretEx();
     
+    void requestServerTimeNative();
+    
     // --- Config ---
     
     char* getConfigNative();

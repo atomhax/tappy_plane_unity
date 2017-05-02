@@ -12,6 +12,8 @@
 
 @interface SpilEventTracker : NSObject
 
+@property (nonatomic, retain) NSString *adjustId;
+
 +(SpilEventTracker*)sharedInstance;
 
 -(void)startWithAppId:(NSString*)apiKey;

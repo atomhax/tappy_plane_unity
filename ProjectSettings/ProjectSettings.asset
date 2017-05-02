@@ -139,8 +139,8 @@ PlayerSettings:
     Android: com.spilgames.tappyplane
     Standalone: unity.Spilgames.Tappy Plane
     Tizen: com.Company.ProductName
-    iOS: com.Company.ProductName
-    tvOS: com.Company.ProductName
+    iOS: com.spilgames.tappyplane
+    tvOS: com.spilgames.tappyplane
   buildNumber:
     iOS: 0
   AndroidBundleVersionCode: 16

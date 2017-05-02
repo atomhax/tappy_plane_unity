@@ -90,6 +90,10 @@
 -(void)rewardTokenClaimed:(nonnull NSString*)rewardType reward:(nonnull NSArray*)reward;
 -(void)rewardTokenClaimFailed:(nonnull NSString*)rewardType error:(nonnull NSString*)error;
 
+// Server time
+-(void)serverTimeRequestSuccess:(nonnull NSString*)unixTimestamp;
+-(void)serverTimeRequestFailed:(nonnull NSString*)error;
+
 @end
 
 @interface Spil : NSObject {
@@ -155,6 +159,11 @@
  *  @param pluginVersion The plugin version
  */
 +(void)setPluginInformation:(nonnull NSString*)pluginName pluginVersion:(nonnull NSString*)pluginVersion;
+
+/**
+ *  Request the server timestamp
+ */
++(void)requestServerTime;
 
 #pragma mark App flow
 
@@ -434,6 +443,15 @@
  *  @param block  A block with response param that will be executed when the server sends a reponse on the tracked event
  */
 +(void) trackEvent:(nonnull NSString*)name withParameters:(nonnull NSDictionary *)params onResponse:(void (^)(id response))block;
+
+/**
+ *  Track an error event
+ *
+ *  @param type    The error type (e.g. "adjust")
+ *  @param action  The error action (e.g. "intall")
+ *  @param message The error message (e.g. "no connection")
+ */
++(void) trackErrorWithType:(NSString*)type withAction:(NSString*)action withMessage:(NSString*)message;
 
 #pragma clang diagnostic pop
 
@@ -740,7 +758,7 @@
  * Shows the help center webview version
  * @param url   The url to open
  */
-+(void)showHelpCenterWebview:(NSString*)url;
++(void)showHelpCenterWebview:(nonnull NSString*)url;
 
 #pragma mark Web
 

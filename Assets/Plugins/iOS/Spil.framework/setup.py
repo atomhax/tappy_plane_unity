@@ -231,13 +231,13 @@ if exportSpilGamesEntitlements:
 		plist['com.apple.developer.ubiquity-kvstore-identifier'] = "$(TeamIdentifierPrefix)$(CFBundleIdentifier)";
 
 	# add iCloud general & game specific document
-	plist['com.apple.developer.icloud-services'] = ["CloudDocuments"];
-	if useICloudContainer:
-		plist['com.apple.developer.icloud-container-identifiers'] = ["iCloud.$(CFBundleIdentifier)", "iCloud.com.spilgames.shared"];
-		plist['com.apple.developer.ubiquity-container-identifiers'] = ["iCloud.$(CFBundleIdentifier)", "iCloud.com.spilgames.shared"];
-	else:
-		plist['com.apple.developer.icloud-container-identifiers'] = ["iCloud.com.spilgames.shared"];
-		plist['com.apple.developer.ubiquity-container-identifiers'] = ["iCloud.com.spilgames.shared"];
+	#plist['com.apple.developer.icloud-services'] = ["CloudDocuments"];
+	#if useICloudContainer:
+	#	plist['com.apple.developer.icloud-container-identifiers'] = ["iCloud.$(CFBundleIdentifier)", "iCloud.com.spilgames.shared"];
+	#	plist['com.apple.developer.ubiquity-container-identifiers'] = ["iCloud.$(CFBundleIdentifier)", "iCloud.com.spilgames.shared"];
+	#else:
+	#	plist['com.apple.developer.icloud-container-identifiers'] = ["iCloud.com.spilgames.shared"];
+	#	plist['com.apple.developer.ubiquity-container-identifiers'] = ["iCloud.com.spilgames.shared"];
 
 	# write entitlements plist
 	print('Saving ' + projectname + '.entitlements')
