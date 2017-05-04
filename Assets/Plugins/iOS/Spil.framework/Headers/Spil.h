@@ -2,7 +2,6 @@
 //  Spil.h
 //  Spil
 //
-//  Created by Martijn van der Gun on 10/1/15.
 //  Copyright © 2015 Spil Games. All rights reserved.
 //
 
@@ -10,7 +9,7 @@
 #import "HookBridge.h"
 #import "GAI.h"
 
-#define SDK_VERSION @"2.2.2"
+#define SDK_VERSION @"2.2.0"
 
 @class ImageContext;
 @class Spil;

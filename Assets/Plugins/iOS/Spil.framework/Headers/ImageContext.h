@@ -2,7 +2,6 @@
 //  ImageContext.h
 //  Spil
 //
-//  Created by Frank Slofstra on 20/02/17.
 //  Copyright © 2017 Spil Games. All rights reserved.
 //
 
