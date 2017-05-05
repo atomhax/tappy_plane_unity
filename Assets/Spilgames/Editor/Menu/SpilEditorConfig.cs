@@ -21,15 +21,17 @@ public class SpilEditorConfig : EditorWindow
 	private static string androidGameVersion = "";
 	private static string iosGameVersion = "";
 
-	#if UNITY_5_6_OR_NEWER
-	private static string bundleIdentifier = PlayerSettings.applicationIdentifier;
-	#elif UNITY_5_3_OR_NEWER
-	private static string bundleIdentifier = PlayerSettings.bundleIdentifier;
-	#endif
+	private static string bundleIdentifier;
 
 	[MenuItem ("Spil SDK/Configuration", false, 0)]
 	static void Init ()
 	{
+		#if UNITY_5_6_OR_NEWER
+		bundleIdentifier = PlayerSettings.applicationIdentifier;
+		#elif UNITY_5_3_OR_NEWER
+		bundleIdentifier = PlayerSettings.bundleIdentifier;
+		#endif
+
 		spil = GameObject.FindObjectOfType<Spil> ();
 		SpilEditorConfig window = (SpilEditorConfig)EditorWindow.GetWindow (typeof(SpilEditorConfig));
 		window.autoRepaintOnSceneChange = true;
