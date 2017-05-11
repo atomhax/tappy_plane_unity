@@ -137,11 +137,11 @@
  <Reference Include="Newtonsoft.Json">
  <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/Newtonsoft.Json.dll</HintPath>
  </Reference>
- <Reference Include="Common">
- <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/UnityPurchasing/Bin/Common.dll</HintPath>
- </Reference>
  <Reference Include="Editor">
  <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/UnityPurchasing/Bin/Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Purchasing.Common">
+ <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/UnityPurchasing/Bin/Purchasing.Common.dll</HintPath>
  </Reference>
  <Reference Include="Security">
  <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/UnityPurchasing/Bin/Security.dll</HintPath>
@@ -151,6 +151,12 @@
  </Reference>
  <Reference Include="Apple">
  <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/UnityPurchasing/Bin/Apple/Apple.dll</HintPath>
+ </Reference>
+ <Reference Include="Facebook">
+ <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/UnityPurchasing/Bin/Facebook/Facebook.dll</HintPath>
+ </Reference>
+ <Reference Include="Tizen">
+ <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/UnityPurchasing/Bin/Tizen/Tizen.dll</HintPath>
  </Reference>
  <Reference Include="winrt">
  <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/UnityPurchasing/winrt/winrt.dll</HintPath>

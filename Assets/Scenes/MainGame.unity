@@ -5350,14 +5350,15 @@ MonoBehaviour:
   initializeOnAwake: 1
   ProjectId: 492493592102
   CustomBundleId: 
+  EditorLogging: 1
   spilUserIdEditor: 21f2b908-0434-4258-b180-84831105a46d
   bundleIdEditor: com.spilgames.tappyplane
   currencyName: Reward
   currencyId: reward
   reward: 50
-  dailyBonusId: 0
+  dailyBonusId: 25
   dailyBonusExternalId: 
-  dailyBonusAmount: 0
+  dailyBonusAmount: 5
   DailyBonusRewardType: 0
 --- !u!4 &1087916765
 Transform:

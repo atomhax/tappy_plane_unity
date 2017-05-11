@@ -90,18 +90,19 @@ public class SpilEditorConfig : EditorWindow
 		GUILayout.Label ("");
 		GUILayout.Label ("WARNING: Please make sure to set your bundle ID in your player settings before getting your game data.\nPlease also note that this tool will only work if your build target is set to iOS or Android", EditorStyles.wordWrappedLabel);
 		GUILayout.Label ("");
-		GUILayout.Label ("The button below will create the following configuration files:", EditorStyles.wordWrappedLabel);
-		GUILayout.Label (" • defaultGameConfig.json", EditorStyles.boldLabel);
-		GUILayout.Label (" • defaultPlayerData.json", EditorStyles.boldLabel);
-		GUILayout.Label (" • defaultGameData.json", EditorStyles.boldLabel);
-		GUILayout.Label ("These files can be located in the StreamingAssets folder", EditorStyles.wordWrappedLabel);
-		GUILayout.Label ("");
 
 		GUILayout.Label ("Android Game Version", EditorStyles.boldLabel);
 		androidGameVersion = GUILayout.TextField (androidGameVersion);
 
 		GUILayout.Label ("iOS Game Version", EditorStyles.boldLabel);
 		iosGameVersion = GUILayout.TextField (iosGameVersion);
+
+		GUILayout.Label ("");
+		GUILayout.Label ("The button below will create the following configuration files:", EditorStyles.wordWrappedLabel);
+		GUILayout.Label (" • defaultGameConfig.json", EditorStyles.boldLabel);
+		GUILayout.Label (" • defaultPlayerData.json", EditorStyles.boldLabel);
+		GUILayout.Label (" • defaultGameData.json", EditorStyles.boldLabel);
+		GUILayout.Label ("These files can be located in the StreamingAssets folder", EditorStyles.wordWrappedLabel);
 
 		GUILayout.Label ("");
 		if (GUILayout.Button ("Create Default Configuration Files")) {
@@ -305,6 +306,26 @@ public class SpilEditorConfig : EditorWindow
 	void DrawEditor ()
 	{
 		GUILayout.Label ("This tab contains configuration information specific to the Unity Editor", EditorStyles.boldLabel);
+		GUILayout.Label ("");
+
+		bool enableLogging = false;
+		if (spil != null) {
+			enableLogging = spil.EditorLogging;
+		}
+		var styleRed = new GUIStyle (EditorStyles.label);
+		styleRed.normal.textColor = Color.red;
+
+		var styleGreen = new GUIStyle (EditorStyles.label);
+		Color green = new Color ();
+		ColorUtility.TryParseHtmlString ("#006400", out green);
+		styleGreen.normal.textColor = green;
+
+		if (enableLogging) {
+			GUILayout.Label ("Spil SDK Editor Logging is Enabled!", styleGreen);
+		} else {
+			GUILayout.Label ("Spil SDK Editor Logging is Disabled! If you want to enable it toggle it from the Spil Game Object!", styleRed);
+		}
+
 		GUILayout.Label ("");
 
 		GUILayout.Label ("Spil User Id:", EditorStyles.boldLabel);

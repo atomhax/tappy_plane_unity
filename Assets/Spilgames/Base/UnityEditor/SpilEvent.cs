@@ -62,18 +62,20 @@ namespace SpilGames.Unity.Base.UnityEditor
 
 			WWW request = new WWW ("https://apptracker.spilgames.com/v1/native-events/event/" + platform + "/" + Spil.BundleIdEditor + "/" + this.eventName, requestForm);
 			yield return request;
-//			while (!request.isDone);	
+
+			SpilLogging.Log ("Sending event: " + "Name: " + this.eventName + " \nData: " + this.data.ToString () + " \nCustom Data: " + this.customData.Print (false) + " \nTimestamp: " + time.ToString ());
+																		
 			if (request.error != null) {
 				if (Spil.BundleIdEditor == null || Spil.BundleIdEditor.Equals ("")) {
-					Debug.LogError ("Spil Initialize might not have been called! Please make sure you call Spil.Initialize() at app start!");
+					SpilLogging.Error ("Spil Initialize might not have been called! Please make sure you call Spil.Initialize() at app start!");
 				} else {
-					Debug.LogError ("Error getting data: " + request.error); 
-					Debug.LogError ("Error getting data: " + request.text);
+					SpilLogging.Error ("Error getting data: " + request.error); 
+					SpilLogging.Error ("Error getting data: " + request.text);
 				}
 
 			} else { 
 				JSONObject serverResponse = new JSONObject (request.text);
-				Debug.Log ("Data returned: " + serverResponse.ToString ());
+				SpilLogging.Log ("Data returned: \n" + serverResponse.ToString ());
 				ResponseEvent.Build (serverResponse);
 			}
 			GameObject.Destroy (this);
@@ -105,6 +107,25 @@ namespace SpilGames.Unity.Base.UnityEditor
 				externalUserIdJson.AddField ("userId", Response.externalId);
 
 				this.data.AddField ("externalUserId", externalUserIdJson);
+			}
+		}
+	}
+
+	public class SpilLogging
+	{
+		public static void Log (string message)
+		{
+			Spil spil = GameObject.FindObjectOfType<Spil> ();
+			if (spil != null && spil.EditorLogging) {
+				Debug.Log (message);
+			}
+		}
+
+		public static void Error (string message)
+		{
+			Spil spil = GameObject.FindObjectOfType<Spil> ();
+			if (spil != null && spil.EditorLogging) {
+				Debug.LogError (message);
 			}
 		}
 	}

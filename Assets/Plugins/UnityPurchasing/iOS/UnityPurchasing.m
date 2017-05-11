@@ -46,24 +46,24 @@ static const int MAX_REQUEST_PRODUCT_RETRY_DELAY = 60;
 int delayInSeconds = 2;
 
 -(NSString*) getAppReceipt {
-    
+
     NSBundle* bundle = [NSBundle mainBundle];
     if ([bundle respondsToSelector:@selector(appStoreReceiptURL)]) {
         NSURL *receiptURL = [bundle appStoreReceiptURL];
         if ([[NSFileManager defaultManager] fileExistsAtPath:[receiptURL path]]) {
             NSData *receipt = [NSData dataWithContentsOfURL:receiptURL];
-            
+
 #if MAC_APPSTORE
             // The base64EncodedStringWithOptions method was only added in OSX 10.9.
             NSString* result = [receipt mgb64_base64EncodedString];
 #else
             NSString* result = [receipt base64EncodedStringWithOptions:0];
 #endif
-            
+
             return result;
         }
     }
-    
+
     UnityPurchasingLog(@"No App Receipt found");
     return @"";
 }
@@ -104,7 +104,7 @@ int delayInSeconds = 2;
         }
         NSString* receipt;
         receipt = [[NSString alloc] initWithData:transaction.transactionReceipt encoding: NSUTF8StringEncoding];
-        
+
         return receipt;
     } else {
         return [self getAppReceipt];
@@ -136,7 +136,7 @@ int delayInSeconds = 2;
 // Handle a new or restored purchase transaction by informing Unity.
 - (void)onTransactionSucceeded:(SKPaymentTransaction*)transaction {
     NSString* transactionId = transaction.transactionIdentifier;
-    
+
     // This should never happen according to Apple's docs, but it does!
     if (nil == transactionId) {
         // Make something up, allowing us to identifiy the transaction when finishing it.
@@ -144,11 +144,19 @@ int delayInSeconds = 2;
         UnityPurchasingLog(@"Missing transaction Identifier!");
     }
     
+    // This transaction was marked as finished, but was not cleared from the queue. Try to clear it now, then pass the error up the stack as a DuplicateTransaction
+    if ([finishedTransactions containsObject:transactionId]) {
+        [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+        UnityPurchasingLog(@"DuplicateTransaction error with product %@ and transactionId %@", transaction.payment.productIdentifier, transactionId);
+        [self onPurchaseFailed:transaction.payment.productIdentifier reason:@"DuplicateTransaction"];
+        return; // EARLY RETURN
+    }
+
     // Item was successfully purchased or restored.
     if (nil == [pendingTransactions objectForKey:transactionId]) {
         [pendingTransactions setObject:transaction forKey:transactionId];
     }
-    
+
     [self UnitySendMessage:@"OnPurchaseSucceeded" payload:transaction.payment.productIdentifier receipt:[self selectReceipt:transaction] transactionId:transactionId];
 }
 
@@ -157,8 +165,9 @@ int delayInSeconds = 2;
     SKPaymentTransaction* transaction = [pendingTransactions objectForKey:transactionIdentifier];
     if (nil != transaction) {
         UnityPurchasingLog(@"Finishing transaction %@", transactionIdentifier);
-        [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+        [[SKPaymentQueue defaultQueue] finishTransaction:transaction]; // If this fails (user not logged into the store?), transaction is already removed from pendingTransactions, so future calls to finishTransaction will not retry
         [pendingTransactions removeObjectForKey:transactionIdentifier];
+        [finishedTransactions addObject:transactionIdentifier];
     } else {
         UnityPurchasingLog(@"Transaction %@ not found!", transactionIdentifier);
     }
@@ -169,13 +178,8 @@ int delayInSeconds = 2;
 {
     productIds = paramIds;
     UnityPurchasingLog(@"Requesting %lu products", (unsigned long) [productIds count]);
-    if ([SKPaymentQueue canMakePayments]) {
-        // Start an immediate poll.
-        [self initiateProductPoll:0];
-    } else {
-        // Send an InitializationFailureReason.
-        [self UnitySendMessage:@"OnSetupFailed" payload:@"PurchasingUnavailable" ];
-    }
+    // Start an immediate poll.
+    [self initiateProductPoll:0];
 }
 
 // Execute a product metadata retrieval request via GCD.
@@ -195,18 +199,37 @@ int delayInSeconds = 2;
 {
     // Look up our corresponding product.
     SKProduct* requestedProduct = [validProducts objectForKey:productDef.storeSpecificId];
-    
+
     if (requestedProduct != nil) {
         UnityPurchasingLog(@"PurchaseProduct: %@", requestedProduct.productIdentifier);
-        
+
         if ([SKPaymentQueue canMakePayments]) {
-            SKPayment *paymentRequest = [SKPayment paymentWithProduct:requestedProduct];
-            [[SKPaymentQueue defaultQueue] addPayment:paymentRequest];
+            SKMutablePayment *payment = [SKMutablePayment paymentWithProduct:requestedProduct];
+
+            // Modify payment request for testing ask-to-buy
+            if (_simulateAskToBuyEnabled) {
+                if ([payment respondsToSelector:@selector(setSimulatesAskToBuyInSandbox:)]) {
+                    UnityPurchasingLog(@"Queueing payment request with simulatesAskToBuyInSandbox enabled");
+                    [payment performSelector:@selector(setSimulatesAskToBuyInSandbox:) withObject:@YES];
+                    //payment.simulatesAskToBuyInSandbox = YES;
+                }
+            }
+
+            // Modify payment request with "applicationUsername" for fraud detection
+            if (_applicationUsername != nil) {
+                if ([payment respondsToSelector:@selector(setApplicationUsername:)]) {
+                    UnityPurchasingLog(@"Setting applicationUsername to %@", _applicationUsername);
+                    [payment performSelector:@selector(setApplicationUsername:) withObject:_applicationUsername];
+                    //payment.applicationUsername = _applicationUsername;
+                }
+            }
+
+            [[SKPaymentQueue defaultQueue] addPayment:payment];
         } else {
             UnityPurchasingLog(@"PurchaseProduct: IAP Disabled");
             [self onPurchaseFailed:productDef.storeSpecificId reason:@"PurchasingUnavailable"];
         }
-        
+
     } else {
         [self onPurchaseFailed:productDef.storeSpecificId reason:@"ItemUnavailable"];
     }
@@ -223,7 +246,24 @@ int delayInSeconds = 2;
 // and maintained for the life of the app, since transactions can
 // be delivered at any time.
 -(void) addTransactionObserver {
-    [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
+    SKPaymentQueue* defaultQueue = [SKPaymentQueue defaultQueue];
+
+    // Detect whether an existing transaction observer is in place.
+    // An existing observer will have processed any transactions already pending,
+    // so when we add our own storekit will not call our updatedTransactions handler.
+    // We workaround this by explicitly processing any existing transactions if they exist.
+    BOOL processExistingTransactions = false;
+    if (defaultQueue != nil && defaultQueue.transactions != nil)
+    {
+        if ([[defaultQueue transactions] count] > 0) {
+            processExistingTransactions = true;
+        }
+    }
+
+    [defaultQueue addTransactionObserver:self];
+    if (processExistingTransactions) {
+        [self paymentQueue:defaultQueue updatedTransactions:defaultQueue.transactions];
+    }
 }
 
 #pragma mark -
@@ -231,14 +271,14 @@ int delayInSeconds = 2;
 
 // Store Kit returns a response from an SKProductsRequest.
 - (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response {
-    
+
     UnityPurchasingLog(@"Received %lu products", (unsigned long) [response.products count]);
     // Add the retrieved products to our set of valid products.
     NSDictionary* fetchedProducts = [NSDictionary dictionaryWithObjects:response.products forKeys:[response.products valueForKey:@"productIdentifier"]];
     [validProducts addEntriesFromDictionary:fetchedProducts];
 
     NSString* productJSON = [UnityPurchasing serializeProductMetadata:response.products];
-    
+
     // Send the app receipt as a separate parameter to avoid JSON parsing a large string.
     [self UnitySendMessage:@"OnProductsRetrieved" payload:productJSON receipt:[self selectReceipt:nil] ];
 }
@@ -251,7 +291,7 @@ int delayInSeconds = 2;
 - (void)request:(SKRequest *)request didFailWithError:(NSError *)error {
     delayInSeconds = MIN(MAX_REQUEST_PRODUCT_RETRY_DELAY, 2 * delayInSeconds);
     UnityPurchasingLog(@"SKProductRequest::didFailWithError: %ld, %@. Unity Purchasing will retry in %i seconds", (long)error.code, error.description, delayInSeconds);
-    
+
     [self initiateProductPoll:delayInSeconds];
 }
 
@@ -288,11 +328,11 @@ int delayInSeconds = 2;
     UnityPurchasingLog(@"UpdatedTransactions");
     for(SKPaymentTransaction *transaction in transactions) {
         switch (transaction.transactionState) {
-                
+
             case SKPaymentTransactionStatePurchasing:
                 // Item is still in the process of being purchased
                 break;
-                
+
             case SKPaymentTransactionStatePurchased:
             case SKPaymentTransactionStateRestored: {
                 [self onTransactionSucceeded:transaction];
@@ -306,7 +346,7 @@ int delayInSeconds = 2;
                 // Purchase was either cancelled by user or an error occurred.
                 NSString* errorCode = [NSString stringWithFormat:@"%ld",(long)transaction.error.code];
                 UnityPurchasingLog(@"PurchaseFailed: %@", errorCode);
-                
+
                 NSString* reason = [self purchaseErrorCodeToReason:transaction.error.code];
                 [self onPurchaseFailed:transaction.payment.productIdentifier reason:reason];
 
@@ -326,7 +366,7 @@ int delayInSeconds = 2;
 
 // Called when SKPaymentQueue has finished sending restored transactions.
 - (void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue {
-    
+
     UnityPurchasingLog(@"PaymentQueueRestoreCompletedTransactionsFinished");
     [self UnitySendMessage:@"onTransactionsRestoredSuccess" payload:@""];
 }
@@ -336,7 +376,7 @@ int delayInSeconds = 2;
 {
     UnityPurchasingLog(@"restoreCompletedTransactionsFailedWithError");
     // Restore was cancelled or an error occurred, so notify user.
-    
+
     [self UnitySendMessage:@"onTransactionsRestoredFail" payload:error.localizedDescription];
 }
 
@@ -377,19 +417,19 @@ int delayInSeconds = 2;
             UnityPurchasingLog(@"Product is missing an identifier!");
             continue;
         }
-        
+
         NSMutableDictionary* hash = [[NSMutableDictionary alloc] init];
         [hashes addObject:hash];
-        
+
         [hash setObject:[product productIdentifier] forKey:@"storeSpecificId"];
-        
+
         NSMutableDictionary* metadata = [[NSMutableDictionary alloc] init];
         [hash setObject:metadata forKey:@"metadata"];
-        
+
         if (NULL != [product price]) {
             [metadata setObject:[product price] forKey:@"localizedPrice"];
         }
-        
+
         if (NULL != [product priceLocale]) {
             NSString *currencyCode = [[product priceLocale] objectForKey:NSLocaleCurrencyCode];
             [metadata setObject:currencyCode forKey:@"isoCurrencyCode"];
@@ -400,7 +440,7 @@ int delayInSeconds = 2;
         [numberFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
         [numberFormatter setLocale:[product priceLocale]];
         NSString *formattedString = [numberFormatter stringFromNumber:[product price]];
-        
+
         if (NULL == formattedString) {
             UnityPurchasingLog(@"Unable to format a localized price");
             [metadata setObject:@"" forKey:@"localizedPriceString"];
@@ -413,7 +453,7 @@ int delayInSeconds = 2;
         } else {
             [metadata setObject:[product localizedTitle] forKey:@"localizedTitle"];
         }
-        
+
         if (NULL == [product localizedDescription]) {
             UnityPurchasingLog(@"No localized description for: %@. Have your products been disapproved in itunes connect?", [product productIdentifier]);
             [metadata setObject:@"" forKey:@"localizedDescription"];
@@ -421,8 +461,8 @@ int delayInSeconds = 2;
             [metadata setObject:[product localizedDescription] forKey:@"localizedDescription"];
         }
     }
-    
-    
+
+
     NSData *data = [NSJSONSerialization dataWithJSONObject:hashes options:0 error:nil];
     return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 }
@@ -433,6 +473,7 @@ int delayInSeconds = 2;
     if ( self = [super init] ) {
         validProducts = [[NSMutableDictionary alloc] init];
         pendingTransactions = [[NSMutableDictionary alloc] init];
+        finishedTransactions = [[NSMutableSet alloc] init];
     }
     return self;
 }
@@ -484,6 +525,8 @@ void unityPurchasingPurchase(const char* json, const char* developerPayload) {
 }
 
 void unityPurchasingFinishTransaction(const char* productJSON, const char* transactionId) {
+    if (transactionId == NULL)
+        return;
     NSString* tranId = [NSString stringWithUTF8String:transactionId];
     [UnityPurchasing_getInstance() finishTransaction:tranId];
 }
@@ -511,3 +554,19 @@ char* getUnityPurchasingAppReceipt () {
 BOOL getUnityPurchasingCanMakePayments () {
     return [SKPaymentQueue canMakePayments];
 }
+
+void setSimulateAskToBuy(BOOL enabled) {
+    UnityPurchasingLog(@"setSimulateAskToBuy %@", enabled ? @"true" : @"false");
+    UnityPurchasing_getInstance().simulateAskToBuyEnabled = enabled;
+}
+
+BOOL getSimulateAskToBuy() {
+    return UnityPurchasing_getInstance().simulateAskToBuyEnabled;
+}
+
+void unityPurchasingSetApplicationUsername(const char *username) {
+    if (username == NULL)
+        return;
+    UnityPurchasing_getInstance().applicationUsername = [NSString stringWithUTF8String:username];
+}
+

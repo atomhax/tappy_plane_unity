@@ -484,7 +484,6 @@ public class GameController : MonoBehaviour
 
 		if (highScorePanel.activeInHierarchy) {
 			highScorePanel.GetComponent<HighScoresPanelController> ().RequestHighScores ();
-			Spil.Instance.RequestSplashScreen ();
 		}
 	}
 	#endif

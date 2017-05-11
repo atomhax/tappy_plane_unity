@@ -127,7 +127,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses
 					string gameData = System.IO.File.ReadAllText (Application.streamingAssetsPath + "/defaultGameData.json");
 					return gameData;
 				} catch(FileNotFoundException e){
-					Debug.Log("defaultGameData.json not found. Creating a placeholder!" + e.ToString());
+					SpilLogging.Log ("defaultGameData.json not found. Creating a placeholder!" + e.ToString());
 					string placeholder = "{\"currencies\": [],\"promotions\": [],\"shop\": [],\"bundles\": [],\"items\": []}";
 					return placeholder;
 				}

@@ -48,6 +48,9 @@ namespace SpilGames.Unity
 		[Header ("Editor Settings")]
 
 		[SerializeField]
+		public bool EditorLogging = true;
+
+		[SerializeField]
 		public string spilUserIdEditor;
 
 		public static string SpilUserIdEditor { get; private set; }
@@ -73,7 +76,6 @@ namespace SpilGames.Unity
 		private int reward = 0;
 
 		public static int Reward { get; private set; }
-
 
 		[Header ("Daily Bonus Settings")]
 

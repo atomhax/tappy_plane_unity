@@ -126,11 +126,11 @@
  <Reference Include="Newtonsoft.Json">
  <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/Newtonsoft.Json.dll</HintPath>
  </Reference>
- <Reference Include="Common">
- <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/UnityPurchasing/Bin/Common.dll</HintPath>
- </Reference>
  <Reference Include="Editor">
  <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/UnityPurchasing/Bin/Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Purchasing.Common">
+ <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/UnityPurchasing/Bin/Purchasing.Common.dll</HintPath>
  </Reference>
  <Reference Include="Security">
  <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/UnityPurchasing/Bin/Security.dll</HintPath>
@@ -141,6 +141,12 @@
  <Reference Include="Apple">
  <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/UnityPurchasing/Bin/Apple/Apple.dll</HintPath>
  </Reference>
+ <Reference Include="Facebook">
+ <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/UnityPurchasing/Bin/Facebook/Facebook.dll</HintPath>
+ </Reference>
+ <Reference Include="Tizen">
+ <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/UnityPurchasing/Bin/Tizen/Tizen.dll</HintPath>
+ </Reference>
  <Reference Include="winrt">
  <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/UnityPurchasing/winrt/winrt.dll</HintPath>
  </Reference>
@@ -150,6 +156,8 @@
       <Project>{12C0FBD5-B090-A94D-1AF8-3A80511B45DB}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
     <ProjectReference Include="Assembly-CSharp.csproj">
       <Project>{F4EAF2BE-4DEE-4F99-C860-C2F87F3D0D46}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
+    <ProjectReference Include="Assembly-CSharp-Editor-firstpass.csproj">
+      <Project>{6DA195AB-A4DC-2F6D-7A92-BCB2AB2CF946}</Project>      <Name>Assembly-CSharp-Editor-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

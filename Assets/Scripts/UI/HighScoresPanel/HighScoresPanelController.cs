@@ -35,8 +35,10 @@ public class HighScoresPanelController : MonoBehaviour {
 		int pos = 1;
 		foreach(KeyValuePair<string, string> p in data.data){
 			PublicGameState gameState = JsonHelper.getObjectFromJson<PublicGameState>(p.Value);
-			highScoreText.text += pos.ToString() + ". " + GameController.GetNameForFbId(p.Key) + " [" + gameState.HighScore + "]\n";
-			pos++;
+			if(gameState != null){
+				highScoreText.text += pos.ToString() + ". " + GameController.GetNameForFbId(p.Key) + " [" + gameState.HighScore + "]\n";
+				pos++;
+			}
 		}
 	}
 

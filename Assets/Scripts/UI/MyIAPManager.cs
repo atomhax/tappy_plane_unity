@@ -193,6 +193,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 				Spil.PlayerData.Wallet.Add (int.Parse (helper.Packages [i].Items [0].Id), int.Parse (helper.Packages [i].Items [0].GetRealValue ().Replace (".0", "")), PlayerDataUpdateReasons.IAP, "Shop", transactionId);
 			}
 		}
+
 	}
 
 	public void OnPurchaseFailed (Product product, PurchaseFailureReason failureReason)

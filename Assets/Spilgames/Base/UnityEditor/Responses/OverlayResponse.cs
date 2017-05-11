@@ -40,7 +40,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses
 
 
 		private static void ShowSplashScreen(JSONObject data, string url){
-			Debug.Log("Opening URL: " + url + " With data: " + data.Print(false));
+			SpilLogging.Log ("Opening URL: " + url + " With data: " + data.Print(false));
 
 			SpilUnityEditorImplementation.fireSplashScreenOpen();
 
@@ -51,7 +51,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses
 		}
 
 		private static void ShowDailyBonus(JSONObject data, string url){
-			Debug.Log("Opening URL: " + url + " With data: " + data.Print(false));
+			SpilLogging.Log ("Opening URL: " + url + " With data: " + data.Print(false));
 
 			SpilUnityEditorImplementation.fireDailyBonusOpen();
 
@@ -108,6 +108,10 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses
 						} else{
 							int id = Spil.DailyBonusId;
 							int amount = Spil.DailyBonusAmount;
+
+							if(id == 0 || amount == 0){
+								SpilLogging.Error ("Daily Bonus Rewards not configured for Editor!");
+							}
 
 							if(rewardType.Equals(Spil.DailyBonusRewardTypeEnum.CURRENCY)){
 								SpilUnityEditorImplementation.pData.WalletOperation("add", id, amount, PlayerDataUpdateReasons.DailyBonus, null, "DailyBonus", null);

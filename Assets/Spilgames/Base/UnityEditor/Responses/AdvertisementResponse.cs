@@ -16,23 +16,22 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses
 
 		public static void ProcessAdvertisementResponse (ResponseEvent response)
 		{
-
 			if (response.action.Equals ("init")) {
 				JSONObject provider = response.data.GetField ("providers");
 
 				if (provider.HasField ("DFP")) {
 					DFPEnabled = true;
-					Debug.Log ("DFP Enabled");
+					SpilLogging.Log ("DFP Enabled");
 				}
 
 				if (provider.HasField ("Fyber")) {
 					FyberEnabled = true;
-					Debug.Log ("Fyber Enabled");
+					SpilLogging.Log ("Fyber Enabled");
 				}
 
 				if (provider.HasField ("Chartboost") || provider.HasField ("ChartBoost")) {
 					ChartboostEnabled = true;
-					Debug.Log ("Chartboost Enabled");
+					SpilLogging.Log ("Chartboost Enabled");
 				}
 			} else if (response.action.Equals ("show")) {
 				string provider = response.data.GetField ("provider").str;
@@ -47,32 +46,32 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses
 
 				if (provider.ToLower ().Trim ().Equals ("dfp")) {
 					if(available){
-						Debug.Log ("DFP Show");
+						SpilLogging.Log ("DFP Show");
 						SpilUnityImplementationBase.fireAdAvailableEvent (adType);
 						PlayInterstitial("DFP");
 					} else {
-						Debug.Log ("DFP Not Available");
+						SpilLogging.Log ("DFP Not Available");
 						SpilUnityImplementationBase.fireAdNotAvailableEvent (adType);
 					}
 
 				} else if (provider.ToLower ().Trim ().Equals ("fyber")) {
 
 					if(available){
-						Debug.Log ("Fyber Show");
+						SpilLogging.Log ("Fyber Show");
 						SpilUnityImplementationBase.fireAdAvailableEvent (adType);
 					} else {
-						Debug.Log ("Fyber Not Available");
+						SpilLogging.Log ("Fyber Not Available");
 						SpilUnityImplementationBase.fireAdNotAvailableEvent (adType);
 					}
 
 
 				} else if (provider.ToLower ().Trim ().Equals ("chartboost")) {
 					if(available){
-						Debug.Log ("Chartboost Show");
+						SpilLogging.Log ("Chartboost Show");
 						SpilUnityImplementationBase.fireAdAvailableEvent (adType);
 						PlayInterstitial("Chartboost");
 					} else {
-						Debug.Log ("Chartboost Not Available");
+						SpilLogging.Log ("Chartboost Not Available");
 						SpilUnityImplementationBase.fireAdNotAvailableEvent (adType);
 					}
 				}

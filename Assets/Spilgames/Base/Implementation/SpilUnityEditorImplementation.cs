@@ -193,7 +193,7 @@ namespace SpilGames.Unity.Base.Implementations
 		/// <param name="dict"></param>
 		public override void SendCustomEvent (string eventName, Dictionary<string, object> dict)
 		{
-			Debug.Log ("SpilSDK-Unity SendCustomEvent " + eventName);
+			SpilLogging.Log ("SpilSDK-Unity SendCustomEvent " + eventName);
 			SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent> ();
 			spilEvent.eventName = eventName;
 
@@ -677,7 +677,7 @@ namespace SpilGames.Unity.Base.Implementations
 
 		public void RequestDangerousPermission (string permission, string rationale)
 		{
-			Debug.Log ("Requested permission: " + permission);
+			SpilLogging.Log ("Requested permission: " + permission);
 		}
 
 		#endregion
@@ -686,12 +686,12 @@ namespace SpilGames.Unity.Base.Implementations
 
 		public void SetProductionEnvironment()
 		{
-			Debug.Log ("Set environment: production!");
+			SpilLogging.Log ("Set environment: production!");
 		}
 
 		public void SetStagingEnvironment()
 		{
-			Debug.Log ("Set environment: staging!");
+			SpilLogging.Log ("Set environment: staging!");
 		}
 
 		#endregion

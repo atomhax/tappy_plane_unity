@@ -92,7 +92,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses
 					string playerData = System.IO.File.ReadAllText (Application.streamingAssetsPath + "/defaultPlayerData.json");
 					temp = JsonHelper.getObjectFromJson<TempUserInfo> (playerData);
 				} catch(FileNotFoundException e){
-					Debug.Log("defaultPlayerData.json not found. Creating a placeholder!" + e.ToString());
+					SpilLogging.Log ("defaultPlayerData.json not found. Creating a placeholder!" + e.ToString());
 					string placeholder = "{\"wallet\":{\"currencies\":[],\"offset\": 0,\"logic\": \"CLIENT\"},\"inventory\":{\"items\":[],\"offset\":0,\"logic\": \"\"}}";
 					temp = JsonHelper.getObjectFromJson<TempUserInfo> (placeholder);
 				}
@@ -142,7 +142,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses
 					string playerData = System.IO.File.ReadAllText (Application.streamingAssetsPath + "/defaultPlayerData.json");
 					temp = JsonHelper.getObjectFromJson<TempUserInfo> (playerData);
 				} catch(FileNotFoundException e){
-					Debug.Log("defaultPlayerData.json not found. Creating a placeholder! " + e.ToString());
+					SpilLogging.Log ("defaultPlayerData.json not found. Creating a placeholder! " + e.ToString());
 					string placeholder = "{\"wallet\":{\"currencies\":[],\"offset\": 0,\"logic\": \"CLIENT\"},\"inventory\":{\"items\":[],\"offset\":0,\"logic\": \"\"}}";
 					temp = JsonHelper.getObjectFromJson<TempUserInfo> (placeholder);
 				}
@@ -299,7 +299,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses
 		{
 
 			if(currencyId <= 0 || reason == null){
-				Debug.Log ("Error updating wallet!");
+				SpilLogging.Error ("Error updating wallet!");
 				return;
 			}
 
@@ -312,7 +312,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses
 			}
 
 			if (currency == null) {
-				Debug.Log ("Currency does not exist!");
+				SpilLogging.Error ("Currency does not exist!");
 				return;
 			}
 
@@ -325,7 +325,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses
 			int updatedBalance = currentBalance + amount;
 
 			if (updatedBalance < 0) {
-				Debug.Log ("Not enough balance for currency!");
+				SpilLogging.Error ("Not enough balance for currency!");
 				return;
 			}
 
@@ -382,7 +382,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses
 			SpilItemData gameItem = GetItemFromObjects(itemId);
 
 			if(gameItem == null || itemId <= 0 || action == null || reason == null){
-				Debug.Log("Error updating item to player inventory!");
+				SpilLogging.Error ("Error updating item to player inventory!");
 				return;
 			}
 
@@ -404,7 +404,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses
 					inventoryItemAmount = inventoryItemAmount - amount;
 
 					if(inventoryItemAmount < 0){
-						Debug.Log("Could not remove item as amount is too low!");
+						SpilLogging.Error ("Could not remove item as amount is too low!");
 						return;
 					}
 				}
@@ -416,7 +416,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses
 				if(action.Equals("add")){
 					Inventory.items.Add(item);
 				} else if (action.Equals("subtract")){
-					Debug.Log("Could not remove item as amount is too low!");
+					SpilLogging.Error ("Could not remove item as amount is too low!");
 				}	
 			}
 
@@ -468,7 +468,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses
 			SpilBundleData bundle = GetBundleFromObjects(bundleId);
 
 			if(bundle == null || reason == null){
-				Debug.Log("Error adding bundle to player inventory!");
+				SpilLogging.Error ("Error adding bundle to player inventory!");
 				return;
 			}
 
@@ -491,7 +491,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses
 				PlayerCurrencyData currency = GetCurrencyFromWallet(bundlePrices[i].currencyId);
 
 				if(currency == null){
-					Debug.Log("Currency does not exist!");
+					SpilLogging.Error ("Currency does not exist!");
 					return;
 				}
 
@@ -499,7 +499,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses
 				int updatedBalance = currentBalance - bundlePrices[i].value;
 
 				if(updatedBalance < 0){
-					Debug.Log("Not enough balance for currency!");
+					SpilLogging.Error ("Not enough balance for currency!");
 					return;
 				}
 
