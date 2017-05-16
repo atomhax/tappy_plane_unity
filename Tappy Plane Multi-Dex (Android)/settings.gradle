@@ -1,5 +1,1 @@
 include 'unity-android-resources'
-include ':amazonAppStore'
-include ':googleAIDL'
-include ':googlePlay'
-include ':common'

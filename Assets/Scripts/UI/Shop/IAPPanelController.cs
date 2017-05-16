@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using SpilGames.Unity;
 using SpilGames.Unity.Helpers;
 using SpilGames.Unity.Helpers.IAPPackages;
+using SpilGames.Unity.Base.SDK;
 
 
 public class IAPPanelController : MonoBehaviour {
@@ -37,9 +38,14 @@ public class IAPPanelController : MonoBehaviour {
 		Spil.Instance.OnIAPInvalid -= OnIAPInvalid;
 		Spil.Instance.OnIAPInvalid += OnIAPInvalid;
 
+		Spil.Instance.OnIAPServerError -= OnIAPServerError;
+		Spil.Instance.OnIAPServerError += OnIAPServerError;
+
 		for(int i = 0 ; i < iapButtons.Length; i ++){
 			iapButtons [i].gameObject.SetActive (false);
 		}
+
+
 		PackagesHelper helper = Spil.Instance.GetPackagesAndPromotions ();
 		if(helper != null){
 			if (helper.Packages.Count == 0) {
@@ -70,6 +76,11 @@ public class IAPPanelController : MonoBehaviour {
 
 	public void OnIAPInvalid(string message){
 		Debug.Log("IAP invalid with response: " + message);
+	}
+
+	public void OnIAPServerError(SpilErrorMessage errorMessage)
+	{
+		Debug.Log("IAP error with message: " + errorMessage.message);
 	}
 		
 }
