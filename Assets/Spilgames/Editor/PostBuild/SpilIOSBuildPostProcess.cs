@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using System;
@@ -16,6 +16,48 @@ public class SpilIOSBuildPostProcess : MonoBehaviour
 	#elif UNITY_5_3_OR_NEWER
 	private static string bundleIdentifier = PlayerSettings.bundleIdentifier;
 	#endif
+
+	#region Python path
+
+	private static readonly string PYTHON2_ENV_VAR = "PYTHON2_EXE"; //$PYTHON2_EXE
+	private static readonly string PYTHON2_LOCAL_BIN = "/usr/local/bin/python2";
+	private static readonly string PYTHON2_BIN = "/usr/bin/python2";
+	private static readonly string PYTHON_LOCAL_BIN = "/usr/local/bin/python";
+	private static readonly string PYTHON_BIN = "/usr/bin/python";
+
+	private static string GetPythonInterpreter()
+	{
+		string retval = Environment.GetEnvironmentVariable(PYTHON2_ENV_VAR);
+
+		PossiblySetString(ref retval, PYTHON2_LOCAL_BIN);
+		PossiblySetString(ref retval, PYTHON2_BIN);
+		PossiblySetString(ref retval, PYTHON_LOCAL_BIN);
+		PossiblySetString(ref retval, PYTHON_BIN);
+
+		if (string.IsNullOrEmpty(retval))
+		{
+			UnityEngine.Debug.LogError("IOSBuildPostProcess::GetPythonInterpreter::Couldn't retrieve python path");
+		}
+		else
+		{
+			UnityEngine.Debug.Log("IOSBuildPostProcess::GetPythonInterpreter::Retrieved python at '" + retval + "'");
+		}
+
+		return retval;
+	}
+
+	private static void PossiblySetString(ref string aPythonPath, string aValue)
+	{
+		if (string.IsNullOrEmpty(aPythonPath))
+		{
+			if (File.Exists(aValue))
+			{
+				aPythonPath = aValue;
+			}
+		}
+	}
+
+	#endregion
 
 	[PostProcessBuild]
 	public static void OnPostprocessBuild (BuildTarget target, string pathToBuildProject)
@@ -45,7 +87,7 @@ public class SpilIOSBuildPostProcess : MonoBehaviour
 			UnityEngine.Debug.Log ("[SPIL] Executing: python " + pathToBuildProject + "/Spil.framework/setup.py " + arguments);
 			Process setupProcess = new Process ();
 			setupProcess.StartInfo.WorkingDirectory = pathToBuildProject;
-			setupProcess.StartInfo.FileName = "python";
+			setupProcess.StartInfo.FileName = GetPythonInterpreter();
 			setupProcess.StartInfo.Arguments = "Spil.framework/setup.py " + arguments;
 			setupProcess.StartInfo.UseShellExecute = false;
 			setupProcess.StartInfo.RedirectStandardOutput = true;
@@ -117,7 +159,7 @@ public class SpilIOSBuildPostProcess : MonoBehaviour
 		while (!request.isDone)
 			;
 		if (request.error != null) {
-			UnityEngine.Debug.LogError ("Error getting game data: " + request.error);  
+			UnityEngine.Debug.LogWarning ("Error getting game data: " + request.error);  
 		} else { 
 			UnityEngine.Debug.Log (type + " Data returned: " + request.text);
 			JSONObject serverResponce = new JSONObject (request.text);

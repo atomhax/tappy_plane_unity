@@ -146,7 +146,6 @@ public class ShopPanelController : MonoBehaviour {
 
 	public void ShowHelpCenter(){
 		Spil.Instance.ShowHelpCenter();
-//		Spil.Instance.SetStagingEnvironment();
 	}
 
 	void OnSplashScreenOpen()

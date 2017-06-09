@@ -40,10 +40,10 @@ public class SpilEditorDocumentation : EditorWindow
 				if (GUILayout.Toggle (tabSelected == 6, "Wallet, Shop & Inventory", EditorStyles.toolbarButton)) {
 					tabSelected = 6;
 				}
-				if (GUILayout.Toggle (tabSelected == 7, "IAP Packages and promotions", EditorStyles.toolbarButton)) {
+				if (GUILayout.Toggle (tabSelected == 7, "IAP Packages and Promotions", EditorStyles.toolbarButton)) {
 					tabSelected = 7;
 				}
-				if (GUILayout.Toggle (tabSelected == 8, "Customer support", EditorStyles.toolbarButton)) {
+				if (GUILayout.Toggle (tabSelected == 8, "Customer Support", EditorStyles.toolbarButton)) {
 					tabSelected = 8;
 				}
 				if (GUILayout.Toggle (tabSelected == 9, "Game State", EditorStyles.toolbarButton)) {
@@ -52,11 +52,17 @@ public class SpilEditorDocumentation : EditorWindow
 				if (GUILayout.Toggle (tabSelected == 10, "Daily Bonus and Splash Screen", EditorStyles.toolbarButton)) {
 					tabSelected = 10;
 				}
+				if (GUILayout.Toggle (tabSelected == 11, "Deep Linking", EditorStyles.toolbarButton)) {
+					tabSelected = 11;
+				}
+				if (GUILayout.Toggle (tabSelected == 11, "Anti-cheating", EditorStyles.toolbarButton)) {
+					tabSelected = 12;
+				}
 			}
 		GUILayout.EndVertical();
 		GUILayout.EndArea();
 
-		GUILayout.BeginArea(new Rect(210, 10, position.width - 210, position.height));
+		GUILayout.BeginArea(new Rect(250, 10, position.width - 210, position.height));
 		GUILayout.BeginVertical();
 		EditorStyles.label.wordWrap = true;
 			switch (tabSelected) {
@@ -93,6 +99,12 @@ public class SpilEditorDocumentation : EditorWindow
 				case 10:
 					DrawSplashScreenDailyBonus();
 					break;
+				case 11:
+					DrawDeepLinking();
+					break;
+				case 12:
+					DrawAntiCheating();
+					break;
 			}
 		GUILayout.EndVertical();
 		GUILayout.EndArea();
@@ -106,7 +118,7 @@ public class SpilEditorDocumentation : EditorWindow
 		GUILayout.Label("");
 		GUILayout.Label("You can find more general information about the Spil SDK here:",  EditorStyles.wordWrappedLabel);
 		if (GUILayout.Button ("Implementing The Spil SDK", GUILayout.Width (400))) {
-			Application.OpenURL("http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/");
+			Application.OpenURL("http://www.spilgames.com/integration/unity/implementing-spil-sdk/");
 		}
 	}
 
@@ -115,7 +127,7 @@ public class SpilEditorDocumentation : EditorWindow
 		GUILayout.Label("");
 		GUILayout.Label("You can find more event tracking information here:",  EditorStyles.wordWrappedLabel);
 		if (GUILayout.Button ("Spil SDK Event tracking", GUILayout.Width (400))) {
-			Application.OpenURL("http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/");
+			Application.OpenURL("http://www.spilgames.com/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/");
 		}
 	}
 
@@ -124,7 +136,7 @@ public class SpilEditorDocumentation : EditorWindow
 		GUILayout.Label("");
 		GUILayout.Label("You can find more game config information here:",  EditorStyles.wordWrappedLabel);
 		if (GUILayout.Button ("Spil SDK Game Config", GUILayout.Width (400))) {
-			Application.OpenURL("http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-game-config/");
+			Application.OpenURL("http://www.spilgames.com/integration/unity/implementing-spil-sdk/spil-sdk-game-config/");
 		}
 	}
 
@@ -133,7 +145,7 @@ public class SpilEditorDocumentation : EditorWindow
 		GUILayout.Label("");
 		GUILayout.Label("You can find more advertisement information here:",  EditorStyles.wordWrappedLabel);
 		if (GUILayout.Button ("Spil SDK Advertisement", GUILayout.Width (400))) {
-			Application.OpenURL("http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-advertisement-2/");
+			Application.OpenURL("http://www.spilgames.com/integration/unity/implementing-spil-sdk/spil-sdk-advertisement-2/");
 		}
 	}
 
@@ -142,7 +154,7 @@ public class SpilEditorDocumentation : EditorWindow
 		GUILayout.Label("");
 		GUILayout.Label("You can find more push notification information here:",  EditorStyles.wordWrappedLabel);
 		if (GUILayout.Button ("Spil SDK Push Notification", GUILayout.Width (400))) {
-			Application.OpenURL("http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-push-notifications/");
+			Application.OpenURL("http://www.spilgames.com/integration/unity/implementing-spil-sdk/spil-sdk-push-notifications/");
 		}
 	}
 
@@ -151,7 +163,7 @@ public class SpilEditorDocumentation : EditorWindow
 		GUILayout.Label("");
 		GUILayout.Label("You can find more Spil User Id information here:",  EditorStyles.wordWrappedLabel);
 		if (GUILayout.Button ("Spil SDK User Id", GUILayout.Width (400))) {
-			Application.OpenURL("http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-user-id/");
+			Application.OpenURL("http://www.spilgames.com/integration/unity/implementing-spil-sdk/spil-sdk-user-id/");
 		}
 	}
 
@@ -163,7 +175,7 @@ public class SpilEditorDocumentation : EditorWindow
 		GUILayout.Label("");
 		GUILayout.Label("You can find more Wallet, Inventory or Shop information here:",  EditorStyles.wordWrappedLabel);
 		if (GUILayout.Button ("Spil SDK Wallet, Shop & Inventory", GUILayout.Width (400))) {
-			Application.OpenURL("http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-wallet-shop-inventory/");
+			Application.OpenURL("http://www.spilgames.com/integration/unity/implementing-spil-sdk/spil-sdk-wallet-shop-inventory/");
 		}
 	}
 
@@ -172,7 +184,7 @@ public class SpilEditorDocumentation : EditorWindow
 		GUILayout.Label("");
 		GUILayout.Label("You can find more IAP Packages information here:",  EditorStyles.wordWrappedLabel);
 		if (GUILayout.Button ("Spil SDK IAP Packages", GUILayout.Width (400))) {
-			Application.OpenURL("http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/sdk-iap-packages-promotions/");
+			Application.OpenURL("http://www.spilgames.com/integration/unity/implementing-spil-sdk/sdk-iap-packages-promotions/");
 		}
 	}
 
@@ -181,7 +193,7 @@ public class SpilEditorDocumentation : EditorWindow
 		GUILayout.Label("");
 		GUILayout.Label("You can find more Customer Support integration information here:",  EditorStyles.wordWrappedLabel);
 		if (GUILayout.Button ("Spil SDK Cutomer Support", GUILayout.Width (400))) {
-			Application.OpenURL("http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-customer-support/");
+			Application.OpenURL("http://www.spilgames.com/integration/unity/implementing-spil-sdk/spil-sdk-customer-support/");
 		}
 	}
 
@@ -190,7 +202,7 @@ public class SpilEditorDocumentation : EditorWindow
 		GUILayout.Label("");
 		GUILayout.Label("You can find more Game State information here:",  EditorStyles.wordWrappedLabel);
 		if (GUILayout.Button ("Spil SDK Game State", GUILayout.Width (400))) {
-			Application.OpenURL("http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-game-state/");
+			Application.OpenURL("http://www.spilgames.com/integration/unity/implementing-spil-sdk/spil-sdk-game-state/");
 		}
 	}
 
@@ -199,7 +211,25 @@ public class SpilEditorDocumentation : EditorWindow
 		GUILayout.Label("");
 		GUILayout.Label("You can find more Daily Bonus and Splash Screen information here:",  EditorStyles.wordWrappedLabel);
 		if (GUILayout.Button ("Spil SDK Daily Bonus and Splash Screen", GUILayout.Width (400))) {
-			Application.OpenURL("http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-splash-daily-bonus-screen/");
+			Application.OpenURL("http://www.spilgames.com/integration/unity/implementing-spil-sdk/spil-sdk-splash-daily-bonus-screen/");
+		}
+	}
+
+	private void DrawDeepLinking(){
+		GUILayout.Label("The Spil SDK provides the functionality of Deep Linking. Deep Linking consists of using a URI (uniform resource identifier) that links to either installing the app on the app store or opening the app with a specific function in mind. The Spil Deep Linking is geared towards rewarding the user for clicking on the link, by providing meaningful content inside the game.",  EditorStyles.wordWrappedLabel);
+		GUILayout.Label("");
+		GUILayout.Label("You can find more Deep Linking information here:",  EditorStyles.wordWrappedLabel);
+		if (GUILayout.Button ("Spil SDK Deep Linking", GUILayout.Width (400))) {
+			Application.OpenURL("http://www.spilgames.com/integration/unity/implementing-spil-sdk/spil-sdk-deep-linking/");
+		}
+	}
+
+	private void DrawAntiCheating(){
+		GUILayout.Label("The Spil SDK takes various measures to prevent users from cheating. If you want to know the details please have a talk with the support team. In addition there are a few things you might want to implement into your game. ",  EditorStyles.wordWrappedLabel);
+		GUILayout.Label("");
+		GUILayout.Label("You can find more Anti-cheating information here:",  EditorStyles.wordWrappedLabel);
+		if (GUILayout.Button ("Spil SDK Anti-cheating", GUILayout.Width (400))) {
+			Application.OpenURL("http://www.spilgames.com/integration/unity/implementing-spil-sdk/spil-sdk-anti-cheating/");
 		}
 	}
 

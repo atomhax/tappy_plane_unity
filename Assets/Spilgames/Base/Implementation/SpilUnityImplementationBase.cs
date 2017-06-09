@@ -12,10 +12,10 @@ namespace SpilGames.Unity.Base.Implementations
 	public abstract class SpilUnityImplementationBase
 	{
 		public static string PluginName = "Unity";
-		public static string PluginVersion = "2.3.0";
+		public static string PluginVersion = "2.3.1";
 
-		public static string AndroidVersion = "2.3.0";
-		public static string iOSVersion = "2.2.0";
+		public static string AndroidVersion = "2.3.1";
+		public static string iOSVersion = "2.2.1";
 
 		#region Game config
 
@@ -393,19 +393,18 @@ namespace SpilGames.Unity.Base.Implementations
 		/// </summary>
 		/// <param name="skuId">The product identifier of the item that was purchased</param>
 		/// <param name="transactionId ">The transaction identifier of the item that was purchased (also called orderId)</param>
-		public void TrackIAPPurchasedEvent (string skuId, string transactionId)
+		public void TrackIAPPurchasedEvent (string skuId, string transactionId, string token = "")
 		{
-			SendCustomEvent ("iapPurchased", new Dictionary<string, object> () { {
-					"skuId",
-					skuId
-				}, {
-					"transactionId",
-					transactionId
-				}, {
-					"purchaseDate",
-					DateTime.Now.ToString ("yyyy-MM-ddTHH\\:mm\\:ss.fffffffzzz")
-				}
-			});
+			Dictionary<string, object> dictionary = new Dictionary<string, object> ();
+			dictionary.Add("skuId", skuId);
+			dictionary.Add("transactionId", transactionId);
+			dictionary.Add("purchaseDate", DateTime.Now.ToString ("yyyy-MM-ddTHH\\:mm\\:ss.fffffffzzz"));
+
+			if(token != null){
+				dictionary.Add("token", token);
+			}
+
+			SendCustomEvent ("iapPurchased", dictionary);
 		}
 
 		/// <summary>

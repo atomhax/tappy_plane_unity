@@ -162,12 +162,13 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 
 		String skuId = finalJsonObject.GetField ("productId").str;
 		String transactionID = args.purchasedProduct.transactionID;
+		String token = finalJsonObject.GetField ("purchaseToken").str;
 
 		if(transactionID == null || transactionID.Equals("")){
-			transactionID = finalJsonObject.GetField ("purchaseToken").str;
+			transactionID = token;
 		}
 
-		Spil.Instance.TrackIAPPurchasedEvent (skuId, transactionID);
+		Spil.Instance.TrackIAPPurchasedEvent (skuId, transactionID, token);
 
 		#elif UNITY_IOS
 

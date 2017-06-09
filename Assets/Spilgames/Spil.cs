@@ -1,6 +1,6 @@
 /*
  * Spil Games Unity SDK 2016
- * Version 2.3.0
+ * Version 2.3.1
  *
  * If you have any questions, don't hesitate to e-mail us at info@spilgames.com
  * Be sure to check the github page for documentation and the latest updates

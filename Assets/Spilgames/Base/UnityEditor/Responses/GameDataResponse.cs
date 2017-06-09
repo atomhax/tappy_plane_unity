@@ -118,6 +118,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses
 			updatedFromServer = true;
 
 			Spil.GameData.RefreshData(Spil.Instance);
+			SpilUnityImplementationBase.fireSpilGameDataAvailable();
 
 		}
 
