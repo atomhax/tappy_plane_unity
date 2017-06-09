@@ -118,7 +118,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 16
+  bundleVersion: 18
   preloadedAssets: []
   metroInputSource: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -136,14 +136,14 @@ PlayerSettings:
   protectGraphicsMemory: 0
   useHDRDisplay: 0
   applicationIdentifier:
-    Android: com.spilgames.tappyplane
+    Android: com.spilgames.tappyplanes
     Standalone: unity.Spilgames.Tappy Plane
     Tizen: com.Company.ProductName
     iOS: com.spilgames.tappyplane
     tvOS: com.spilgames.tappyplane
   buildNumber:
     iOS: 0
-  AndroidBundleVersionCode: 16
+  AndroidBundleVersionCode: 18
   AndroidMinSdkVersion: 17
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1
