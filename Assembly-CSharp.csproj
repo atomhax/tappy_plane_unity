@@ -85,6 +85,7 @@
      <Compile Include="Assets\Spilgames\Base\UnityEditor\Responses\ConfigResponse.cs" />
      <Compile Include="Assets\Spilgames\Base\UnityEditor\Responses\GameDataResponse.cs" />
      <Compile Include="Assets\Spilgames\Base\UnityEditor\Responses\GameStateResponse.cs" />
+     <Compile Include="Assets\Spilgames\Base\UnityEditor\Responses\LiveEventResponse.cs" />
      <Compile Include="Assets\Spilgames\Base\UnityEditor\Responses\OverlayResponse.cs" />
      <Compile Include="Assets\Spilgames\Base\UnityEditor\Responses\PackagesResponse.cs" />
      <Compile Include="Assets\Spilgames\Base\UnityEditor\Responses\PlayerDataResponse.cs" />

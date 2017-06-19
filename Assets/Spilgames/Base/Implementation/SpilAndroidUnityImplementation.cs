@@ -473,6 +473,30 @@ namespace SpilGames.Unity.Base.Implementations
 
 		#endregion
 
+		#region Live Event
+
+		public override void RequestLiveEvent()
+		{
+			CallNativeMethod ("requestLiveEvent");
+		}
+
+		public override string GetLiveEventConfig()
+		{
+			return CallNativeMethod ("getLiveEventConfig");
+		}
+
+		public override long GetLiveEventStartDate()
+		{
+			return Convert.ToInt64(CallNativeMethod ("getLiveEventStartDate"));
+		}
+
+		public override long GetLiveEventEndDate()
+		{
+			return Convert.ToInt64(CallNativeMethod("getLiveEventEndDate"));
+		}
+
+		#endregion
+		
 		#region Push notifications
 
 		/// <summary>

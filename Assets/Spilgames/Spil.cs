@@ -502,5 +502,61 @@ namespace SpilGames.Unity
 		{
 			SpilUnityImplementationBase.fireServerTimeRequestFailed (error); 
 		}
+		
+		/// <summary>
+		/// This event indicates that the Live Event Stage has been opened.
+		/// </summary>
+		public void LiveEventStageOpen ()
+		{
+			SpilUnityImplementationBase.fireLiveEventStageOpen(); 
+		}
+		
+		/// <summary>
+		/// This event indicates that the Live Event Stage has been closed.
+		/// </summary>
+		public void LiveEventStageClosed ()
+		{
+			SpilUnityImplementationBase.fireLiveEventStageClosed(); 
+		}
+		
+		/// <summary>
+		/// This event indicates that the Live Event is not available.
+		/// </summary>
+		public void LiveEventStageNotAvailable ()
+		{
+			SpilUnityImplementationBase.fireLiveEventStageNotAvailable();
+		}
+		
+		/// <summary>
+		/// This event indicates that an error occured for the Live Event.
+		/// </summary>
+		public void LiveEventError (string error)
+		{
+			SpilUnityImplementationBase.fireLiveEventError(error);
+		}
+		
+		/// <summary>
+		/// This event indicates the reward given for the Live Event.
+		/// </summary>
+		public void LiveEventReward (string reward)
+		{
+			SpilUnityImplementationBase.fireLiveEventReward(reward);
+		}
+		
+		/// <summary>
+		/// This event indicates if the user met the requirements to receive the reward.
+		/// </summary>
+		public void LiveEventMetRequirements (string metRequirements)
+		{
+			SpilUnityImplementationBase.fireLiveEventMetRequirements(Convert.ToBoolean(metRequirements));
+		}
+		
+		/// <summary>
+		/// This event indicates if the Live Event was completed by the user.
+		/// </summary>
+		public void LiveEventCompleted ()
+		{
+			SpilUnityImplementationBase.fireLiveEventCompleted();
+		}
 	}
 }

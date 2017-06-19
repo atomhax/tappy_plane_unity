@@ -400,9 +400,11 @@ namespace SpilGames.Unity.Base.Implementations
 			dictionary.Add("transactionId", transactionId);
 			dictionary.Add("purchaseDate", DateTime.Now.ToString ("yyyy-MM-ddTHH\\:mm\\:ss.fffffffzzz"));
 
+			#if UNITY_ANDROID
 			if(token != null){
 				dictionary.Add("token", token);
 			}
+			#endif
 
 			SendCustomEvent ("iapPurchased", dictionary);
 		}
@@ -844,7 +846,7 @@ namespace SpilGames.Unity.Base.Implementations
 			} 	
 		}
 
-		public delegate void GameStateUpdated (String access);
+		public delegate void GameStateUpdated (string access);
 
 		/// <summary>
 		/// This is fired by the native Spil SDK after game state was updated.
@@ -852,7 +854,7 @@ namespace SpilGames.Unity.Base.Implementations
 		/// </summary>
 		public event GameStateUpdated OnGameStateUpdated;
 
-		public static void fireGameStateUpdated (String access)
+		public static void fireGameStateUpdated (string access)
 		{
 			Debug.Log ("SpilSDK-Unity Game State Data updated, access = " + access);
 
@@ -869,7 +871,7 @@ namespace SpilGames.Unity.Base.Implementations
 		/// </summary>
 		public event OtherUsersGameStateDataLoaded OnOtherUsersGameStateDataLoaded;
 
-		public static void fireOtherUsersGameStateLoaded (String message)
+		public static void fireOtherUsersGameStateLoaded (string message)
 		{
 			Debug.Log ("SpilSDK-Unity Other users game state data loaded, message = " + message);
 
@@ -1050,7 +1052,7 @@ namespace SpilGames.Unity.Base.Implementations
 			} 	
 		}
 
-		public delegate void DailyBonusReward (String rewardList);
+		public delegate void DailyBonusReward (string rewardList);
 
 		/// <summary>
 		/// This is fired by the native Spil SDK when the reward is received from the web view.
@@ -1058,7 +1060,7 @@ namespace SpilGames.Unity.Base.Implementations
 		/// </summary>
 		public event DailyBonusReward OnDailyBonusReward;
 
-		public static void fireDailyBonusReward (String reward)
+		public static void fireDailyBonusReward (string reward)
 		{
 			Debug.Log ("SpilSDK-Unity Received reward = " + reward);
 
@@ -1067,7 +1069,7 @@ namespace SpilGames.Unity.Base.Implementations
 			} 	
 		}
 
-		public delegate void RewardTokenReceived (String token, List<RewardObject> reward, String rewardType);
+		public delegate void RewardTokenReceived (string token, List<RewardObject> reward, string rewardType);
 
 		/// <summary>
 		/// This is fired by the native Spil SDK when the reward is received.
@@ -1075,7 +1077,7 @@ namespace SpilGames.Unity.Base.Implementations
 		/// </summary>
 		public event RewardTokenReceived OnRewardTokenReceived;
 
-		public static void fireRewardTokenReceived (String response)
+		public static void fireRewardTokenReceived (string response)
 		{
 			Debug.Log ("SpilSDK-Unity Received reward = " + response);
 
@@ -1086,7 +1088,7 @@ namespace SpilGames.Unity.Base.Implementations
 			} 	
 		}
 
-		public delegate void RewardTokenClaimed (List<RewardObject> reward, String rewardType);
+		public delegate void RewardTokenClaimed (List<RewardObject> reward, string rewardType);
 
 		/// <summary>
 		/// This is fired by the native Spil SDK when the reward has been claimed successfully from SLOT.
@@ -1094,7 +1096,7 @@ namespace SpilGames.Unity.Base.Implementations
 		/// </summary>
 		public event RewardTokenClaimed OnRewardTokenClaimed;
 
-		public static void fireRewardTokenClaimed (String response)
+		public static void fireRewardTokenClaimed (string response)
 		{
 			Debug.Log ("SpilSDK-Unity Claimed reward = " + response);
 
@@ -1105,7 +1107,7 @@ namespace SpilGames.Unity.Base.Implementations
 			} 	
 		}
 
-		public delegate void RewardTokenClaimFailed (String rewardType, SpilErrorMessage error);
+		public delegate void RewardTokenClaimFailed (string rewardType, SpilErrorMessage error);
 
 		/// <summary>
 		/// This is fired by the native Spil SDK when the reward claiming has failed in SLOT.
@@ -1113,7 +1115,7 @@ namespace SpilGames.Unity.Base.Implementations
 		/// </summary>
 		public event RewardTokenClaimFailed OnRewardTokenClaimFailed;
 
-		public static void fireRewardTokenClaimFailed (String response)
+		public static void fireRewardTokenClaimFailed (string response)
 		{
 			Debug.Log ("SpilSDK-Unity Claim failed for = " + response);
 
@@ -1184,7 +1186,7 @@ namespace SpilGames.Unity.Base.Implementations
 
 			JSONObject responseJSON = new JSONObject(response);
 
-			String localPath = responseJSON.GetField("localPath").str;
+			string localPath = responseJSON.GetField("localPath").str;
 
 			ImageContext imageContextObj = JsonHelper.getObjectFromJson<ImageContext> (responseJSON.GetField("imageContext").Print(false));
 
@@ -1324,6 +1326,124 @@ namespace SpilGames.Unity.Base.Implementations
 
 		#endregion
 
+		#region Live Event
+
+		public delegate void LiveEventStageOpen ();
+
+		/// <summary>
+		/// This event indicates that the Live Event Stage has been opened.
+		/// </summary>
+		public event LiveEventStageOpen OnLiveEventStageOpen;
+
+		public static void fireLiveEventStageOpen ()
+		{
+			Debug.Log ("SpilSDK-Unity fireLiveEventStageOpen");
+
+			if (Spil.Instance.OnLiveEventStageOpen != null) {
+				Spil.Instance.OnLiveEventStageOpen ();
+			}
+		}
+
+		public delegate void LiveEventStageClosed ();
+
+		/// <summary>
+		/// This event indicates that the Live Event Stage has been closed.
+		/// </summary>
+		public event LiveEventStageClosed OnLiveEventStageClosed;
+
+		public static void fireLiveEventStageClosed ()
+		{
+			Debug.Log ("SpilSDK-Unity fireLiveEventStageOpen");
+
+			if (Spil.Instance.OnLiveEventStageClosed != null) {
+				Spil.Instance.OnLiveEventStageClosed ();
+			}
+		}
+		
+		public delegate void LiveEventStageNotAvailable ();
+
+		/// <summary>
+		/// This event indicates that the Live Event is not available.
+		/// </summary>
+		public event LiveEventStageNotAvailable OnLiveEventStageNotAvailable;
+
+		public static void fireLiveEventStageNotAvailable ()
+		{
+			Debug.Log ("SpilSDK-Unity fireLiveEventStageOpen");
+
+			if (Spil.Instance.OnLiveEventStageNotAvailable != null) {
+				Spil.Instance.OnLiveEventStageNotAvailable ();
+			}
+		}
+		
+		public delegate void LiveEventError (SpilErrorMessage errorMessage);
+
+		/// <summary>
+		/// This event indicates that the IAP has been validated with the SLOT backend.
+		/// </summary>
+		public event LiveEventError OnLiveEventError;
+
+		public static void fireLiveEventError (string error)
+		{
+			Debug.Log ("SpilSDK-Unity fireLiveEventError with data: " + error);
+
+			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage> (error);
+			if (Spil.Instance.OnLiveEventError != null) {
+				Spil.Instance.OnLiveEventError (errorMessage);
+			}
+		}
+		
+		public delegate void LiveEventReward (string rewardList);
+
+		/// <summary>
+		/// This event indicates the reward given for the Live Event.
+		/// The developer can subscribe to this event and provide the reward to the user.
+		/// </summary>
+		public event LiveEventReward OnLiveEventReward;
+
+		public static void fireLiveEventReward (string reward)
+		{
+			Debug.Log ("SpilSDK-Unity Received reward = " + reward);
+
+			if (Spil.Instance.OnLiveEventReward != null) {
+				Spil.Instance.OnLiveEventReward (reward);
+			} 	
+		}
+		
+		public delegate void LiveEventMetRequirements (bool metRequirements);
+
+		/// <summary>
+		/// This event indicates if the user met the requirements to receive the reward.
+		/// </summary>
+		public event LiveEventMetRequirements OnLiveEventMetRequirements;
+
+		public static void fireLiveEventMetRequirements (bool metRequirements)
+		{
+			Debug.Log ("SpilSDK-Unity LiveEventMetRequirements with data = " + metRequirements);
+
+			if (Spil.Instance.OnLiveEventMetRequirements != null) {
+				Spil.Instance.OnLiveEventMetRequirements (metRequirements);
+			} 	
+		}
+		
+		public delegate void LiveEventCompleted ();
+
+		/// <summary>
+		/// This event indicates that the Live Event is not available.
+		/// </summary>
+		public event LiveEventCompleted OnLiveEventCompleted;
+
+		public static void fireLiveEventCompleted ()
+		{
+			Debug.Log ("SpilSDK-Unity fireLiveEventCompleted");
+
+			if (Spil.Instance.OnLiveEventCompleted != null) {
+				Spil.Instance.OnLiveEventCompleted ();
+			}
+		}
+		
+		#endregion
+		
 		#endregion
 
 		#region Abstract Methods
@@ -1565,6 +1685,18 @@ namespace SpilGames.Unity.Base.Implementations
 		#region Server Time
 
 		public abstract void RequestServerTime();
+
+		#endregion
+		
+		#region Live Event
+
+		public abstract void RequestLiveEvent();
+
+		public abstract string GetLiveEventConfig();
+
+		public abstract long GetLiveEventStartDate();
+
+		public abstract long GetLiveEventEndDate();
 
 		#endregion
 

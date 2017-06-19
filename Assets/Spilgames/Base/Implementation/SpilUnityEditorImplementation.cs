@@ -700,9 +700,33 @@ namespace SpilGames.Unity.Base.Implementations
 
 		public override void RequestServerTime ()
 		{	
-			int currentTime = (int)(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now) - new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc)).TotalSeconds;
+			double currentTime = (int)(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now) - new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc)).TotalMilliseconds;
 			string time = currentTime.ToString();
 			fireServerTimeRequestSuccess(time);
+		}
+
+		#endregion
+		
+		#region Live Event
+
+		public override void RequestLiveEvent()
+		{
+
+		}
+
+		public override string GetLiveEventConfig()
+		{
+			return "";
+		}
+
+		public override long GetLiveEventStartDate()
+		{
+			return 0;
+		}
+
+		public override long GetLiveEventEndDate()
+		{
+			return 0;
 		}
 
 		#endregion

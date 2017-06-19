@@ -57,7 +57,10 @@ namespace SpilGames.Unity.Base.UnityEditor
 					case "gamestate":
 						GameStateResponse.ProcessGameStateResponse (responseEvent);
 						break;
-					}
+					case "liveevent":
+						LiveEventResponse.ProcessLiveEventResponse(responseEvent);
+						break;
+				}
 			}
 			GameObject.Destroy(responseEvent);
 		}
