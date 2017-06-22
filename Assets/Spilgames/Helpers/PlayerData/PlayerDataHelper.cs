@@ -140,7 +140,10 @@ namespace SpilGames.Unity.Helpers.PlayerData
 		public static string Cancel = "Cancel";
 		public static string Collection = "Collection";
 		public static string Reset = "Reset";
-    		public static string InitialValue = "Initial Value";
+    	public static string InitialValue = "Initial Value";
+		public static string Deeplink = "Deeplink From Client";
+		public static string PushNotification = "Push Notification From Client";
+		public static string LiveEvent = "Live Event From Client";
 
 		public PlayerDataUpdateReasons (){}
 	}

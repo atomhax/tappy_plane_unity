@@ -13,111 +13,162 @@ using SpilGames.Unity.Helpers.GameData;
 using System;
 using SpilGames.Unity.Helpers.PlayerData;
 
-namespace SpilGames.Unity
-{
-	[HelpURL ("http://www.spilgames.com/developers/integration/unity/unity-get-started/")]
-	public class Spil : MonoBehaviour
-	{
+namespace SpilGames.Unity {
+    
+    [HelpURL("http://www.spilgames.com/developers/integration/unity/unity-get-started/")]
+    
+    public class Spil : MonoBehaviour {
+        private SpilGameDataHelper GameDataObject;
+        public static SpilGameDataHelper GameData;
 
-		private SpilGameDataHelper GameDataObject;
-		public static SpilGameDataHelper GameData;
+        private PlayerDataHelper PlayerDataObject;
+        public static PlayerDataHelper PlayerData;
 
-		private PlayerDataHelper PlayerDataObject;
-		public static PlayerDataHelper PlayerData;
+        [SerializeField] public bool initializeOnAwake = true;
 
-		[SerializeField]
-		public bool initializeOnAwake = true;
+        [Header("Android Settings")]
+#if UNITY_ANDROID || UNITY_EDITOR
+        /// <summary>
+        /// The project ID assigned to your project by Spil games.
+        /// You can get your project id from your contact person.
+        /// The project ID is used for push notifications.
+        /// </summary>
+        [SerializeField] public string ProjectId = "";
 
-		[Header ("Android Settings")]
+#endif
 
-		#if UNITY_ANDROID || UNITY_EDITOR
-		/// <summary>
-		/// The project ID assigned to your project by Spil games.
-		/// You can get your project id from your contact person.
-		/// The project ID is used for push notifications.
-		/// </summary>
-		[SerializeField]
-		public string ProjectId = "";
+        [Header("iOS Settings")] 
+        
+        [SerializeField] public string CustomBundleId;
 
-		#endif
+        [Header("Editor Settings")] 
+        
+        [SerializeField] public bool EditorLogging = true;
 
-		[Header ("iOS Settings")]
-		[SerializeField]
-		public string CustomBundleId;
+        [SerializeField] public bool EditorDebugMode = true;
 
-		[Header ("Editor Settings")]
+        [SerializeField] public string spilUserIdEditor;
 
-		[SerializeField]
-		public bool EditorLogging = true;
+        public static string SpilUserIdEditor { get; private set; }
 
-		[SerializeField]
-		public string spilUserIdEditor;
+        [SerializeField] public string bundleIdEditor;
 
-		public static string SpilUserIdEditor { get; private set; }
+        public static string BundleIdEditor { get; private set; }
 
-		[SerializeField]
-		public string bundleIdEditor;
+        [Header ("Reward Settings")]
+        
+        [Header("Ads")] 
+        
+        [SerializeField] private string currencyName;
 
-		public static string BundleIdEditor { get; private set; }
+        public static string CurrencyName { get; private set; }
 
-		[Header ("Reward Video Settings")]
+        [SerializeField] private string currencyId;
 
-		[SerializeField]
-		private string currencyName;
+        public static string CurrencyId { get; private set; }
 
-		public static string CurrencyName { get; private set; }
+        [SerializeField] private int reward = 0;
 
-		[SerializeField]
-		private string currencyId;
+        public static int Reward { get; private set; }
 
-		public static string CurrencyId { get; private set; }
+        [Space(10)]
+        
+        [Header("Daily Bonus")] 
+        
+        [SerializeField] private int dailyBonusId;
 
-		[SerializeField]
-		private int reward = 0;
+        public static int DailyBonusId { get; private set; }
 
-		public static int Reward { get; private set; }
+        [SerializeField] private string dailyBonusExternalId;
 
-		[Header ("Daily Bonus Settings")]
+        public static string DailyBonusExternalId { get; private set; }
 
-		[SerializeField]
-		private int dailyBonusId;
+        [SerializeField] private int dailyBonusAmount;
 
-		public static int DailyBonusId { get; private set; }
+        public static int DailyBonusAmount { get; private set; }
 
-		[SerializeField]
-		private string dailyBonusExternalId;
+        public enum DailyBonusRewardTypeEnum {
+            CURRENCY,
+            ITEM,
+            EXTERNAL
+        };
 
-		public static string DailyBonusExternalId { get; private set; }
+        public DailyBonusRewardTypeEnum DailyBonusRewardType;
 
-		[SerializeField]
-		private int dailyBonusAmount;
+        [Space(10)]
+        
+        [Header("Live Event")] 
+        
+        [SerializeField] private int liveEventRewardId;
 
-		public static int DailyBonusAmount { get; private set; }
+        public static int LiveEventRewardId { get; private set; }
 
-		public enum DailyBonusRewardTypeEnum
-		{
-			CURRENCY,
-			ITEM,
-			EXTERNAL
-		};
+        [SerializeField] private string liveEventExternalRewardId;
 
-		public DailyBonusRewardTypeEnum DailyBonusRewardType;
+        public static string LiveEventExternalRewardId { get; private set; }
 
-		public static Spil MonoInstance {
-			get {
-				GameObject spilSDKObject = GameObject.Find ("SpilSDK");
-				if (spilSDKObject == null) {
-					throw new NullReferenceException ("Could not find a gameobject in the scene named \"SpilSDK\".");
-				}
-				return spilSDKObject.GetComponent<Spil> ();
-			}
-		}
+        [SerializeField] private int liveEventRewardAmount;
 
-		#if UNITY_EDITOR
+        public static int LiveEventRewardAmount { get; private set; }
 
-		public static SpilUnityEditorImplementation Instance = new SpilUnityEditorImplementation ();
+        public enum LiveEventRewardTypeEnum {
+            CURRENCY,
+            ITEM,
+            EXTERNAL
+        };
 
-		#elif UNITY_ANDROID
+        public LiveEventRewardTypeEnum LiveEventRewardType;
+        
+        [Space(10)]
+        
+        [Header("Token System")] 
+        
+        [SerializeField] private string rewardToken;
+        
+        public static string RewardToken { get; private set; }
+        
+        public enum RewardFeatureTypeEnum {
+            DEEPLINK,
+
+        };
+
+        public RewardFeatureTypeEnum RewardFeatureType;
+
+        [SerializeField] private int tokenRewardId;
+
+        public static int TokenRewardId { get; private set; }
+
+        [SerializeField] private string tokenExternalRewardId;
+
+        public static string TokenExternalRewardId { get; private set; }
+
+        [SerializeField] private int tokenRewardAmount;
+
+        public static int TokenRewardAmount { get; private set; }
+
+        public enum TokenRewardTypeEnum {
+            CURRENCY,
+            ITEM,
+            EXTERNAL
+        };
+        
+        public TokenRewardTypeEnum TokenRewardType;
+        
+        public static Spil MonoInstance {
+            get {
+                GameObject spilSDKObject = GameObject.Find("SpilSDK");
+                if (spilSDKObject == null) {
+                    throw new NullReferenceException("Could not find a gameobject in the scene named \"SpilSDK\".");
+                }
+                return spilSDKObject.GetComponent<Spil>();
+            }
+        }
+
+#if UNITY_EDITOR
+
+        public static SpilUnityEditorImplementation Instance = new SpilUnityEditorImplementation();
+
+#elif UNITY_ANDROID
 
 		public static SpilAndroidUnityImplementation Instance = new SpilAndroidUnityImplementation();
 
@@ -127,26 +178,31 @@ namespace SpilGames.Unity
 
 		#endif
 
-		void Awake ()
-		{
-			if (initializeOnAwake) {
-				Initialize ();
-			}
-		}
+        public delegate void SpilSDKInitialized();
+        
+        /// <summary>
+        /// This event indicates that the Spil SDK was initialised on Unity Side.
+        /// </summary>
+        public static event SpilSDKInitialized OnSpilSDKInitialized;
+        
+        void Awake() {
+            if (initializeOnAwake) {
+                Initialize();
+            }
+        }
 
-		public void Initialize ()
-		{
-			Debug.Log ("SpilSDK-Unity Init");
+        public void Initialize() {
+            Debug.Log("SpilSDK-Unity Init");
 
-			Instance.SetPluginInformation (SpilUnityImplementationBase.PluginName, SpilUnityImplementationBase.PluginVersion);
+            Instance.SetPluginInformation(SpilUnityImplementationBase.PluginName, SpilUnityImplementationBase.PluginVersion);
 
-			#if UNITY_EDITOR
+#if UNITY_EDITOR
 
-			InitEditor();
+            InitEditor();
 
-			#endif
+#endif
 
-			#if UNITY_IOS
+#if UNITY_IOS
 
 			if (!string.IsNullOrEmpty (CustomBundleId)) {
 				Instance.SetCustomBundleId (CustomBundleId);
@@ -154,20 +210,20 @@ namespace SpilGames.Unity
 
 			#endif
 
-			#if UNITY_ANDROID
+#if UNITY_ANDROID
 
-			//Check if Project Id is set
-			if (ProjectId == null) {
-				throw new UnityException ("Project ID not set!! Please set your Project Id with the id provided by the Spil representative!");
-			}
+            //Check if Project Id is set
+            if (ProjectId == null) {
+                throw new UnityException("Project ID not set!! Please set your Project Id with the id provided by the Spil representative!");
+            }
 
-			#endif
+#endif
 
-			Instance.SpilInit ();
-			DontDestroyOnLoad (gameObject);
-			gameObject.name = "SpilSDK";
+            Instance.SpilInit();
+            DontDestroyOnLoad(gameObject);
+            gameObject.name = "SpilSDK";
 
-			#if !UNITY_EDITOR
+#if !UNITY_EDITOR
 
 			GameDataObject = new SpilGameDataHelper (Instance);
 			GameData = GameDataObject;
@@ -176,387 +232,374 @@ namespace SpilGames.Unity
 			PlayerData = PlayerDataObject;
 
 			#endif
-		}
+            
+            Invoke ("SendOnInitializeEvent", 1);
+        }
 
-		public void InitEditor()
-		{
-			if (String.IsNullOrEmpty (spilUserIdEditor)) {
-				spilUserIdEditor = Guid.NewGuid ().ToString ();
-			}
-			SpilUserIdEditor = spilUserIdEditor;
-			Debug.Log ("SpilSDK-Unity Using SpilUserIdEditor: " + SpilUserIdEditor);
+        public void InitEditor() {
+            if (string.IsNullOrEmpty(spilUserIdEditor)) {
+                spilUserIdEditor = Guid.NewGuid().ToString();
+            }
+            SpilUserIdEditor = spilUserIdEditor;
+            Debug.Log("SpilSDK-Unity Using SpilUserIdEditor: " + SpilUserIdEditor);
 
-			BundleIdEditor = bundleIdEditor;
-			if (String.IsNullOrEmpty (bundleIdEditor)) {
-				Debug.Assert (!String.IsNullOrEmpty (bundleIdEditor), "SpilSDK-Unity No BundleIdEditor set!");
-			}
+            BundleIdEditor = bundleIdEditor;
+            if (string.IsNullOrEmpty(bundleIdEditor)) {
+                Debug.Assert(!string.IsNullOrEmpty(bundleIdEditor), "SpilSDK-Unity No BundleIdEditor set!");
+            }
 
-			CurrencyName = currencyName;
-			CurrencyId = currencyId;
-			Reward = reward;
+            CurrencyName = currencyName;
+            CurrencyId = currencyId;
+            Reward = reward;
 
-			DailyBonusId = dailyBonusId;
-			DailyBonusExternalId = dailyBonusExternalId;
-			DailyBonusAmount = dailyBonusAmount;
-		}
+            DailyBonusId = dailyBonusId;
+            DailyBonusExternalId = dailyBonusExternalId;
+            DailyBonusAmount = dailyBonusAmount;
 
-		/// <summary>
-		/// This method is called by the native Spil SDK, it should not be used by developers.
-		/// Developers can subscribe to the Spil.Instance.AdStarted event.
-		/// </summary>
-		public void AdStart ()
-		{
-			SpilUnityImplementationBase.fireAdStartedEvent ();
-		}
+            LiveEventRewardId = liveEventRewardId;
+            LiveEventExternalRewardId = liveEventExternalRewardId;
+            LiveEventRewardAmount = liveEventRewardAmount;
 
-		/// <summary>
-		/// This method is called by the native Spil SDK, it should not be used by developers.
-		/// Developers can subscribe to the Spil.Instance.AdFinished event.
-		/// </summary>
-		public void AdFinished (string response)
-		{
-			SpilUnityImplementationBase.fireAdFinishedEvent (response);
-		}
+            TokenRewardId = tokenRewardId;
+            TokenExternalRewardId = tokenExternalRewardId;
+            TokenRewardAmount = tokenRewardAmount;
+            
+            RewardToken = rewardToken;
+        }
 
-		/// <summary>
-		/// This method is called by the native Spil SDK, it should not be used by developers.
-		/// Developers can subscribe to the Spil.Instance.AdAvailable event.
-		/// </summary>
-		public void AdAvailable (string type)
-		{
-			SpilUnityImplementationBase.fireAdAvailableEvent (type);
-		}
+        private void SendOnInitializeEvent() {
+            if (OnSpilSDKInitialized != null) {
+                OnSpilSDKInitialized();
+            }
+        }
+        
+        /// <summary>
+        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// Developers can subscribe to the Spil.Instance.AdStarted event.
+        /// </summary>
+        public void AdStart() {
+            SpilUnityImplementationBase.fireAdStartedEvent();
+        }
 
-		/// <summary>
-		/// This method is called by the native Spil SDK, it should not be used by developers.
-		/// Developers can subscribe to the Spil.Instance.AdNotAvailable event.
-		/// </summary>
-		public void AdNotAvailable (string type)
-		{
-			SpilUnityImplementationBase.fireAdNotAvailableEvent (type);
-		}
+        /// <summary>
+        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// Developers can subscribe to the Spil.Instance.AdFinished event.
+        /// </summary>
+        public void AdFinished(string response) {
+            SpilUnityImplementationBase.fireAdFinishedEvent(response);
+        }
 
-		/// <summary>
-		/// This method is called by the native Spil SDK, it should not be used by developers.
-		/// Developers can subscribe to the Spil.Instance.OpenParentalGate event.
-		/// </summary>
-		public void OpenParentalGate ()
-		{
-			SpilUnityImplementationBase.fireOpenParentalGateEvent ();
-		}
+        /// <summary>
+        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// Developers can subscribe to the Spil.Instance.AdAvailable event.
+        /// </summary>
+        public void AdAvailable(string type) {
+            SpilUnityImplementationBase.fireAdAvailableEvent(type);
+        }
 
-		/// <summary>
-		/// This method is called by the native Spil SDK, it should not be used by developers.
-		/// Developers can subscribe to the Spil.Instance.ConfigUpdated event.
-		/// </summary>
-		public void ConfigUpdated ()
-		{
-			SpilUnityImplementationBase.fireConfigUpdatedEvent ();
-		}
+        /// <summary>
+        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// Developers can subscribe to the Spil.Instance.AdNotAvailable event.
+        /// </summary>
+        public void AdNotAvailable(string type) {
+            SpilUnityImplementationBase.fireAdNotAvailableEvent(type);
+        }
 
-		/// <summary>
-		/// This method is called by the native Spil SDK, it should not be used by developers.
-		/// Developers can subscribe to the Spil.Instance.ConfigUpdated event.
-		/// </summary>
-		public void ConfigError (string error)
-		{
-			SpilUnityImplementationBase.fireConfigError (error);
-		}
+        /// <summary>
+        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// Developers can subscribe to the Spil.Instance.OpenParentalGate event.
+        /// </summary>
+        public void OpenParentalGate() {
+            SpilUnityImplementationBase.fireOpenParentalGateEvent();
+        }
 
-		/// <summary>
-		/// This method is called by the native Spil SDK, it should not be used by developers.
-		/// </summary>
-		public void OnResponseReceived (string response)
-		{
-			SpilUnityImplementationBase.OnResponseReceived (response);
-		}
+        /// <summary>
+        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// Developers can subscribe to the Spil.Instance.ConfigUpdated event.
+        /// </summary>
+        public void ConfigUpdated() {
+            SpilUnityImplementationBase.fireConfigUpdatedEvent();
+        }
 
-		/// <summary>
-		/// This method is called by the native Spil SDK, it should not be used by developers.
-		/// </summary>
-		public void SpilGameDataAvailable ()
-		{
-			SpilUnityImplementationBase.fireSpilGameDataAvailable ();
-		}
+        /// <summary>
+        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// Developers can subscribe to the Spil.Instance.ConfigUpdated event.
+        /// </summary>
+        public void ConfigError(string error) {
+            SpilUnityImplementationBase.fireConfigError(error);
+        }
 
-		/// <summary>
-		/// This method is called by the native Spil SDK, it should not be used by developers.
-		/// </summary>
-		public void SpilGameDataError (string reason)
-		{
-			SpilUnityImplementationBase.fireSpilGameDataError (reason);
-		}
+        /// <summary>
+        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// </summary>
+        public void OnResponseReceived(string response) {
+            SpilUnityImplementationBase.OnResponseReceived(response);
+        }
 
-		/// <summary>
-		/// This method is called by the native Spil SDK, it should not be used by developers.
-		/// </summary>
-		public void PlayerDataAvailable ()
-		{
-			SpilUnityImplementationBase.firePlayerDataAvailable ();
-		}
+        /// <summary>
+        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// </summary>
+        public void SpilGameDataAvailable() {
+            SpilUnityImplementationBase.fireSpilGameDataAvailable();
+        }
 
-		/// <summary>
-		/// This method is called by the native Spil SDK, it should not be used by developers.
-		/// </summary>
-		public void PlayerDataUpdated (string data)
-		{
-			SpilUnityImplementationBase.firePlayerDataUpdated (data);
-		}
+        /// <summary>
+        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// </summary>
+        public void SpilGameDataError(string reason) {
+            SpilUnityImplementationBase.fireSpilGameDataError(reason);
+        }
 
-		/// <summary>
-		/// This method is called by the native Spil SDK, it should not be used by developers.
-		/// </summary>
-		public void PlayerDataError (string reason)
-		{
-			SpilUnityImplementationBase.firePlayerDataError (reason);
-		}
+        /// <summary>
+        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// </summary>
+        public void PlayerDataAvailable() {
+            SpilUnityImplementationBase.firePlayerDataAvailable();
+        }
 
-		/// <summary>
-		/// This method is called by the native Spil SDK, it should not be used by developers.
-		/// </summary>
-		public void GameStateUpdated (string access)
-		{
-			SpilUnityImplementationBase.fireGameStateUpdated (access);
-		}
+        /// <summary>
+        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// </summary>
+        public void PlayerDataUpdated(string data) {
+            SpilUnityImplementationBase.firePlayerDataUpdated(data);
+        }
 
-		/// <summary>
-		/// This method is called by the native Spil SDK, it should not be used by developers.
-		/// </summary>
-		public void OtherUsersGameStateLoaded (string message)
-		{
-			SpilUnityImplementationBase.fireOtherUsersGameStateLoaded (message);
-		}
+        /// <summary>
+        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// </summary>
+        public void PlayerDataError(string reason) {
+            SpilUnityImplementationBase.firePlayerDataError(reason);
+        }
 
-		/// <summary>
-		/// This method is called by the native Spil SDK, it should not be used by developers.
-		/// </summary>
-		public void GameStateError (string message)
-		{
-			SpilUnityImplementationBase.fireGameStateError (message);
-		}
+        /// <summary>
+        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// </summary>
+        public void GameStateUpdated(string access) {
+            SpilUnityImplementationBase.fireGameStateUpdated(access);
+        }
 
-		/// <summary>
-		/// This method is called by the native Spil SDK, it should not be used by developers.
-		/// </summary>
-		public void SplashScreenOpen ()
-		{
-			SpilUnityImplementationBase.fireSplashScreenOpen ();
-		}
+        /// <summary>
+        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// </summary>
+        public void OtherUsersGameStateLoaded(string message) {
+            SpilUnityImplementationBase.fireOtherUsersGameStateLoaded(message);
+        }
 
-		/// <summary>
-		/// This method is called by the native Spil SDK, it should not be used by developers.
-		/// </summary>
-		public void SplashScreenNotAvailable ()
-		{
-			SpilUnityImplementationBase.fireSplashScreenNotAvailable ();
-		}
+        /// <summary>
+        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// </summary>
+        public void GameStateError(string message) {
+            SpilUnityImplementationBase.fireGameStateError(message);
+        }
 
-		/// <summary>
-		/// This method is called by the native Spil SDK, it should not be used by developers.
-		/// </summary>
-		public void SplashScreenClosed ()
-		{
-			SpilUnityImplementationBase.fireSplashScreenClosed ();
-		}
+        /// <summary>
+        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// </summary>
+        public void SplashScreenOpen() {
+            SpilUnityImplementationBase.fireSplashScreenOpen();
+        }
 
-		/// <summary>
-		/// This method is called by the native Spil SDK, it should not be used by developers.
-		/// </summary>
-		public void SplashScreenOpenShop ()
-		{
-			SpilUnityImplementationBase.fireSplashScreenOpenShop ();
-		}
+        /// <summary>
+        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// </summary>
+        public void SplashScreenNotAvailable() {
+            SpilUnityImplementationBase.fireSplashScreenNotAvailable();
+        }
 
-		/// <summary>
-		/// This method is called by the native Spil SDK, it should not be used by developers.
-		/// </summary>
-		public void SplashScreenError (string error)
-		{
-			SpilUnityImplementationBase.fireSplashScreenError (error);
-		}
+        /// <summary>
+        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// </summary>
+        public void SplashScreenClosed() {
+            SpilUnityImplementationBase.fireSplashScreenClosed();
+        }
 
-		/// <summary>
-		/// This method is called by the native Spil SDK, it should not be used by developers.
-		/// </summary>
-		public void DailyBonusOpen ()
-		{
-			SpilUnityImplementationBase.fireDailyBonusOpen ();
-		}
+        /// <summary>
+        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// </summary>
+        public void SplashScreenOpenShop() {
+            SpilUnityImplementationBase.fireSplashScreenOpenShop();
+        }
 
-		/// <summary>
-		/// This method is called by the native Spil SDK, it should not be used by developers.
-		/// </summary>
-		public void DailyBonusNotAvailable ()
-		{
-			SpilUnityImplementationBase.fireDailyBonusNotAvailable ();
-		}
+        /// <summary>
+        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// </summary>
+        public void SplashScreenError(string error) {
+            SpilUnityImplementationBase.fireSplashScreenError(error);
+        }
 
-		/// <summary>
-		/// This method is called by the native Spil SDK, it should not be used by developers.
-		/// </summary>
-		public void DailyBonusClosed ()
-		{
-			SpilUnityImplementationBase.fireDailyBonusClosed ();
-		}
+        /// <summary>
+        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// </summary>
+        public void DailyBonusOpen() {
+            SpilUnityImplementationBase.fireDailyBonusOpen();
+        }
 
-		/// <summary>
-		/// This method is called by the native Spil SDK, it should not be used by developers.
-		/// </summary>
-		public void DailyBonusReward (string reward)
-		{
-			SpilUnityImplementationBase.fireDailyBonusReward (reward);
-		}
+        /// <summary>
+        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// </summary>
+        public void DailyBonusNotAvailable() {
+            SpilUnityImplementationBase.fireDailyBonusNotAvailable();
+        }
 
-		/// <summary>
-		/// This method is called by the native Spil SDK, it should not be used by developers.
-		/// </summary>
-		public void DailyBonusError (string error)
-		{
-			SpilUnityImplementationBase.fireDailyBonusError (error);
-		}
+        /// <summary>
+        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// </summary>
+        public void DailyBonusClosed() {
+            SpilUnityImplementationBase.fireDailyBonusClosed();
+        }
 
-		/// <summary>
-		/// This method is called by the native Spil SDK, it should not be used by developers.
-		/// </summary>
-		public void RewardTokenReceived (string response)
-		{
-			SpilUnityImplementationBase.fireRewardTokenReceived (response);
-		}
+        /// <summary>
+        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// </summary>
+        public void DailyBonusReward(string receivedReward) {
+            SpilUnityImplementationBase.fireDailyBonusReward(receivedReward);
+        }
 
-		/// <summary>
-		/// This method is called by the native Spil SDK, it should not be used by developers.
-		/// </summary>
-		public void RewardTokenClaimed (string response)
-		{
-			SpilUnityImplementationBase.fireRewardTokenClaimed (response);
-		}
+        /// <summary>
+        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// </summary>
+        public void DailyBonusError(string error) {
+            SpilUnityImplementationBase.fireDailyBonusError(error);
+        }
 
-		/// <summary>
-		/// This method is called by the native Spil SDK, it should not be used by developers.
-		/// </summary>
-		public void RewardTokenClaimFailed (string response)
-		{
-			SpilUnityImplementationBase.fireRewardTokenClaimFailed (response);
-		}
+        /// <summary>
+        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// </summary>
+        public void RewardTokenReceived(string response) {
+            SpilUnityImplementationBase.fireRewardTokenReceived(response);
+        }
 
-		/// <summary>
-		/// This event will be called when an image has been downloaded.
-		/// </summary>
-		public void ImageLoadSuccess (string response)
-		{
-			SpilUnityImplementationBase.fireImageLoadSuccess (response);
-		}
+        /// <summary>
+        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// </summary>
+        public void RewardTokenClaimed(string response) {
+            SpilUnityImplementationBase.fireRewardTokenClaimed(response);
+        }
 
-		/// <summary>
-		/// This event will be called when an image has failed downloadibg.
-		/// </summary>
-		public void ImageLoadFailed (string response)
-		{
-			SpilUnityImplementationBase.fireImageLoadFailed (response);
-		}
+        /// <summary>
+        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// </summary>
+        public void RewardTokenClaimFailed(string response) {
+            SpilUnityImplementationBase.fireRewardTokenClaimFailed(response);
+        }
 
-		/// <summary>
-		/// This event indicates that the operation for preloading item and bundle images has been completed.
-		/// </summary>
-		public void ImagePreloadingCompleted ()
-		{
-			SpilUnityImplementationBase.fireImagePreloadingCompleted ();
-		}
+        /// <summary>
+        /// This event will be called when an image has been downloaded.
+        /// </summary>
+        public void ImageLoadSuccess(string response) {
+            SpilUnityImplementationBase.fireImageLoadSuccess(response);
+        }
 
-		/// <summary>
-		/// This event indicates that the IAP has been validated with the SLOT backend.
-		/// </summary>
-		public void IAPValid (string data)
-		{
-			SpilUnityImplementationBase.fireIAPValid (data);
-		}
+        /// <summary>
+        /// This event will be called when an image has failed downloadibg.
+        /// </summary>
+        public void ImageLoadFailed(string response) {
+            SpilUnityImplementationBase.fireImageLoadFailed(response);
+        }
 
-		/// <summary>
-		/// This event indicates that the IAP was invalid when checked with the SLOT backend.
-		/// </summary>
-		public void IAPInvalid (string message)
-		{
-			SpilUnityImplementationBase.fireIAPInvalid (message); 
-		}
+        /// <summary>
+        /// This event indicates that the operation for preloading item and bundle images has been completed.
+        /// </summary>
+        public void ImagePreloadingCompleted() {
+            SpilUnityImplementationBase.fireImagePreloadingCompleted();
+        }
 
-		/// <summary>
-		/// This event indicates that the IAP was invalid when checked with the SLOT backend.
-		/// </summary>
-		public void IAPServerError (string error)
-		{
-			SpilUnityImplementationBase.fireIAPServerError (error); 
-		}
+        /// <summary>
+        /// This event indicates that the IAP has been validated with the SLOT backend.
+        /// </summary>
+        public void IAPValid(string data) {
+            SpilUnityImplementationBase.fireIAPValid(data);
+        }
 
-		/// <summary>
-		/// This event indicates that the IAP was invalid when checked with the SLOT backend.
-		/// </summary>
-		public void ServerTimeRequestSuccess (string time)
-		{
-			SpilUnityImplementationBase.fireServerTimeRequestSuccess (time); 
-		}
+        /// <summary>
+        /// This event indicates that the IAP was invalid when checked with the SLOT backend.
+        /// </summary>
+        public void IAPInvalid(string message) {
+            SpilUnityImplementationBase.fireIAPInvalid(message);
+        }
+        
+        /// <summary>
+        /// This event indicates that an IAP request was fired from the SDK.
+        /// </summary>
+        public void IAPRequestPurchase(string skuId) {
+            SpilUnityImplementationBase.fireIAPRequestPurchase(skuId);
+        }
+        
+        /// <summary>
+        /// This event indicates that the IAP was invalid when checked with the SLOT backend.
+        /// </summary>
+        public void IAPServerError(string error) {
+            SpilUnityImplementationBase.fireIAPServerError(error);
+        }
 
-		/// <summary>
-		/// This event indicates that the IAP was invalid when checked with the SLOT backend.
-		/// </summary>
-		public void ServerTimeRequestFailed (string error)
-		{
-			SpilUnityImplementationBase.fireServerTimeRequestFailed (error); 
-		}
-		
-		/// <summary>
-		/// This event indicates that the Live Event Stage has been opened.
-		/// </summary>
-		public void LiveEventStageOpen ()
-		{
-			SpilUnityImplementationBase.fireLiveEventStageOpen(); 
-		}
-		
-		/// <summary>
-		/// This event indicates that the Live Event Stage has been closed.
-		/// </summary>
-		public void LiveEventStageClosed ()
-		{
-			SpilUnityImplementationBase.fireLiveEventStageClosed(); 
-		}
-		
-		/// <summary>
-		/// This event indicates that the Live Event is not available.
-		/// </summary>
-		public void LiveEventStageNotAvailable ()
-		{
-			SpilUnityImplementationBase.fireLiveEventStageNotAvailable();
-		}
-		
-		/// <summary>
-		/// This event indicates that an error occured for the Live Event.
-		/// </summary>
-		public void LiveEventError (string error)
-		{
-			SpilUnityImplementationBase.fireLiveEventError(error);
-		}
-		
-		/// <summary>
-		/// This event indicates the reward given for the Live Event.
-		/// </summary>
-		public void LiveEventReward (string reward)
-		{
-			SpilUnityImplementationBase.fireLiveEventReward(reward);
-		}
-		
-		/// <summary>
-		/// This event indicates if the user met the requirements to receive the reward.
-		/// </summary>
-		public void LiveEventMetRequirements (string metRequirements)
-		{
-			SpilUnityImplementationBase.fireLiveEventMetRequirements(Convert.ToBoolean(metRequirements));
-		}
-		
-		/// <summary>
-		/// This event indicates if the Live Event was completed by the user.
-		/// </summary>
-		public void LiveEventCompleted ()
-		{
-			SpilUnityImplementationBase.fireLiveEventCompleted();
-		}
-	}
+        /// <summary>
+        /// This event indicates that the IAP was invalid when checked with the SLOT backend.
+        /// </summary>
+        public void ServerTimeRequestSuccess(string time) {
+            SpilUnityImplementationBase.fireServerTimeRequestSuccess(time);
+        }
+
+        /// <summary>
+        /// This event indicates that the IAP was invalid when checked with the SLOT backend.
+        /// </summary>
+        public void ServerTimeRequestFailed(string error) {
+            SpilUnityImplementationBase.fireServerTimeRequestFailed(error);
+        }
+
+        /// <summary>
+        /// This event indicates that the Live Event Stage has been opened.
+        /// </summary>
+        public void LiveEventAvailable() {
+            SpilUnityImplementationBase.fireLiveEventAvailable();
+        }
+        
+        /// <summary>
+        /// This event indicates that the Live Event Stage has been opened.
+        /// </summary>
+        public void LiveEventStageOpen() {
+            SpilUnityImplementationBase.fireLiveEventStageOpen();
+        }
+
+        /// <summary>
+        /// This event indicates that the Live Event Stage has been closed.
+        /// </summary>
+        public void LiveEventStageClosed() {
+            SpilUnityImplementationBase.fireLiveEventStageClosed();
+        }
+
+        /// <summary>
+        /// This event indicates that the Live Event is not available.
+        /// </summary>
+        public void LiveEventNotAvailable() {
+            SpilUnityImplementationBase.fireLiveEventNotAvailable();
+        }
+
+        /// <summary>
+        /// This event indicates that an error occured for the Live Event.
+        /// </summary>
+        public void LiveEventError(string error) {
+            SpilUnityImplementationBase.fireLiveEventError(error);
+        }
+
+        /// <summary>
+        /// This event indicates the reward given for the Live Event.
+        /// </summary>
+        public void LiveEventReward(string receivedReward) {
+            SpilUnityImplementationBase.fireLiveEventReward(receivedReward);
+        }
+
+        /// <summary>
+        /// This event indicates if the user met the requirements to receive the reward.
+        /// </summary>
+        public void LiveEventMetRequirements(string metRequirements) {
+            SpilUnityImplementationBase.fireLiveEventMetRequirements(Convert.ToBoolean(metRequirements));
+        }
+
+        /// <summary>
+        /// This event indicates if the Live Event was completed by the user.
+        /// </summary>
+        public void LiveEventCompleted() {
+            SpilUnityImplementationBase.fireLiveEventCompleted();
+        }
+    }
 }

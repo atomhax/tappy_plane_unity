@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using SpilGames.Unity;
@@ -14,6 +15,7 @@ using SpilGames.Unity.Helpers.PlayerData;
 using Facebook.Unity;
 #endif
 using SpilGames.Unity.Base.Implementations;
+using Random = UnityEngine.Random;
 
 public class GameController : MonoBehaviour
 {
@@ -51,7 +53,7 @@ public class GameController : MonoBehaviour
 
 	List<GameObject> listOfObsticles = new List<GameObject> ();
 
-	public GameObject startPanel, ingamePanel, gameoverPanel, shopPanel, skinSelectPanel, tabsPanel, inGamePurchaseSuccessPanel, inGamePurchaseFailPanel, highScorePanel, moreGamesButton;
+	public GameObject startPanel, ingamePanel, gameoverPanel, shopPanel, skinSelectPanel, tabsPanel, inGamePurchaseSuccessPanel, inGamePurchaseFailPanel, highScorePanel, moreGamesButton, liveEventButton;
 
 	// Facebook
 	public static List<string> userIds = new List<string> ();
@@ -100,57 +102,14 @@ public class GameController : MonoBehaviour
 	void Start ()
 	{
 
-		initialPosition = player.gameObject.transform.position;
-		initialRotation = player.gameObject.transform.rotation;
-
-		Spil.Instance.OnReward -= Spil_Instance_OnReward;
-		Spil.Instance.OnReward += Spil_Instance_OnReward;
-
+		Spil.OnSpilSDKInitialized -= OnSpilSDKInitialized;
+		Spil.OnSpilSDKInitialized += OnSpilSDKInitialized;
+		
 		GetAndApplyGameConfig ();
 		SetupNewGame ();
-
-		Spil.Instance.OnDailyBonusOpen -= OnDailyBonusOpen;
-		Spil.Instance.OnDailyBonusOpen += OnDailyBonusOpen;
-
-		Spil.Instance.OnDailyBonusClosed -= OnDailyBonusClosed;
-		Spil.Instance.OnDailyBonusClosed += OnDailyBonusClosed;
-
-		Spil.Instance.OnDailyBonusNotAvailable -= OnDailyBonusNotAvailable;
-		Spil.Instance.OnDailyBonusNotAvailable += OnDailyBonusNotAvailable;
-
-		Spil.Instance.OnDailyBonusError -= OnDailyBonusError;
-		Spil.Instance.OnDailyBonusError += OnDailyBonusError;
-
-		Spil.Instance.OnDailyBonusReward -= OnDailyBonusReward;
-		Spil.Instance.OnDailyBonusReward += OnDailyBonusReward;
-
-		Spil.Instance.OnPlayerDataUpdated -= OnPlayerDataUpdated;
-		Spil.Instance.OnPlayerDataUpdated += OnPlayerDataUpdated;
-
-		Spil.Instance.OnReward -= RewardHandler;
-		Spil.Instance.OnReward += RewardHandler;
-
-		Spil.Instance.OnRewardTokenReceived -= OnRewardTokenReceived;
-		Spil.Instance.OnRewardTokenReceived += OnRewardTokenReceived;
-
-		Spil.Instance.OnRewardTokenClaimed -= OnRewardTokenClaimed;
-		Spil.Instance.OnRewardTokenClaimed += OnRewardTokenClaimed;
-
-		Spil.Instance.OnRewardTokenClaimFailed -= OnRewardTokenClaimFailed;
-		Spil.Instance.OnRewardTokenClaimFailed += OnRewardTokenClaimFailed;
-
-		Spil.Instance.OnServerTimeRequestSuccess -= OnServerTimeRequestSuccess;
-		Spil.Instance.OnServerTimeRequestSuccess += OnServerTimeRequestSuccess;
-
-		Spil.Instance.OnServerTimeRequestFailed -= OnServerTimeRequestFailed;
-		Spil.Instance.OnServerTimeRequestFailed += OnServerTimeRequestFailed;
-
-		FireTrackEventSample ();
-
-//		Spil.Instance.PreloadItemAndBundleImages();
-
-		Invoke ("RequestDailyBonus", 1);
-		Spil.Instance.RequestServerTime ();
+		
+		initialPosition = player.gameObject.transform.position;
+		initialRotation = player.gameObject.transform.rotation;
 	}
 
 	void Spil_Instance_OnReward (PushNotificationRewardResponse rewardResponse)
@@ -490,7 +449,8 @@ public class GameController : MonoBehaviour
 
 	private void RequestDailyBonus ()
 	{
-		Spil.Instance.RequestDailyBonus ();
+		Spil.Instance.RequestLiveEvent();
+		//Spil.Instance.RequestDailyBonus ();
 	}
 
 	public static string GetNameForFbId (string fbId)
@@ -632,6 +592,65 @@ public class GameController : MonoBehaviour
 		Spil.Instance.PlayMoreApps ();
 	}
 
+	private void OnSpilSDKInitialized() {
+		Debug.Log("Spil SDK Initialized");
+		
+		Spil.Instance.OnReward -= Spil_Instance_OnReward;
+		Spil.Instance.OnReward += Spil_Instance_OnReward;
+		
+		Spil.Instance.OnDailyBonusOpen -= OnDailyBonusOpen;
+		Spil.Instance.OnDailyBonusOpen += OnDailyBonusOpen;
+
+		Spil.Instance.OnDailyBonusClosed -= OnDailyBonusClosed;
+		Spil.Instance.OnDailyBonusClosed += OnDailyBonusClosed;
+
+		Spil.Instance.OnDailyBonusNotAvailable -= OnDailyBonusNotAvailable;
+		Spil.Instance.OnDailyBonusNotAvailable += OnDailyBonusNotAvailable;
+
+		Spil.Instance.OnDailyBonusError -= OnDailyBonusError;
+		Spil.Instance.OnDailyBonusError += OnDailyBonusError;
+
+		Spil.Instance.OnDailyBonusReward -= OnDailyBonusReward;
+		Spil.Instance.OnDailyBonusReward += OnDailyBonusReward;
+
+		Spil.Instance.OnPlayerDataUpdated -= OnPlayerDataUpdated;
+		Spil.Instance.OnPlayerDataUpdated += OnPlayerDataUpdated;
+
+		Spil.Instance.OnReward -= RewardHandler;
+		Spil.Instance.OnReward += RewardHandler;
+
+		Spil.Instance.OnRewardTokenReceived -= OnRewardTokenReceived;
+		Spil.Instance.OnRewardTokenReceived += OnRewardTokenReceived;
+
+		Spil.Instance.OnRewardTokenClaimed -= OnRewardTokenClaimed;
+		Spil.Instance.OnRewardTokenClaimed += OnRewardTokenClaimed;
+
+		Spil.Instance.OnRewardTokenClaimFailed -= OnRewardTokenClaimFailed;
+		Spil.Instance.OnRewardTokenClaimFailed += OnRewardTokenClaimFailed;
+
+		Spil.Instance.OnServerTimeRequestSuccess -= OnServerTimeRequestSuccess;
+		Spil.Instance.OnServerTimeRequestSuccess += OnServerTimeRequestSuccess;
+
+		Spil.Instance.OnServerTimeRequestFailed -= OnServerTimeRequestFailed;
+		Spil.Instance.OnServerTimeRequestFailed += OnServerTimeRequestFailed;
+
+		Spil.Instance.OnLiveEventAvailable -= OnLiveEventAvailable;
+		Spil.Instance.OnLiveEventAvailable += OnLiveEventAvailable;
+		
+		FireTrackEventSample ();
+
+//		Spil.Instance.PreloadItemAndBundleImages();
+
+		Invoke ("RequestDailyBonus", 1);
+		Spil.Instance.RequestServerTime ();
+	}
+	
+	private void OnLiveEventAvailable() {
+		Debug.Log("Live Event Available");
+		Debug.Log("Config for Live Event: " + Spil.Instance.GetLiveEventConfig());
+		Spil.Instance.OpenLiveEvent();
+	}
+	
 	/*public void FBShareScore ()
 	{
 		System.Uri url = new System.Uri ("http://files.cdn.spilcloud.com/10/1479133368_tappy_logo.png");

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using UnityEditor.Callbacks;
 using UnityEditor;
@@ -13,6 +14,7 @@ public class SpilAndroidBuildPostProcess : MonoBehaviour
 {
 
 	private static string androidFolder = "Assets/Plugins/Android/";
+	private static Spil spil;
 
 	#if UNITY_5_6_OR_NEWER
 	private static string bundleIdentifier = PlayerSettings.applicationIdentifier;
@@ -23,6 +25,8 @@ public class SpilAndroidBuildPostProcess : MonoBehaviour
 	[PostProcessBuild]
 	public static void OnPostprocessBuild (BuildTarget target, string pathToBuildProject){
 
+		spil = GameObject.FindObjectOfType<Spil>();
+		
 		if(target == BuildTarget.Android){
 			Debug.Log("Starting verification step for Android Spil SDK");
 
@@ -200,7 +204,10 @@ public class SpilAndroidBuildPostProcess : MonoBehaviour
 		form.AddField ("data", dummyData.ToString ());
 		form.AddField ("customData", dummyCustomData.ToString ());
 		form.AddField ("ts", "1470057439857");
-		form.AddField ("queued", "0");
+		form.AddField ("queued", 0);
+		if (spil.EditorDebugMode) {
+			form.AddField("debugMode", Convert.ToString(spil.EditorDebugMode).ToLower());
+		}
 		return form;
 	}
 

@@ -9,41 +9,32 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses
 
 	public class ConfigResponse : Response
 	{
-
 		public static string GameConfigData;
 
 		public static void ProcessConfigResponse(ResponseEvent response){
-			if(response.data != null){
-				GameConfigData = response.data.Print(false);
-				SpilUnityImplementationBase.fireConfigUpdatedEvent();
-			}
+			if (response.data == null) return;
+			GameConfigData = response.data.Print();
+			SpilUnityImplementationBase.fireConfigUpdatedEvent();
 		}
 
-		public static string getConfigAll(){
-			if(GameConfigData == null){
-				return loadGameConfigFromAssets();
-			}
-
-			return GameConfigData;
+		public static string getConfigAll()
+		{
+			return GameConfigData ?? loadGameConfigFromAssets();
 		}
 
-		public static string getConfigValue(string key){
+		public static string getConfigValue(string key)
+		{
 			JSONObject config = new JSONObject(GameConfigData);
 
-			if(config.HasField(key)){
-				return config.GetField(key).Print(false);
-			}
-
-			return null;
-
+			return config.HasField(key) ? config.GetField(key).Print(false) : null;
 		}
 
-		private static string loadGameConfigFromAssets(){
+		private static string loadGameConfigFromAssets()
+		{
 			string config = System.IO.File.ReadAllText (Application.streamingAssetsPath + "/defaultGameConfig.json");
 
 			return config;
 		}
-	
 	}
 
 }
