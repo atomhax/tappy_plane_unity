@@ -595,6 +595,42 @@ namespace SpilGames.Unity.Base.Implementations
 
 		#endregion
 
+		#region Live Event
+
+		public override void RequestLiveEvent()
+		{
+			requestLiveEventNative();
+		}
+
+		[DllImport("__Internal")]
+		private static extern void requestLiveEventNative();
+
+		public override string GetLiveEventConfig()
+		{
+			return getLiveEventConfigNative();
+		}
+
+		[DllImport("__Internal")]
+		private static extern string getLiveEventConfigNative();
+
+		public override long GetLiveEventStartDate()
+		{
+			return Convert.ToInt64(getLiveEventStartDateNative());
+		}
+
+		[DllImport("__Internal")]
+		private static extern string getLiveEventStartDateNative();
+
+		public override long GetLiveEventEndDate()
+		{
+			return Convert.ToInt64(getLiveEventEndDateNative());
+		}
+
+		[DllImport("__Internal")]
+		private static extern string getLiveEventEndDateNative();
+
+		#endregion
+
 		#region Customer support
 
 	        public override void ShowHelpCenter() {
