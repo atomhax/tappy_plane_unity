@@ -42,15 +42,9 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
         }
 
         public static void AdvanceToNextStage() {
-            if (liveEventOverview.fromStartStage) {
-                if (liveEventOverview.currentStage != null) {
-                    OpenStageView(StageType.PROGRESS, liveEventOverview.currentStage);
-                    liveEventOverview.fromStartStage = false;
-                }
-                else {
-                    SpilLogging.Error("Error validating live event next stage!");
-                    CloseStageView();
-                }
+            if (liveEventOverview.fromStartStage && liveEventOverview.currentStage != null) {
+                OpenStageView(StageType.PROGRESS, liveEventOverview.currentStage);
+                liveEventOverview.fromStartStage = false;
             }
             else {
                 SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
@@ -178,6 +172,10 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
 
             if (!metRequirements) {
                 SpilUnityImplementationBase.fireLiveEventMetRequirements(false);
+                if (response.HasField("progress")) {
+                    liveEventOverview.currentStage.RemoveField("progress");
+                    liveEventOverview.currentStage.AddField("progress", response.GetField("progress"));
+                }
                 CloseStageView();
                 return;
             }
@@ -228,6 +226,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
 
         public static void OpenLiveEvent() {
             if (liveEventOverview.startStage != null) {
+                liveEventOverview.fromStartStage = true;
                 OpenStageView(StageType.START, liveEventOverview.startStage);
             }
             else {
@@ -311,7 +310,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
                     }
                 }
                 else if (overlayType.Equals("progress")) {
-                    GUI.Label(new Rect(10, 10, (Screen.width - 20), (Screen.height - 20) / 2), "\nProgress Page \n Requirements: " + currentStage.GetField("requirements").Print() + "\n \n Applied Items: " + applyItems.Print(), infoGuiStyle);
+                    GUI.Label(new Rect(10, 10, (Screen.width - 20), (Screen.height - 20) / 2), "\nProgress Page \n Requirements: " + currentStage.GetField("requirements").Print() + " \n \n Progress: " + (currentStage.HasField("progress") ? currentStage.GetField("progress").Print() : "") + "\n \n Applied Items: " + applyItems.Print(), infoGuiStyle);
 
                     GUI.Label(new Rect(10, (Screen.height / 2 + 10), 200, (Screen.height - 20) / 12 - 10), "Id", itemsGuiStyle);
                     id = GUI.TextField(new Rect(220, (Screen.height / 2 + 10), Screen.width - 230, (Screen.height - 20) / 12 - 10), id, textFieldGuiStyle);

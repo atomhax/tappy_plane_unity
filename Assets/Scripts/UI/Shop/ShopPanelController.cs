@@ -96,7 +96,11 @@ public class ShopPanelController : MonoBehaviour {
 	{
 		starsAmountText.text = Spil.PlayerData.GetCurrencyBalance (25).ToString ();
 		diamonsAmountText.text = Spil.PlayerData.GetCurrencyBalance (28).ToString ();
-		tapperAmountText.text = Spil.PlayerData.GetItemAmount(100077) == -1 ? "0" : Spil.PlayerData.GetItemAmount(100077).ToString();
+		if (Spil.PlayerData.GetItemAmount(100077) < 0) {
+			tapperAmountText.text = "0";
+		} else {
+			tapperAmountText.text = Spil.PlayerData.GetItemAmount(100077).ToString();
+		}
 	}
 		
 	void Spil_Instance_OnAdAvailable (SpilGames.Unity.Base.SDK.enumAdType adType)
