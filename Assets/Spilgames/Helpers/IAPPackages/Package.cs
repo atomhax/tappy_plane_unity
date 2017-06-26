@@ -51,7 +51,7 @@ namespace SpilGames.Unity.Helpers.IAPPackages
 				foreach (PromotionData promotion in this.promotions) {
 					if (promotion.items != null) {
 						// Apply regular promotions
-						if (String.IsNullOrEmpty (promotion.type)) {
+						if (String.IsNullOrEmpty (promotion.type) || promotion.type.Equals("PERCENTAGE")) {
 							foreach (PackageItemData promotionItem in promotion.items) {
 								if (promotionItem.id.Equals (packageItem.id)) {
 									double.TryParse (promotionItem.value, out promotionValue);
@@ -69,7 +69,7 @@ namespace SpilGames.Unity.Helpers.IAPPackages
 					}
 				}
 
-				double totalPromotion = promotionValue + extraValue;
+				double totalPromotion = (promotionValue - packageItem.value) + (extraValue - packageItem.value);
 				Items.Add(new PackageItem(packageItem.id, packageItem.type, packageItem.value, 
 					totalPromotion != 0 ? totalPromotion.ToString() : null));
 			}
