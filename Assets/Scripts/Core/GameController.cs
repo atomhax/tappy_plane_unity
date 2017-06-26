@@ -61,6 +61,8 @@ public class GameController : MonoBehaviour
 	public static List<string> userNames = new List<string> ();
 	public bool fbLoggedIn = false;
 
+	public bool overlayEnabled = false;
+	
 	private Vector3 initialPosition;
 	private Quaternion initialRotation;
 
@@ -199,8 +201,8 @@ public class GameController : MonoBehaviour
 	}
 
 
-	public void StartNewGame ()
-	{
+	public void StartNewGame () {
+		if (overlayEnabled) return;
 		player.idleMode = false;
 		player.dead = false;
 		InvokeRepeating ("SpawnObsticle", 0, obsitcleSpawnFrequency);
@@ -337,11 +339,13 @@ public class GameController : MonoBehaviour
 	public void OnDailyBonusOpen ()
 	{
 		Debug.Log ("DailyBonusOpen");
+		overlayEnabled = true;
 	}
 
 	public void OnDailyBonusClosed ()
 	{
 		Debug.Log ("DailyBonusClosed");
+		overlayEnabled = false;
 	}
 
 	public void OnDailyBonusReward (string reward)
@@ -352,6 +356,7 @@ public class GameController : MonoBehaviour
 	public void OnDailyBonusError (SpilErrorMessage error)
 	{
 		Debug.Log ("DailyBonusError with reason: " + error.message);
+		overlayEnabled = false;
 	}
 
 	public void OnDailyBonusNotAvailable ()
@@ -644,6 +649,18 @@ public class GameController : MonoBehaviour
 		Spil.Instance.OnLiveEventAvailable -= OnLiveEventAvailable;
 		Spil.Instance.OnLiveEventAvailable += OnLiveEventAvailable;
 		
+		Spil.Instance.OnLiveEventStageOpen -= OnLiveEventStageOpen;
+		Spil.Instance.OnLiveEventStageOpen += OnLiveEventStageOpen;
+		
+		Spil.Instance.OnLiveEventStageClosed -= OnLiveEventStageClosed;
+		Spil.Instance.OnLiveEventStageClosed += OnLiveEventStageClosed;
+		
+		Spil.Instance.OnLiveEventMetRequirements -= OnLiveEventMetRequirements;
+		Spil.Instance.OnLiveEventMetRequirements += OnLiveEventMetRequirements;
+		
+		Spil.Instance.OnLiveEventError -= OnLiveEventError;
+		Spil.Instance.OnLiveEventError += OnLiveEventError;
+		
 		Spil.Instance.OnLiveEventCompleted -= OnLiveEventCompleted;
 		Spil.Instance.OnLiveEventCompleted += OnLiveEventCompleted;
 		
@@ -655,6 +672,24 @@ public class GameController : MonoBehaviour
 		Spil.Instance.RequestLiveEvent();
 	}
 
+	private void OnLiveEventError(SpilErrorMessage errorMessage) {
+		overlayEnabled = false;
+	}
+
+	private void OnLiveEventMetRequirements(bool metRequirements) {
+		if (!metRequirements) {
+			overlayEnabled = false;
+		}
+	}
+
+	private void OnLiveEventStageClosed() {
+		overlayEnabled = false;
+	}
+
+	private void OnLiveEventStageOpen() {
+		overlayEnabled = true;
+	}
+
 	private void OnLiveEventAvailable() {
 		Debug.Log("Live Event Available");
 		Debug.Log("Config for Live Event: " + Spil.Instance.GetLiveEventConfig());
@@ -662,11 +697,13 @@ public class GameController : MonoBehaviour
 	}
 
 	public void OpenLiveEvent() {
+		overlayEnabled = true;
 		Spil.Instance.OpenLiveEvent();
 	}
 	
 	private void OnLiveEventCompleted() {
 		liveEventButton.SetActive(false);
+		overlayEnabled = false;
 	}
 	
 	/*public void FBShareScore ()
