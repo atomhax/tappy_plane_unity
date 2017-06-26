@@ -11,6 +11,9 @@ using SpilGames.Unity.Json;
 
 public class SpilIOSBuildPostProcess : MonoBehaviour
 {
+	
+	private static Spil spil;
+	
 	#if UNITY_5_6_OR_NEWER
 	private static string bundleIdentifier = PlayerSettings.applicationIdentifier;
 	#elif UNITY_5_3_OR_NEWER
@@ -62,6 +65,8 @@ public class SpilIOSBuildPostProcess : MonoBehaviour
 	[PostProcessBuild]
 	public static void OnPostprocessBuild (BuildTarget target, string pathToBuildProject)
 	{
+		spil = GameObject.FindObjectOfType<Spil>();
+		
 		if (target == BuildTarget.iOS) {
 			UnityEngine.Debug.Log ("[SPIL] Starting custom post process build script." + pathToBuildProject);
 
@@ -192,7 +197,10 @@ public class SpilIOSBuildPostProcess : MonoBehaviour
 		form.AddField ("data", dummyData.ToString ());
 		form.AddField ("customData", dummyCustomData.ToString ());
 		form.AddField ("ts", "1470057439857");
-		form.AddField ("queued", "0");
+		form.AddField ("queued", 0);
+		if (spil.EditorDebugMode) {
+			form.AddField("debugMode", Convert.ToString(spil.EditorDebugMode).ToLower());
+		}
 		return form;
 	}
 

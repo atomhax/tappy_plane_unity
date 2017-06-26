@@ -12,122 +12,116 @@ using System;
 using SpilGames.Unity.Json;
 using SpilGames.Unity.Base.UnityEditor.Responses;
 
-namespace SpilGames.Unity.Base.UnityEditor
-{
-	public class SpilEvent : MonoBehaviour
-	{
-		public string eventName;
-		public JSONObject data = new JSONObject ();
-		public JSONObject customData = new JSONObject ();
-		private string uid = Spil.SpilUserIdEditor;
+namespace SpilGames.Unity.Base.UnityEditor {
+    public class SpilEvent : MonoBehaviour {
+        public string eventName;
+        public JSONObject data = new JSONObject();
+        public JSONObject customData = new JSONObject();
+        private string uid = Spil.SpilUserIdEditor;
 
-		private string bundleIdentifier;
+        private string bundleIdentifier;
 
-		private string platform;
+        private string platform;
 
-		public void Send ()
-		{
-			this.StartCoroutine (SendCoroutine ());
-		}
+        public void Send() {
+            this.StartCoroutine(SendCoroutine());
+        }
 
-		public IEnumerator SendCoroutine ()
-		{
+        public IEnumerator SendCoroutine() {
+            Spil spil = GameObject.FindObjectOfType<Spil>();
+            platform = EditorUserBuildSettings.activeBuildTarget.ToString().Trim().ToLower();
 
-			platform = EditorUserBuildSettings.activeBuildTarget.ToString ().Trim ().ToLower ();
-
-			#if UNITY_5_6_OR_NEWER
-			bundleIdentifier = PlayerSettings.applicationIdentifier;
-			#elif UNITY_5_3_OR_NEWER
+#if UNITY_5_6_OR_NEWER
+            bundleIdentifier = PlayerSettings.applicationIdentifier;
+#elif UNITY_5_3_OR_NEWER
 			bundleIdentifier = PlayerSettings.bundleIdentifier;
 			#endif
 
-			AddDefaultParameters ();
+            AddDefaultParameters();
 
-			WWWForm requestForm = new WWWForm ();
-			requestForm.AddField ("name", this.eventName);
-			requestForm.AddField ("data", this.data.ToString ());
-			if (!this.customData.IsNull) {
-				requestForm.AddField ("customData", this.customData.Print (false));
-			} else {
-				requestForm.AddField ("customData", "{}");
-			}
+            WWWForm requestForm = new WWWForm();
+            requestForm.AddField("name", eventName);
+            requestForm.AddField("data", data.ToString());
+            requestForm.AddField("customData", !customData.IsNull ? customData.Print() : "{}");
 
 
-			var epoch = new DateTime (1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-			var time = (long)(DateTime.Now.ToUniversalTime () - epoch).TotalMilliseconds;
+            var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            var time = (long) (DateTime.Now.ToUniversalTime() - epoch).TotalMilliseconds;
 
-			requestForm.AddField ("ts", time.ToString ());
-			requestForm.AddField ("queued", 0);
-			requestForm.AddField ("debugMode", "true");
+            requestForm.AddField("ts", time.ToString());
+            requestForm.AddField("queued", 0);
 
-			WWW request = new WWW ("https://apptracker.spilgames.com/v1/native-events/event/" + platform + "/" + Spil.BundleIdEditor + "/" + this.eventName, requestForm);
-			yield return request;
+            if (spil.EditorDebugMode) {
+                requestForm.AddField("debugMode", Convert.ToString(spil.EditorDebugMode).ToLower());
+            }
 
-			SpilLogging.Log ("Sending event: " + "Name: " + this.eventName + " \nData: " + this.data.ToString () + " \nCustom Data: " + this.customData.Print (false) + " \nTimestamp: " + time.ToString ());
-																		
-			if (request.error != null) {
-				if (Spil.BundleIdEditor == null || Spil.BundleIdEditor.Equals ("")) {
-					SpilLogging.Error ("Spil Initialize might not have been called! Please make sure you call Spil.Initialize() at app start!");
-				} else {
-					SpilLogging.Error ("Error getting data: " + request.error); 
-					SpilLogging.Error ("Error getting data: " + request.text);
-				}
+            WWW request = new WWW("https://apptracker.spilgames.com/v1/native-events/event/" + platform + "/" + Spil.BundleIdEditor +"/" + eventName, requestForm);
+            yield return request;
 
-			} else { 
-				JSONObject serverResponse = new JSONObject (request.text);
-				SpilLogging.Log ("Data returned: \n" + serverResponse.ToString ());
-				ResponseEvent.Build (serverResponse);
-			}
-			GameObject.Destroy (this);
-		}
+            SpilLogging.Log("Sending event: " + "Name: " + eventName + " \nData: " + data + " \nCustom Data: " +
+                            customData.Print() + " \nTimestamp: " + time);
 
-		private void AddDefaultParameters ()
-		{
-			this.data.AddField ("uid", this.uid);
-			this.data.AddField ("locale", "en");
-			this.data.AddField ("appVersion", PlayerSettings.bundleVersion);
-			this.data.AddField ("apiVersion", SpilUnityImplementationBase.PluginVersion);
-			this.data.AddField ("osVersion", "1.0");
-			this.data.AddField ("os", platform);
-			this.data.AddField ("deviceModel", "Editor");
-			this.data.AddField ("timezoneOffset", "0");
-			this.data.AddField ("tto", "200");
-			if (platform.Equals ("android")) {
-				this.data.AddField ("packageName", bundleIdentifier);
-			} else {
-				this.data.AddField ("bundleId", bundleIdentifier);
-			}
-			this.data.AddField ("sessionId", "deadbeef");
-			this.data.AddField ("pluginName", Response.pluginName);
-			this.data.AddField ("pluginVersion", Response.pluginVersion);
+            if (request.error != null) {
+                if (Spil.BundleIdEditor == null || Spil.BundleIdEditor.Equals("")) {
+                    SpilLogging.Error(
+                        "Spil Initialize might not have been called! Please make sure you call Spil.Initialize() at app start!");
+                }
+                else {
+                    SpilLogging.Error("Error getting data: " + request.error);
+                    SpilLogging.Error("Error getting data: " + request.text);
+                }
+            }
+            else {
+                JSONObject serverResponse = new JSONObject(request.text);
+                SpilLogging.Log("Data returned: \n" + serverResponse);
+                ResponseEvent.Build(serverResponse);
+            }
+            GameObject.Destroy(this);
+        }
 
-			if (Response.provider != null && Response.externalId != null) {
-				JSONObject externalUserIdJson = new JSONObject ();
-				externalUserIdJson.AddField ("provider", Response.provider);
-				externalUserIdJson.AddField ("userId", Response.externalId);
+        private void AddDefaultParameters() {
+            data.AddField("uid", uid);
+            data.AddField("locale", "en");
+            data.AddField("appVersion", PlayerSettings.bundleVersion);
+            data.AddField("apiVersion", SpilUnityImplementationBase.PluginVersion);
+            data.AddField("osVersion", "1.0");
+            data.AddField("os", platform);
+            data.AddField("deviceModel", "Editor");
+            data.AddField("timezoneOffset", "0");
+            data.AddField("tto", "200");
+            if (platform.Equals("android")) {
+                data.AddField("packageName", bundleIdentifier);
+            }
+            else {
+                data.AddField("bundleId", bundleIdentifier);
+            }
+            data.AddField("sessionId", "deadbeef");
+            data.AddField("pluginName", Response.pluginName);
+            data.AddField("pluginVersion", Response.pluginVersion);
 
-				this.data.AddField ("externalUserId", externalUserIdJson);
-			}
-		}
-	}
+            if (Response.provider == null || Response.externalId == null) return;
+            JSONObject externalUserIdJson = new JSONObject();
+            externalUserIdJson.AddField("provider", Response.provider);
+            externalUserIdJson.AddField("userId", Response.externalId);
 
-	public class SpilLogging
-	{
-		public static void Log (string message)
-		{
-			Spil spil = GameObject.FindObjectOfType<Spil> ();
-			if (spil != null && spil.EditorLogging) {
-				Debug.Log (message);
-			}
-		}
+            data.AddField("externalUserId", externalUserIdJson);
+        }
+    }
 
-		public static void Error (string message)
-		{
-			Spil spil = GameObject.FindObjectOfType<Spil> ();
-			if (spil != null && spil.EditorLogging) {
-				Debug.LogError (message);
-			}
-		}
-	}
+    public class SpilLogging {
+        public static void Log(string message) {
+            Spil spil = GameObject.FindObjectOfType<Spil>();
+            if (spil != null && spil.EditorLogging) {
+                Debug.Log(message);
+            }
+        }
+
+        public static void Error(string message) {
+            Spil spil = GameObject.FindObjectOfType<Spil>();
+            if (spil != null && spil.EditorLogging) {
+                Debug.LogError(message);
+            }
+        }
+    }
 }
 #endif

@@ -1,3 +1,14 @@
+## [1.11.2] - 2017-05-30
+### Added
+- Apple platforms - Parse the app receipt when retrieving product information and attempt to set receipt fields on Product. With this change the hasReceipt field on Apple platforms will work more like it does on non-Apple platforms.
+
+### Fixed
+- FacebookStore - Better error handling for cases where store configuration changes after purchases have already been made.
+- General - Better momentary memory performance for local receipt validation and other JSON parsing situations.
+- Editor menus - Targeted Android store menu checkmark are set and valid more often.
+- Installer - Fix error seen during install, `ReflectionTypeLoadException[...]UnityEditor.Purchasing.UnityIAPInstaller.<k_Purchasing>`.
+
+
 ## [1.11.1] - 2017-05-23
 ### Fixed
 - GooglePlay - Fix regression seen during purchasing where GooglePlay Activity forces screen orientation to portrait and turns background black. Restores neutral orientation and transparent background behavior.

@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using SpilGames.Unity.Base.SDK;
 using SpilGames.Unity.Json;
 
-
 namespace SpilGames.Unity.Base.UnityEditor.Responses
 {
 	public class PackagesResponse : Response
@@ -16,19 +15,17 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses
 		public static List<PromotionData> GamePromotionData;
 
 		public static void ProcessPackagesResponse(ResponseEvent response){
-			if(response.data != null){
-				if(response.data.HasField("packages")){
-					JSONObject json = new JSONObject();
-					json.AddField("data", response.data.GetField("packages").Print(false));
-					GamePackagesData = JsonHelper.getObjectFromJson<List<PackageData>>(json.GetField("data").str);
-				}
+			if (response.data == null) return;
+			if(response.data.HasField("packages")){
+				JSONObject json = new JSONObject();
+				json.AddField("data", response.data.GetField("packages").Print(false));
+				GamePackagesData = JsonHelper.getObjectFromJson<List<PackageData>>(json.GetField("data").str);
+			}
 
-				if(response.data.HasField("promotions")){
-					JSONObject json = new JSONObject();
-					json.AddField("data", response.data.GetField("promotions").Print(false));
-					GamePromotionData = JsonHelper.getObjectFromJson<List<PromotionData>>(json.GetField("data").str);
-				}
-
+			if(response.data.HasField("promotions")){
+				JSONObject json = new JSONObject();
+				json.AddField("data", response.data.GetField("promotions").Print(false));
+				GamePromotionData = JsonHelper.getObjectFromJson<List<PromotionData>>(json.GetField("data").str);
 			}
 		}
 

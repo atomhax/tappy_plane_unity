@@ -136,7 +136,7 @@ PlayerSettings:
   protectGraphicsMemory: 0
   useHDRDisplay: 0
   applicationIdentifier:
-    Android: com.spilgames.tappyplanes
+    Android: com.spilgames.tappyplane
     Standalone: unity.Spilgames.Tappy Plane
     Tizen: com.Company.ProductName
     iOS: com.spilgames.tappyplane

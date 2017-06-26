@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Purchasing;
 using SpilGames.Unity;
@@ -151,18 +152,19 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 		#if UNITY_ANDROID
 
 		//parse the json
-		Dictionary<String,object> hashOfReceipt = args.purchasedProduct.receipt.HashtableFromJson ();
-		String stringOfPayload = hashOfReceipt ["Payload"].ToString ();
+		
+		Dictionary<String,object> hashOfReceipt = JsonConvert.DeserializeObject<Dictionary<String,object>>(args.purchasedProduct.receipt);
+		string stringOfPayload = hashOfReceipt ["Payload"].ToString ();
 		JSONObject jsonFromObject = new JSONObject (stringOfPayload);
-		String jsonFieldString = jsonFromObject.GetField ("json").str;
+		string jsonFieldString = jsonFromObject.GetField ("json").str;
 		jsonFieldString = jsonFieldString.Replace (@"\", "");
 		JSONObject finalJsonObject = new JSONObject (jsonFieldString);
 
 		//the info to track
 
-		String skuId = finalJsonObject.GetField ("productId").str;
-		String transactionID = args.purchasedProduct.transactionID;
-		String token = finalJsonObject.GetField ("purchaseToken").str;
+		string skuId = args.purchasedProduct.definition.id;
+		string transactionID = args.purchasedProduct.transactionID;
+		string token = finalJsonObject.GetField ("purchaseToken").str;
 
 		if(transactionID == null || transactionID.Equals("")){
 			transactionID = token;

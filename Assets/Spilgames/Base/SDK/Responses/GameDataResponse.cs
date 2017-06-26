@@ -3,92 +3,80 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-namespace SpilGames.Unity.Base.SDK
-{
+namespace SpilGames.Unity.Base.SDK {
+    #region Spil Game Objects
 
-	#region Spil Game Objects
+    public class SpilCurrencyData {
+        public int id;
+        public string name;
+        public int initialValue;
+        public int type;
+        public string imageUrl;
+        public string displayName;
+        public string displayDescription;
+    }
 
-	public class SpilCurrencyData
-	{
-		public int id;
-		public string name;
-		public int initialValue;
-		public int type;
-		public string imageUrl;
-		public string displayName;
-		public string displayDescription;
-	}
+    public class SpilItemData {
+        public int id;
+        public string name;
+        public int initialValue;
+        public int type;
+        public string imageUrl;
+        public string displayName;
+        public string displayDescription;
+    }
 
-	public class SpilItemData
-	{
-		public int id;
-		public string name;
-		public int initialValue;
-		public int type;
-		public string imageUrl;
-		public string displayName;
-		public string displayDescription;
-	}
+    public class SpilBundlePriceData {
+        public int currencyId;
+        public int value;
+    }
 
-	public class SpilBundlePriceData
-	{
-		public int currencyId;
-		public int value;
-	}
+    public class SpilBundleItemData {
+        public int id;
+        public int amount;
+    }
 
-	public class SpilBundleItemData
-	{
-		public int id;
-		public int amount;
-	}
+    public class SpilBundleData {
+        public int id;
+        public string name;
+        public List<SpilBundlePriceData> prices;
+        public List<SpilBundleItemData> items;
+        public string imageUrl;
+        public string displayName;
+        public string displayDescription;
+    }
 
-	public class SpilBundleData
-	{
-		public int id;
-		public string name;
-		public List<SpilBundlePriceData> prices;
-		public List<SpilBundleItemData> items;
-		public string imageUrl;
-		public string displayName;
-		public string displayDescription;
-	}
+    public class SpilGameData {
+        public List<SpilCurrencyData> currencies;
+        public List<SpilItemData> items;
+        public List<SpilBundleData> bundles;
+        public List<SpilShopTabData> shop;
+        public List<SpilShopPromotionData> promotions;
+    }
 
-	public class SpilGameData
-	{
-		public List<SpilCurrencyData> currencies;
-		public List<SpilItemData> items;
-		public List<SpilBundleData> bundles;
-		public List<SpilShopTabData> shop;
-		public List<SpilShopPromotionData> promotions;
-	}
+    #endregion
 
-	#endregion
+    #region Shop
 
-	#region Shop
+    public class SpilShopEntryData {
+        public int bundleId;
+        public string label;
+        public int position;
+    }
 
-	public class SpilShopEntryData
-	{
-		public int bundleId;
-		public string label;
-		public int position;
-	}
+    public class SpilShopTabData {
+        public string name;
+        public List<SpilShopEntryData> entries;
+    }
 
-	public class SpilShopTabData
-	{
-		public string name;
-		public List<SpilShopEntryData> entries;
-	}
+    public class SpilShopPromotionData {
+        public int bundleId;
+        public int amount;
+        public List<SpilBundlePriceData> prices;
+        public string discount;
+        public DateTime startDate;
+        public DateTime endDate;
+    }
 
-	public class SpilShopPromotionData
-	{
-		public int bundleId;
-		public int amount;
-		public List<SpilBundlePriceData> prices;
-		public string discount;
-		public DateTime startDate;
-		public DateTime endDate;
-	}
-
-	#endregion
+    #endregion
 }
-
