@@ -14,7 +14,7 @@ public class ShopPanelController : MonoBehaviour {
 
 	public GameController gameController;
 
-	public Text starsAmountText, diamonsAmountText, starsRewardedText;
+	public Text starsAmountText, diamonsAmountText, starsRewardedText, tapperAmountText;
 
 	public List<GameObject> shopTabs = new List<GameObject> ();
 	public List<GameObject> tabButtons = new List<GameObject> ();
@@ -96,6 +96,7 @@ public class ShopPanelController : MonoBehaviour {
 	{
 		starsAmountText.text = Spil.PlayerData.GetCurrencyBalance (25).ToString ();
 		diamonsAmountText.text = Spil.PlayerData.GetCurrencyBalance (28).ToString ();
+		tapperAmountText.text = Spil.PlayerData.GetItemAmount(100077) == -1 ? "0" : Spil.PlayerData.GetItemAmount(100077).ToString();
 	}
 		
 	void Spil_Instance_OnAdAvailable (SpilGames.Unity.Base.SDK.enumAdType adType)

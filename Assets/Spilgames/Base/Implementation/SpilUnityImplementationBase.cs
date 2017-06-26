@@ -706,7 +706,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// can subscribe, it will only be called when the config values are different from the previous loaded config.
         /// </summary>
         public static void fireConfigError(string error) {
-            Debug.Log("SpilSDK-Unity Config updated!");
+            Debug.Log("SpilSDK-Unity Config Error with message: " + error);
 
             SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
             if (Spil.Instance.OnConfigError != null) {
@@ -1321,7 +1321,7 @@ namespace SpilGames.Unity.Base.Implementations {
         public event LiveEventStageClosed OnLiveEventStageClosed;
 
         public static void fireLiveEventStageClosed() {
-            Debug.Log("SpilSDK-Unity fireLiveEventStageOpen");
+            Debug.Log("SpilSDK-Unity fireLiveEventStageClosed");
 
             if (Spil.Instance.OnLiveEventStageClosed != null) {
                 Spil.Instance.OnLiveEventStageClosed();

@@ -1,3 +1,11 @@
+## [1.11.4] - 2017-06-21
+### Fixed
+- Apple platforms - Fix a blocking bug when building from Unity 5.3.
+
+## [1.11.3] - 2017-06-20
+### Fixed
+- Amazon - Purchase attempts for owned non-consumable products are now treated as successful purchases.
+
 ## [1.11.2] - 2017-05-30
 ### Added
 - Apple platforms - Parse the app receipt when retrieving product information and attempt to set receipt fields on Product. With this change the hasReceipt field on Apple platforms will work more like it does on non-Apple platforms.

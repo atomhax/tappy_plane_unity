@@ -29,6 +29,7 @@ public class GameController : MonoBehaviour
 	}
 
 	public int playerScore = 0;
+	public int tapperScore = 0;
 
 	public int latestRewardAmount = 0;
 	public string latestRewardType = "";
@@ -53,7 +54,7 @@ public class GameController : MonoBehaviour
 
 	List<GameObject> listOfObsticles = new List<GameObject> ();
 
-	public GameObject startPanel, ingamePanel, gameoverPanel, shopPanel, skinSelectPanel, tabsPanel, inGamePurchaseSuccessPanel, inGamePurchaseFailPanel, highScorePanel, moreGamesButton, liveEventButton;
+	public GameObject startPanel, ingamePanel, gameoverPanel, shopPanel, skinSelectPanel, tabsPanel, inGamePurchaseSuccessPanel, inGamePurchaseFailPanel, highScorePanel, moreGamesButton, dailyBonusButton, liveEventButton;
 
 	// Facebook
 	public static List<string> userIds = new List<string> ();
@@ -125,10 +126,16 @@ public class GameController : MonoBehaviour
 		}	
 	}
 
+	public void AddToTapper() 
+	{
+		tapperScore++;
+	}
+
 	public void SetupNewGame ()
 	{
 		ClearOutOldObsticles ();
 		playerScore = 0;
+		tapperScore = 0;
 
 		player.dead = false;
 		player.idleMode = true;
@@ -205,6 +212,7 @@ public class GameController : MonoBehaviour
 	public void GameOver ()
 	{
 		Spil.PlayerData.Wallet.Add (25, playerScore, PlayerDataUpdateReasons.LevelComplete, "Game Over Screen");
+		Spil.PlayerData.Inventory.Add(100077, tapperScore, PlayerDataUpdateReasons.LevelComplete, "Game Over Screen");
 		CancelInvoke ("SpawnObsticle");
 		UpdateUI (GameStates.GameOver);
 		Spil.Instance.TrackPlayerDiesEvent ("MainGame");
@@ -447,10 +455,9 @@ public class GameController : MonoBehaviour
 	}
 	#endif
 
-	private void RequestDailyBonus ()
+	public void RequestDailyBonus ()
 	{
-		Spil.Instance.RequestLiveEvent();
-		//Spil.Instance.RequestDailyBonus ();
+		Spil.Instance.RequestDailyBonus ();
 	}
 
 	public static string GetNameForFbId (string fbId)
@@ -637,18 +644,29 @@ public class GameController : MonoBehaviour
 		Spil.Instance.OnLiveEventAvailable -= OnLiveEventAvailable;
 		Spil.Instance.OnLiveEventAvailable += OnLiveEventAvailable;
 		
+		Spil.Instance.OnLiveEventCompleted -= OnLiveEventCompleted;
+		Spil.Instance.OnLiveEventCompleted += OnLiveEventCompleted;
+		
 		FireTrackEventSample ();
 
 //		Spil.Instance.PreloadItemAndBundleImages();
 
-		Invoke ("RequestDailyBonus", 1);
 		Spil.Instance.RequestServerTime ();
+		Spil.Instance.RequestLiveEvent();
 	}
-	
+
 	private void OnLiveEventAvailable() {
 		Debug.Log("Live Event Available");
 		Debug.Log("Config for Live Event: " + Spil.Instance.GetLiveEventConfig());
+		liveEventButton.SetActive(true);
+	}
+
+	public void OpenLiveEvent() {
 		Spil.Instance.OpenLiveEvent();
+	}
+	
+	private void OnLiveEventCompleted() {
+		liveEventButton.SetActive(false);
 	}
 	
 	/*public void FBShareScore ()
