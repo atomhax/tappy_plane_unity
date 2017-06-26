@@ -5,182 +5,183 @@ using SpilGames.Unity.Base.SDK;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SpilGames.Unity.Helpers.IAPPackages
-{
-	/// <summary>
-	/// This is the business object that the developer can use to work with Packages and Promotions.
-	/// </summary>
-	public class Package
-	{
-		/// <summary>
-		/// The package Id
-		/// </summary>
-		public string Id { get { return id; } }
+namespace SpilGames.Unity.Helpers.IAPPackages {
+    /// <summary>
+    /// This is the business object that the developer can use to work with Packages and Promotions.
+    /// </summary>
+    public class Package {
+        /// <summary>
+        /// The package Id
+        /// </summary>
+        public string Id {
+            get { return id; }
+        }
 
-		private string id;
+        private string id;
 
-		/// <summary>
-		/// The original discount label of the item before any promotion is applied.
-		/// </summary>
-		public string OriginalDiscountLabel { get { return originalDiscountLabel; } }
+        /// <summary>
+        /// The original discount label of the item before any promotion is applied.
+        /// </summary>
+        public string OriginalDiscountLabel {
+            get { return originalDiscountLabel; }
+        }
 
-		private string originalDiscountLabel;
-		
-		public List<PackageItem> Items;
+        private string originalDiscountLabel;
 
-		public List<PromotionData> promotions;
+        public List<PackageItem> Items;
 
-		public Package (string id, string originalDiscountLabel, List<PackageItemData> packageItems, List<PromotionData> promotions = null)
-		{
-			this.id = id;
-			this.originalDiscountLabel = originalDiscountLabel;
+        public List<PromotionData> promotions;
 
-			this.promotions = promotions;
-			if (this.promotions == null) {
-				this.promotions = new List<PromotionData> ();
-			}
+        public Package(string id, string originalDiscountLabel, List<PackageItemData> packageItems, List<PromotionData> promotions = null) {
+            this.id = id;
+            this.originalDiscountLabel = originalDiscountLabel;
 
-			Items = new List<PackageItem> ();
+            this.promotions = promotions;
+            if (this.promotions == null) {
+                this.promotions = new List<PromotionData>();
+            }
 
-			// Populate items
-			foreach(PackageItemData packageItem in packageItems)
-			{
-				double promotionValue = 0;
-				double extraValue = 0;
+            Items = new List<PackageItem>();
 
-				foreach (PromotionData promotion in this.promotions) {
-					if (promotion.items != null) {
-						// Apply regular promotions
-						if (String.IsNullOrEmpty (promotion.type) || promotion.type.Equals("PERCENTAGE")) {
-							foreach (PackageItemData promotionItem in promotion.items) {
-								if (promotionItem.id.Equals (packageItem.id)) {
-									double.TryParse (promotionItem.value, out promotionValue);
-								}
-							}
-						}
-						// Apply extra item promotions
-						if (promotion.type.Equals("EXTRAITEM")) {
-							foreach (PackageItemData promotionItem in promotion.items) {
-								if (promotionItem.id.Equals (packageItem.id)) {
-									double.TryParse (promotionItem.value, out extraValue);
-								}
-							}
-						}
-					}
-				}
+            // Populate items
+            foreach (PackageItemData packageItem in packageItems) {
+                double promotionValue = 0;
+                double extraValue = 0;
 
-				double packageValue = 0;
-				double.TryParse (packageItem.value, out packageValue);
-				double totalPromotion = (promotionValue - packageValue) + (extraValue - packageValue);
-				Items.Add(new PackageItem(packageItem.id, packageItem.type, packageItem.value, 
-					totalPromotion != 0 ? totalPromotion.ToString() : null));
-			}
-		}
+                foreach (PromotionData promotion in this.promotions) {
+                    if (promotion.items != null) {
+                        // Apply regular promotions
+                        if (String.IsNullOrEmpty(promotion.type) || promotion.type.Equals("PERCENTAGE")) {
+                            foreach (PackageItemData promotionItem in promotion.items) {
+                                if (promotionItem.id.Equals(packageItem.id)) {
+                                    double.TryParse(promotionItem.value, out promotionValue);
+                                }
+                            }
+                        }
+                        // Apply extra item promotions
+                        if (promotion.type.Equals("EXTRAITEM")) {
+                            foreach (PackageItemData promotionItem in promotion.items) {
+                                if (promotionItem.id.Equals(packageItem.id)) {
+                                    double.TryParse(promotionItem.value, out extraValue);
+                                }
+                            }
+                        }
+                    }
+                }
 
-		/// <summary>
-		/// Get a list with discounts labels which apply to this package. 
-		/// </summary>
-		/// <returns>The list with discount labels.</returns>
-		public List<string> GetDiscountLabels()
-		{
-			List<string> result = new List<string> ();
-			foreach (PromotionData promotion in promotions) {
-				if (String.IsNullOrEmpty (promotion.discountLabel)) {
-					continue;
-				}
-				result.Add (promotion.discountLabel);
-			}
-			return result;
-		}
+                double packageValue = 0;
+                double.TryParse(packageItem.value, out packageValue);
+                double totalPromotion = (promotionValue - packageValue) + (extraValue - packageValue);
+                Items.Add(new PackageItem(packageItem.id, packageItem.type, packageItem.value,
+                    totalPromotion != 0 ? totalPromotion.ToString() : null));
+            }
+        }
 
-		/// <summary>
-		/// Get a concatted discount label for this package. 
-		/// </summary>
-		/// <returns>The list with discount labels.</returns>
-		public string GetConcattedDiscountLabel() {
-			string result = "";
-			List<string> labels = GetDiscountLabels ();
-			foreach (string label in labels) {
-				if (result.Length > 0) {
-					result += " + ";
-				}
-				result += label;
-			}
-			return result;
-		}
+        /// <summary>
+        /// Get a list with discounts labels which apply to this package. 
+        /// </summary>
+        /// <returns>The list with discount labels.</returns>
+        public List<string> GetDiscountLabels() {
+            List<string> result = new List<string>();
+            foreach (PromotionData promotion in promotions) {
+                if (String.IsNullOrEmpty(promotion.discountLabel)) {
+                    continue;
+                }
+                result.Add(promotion.discountLabel);
+            }
+            return result;
+        }
 
-		/// <summary>
-		/// Checks for any active promotion for this package, also checks if the current date is between the promotion's begin and end date. 
-		/// </summary>
-		/// <returns>True if there is an active promotion, false if there is no active promotion.</returns>
-		public bool HasActivePromotion ()
-		{
-			return promotions.Count > 0;
-		}
+        /// <summary>
+        /// Get a concatted discount label for this package. 
+        /// </summary>
+        /// <returns>The list with discount labels.</returns>
+        public string GetConcattedDiscountLabel() {
+            string result = "";
+            List<string> labels = GetDiscountLabels();
+            foreach (string label in labels) {
+                if (result.Length > 0) {
+                    result += " + ";
+                }
+                result += label;
+            }
+            return result;
+        }
 
-		public PackageItem GetItemById (string itemId)
-		{
-			return Items.FirstOrDefault (a => a.Id.Equals (itemId));
-		}
-	}
+        /// <summary>
+        /// Checks for any active promotion for this package, also checks if the current date is between the promotion's begin and end date. 
+        /// </summary>
+        /// <returns>True if there is an active promotion, false if there is no active promotion.</returns>
+        public bool HasActivePromotion() {
+            return promotions.Count > 0;
+        }
 
-	/// <summary>
-	/// This is the business object that the developer can use to work with Items associated with Packages and Promotions.
-	/// </summary>
-	public class PackageItem
-	{
-		/// <summary>
-		/// The item Id, also known as "SKU".
-		/// </summary>
-		public string Id { get { return id; } }
+        public PackageItem GetItemById(string itemId) {
+            return Items.FirstOrDefault(a => a.Id.Equals(itemId));
+        }
+    }
 
-		private string id;
+    /// <summary>
+    /// This is the business object that the developer can use to work with Items associated with Packages and Promotions.
+    /// </summary>
+    public class PackageItem {
+        /// <summary>
+        /// The item Id, also known as "SKU".
+        /// </summary>
+        public string Id {
+            get { return id; }
+        }
 
-		/// <summary>
-		/// The type of the item.
-		/// </summary>
-		public string Type { get { return type; } }
+        private string id;
 
-		private string type;
+        /// <summary>
+        /// The type of the item.
+        /// </summary>
+        public string Type {
+            get { return type; }
+        }
 
-		/// <summary>
-		/// The original value of the item before any promotion is applied.
-		/// </summary>
-		public string OriginalValue { get { return originalValue; } }
+        private string type;
 
-		private string originalValue;
+        /// <summary>
+        /// The original value of the item before any promotion is applied.
+        /// </summary>
+        public string OriginalValue {
+            get { return originalValue; }
+        }
 
-		/// <summary>
-		/// The value of the item if there is an active promotion for this item. Returns null if there is no promotion.
-		/// </summary>
-		public string PromotionValue { get { return promotionValue; } }
+        private string originalValue;
 
-		private string promotionValue;
+        /// <summary>
+        /// The value of the item if there is an active promotion for this item. Returns null if there is no promotion.
+        /// </summary>
+        public string PromotionValue {
+            get { return promotionValue; }
+        }
 
-		public PackageItem (string id, string type, string originalValue, string promotionValue = null)
-		{
-			this.id = id;
-			this.type = type;
-			this.originalValue = originalValue;
-			this.promotionValue = promotionValue;
-		}
+        private string promotionValue;
 
-		/// <summary>
-		/// Gets the actual value of this item. Checks for any active promotion for this item. 
-		/// </summary>
-		/// <returns>The original value if there is no active promotion or the promotion value if there is an active promotion.</returns>
-		public string GetRealValue ()
-		{
-			return PromotionValue != null ? PromotionValue : OriginalValue;
-		}
+        public PackageItem(string id, string type, string originalValue, string promotionValue = null) {
+            this.id = id;
+            this.type = type;
+            this.originalValue = originalValue;
+            this.promotionValue = promotionValue;
+        }
 
-		/// <summary>
-		/// Checks for any active promotion for this item, also checks if the current date is between the promotion's begin and end date. 
-		/// </summary>
-		/// <returns>True if there is an active promotion, false if there is no active promotion.</returns>
-		public bool HasActivePromotion ()
-		{
-			return PromotionValue != null;
-		}
-	}
+        /// <summary>
+        /// Gets the actual value of this item. Checks for any active promotion for this item. 
+        /// </summary>
+        /// <returns>The original value if there is no active promotion or the promotion value if there is an active promotion.</returns>
+        public string GetRealValue() {
+            return PromotionValue != null ? PromotionValue : OriginalValue;
+        }
+
+        /// <summary>
+        /// Checks for any active promotion for this item, also checks if the current date is between the promotion's begin and end date. 
+        /// </summary>
+        /// <returns>True if there is an active promotion, false if there is no active promotion.</returns>
+        public bool HasActivePromotion() {
+            return PromotionValue != null;
+        }
+    }
 }

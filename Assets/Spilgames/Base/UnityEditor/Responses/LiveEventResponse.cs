@@ -304,14 +304,14 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
 
             void OnGUI() {
                 if (overlayType.Equals("start")) {
-                    GUI.Label(new Rect(10, 10, (Screen.width - 20), (Screen.height - 20) / 2), "\nStart Page \nWebView Information: \n" + stageData.Print(), infoGuiStyle);
+                    GUI.Label(new Rect(10, 10, (Screen.width - 20), (Screen.height - 20) / 2), "\nStart Page", infoGuiStyle);
 
                     if (GUI.Button(new Rect(10, Screen.height / 2, (Screen.width - 20), (Screen.height - 20) / 2), "Continue")) {
                         AdvanceToNextStage();
                     }
                 }
                 else if (overlayType.Equals("progress")) {
-                    GUI.Label(new Rect(10, 10, (Screen.width - 20), (Screen.height - 20) / 2), "\nProgress Page \nWebView Information: \n" + currentStage.Print() + "\n \n Requirements: " + currentStage.GetField("requirements").Print() + "\n \n Applied Items: " + applyItems.Print(), infoGuiStyle);
+                    GUI.Label(new Rect(10, 10, (Screen.width - 20), (Screen.height - 20) / 2), "\nProgress Page \n Requirements: " + currentStage.GetField("requirements").Print() + "\n \n Applied Items: " + applyItems.Print(), infoGuiStyle);
 
                     GUI.Label(new Rect(10, (Screen.height / 2 + 10), 200, (Screen.height - 20) / 12 - 10), "Id", itemsGuiStyle);
                     id = GUI.TextField(new Rect(220, (Screen.height / 2 + 10), Screen.width - 230, (Screen.height - 20) / 12 - 10), id, textFieldGuiStyle);
@@ -328,7 +328,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
                     }
                 }
                 else if (overlayType.Equals("info")) {
-                    GUI.Label(new Rect(10, 10, (Screen.width - 20), (Screen.height - 20) / 2), "\nInfo/Claim Reward Page \nWebView Information: \n" + currentStage.Print(), infoGuiStyle);
+                    GUI.Label(new Rect(10, 10, (Screen.width - 20), (Screen.height - 20) / 2), "\nInfo/Claim Reward Page", infoGuiStyle);
                     
                     if (GUI.Button(new Rect(10, Screen.height / 2, (Screen.width - 20), (Screen.height - 20) / 2), "Continue")) {
                         AdvanceToNextStage();
