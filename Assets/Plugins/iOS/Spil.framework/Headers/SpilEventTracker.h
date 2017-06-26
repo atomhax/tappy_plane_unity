@@ -19,6 +19,7 @@
 
 -(void)setCustomBundleId:(NSString*)bundleId;
 -(NSString*)getBundleId;
+-(NSString*)getAppId;
 
 -(void)setAdvancedLogging:(BOOL)advancedLoggingEnabled;
 -(BOOL)getAdvancedLoggingEnabled;
