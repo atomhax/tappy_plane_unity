@@ -124,7 +124,7 @@ extern "C" {
     
     char* getAllPackagesNative();
     
-    char* getPromotionNative(const char* keyName);
+    char* getPromotionsNative(const char* keyName);
 
     // --- ADS ---
     
@@ -213,6 +213,18 @@ extern "C" {
     void clearDiskCacheNative();
     
     void preloadItemAndBundleImagesNative();
+    
+    // --- Live events ---
+    
+    void requestLiveEventNative();
+    
+    void openLiveEventNative();
+    
+    char* getLiveEventStartDateNative();
+    
+    char* getLiveEventEndDateNative();
+    
+    char* getLiveEventConfigNative();
 }
 
 #endif

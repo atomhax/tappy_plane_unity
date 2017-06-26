@@ -12,5 +12,6 @@
 
 +(void)handleAction:(NSDictionary*)action withCallBackUID:(NSString*)callbackUID;
 +(void)handleAction:(NSDictionary*)action withResponse:(void (^)(id response))block;
++(void)showWebview:(NSDictionary*)data withActionName:(NSString*)name;
 
 @end

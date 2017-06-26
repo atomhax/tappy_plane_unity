@@ -42,14 +42,20 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses
 			return null;
 		}
 
-		public static string getPromotion(string packageId){
-			for(int i = 0; i < GamePromotionData.Count; i++){
-				if(GamePromotionData[i].packageId.Equals(packageId)){
-					return JsonHelper.getJSONFromObject(GamePromotionData[i]);
+		public static string getPromotions(string packageId) {
+			List<PromotionData> promotions = new List<PromotionData> ();
+
+			for (int i = 0; i < GamePromotionData.Count; i++) {
+				if (GamePromotionData [i].packageId.Equals (packageId)) {
+					promotions.Add (GamePromotionData [i]);
 				}
 			}
 
-			return null;
+			if (promotions.Count > 0) {
+				return JsonHelper.getJSONFromObject (promotions);
+			} else {
+				return null;
+			}
 		}
 	}
 }

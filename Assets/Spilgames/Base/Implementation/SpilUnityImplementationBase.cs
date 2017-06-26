@@ -737,7 +737,7 @@ namespace SpilGames.Unity.Base.Implementations
 			Debug.Log ("SpilSDK-Unity Config updated!");
 
 			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage> (error);
-			if (Spil.Instance.OnConfigUpdated != null) {
+			if (Spil.Instance.OnConfigError != null) {
 				Spil.Instance.OnConfigError (errorMessage);
 			}
 		}
@@ -1517,7 +1517,7 @@ namespace SpilGames.Unity.Base.Implementations
 		/// The Spil Unity SDK is not packaged as a seperate assembly yet so this method is currently visible, this will be fixed in the future.
 		/// Internal method names start with a lower case so you can easily recognise and avoid them.
 		/// </summary>
-		internal abstract string GetPromotion (string key);
+		internal abstract string GetPromotions (string key);
 
 		// This is not essential so could be removed but might be handy for some developers so we left it in.
 		public abstract void UpdatePackagesAndPromotions ();

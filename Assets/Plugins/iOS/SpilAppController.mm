@@ -57,6 +57,20 @@
     return [super application:application continueUserActivity:userActivity restorationHandler:restorationHandler];
 }
 
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+	if ([Spil getAppId] != nil) {
+	    [Spil applicationDidBecomeActive:application];
+	}
+    [super applicationDidBecomeActive:application];
+}
+
+- (void)applicationDidEnterBackground:(UIApplication *)application {
+	if ([Spil getAppId] != nil) {
+    	[Spil applicationDidEnterBackground:application];
+    }
+    [super applicationDidEnterBackground:application];
+}
+
 @end
 
 IMPL_APP_CONTROLLER_SUBCLASS(SpilAppController)
