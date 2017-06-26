@@ -26,6 +26,8 @@ namespace SpilGames.Unity {
 
         [SerializeField] public bool initializeOnAwake = true;
 
+        [SerializeField] public int invokeSeconds = 1;
+
         [Header("Android Settings")]
 #if UNITY_ANDROID || UNITY_EDITOR
         /// <summary>
@@ -233,7 +235,7 @@ namespace SpilGames.Unity {
 
 			#endif
             
-            Invoke ("SendOnInitializeEvent", 1);
+            Invoke ("SendOnInitializeEvent", invokeSeconds);
         }
 
         public void InitEditor() {

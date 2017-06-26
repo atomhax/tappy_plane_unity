@@ -2,6 +2,8 @@
 using System.Collections;
 using SpilGames.Unity;
 using System.Collections.Generic;
+using SpilGames.Unity.Helpers.PlayerData;
+
 public class PlayerController : MonoBehaviour {
 
 	public Rigidbody2D playerBody;
@@ -18,6 +20,7 @@ public class PlayerController : MonoBehaviour {
 
 	public bool idleMode = false;
 
+	private int tapperCount = 0;
 
 	void Start(){
 		SetupPlayerSkin ();
@@ -32,8 +35,14 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	public void Jump(){
-		if(dead && !idleMode){
+		if (dead && !idleMode) {
 			return;
+		}
+		if (!dead && !idleMode) {
+			tapperCount++;
+			if (tapperCount % 10 == 0) {
+				gameController.AddToTapper();
+			}
 		}
 		playerBody.AddForce (jumpForce * Vector2.up, ForceMode2D.Impulse);
 	}
