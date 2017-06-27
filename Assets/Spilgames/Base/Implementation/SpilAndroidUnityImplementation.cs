@@ -51,11 +51,13 @@ namespace SpilGames.Unity.Base.Implementations {
 
         // Method that returns the all packages
         protected override string GetAllPackages() {
+            Debug.Log("Get All Packages: " + CallNativeMethod("getAllPackages"));
             return CallNativeMethod("getAllPackages");
         }
 
         // Method that returns a package based on key
         protected override string GetPackage(string key) {
+            Debug.Log("GetPackage: " + CallNativeMethod("getPackage", key, true));
             return CallNativeMethod("getPackage", key, true);
         }
 
@@ -65,6 +67,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// Internal method names start with a lower case so you can easily recognise and avoid them.
         /// </summary>
 		internal override string GetPromotions (string key) {
+            Debug.Log("GetPromotion: " + CallNativeMethod ("getPromotions", key, true));
 			return CallNativeMethod ("getPromotions", key, true);
 		}
 
