@@ -610,7 +610,7 @@ namespace SpilGames.Unity.Base.Implementations
 		}
 
 		[DllImport("__Internal")]
-		private static extern string openLiveEventNative();
+		private static extern void openLiveEventNative();
 
 		public override string GetLiveEventConfig()
 		{
