@@ -71,7 +71,13 @@ namespace SpilGames.Unity.Helpers.IAPPackages {
 
                 double packageValue = 0;
                 double.TryParse(packageItem.value, out packageValue);
-                double totalPromotion = (promotionValue - packageValue) + (extraValue - packageValue);
+				double totalPromotion = packageValue;
+				if (promotionValue != 0) {
+					totalPromotion += (promotionValue - packageValue);
+				}
+				if (extraValue != 0) {
+					totalPromotion += (promotionValue - extraValue);
+				}
                 Items.Add(new PackageItem(packageItem.id, packageItem.type, packageItem.value,
                     totalPromotion != 0 ? totalPromotion.ToString() : null));
             }
