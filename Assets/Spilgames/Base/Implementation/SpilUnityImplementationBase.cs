@@ -382,7 +382,7 @@ namespace SpilGames.Unity.Base.Implementations {
             dictionary.Add("purchaseDate", DateTime.Now.ToString("yyyy-MM-ddTHH\\:mm\\:ss.fffffffzzz"));
 
 #if UNITY_ANDROID
-            if (token != null) {
+            if (token != null && !token.Equals("")) {
                 dictionary.Add("token", token);
             }
 #endif
