@@ -923,6 +923,22 @@ namespace SpilGames.Unity.Base.Implementations {
                 Spil.Instance.OnSplashScreenOpenShop();
             }
         }
+        
+        public delegate void SplashScreenData(string payload);
+
+        /// <summary>
+        /// This is fired by the native Spil SDK in order to pass relevant information from the Splash Screen.
+        /// The developer can subscribe to this event and process the JSON string.
+        /// </summary>
+        public event SplashScreenData OnSplashScreenData;
+
+        public static void fireSplashScreenData(string payload) {
+            Debug.Log("SpilSDK-Unity Splash Screen Data: " + payload);
+
+            if (Spil.Instance.OnSplashScreenData != null) {
+                Spil.Instance.OnSplashScreenData(payload);
+            }
+        }
 
         public delegate void SplashScreenError(SpilErrorMessage errorMessage);
 

@@ -421,6 +421,13 @@ namespace SpilGames.Unity {
         public void SplashScreenOpenShop() {
             SpilUnityImplementationBase.fireSplashScreenOpenShop();
         }
+        
+        /// <summary>
+        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// </summary>
+        public void SplashScreenData(string payload) {
+            
+        }
 
         /// <summary>
         /// This method is called by the native Spil SDK, it should not be used by developers.
