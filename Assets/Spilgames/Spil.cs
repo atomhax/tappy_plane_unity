@@ -596,6 +596,13 @@ namespace SpilGames.Unity {
         public void LiveEventReward(string receivedReward) {
             SpilUnityImplementationBase.fireLiveEventReward(receivedReward);
         }
+        
+        /// <summary>
+        /// This event indicates the reward given for the Live Event.
+        /// </summary>
+        public void LiveEventUsedExternalItems(string items) {
+            SpilUnityImplementationBase.fireLiveEventReward(items);
+        }
 
         /// <summary>
         /// This event indicates if the user met the requirements to receive the reward.
