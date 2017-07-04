@@ -5619,7 +5619,7 @@ MonoBehaviour:
   CustomBundleId: 
   EditorLogging: 1
   EditorDebugMode: 0
-  spilUserIdEditor: 11f2b908-0434-4258-b130-04831105a86d
+  spilUserIdEditor: 15f6b908-0434-4258-b130-04831105a88d
   bundleIdEditor: com.spilgames.tappyplane
   currencyName: Reward
   currencyId: reward
@@ -8944,6 +8944,7 @@ MonoBehaviour:
   dailyBonusButton: {fileID: 1089260491}
   liveEventButton: {fileID: 1998957876}
   fbLoggedIn: 0
+  overlayEnabled: 0
 --- !u!4 &1536161944
 Transform:
   m_ObjectHideFlags: 0
@@ -10132,6 +10133,7 @@ MonoBehaviour:
   - {fileID: 1693889312}
   - {fileID: 1162049860}
   gameController: {fileID: 1536161943}
+  iapManager: {fileID: 1996137884}
 --- !u!1 &1847448356
 GameObject:
   m_ObjectHideFlags: 0

@@ -28,25 +28,20 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
             if (response.data != null) {
                 if (response.action.ToLower().Trim().Equals("request")) {
                     ProcessRequestLiveEvent(response.data);
-                }
-                else if (response.action.ToLower().Trim().Equals("nextstage")) {
+                } else if (response.action.ToLower().Trim().Equals("nextstage")) {
                     ProcessAdvanceToNextStage(response.data);
-                }
-                else if (response.action.ToLower().Trim().Equals("applyitems")) {
+                } else if (response.action.ToLower().Trim().Equals("applyitems")) {
                     ProcessApplyItems(response.data);
-                }
-                else if (response.action.ToLower().Trim().Equals("notavailable")) {
+                } else if (response.action.ToLower().Trim().Equals("notavailable")) {
                     SpilUnityImplementationBase.fireLiveEventNotAvailable();
                 }
             }
         }
 
         public static void AdvanceToNextStage() {
-            if (liveEventOverview.fromStartStage && liveEventOverview.currentStage != null) {
+            if (liveEventOverview.currentStage != null && liveEventOverview.alwaysShowStartStage) {
                 OpenStageView(StageType.PROGRESS, liveEventOverview.currentStage);
-                liveEventOverview.fromStartStage = false;
-            }
-            else {
+            } else {
                 SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
                 spilEvent.eventName = "liveEventNextStage";
 
@@ -70,8 +65,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
                     int amount = (int) items.list[i].GetField("amount").n;
                     Spil.Instance.SubtractItemFromInventory(id, amount, PlayerDataUpdateReasons.LiveEvent, null);
                 }
-            }
-            else {
+            } else {
                 spilEvent.customData.AddField("items", "");
             }
 
@@ -90,8 +84,10 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
                     JSONObject rewards = new JSONObject(JSONObject.Type.ARRAY);
                     rewards.Add(liveEventOverview.currentStage.GetField("rewards"));
                     liveEventOverview.currentStage.AddField("rewards", rewards);
-
-                    liveEventOverview.fromStartStage = true;
+                }
+                
+                if (response.HasField("alwaysShowStartStage")) {
+                    liveEventOverview.alwaysShowStartStage = response.GetField("alwaysShowStartStage").b;
                 }
 
                 if (response.HasField("eventItems")) {
@@ -122,8 +118,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
 
                     SpilUnityImplementationBase.fireLiveEventAvailable();
                 }
-            }
-            else {
+            } else {
                 SpilLogging.Error("Error retrieving live event data!");
             }
         }
@@ -144,8 +139,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
                 JSONObject rewards = new JSONObject(JSONObject.Type.ARRAY);
                 rewards.Add(liveEventOverview.currentStage.GetField("rewards"));
                 liveEventOverview.currentStage.AddField("rewards", rewards);
-            }
-            else if (response.HasField("noMoreStages")) {
+            } else if (response.HasField("noMoreStages")) {
                 SpilUnityImplementationBase.fireLiveEventCompleted();
                 CloseStageView();
                 return;
@@ -153,8 +147,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
 
             if (liveEventOverview.currentStage != null) {
                 OpenStageView(StageType.PROGRESS, liveEventOverview.currentStage);
-            }
-            else {
+            } else {
                 SpilLogging.Error("Error opening next stage due to missing data!");
             }
         }
@@ -196,8 +189,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
                 json.AddField("data", rewardsJSON);
 
                 SpilUnityImplementationBase.fireLiveEventReward(json.Print());
-            }
-            else {
+            } else {
                 int id = Spil.LiveEventRewardId;
                 int amount = Spil.LiveEventRewardAmount;
 
@@ -207,8 +199,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
 
                 if (rewardType == Spil.LiveEventRewardTypeEnum.CURRENCY) {
                     SpilUnityEditorImplementation.pData.WalletOperation("add", id, amount, PlayerDataUpdateReasons.LiveEvent, null, "LiveEvent", null);
-                }
-                else if (rewardType == Spil.LiveEventRewardTypeEnum.ITEM) {
+                } else if (rewardType == Spil.LiveEventRewardTypeEnum.ITEM) {
                     SpilUnityEditorImplementation.pData.InventoryOperation("add", id, amount, PlayerDataUpdateReasons.LiveEvent, null, "LiveEvent", null);
                 }
             }
@@ -225,12 +216,20 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
         }
 
         public static void OpenLiveEvent() {
-            if (liveEventOverview.startStage != null) {
-                liveEventOverview.fromStartStage = true;
-                OpenStageView(StageType.START, liveEventOverview.startStage);
-            }
-            else {
-                SpilUnityImplementationBase.fireLiveEventNotAvailable();
+            if (liveEventOverview.alwaysShowStartStage) {
+                if (liveEventOverview.startStage != null) {
+                    OpenStageView(StageType.START, liveEventOverview.startStage);
+                } else {
+                    SpilUnityImplementationBase.fireLiveEventNotAvailable();
+                }
+            } else {
+                if (liveEventOverview.currentStage != null) {
+                    OpenStageView(StageType.PROGRESS, liveEventOverview.currentStage);
+                } else if (liveEventOverview.startStage != null) {
+                    OpenStageView(StageType.START, liveEventOverview.startStage);
+                } else {
+                    SpilUnityImplementationBase.fireLiveEventNotAvailable();
+                }
             }
         }
 
@@ -308,9 +307,9 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
                     if (GUI.Button(new Rect(10, Screen.height / 2, (Screen.width - 20), (Screen.height - 20) / 2), "Continue")) {
                         AdvanceToNextStage();
                     }
-                }
-                else if (overlayType.Equals("progress")) {
-                    GUI.Label(new Rect(10, 10, (Screen.width - 20), (Screen.height - 20) / 2), "\nProgress Page \n Requirements: " + currentStage.GetField("requirements").Print() + " \n \n Progress: " + (currentStage.HasField("progress") ? currentStage.GetField("progress").Print() : "") + "\n \n Applied Items: " + applyItems.Print(), infoGuiStyle);
+                } else if (overlayType.Equals("progress")) {
+                    GUI.Label(new Rect(10, 10, (Screen.width - 20), (Screen.height - 20) / 2),
+                        "\nProgress Page \n Requirements: " + currentStage.GetField("requirements").Print() + " \n \n Progress: " + (currentStage.HasField("progress") ? currentStage.GetField("progress").Print() : "") + "\n \n Applied Items: " + applyItems.Print(), infoGuiStyle);
 
                     GUI.Label(new Rect(10, (Screen.height / 2 + 10), 200, (Screen.height - 20) / 12 - 10), "Id", itemsGuiStyle);
                     id = GUI.TextField(new Rect(220, (Screen.height / 2 + 10), Screen.width - 230, (Screen.height - 20) / 12 - 10), id, textFieldGuiStyle);
@@ -325,10 +324,9 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
                     if (GUI.Button(new Rect(10, (Screen.height / 2 + Screen.height / 4), (Screen.width - 20), (Screen.height - 20) / 4), "Apply Items")) {
                         ApplyItems(applyItems);
                     }
-                }
-                else if (overlayType.Equals("info")) {
+                } else if (overlayType.Equals("info")) {
                     GUI.Label(new Rect(10, 10, (Screen.width - 20), (Screen.height - 20) / 2), "\nInfo/Claim Reward Page", infoGuiStyle);
-                    
+
                     if (GUI.Button(new Rect(10, Screen.height / 2, (Screen.width - 20), (Screen.height - 20) / 2), "Continue")) {
                         AdvanceToNextStage();
                     }
@@ -423,7 +421,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
             public JSONObject eventItems = new JSONObject(JSONObject.Type.ARRAY);
             public long startDate;
             public long endDate;
-            public bool fromStartStage;
+            public bool alwaysShowStartStage = false;
         }
 
         public class Reward {

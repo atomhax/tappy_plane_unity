@@ -421,6 +421,13 @@ namespace SpilGames.Unity {
         public void SplashScreenOpenShop() {
             SpilUnityImplementationBase.fireSplashScreenOpenShop();
         }
+        
+        /// <summary>
+        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// </summary>
+        public void SplashScreenData(string payload) {
+            
+        }
 
         /// <summary>
         /// This method is called by the native Spil SDK, it should not be used by developers.
@@ -588,6 +595,13 @@ namespace SpilGames.Unity {
         /// </summary>
         public void LiveEventReward(string receivedReward) {
             SpilUnityImplementationBase.fireLiveEventReward(receivedReward);
+        }
+        
+        /// <summary>
+        /// This event indicates the reward given for the Live Event.
+        /// </summary>
+        public void LiveEventUsedExternalItems(string items) {
+            SpilUnityImplementationBase.fireLiveEventReward(items);
         }
 
         /// <summary>

@@ -382,7 +382,7 @@ namespace SpilGames.Unity.Base.Implementations {
             dictionary.Add("purchaseDate", DateTime.Now.ToString("yyyy-MM-ddTHH\\:mm\\:ss.fffffffzzz"));
 
 #if UNITY_ANDROID
-            if (token != null) {
+            if (token != null && !token.Equals("")) {
                 dictionary.Add("token", token);
             }
 #endif
@@ -923,6 +923,22 @@ namespace SpilGames.Unity.Base.Implementations {
                 Spil.Instance.OnSplashScreenOpenShop();
             }
         }
+        
+        public delegate void SplashScreenData(string payload);
+
+        /// <summary>
+        /// This is fired by the native Spil SDK in order to pass relevant information from the Splash Screen.
+        /// The developer can subscribe to this event and process the JSON string.
+        /// </summary>
+        public event SplashScreenData OnSplashScreenData;
+
+        public static void fireSplashScreenData(string payload) {
+            Debug.Log("SpilSDK-Unity Splash Screen Data: " + payload);
+
+            if (Spil.Instance.OnSplashScreenData != null) {
+                Spil.Instance.OnSplashScreenData(payload);
+            }
+        }
 
         public delegate void SplashScreenError(SpilErrorMessage errorMessage);
 
@@ -1359,6 +1375,22 @@ namespace SpilGames.Unity.Base.Implementations {
             }
         }
 
+        public delegate void LiveEventUsedExternalItems(string items);
+
+        /// <summary>
+        /// This event indicates the items used in the live event.
+        /// The developer can subscribe to this event and provide the reward to the user.
+        /// </summary>
+        public event LiveEventUsedExternalItems OnLiveEventUsedExternalItems;
+
+        public static void fireLiveEventUsedExternalItems(string items) {
+            Debug.Log("SpilSDK-Unity Used items = " + items);
+
+            if (Spil.Instance.OnLiveEventUsedExternalItems != null) {
+                Spil.Instance.OnLiveEventUsedExternalItems(items);
+            }
+        }
+        
         public delegate void LiveEventReward(string rewardList);
 
         /// <summary>
