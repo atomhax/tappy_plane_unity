@@ -10133,6 +10133,7 @@ MonoBehaviour:
   - {fileID: 1693889312}
   - {fileID: 1162049860}
   gameController: {fileID: 1536161943}
+  iapManager: {fileID: 1996137884}
 --- !u!1 &1847448356
 GameObject:
   m_ObjectHideFlags: 0

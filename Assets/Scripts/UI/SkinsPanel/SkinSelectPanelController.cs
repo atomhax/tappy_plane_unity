@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using SpilGames.Unity;
@@ -14,12 +15,21 @@ public class SkinSelectPanelController : MonoBehaviour {
 
 	public GameController gameController;
 
+	public MyIAPManager iapManager;
+
 	public void OnEnable() {
 		#if UNITY_TVOS
 		EventSystem eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
 		eventSystem.firstSelectedGameObject = GameObject.Find("BackButtonSkin");
 		#endif
 		Spil.Instance.RequestSplashScreen ();
+		
+		Spil.Instance.OnIAPRequestPurchase -= OnIapRequestPurchase;
+		Spil.Instance.OnIAPRequestPurchase += OnIapRequestPurchase;
+	}
+
+	private void OnIapRequestPurchase(string skuId) {
+		iapManager.BuyProductID(skuId);
 	}
 
 	public void UpdateButtons(){
