@@ -427,8 +427,10 @@ public class SpilEditorConfig : EditorWindow {
                 playerData.GetField("wallet").GetField("currencies").Add(currency);
             }
 
+            playerData.GetField("wallet").RemoveField("offset");
             playerData.GetField("wallet").AddField("offset", 0);
 
+            playerData.GetField("inventory").RemoveField("offset");
             playerData.GetField("inventory").AddField("offset", 0);
 
             File.WriteAllText(streamingAssetsPath + "/defaultPlayerData.json", playerData.Print(false));
