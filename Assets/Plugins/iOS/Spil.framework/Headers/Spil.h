@@ -9,7 +9,7 @@
 #import "HookBridge.h"
 #import "GAI.h"
 
-#define SDK_VERSION @"2.2.2"
+#define SDK_VERSION @"2.4.0"
 
 @class ImageContext;
 @class Spil;
@@ -47,6 +47,7 @@
 -(void)splashScreenClosed;
 -(void)splashScreenOpenShop;
 -(void)splashScreenError:(nonnull NSString*)message;
+-(void)sendDataToGame:(nonnull NSString*)payload;
 
 // Daily bonus screen events
 -(void)dailyBonusOpen;
@@ -103,6 +104,7 @@
 -(void)liveEventNotAvailable;
 -(void)liveEventError:(nonnull NSString*)error;
 -(void)liveEventMetRequirements:(BOOL)metRequirements;
+-(void)liveEventUsedExternalItems:(nonnull NSArray*)externalItem;
 -(void)liveEventReward:(nonnull NSArray*)rewardList;
 -(void)liveEventCompleted;
 
