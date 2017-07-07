@@ -241,18 +241,21 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
             switch (stageType) {
                 case StageType.START:
                     overlayObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    overlayObject.GetComponent<MeshRenderer>().enabled = false;            
                     overlay = overlayObject.AddComponent<WebOverlay>();
                     overlay.overlayType = "start";
                     overlay.stageData = stage;
                     break;
                 case StageType.PROGRESS:
                     overlayObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    overlayObject.GetComponent<MeshRenderer>().enabled = false;
                     overlay = overlayObject.AddComponent<WebOverlay>();
                     overlay.overlayType = "progress";
                     overlay.currentStage = stage;
                     break;
                 case StageType.INFO:
                     overlayObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    overlayObject.GetComponent<MeshRenderer>().enabled = false;
                     overlay = overlayObject.AddComponent<WebOverlay>();
                     overlay.overlayType = "info";
                     overlay.currentStage = stage;

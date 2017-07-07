@@ -5621,6 +5621,7 @@ MonoBehaviour:
   EditorDebugMode: 0
   spilUserIdEditor: 15f6b908-0434-4258-b130-04831105a88d
   bundleIdEditor: com.spilgames.tappyplane
+  iapPurchaseRequestValue: com.spilgames.tappyplane.diamondpack01
   currencyName: Reward
   currencyId: reward
   reward: 50

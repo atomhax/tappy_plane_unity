@@ -62,15 +62,26 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
 
             void OnGUI() {
                 if (overlayType.Equals("splashScreen")) {
-                    if (GUI.Button(new Rect(10, 10, (Screen.width - 20), (Screen.height - 20) / 2), "Close")) {
+                    if (GUI.Button(new Rect(10, 10, (Screen.width - 20), (Screen.height - 20) / 3), "Close")) {
                         SpilUnityImplementationBase.fireSplashScreenClosed();
 
                         GameObject.Destroy(this.gameObject);
                     }
 
-                    if (GUI.Button(new Rect(10, Screen.height / 2, (Screen.width - 20), (Screen.height - 20) / 2),
+                    if (GUI.Button(new Rect(10, (Screen.height / 3 + 10), (Screen.width - 20), (Screen.height - 20) / 3),
                         "Open Shop")) {
                         SpilUnityImplementationBase.fireSplashScreenOpenShop();
+
+                        GameObject.Destroy(this.gameObject);
+                    }
+                    
+                    if (GUI.Button(new Rect(10, (2 * Screen.height / 3 + 10), (Screen.width - 20), (Screen.height - 20) / 3),
+                        "IAP Purchase Request")) {
+                        if (Spil.IapPurchaseRequest == null || Spil.IapPurchaseRequest.Equals("")) {
+                            SpilLogging.Error("Iap Purchase Request SKU Id not set! Please configure value in the Spil SDK object!");
+                        } else {
+                            SpilUnityImplementationBase.fireIAPRequestPurchase(Spil.IapPurchaseRequest);  
+                        }
 
                         GameObject.Destroy(this.gameObject);
                     }

@@ -57,6 +57,10 @@ namespace SpilGames.Unity {
 
         public static string BundleIdEditor { get; private set; }
 
+        [SerializeField] public string iapPurchaseRequestValue;
+
+        public static string IapPurchaseRequest { get; private set; }
+        
         [Header ("Reward Settings")]
         
         [Header("Ads")] 
@@ -250,6 +254,8 @@ namespace SpilGames.Unity {
                 Debug.Assert(!string.IsNullOrEmpty(bundleIdEditor), "SpilSDK-Unity No BundleIdEditor set!");
             }
 
+            IapPurchaseRequest = iapPurchaseRequestValue;
+            
             CurrencyName = currencyName;
             CurrencyId = currencyId;
             Reward = reward;

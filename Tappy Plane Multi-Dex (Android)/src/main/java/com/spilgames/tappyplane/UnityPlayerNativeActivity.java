@@ -1,4 +1,4 @@
-package com.spilgames.tappyplanes;
+package com.spilgames.tappyplane;
 
 import com.unity3d.player.*;
 import android.app.NativeActivity;
