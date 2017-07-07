@@ -47,7 +47,7 @@
 -(void)splashScreenClosed;
 -(void)splashScreenOpenShop;
 -(void)splashScreenError:(nonnull NSString*)message;
--(void)sendDataToGame:(nonnull NSString*)payload;
+-(void)splashScreenData:(nonnull NSString*)payload;
 
 // Daily bonus screen events
 -(void)dailyBonusOpen;
