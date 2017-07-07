@@ -9,7 +9,19 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
     public class RewardResponse : ResponseEvent{
         private static Spil.TokenRewardTypeEnum rewardType = Spil.MonoInstance.TokenRewardType;
         
+        private static string DeepLink = "deeplink";
+        private static string PushNotification = "pushnotification";
+        
         public static void ProcessRewardResponse(ResponseEvent response) {
+            
+            string reason = "";
+
+            if (rewardType.ToString().ToLower().Trim().Equals(DeepLink)) {
+                reason = PlayerDataUpdateReasons.Deeplink;
+            } else if (rewardType.ToString().ToLower().Trim().Equals(PushNotification)) {
+                reason = PlayerDataUpdateReasons.PushNotification;
+            }
+            
             if (rewardType == Spil.TokenRewardTypeEnum.EXTERNAL) {
                 List<Reward> rewards = new List<Reward>();
 
@@ -22,25 +34,25 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
                 string rewardsJSON = JsonHelper.getJSONFromObject(rewards);
 
                 JSONObject json = new JSONObject();
-                json.AddField("data", rewardsJSON);
+                json.AddField("reward", rewardsJSON);
+                json.AddField("rewardType", rewardType.ToString());
 
-                //ToDo
-//                SpilUnityImplementationBase.fireRewardTokenClaimed();
+                SpilUnityImplementationBase.fireRewardTokenClaimed(json.Print());
                 
             }
             else {
-                int id = Spil.DailyBonusId;
-                int amount = Spil.DailyBonusAmount;
+                int id = Spil.TokenRewardId;
+                int amount = Spil.TokenRewardAmount;
 
                 if (id == 0 || amount == 0) {
-                    SpilLogging.Error("Daily Bonus Rewards not configured for Editor!");
+                    SpilLogging.Error("Token Rewards not configured for Editor!");
                 }
 
                 if (rewardType == Spil.TokenRewardTypeEnum.CURRENCY) {
-                    SpilUnityEditorImplementation.pData.WalletOperation("add", id, amount, PlayerDataUpdateReasons.DailyBonus, null, "DailyBonus", null);
+                    SpilUnityEditorImplementation.pData.WalletOperation("add", id, amount, reason, null, "DeepLink", null);
                 }
                 else if (rewardType == Spil.TokenRewardTypeEnum.ITEM) {
-                    SpilUnityEditorImplementation.pData.InventoryOperation("add", id, amount, PlayerDataUpdateReasons.DailyBonus, null, "DailyBonus", null);
+                    SpilUnityEditorImplementation.pData.InventoryOperation("add", id, amount, reason, null, "DailyBonus", null);
                 }
             }
         }
