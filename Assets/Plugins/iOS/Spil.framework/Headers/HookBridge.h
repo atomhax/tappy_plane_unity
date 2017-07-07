@@ -124,6 +124,8 @@ extern "C" {
     
     char* getAllPackagesNative();
     
+    char* getPromotionNative(const char* keyName);
+    
     char* getPromotionsNative(const char* keyName);
 
     // --- ADS ---
