@@ -108,6 +108,15 @@ public class GameController : MonoBehaviour
 		Spil.OnSpilSDKInitialized -= OnSpilSDKInitialized;
 		Spil.OnSpilSDKInitialized += OnSpilSDKInitialized;
 		
+		Spil.Instance.OnRewardTokenReceived -= OnRewardTokenReceived;
+		Spil.Instance.OnRewardTokenReceived += OnRewardTokenReceived;
+
+		Spil.Instance.OnRewardTokenClaimed -= OnRewardTokenClaimed;
+		Spil.Instance.OnRewardTokenClaimed += OnRewardTokenClaimed;
+
+		Spil.Instance.OnRewardTokenClaimFailed -= OnRewardTokenClaimFailed;
+		Spil.Instance.OnRewardTokenClaimFailed += OnRewardTokenClaimFailed;
+		
 		GetAndApplyGameConfig ();
 		SetupNewGame ();
 		
@@ -630,15 +639,6 @@ public class GameController : MonoBehaviour
 
 		Spil.Instance.OnReward -= RewardHandler;
 		Spil.Instance.OnReward += RewardHandler;
-
-		Spil.Instance.OnRewardTokenReceived -= OnRewardTokenReceived;
-		Spil.Instance.OnRewardTokenReceived += OnRewardTokenReceived;
-
-		Spil.Instance.OnRewardTokenClaimed -= OnRewardTokenClaimed;
-		Spil.Instance.OnRewardTokenClaimed += OnRewardTokenClaimed;
-
-		Spil.Instance.OnRewardTokenClaimFailed -= OnRewardTokenClaimFailed;
-		Spil.Instance.OnRewardTokenClaimFailed += OnRewardTokenClaimFailed;
 
 		Spil.Instance.OnServerTimeRequestSuccess -= OnServerTimeRequestSuccess;
 		Spil.Instance.OnServerTimeRequestSuccess += OnServerTimeRequestSuccess;
