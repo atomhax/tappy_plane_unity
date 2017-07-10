@@ -104,9 +104,61 @@ public class GameController : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+		
+		Spil.Instance.OnReward -= Spil_Instance_OnReward;
+		Spil.Instance.OnReward += Spil_Instance_OnReward;
+		
+		Spil.Instance.OnDailyBonusOpen -= OnDailyBonusOpen;
+		Spil.Instance.OnDailyBonusOpen += OnDailyBonusOpen;
 
-		Spil.OnSpilSDKInitialized -= OnSpilSDKInitialized;
-		Spil.OnSpilSDKInitialized += OnSpilSDKInitialized;
+		Spil.Instance.OnDailyBonusClosed -= OnDailyBonusClosed;
+		Spil.Instance.OnDailyBonusClosed += OnDailyBonusClosed;
+
+		Spil.Instance.OnDailyBonusNotAvailable -= OnDailyBonusNotAvailable;
+		Spil.Instance.OnDailyBonusNotAvailable += OnDailyBonusNotAvailable;
+
+		Spil.Instance.OnDailyBonusError -= OnDailyBonusError;
+		Spil.Instance.OnDailyBonusError += OnDailyBonusError;
+
+		Spil.Instance.OnDailyBonusReward -= OnDailyBonusReward;
+		Spil.Instance.OnDailyBonusReward += OnDailyBonusReward;
+
+		Spil.Instance.OnPlayerDataUpdated -= OnPlayerDataUpdated;
+		Spil.Instance.OnPlayerDataUpdated += OnPlayerDataUpdated;
+
+		Spil.Instance.OnReward -= RewardHandler;
+		Spil.Instance.OnReward += RewardHandler;
+
+		Spil.Instance.OnServerTimeRequestSuccess -= OnServerTimeRequestSuccess;
+		Spil.Instance.OnServerTimeRequestSuccess += OnServerTimeRequestSuccess;
+
+		Spil.Instance.OnServerTimeRequestFailed -= OnServerTimeRequestFailed;
+		Spil.Instance.OnServerTimeRequestFailed += OnServerTimeRequestFailed;
+
+		Spil.Instance.OnLiveEventAvailable -= OnLiveEventAvailable;
+		Spil.Instance.OnLiveEventAvailable += OnLiveEventAvailable;
+		
+		Spil.Instance.OnLiveEventStageOpen -= OnLiveEventStageOpen;
+		Spil.Instance.OnLiveEventStageOpen += OnLiveEventStageOpen;
+		
+		Spil.Instance.OnLiveEventStageClosed -= OnLiveEventStageClosed;
+		Spil.Instance.OnLiveEventStageClosed += OnLiveEventStageClosed;
+		
+		Spil.Instance.OnLiveEventMetRequirements -= OnLiveEventMetRequirements;
+		Spil.Instance.OnLiveEventMetRequirements += OnLiveEventMetRequirements;
+		
+		Spil.Instance.OnLiveEventError -= OnLiveEventError;
+		Spil.Instance.OnLiveEventError += OnLiveEventError;
+		
+		Spil.Instance.OnLiveEventCompleted -= OnLiveEventCompleted;
+		Spil.Instance.OnLiveEventCompleted += OnLiveEventCompleted;
+		
+		FireTrackEventSample ();
+
+//		Spil.Instance.PreloadItemAndBundleImages();
+
+		Spil.Instance.RequestServerTime ();
+		Spil.Instance.RequestLiveEvent();
 		
 		Spil.Instance.OnRewardTokenReceived -= OnRewardTokenReceived;
 		Spil.Instance.OnRewardTokenReceived += OnRewardTokenReceived;
@@ -616,60 +668,7 @@ public class GameController : MonoBehaviour
 	private void OnSpilSDKInitialized() {
 		Debug.Log("Spil SDK Initialized");
 		
-		Spil.Instance.OnReward -= Spil_Instance_OnReward;
-		Spil.Instance.OnReward += Spil_Instance_OnReward;
-		
-		Spil.Instance.OnDailyBonusOpen -= OnDailyBonusOpen;
-		Spil.Instance.OnDailyBonusOpen += OnDailyBonusOpen;
 
-		Spil.Instance.OnDailyBonusClosed -= OnDailyBonusClosed;
-		Spil.Instance.OnDailyBonusClosed += OnDailyBonusClosed;
-
-		Spil.Instance.OnDailyBonusNotAvailable -= OnDailyBonusNotAvailable;
-		Spil.Instance.OnDailyBonusNotAvailable += OnDailyBonusNotAvailable;
-
-		Spil.Instance.OnDailyBonusError -= OnDailyBonusError;
-		Spil.Instance.OnDailyBonusError += OnDailyBonusError;
-
-		Spil.Instance.OnDailyBonusReward -= OnDailyBonusReward;
-		Spil.Instance.OnDailyBonusReward += OnDailyBonusReward;
-
-		Spil.Instance.OnPlayerDataUpdated -= OnPlayerDataUpdated;
-		Spil.Instance.OnPlayerDataUpdated += OnPlayerDataUpdated;
-
-		Spil.Instance.OnReward -= RewardHandler;
-		Spil.Instance.OnReward += RewardHandler;
-
-		Spil.Instance.OnServerTimeRequestSuccess -= OnServerTimeRequestSuccess;
-		Spil.Instance.OnServerTimeRequestSuccess += OnServerTimeRequestSuccess;
-
-		Spil.Instance.OnServerTimeRequestFailed -= OnServerTimeRequestFailed;
-		Spil.Instance.OnServerTimeRequestFailed += OnServerTimeRequestFailed;
-
-		Spil.Instance.OnLiveEventAvailable -= OnLiveEventAvailable;
-		Spil.Instance.OnLiveEventAvailable += OnLiveEventAvailable;
-		
-		Spil.Instance.OnLiveEventStageOpen -= OnLiveEventStageOpen;
-		Spil.Instance.OnLiveEventStageOpen += OnLiveEventStageOpen;
-		
-		Spil.Instance.OnLiveEventStageClosed -= OnLiveEventStageClosed;
-		Spil.Instance.OnLiveEventStageClosed += OnLiveEventStageClosed;
-		
-		Spil.Instance.OnLiveEventMetRequirements -= OnLiveEventMetRequirements;
-		Spil.Instance.OnLiveEventMetRequirements += OnLiveEventMetRequirements;
-		
-		Spil.Instance.OnLiveEventError -= OnLiveEventError;
-		Spil.Instance.OnLiveEventError += OnLiveEventError;
-		
-		Spil.Instance.OnLiveEventCompleted -= OnLiveEventCompleted;
-		Spil.Instance.OnLiveEventCompleted += OnLiveEventCompleted;
-		
-		FireTrackEventSample ();
-
-//		Spil.Instance.PreloadItemAndBundleImages();
-
-		Spil.Instance.RequestServerTime ();
-		Spil.Instance.RequestLiveEvent();
 	}
 
 	private void OnLiveEventError(SpilErrorMessage errorMessage) {

@@ -184,12 +184,12 @@ namespace SpilGames.Unity {
 
 		#endif
 
-        public delegate void SpilSDKInitialized();
-        
-        /// <summary>
-        /// This event indicates that the Spil SDK was initialised on Unity Side.
-        /// </summary>
-        public static event SpilSDKInitialized OnSpilSDKInitialized;
+//        public delegate void SpilSDKInitialized();
+//        
+//        /// <summary>
+//        /// This event indicates that the Spil SDK was initialised on Unity Side.
+//        /// </summary>
+//        public static event SpilSDKInitialized OnSpilSDKInitialized;
         
         void Awake() {
             if (initializeOnAwake) {
@@ -239,7 +239,7 @@ namespace SpilGames.Unity {
 
 			#endif
             
-            Invoke ("SendOnInitializeEvent", invokeSeconds);
+//            Invoke ("SendOnInitializeEvent", invokeSeconds);
         }
 
         public void InitEditor() {
@@ -275,11 +275,11 @@ namespace SpilGames.Unity {
             RewardToken = rewardToken;
         }
 
-        private void SendOnInitializeEvent() {
-            if (OnSpilSDKInitialized != null) {
-                OnSpilSDKInitialized();
-            }
-        }
+//        private void SendOnInitializeEvent() {
+//            if (OnSpilSDKInitialized != null) {
+//                OnSpilSDKInitialized();
+//            }
+//        }
         
         /// <summary>
         /// This method is called by the native Spil SDK, it should not be used by developers.
