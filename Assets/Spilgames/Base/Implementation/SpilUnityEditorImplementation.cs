@@ -206,7 +206,6 @@ namespace SpilGames.Unity.Base.Implementations {
                 }
             }
 
-
             spilEvent.Send();
         }
 

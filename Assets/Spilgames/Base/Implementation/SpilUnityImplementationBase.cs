@@ -793,6 +793,22 @@ namespace SpilGames.Unity.Base.Implementations {
             }
         }
 
+        public delegate void PlayerDataEmptyGacha();
+
+        /// <summary>
+        /// This is fired by the native Spil SDK after player data has been received from the server.
+        /// The developer can subscribe to this event and then request the Player Data (Wallet & Inventory).
+        /// </summary>
+        public event PlayerDataEmptyGacha OnPlayerDataEmptyGacha;
+
+        public static void firePlayerDataEmptyGacha() {
+            Debug.Log("SpilSDK-Unity Received nothing from gacha box!");
+
+            if (Spil.Instance.OnPlayerDataEmptyGacha != null) {
+                Spil.Instance.OnPlayerDataEmptyGacha();
+            }
+        }
+        
         public delegate void PlayerDataError(SpilErrorMessage errorMessage);
 
         /// <summary>
