@@ -6,6 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "GachaContent.h"
 
 @interface Item : NSObject
 
@@ -17,8 +18,13 @@
 @property (strong, nonatomic) NSString *displayName;
 @property (strong, nonatomic) NSString *displayDescription;
 
+@property (assign, nonatomic) int isGacha;
+@property (strong, nonatomic) NSMutableArray *gachaContent;
+
 -(id)initWithDictionary:(NSDictionary*)dict;
 
--(NSMutableDictionary*)toJSONObject;
+-(NSMutableDictionary*)toJSONObject:(bool)includeContent;
+
+-(GachaContent*)getRandomGachaReward;
 
 @end

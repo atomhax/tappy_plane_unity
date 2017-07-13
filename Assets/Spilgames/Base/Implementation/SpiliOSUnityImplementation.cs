@@ -524,6 +524,13 @@ namespace SpilGames.Unity.Base.Implementations
 		[DllImport("__Internal")]
 		private static extern void buyBundleNative (int bundleId, string reason, string location, string reasonDetails, string transactionId);
 
+		public override void OpenGacha(int gachaId, string reason, string location, string reasonDetails = null) {
+			openGachaNative(gachaId, reason, reasonDetails, location);
+		}
+
+		[DllImport("__Internal")]
+		private static extern void openGachaNative (int bundleId, string reason, string reasonDetails, string location);
+
 		public override void ResetPlayerData () 
 		{
 			resetPlayerDataNative ();

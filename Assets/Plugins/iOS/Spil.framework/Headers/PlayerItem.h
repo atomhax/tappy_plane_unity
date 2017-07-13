@@ -20,6 +20,6 @@
 -(id)initWithItem:(Item*)item;
 -(id)initWithDictionary:(NSDictionary*)dict;
 
--(NSDictionary*)toJSONObject;
+-(NSDictionary*)toJSONObject:(bool)includeContent;
 
 @end
