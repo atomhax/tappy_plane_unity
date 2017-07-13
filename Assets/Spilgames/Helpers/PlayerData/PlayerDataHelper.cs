@@ -38,8 +38,7 @@ namespace SpilGames.Unity.Helpers.PlayerData {
                     }
                 }
                 return false;
-            }
-            else {
+            } else {
                 return false;
             }
         }
@@ -56,8 +55,7 @@ namespace SpilGames.Unity.Helpers.PlayerData {
                     }
                 }
                 return -1;
-            }
-            else {
+            } else {
                 return -1;
             }
         }
@@ -74,17 +72,44 @@ namespace SpilGames.Unity.Helpers.PlayerData {
                     }
                 }
                 return -1;
-            }
-            else {
+            } else {
                 return -1;
             }
         }
 
         /// <summary>
+        /// Helper method that returns all the gacha Items owned by the user
+        /// </summary>
+        public List<PlayerItem> GetGachas() {
+            List<PlayerItem> playerGachas = new List<PlayerItem>();
+
+            if (Inventory != null) {
+                foreach (PlayerItem playerItem in Inventory.Items) {
+                    if (playerItem.IsGacha) {
+                        playerGachas.Add(playerItem);
+                    }
+                }
+            }
+
+            return playerGachas;
+        }
+        
+        /// <summary>
         /// Helper method that consumes the bundle given a bundleId and a reason
         /// </summary>
         public void BuyBundle(int bundleId, string reason, string location, string reasonDetails = null, string transactionId = null) {
             Spil.Instance.BuyBundle(bundleId, reason, location, reasonDetails, transactionId);
+        }
+
+        /// <summary>
+        /// Helper method used to open gacha boxes.
+        /// </summary>
+        /// <param name="gachaId"></param>
+        /// <param name="reason"></param>
+        /// <param name="location"></param>
+        /// <param name="reasonDetails"></param>
+        public void OpenGacha(int gachaId, string reason, string location, string reasonDetails = null) {
+            Spil.Instance.OpenGacha(gachaId, reason, location, reasonDetails);
         }
 
         private void AddDataToHelper(List<PlayerCurrencyData> walletCurrencies, List<PlayerItemData> inventoryItems) {
@@ -136,6 +161,7 @@ namespace SpilGames.Unity.Helpers.PlayerData {
         public static string Deeplink = "Deeplink From Client";
         public static string PushNotification = "Push Notification From Client";
         public static string LiveEvent = "Live Event From Client";
+        public static string OpenGacha = "Open Gacha";
 
         public PlayerDataUpdateReasons() {
         }

@@ -24,8 +24,7 @@ namespace SpilGames.Unity.Helpers.GameData {
                 if (spilGameData != null) {
                     AddDataToHelper(spilGameData.currencies, spilGameData.items, spilGameData.bundles, spilGameData.shop, spilGameData.promotions);
                     Debug.Log("Spil GameData created");
-                }
-                else {
+                } else {
                     Debug.Log("Spil GameData not created, Instance.GetSpilGameDataFromsdk() did not return any data.");
                 }
             }
@@ -38,8 +37,7 @@ namespace SpilGames.Unity.Helpers.GameData {
                 if (spilGameData != null) {
                     AddDataToHelper(spilGameData.currencies, spilGameData.items, spilGameData.bundles, spilGameData.shop, spilGameData.promotions);
                     Debug.Log("Spil GameData Refreshed");
-                }
-                else {
+                } else {
                     Debug.Log("Spil GameData not created, Instance.GetSpilGameDataFromsdk() did not return any data.");
                 }
             }
@@ -57,8 +55,7 @@ namespace SpilGames.Unity.Helpers.GameData {
                     }
                 }
                 return null;
-            }
-            else {
+            } else {
                 return null;
             }
         }
@@ -70,13 +67,12 @@ namespace SpilGames.Unity.Helpers.GameData {
         public Bundle GetBundle(string name) {
             if (Bundles != null) {
                 foreach (Bundle bundle in Bundles) {
-                    if (bundle.Name == name) {
+                    if (bundle.Name.Equals(name)) {
                         return bundle;
                     }
                 }
                 return null;
-            }
-            else {
+            } else {
                 return null;
             }
         }
@@ -94,9 +90,7 @@ namespace SpilGames.Unity.Helpers.GameData {
                 }
                 return null;
             }
-            else {
-                return null;
-            }
+            return null;
         }
 
         /// <summary>
@@ -106,15 +100,64 @@ namespace SpilGames.Unity.Helpers.GameData {
         public Item GetItem(string name) {
             if (Items != null) {
                 foreach (Item item in Items) {
-                    if (item.Name == name) {
+                    if (item.Name.Equals(name)) {
                         return item;
                     }
                 }
                 return null;
-            }
-            else {
+            } else {
                 return null;
             }
+        }
+
+        /// <summary>
+        /// Helper method that returns the Gacha for a given name
+        /// Returns null if no gacha was found
+        /// </summary>
+        public Item GetGacha(string name) {
+            if (Items != null) {
+                foreach (Item gacha in Items) {
+                    if (gacha.Name.Equals(name) && gacha.IsGacha) {
+                        return gacha;
+                    }
+                }
+                return null;
+            } else {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Helper method that returns the Gacha for a given id
+        /// Returns null if no gacha was found
+        /// </summary>
+        public Item GetGacha(int gachaId) {
+            if (Items != null) {
+                foreach (Item gacha in Items) {
+                    if (gacha.Id == gachaId && gacha.IsGacha) {
+                        return gacha;
+                    }
+                }
+                return null;
+            } else {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Helper method that returns all the defined gacha items.
+        /// </summary>
+        public List<Item> GetAllGachas() {
+            List<Item> gachas = new List<Item>();
+            if (Items != null) {
+                foreach (Item gacha in Items) {
+                    if (gacha.IsGacha) {
+                        gachas.Add(gacha);
+                    }
+                }
+            }
+
+            return gachas;
         }
 
         /// <summary>
@@ -129,8 +172,7 @@ namespace SpilGames.Unity.Helpers.GameData {
                     }
                 }
                 return null;
-            }
-            else {
+            } else {
                 return null;
             }
         }
@@ -142,13 +184,12 @@ namespace SpilGames.Unity.Helpers.GameData {
         public Currency GetCurrency(string name) {
             if (Currencies != null) {
                 foreach (Currency currency in Currencies) {
-                    if (currency.Name == name) {
+                    if (currency.Name.Equals(name)) {
                         return currency;
                     }
                 }
                 return null;
-            }
-            else {
+            } else {
                 return null;
             }
         }
@@ -166,7 +207,7 @@ namespace SpilGames.Unity.Helpers.GameData {
 
             if (items != null) {
                 foreach (SpilItemData spilItemsData in items) {
-                    Items.Add(new Item(spilItemsData.id, spilItemsData.name, spilItemsData.type, spilItemsData.imageUrl, spilItemsData.displayName, spilItemsData.displayDescription));
+                    Items.Add(new Item(spilItemsData.id, spilItemsData.name, spilItemsData.type, spilItemsData.imageUrl, spilItemsData.displayName, spilItemsData.displayDescription, spilItemsData.isGacha, spilItemsData.content));
                 }
             }
 

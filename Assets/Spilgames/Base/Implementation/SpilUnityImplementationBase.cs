@@ -10,10 +10,10 @@ using SpilGames.Unity.Helpers.IAPPackages;
 namespace SpilGames.Unity.Base.Implementations {
     public abstract class SpilUnityImplementationBase {
         public static string PluginName = "Unity";
-        public static string PluginVersion = "2.4.0";
+        public static string PluginVersion = "2.5.0";
 
-        public static string AndroidVersion = "2.4.0";
-        public static string iOSVersion = "2.4.0";
+        public static string AndroidVersion = "2.5.0";
+        public static string iOSVersion = "2.5.0";
 
         #region Game config
 
@@ -1648,6 +1648,8 @@ namespace SpilGames.Unity.Base.Implementations {
 
         public abstract void BuyBundle(int bundleId, string reason, string location, string reasonDetails = null, string transactionId = null);
 
+        public abstract void OpenGacha(int gachaId, string reason, string location, string reasonDetails = null);
+        
         public abstract void ResetPlayerData();
 
         public abstract void ResetInventory();

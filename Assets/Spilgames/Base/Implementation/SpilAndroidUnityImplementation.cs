@@ -303,6 +303,15 @@ namespace SpilGames.Unity.Base.Implementations {
             }, true);
         }
 
+        public override void OpenGacha(int gachaId, string reason, string location, string reasonDetails = null) {
+            CallNativeMethod("openGacha", new object[] {
+                gachaId,
+                reason,
+                location,
+                reasonDetails
+            }, true);
+        }
+
         public override void ResetPlayerData() {
             CallNativeMethod("resetPlayerData");
         }

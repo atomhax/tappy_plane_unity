@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using System.Collections.Generic;
+using SpilGames.Unity.Base.SDK;
 
 namespace SpilGames.Unity.Helpers.GameData {
     /// <summary>
@@ -11,43 +13,41 @@ namespace SpilGames.Unity.Helpers.GameData {
         /// The item Id
         /// </summary>
         public int Id {
-            get { return _Id; }
+            get { return id; }
         }
 
-        private int _Id;
+        private int id;
 
         /// <summary>
         /// The item Name
         /// </summary>
         public string Name {
-            get { return _Name; }
+            get { return name; }
         }
 
-        private string _Name;
+        private string name;
 
         /// <summary>
         /// The item Type (Consumable, Booster and Permanent)
         /// </summary>
         public int Type {
-            get { return _Type; }
+            get { return type; }
         }
 
-        public int _Type;
+        private int type;
 
-        private string _imageURL;
-
+        private string imageUrl;
 
         /// <summary>
         /// Get the local image path of the item. (disk cache)
         /// </summary>
         public string GetImagePath() {
-            string imagePath = Spil.Instance.GetImagePath(_imageURL);
+            string imagePath = Spil.Instance.GetImagePath(imageUrl);
 
             if (imagePath != null) {
                 return imagePath;
-            }
-            else {
-                Spil.Instance.RequestImage(_imageURL, _Id, "item");
+            } else {
+                Spil.Instance.RequestImage(imageUrl, id, "item");
                 return null;
             }
         }
@@ -56,34 +56,60 @@ namespace SpilGames.Unity.Helpers.GameData {
         /// Checks if there is an image defined for the item.
         /// </summary>
         public bool HasImage() {
-            return !String.IsNullOrEmpty(_imageURL);
+            return !String.IsNullOrEmpty(imageUrl);
         }
 
         /// <summary>
         /// Gets the display name of the item.
         /// </summary>
         public string DisplayName {
-            get { return _displayName; }
+            get { return displayName; }
         }
 
-        private string _displayName;
+        private string displayName;
 
         /// <summary>
         /// Gets the display description of the item.
         /// </summary>
         public string DisplayDescription {
-            get { return _displayDescription; }
+            get { return displayDescription; }
         }
 
-        private string _displayDescription;
+        private string displayDescription;
 
-        public Item(int id, string name, int type, string imageURL, string displayName, string displayDescription) {
-            _Id = id;
-            _Name = name;
-            _Type = type;
-            _imageURL = imageURL;
-            _displayName = displayName;
-            _displayDescription = displayDescription;
+        /// <summary>
+        /// Tells if the item is a gacha.
+        /// </summary>
+        public bool IsGacha {
+            get { return isGacha; }
+        }
+
+        private bool isGacha;
+
+        /// <summary>
+        /// If the item is a gacha, this list contains all the possible items the user might get.
+        /// </summary>
+        public List<GachaContent> Content {
+            get { return content; }
+        }
+
+        private List<GachaContent> content;
+
+        public Item(int id, string name, int type, string imageUrl, string displayName, string displayDescription, bool isGacha, List<SpilGachaContent> content) {
+            this.id = id;
+            this.name = name;
+            this.type = type;
+            this.imageUrl = imageUrl;
+            this.displayName = displayName;
+            this.displayDescription = displayDescription;
+            this.isGacha = isGacha;
+
+            this.content = new List<GachaContent>();
+            if (content != null && content.Count > 0) {
+                foreach (SpilGachaContent gachaContent in content) {
+                    this.content.Add(new GachaContent(gachaContent.id, gachaContent.type, gachaContent.amount, gachaContent.weight));
+                }
+            }
         }
     }
 }

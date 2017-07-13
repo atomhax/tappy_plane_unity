@@ -14,7 +14,7 @@ public class ShopPanelController : MonoBehaviour {
 
 	public GameController gameController;
 
-	public Text starsAmountText, diamonsAmountText, starsRewardedText, tapperAmountText;
+	public Text starsAmountText, diamonsAmountText, starsRewardedText, tapperAmountText, tappyChestAmountText;
 
 	public List<GameObject> shopTabs = new List<GameObject> ();
 	public List<GameObject> tabButtons = new List<GameObject> ();
@@ -101,6 +101,11 @@ public class ShopPanelController : MonoBehaviour {
 		} else {
 			tapperAmountText.text = Spil.PlayerData.GetItemAmount(100077).ToString();
 		}
+		if (Spil.PlayerData.GetItemAmount(100088) < 0) {
+			tappyChestAmountText.text = "0";
+		} else {
+			tappyChestAmountText.text = Spil.PlayerData.GetItemAmount(100088).ToString();
+		}
 	}
 		
 	void Spil_Instance_OnAdAvailable (SpilGames.Unity.Base.SDK.enumAdType adType)
@@ -111,6 +116,7 @@ public class ShopPanelController : MonoBehaviour {
 	}
 
 	public void StartRewardedVideo(){
+		Spil.Instance.OnAdFinished -= Spil_Instance_OnAdFinished;
 		Spil.Instance.OnAdFinished += Spil_Instance_OnAdFinished;
 		Spil.Instance.PlayVideo ();
 	}
@@ -118,7 +124,8 @@ public class ShopPanelController : MonoBehaviour {
 	void Spil_Instance_OnAdFinished (SpilAdFinishedResponse response)
 	{
 		getFreeCoinsButton.SetActive (false);
-		if(response.reward != null){
+		if(response.reward != null) {
+			gameController.latestRewardAmount = 0;
 			gameController.latestRewardAmount = response.reward.reward;
 			gameController.latestRewardType = "stars";
 
@@ -153,6 +160,10 @@ public class ShopPanelController : MonoBehaviour {
 		Spil.Instance.ShowHelpCenter();
 	}
 
+	public void OpenTappyChest() {
+		Spil.PlayerData.OpenGacha(100088, PlayerDataUpdateReasons.OpenGacha, "Shop", "Opening Tappy Chest");
+	}
+	
 	void OnSplashScreenOpen()
 	{
 		Debug.Log ("SplashScreenOpen");

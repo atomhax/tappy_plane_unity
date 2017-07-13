@@ -229,7 +229,7 @@ public class GameController : MonoBehaviour
 		Spil.Instance.OnAdFinished += Spil_Instance_OnAdFinished;
 
 		RequestMoreApps ();
-
+		
 		UpdateUI (GameStates.Start);
 	}
 
@@ -378,9 +378,7 @@ public class GameController : MonoBehaviour
 	public void LoadSkinsPanelAfterPurchase ()
 	{
 		inGamePurchaseSuccessPanel.SetActive (false);
-		UpdateUI (GameStates.Start);
-		skinSelectPanel.SetActive (true);
-		tabsPanel.SetActive (false);
+		
 	}
 
 	public void OnGameStateUpdated (string access)

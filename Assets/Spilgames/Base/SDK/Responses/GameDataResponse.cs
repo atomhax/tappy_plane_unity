@@ -24,6 +24,15 @@ namespace SpilGames.Unity.Base.SDK {
         public string imageUrl;
         public string displayName;
         public string displayDescription;
+        public bool isGacha;
+        public List<SpilGachaContent> content;
+    }
+
+    public class SpilGachaContent {
+        public int id;
+        public string type;
+        public int amount;
+        public int weight;
     }
 
     public class SpilBundlePriceData {

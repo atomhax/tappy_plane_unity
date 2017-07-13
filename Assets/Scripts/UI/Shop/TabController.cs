@@ -19,7 +19,13 @@ public class TabController : MonoBehaviour {
 			bool hasItem = false;
 			Bundle bundle = Spil.GameData.GetBundle (entry.BundleId);
 			for (int i = 0; i < bundle.Items.Count; i++) {
-				if(Spil.PlayerData.InventoryHasItem(bundle.Items[i].Id)){
+				Item gacha  = Spil.GameData.GetGacha(bundle.Items[i].Id);
+				bool isGacha = false;
+				if (gacha != null) {
+					isGacha = Spil.GameData.GetGacha(bundle.Items[i].Id).IsGacha;
+				}
+				
+				if(Spil.PlayerData.InventoryHasItem(bundle.Items[i].Id) && !isGacha){
 					hasItem = true;
 				}
 			}	

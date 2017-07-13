@@ -533,7 +533,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
 
             SendUpdatePlayerDataEvent(bundle, reason, reasonDetails, location, transactionId);
         }
-
+        
         private SpilBundleData GetBundleFromObjects(int bundleId) {
             foreach (SpilBundleData bundleData in SpilUnityEditorImplementation.gData.bundles) {
                 if (bundleData.id == bundleId) {
@@ -556,6 +556,10 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
 
         private bool IsPromotionValid(SpilShopPromotionData promotion) {
             return DateTime.Now > promotion.startDate && DateTime.Now < promotion.endDate;
+        }
+
+        public void OpenGacha(int gachaId, string reason, string reasonDetails, string location) {
+            
         }
 
         private void SendUpdatePlayerDataEvent(string reason, string reasonDetails, string location,
