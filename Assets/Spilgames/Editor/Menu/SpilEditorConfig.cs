@@ -448,7 +448,7 @@ public class SpilEditorConfig : EditorWindow {
             WWW request = new WWW("https://apptracker.spilgames.com/v1/native-events/event/android/" + bundleIdentifier + "/" + type, form);
             while (!request.isDone)
                 ;
-            if (request.error != null) {
+            if (request.error != null && !request.error.Equals("")) {
                 Debug.LogError("Error getting game data: " + request.error);
                 combined.AddField("androidSdkConfig", "");
             }
@@ -461,7 +461,7 @@ public class SpilEditorConfig : EditorWindow {
             WWW request2 = new WWW("https://apptracker.spilgames.com/v1/native-events/event/ios/" + bundleIdentifier + "/" + type, form2);
             while (!request2.isDone)
                 ;
-            if (request2.error != null) {
+            if (request.error != null && !request.error.Equals("")) {
                 Debug.LogError("Error getting game data: " + request2.error);
                 combined.AddField("iosSdkConfig", "");
             }
@@ -479,7 +479,7 @@ public class SpilEditorConfig : EditorWindow {
             WWW request = new WWW("https://apptracker.spilgames.com/v1/native-events/event/" + EditorUserBuildSettings.activeBuildTarget.ToString().Trim().ToLower() + "/" + bundleIdentifier + "/" + type, form);
             while (!request.isDone)
                 ;
-            if (request.error != null) {
+            if (request.error != null && !request.error.Equals("")) {
                 Debug.LogError("Error getting game data: " + request.error + " " + request.text);
             }
             else {

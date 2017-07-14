@@ -163,7 +163,7 @@ public class SpilIOSBuildPostProcess : MonoBehaviour
 		WWW request = new WWW ("https://apptracker.spilgames.com/v1/native-events/event/ios/" + bundleIdentifier + "/" + type, form);
 		while (!request.isDone)
 			;
-		if (request.error != null) {
+		if (request.error != null && !request.error.Equals("")) {
 			UnityEngine.Debug.LogWarning ("Error getting game data: " + request.error);  
 		} else { 
 			UnityEngine.Debug.Log (type + " Data returned: " + request.text);

@@ -47,7 +47,7 @@ public class SpilEditorReleases : EditorWindow
 
 		while (!request.isDone);
 
-		if(request.error == null){
+		if(request.error != null && !request.error.Equals("")){
 			JSONObject response = new JSONObject(request.text);
 
 			string GitHubReleaseTag = response.GetField("tag_name").Print(false);

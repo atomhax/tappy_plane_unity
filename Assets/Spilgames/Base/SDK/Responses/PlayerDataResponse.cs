@@ -27,7 +27,6 @@ namespace SpilGames.Unity.Base.SDK {
     }
 
     public class PlayerDataUpdatedData {
-        public string location;
         public string reason;
         public List<PlayerItemData> items = new List<PlayerItemData>();
         public List<PlayerCurrencyData> currencies = new List<PlayerCurrencyData>();

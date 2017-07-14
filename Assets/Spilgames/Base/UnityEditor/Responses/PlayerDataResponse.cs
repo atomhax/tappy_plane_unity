@@ -1,16 +1,14 @@
 ﻿#if UNITY_EDITOR
-using UnityEngine;
-using System.Collections;
-using SpilGames.Unity.Base.Implementations;
-using SpilGames.Unity;
-using SpilGames.Unity.Helpers;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using SpilGames.Unity.Base.Implementations;
 using SpilGames.Unity.Base.SDK;
-using SpilGames.Unity.Json;
 using SpilGames.Unity.Helpers.PlayerData;
+using SpilGames.Unity.Json;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace SpilGames.Unity.Base.UnityEditor.Responses {
     public class PlayerDataResponse : Response {
@@ -187,8 +185,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
                             if (currency == null) continue;
                             if (Wallet.offset == 0 && receivedWallet.offset != 0) {
                                 currency.currentBalance = playerCurrency.currentBalance;
-                            }
-                            else {
+                            } else {
                                 if (playerCurrency.delta != 0) {
                                     int updatedBalance =
                                         currency.currentBalance + playerCurrency.delta;
@@ -203,8 +200,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
 
                             updated = true;
                             updatedData.currencies.Add(currency);
-                        }
-                        else if (receivedWallet.logic.Equals("SERVER")) {
+                        } else if (receivedWallet.logic.Equals("SERVER")) {
                         }
                     }
                 }
@@ -226,14 +222,12 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
                             PlayerItemData item = Inventory.items.FirstOrDefault(a => a.id == playerItem.id);
                             if (item != null && playerItem.delta != 0) {
                                 item.amount = item.amount + playerItem.delta;
-                            }
-                            else {
+                            } else {
                                 itemsToBeAdded.Add(playerItem);
                             }
 
                             updated = true;
-                        }
-                        else if (receivedInventory.logic.Equals("SERVER")) {
+                        } else if (receivedInventory.logic.Equals("SERVER")) {
                         }
 
                         updatedData.items.Add(playerItem);
@@ -250,6 +244,11 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
                             playerItem.amount = itemToAdd.amount;
                             playerItem.value = itemToAdd.value;
                             playerItem.delta = 0;
+
+                            playerItem.displayName = item.displayName;
+                            playerItem.displayDescription = item.displayDescription;
+                            playerItem.isGacha = item.isGacha;
+                            playerItem.content = item.content;
 
                             Inventory.items.Add(playerItem);
 
@@ -270,8 +269,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
             SpilUnityImplementationBase.firePlayerDataAvailable();
         }
 
-        public void WalletOperation(string action, int currencyId, int amount, string reason, string reasonDetails,
-            string location, string transactionId) {
+        public void WalletOperation(string action, int currencyId, int amount, string reason, string reasonDetails, string location, string transactionId) {
             if (currencyId <= 0 || reason == null) {
                 SpilLogging.Error("Error updating wallet!");
                 return;
@@ -318,13 +316,11 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
                 PlayerDataUpdatedData updatedData = new PlayerDataUpdatedData();
                 updatedData.currencies.Add(currency);
                 updatedData.reason = reason;
-                updatedData.location = location;
 
                 SpilUnityImplementationBase.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
 
-                SendUpdatePlayerDataEvent(reason, reasonDetails, location, transactionId);
-            }
-            else if (Wallet.logic.Equals("SERVER")) {
+                SendUpdatePlayerDataEvent(null, reason, reasonDetails, location, transactionId);
+            } else if (Wallet.logic.Equals("SERVER")) {
             }
         }
 
@@ -346,8 +342,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
             }
         }
 
-        public void InventoryOperation(string action, int itemId, int amount, string reason, string reasonDetails,
-            string location, string transactionId) {
+        public void InventoryOperation(string action, int itemId, int amount, string reason, string reasonDetails, string location, string transactionId) {
             SpilItemData gameItem = GetItemFromObjects(itemId);
 
             if (gameItem == null || itemId <= 0 || action == null || reason == null) {
@@ -359,6 +354,10 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
             item.id = gameItem.id;
             item.name = gameItem.name;
             item.type = gameItem.type;
+            item.displayName = gameItem.displayName;
+            item.displayDescription = gameItem.displayDescription;
+            item.isGacha = gameItem.isGacha;
+            item.content = gameItem.content;
             item.amount = amount;
             item.delta = amount;
 
@@ -369,8 +368,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
 
                 if (action.Equals("add")) {
                     inventoryItemAmount = inventoryItemAmount + amount;
-                }
-                else if (action.Equals("subtract")) {
+                } else if (action.Equals("subtract")) {
                     inventoryItemAmount = inventoryItemAmount - amount;
 
                     if (inventoryItemAmount < 0) {
@@ -382,12 +380,10 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
                 inventoryItem.delta = amount;
                 inventoryItem.amount = inventoryItemAmount;
                 UpdateItem(inventoryItem);
-            }
-            else {
+            } else {
                 if (action.Equals("add")) {
                     Inventory.items.Add(item);
-                }
-                else if (action.Equals("subtract")) {
+                } else if (action.Equals("subtract")) {
                     SpilLogging.Error("Could not remove item as amount is too low!");
                 }
             }
@@ -395,11 +391,10 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
             PlayerDataUpdatedData updatedData = new PlayerDataUpdatedData();
             updatedData.items.Add(item);
             updatedData.reason = reason;
-            updatedData.location = location;
 
             SpilUnityImplementationBase.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
 
-            SendUpdatePlayerDataEvent(item, reason, reasonDetails, location, transactionId);
+            SendUpdatePlayerDataEvent(null, reason, reasonDetails, location, transactionId);
         }
 
         private SpilItemData GetItemFromObjects(int itemId) {
@@ -422,6 +417,26 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
             return null;
         }
 
+        private SpilItemData GetGachaFromObjects(int gachaId) {
+            foreach (SpilItemData item in SpilUnityEditorImplementation.gData.items) {
+                if (item.id == gachaId && item.isGacha) {
+                    return item;
+                }
+            }
+
+            return null;
+        }
+
+        private PlayerItemData GetGachaFromInventory(int gachaId) {
+            foreach (PlayerItemData item in Inventory.items) {
+                if (item.id == gachaId && item.isGacha) {
+                    return item;
+                }
+            }
+
+            return null;
+        }
+
         private void UpdateItem(PlayerItemData item) {
             foreach (PlayerItemData playerItem in Inventory.items) {
                 if (playerItem.id != item.id) continue;
@@ -430,8 +445,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
             }
         }
 
-        public void BuyBundle(int bundleId, string reason, string reasonDetails, string location,
-            string transactionId) {
+        public void BuyBundle(int bundleId, string reason, string reasonDetails, string location, string transactionId) {
             PlayerDataUpdatedData updatedData = new PlayerDataUpdatedData();
 
             SpilBundleData bundle = GetBundleFromObjects(bundleId);
@@ -487,6 +501,10 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
                 item.id = gameItem.id;
                 item.name = gameItem.name;
                 item.type = gameItem.type;
+                item.displayName = gameItem.displayName;
+                item.displayDescription = gameItem.displayDescription;
+                item.isGacha = gameItem.isGacha;
+                item.content = gameItem.content;
 
                 PlayerItemData inventoryItem = GetItemFromInventory(bundleItem.id);
 
@@ -509,8 +527,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
                     UpdateItem(inventoryItem);
 
                     updatedData.items.Add(inventoryItem);
-                }
-                else {
+                } else {
                     inventoryItemAmount = bundleItem.amount;
 
                     if (isPromotionValid) {
@@ -527,13 +544,15 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
             }
 
             updatedData.reason = reason;
-            updatedData.location = location;
 
             SpilUnityImplementationBase.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
 
             SendUpdatePlayerDataEvent(bundle, reason, reasonDetails, location, transactionId);
         }
-        
+
+        private void OpenBundle(int bundleId, int amount, string reason, string reasonDetails, string location) {
+        }
+
         private SpilBundleData GetBundleFromObjects(int bundleId) {
             foreach (SpilBundleData bundleData in SpilUnityEditorImplementation.gData.bundles) {
                 if (bundleData.id == bundleId) {
@@ -559,26 +578,230 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
         }
 
         public void OpenGacha(int gachaId, string reason, string reasonDetails, string location) {
-            
+            PlayerItemData gachaPlayerItem = GetGachaFromInventory(gachaId);
+            SpilItemData gachaItem = GetGachaFromObjects(gachaId);
+
+            if (gachaPlayerItem == null || gachaItem == null || gachaId <= 0 || reason == null || !gachaPlayerItem.isGacha) {
+                SpilLogging.Error("Error opening gacha!");
+                return;
+            }
+
+            if (!gachaPlayerItem.content.All(gachaItem.content.Contains) && gachaPlayerItem.content.Count == gachaItem.content.Count) {
+                gachaPlayerItem.content = gachaItem.content;
+            }
+
+            if (gachaPlayerItem.amount < 1) {
+                SpilLogging.Error("Not enough gacha boxes in the inventory!");
+                return;
+            }
+
+            if (gachaPlayerItem.content.Count < 1) {
+                SpilLogging.Error("Error opening gacha! No content present!");
+                return;
+            }
+
+            int weightSum = 0;
+
+            foreach (SpilGachaContent gachaContent in gachaPlayerItem.content) {
+                weightSum = weightSum + gachaContent.weight;
+            }
+
+            if (weightSum == 0) {
+                SpilLogging.Error("Error opening gacha!");
+                return;
+            }
+
+            int rand = Random.Range(0, weightSum);
+
+            int low = 0;
+            int high = 0;
+
+            for (int i = 0; i < gachaPlayerItem.content.Count; i++) {
+                SpilGachaContent gachaContent = gachaPlayerItem.content[i];
+
+                if (i != 0) {
+                    low = high;
+                }
+
+                high = low + gachaContent.weight;
+
+                if (rand >= low && rand < high) {
+                    gachaPlayerItem.amount = gachaPlayerItem.amount - 1;
+                    gachaPlayerItem.delta = gachaPlayerItem.delta - 1;
+
+                    UpdateItem(gachaPlayerItem);
+
+                    switch (gachaContent.type) {
+                        case "CURRENCY":
+                            WalletOperation("add", gachaContent.id, gachaContent.amount, reason, reasonDetails, location, null);
+                            break;
+                        case "ITEM":
+                            InventoryOperation("add", gachaContent.id, gachaContent.amount, reason, reasonDetails, location, null);
+                            break;
+                        case "BUNDLE":
+                            OpenBundle(gachaContent.id, gachaContent.amount, reason, reasonDetails, location);
+                            break;
+                        case "GACHA":
+                            InventoryOperation("add", gachaContent.id, gachaContent.amount, reason, reasonDetails, location, null);
+                            break;
+                        case "NONE":
+                            PlayerDataUpdatedData updatedData = new PlayerDataUpdatedData();
+                            updatedData.items.Add(gachaPlayerItem);
+                            updatedData.reason = reason;
+
+                            SpilUnityImplementationBase.firePlayerDataEmptyGacha();
+                            SpilUnityImplementationBase.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
+                            break;
+                        default:
+                            SpilLogging.Error("Error opening gacha!");
+                            return;
+                    }
+
+                    break;
+                }
+            }
         }
 
-        private void SendUpdatePlayerDataEvent(string reason, string reasonDetails, string location,
-            string transationId) {
+        public void SendUpdatePlayerDataEvent(SpilBundleData bundle, string reason, string reasonDetails, string location, string transactionId) {
             SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
             spilEvent.eventName = "updatePlayerData";
 
-            JSONObject walletJSON = new JSONObject();
-            List<PlayerCurrencyData> list = new List<PlayerCurrencyData>();
+            JSONObject walletObject = new JSONObject();
+            List<PlayerCurrencyData> currencyList = new List<PlayerCurrencyData>();
 
             foreach (PlayerCurrencyData currencyData in Wallet.currencies) {
                 if (currencyData.delta != 0) {
-                    list.Add(currencyData);
+                    currencyList.Add(currencyData);                                                     
                 }
             }
 
-            JSONObject currenciesJSON = new JSONObject(JSONObject.Type.ARRAY);
+            if (currencyList.Count > 0) {
+                JSONObject currenciesJSON = new JSONObject();
 
-            foreach (PlayerCurrencyData currencyData in list) {
+                foreach (PlayerCurrencyData currencyData in currencyList) {
+                    JSONObject obj = new JSONObject();
+                    obj.AddField("id", currencyData.id);
+                    obj.AddField("currentBalance", currencyData.currentBalance);
+                    obj.AddField("delta", currencyData.delta);
+
+                    currenciesJSON.Add(obj);
+                }
+
+                walletObject.AddField("currencies", currenciesJSON);
+
+                walletObject.AddField("offset", Wallet.offset);
+
+                spilEvent.customData.AddField("wallet", walletObject);
+                
+                foreach (PlayerCurrencyData currencyData in Wallet.currencies) {
+                    currencyData.delta = 0;
+                    UpdateCurrency(currencyData);   
+                }
+            }
+
+            JSONObject inventoryObject = new JSONObject();
+            List<PlayerItemData> itemsList = new List<PlayerItemData>();
+
+            foreach (PlayerItemData playerItemData in Inventory.items) {
+                if (playerItemData.delta != 0) {
+                    itemsList.Add(playerItemData);
+                }
+            }
+
+            if (itemsList.Count > 0) {
+                JSONObject itemsJSON = new JSONObject(JSONObject.Type.ARRAY);
+                
+                foreach (PlayerItemData playerItemData in itemsList) {
+                    JSONObject obj = new JSONObject();
+                    obj.AddField("id", playerItemData.id);
+                    obj.AddField("amount", playerItemData.amount);
+                    obj.AddField("delta", playerItemData.delta);
+
+                    itemsJSON.Add(obj);
+                }
+                
+                inventoryObject.AddField("items", itemsJSON);
+                
+                inventoryObject.AddField("offset", Inventory.offset);
+
+                spilEvent.customData.AddField("inventory", inventoryObject);
+                
+                foreach (PlayerItemData playerItemData in Inventory.items) {
+                    playerItemData.delta = 0;
+                    UpdateItem(playerItemData);
+                }
+            }         
+
+            if (bundle != null) {
+                spilEvent.customData.AddField("bundle", new JSONObject(JsonHelper.getJSONFromObject(bundle)));
+            }
+
+            spilEvent.customData.AddField("reason", reason);
+
+            if (reasonDetails != null) {
+                spilEvent.customData.AddField("reasonDetails", reasonDetails);
+            }
+
+            if (location != null) {
+                spilEvent.customData.AddField("location", location);
+            }
+
+            if (transactionId != null) {
+                spilEvent.customData.AddField("transactionId", transactionId);
+            }
+    
+            spilEvent.Send();
+        }
+
+        public void SendUpdatePlayerDataEvent() {
+            SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
+            spilEvent.eventName = "updatePlayerData";
+
+            JSONObject walletObject = new JSONObject();
+            walletObject.AddField("offset", Wallet.offset);
+
+            spilEvent.customData.AddField("wallet", walletObject);
+
+            JSONObject inventoryObject = new JSONObject();
+            inventoryObject.AddField("offset", Inventory.offset);
+
+            spilEvent.customData.AddField("inventory", inventoryObject);
+    
+            spilEvent.Send();
+        }
+
+        public void SendUpdatePlayerDataEvent(bool resetWallet, bool resetInventory, string reason) {
+            if (resetWallet) {
+                foreach (PlayerCurrencyData currency in Wallet.currencies) {
+                    int newDelta = currency.initialValue - currency.currentBalance;
+
+                    currency.currentBalance = currency.initialValue;
+                    currency.delta = newDelta + currency.delta;
+                    
+                    UpdateCurrency(currency);
+                }
+            
+            }
+
+            if (resetInventory) {
+                foreach (PlayerItemData item in Inventory.items) {
+                    int newDelta = item.initialValue - item.amount;
+
+                    item.amount = item.initialValue;
+                    item.delta = newDelta + item.delta;
+                    
+                    UpdateItem(item);
+                }
+            }
+            
+            SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
+            spilEvent.eventName = "updatePlayerData";
+
+            JSONObject walletObject = new JSONObject();
+
+            JSONObject currenciesJSON = new JSONObject(JSONObject.Type.ARRAY);
+                
+            foreach (PlayerCurrencyData currencyData in Wallet.currencies) {
                 JSONObject obj = new JSONObject();
                 obj.AddField("id", currencyData.id);
                 obj.AddField("currentBalance", currencyData.currentBalance);
@@ -586,131 +809,29 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
 
                 currenciesJSON.Add(obj);
             }
+                
+            walletObject.AddField("currencies", currenciesJSON);
+            walletObject.AddField("offset", Wallet.offset);
 
-            walletJSON.AddField("currencies", currenciesJSON);
-            walletJSON.AddField("offset", Wallet.offset);
+            spilEvent.customData.AddField("wallet", walletObject);
 
-            spilEvent.customData.AddField("wallet", walletJSON);
-            spilEvent.customData.AddField("reason", reason);
+            JSONObject inventoryObject = new JSONObject();
+            
+            JSONObject itemsJSON = new JSONObject(JSONObject.Type.ARRAY);
 
-            if (location != null) {
-                spilEvent.customData.AddField("location", location);
+            foreach (PlayerItemData playerItemData in Inventory.items) {
+                JSONObject obj = new JSONObject();
+                obj.AddField("id", playerItemData.id);
+                obj.AddField("amount", playerItemData.amount);
+                obj.AddField("delta", playerItemData.delta);
+
+                itemsJSON.Add(obj);
             }
+                
+            inventoryObject.AddField("items", itemsJSON);
+            inventoryObject.AddField("offset", Inventory.offset);
 
-            if (transationId != null) {
-                spilEvent.customData.AddField("transactionId", transationId);
-            }
-
-            spilEvent.Send();
-        }
-
-        private void SendUpdatePlayerDataEvent(PlayerItemData item, string reason, string reasonDetails,
-            string location, string transationId) {
-            SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
-            spilEvent.eventName = "updatePlayerData";
-
-            JSONObject walletJSON = new JSONObject();
-            walletJSON.AddField("offset", Wallet.offset);
-
-            spilEvent.customData.AddField("wallet", walletJSON);
-
-            JSONObject inventoryJSON = new JSONObject();
-
-            JSONObject itemsJSON = new JSONObject(JsonHelper.getJSONFromObject(Inventory.items));
-
-            inventoryJSON.AddField("items", itemsJSON);
-            inventoryJSON.AddField("offset", Inventory.offset);
-
-            spilEvent.customData.AddField("inventory", inventoryJSON);
-
-            spilEvent.customData.AddField("item", new JSONObject(JsonHelper.getJSONFromObject(item)));
-
-            spilEvent.customData.AddField("reason", reason);
-
-            if (reasonDetails != null) {
-                spilEvent.customData.AddField("reasonDetails", reasonDetails);
-            }
-
-            if (location != null) {
-                spilEvent.customData.AddField("location", location);
-            }
-
-            if (transationId != null) {
-                spilEvent.customData.AddField("transactionId", transationId);
-            }
-
-            spilEvent.Send();
-        }
-
-        private void SendUpdatePlayerDataEvent(SpilBundleData bundle, string reason, string reasonDetails,
-            string location, string transationId) {
-            SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
-            spilEvent.eventName = "updatePlayerData";
-
-            JSONObject walletJSON = new JSONObject();
-
-            JSONObject currenciesJSON = new JSONObject(JsonHelper.getJSONFromObject(Wallet.currencies));
-
-            walletJSON.AddField("currencies", currenciesJSON);
-            walletJSON.AddField("offset", Wallet.offset);
-
-            spilEvent.customData.AddField("wallet", walletJSON);
-
-            JSONObject inventoryJSON = new JSONObject();
-
-            JSONObject itemsJSON = new JSONObject(JsonHelper.getJSONFromObject(Inventory.items));
-
-            inventoryJSON.AddField("items", itemsJSON);
-            inventoryJSON.AddField("offset", Inventory.offset);
-
-            spilEvent.customData.AddField("inventory", inventoryJSON);
-
-            spilEvent.customData.AddField("bundle", new JSONObject(JsonHelper.getJSONFromObject(bundle)));
-
-            spilEvent.customData.AddField("reason", reason);
-
-            if (reasonDetails != null) {
-                spilEvent.customData.AddField("reasonDetails", reasonDetails);
-            }
-
-            if (location != null) {
-                spilEvent.customData.AddField("location", location);
-            }
-
-            if (transationId != null) {
-                spilEvent.customData.AddField("transactionId", transationId);
-            }
-
-            spilEvent.Send();
-        }
-
-        public void SendUpdatePlayerDataEvent(bool wallet, bool inventory, string reason) {
-            SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
-            spilEvent.eventName = "updatePlayerData";
-
-            if (wallet) {
-                JSONObject walletJSON = new JSONObject();
-
-                JSONObject currenciesJSON =
-                    new JSONObject(JsonHelper.getJSONFromObject(SpilUnityEditorImplementation.pData.Wallet.currencies));
-
-                walletJSON.AddField("currencies", currenciesJSON);
-                walletJSON.AddField("offset", Wallet.offset);
-
-                spilEvent.customData.AddField("wallet", walletJSON);
-            }
-
-            if (inventory) {
-                JSONObject inventoryJSON = new JSONObject();
-
-                JSONObject itemsJSON =
-                    new JSONObject(JsonHelper.getJSONFromObject(SpilUnityEditorImplementation.pData.Inventory.items));
-
-                inventoryJSON.AddField("items", itemsJSON);
-                inventoryJSON.AddField("offset", Inventory.offset);
-
-                spilEvent.customData.AddField("inventory", inventoryJSON);
-            }
+            spilEvent.customData.AddField("inventory", inventoryObject);
 
             spilEvent.customData.AddField("reason", reason);
 

@@ -61,7 +61,7 @@ namespace SpilGames.Unity.Base.UnityEditor {
             SpilLogging.Log("Sending event: " + "Name: " + eventName + " \nData: " + data + " \nCustom Data: " +
                             customData.Print() + " \nTimestamp: " + time);
 
-            if (request.error != null) {
+            if (request.error != null && !request.error.Equals("")) {
                 if (Spil.BundleIdEditor == null || Spil.BundleIdEditor.Equals("")) {
                     SpilLogging.Error(
                         "Spil Initialize might not have been called! Please make sure you call Spil.Initialize() at app start!");
