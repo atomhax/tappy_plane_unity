@@ -9,7 +9,7 @@
 #import "HookBridge.h"
 #import "GAI.h"
 
-#define SDK_VERSION @"2.4.0"
+#define SDK_VERSION @"2.5.0"
 
 @class ImageContext;
 @class Spil;
@@ -73,6 +73,7 @@
 -(void)playerDataAvailable;
 -(void)playerDataError:(nonnull NSString*)message;
 -(void)playerDataUpdated:(nonnull NSString*)reason updatedData:(nonnull NSString*)updatedData;
+-(void)playerDataEmptyGacha;
 
 // User data events
 -(void)gameStateUpdated:(nonnull NSString*)access; // Access: private|public
@@ -714,6 +715,21 @@
  * @param transactionId The transaction id used
  */
 +(void)buyBundle:(int)bundleId withReason:(nonnull NSString*)reason withReasonDetails:(nullable NSString*)reasonDetails withLocation:(nullable NSString*)location withTransactionId:(nullable NSString*)transactionId;
+
+/**
+ * Open the gacha and add the content to the inventory
+ * @param itemId        The id of the gacha
+ * @param reason        The bundle reason
+ * @param reasonDetails The bundle reasonDetails
+ * @param location      The location where the event happened, for example level1
+ */
++(void)openGacha:(int)itemId withReason:(nonnull NSString*)reason withReasonDetails:(nullable NSString*)reasonDetails withLocation:(nullable NSString*)location;
+
+/**
+ * Buy the gacha from the ingame store, optionally directly open the content and add it to the inventory
+ * @param itemId        The id of the gacha
+ */
+//+(void)buyGacha:(int)itemId openGacha:(bool)openGacha;
 
 /**
  * Get all the shop tabs

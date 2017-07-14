@@ -24,7 +24,7 @@
 
 -(void)updateItem:(PlayerItem*)item;
 
--(NSArray*)getUpdatedItems;
+-(NSArray*)getUpdatedItems:(bool)includeContent;
 
 -(PlayerItem*)getItem:(int)id;
 
