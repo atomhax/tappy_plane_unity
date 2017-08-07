@@ -439,7 +439,7 @@ namespace SpilGames.Unity {
         /// This method is called by the native Spil SDK, it should not be used by developers.
         /// </summary>
         public void SplashScreenData(string payload) {
-            
+            SpilUnityImplementationBase.fireSplashScreenData(payload);
         }
 
         /// <summary>

@@ -172,6 +172,13 @@ public class GameController : MonoBehaviour
 		GetAndApplyGameConfig ();
 		SetupNewGame ();
 		
+		#if UNITY_EDITOR
+		if (Spil.RewardToken != null && !Spil.RewardToken.Equals("")) {
+			Spil.TokenRewardTypeEnum rewardType = Spil.MonoInstance.TokenRewardType;
+			Spil.Instance.ClaimToken(Spil.RewardToken, rewardType.ToString());
+		}
+		#endif
+		
 		initialPosition = player.gameObject.transform.position;
 		initialRotation = player.gameObject.transform.rotation;
 	}

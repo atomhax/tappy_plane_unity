@@ -677,7 +677,6 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
 
             if (currencyList.Count > 0) {
                 JSONObject currenciesJSON = new JSONObject();
-
                 foreach (PlayerCurrencyData currencyData in currencyList) {
                     JSONObject obj = new JSONObject();
                     obj.AddField("id", currencyData.id);

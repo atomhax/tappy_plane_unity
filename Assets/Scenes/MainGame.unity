@@ -5725,11 +5725,11 @@ MonoBehaviour:
   liveEventExternalRewardId: 
   liveEventRewardAmount: 200
   LiveEventRewardType: 0
-  rewardToken: 
+  rewardToken: NJN9XYEV
   RewardFeatureType: 0
-  tokenRewardId: 0
+  tokenRewardId: 28
   tokenExternalRewardId: 
-  tokenRewardAmount: 0
+  tokenRewardAmount: 100
   TokenRewardType: 0
 --- !u!4 &1087916765
 Transform:
