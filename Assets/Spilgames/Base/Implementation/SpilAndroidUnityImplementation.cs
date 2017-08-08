@@ -616,10 +616,11 @@ namespace SpilGames.Unity.Base.Implementations {
 
         #region Permissions
 
-        public void RequestDangerousPermission(string permission, string rationale) {
+        public void RequestDangerousPermission(string permission, string rationale, string denyRationale) {
             CallNativeMethod("requestDangerousPermission", new object[] {
                 permission,
-                rationale
+                rationale,
+                denyRationale
             }, true);
         }
 
