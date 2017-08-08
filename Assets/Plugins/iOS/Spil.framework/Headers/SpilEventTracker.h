@@ -29,9 +29,11 @@
 
 -(void) trackEvent:(NSString*)name;
 -(void) trackEvent:(NSString*)name withParameters:(NSDictionary *)parameters;
-
 -(void) trackEvent:(NSString*)name onResponse:(void (^)(id response))block;
 -(void) trackEvent:(NSString*)name withParameters:(NSDictionary *)parameters onResponse:(void (^)(id response))block;
+
+-(void) trackInstantEvent:(NSString*)eventName onResponse:(void (^)(id response))block;
+-(void) trackInstantEvent:(NSString*)eventName withParameters:(NSDictionary*)eventData onResponse:(void (^)(id response))block;
 
 -(void)applicationDidEnterBackground:(UIApplication *)application;
 -(void)applicationDidBecomeActive:(UIApplication *)application;

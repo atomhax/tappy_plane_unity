@@ -61,6 +61,7 @@
 
 // Config events
 -(void)configUpdated;
+-(void)configError:(nonnull NSString*)error;
 
 // Package events
 -(void)packagesLoaded;
@@ -97,6 +98,7 @@
 // Server time
 -(void)serverTimeRequestSuccess:(nonnull NSString*)unixTimestamp;
 -(void)serverTimeRequestFailed:(nonnull NSString*)error;
+-(void)gameStateServerError:(nonnull NSString*)error;
 
 // Live events
 -(void)liveEventStageOpen;
@@ -860,6 +862,11 @@
  *  @param userIds The user ids
  */
 +(void)getOtherUsersGameState:(nonnull NSString*)provider userIds:(nonnull NSArray*)userIds;
+
+/**
+ *  Request the private gamestate.
+ */
++(void)requestMyGameState;
 
 #pragma image cache
 

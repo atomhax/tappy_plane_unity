@@ -386,8 +386,17 @@ namespace SpilGames.Unity.Base.Implementations
 
 		[DllImport("__Internal")]
 		private static extern void getOtherUsersGameStateNative(string provider, string userIdsJsonArray);
-
     
+		/// <summary>
+		/// Request to the SDK the latest Private and Public Game State.
+		/// </summary>
+		public override void RequestMyGameState() {
+			requestMyGameStateNative ();
+		}
+
+		[DllImport("__Internal")]
+		private static extern void requestMyGameStateNative();
+
 		#region Spil Game Objects
 	
 		public override string GetSpilGameDataFromSdk ()
@@ -397,8 +406,6 @@ namespace SpilGames.Unity.Base.Implementations
 
 		[DllImport("__Internal")]
 		private static extern string getSpilGameDataNative();
-
-
     
 		#region Image loading
 	
