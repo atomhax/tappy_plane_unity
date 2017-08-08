@@ -108,6 +108,13 @@ namespace SpilGames.Unity.Base.Implementations {
         }
 
         /// <summary>
+        /// Request to the SDK the latest Private and Public Game State.
+        /// </summary>
+        public override void RequestMyGameState() {
+            CallNativeMethod("requestMyGameState");
+        }
+
+        /// <summary>
         /// Sets the state of the private game.
         /// </summary>
         /// <param name="privateData">Private data.</param>

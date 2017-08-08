@@ -179,6 +179,9 @@ public class GameController : MonoBehaviour
 		}
 		#endif
 		
+		Debug.Log("Requesting Game State!!!!");
+		Spil.Instance.RequestMyGameState();
+		
 		initialPosition = player.gameObject.transform.position;
 		initialRotation = player.gameObject.transform.rotation;
 	}

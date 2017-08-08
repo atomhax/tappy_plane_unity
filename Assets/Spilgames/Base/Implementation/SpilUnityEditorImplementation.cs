@@ -467,6 +467,10 @@ namespace SpilGames.Unity.Base.Implementations {
             return Response.provider;
         }
 
+        public override void RequestMyGameState() {
+            RequestGameState();
+        }
+
         /// <summary>
         /// Sets the state of the private game.
         /// </summary>

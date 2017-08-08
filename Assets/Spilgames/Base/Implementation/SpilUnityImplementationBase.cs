@@ -1576,6 +1576,11 @@ namespace SpilGames.Unity.Base.Implementations {
         #region Game State
 
         /// <summary>
+        /// Request the users Private and Public Game State.
+        /// </summary>
+        public abstract void RequestMyGameState();
+        
+        /// <summary>
         /// Sets the state of the private game.
         /// </summary>
         /// <param name="privateData">Private data.</param>
