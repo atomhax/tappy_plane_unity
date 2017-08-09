@@ -1,21 +1,16 @@
 ﻿using System;
-using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using SpilGames.Unity;
-using SpilGames.Unity.Helpers.GameData;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using SpilGames.Unity.Base.SDK;
-using SpilGames.Unity.Json;
+using SpilGames.Unity.Helpers.GameData;
 using SpilGames.Unity.Helpers.PlayerData;
-
-
+using SpilGames.Unity.Json;
+using UnityEngine;
+using UnityEngine.UI;
+using Random = UnityEngine.Random;
 #if !UNITY_TVOS
 using Facebook.Unity;
 #endif
-using SpilGames.Unity.Base.Implementations;
-using Random = UnityEngine.Random;
 
 public class GameController : MonoBehaviour
 {
@@ -178,7 +173,7 @@ public class GameController : MonoBehaviour
 			Spil.Instance.ClaimToken(Spil.RewardToken, rewardType.ToString());
 		}
 		#endif
-		
+
 		Debug.Log("Requesting Game State!!!!");
 		Spil.Instance.RequestMyGameState();
 		
@@ -517,8 +512,8 @@ public class GameController : MonoBehaviour
 					Dictionary<string,object> userData = data [i] as Dictionary<string,object>;
 					string userId = userData ["id"] as string;
 					string userName = userData ["name"] as string;
-					GameController.userIds.Add (userId);
-					GameController.userNames.Add (userName);
+					userIds.Add (userId);
+					userNames.Add (userName);
 				}
 			}
 		}
@@ -536,10 +531,10 @@ public class GameController : MonoBehaviour
 
 	public static string GetNameForFbId (string fbId)
 	{
-		for (int i = 0; i < GameController.userIds.Count; i++) {
-			string id = GameController.userIds [i];
+		for (int i = 0; i < userIds.Count; i++) {
+			string id = userIds [i];
 			if (id == fbId) {
-				return GameController.userNames [i];
+				return userNames [i];
 			}
 		}
 		return "Me"; 
@@ -551,15 +546,15 @@ public class GameController : MonoBehaviour
 
 		// Add the own user id
 		json += "\"" + Spil.Instance.GetUserId () + "\"";
-		if (GameController.userIds.Count > 0) {
+		if (userIds.Count > 0) {
 			json += ",";
 		}
 
 		// Add the friend user ids
-		for (int i = 0; i < GameController.userIds.Count; i++) {
-			string id = GameController.userIds [i];
+		for (int i = 0; i < userIds.Count; i++) {
+			string id = userIds [i];
 			json += "\"" + id + "\"";
-			if (i + 1 != GameController.userIds.Count) {
+			if (i + 1 != userIds.Count) {
 				json += ",";
 			}
 		}
@@ -611,21 +606,21 @@ public class GameController : MonoBehaviour
 	public void FBShare ()
 	{
 		#if !UNITY_TVOS
-		System.Uri url = new System.Uri ("http://files.cdn.spilcloud.com/10/1479133368_tappy_logo.png");
+		Uri url = new Uri ("http://files.cdn.spilcloud.com/10/1479133368_tappy_logo.png");
 		FB.ShareLink (url, "Tappy Plane", "Check out Tappy Plane for iOS and Android!", url, null);
 		#endif
 	}
 
-	void Spil_Instance_OnAdAvailable (SpilGames.Unity.Base.SDK.enumAdType adType)
+	void Spil_Instance_OnAdAvailable (enumAdType adType)
 	{
-		if (adType == SpilGames.Unity.Base.SDK.enumAdType.MoreApps) {
+		if (adType == enumAdType.MoreApps) {
 			moreGamesButton.SetActive (true);
 		}
 	}
 
-	void Spil_Instance_OnAdNotAvailable (SpilGames.Unity.Base.SDK.enumAdType adType)
+	void Spil_Instance_OnAdNotAvailable (enumAdType adType)
 	{
-		if (adType == SpilGames.Unity.Base.SDK.enumAdType.MoreApps) {
+		if (adType == enumAdType.MoreApps) {
 			moreGamesButton.SetActive (false);
 		}
 	}
