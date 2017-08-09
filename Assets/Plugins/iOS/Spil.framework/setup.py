@@ -74,9 +74,9 @@ else:
 
 # read entitlements arguments
 exportSpilGamesEntitlements = str2bool(sys.argv[2]) if len(sys.argv) > 2 else False;
-useICloudContainer = str2bool(sys.argv[3]) if len(sys.argv) > 3 else False;
+useICloudContainer = str2bool(sys.argv[3]) if len(sys.argv) > 3 else False; # deprecated
 useICloudKV = str2bool(sys.argv[4]) if len(sys.argv) > 4 else False;
-usePushNotifications = str2bool(sys.argv[5]) if len(sys.argv) > 5 else False;
+usePushNotifications = str2bool(sys.argv[5]) if len(sys.argv) > 5 else False; # deprecated
 print("exportSpilGamesEntitlements: " + str(exportSpilGamesEntitlements));
 print("useICloudContainer: " + str(useICloudContainer));
 print("useICloudKV: " + str(useICloudKV));
@@ -229,15 +229,6 @@ if exportSpilGamesEntitlements:
 	# add iCloud kv store
 	if useICloudKV:
 		plist['com.apple.developer.ubiquity-kvstore-identifier'] = "$(TeamIdentifierPrefix)$(CFBundleIdentifier)";
-
-	# add iCloud general & game specific document
-	#plist['com.apple.developer.icloud-services'] = ["CloudDocuments"];
-	#if useICloudContainer:
-	#	plist['com.apple.developer.icloud-container-identifiers'] = ["iCloud.$(CFBundleIdentifier)", "iCloud.com.spilgames.shared"];
-	#	plist['com.apple.developer.ubiquity-container-identifiers'] = ["iCloud.$(CFBundleIdentifier)", "iCloud.com.spilgames.shared"];
-	#else:
-	#	plist['com.apple.developer.icloud-container-identifiers'] = ["iCloud.com.spilgames.shared"];
-	#	plist['com.apple.developer.ubiquity-container-identifiers'] = ["iCloud.com.spilgames.shared"];
 
 	# write entitlements plist
 	print('Saving ' + projectname + '.entitlements')

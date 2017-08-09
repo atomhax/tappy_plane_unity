@@ -18,15 +18,14 @@ public class TVOSBuildPostProcess : MonoBehaviour
 			MoveDirectory (pathToBuildProject + "/Frameworks/Plugins/tvOS/SpilTV.framework", pathToBuildProject + "/SpilTV.framework");
 
 			bool exportDefaultEntitlements = EditorPrefs.GetBool ("exportDefaultEntitlements");
-			bool useICloudContainer = EditorPrefs.GetBool ("useICloudContainer");
 			bool useICloudKV = EditorPrefs.GetBool ("useICloudKV");
 			bool usePushNotifications = EditorPrefs.GetBool ("usePushNotifications");
 
 			String arguments = "Unity-iPhone " +
 								   exportDefaultEntitlements + " " +
-								   useICloudContainer + " " +
+								   false + " " +
 				                   useICloudKV + " " +
-				                   usePushNotifications;
+				                   false;
 
 			UnityEngine.Debug.Log ("[SPIL] Executing: python " + pathToBuildProject + "/SpilTV.framework/setup.py " + arguments);
 			Process setupProcess = new Process ();
