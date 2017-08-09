@@ -728,12 +728,6 @@
 +(void)openGacha:(int)itemId withReason:(nonnull NSString*)reason withReasonDetails:(nullable NSString*)reasonDetails withLocation:(nullable NSString*)location;
 
 /**
- * Buy the gacha from the ingame store, optionally directly open the content and add it to the inventory
- * @param itemId        The id of the gacha
- */
-//+(void)buyGacha:(int)itemId openGacha:(bool)openGacha;
-
-/**
  * Get all the shop tabs
  *
  * Returns an array with ShopTab objects
