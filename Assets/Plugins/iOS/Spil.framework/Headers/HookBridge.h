@@ -208,6 +208,8 @@ extern "C" {
 
     void getOtherUsersGameStateNative(const char* provider, const char* userIdsJsonArray);
     
+    void requestMyGameStateNative();
+    
     // --- Image cache ---
     
     char* getImagePathNative(char* url);
