@@ -8,12 +8,13 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
-    <ProjectGuid>{FCF3EBED-1117-7C63-5D4A-C0589384D5DC}</ProjectGuid>
+    <RootNamespace>
+    </RootNamespace>
+    <ProjectGuid>{F4EAF2BE-4DEE-4F99-C860-C2F87F3D0D46}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>Assets</BaseDirectory>
   </PropertyGroup>
@@ -22,7 +23,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_1_0;UNITY_2017_1;UNITY_2017;UNITY_PURCHASING;UNITY_ANALYTICS;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_RUNTIME_NAVMESH_BUILDING;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_DIRECTOR;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_TIMELINE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;ENABLE_SPRITE_MASKING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;ENABLE_MONO_BDWGC;PLATFORM_SUPPORTS_MONO;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_VIDEO;ENABLE_RMGUI;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_STYLE_SHEETS;ENABLE_RUNTIME_GI;ENABLE_SUBSTANCE;ENABLE_GAMECENTER;ENABLE_NETWORK;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_IOS_NATIVE_CRASH_REPORTING;PLAYERCONNECTION_LISTENS_FIXED_PORT;DEBUGGER_LISTENS_FIXED_PORT;PLATFORM_SUPPORTS_ADS_ID;SUPPORT_ENVIRONMENT_VARIABLES;PLATFORM_SUPPORTS_PROFILER;PLATFORM_HAS_NO_SUPPORT_FOR_BUCKET_ALLOCATOR;STRICTCPP_NEW_DELETE_SIGNATURES;HAS_NEON_SKINNIG;UNITY_GFX_USE_PLATFORM_VSYNC;UNITY_INPUT_SIMULATE_EVENTS;PLATFORM_ALWAYS_USES_STDOUT_FOR_LOG;ENABLE_VR;ENABLE_UNITYADS_RUNTIME;UNITY_UNITYADS_API;PLATFORM_IOS;UNITY_IOS;PLATFORM_IPHONE;UNITY_IPHONE;UNITY_IPHONE_API;SUPPORT_MULTIPLE_DISPLAYS;ENABLE_IL2CPP;NET_2_0_SUBSET;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_OSX;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE;ENABLE_IOS_ON_DEMAND_RESOURCES;ENABLE_IOS_APP_SLICING;UNITY_HAS_GOOGLEVR;ENABLE_MONO</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_1_0;UNITY_2017_1;UNITY_2017;UNITY_PURCHASING;UNITY_ANALYTICS;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_RUNTIME_NAVMESH_BUILDING;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_DIRECTOR;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_TIMELINE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;ENABLE_SPRITE_MASKING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;ENABLE_MONO_BDWGC;PLATFORM_SUPPORTS_MONO;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_VIDEO;ENABLE_RMGUI;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_STYLE_SHEETS;PLATFORM_ANDROID;UNITY_ANDROID;UNITY_ANDROID_API;ENABLE_SUBSTANCE;ENABLE_EGL;ENABLE_NETWORK;ENABLE_RUNTIME_GI;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;PLATFORM_SUPPORTS_ADS_ID;UNITY_CAN_SHOW_SPLASH_SCREEN;ENABLE_VR;ENABLE_UNITYADS_RUNTIME;UNITY_UNITYADS_API;ENABLE_MONO;NET_2_0_SUBSET;DEVELOPMENT_BUILD;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_OSX;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE;UNITY_HAS_GOOGLEVR</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
@@ -51,134 +52,136 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Core\GameController.cs" />
-     <Compile Include="Assets\Scripts\Core\PrivateGameState.cs" />
-     <Compile Include="Assets\Scripts\Core\PublicGameState.cs" />
-     <Compile Include="Assets\Scripts\InGame\BackgroundScroll.cs" />
-     <Compile Include="Assets\Scripts\InGame\DestroyObsticles.cs" />
-     <Compile Include="Assets\Scripts\InGame\MoveLeft.cs" />
-     <Compile Include="Assets\Scripts\InGame\ObsticleController.cs" />
-     <Compile Include="Assets\Scripts\InGame\PlayerController.cs" />
-     <Compile Include="Assets\Scripts\UI\GameOverPanelController.cs" />
-     <Compile Include="Assets\Scripts\UI\HighScoresPanel\HighScoresPanelController.cs" />
-     <Compile Include="Assets\Scripts\UI\InGamePanelController.cs" />
-     <Compile Include="Assets\Scripts\UI\MyIAPManager.cs" />
-     <Compile Include="Assets\Scripts\UI\Shop\BundleDisplayPanelController.cs" />
-     <Compile Include="Assets\Scripts\UI\Shop\EntryButtonController.cs" />
-     <Compile Include="Assets\Scripts\UI\Shop\IAPButtonController.cs" />
-     <Compile Include="Assets\Scripts\UI\Shop\IAPPanelController.cs" />
-     <Compile Include="Assets\Scripts\UI\Shop\ShopPanelController.cs" />
-     <Compile Include="Assets\Scripts\UI\Shop\TabButtonController.cs" />
-     <Compile Include="Assets\Scripts\UI\Shop\TabController.cs" />
-     <Compile Include="Assets\Scripts\UI\SkinsPanel\BackgroundButtonController.cs" />
-     <Compile Include="Assets\Scripts\UI\SkinsPanel\PlaneSkinButtonController.cs" />
-     <Compile Include="Assets\Scripts\UI\SkinsPanel\SkinSelectPanelController.cs" />
-     <Compile Include="Assets\Spilgames\Base\Implementation\SpilAndroidUnityImplementation.cs" />
-     <Compile Include="Assets\Spilgames\Base\Implementation\SpiliOSUnityImplementation.cs" />
-     <Compile Include="Assets\Spilgames\Base\Implementation\SpilUnityEditorImplementation.cs" />
-     <Compile Include="Assets\Spilgames\Base\Implementation\SpilUnityImplementationBase.cs" />
-     <Compile Include="Assets\Spilgames\Base\SDK\Responses\AdvertisementResponse.cs" />
-     <Compile Include="Assets\Spilgames\Base\SDK\Responses\GameDataResponse.cs" />
-     <Compile Include="Assets\Spilgames\Base\SDK\Responses\GameStateResponse.cs" />
-     <Compile Include="Assets\Spilgames\Base\SDK\Responses\IAPPackagesResponse.cs" />
-     <Compile Include="Assets\Spilgames\Base\SDK\Responses\ImageResponse.cs" />
-     <Compile Include="Assets\Spilgames\Base\SDK\Responses\PlayerDataResponse.cs" />
-     <Compile Include="Assets\Spilgames\Base\SDK\Responses\RewardResponse.cs" />
-     <Compile Include="Assets\Spilgames\Base\SDK\SpilResponse.cs" />
-     <Compile Include="Assets\Spilgames\Base\UnityEditor\ResponseEvent.cs" />
-     <Compile Include="Assets\Spilgames\Base\UnityEditor\Responses\AdvertisementResponse.cs" />
-     <Compile Include="Assets\Spilgames\Base\UnityEditor\Responses\ConfigResponse.cs" />
-     <Compile Include="Assets\Spilgames\Base\UnityEditor\Responses\GameDataResponse.cs" />
-     <Compile Include="Assets\Spilgames\Base\UnityEditor\Responses\GameStateResponse.cs" />
-     <Compile Include="Assets\Spilgames\Base\UnityEditor\Responses\LiveEventResponse.cs" />
-     <Compile Include="Assets\Spilgames\Base\UnityEditor\Responses\OverlayResponse.cs" />
-     <Compile Include="Assets\Spilgames\Base\UnityEditor\Responses\PackagesResponse.cs" />
-     <Compile Include="Assets\Spilgames\Base\UnityEditor\Responses\PlayerDataResponse.cs" />
-     <Compile Include="Assets\Spilgames\Base\UnityEditor\Responses\Response.cs" />
-     <Compile Include="Assets\Spilgames\Base\UnityEditor\Responses\RewardResponse.cs" />
-     <Compile Include="Assets\Spilgames\Base\UnityEditor\SpilEvent.cs" />
-     <Compile Include="Assets\Spilgames\Helpers\GameData\Bundle.cs" />
-     <Compile Include="Assets\Spilgames\Helpers\GameData\Currency.cs" />
-     <Compile Include="Assets\Spilgames\Helpers\GameData\GachaContent.cs" />
-     <Compile Include="Assets\Spilgames\Helpers\GameData\Item.cs" />
-     <Compile Include="Assets\Spilgames\Helpers\GameData\Shop.cs" />
-     <Compile Include="Assets\Spilgames\Helpers\GameData\SpilGameDataHelper.cs" />
-     <Compile Include="Assets\Spilgames\Helpers\GameData\Tracking.cs" />
-     <Compile Include="Assets\Spilgames\Helpers\IAPPackages\Package.cs" />
-     <Compile Include="Assets\Spilgames\Helpers\IAPPackages\PackagesHelper.cs" />
-     <Compile Include="Assets\Spilgames\Helpers\PlayerData\Inventory.cs" />
-     <Compile Include="Assets\Spilgames\Helpers\PlayerData\PlayerDataHelper.cs" />
-     <Compile Include="Assets\Spilgames\Helpers\PlayerData\Wallet.cs" />
-     <Compile Include="Assets\Spilgames\Json\JSONHelper.cs" />
-     <Compile Include="Assets\Spilgames\Json\JSONObject.cs" />
-     <Compile Include="Assets\Spilgames\Spil.cs" />
-     <None Include="Assets\Plugins\iOS\Spil.framework\Version.txt" />
-     <None Include="Assets\link.xml" />
-     <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
- <Reference Include="UnityEngine.UI">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Networking">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.TestRunner">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll</HintPath>
- </Reference>
- <Reference Include="nunit.framework">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/TestRunner/net35/unity-custom/nunit.framework.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Timeline">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Timeline/RuntimeEditor/UnityEngine.Timeline.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Analytics">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.HoloLens">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Purchasing">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityPurchasing/UnityEngine.Purchasing.dll</HintPath>
- </Reference>
- <Reference Include="Facebook.Unity">
- <HintPath>/Users/frankslofstra/Documents/Projects/TappyPlane/Assets/FacebookSDK/Plugins/Facebook.Unity.dll</HintPath>
- </Reference>
- <Reference Include="Newtonsoft.Json">
- <HintPath>/Users/frankslofstra/Documents/Projects/TappyPlane/Assets/Plugins/Newtonsoft.Json.dll</HintPath>
- </Reference>
- <Reference Include="ChannelPurchase">
- <HintPath>/Users/frankslofstra/Documents/Projects/TappyPlane/Assets/Plugins/UnityChannel/ChannelPurchase.dll</HintPath>
- </Reference>
- <Reference Include="UnityStore">
- <HintPath>/Users/frankslofstra/Documents/Projects/TappyPlane/Assets/Plugins/UnityChannel/UnityStore.dll</HintPath>
- </Reference>
- <Reference Include="Editor">
- <HintPath>/Users/frankslofstra/Documents/Projects/TappyPlane/Assets/Plugins/UnityPurchasing/Bin/Editor.dll</HintPath>
- </Reference>
- <Reference Include="Purchasing.Common">
- <HintPath>/Users/frankslofstra/Documents/Projects/TappyPlane/Assets/Plugins/UnityPurchasing/Bin/Purchasing.Common.dll</HintPath>
- </Reference>
- <Reference Include="Stores">
- <HintPath>/Users/frankslofstra/Documents/Projects/TappyPlane/Assets/Plugins/UnityPurchasing/Bin/Stores.dll</HintPath>
- </Reference>
- <Reference Include="Apple">
- <HintPath>/Users/frankslofstra/Documents/Projects/TappyPlane/Assets/Plugins/UnityPurchasing/Bin/Apple/Apple.dll</HintPath>
- </Reference>
- <Reference Include="FacebookStore">
- <HintPath>/Users/frankslofstra/Documents/Projects/TappyPlane/Assets/Plugins/UnityPurchasing/Bin/Facebook/FacebookStore.dll</HintPath>
- </Reference>
- <Reference Include="Security">
- <HintPath>/Users/frankslofstra/Documents/Projects/TappyPlane/Assets/Plugins/UnityPurchasing/Bin/Security/live/Security.dll</HintPath>
- </Reference>
- <Reference Include="Tizen">
- <HintPath>/Users/frankslofstra/Documents/Projects/TappyPlane/Assets/Plugins/UnityPurchasing/Bin/Tizen/Tizen.dll</HintPath>
- </Reference>
- <Reference Include="winrt">
- <HintPath>/Users/frankslofstra/Documents/Projects/TappyPlane/Assets/Plugins/UnityPurchasing/winrt/winrt.dll</HintPath>
- </Reference>
+    <Compile Include="Assets\Scripts\Core\GameController.cs" />
+    <Compile Include="Assets\Scripts\Core\PrivateGameState.cs" />
+    <Compile Include="Assets\Scripts\Core\PublicGameState.cs" />
+    <Compile Include="Assets\Scripts\InGame\BackgroundScroll.cs" />
+    <Compile Include="Assets\Scripts\InGame\DestroyObsticles.cs" />
+    <Compile Include="Assets\Scripts\InGame\MoveLeft.cs" />
+    <Compile Include="Assets\Scripts\InGame\ObsticleController.cs" />
+    <Compile Include="Assets\Scripts\InGame\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\UI\GameOverPanelController.cs" />
+    <Compile Include="Assets\Scripts\UI\HighScoresPanel\HighScoresPanelController.cs" />
+    <Compile Include="Assets\Scripts\UI\InGamePanelController.cs" />
+    <Compile Include="Assets\Scripts\UI\MyIAPManager.cs" />
+    <Compile Include="Assets\Scripts\UI\Shop\BundleDisplayPanelController.cs" />
+    <Compile Include="Assets\Scripts\UI\Shop\EntryButtonController.cs" />
+    <Compile Include="Assets\Scripts\UI\Shop\IAPButtonController.cs" />
+    <Compile Include="Assets\Scripts\UI\Shop\IAPPanelController.cs" />
+    <Compile Include="Assets\Scripts\UI\Shop\ShopPanelController.cs" />
+    <Compile Include="Assets\Scripts\UI\Shop\TabButtonController.cs" />
+    <Compile Include="Assets\Scripts\UI\Shop\TabController.cs" />
+    <Compile Include="Assets\Scripts\UI\SkinsPanel\BackgroundButtonController.cs" />
+    <Compile Include="Assets\Scripts\UI\SkinsPanel\PlaneSkinButtonController.cs" />
+    <Compile Include="Assets\Scripts\UI\SkinsPanel\SkinSelectPanelController.cs" />
+    <Compile Include="Assets\Spilgames\Base\Implementation\SpilAndroidUnityImplementation.cs" />
+    <Compile Include="Assets\Spilgames\Base\Implementation\SpiliOSUnityImplementation.cs" />
+    <Compile Include="Assets\Spilgames\Base\Implementation\SpilUnityEditorImplementation.cs" />
+    <Compile Include="Assets\Spilgames\Base\Implementation\SpilUnityImplementationBase.cs" />
+    <Compile Include="Assets\Spilgames\Base\SDK\Responses\AdvertisementResponse.cs" />
+    <Compile Include="Assets\Spilgames\Base\SDK\Responses\GameDataResponse.cs" />
+    <Compile Include="Assets\Spilgames\Base\SDK\Responses\GameStateResponse.cs" />
+    <Compile Include="Assets\Spilgames\Base\SDK\Responses\IAPPackagesResponse.cs" />
+    <Compile Include="Assets\Spilgames\Base\SDK\Responses\ImageResponse.cs" />
+    <Compile Include="Assets\Spilgames\Base\SDK\Responses\PlayerDataResponse.cs" />
+    <Compile Include="Assets\Spilgames\Base\SDK\Responses\RewardResponse.cs" />
+    <Compile Include="Assets\Spilgames\Base\SDK\SpilResponse.cs" />
+    <Compile Include="Assets\Spilgames\Base\UnityEditor\ResponseEvent.cs" />
+    <Compile Include="Assets\Spilgames\Base\UnityEditor\Responses\AdvertisementResponse.cs" />
+    <Compile Include="Assets\Spilgames\Base\UnityEditor\Responses\ConfigResponse.cs" />
+    <Compile Include="Assets\Spilgames\Base\UnityEditor\Responses\GameDataResponse.cs" />
+    <Compile Include="Assets\Spilgames\Base\UnityEditor\Responses\GameStateResponse.cs" />
+    <Compile Include="Assets\Spilgames\Base\UnityEditor\Responses\LiveEventResponse.cs" />
+    <Compile Include="Assets\Spilgames\Base\UnityEditor\Responses\OverlayResponse.cs" />
+    <Compile Include="Assets\Spilgames\Base\UnityEditor\Responses\PackagesResponse.cs" />
+    <Compile Include="Assets\Spilgames\Base\UnityEditor\Responses\PlayerDataResponse.cs" />
+    <Compile Include="Assets\Spilgames\Base\UnityEditor\Responses\Response.cs" />
+    <Compile Include="Assets\Spilgames\Base\UnityEditor\Responses\RewardResponse.cs" />
+    <Compile Include="Assets\Spilgames\Base\UnityEditor\SpilEvent.cs" />
+    <Compile Include="Assets\Spilgames\Helpers\GameData\Bundle.cs" />
+    <Compile Include="Assets\Spilgames\Helpers\GameData\Currency.cs" />
+    <Compile Include="Assets\Spilgames\Helpers\GameData\GachaContent.cs" />
+    <Compile Include="Assets\Spilgames\Helpers\GameData\Item.cs" />
+    <Compile Include="Assets\Spilgames\Helpers\GameData\Shop.cs" />
+    <Compile Include="Assets\Spilgames\Helpers\GameData\SpilGameDataHelper.cs" />
+    <Compile Include="Assets\Spilgames\Helpers\GameData\Tracking.cs" />
+    <Compile Include="Assets\Spilgames\Helpers\IAPPackages\Package.cs" />
+    <Compile Include="Assets\Spilgames\Helpers\IAPPackages\PackagesHelper.cs" />
+    <Compile Include="Assets\Spilgames\Helpers\PlayerData\Inventory.cs" />
+    <Compile Include="Assets\Spilgames\Helpers\PlayerData\PlayerDataHelper.cs" />
+    <Compile Include="Assets\Spilgames\Helpers\PlayerData\Wallet.cs" />
+    <Compile Include="Assets\Spilgames\Json\JSONHelper.cs" />
+    <Compile Include="Assets\Spilgames\Json\JSONObject.cs" />
+    <Compile Include="Assets\Spilgames\Spil.cs" />
+    <None Include="Assets\Plugins\iOS\Spil.framework\Version.txt" />
+    <None Include="Assets\link.xml" />
+    <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
+    <Reference Include="UnityEngine.UI">
+      <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Networking">
+      <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TestRunner">
+      <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/TestRunner/net35/unity-custom/nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Timeline">
+      <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Timeline/RuntimeEditor/UnityEngine.Timeline.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Analytics">
+      <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.HoloLens">
+      <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Purchasing">
+      <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityPurchasing/UnityEngine.Purchasing.dll</HintPath>
+    </Reference>
+    <Reference Include="Facebook.Unity">
+      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/FacebookSDK/Plugins/Facebook.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="ChannelPurchase">
+      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/UnityChannel/ChannelPurchase.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityStore">
+      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/UnityChannel/UnityStore.dll</HintPath>
+    </Reference>
+    <Reference Include="Editor">
+      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/UnityPurchasing/Bin/Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Purchasing.Common">
+      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/UnityPurchasing/Bin/Purchasing.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Stores">
+      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/UnityPurchasing/Bin/Stores.dll</HintPath>
+    </Reference>
+    <Reference Include="Apple">
+      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/UnityPurchasing/Bin/Apple/Apple.dll</HintPath>
+    </Reference>
+    <Reference Include="FacebookStore">
+      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/UnityPurchasing/Bin/Facebook/FacebookStore.dll</HintPath>
+    </Reference>
+    <Reference Include="Security">
+      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/UnityPurchasing/Bin/Security/live/Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Tizen">
+      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/UnityPurchasing/Bin/Tizen/Tizen.dll</HintPath>
+    </Reference>
+    <Reference Include="winrt">
+      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/UnityPurchasing/winrt/winrt.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{835344B5-D482-29B1-1E0D-943F475887E4}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
+      <Project>{12C0FBD5-B090-A94D-1AF8-3A80511B45DB}</Project>
+      <Name>Assembly-CSharp-firstpass</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -188,5 +191,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  
 </Project>
