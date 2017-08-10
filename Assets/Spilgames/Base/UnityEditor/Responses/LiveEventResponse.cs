@@ -324,8 +324,12 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
                         AddItemToList(id, amount);
                     }
 
-                    if (GUI.Button(new Rect(10, (Screen.height / 2 + Screen.height / 4), (Screen.width - 20), (Screen.height - 20) / 4), "Apply Items")) {
+                    if (GUI.Button(new Rect(10, (Screen.height / 2 + Screen.height / 4), (Screen.width - 20), (Screen.height - 20) / 8), "Apply Items")) {
                         ApplyItems(applyItems);
+                    }
+                    
+                    if (GUI.Button(new Rect(10, (Screen.height / 2 + Screen.height / 4 + Screen.height / 8), (Screen.width - 20), (Screen.height - 20) / 8), "Close")) {
+                        GameObject.Destroy(this.gameObject);
                     }
                 } else if (overlayType.Equals("info")) {
                     GUI.Label(new Rect(10, 10, (Screen.width - 20), (Screen.height - 20) / 2), "\nInfo/Claim Reward Page", infoGuiStyle);
