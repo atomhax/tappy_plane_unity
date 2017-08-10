@@ -1,1 +1,267 @@
-{"androidSdkConfig":{"adjust":{"appToken":"6yx92oaxo48w"},"chartboost":{"appId":"543579f21873da72a60fc801","appSignature":"b9f17fcccb85e912dca3ac3566a4040f83a61d86"},"firebase":{"apiKey":"AIzaSyD_GZFAzqGbqpFQ2Xw7lDHxXCzN8xkW74U","applicationId":"1:492493592102:android:43b90ae4bcbef1e1","databaseUrl":"https://tappy-plane-47362772.firebaseio.com","gcmSenderId":"492493592102","storageBucket":"tappy-plane-47362772.appspot.com"},"googleServices":{"IAPKey":"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAohTfXeH6cbRDuE7BLSUriL6riZirxLp+vE0l+0Dy7rU4mgvfOHod7drnE413S7KuIA2thkEeUFoDh6GiEDpoIuyuuWINplbznezFgMaxrVqSZuF138yAInfHkd/nWZ3DOQ/NLXCUpREHh0ZQgQClOyaAyow11JZHMkuebMuZbD2SnnDhbe4NfbzAYpO69to3sNvB4RLxg9Of1UJ9dBRyOtsW0jDd3FVTqn0iXWnb3w4YfjAUYpxs4gcVSHCk7DbHFXBZH1E013s+NfCJPr0BJRRtalYPD+sg7MI8W9eUPw1omAr9sS7nPrEPSEYg9mmVJgOqwEAYHNn7I3AcbR5oNwIDAQAB","analyticsId":"UA-68569711-48","googleProjectNumber":"492493592102"},"spil":{"appToken":"","googleFeaturePermission":true,"permissions":[{"permission":"android.permission.WRITE_EXTERNAL_STORAGE","permissionRationales":[{"denyRationale":"By denying this permission, the game is not able to store user specific data on your device and your progress cannot be restored.","locale":"en","rationale":"This permission is required so that the game can reliably store data and provide you with the best experience possible."},{"denyRationale":"Wenn du diese Berechtigung verweigerst, kann das Spiel keine benutzerspezifischen Daten auf deinem Ger\u00e4t speichern und dein Fortschritt kann nicht wiederhergestellt werden.","locale":"de","rationale":"Diese Berechtigung n\u00f6tig, damit das Spiel zuverl\u00e4ssig Daten speichern und dir das bestm\u00f6gliche Spielvergn\u00fcgen bieten kann."},{"denyRationale":"Door deze toestemming te weigeren kan het spel geen gebruikersspecifieke gegevens opslaan op je apparaat en kan je voortgang niet worden hersteld.","locale":"nl","rationale":"Deze toestemming is vereist zodat het spel op betrouwbare wijze gegevens kan opslaan om je de beste spelbeleving te kunnen bieden."},{"denyRationale":"En refusant l'autorisation, le jeu ne peut pas sauvegarder de donn\u00e9es utilisateur sp\u00e9cifiques sur votre appareil et vous ne pourrez pas restaurer votre progression.","locale":"fr","rationale":"Le jeu a besoin de cette autorisation pour sauvegarder efficacement les donn\u00e9es et vous offrir la meilleure exp\u00e9rience possible."},{"denyRationale":"Si no aceptas el permiso, el juego no podr\u00e1 guardar datos espec\u00edficos del usuario en tu dispositivo y no se podr\u00e1 recuperar tu progreso.","locale":"es","rationale":"Se necesita este permiso para que el juego pueda guardar datos de forma segura y ofrecerte la mejor experiencia posible."},{"denyRationale":"Ao negar esta permiss\u00e3o, o jogo n\u00e3o ser\u00e1 capaz de guardar dados espec\u00edficos do usu\u00e1rio em seu dispositivo e seu progresso n\u00e3o poder\u00e1 ser restaurado.","locale":"pt","rationale":"Esta permiss\u00e3o \u00e9 necess\u00e1ria para que o jogo possa guardar dados com seguran\u00e7a e lhe dar a melhor experi\u00eancia poss\u00edvel."},{"denyRationale":"Se neghi l'autorizzazione, il gioco non sar\u00e0 in grado di archiviare dati utente specifici sul tuo dispositivo e i tuoi progressi non potranno essere ripristinati.","locale":"it","rationale":"Questa autorizzazione \u00e8 necessaria perch\u00e9 il gioco possa archiviare dati in modo affidabile e fornirti la migliore esperienza possibile."},{"denyRationale":"Om du avvisar den h\u00e4r beh\u00f6righeten kan spelet inte lagra anv\u00e4ndarspecifika data p\u00e5 din enhet och dina framsteg kan inte \u00e5terst\u00e4llas.","locale":"sv","rationale":"Du beh\u00f6ver den h\u00e4r beh\u00f6righeten s\u00e5 att spelet kan lagra data p\u00e5 ett s\u00e4kert s\u00e4tt och f\u00f6r att ge dig den b\u00e4sta m\u00f6jliga upplevelsen."},{"denyRationale":"Brak pozwolenia oznacza, \u017ce nie b\u0119dzie mo\u017cna przechowywa\u0107 w grze danych u\u017cytkownika na Twoim urz\u0105dzeniu oraz przywr\u00f3ci\u0107 Twojego post\u0119pu.","locale":"pl","rationale":"Pozwolenie jest niezb\u0119dne, aby mo\u017cna by\u0142o rzetelnie przechowywa\u0107 dane w grze i zapewni\u0107 Ci jak najlepsze wra\u017cenia."},{"denyRationale":"\u0412 \u0441\u043b\u0443\u0447\u0430\u0435 \u043e\u0442\u043a\u0430\u0437\u0430 \u043e\u0442 \u043f\u0440\u0435\u0434\u043e\u0441\u0442\u0430\u0432\u043b\u0435\u043d\u0438\u044f \u044d\u0442\u043e\u0433\u043e \u0440\u0430\u0437\u0440\u0435\u0448\u0435\u043d\u0438\u044f \u0438\u0433\u0440\u0430 \u043d\u0435 \u0441\u043c\u043e\u0436\u0435\u0442 \u0445\u0440\u0430\u043d\u0438\u0442\u044c \u0434\u0430\u043d\u043d\u044b\u0435 \u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u0442\u0435\u043b\u044f \u043d\u0430 \u0432\u0430\u0448\u0435\u043c \u0443\u0441\u0442\u0440\u043e\u0439\u0441\u0442\u0432\u0435 \u0438 \u0432\u0430\u0448\u0438 \u0443\u0441\u043f\u0435\u0445\u0438 \u0432 \u0438\u0433\u0440\u0435 \u043d\u0435\u043b\u044c\u0437\u044f \u0431\u0443\u0434\u0435\u0442 \u0432\u043e\u0441\u0441\u0442\u0430\u043d\u043e\u0432\u0438\u0442\u044c.","locale":"ru","rationale":"\u042d\u0442\u043e \u0440\u0430\u0437\u0440\u0435\u0448\u0435\u043d\u0438\u0435 \u043d\u0435\u043e\u0431\u0445\u043e\u0434\u0438\u043c\u043e \u0434\u043b\u044f \u0442\u043e\u0433\u043e, \u0447\u0442\u043e\u0431\u044b \u0438\u0433\u0440\u0430 \u043c\u043e\u0433\u043b\u0430 \u043d\u0430\u0434\u0435\u0436\u043d\u043e \u0445\u0440\u0430\u043d\u0438\u0442\u044c \u0434\u0430\u043d\u043d\u044b\u0435 \u0438 \u043e\u0431\u0435\u0441\u043f\u0435\u0447\u0438\u0432\u0430\u0442\u044c \u0432\u0430\u043c \u043c\u0430\u043a\u0441\u0438\u043c\u0430\u043b\u044c\u043d\u043e\u0435 \u0443\u0434\u043e\u0432\u043e\u043b\u044c\u0441\u0442\u0432\u0438\u0435 \u043e\u0442 \u0438\u0433\u0440\u044b."},{"denyRationale":"Dengan menolak izin ini, game tidak akan bisa menyimpan data spesifik pengguna di perangkatmu dan progresmu tidak bisa disimpan.","locale":"id","rationale":"Izin ini diperlukan supaya game bisa menyimpan data dengan andal dan memberikan pengalaman yang terbaik untukmu."},{"denyRationale":"\u3053\u306e\u8a31\u53ef\u3092\u5374\u4e0b\u3055\u308c\u307e\u3059\u3068\u3001\u3053\u306e\u30b2\u30fc\u30e0\u306e\u3054\u81ea\u8eab\u306e\u30c7\u30fc\u30bf\u3092\u30c7\u30d0\u30a4\u30b9\u306b\u4fdd\u5b58\u3067\u304d\u305a\u3001\u30b2\u30fc\u30e0\u306e\u9032\u884c\u72b6\u614b\u3092\u5fa9\u5143\u3067\u304d\u306a\u304f\u306a\u308a\u307e\u3059\u3002","locale":"ja","rationale":"\u3053\u306e\u30b2\u30fc\u30e0\u3067\u78ba\u5b9f\u306b\u30c7\u30fc\u30bf\u3092\u4fdd\u5b58\u3057\u3001\u3059\u3070\u3089\u3057\u3044\u4f53\u9a13\u3092\u5b9f\u73fe\u3059\u308b\u306b\u306f\u3001\u3053\u306e\u8a31\u53ef\u304c\u5fc5\u8981\u3067\u3059\u3002"},{"denyRationale":"\u5982\u679c\u62d2\u7edd\u6388\u4e88\u6b64\u9879\u6743\u9650\uff0c\u6e38\u620f\u5c31\u65e0\u6cd5\u5728\u60a8\u7684\u8bbe\u5907\u4e0a\u5b58\u50a8\u7528\u6237\u7684\u7279\u5b9a\u6570\u636e\uff0c\u60a8\u7684\u6e38\u620f\u8fdb\u5ea6\u4e5f\u5c31\u65e0\u6cd5\u6062\u590d\u3002","locale":"zh","rationale":"\u6e38\u620f\u9700\u8981\u6b64\u9879\u6743\u9650\u6765\u53ef\u9760\u5730\u5b58\u50a8\u6570\u636e\u5e76\u5411\u60a8\u63d0\u4f9b\u6700\u4f73\u4f53\u9a8c\u3002"},{"denyRationale":"Bu izni vermezseniz oyun, kullan\u0131c\u0131ya \u00f6zel verileri cihaz\u0131n\u0131zda depolayamaz ve oyundaki ilerlemeniz geri y\u00fcklenemez.","locale":"tr","rationale":"Oyunun g\u00fcvenli bir \u015fekilde verileri depolamas\u0131 ve size m\u00fcmk\u00fcn olan en iyi deneyimi sunmas\u0131 i\u00e7in bu izin istenmektedir."},{"denyRationale":"\uc774 \uc2b9\uc778\uc744 \uac70\ubd80\ud560 \uc2dc \uac8c\uc784\uc740 \uc0ac\uc6a9\uc790\uc758 \ud2b9\uc815 \uc815\ubcf4\ub97c \uc7a5\uce58\uc5d0 \uc800\uc7a5\ud560 \uc218 \uc5c6\uac8c \ub418\uba70 \uc9c4\ud589 \uc0c1\ud669\uc774 \ubcf5\uad6c\ub418\uc9c0 \uc54a\uc2b5\ub2c8\ub2e4.","locale":"ko","rationale":"\uc774 \uc2b9\uc778\uc740 \uc548\uc815\uc801\uc73c\ub85c \uac8c\uc784\uc758 \ub370\uc774\ud130\ub97c \uc800\uc7a5\ud558\uace0 \uc0ac\uc6a9\uc790\uc5d0\uac8c \ucd5c\uc801\uc758 \ud658\uacbd\uc744 \uc81c\uacf5\ud558\uae30 \uc704\ud574 \uc694\uccad\ub418\uc5c8\uc2b5\ub2c8\ub2e4."}]}],"subDomain":""},"version":2,"zendesk":{"appId":"73fc3647bd842920d20862af48414472ae0c607c9e5d414c","oauthClientId":"mobile_sdk_client_9fcb4e68b1c9094237f8","subdomain":"https://spilapps.zendesk.com"}},"forSLOTTesting":"This key should only be in the online (SLOT) game-config, not in the defaultGameConfig.json","gameName":"Tappy Plane","obsitcleSpawnFrequency":"2","playerJumpForce":"25","iosSdkConfig":{"adjust":{"appToken":"odry2f9glreo"},"firebase":{"apiKey":"AIzaSyDmS-X2YR_I_v0cPUeUAXfywnHMVP9rlNs","applicationId":"1:492493592102:ios:43b90ae4bcbef1e1","clientId":"492493592102-f9avcumlehb75t9139b7ha6fn9qdrs3h.apps.googleusercontent.com","databaseUrl":"https://tappy-plane-47362772.firebaseio.com","gcmSenderId":"492493592102","storageBucket":"tappy-plane-47362772.appspot.com"},"googleServices":{"analyticsId":"UA-68569711-48"},"spil":{"appToken":"","subDomain":"gc1"},"version":1,"zendesk":{"appId":"73fc3647bd842920d20862af48414472ae0c607c9e5d414c","customTheme":{"customizeNavBar":"true","emptyBackgroundColor":"#AAAAAA","inputFieldBackgroundColor":"#FFFFFF","inputFieldTextColor":"#000000","metaTextColor":"#111111","navBarItemsColor":"#000000","navBarTextColor":"#000000","navBarTintColor":"#FFFFFF","primaryBackgroundColor":"#FFFFFF","primaryTextColor":"#000000","secondaryBackgroundColor":"#DDDDDD","separatorColor":"#555555"},"oauthClientId":"mobile_sdk_client_9fcb4e68b1c9094237f8","subdomain":"https://spilapps.zendesk.com"}}}
+{
+  "androidSdkConfig": {
+    "adjust": {
+      "appToken": "6yx92oaxo48w"
+    },
+    "chartboost": {
+      "appId": "543579f21873da72a60fc801",
+      "appSignature": "b9f17fcccb85e912dca3ac3566a4040f83a61d86"
+    },
+    "firebase": {
+      "apiKey": "AIzaSyD_GZFAzqGbqpFQ2Xw7lDHxXCzN8xkW74U",
+      "applicationId": "1:492493592102:android:43b90ae4bcbef1e1",
+      "databaseUrl": "https://tappy-plane-47362772.firebaseio.com",
+      "gcmSenderId": "492493592102",
+      "storageBucket": "tappy-plane-47362772.appspot.com"
+    },
+    "googleServices": {
+      "IAPKey": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAohTfXeH6cbRDuE7BLSUriL6riZirxLp+vE0l+0Dy7rU4mgvfOHod7drnE413S7KuIA2thkEeUFoDh6GiEDpoIuyuuWINplbznezFgMaxrVqSZuF138yAInfHkd/nWZ3DOQ/NLXCUpREHh0ZQgQClOyaAyow11JZHMkuebMuZbD2SnnDhbe4NfbzAYpO69to3sNvB4RLxg9Of1UJ9dBRyOtsW0jDd3FVTqn0iXWnb3w4YfjAUYpxs4gcVSHCk7DbHFXBZH1E013s+NfCJPr0BJRRtalYPD+sg7MI8W9eUPw1omAr9sS7nPrEPSEYg9mmVJgOqwEAYHNn7I3AcbR5oNwIDAQAB",
+      "analyticsId": "UA-68569711-48",
+      "googleProjectNumber": "492493592102"
+    },
+    "spil": {
+      "appToken": "",
+      "googleFeaturePermission": true,
+      "permissionDialogSettings": [
+        {
+          "askAgain": "Ask Again",
+          "denyRationaleTitle": "Deny Rationale",
+          "locale": "en",
+          "rationaleTitle": "Permission Rationale",
+          "settings": "Settings"
+        },
+        {
+          "askAgain": "Frag nochmal",
+          "denyRationaleTitle": "Verweigern Sie Begr\u00fcndung",
+          "locale": "de",
+          "rationaleTitle": "Genehmigungsgrund",
+          "settings": "Einstellungen"
+        },
+        {
+          "askAgain": "",
+          "denyRationaleTitle": "",
+          "locale": "nl",
+          "rationaleTitle": "",
+          "settings": ""
+        },
+        {
+          "askAgain": "",
+          "denyRationaleTitle": "",
+          "locale": "fr",
+          "rationaleTitle": "",
+          "settings": ""
+        },
+        {
+          "askAgain": "",
+          "denyRationaleTitle": "",
+          "locale": "es",
+          "rationaleTitle": "",
+          "settings": ""
+        },
+        {
+          "askAgain": "",
+          "denyRationaleTitle": "",
+          "locale": "pt",
+          "rationaleTitle": "",
+          "settings": ""
+        },
+        {
+          "askAgain": "",
+          "denyRationaleTitle": "",
+          "locale": "it",
+          "rationaleTitle": "",
+          "settings": ""
+        },
+        {
+          "askAgain": "",
+          "denyRationaleTitle": "",
+          "locale": "sv",
+          "rationaleTitle": "",
+          "settings": ""
+        },
+        {
+          "askAgain": "",
+          "denyRationaleTitle": "",
+          "locale": "pl",
+          "rationaleTitle": "",
+          "settings": ""
+        },
+        {
+          "askAgain": "",
+          "denyRationaleTitle": "",
+          "locale": "ru",
+          "rationaleTitle": "",
+          "settings": ""
+        },
+        {
+          "askAgain": "",
+          "denyRationaleTitle": "",
+          "locale": "id",
+          "rationaleTitle": "",
+          "settings": ""
+        },
+        {
+          "askAgain": "",
+          "denyRationaleTitle": "",
+          "locale": "ja",
+          "rationaleTitle": "",
+          "settings": ""
+        },
+        {
+          "askAgain": "",
+          "denyRationaleTitle": "",
+          "locale": "zh",
+          "rationaleTitle": "",
+          "settings": ""
+        },
+        {
+          "askAgain": "",
+          "denyRationaleTitle": "",
+          "locale": "tr",
+          "rationaleTitle": "",
+          "settings": ""
+        },
+        {
+          "askAgain": "",
+          "denyRationaleTitle": "",
+          "locale": "ko",
+          "rationaleTitle": "",
+          "settings": ""
+        }
+      ],
+      "permissions": [
+        {
+          "permission": "android.permission.WRITE_EXTERNAL_STORAGE",
+          "permissionRationales": [
+            {
+              "denyRationale": "By denying this permission, the game is not able to store user specific data on your device and your progress cannot be restored.",
+              "locale": "en",
+              "rationale": "This permission is required so that the game can reliably store data and provide you with the best experience possible."
+            },
+            {
+              "denyRationale": "Wenn du diese Berechtigung verweigerst, kann das Spiel keine benutzerspezifischen Daten auf deinem Ger\u00e4t speichern und dein Fortschritt kann nicht wiederhergestellt werden.",
+              "locale": "de",
+              "rationale": "Diese Berechtigung n\u00f6tig, damit das Spiel zuverl\u00e4ssig Daten speichern und dir das bestm\u00f6gliche Spielvergn\u00fcgen bieten kann."
+            },
+            {
+              "denyRationale": "Door deze toestemming te weigeren kan het spel geen gebruikersspecifieke gegevens opslaan op je apparaat en kan je voortgang niet worden hersteld.",
+              "locale": "nl",
+              "rationale": "Deze toestemming is vereist zodat het spel op betrouwbare wijze gegevens kan opslaan om je de beste spelbeleving te kunnen bieden."
+            },
+            {
+              "denyRationale": "En refusant l'autorisation, le jeu ne peut pas sauvegarder de donn\u00e9es utilisateur sp\u00e9cifiques sur votre appareil et vous ne pourrez pas restaurer votre progression.",
+              "locale": "fr",
+              "rationale": "Le jeu a besoin de cette autorisation pour sauvegarder efficacement les donn\u00e9es et vous offrir la meilleure exp\u00e9rience possible."
+            },
+            {
+              "denyRationale": "Si no aceptas el permiso, el juego no podr\u00e1 guardar datos espec\u00edficos del usuario en tu dispositivo y no se podr\u00e1 recuperar tu progreso.",
+              "locale": "es",
+              "rationale": "Se necesita este permiso para que el juego pueda guardar datos de forma segura y ofrecerte la mejor experiencia posible."
+            },
+            {
+              "denyRationale": "Ao negar esta permiss\u00e3o, o jogo n\u00e3o ser\u00e1 capaz de guardar dados espec\u00edficos do usu\u00e1rio em seu dispositivo e seu progresso n\u00e3o poder\u00e1 ser restaurado.",
+              "locale": "pt",
+              "rationale": "Esta permiss\u00e3o \u00e9 necess\u00e1ria para que o jogo possa guardar dados com seguran\u00e7a e lhe dar a melhor experi\u00eancia poss\u00edvel."
+            },
+            {
+              "denyRationale": "Se neghi l'autorizzazione, il gioco non sar\u00e0 in grado di archiviare dati utente specifici sul tuo dispositivo e i tuoi progressi non potranno essere ripristinati.",
+              "locale": "it",
+              "rationale": "Questa autorizzazione \u00e8 necessaria perch\u00e9 il gioco possa archiviare dati in modo affidabile e fornirti la migliore esperienza possibile."
+            },
+            {
+              "denyRationale": "Om du avvisar den h\u00e4r beh\u00f6righeten kan spelet inte lagra anv\u00e4ndarspecifika data p\u00e5 din enhet och dina framsteg kan inte \u00e5terst\u00e4llas.",
+              "locale": "sv",
+              "rationale": "Du beh\u00f6ver den h\u00e4r beh\u00f6righeten s\u00e5 att spelet kan lagra data p\u00e5 ett s\u00e4kert s\u00e4tt och f\u00f6r att ge dig den b\u00e4sta m\u00f6jliga upplevelsen."
+            },
+            {
+              "denyRationale": "Brak pozwolenia oznacza, \u017ce nie b\u0119dzie mo\u017cna przechowywa\u0107 w grze danych u\u017cytkownika na Twoim urz\u0105dzeniu oraz przywr\u00f3ci\u0107 Twojego post\u0119pu.",
+              "locale": "pl",
+              "rationale": "Pozwolenie jest niezb\u0119dne, aby mo\u017cna by\u0142o rzetelnie przechowywa\u0107 dane w grze i zapewni\u0107 Ci jak najlepsze wra\u017cenia."
+            },
+            {
+              "denyRationale": "\u0412 \u0441\u043b\u0443\u0447\u0430\u0435 \u043e\u0442\u043a\u0430\u0437\u0430 \u043e\u0442 \u043f\u0440\u0435\u0434\u043e\u0441\u0442\u0430\u0432\u043b\u0435\u043d\u0438\u044f \u044d\u0442\u043e\u0433\u043e \u0440\u0430\u0437\u0440\u0435\u0448\u0435\u043d\u0438\u044f \u0438\u0433\u0440\u0430 \u043d\u0435 \u0441\u043c\u043e\u0436\u0435\u0442 \u0445\u0440\u0430\u043d\u0438\u0442\u044c \u0434\u0430\u043d\u043d\u044b\u0435 \u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u0442\u0435\u043b\u044f \u043d\u0430 \u0432\u0430\u0448\u0435\u043c \u0443\u0441\u0442\u0440\u043e\u0439\u0441\u0442\u0432\u0435 \u0438 \u0432\u0430\u0448\u0438 \u0443\u0441\u043f\u0435\u0445\u0438 \u0432 \u0438\u0433\u0440\u0435 \u043d\u0435\u043b\u044c\u0437\u044f \u0431\u0443\u0434\u0435\u0442 \u0432\u043e\u0441\u0441\u0442\u0430\u043d\u043e\u0432\u0438\u0442\u044c.",
+              "locale": "ru",
+              "rationale": "\u042d\u0442\u043e \u0440\u0430\u0437\u0440\u0435\u0448\u0435\u043d\u0438\u0435 \u043d\u0435\u043e\u0431\u0445\u043e\u0434\u0438\u043c\u043e \u0434\u043b\u044f \u0442\u043e\u0433\u043e, \u0447\u0442\u043e\u0431\u044b \u0438\u0433\u0440\u0430 \u043c\u043e\u0433\u043b\u0430 \u043d\u0430\u0434\u0435\u0436\u043d\u043e \u0445\u0440\u0430\u043d\u0438\u0442\u044c \u0434\u0430\u043d\u043d\u044b\u0435 \u0438 \u043e\u0431\u0435\u0441\u043f\u0435\u0447\u0438\u0432\u0430\u0442\u044c \u0432\u0430\u043c \u043c\u0430\u043a\u0441\u0438\u043c\u0430\u043b\u044c\u043d\u043e\u0435 \u0443\u0434\u043e\u0432\u043e\u043b\u044c\u0441\u0442\u0432\u0438\u0435 \u043e\u0442 \u0438\u0433\u0440\u044b."
+            },
+            {
+              "denyRationale": "Dengan menolak izin ini, game tidak akan bisa menyimpan data spesifik pengguna di perangkatmu dan progresmu tidak bisa disimpan.",
+              "locale": "id",
+              "rationale": "Izin ini diperlukan supaya game bisa menyimpan data dengan andal dan memberikan pengalaman yang terbaik untukmu."
+            },
+            {
+              "denyRationale": "\u3053\u306e\u8a31\u53ef\u3092\u5374\u4e0b\u3055\u308c\u307e\u3059\u3068\u3001\u3053\u306e\u30b2\u30fc\u30e0\u306e\u3054\u81ea\u8eab\u306e\u30c7\u30fc\u30bf\u3092\u30c7\u30d0\u30a4\u30b9\u306b\u4fdd\u5b58\u3067\u304d\u305a\u3001\u30b2\u30fc\u30e0\u306e\u9032\u884c\u72b6\u614b\u3092\u5fa9\u5143\u3067\u304d\u306a\u304f\u306a\u308a\u307e\u3059\u3002",
+              "locale": "ja",
+              "rationale": "\u3053\u306e\u30b2\u30fc\u30e0\u3067\u78ba\u5b9f\u306b\u30c7\u30fc\u30bf\u3092\u4fdd\u5b58\u3057\u3001\u3059\u3070\u3089\u3057\u3044\u4f53\u9a13\u3092\u5b9f\u73fe\u3059\u308b\u306b\u306f\u3001\u3053\u306e\u8a31\u53ef\u304c\u5fc5\u8981\u3067\u3059\u3002"
+            },
+            {
+              "denyRationale": "\u5982\u679c\u62d2\u7edd\u6388\u4e88\u6b64\u9879\u6743\u9650\uff0c\u6e38\u620f\u5c31\u65e0\u6cd5\u5728\u60a8\u7684\u8bbe\u5907\u4e0a\u5b58\u50a8\u7528\u6237\u7684\u7279\u5b9a\u6570\u636e\uff0c\u60a8\u7684\u6e38\u620f\u8fdb\u5ea6\u4e5f\u5c31\u65e0\u6cd5\u6062\u590d\u3002",
+              "locale": "zh",
+              "rationale": "\u6e38\u620f\u9700\u8981\u6b64\u9879\u6743\u9650\u6765\u53ef\u9760\u5730\u5b58\u50a8\u6570\u636e\u5e76\u5411\u60a8\u63d0\u4f9b\u6700\u4f73\u4f53\u9a8c\u3002"
+            },
+            {
+              "denyRationale": "Bu izni vermezseniz oyun, kullan\u0131c\u0131ya \u00f6zel verileri cihaz\u0131n\u0131zda depolayamaz ve oyundaki ilerlemeniz geri y\u00fcklenemez.",
+              "locale": "tr",
+              "rationale": "Oyunun g\u00fcvenli bir \u015fekilde verileri depolamas\u0131 ve size m\u00fcmk\u00fcn olan en iyi deneyimi sunmas\u0131 i\u00e7in bu izin istenmektedir."
+            },
+            {
+              "denyRationale": "\uc774 \uc2b9\uc778\uc744 \uac70\ubd80\ud560 \uc2dc \uac8c\uc784\uc740 \uc0ac\uc6a9\uc790\uc758 \ud2b9\uc815 \uc815\ubcf4\ub97c \uc7a5\uce58\uc5d0 \uc800\uc7a5\ud560 \uc218 \uc5c6\uac8c \ub418\uba70 \uc9c4\ud589 \uc0c1\ud669\uc774 \ubcf5\uad6c\ub418\uc9c0 \uc54a\uc2b5\ub2c8\ub2e4.",
+              "locale": "ko",
+              "rationale": "\uc774 \uc2b9\uc778\uc740 \uc548\uc815\uc801\uc73c\ub85c \uac8c\uc784\uc758 \ub370\uc774\ud130\ub97c \uc800\uc7a5\ud558\uace0 \uc0ac\uc6a9\uc790\uc5d0\uac8c \ucd5c\uc801\uc758 \ud658\uacbd\uc744 \uc81c\uacf5\ud558\uae30 \uc704\ud574 \uc694\uccad\ub418\uc5c8\uc2b5\ub2c8\ub2e4."
+            }
+          ]
+        }
+      ],
+      "subDomain": ""
+    },
+    "version": 2,
+    "zendesk": {
+      "appId": "73fc3647bd842920d20862af48414472ae0c607c9e5d414c",
+      "oauthClientId": "mobile_sdk_client_9fcb4e68b1c9094237f8",
+      "subdomain": "https://spilapps.zendesk.com"
+    }
+  },
+  "forSLOTTesting": "This key should only be in the online (SLOT) game-config, not in the defaultGameConfig.json",
+  "gameName": "Tappy Plane",
+  "obsitcleSpawnFrequency": "2",
+  "playerJumpForce": "25",
+  "iosSdkConfig": {
+    "adjust": {
+      "appToken": "odry2f9glreo"
+    },
+    "firebase": {
+      "apiKey": "AIzaSyDmS-X2YR_I_v0cPUeUAXfywnHMVP9rlNs",
+      "applicationId": "1:492493592102:ios:43b90ae4bcbef1e1",
+      "clientId": "492493592102-f9avcumlehb75t9139b7ha6fn9qdrs3h.apps.googleusercontent.com",
+      "databaseUrl": "https://tappy-plane-47362772.firebaseio.com",
+      "gcmSenderId": "492493592102",
+      "storageBucket": "tappy-plane-47362772.appspot.com"
+    },
+    "googleServices": {
+      "analyticsId": "UA-68569711-48"
+    },
+    "spil": {
+      "appToken": "",
+      "subDomain": "gc1"
+    },
+    "version": 1,
+    "zendesk": {
+      "appId": "73fc3647bd842920d20862af48414472ae0c607c9e5d414c",
+      "customTheme": {
+        "customizeNavBar": "true",
+        "emptyBackgroundColor": "#AAAAAA",
+        "inputFieldBackgroundColor": "#FFFFFF",
+        "inputFieldTextColor": "#000000",
+        "metaTextColor": "#111111",
+        "navBarItemsColor": "#000000",
+        "navBarTextColor": "#000000",
+        "navBarTintColor": "#FFFFFF",
+        "primaryBackgroundColor": "#FFFFFF",
+        "primaryTextColor": "#000000",
+        "secondaryBackgroundColor": "#DDDDDD",
+        "separatorColor": "#555555"
+      },
+      "oauthClientId": "mobile_sdk_client_9fcb4e68b1c9094237f8",
+      "subdomain": "https://spilapps.zendesk.com"
+    }
+  }
+}
