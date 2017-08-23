@@ -211,11 +211,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// event to which the developer can subscribe and for instance call PlayVideo(); or PlayMoreApps();
         /// </summary>
         public override void RequestMoreApps() {
-            CallNativeMethod("requestAd", new object[] {
-                "Chartboost",
-                "moreApps",
-                false
-            }, true);
+            CallNativeMethod("requestMoreApps");
         }
 
         /// <summary>

@@ -31,102 +31,102 @@
           "settings": "Settings"
         },
         {
-          "askAgain": "Frag nochmal",
-          "denyRationaleTitle": "Verweigern Sie Begr\u00fcndung",
+          "askAgain": "Erneut fragen",
+          "denyRationaleTitle": "Berechtigungsablehnung",
           "locale": "de",
-          "rationaleTitle": "Genehmigungsgrund",
+          "rationaleTitle": "Berechtigungszugriff",
           "settings": "Einstellungen"
         },
         {
-          "askAgain": "",
-          "denyRationaleTitle": "",
+          "askAgain": "Opnieuw vragen",
+          "denyRationaleTitle": "Reden voor afwijzing",
           "locale": "nl",
-          "rationaleTitle": "",
-          "settings": ""
+          "rationaleTitle": "Reden voor toestemming",
+          "settings": "Instellingen"
         },
         {
-          "askAgain": "",
-          "denyRationaleTitle": "",
+          "askAgain": "Demander \u00e0 nouveau",
+          "denyRationaleTitle": "Justification du Refus",
           "locale": "fr",
-          "rationaleTitle": "",
-          "settings": ""
+          "rationaleTitle": "Justification de la Permission",
+          "settings": "Param\u00e8tres"
         },
         {
-          "askAgain": "",
-          "denyRationaleTitle": "",
+          "askAgain": "Volver a preguntar",
+          "denyRationaleTitle": "Fundamentos de negaci\u00f3n",
           "locale": "es",
-          "rationaleTitle": "",
-          "settings": ""
+          "rationaleTitle": "Fundamentos de permiso",
+          "settings": "Configuraci\u00f3n"
         },
         {
-          "askAgain": "",
-          "denyRationaleTitle": "",
+          "askAgain": "Pedir novamente",
+          "denyRationaleTitle": "Negar",
           "locale": "pt",
-          "rationaleTitle": "",
-          "settings": ""
+          "rationaleTitle": "Sobre a Permiss\u00e3o",
+          "settings": "Configura\u00e7\u00f5es"
         },
         {
-          "askAgain": "",
-          "denyRationaleTitle": "",
+          "askAgain": "Chiedi di nuovo",
+          "denyRationaleTitle": "Nega autorizzazione",
           "locale": "it",
-          "rationaleTitle": "",
-          "settings": ""
+          "rationaleTitle": "Richiesta autorizzazione",
+          "settings": "Impostazioni"
         },
         {
-          "askAgain": "",
-          "denyRationaleTitle": "",
+          "askAgain": "Fr\u00e5ga igen",
+          "denyRationaleTitle": "Neka anledning",
           "locale": "sv",
-          "rationaleTitle": "",
-          "settings": ""
+          "rationaleTitle": "Anledning f\u00f6r beh\u00f6righet",
+          "settings": "Inst\u00e4llningar"
         },
         {
-          "askAgain": "",
-          "denyRationaleTitle": "",
+          "askAgain": "Zapytaj ponownie",
+          "denyRationaleTitle": "Odrzu\u0107 uzasadnienie",
           "locale": "pl",
-          "rationaleTitle": "",
-          "settings": ""
+          "rationaleTitle": "Uzasadnienie zgody",
+          "settings": "Ustawienia"
         },
         {
-          "askAgain": "",
-          "denyRationaleTitle": "",
+          "askAgain": "\u0421\u043f\u0440\u043e\u0441\u0438\u0442\u044c \u043f\u043e\u0432\u0442\u043e\u0440\u043d\u043e",
+          "denyRationaleTitle": "\u041e\u0442\u043a\u043b\u043e\u043d\u0438\u0442\u044c \u043f\u0440\u0438\u0447\u0438\u043d\u0443",
           "locale": "ru",
-          "rationaleTitle": "",
-          "settings": ""
+          "rationaleTitle": "\u041f\u0440\u0438\u0447\u0438\u043d\u0430 \u0440\u0430\u0437\u0440\u0435\u0448\u0435\u043d\u0438\u044f",
+          "settings": "\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438"
         },
         {
-          "askAgain": "",
-          "denyRationaleTitle": "",
+          "askAgain": "Tanya Lagi",
+          "denyRationaleTitle": "Tolak Alasan",
           "locale": "id",
-          "rationaleTitle": "",
-          "settings": ""
+          "rationaleTitle": "Alasan Izin",
+          "settings": "Pengaturan"
         },
         {
-          "askAgain": "",
-          "denyRationaleTitle": "",
+          "askAgain": "\u3082\u3046\u4e00\u5ea6\u7533\u3057\u8fbc\u3080",
+          "denyRationaleTitle": "\u627f\u8a8d\u306e\u6839\u62e0",
           "locale": "ja",
-          "rationaleTitle": "",
-          "settings": ""
+          "rationaleTitle": "\u627f\u8a8d\u306e\u6839\u62e0",
+          "settings": "\u8a2d\u5b9a"
         },
         {
-          "askAgain": "",
-          "denyRationaleTitle": "",
+          "askAgain": "\u518d\u6b21\u8be2\u95ee",
+          "denyRationaleTitle": "\u62d2\u7edd\u8bf4\u660e",
           "locale": "zh",
-          "rationaleTitle": "",
-          "settings": ""
+          "rationaleTitle": "\u6743\u9650\u8bf4\u660e",
+          "settings": "\u8bbe\u7f6e"
         },
         {
-          "askAgain": "",
-          "denyRationaleTitle": "",
+          "askAgain": "Yeniden Sor",
+          "denyRationaleTitle": "Ret A\u00e7\u0131klamas\u0131",
           "locale": "tr",
-          "rationaleTitle": "",
-          "settings": ""
+          "rationaleTitle": "\u0130zin A\u00e7\u0131klamas\u0131",
+          "settings": "Ayarlar"
         },
         {
-          "askAgain": "",
-          "denyRationaleTitle": "",
+          "askAgain": "\ub2e4\uc2dc \uc9c8\ubb38\ud558\uae30",
+          "denyRationaleTitle": "\uac70\ubd80 \uc0ac\uc720",
           "locale": "ko",
-          "rationaleTitle": "",
-          "settings": ""
+          "rationaleTitle": "\uc2b9\uc778 \uc0ac\uc720",
+          "settings": "\uc124\uc815"
         }
       ],
       "permissions": [
