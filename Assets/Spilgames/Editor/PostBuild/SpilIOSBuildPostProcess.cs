@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using SpilGames.Unity.Base.Implementations;
 using SpilGames.Unity;
 using SpilGames.Unity.Json;
+using Debug = UnityEngine.Debug;
 
 public class SpilIOSBuildPostProcess : MonoBehaviour
 {
@@ -73,6 +74,7 @@ public class SpilIOSBuildPostProcess : MonoBehaviour
 			try {
 				CheckLatestPluginVersion();
 				CheckSlotGameConifg();
+				CheckSlotGameData();
 			} catch (Exception) {}
 
 			UnityEngine.Debug.Log ("[SPIL] Moving Spil.framework to the root of the project");
@@ -150,8 +152,21 @@ public class SpilIOSBuildPostProcess : MonoBehaviour
 
 			if(!localConfig.Equals(slotConfig)){
 				UnityEngine.Debug.Log("The local \"defaultGameConfig.json\" file is out-of-sync with the SLOT configuration. Please make sure to update your file with the latest changes from SLOT before building!");
+				Debug.Log("The check done at this stage only verifies if you have data correctly for the Live environment and not the Debug/Testing one!");
 			}
 		} 
+	}
+	
+	public static void CheckSlotGameData() {
+		JSONObject slotGameDataJSON = new JSONObject(GetData("requestGameData"));
+		JSONObject localGameDataJSON = new JSONObject(System.IO.File.ReadAllText(Application.streamingAssetsPath + "/defaultGameData.json"));
+		if (!localGameDataJSON.Print().Equals(slotGameDataJSON.Print())) {
+			UnityEngine.Debug.Log("The local \"defaultGameData.json\" file is out-of-sync with the SLOT configuration. Please make sure to update your file with the latest changes from SLOT before building!");
+			Debug.Log("The check done at this stage only verifies if you have data correctly for the Live environment and not the Debug/Testing one!");
+		}
+		else {
+			Debug.Log("Local Game Data is synchronised with SLOT");
+		}
 	}
 
 	public static string GetData (string type) {
@@ -184,21 +199,10 @@ public class SpilIOSBuildPostProcess : MonoBehaviour
 		dummyData.AddField ("tto", "0");
 		dummyData.AddField ("sessionId", "deadbeef");
 		dummyData.AddField ("timezoneOffset", "0");
-		JSONObject dummyCustomData = new JSONObject ();
-		JSONObject dummyWallet = new JSONObject ();
-		dummyWallet.AddField ("offset", 0);
-		JSONObject dummyInventory = new JSONObject ();
-		dummyInventory.AddField ("offset", 0);
-		dummyCustomData.AddField ("wallet", dummyWallet);
-		dummyCustomData.AddField ("inventory", dummyInventory);
 		WWWForm form = new WWWForm ();
-		form.AddField ("data", dummyData.ToString ());
-		form.AddField ("customData", dummyCustomData.ToString ());
+		form.AddField ("data", dummyData.ToString ());;
 		form.AddField ("ts", "1470057439857");
 		form.AddField ("queued", 0);
-		if (spil.EditorDebugMode) {
-			form.AddField("debugMode", Convert.ToString(spil.EditorDebugMode).ToLower());
-		}
 		return form;
 	}
 

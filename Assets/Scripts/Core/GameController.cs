@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SpilGames.Unity;
+using SpilGames.Unity.Base.Implementations;
 using SpilGames.Unity.Base.SDK;
 using SpilGames.Unity.Helpers.GameData;
 using SpilGames.Unity.Helpers.PlayerData;
@@ -164,6 +165,9 @@ public class GameController : MonoBehaviour
 		Spil.Instance.OnRewardTokenClaimFailed -= OnRewardTokenClaimFailed;
 		Spil.Instance.OnRewardTokenClaimFailed += OnRewardTokenClaimFailed;
 		
+		Spil.Instance.OnPermissionResponse -=OnPermissionResponse;
+		Spil.Instance.OnPermissionResponse +=OnPermissionResponse;
+		
 		GetAndApplyGameConfig ();
 		SetupNewGame ();
 		
@@ -279,6 +283,16 @@ public class GameController : MonoBehaviour
 
 	public void GameOver ()
 	{
+		Spil.PlayerData.Wallet.Add (25, playerScore, PlayerDataUpdateReasons.LevelComplete, "Game Over Screen");
+		Spil.PlayerData.Inventory.Add(100077, tapperScore, PlayerDataUpdateReasons.LevelComplete, "Game Over Screen");
+		Spil.PlayerData.Wallet.Add (25, playerScore, PlayerDataUpdateReasons.LevelComplete, "Game Over Screen");
+		Spil.PlayerData.Inventory.Add(100077, tapperScore, PlayerDataUpdateReasons.LevelComplete, "Game Over Screen");
+		Spil.PlayerData.Wallet.Add (25, playerScore, PlayerDataUpdateReasons.LevelComplete, "Game Over Screen");
+		Spil.PlayerData.Inventory.Add(100077, tapperScore, PlayerDataUpdateReasons.LevelComplete, "Game Over Screen");
+		Spil.PlayerData.Wallet.Add (25, playerScore, PlayerDataUpdateReasons.LevelComplete, "Game Over Screen");
+		Spil.PlayerData.Inventory.Add(100077, tapperScore, PlayerDataUpdateReasons.LevelComplete, "Game Over Screen");
+		Spil.PlayerData.Wallet.Add (25, playerScore, PlayerDataUpdateReasons.LevelComplete, "Game Over Screen");
+		Spil.PlayerData.Inventory.Add(100077, tapperScore, PlayerDataUpdateReasons.LevelComplete, "Game Over Screen");
 		Spil.PlayerData.Wallet.Add (25, playerScore, PlayerDataUpdateReasons.LevelComplete, "Game Over Screen");
 		Spil.PlayerData.Inventory.Add(100077, tapperScore, PlayerDataUpdateReasons.LevelComplete, "Game Over Screen");
 		CancelInvoke ("SpawnObsticle");
@@ -706,6 +720,10 @@ public class GameController : MonoBehaviour
 	private void OnLiveEventCompleted() {
 		liveEventButton.SetActive(false);
 		overlayEnabled = false;
+	}
+	
+	private void OnPermissionResponse(SpilAndroidUnityImplementation.PermissionResponseObject permissionResponse) {
+		Debug.Log("Tappy Plane Permission Response -- Permission: " + permissionResponse.permission + ", Status: " + permissionResponse.granted + ", Is Permanently Denied: " + permissionResponse.permanentlyDenied);
 	}
 	
 	/*public void FBShareScore ()

@@ -7,12 +7,12 @@ using SpilGames.Unity;
 using System.IO;
 using SpilGames.Unity.Base.Implementations;
 using System.Xml;
+using SpilGames.Unity.Base.UnityEditor;
 using SpilGames.Unity.Json;
 
 
 public class SpilAndroidBuildPostProcess : MonoBehaviour {
     private static string androidFolder = "Assets/Plugins/Android/";
-    private static Spil spil;
 
 #if UNITY_5_6_OR_NEWER
     private static string bundleIdentifier = PlayerSettings.applicationIdentifier;
@@ -53,7 +53,6 @@ public class SpilAndroidBuildPostProcess : MonoBehaviour {
         string spilSDKFyber = "spilsdk-fyber-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
         string spilSDKZendesk = "spilsdk-zendesk-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
 
-
         if (!File.Exists(androidFolder + spilSDK)) {
             Debug.LogError("The Spil SDK aar file is missing from your 'Assets/Plugins/Android/'. If you want to use the Spil SDK please make sure to include the file to that location");
         }
@@ -79,6 +78,7 @@ public class SpilAndroidBuildPostProcess : MonoBehaviour {
         }
 
         CheckSlotGameConifg();
+        CheckSlotGameData();
     }
 
     public static void VerifyManifest() {
@@ -143,7 +143,6 @@ public class SpilAndroidBuildPostProcess : MonoBehaviour {
     }
 
     public static void CheckSlotGameConifg() {
-        spil = GameObject.FindObjectOfType<Spil>();
         JSONObject slotConfigJSON = new JSONObject(GetData("requestConfig"));
         JSONObject localConfigJSON = new JSONObject(System.IO.File.ReadAllText(Application.streamingAssetsPath + "/defaultGameConfig.json"));
         if (slotConfigJSON.HasField("androidSdkConfig") && localConfigJSON.HasField("androidSdkConfig")) {
@@ -153,7 +152,21 @@ public class SpilAndroidBuildPostProcess : MonoBehaviour {
             if (!localConfig.Equals(slotConfig)) {
                 UnityEngine.Debug.Log("The local \"defaultGameConfig.json\" file is out-of-sync with the SLOT configuration. Please make sure to update your file with the latest changes from SLOT before building!");
                 Debug.Log("The check done at this stage only verifies if you have data correctly for the Live environment and not the Debug/Testing one!");
+            } else {
+                Debug.Log("Local Game Config is synchronised with SLOT");
             }
+        }
+    }
+
+    public static void CheckSlotGameData() {
+        JSONObject slotGameDataJSON = new JSONObject(GetData("requestGameData"));
+        JSONObject localGameDataJSON = new JSONObject(System.IO.File.ReadAllText(Application.streamingAssetsPath + "/defaultGameData.json"));
+        if (!localGameDataJSON.Print().Equals(slotGameDataJSON.Print())) {
+            UnityEngine.Debug.Log("The local \"defaultGameData.json\" file is out-of-sync with the SLOT configuration. Please make sure to update your file with the latest changes from SLOT before building!");
+            Debug.Log("The check done at this stage only verifies if you have data correctly for the Live environment and not the Debug/Testing one!");
+        }
+        else {
+            Debug.Log("Local Game Data is synchronised with SLOT");
         }
     }
 
@@ -165,11 +178,10 @@ public class SpilAndroidBuildPostProcess : MonoBehaviour {
         while (!request.isDone)
             ;
         if (request.error != null && !request.error.Equals("")) {
-            UnityEngine.Debug.LogError("Error getting game data: " + request.error);
+            SpilLogging.Error("Error getting game data: " + request.error);
         } else {
-            UnityEngine.Debug.Log(type + " Data returned: " + request.text);
-            JSONObject serverResponce = new JSONObject(request.text);
-            data = serverResponce.GetField("data").ToString();
+            JSONObject serverResponse = new JSONObject(request.text);
+            data = serverResponse.GetField("data").ToString();
         }
         return data;
     }
@@ -187,16 +199,8 @@ public class SpilAndroidBuildPostProcess : MonoBehaviour {
         dummyData.AddField("tto", "0");
         dummyData.AddField("sessionId", "deadbeef");
         dummyData.AddField("timezoneOffset", "0");
-        JSONObject dummyCustomData = new JSONObject();
-        JSONObject dummyWallet = new JSONObject();
-        dummyWallet.AddField("offset", 0);
-        JSONObject dummyInventory = new JSONObject();
-        dummyInventory.AddField("offset", 0);
-        dummyCustomData.AddField("wallet", dummyWallet);
-        dummyCustomData.AddField("inventory", dummyInventory);
         WWWForm form = new WWWForm();
         form.AddField("data", dummyData.ToString());
-        form.AddField("customData", dummyCustomData.ToString());
         form.AddField("ts", "1470057439857");
         form.AddField("queued", 0);
         return form;

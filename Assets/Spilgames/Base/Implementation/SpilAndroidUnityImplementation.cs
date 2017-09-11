@@ -66,10 +66,10 @@ namespace SpilGames.Unity.Base.Implementations {
         /// The Spil Unity SDK is not packaged as a seperate assembly yet so this method is currently visible, this will be fixed in the future.
         /// Internal method names start with a lower case so you can easily recognise and avoid them.
         /// </summary>
-		internal override string GetPromotions (string key) {
-            Debug.Log("GetPromotion: " + CallNativeMethod ("getPromotions", key, true));
-			return CallNativeMethod ("getPromotions", key, true);
-		}
+        internal override string GetPromotions(string key) {
+            Debug.Log("GetPromotion: " + CallNativeMethod("getPromotions", key, true));
+            return CallNativeMethod("getPromotions", key, true);
+        }
 
         #endregion
 
@@ -178,7 +178,24 @@ namespace SpilGames.Unity.Base.Implementations {
         public override void SendCustomEvent(string eventName, Dictionary<string, object> dict) {
             Debug.Log("SpilSDK-Unity SendCustomEvent " + eventName);
 
-            string parameters = JsonHelper.getJSONFromObject(dict);
+            if (eventName.Equals("updatePlayerData") && dict.ContainsKey("inventory") &&
+                dict["inventory"] is Dictionary<string, object>) {
+                Dictionary<string, object> inventory = (Dictionary<string, object>) dict["inventory"];
+                string inventoryAsString = JsonHelper.DictToJSONObject(inventory).ToString().Replace("\"", "\\\"");
+                dict["inventory"] = inventoryAsString;
+            }
+            if (eventName.Equals("updatePlayerData") && dict.ContainsKey("wallet") &&
+                dict["wallet"] is Dictionary<string, object>) {
+                Dictionary<string, object> wallet = (Dictionary<string, object>) dict["wallet"];
+                string walletAsString = JsonHelper.DictToJSONObject(wallet).ToString().Replace("\"", "\\\"");
+                dict["wallet"] = walletAsString;
+            }
+
+            string parameters = null;
+            if (dict != null) {
+                parameters = JsonHelper.DictToJSONObject(dict).ToString();
+            }
+            
             CallNativeMethod("trackEvent", new object[] {
                 eventName,
                 parameters
@@ -252,7 +269,8 @@ namespace SpilGames.Unity.Base.Implementations {
             return CallNativeMethod("getInventory");
         }
 
-        public override void AddCurrencyToWallet(int currencyId, int amount, string reason, string location, string reasonDetails = null, string transactionId = null) {
+        public override void AddCurrencyToWallet(int currencyId, int amount, string reason, string location,
+            string reasonDetails = null, string transactionId = null) {
             CallNativeMethod("addCurrencyToWallet", new object[] {
                 currencyId,
                 amount,
@@ -263,7 +281,8 @@ namespace SpilGames.Unity.Base.Implementations {
             }, true);
         }
 
-        public override void SubtractCurrencyFromWallet(int currencyId, int amount, string reason, string location, string reasonDetails = null, string transactionId = null) {
+        public override void SubtractCurrencyFromWallet(int currencyId, int amount, string reason, string location,
+            string reasonDetails = null, string transactionId = null) {
             CallNativeMethod("subtractCurrencyFromWallet", new object[] {
                 currencyId,
                 amount,
@@ -274,7 +293,8 @@ namespace SpilGames.Unity.Base.Implementations {
             }, true);
         }
 
-        public override void AddItemToInventory(int itemId, int amount, string reason, string location, string reasonDetails = null, string transactionId = null) {
+        public override void AddItemToInventory(int itemId, int amount, string reason, string location,
+            string reasonDetails = null, string transactionId = null) {
             CallNativeMethod("addItemToInventory", new object[] {
                 itemId,
                 amount,
@@ -285,7 +305,8 @@ namespace SpilGames.Unity.Base.Implementations {
             }, true);
         }
 
-        public override void SubtractItemFromInventory(int itemId, int amount, string reason, string location, string reasonDetails = null, string transactionId = null) {
+        public override void SubtractItemFromInventory(int itemId, int amount, string reason, string location,
+            string reasonDetails = null, string transactionId = null) {
             CallNativeMethod("subtractItemFromInventory", new object[] {
                 itemId,
                 amount,
@@ -296,7 +317,8 @@ namespace SpilGames.Unity.Base.Implementations {
             }, true);
         }
 
-        public override void BuyBundle(int bundleId, string reason, string location, string reasonDetails = null, string transactionId = null) {
+        public override void BuyBundle(int bundleId, string reason, string location, string reasonDetails = null,
+            string transactionId = null) {
             CallNativeMethod("buyBundle", new object[] {
                 bundleId,
                 reason,
@@ -518,7 +540,8 @@ namespace SpilGames.Unity.Base.Implementations {
         /// <param name="useParam1"></param>
         /// <returns></returns>
         private string CallNativeMethod<T>(string methodName, T param1 = null, bool useParam1 = false) where T : class {
-            Debug.Log("SpilSDK-Unity CallNativeMethod " + methodName + (param1 != null ? " param: " + param1.ToString() : ""));
+            Debug.Log("SpilSDK-Unity CallNativeMethod " + methodName +
+                      (param1 != null ? " param: " + param1.ToString() : ""));
 
             string value = null;
             using (AndroidJavaClass pClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer")) {
@@ -619,7 +642,7 @@ namespace SpilGames.Unity.Base.Implementations {
                 denyRationale
             }, true);
         }
-
+        
         public class Permissions {
             public static string READ_CALENDAR = "android.permission.READ_CALENDAR";
             public static string WRITE_CALENDAR = "android.permission.WRITE_CALENDAR";
@@ -639,6 +662,12 @@ namespace SpilGames.Unity.Base.Implementations {
             public static string READ_EXTERNAL_STORAGE = "android.permission.READ_EXTERNAL_STORAGE";
         }
 
+        public class PermissionResponseObject {
+            public string permission;
+            public bool granted;
+            public bool permanentlyDenied;
+        }
+        
         #endregion
 
         #region Environemnt Changing
