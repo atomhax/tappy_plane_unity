@@ -58,16 +58,12 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-	if ([Spil getAppId] != nil) {
-	    [Spil applicationDidBecomeActive:application];
-	}
+	[Spil applicationDidBecomeActive:application];
     [super applicationDidBecomeActive:application];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-	if ([Spil getAppId] != nil) {
-    	[Spil applicationDidEnterBackground:application];
-    }
+    [Spil applicationDidEnterBackground:application];
     [super applicationDidEnterBackground:application];
 }
 

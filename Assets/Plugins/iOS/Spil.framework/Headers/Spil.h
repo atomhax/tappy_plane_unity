@@ -9,7 +9,7 @@
 #import "HookBridge.h"
 #import "GAI.h"
 
-#define SDK_VERSION @"2.5.0"
+#define SDK_VERSION @"2.6.0"
 
 @class ImageContext;
 @class Spil;
@@ -125,23 +125,11 @@
 #pragma mark General
 
 /**
- * Initiates the API
- */
-+(void)start;
-
-/**
  *  Initiates the API with options
  *
- *  @param options holds a dictionary with options like "isUnity"
+ *  @param Optional, options holds a dictionary with options like "isUnity"
  */
-+(void)startWithOptions:(nonnull NSDictionary*)options;
-
-/**
- *  Show advanced debug logs
- *
- *  @param advancedLoggingEnabled Enables or disables the advanced log printing
- */
-+(void)setAdvancedLoggingEnabled:(BOOL)advancedLoggingEnabled;
++(void)startWithOptions:(nullable NSDictionary*)options;
 
 /**
  *  Helper method to log a message to the console
@@ -158,11 +146,6 @@
  *  @param The custom bundle id to use
  */
 +(void)setCustomBundleId:(nonnull NSString*)bundleId;
-
-/**
- * Get the current app id
- */
-+(nullable NSString*)getAppId;
 
 /**
  *  Get the Spil user id
@@ -579,6 +562,11 @@
 +(void)requestPackages;
 
 #pragma mark Ads
+
+/**
+ * Requests the more apps screen
+ */
++(void)requestMoreApps;
 
 /**
  * Show the more apps screen

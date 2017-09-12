@@ -21,28 +21,12 @@
 			<string>PSToggleSwitchSpecifier</string>
 		</dict>
 		<dict>
-			<key>Title</key>
-			<string>Advanced debugging</string>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-		</dict>
-		<dict>
 			<key>DefaultValue</key>
 			<false/>
 			<key>Key</key>
 			<string>spil_usingstaging</string>
 			<key>Title</key>
-			<string>Using Staging</string>
-			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
-		</dict>
-		<dict>
-			<key>DefaultValue</key>
-			<false/>
-			<key>Key</key>
-			<string>spil_advancedlogging</string>
-			<key>Title</key>
-			<string>Advanced logging</string>
+			<string>Staging</string>
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 		</dict>
@@ -66,7 +50,7 @@
 		</dict>
 		<dict>
 			<key>Title</key>
-			<string>User token</string>
+			<string>User Token</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>
@@ -79,6 +63,16 @@
 			<string></string>
 			<key>Type</key>
 			<string>PSTextFieldSpecifier</string>
+		</dict>
+		<dict>
+			<key>DefaultValue</key>
+			<false/>
+			<key>Key</key>
+			<string>spil_resetuid</string>
+			<key>Title</key>
+			<string>Reset UID</string>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
 		</dict>
 		<dict>
 			<key>Title</key>

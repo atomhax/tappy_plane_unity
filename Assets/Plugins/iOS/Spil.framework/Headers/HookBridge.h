@@ -108,6 +108,10 @@ extern "C" {
 
     char* getLocalSecretEx();
     
+/*    char* getPublicKeysEx();
+    
+    char* getIssuersEx();*/
+    
     void requestServerTimeNative();
     
     // --- Config ---
@@ -129,6 +133,8 @@ extern "C" {
     char* getPromotionsNative(const char* keyName);
 
     // --- ADS ---
+    
+    void requestMoreAppsNative();
     
     void showMoreAppsNative();
     
@@ -237,5 +243,7 @@ extern "C" {
 
 + (void)sendMessage:(NSString*)messageName toObject:(NSString*)objectName withParameter:(NSString*)parameterString;
 + (NSString*) getLocalSecret;
+/*+ (NSArray*) getPublicKeys;
++ (NSArray*) getIssuers;*/
 
 @end

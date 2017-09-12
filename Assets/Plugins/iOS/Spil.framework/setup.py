@@ -145,9 +145,9 @@ addBundleResource(os.getcwd() + '/Data/Raw/defaultPlayerData.json', os.getcwd() 
 addBundleResource(os.getcwd() + '/Spil.framework/ZendeskSDK.bundle', os.getcwd() + '/ZendeskSDK.bundle', bundles)
 addBundleResource(os.getcwd() + '/Spil.framework/ZendeskSDKStrings.bundle', os.getcwd() + '/ZendeskSDKStrings.bundle', bundles)
 
-# add png/xib resources
+# add png/xib/der resources
 for file in os.listdir(os.getcwd() + '/Spil.framework'):
-    if file.lower().endswith(".png") or file.lower().endswith(".xib"):
+    if file.lower().endswith(".png") or file.lower().endswith(".xib") or file.lower().endswith(".der"):
         addBundleResource(os.getcwd() + '/Spil.framework/' + file, os.getcwd() + '/' + file, bundles)
 
 # change build settings
