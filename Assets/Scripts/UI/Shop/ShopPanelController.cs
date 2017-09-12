@@ -46,7 +46,7 @@ public class ShopPanelController : MonoBehaviour {
 		Spil.Instance.OnSplashScreenOpenShop -= OnSplashScreenOpenShop;
 		Spil.Instance.OnSplashScreenOpenShop += OnSplashScreenOpenShop;
 
-		Spil.Instance.SendRequestRewardVideoEvent ();
+		Spil.Instance.RequestRewardVideo("Shop");
 		Spil_Instance_OnPlayerDataUpdated("Opened", null);
 		ResetShop();
 		CreateShop ();
@@ -134,7 +134,7 @@ public class ShopPanelController : MonoBehaviour {
 			Spil.PlayerData.Wallet.Add (25, response.reward.reward, PlayerDataUpdateReasons.RewardAds, "Shop");
 			rewardSucessPanel.SetActive (true);
 		}
-		Spil.Instance.SendRequestRewardVideoEvent ();
+		Spil.Instance.RequestRewardVideo("Shop");
 	}
 
 	public void ShowReward(PlayerCurrencyData currency) {

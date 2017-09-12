@@ -232,6 +232,18 @@ namespace SpilGames.Unity.Base.Implementations {
         }
 
         /// <summary>
+        /// Sends the "requestRewardVideo" event to the native Spil SDK which will send a request to the back-end.
+        /// When a response has been received from the back-end the SDK will fire either an "AdAvailable" or and "AdNotAvailable"
+        /// event to which the developer can subscribe and for instance call PlayVideo();
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        public override void RequestRewardVideo(string location = null) {
+            CallNativeMethod("requestRewardVideo", new object[] {
+                location
+            }, true);
+        }
+
+        /// <summary>
         /// Retrieves the Spil User Id so that developers can show this in-game for users.
         /// If users contact Spil customer service they can supply this Id so that 
         /// customer support can help them properly. Please make this Id available for users
