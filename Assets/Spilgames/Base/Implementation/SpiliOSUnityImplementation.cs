@@ -131,66 +131,10 @@ namespace SpilGames.Unity.Base.Implementations
 		{
 			if (dict != null)
 			{
-				// Create a new dict json string
-				string jsonString = "{";
-
-				// Add each passed kv to the json dict
-				foreach (var item in dict) {
-					string key = item.Key;
-					object value = item.Value;
-					jsonString += "\"" + key + "\":";
-
-					// Detect the value type
-					if (value != null) {
-						if (value is String) {
-							// Determine if there is nested json included in the json, in that case reformat it
-							try {
-								string jsonInputString = ((string)item.Value).Replace ("\\\"", "\"").Trim (new char[]{ '\"' });
-								JSONObject inputJsonObject = new JSONObject (jsonInputString);
-								if (inputJsonObject.IsArray || inputJsonObject.IsObject) {
-									jsonString += jsonInputString;
-								} else {
-									jsonString += "\"" + value + "\"";
-								}
-							} catch (Exception e) {
-								Debug.Log ("---JSON DETECTION FAILED" + e.Message);
-								jsonString += "\"" + value + "\"";
-							}
-						} else if (value is bool) {
-							// Value is a bool, add it without quotes
-							jsonString += (bool)value ? "true" : "false";
-						} else if (value is int || value is float || value is double || value is long) {
-							// Value is a number, add it without quotes
-							jsonString += value.ToString ();
-						} else if (value is JSONObject) {
-							jsonString += ((JSONObject)value).Print();
-						} else {
-							try {
-								jsonString += JsonHelper.getJSONFromObject(value);
-							} catch (Exception) {
-								// Value is unknown or not supported
-								jsonString += "\"INVALID PARAMETER TYPE\"";
-								Debug.LogError ("---INVALID JSON FOR KEY: " + key + ", expected type: string, bool, int, float, double, long");
-							}
-						}
-					} else {
-						// Value is empty
-						jsonString += "\"\"";
-					}
-
-					jsonString += ",";
-				}
-
-				// Close the json dict
-				if (jsonString.EndsWith(",")){
-					jsonString = jsonString.Substring(0, jsonString.Length - 1);
-				}
-				jsonString += "}";
-
-				Debug.Log ("---JSON BUILDED:" + jsonString);
-
-				if (jsonString != "{}") {
-					trackEventWithParamsNative (eventName, jsonString);
+				parameters = JsonHelper.DictToJSONObject(dict).ToString();
+				if (parameters != "{}")
+				{
+					trackEventWithParamsNative (eventName, parameters);
 				} else {
 					trackEventNative(eventName);
 				}

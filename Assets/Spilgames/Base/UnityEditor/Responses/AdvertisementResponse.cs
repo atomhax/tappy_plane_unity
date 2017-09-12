@@ -100,9 +100,15 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
             public string provider;
             public string adType;
 
+            private GUIStyle infoGuiStyle;
+
+            private void Start() {
+                infoGuiStyle = CreateGuiStyleForText(true);
+            }
+            
             void OnGUI() {
-                if (GUI.Button(new Rect(10, 10, (Screen.width - 20), (Screen.height - 20)),
-                    provider + " " + adType + " is playing!")) {
+                GUI.Label(new Rect(10, 10, (Screen.width - 20), (Screen.height - 20) / 8), "\n" + provider + " " + adType + " is playing!", infoGuiStyle);
+                if (GUI.Button(new Rect(10, ((Screen.height + 40) / 8), (Screen.width - 20), (7 * Screen.height) / 16), "Close")) {
                     AdFinished adFinished = new AdFinished();
 
                     adFinished.network = provider;
@@ -128,6 +134,46 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
                     SpilUnityImplementationBase.fireAdFinishedEvent(JsonHelper.getJSONFromObject(adFinished));
                     GameObject.Destroy(this.gameObject);
                 }
+                if (GUI.Button(new Rect(10, ((9 * Screen.height + 40) / 16), (Screen.width - 20), (7 * Screen.height) / 16), "Dismiss")) {
+                    AdFinished adFinished = new AdFinished();
+
+                    adFinished.network = provider;
+                    adFinished.type = adType;
+                    adFinished.reason = "dismiss";
+
+                    SpilUnityImplementationBase.fireAdFinishedEvent(JsonHelper.getJSONFromObject(adFinished));
+                    GameObject.Destroy(this.gameObject);
+                }
+            }
+            
+            private GUIStyle CreateGuiStyleForText(bool alignMiddle) {
+                GUIStyle infoGuiStyle = new GUIStyle();
+                GUIStyleState guiStyleState = new GUIStyleState();
+                guiStyleState.textColor = Color.white;
+                Color color = new Color(0f, 0f, 0f, 0.39f);
+                Texture2D blackBackground = new Texture2D(Screen.width - 230, (Screen.height - 20) / 12 - 10);
+
+                var fillColorArray = blackBackground.GetPixels();
+
+                for (var i = 0; i < fillColorArray.Length; ++i) {
+                    fillColorArray[i] = color;
+                }
+
+                blackBackground.SetPixels(fillColorArray);
+
+                blackBackground.Apply();
+
+                guiStyleState.background = blackBackground;
+                infoGuiStyle.normal = guiStyleState;
+                infoGuiStyle.wordWrap = true;
+                infoGuiStyle.fontSize = 24;
+                infoGuiStyle.padding = new RectOffset(10, 10, 10, 10);
+
+                if (alignMiddle) {
+                    infoGuiStyle.alignment = TextAnchor.MiddleCenter;
+                }
+
+                return infoGuiStyle;
             }
         }
 

@@ -630,5 +630,16 @@ namespace SpilGames.Unity {
         public void LiveEventCompleted() {
             SpilUnityImplementationBase.fireLiveEventCompleted();
         }
+        
+        #if UNITY_ANDROID
+        /// <summary>
+        /// This event indicates the status of the permission request.
+        /// Only Android.
+        /// </summary>
+        public void PermissionResponse(string message) {
+            SpilUnityImplementationBase.firePermissionResponse(message);
+        }
+        #endif
+     
     }
 }

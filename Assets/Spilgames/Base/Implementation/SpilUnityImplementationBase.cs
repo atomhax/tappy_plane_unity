@@ -10,10 +10,10 @@ using SpilGames.Unity.Helpers.IAPPackages;
 namespace SpilGames.Unity.Base.Implementations {
     public abstract class SpilUnityImplementationBase {
         public static string PluginName = "Unity";
-        public static string PluginVersion = "2.5.0";
+        public static string PluginVersion = "2.6.0";
 
-        public static string AndroidVersion = "2.5.0";
-        public static string iOSVersion = "2.5.0";
+        public static string AndroidVersion = "2.6.0";
+        public static string iOSVersion = "2.6.0";
 
         #region Game config
 
@@ -342,15 +342,20 @@ namespace SpilGames.Unity.Base.Implementations {
         /// <param name="itemsList">A list of TrackingItems objects that defines all the items that have been changed with this event. This parameter can also be omited if no items have been updated</param>
         public void TrackWalletInventoryEvent(string reason, string location, List<TrackingCurrency> currencyList = null, List<TrackingItem> itemsList = null, string reasonDetails = null, string transactionId = null) {
             Dictionary<string, object> dictionary = new Dictionary<string, object>();
-            if (currencyList != null) {
-                string currencyListJSON = JsonHelper.getJSONFromObject(currencyList);
-                string wallet = "{\"currencies\":" + currencyListJSON + ", \"offset\":0}";
+
+            if (currencyList != null)
+            {
+                Dictionary<string, object> wallet = new Dictionary<string, object>();
+                wallet.Add("currencies", new JSONObject(JsonHelper.getJSONFromObject(currencyList)));
+                wallet.Add("offset", 0);
                 dictionary.Add("wallet", wallet);
             }
 
-            if (itemsList != null) {
-                string itemsListJSON = JsonHelper.getJSONFromObject(itemsList);
-                string inventory = "{\"items\":" + itemsListJSON + ", \"offset\":0}";
+            if (itemsList != null)
+            {
+                Dictionary<string, object> inventory = new Dictionary<string, object>();
+                inventory.Add("items", new JSONObject(JsonHelper.getJSONFromObject(itemsList)));
+                inventory.Add("offset", 0);
                 dictionary.Add("inventory", inventory);
             }
 
@@ -358,11 +363,13 @@ namespace SpilGames.Unity.Base.Implementations {
             dictionary.Add("location", location);
             dictionary.Add("trackingOnly", true);
 
-            if (reasonDetails != null) {
+            if (reasonDetails != null)
+            {
                 dictionary.Add("reasonDetails", reasonDetails);
             }
 
-            if (transactionId != null) {
+            if (transactionId != null)
+            {
                 dictionary.Add("transactionId", transactionId);
             }
 
@@ -1455,6 +1462,33 @@ namespace SpilGames.Unity.Base.Implementations {
 
         #endregion
 
+#if  UNITY_ANDROID
+        #region Permission
+
+        public delegate void PermissionResponse(SpilAndroidUnityImplementation.PermissionResponseObject permissionResponse);
+
+        /// <summary>
+        /// This is fired by the native Spil SDK when the config was updated.
+        /// The developer can subscribe to this event and for instance re-enable the in-game sound.
+        /// </summary>
+        public event PermissionResponse OnPermissionResponse;
+
+        /// <summary>
+        /// This is called by the native Spil SDK and will fire an ConfigUpdated event to which the developer 
+        /// can subscribe, it will only be called when the config values are different from the previous loaded config.
+        /// </summary>
+        public static void firePermissionResponse(string message) {
+            Debug.Log("SpilSDK-Unity Permission response with message: " + message);
+
+            SpilAndroidUnityImplementation.PermissionResponseObject permissionResponse = JsonHelper.getObjectFromJson<SpilAndroidUnityImplementation.PermissionResponseObject>(message);
+            if (Spil.Instance.OnPermissionResponse != null) {
+                Spil.Instance.OnPermissionResponse(permissionResponse);
+            }
+        }
+
+        #endregion
+#endif
+        
         #endregion
 
         #region Abstract Methods

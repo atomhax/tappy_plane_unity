@@ -162,6 +162,7 @@ namespace SpilGames.Unity.Helpers.PlayerData {
         public static string PushNotification = "Push Notification From Client";
         public static string LiveEvent = "Live Event From Client";
         public static string OpenGacha = "Open Gacha";
+        public static string DebugTest = "Debug test";
 
         public PlayerDataUpdateReasons() {
         }
