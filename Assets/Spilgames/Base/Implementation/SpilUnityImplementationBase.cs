@@ -717,7 +717,9 @@ namespace SpilGames.Unity.Base.Implementations {
         public event SpilGameDataAvailable OnSpilGameDataAvailable;
 
         public static void fireSpilGameDataAvailable() {
-            Spil.GameData.SpilGameDataHandler();
+            if (Spil.GameData != null) {
+                Spil.GameData.SpilGameDataHandler();
+            }
 
             Debug.Log("SpilSDK-Unity Spil Game Data is available");
 
@@ -776,7 +778,10 @@ namespace SpilGames.Unity.Base.Implementations {
 
             PlayerDataUpdatedData playerDataUpdatedData = JsonHelper.getObjectFromJson<PlayerDataUpdatedData>(data);
 
-            Spil.PlayerData.PlayerDataUpdatedHandler();
+            if (Spil.PlayerData != null) {
+                Spil.PlayerData.PlayerDataUpdatedHandler();
+            }
+            
 
             if (Spil.Instance.OnPlayerDataUpdated != null) {
                 Spil.Instance.OnPlayerDataUpdated(playerDataUpdatedData.reason, playerDataUpdatedData);
