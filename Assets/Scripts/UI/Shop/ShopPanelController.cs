@@ -118,7 +118,7 @@ public class ShopPanelController : MonoBehaviour {
 	public void StartRewardedVideo(){
 		Spil.Instance.OnAdFinished -= Spil_Instance_OnAdFinished;
 		Spil.Instance.OnAdFinished += Spil_Instance_OnAdFinished;
-		Spil.Instance.PlayVideo ();
+		Spil.Instance.PlayVideo ("Shop Button");
 	}
 
 	void Spil_Instance_OnAdFinished (SpilAdFinishedResponse response)

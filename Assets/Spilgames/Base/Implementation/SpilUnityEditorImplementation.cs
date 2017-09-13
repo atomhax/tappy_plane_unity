@@ -217,7 +217,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// When calling this method "SendrequestRewardVideoEvent()" must first have been called to request and cache a video.
         /// If no video is available then nothing will happen.
         /// </summary>
-		public override void PlayVideo(string location) {
+		public override void PlayVideo(string location = null, string rewardType = null) {
             AdvertisementResponse.PlayVideo();
         }
 
@@ -246,12 +246,16 @@ namespace SpilGames.Unity.Base.Implementations {
         /// event to which the developer can subscribe and for instance call PlayVideo();
         /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
-		public override void RequestRewardVideo(string rewardType = null, string location = null) {
+		public override void RequestRewardVideo(string location = null, string rewardType = null) {
             SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
             spilEvent.eventName = "requestRewardVideo";
 
             if (location != null) {
                 spilEvent.customData.AddField("location", location);
+            }
+
+            if (rewardType != null) {
+                spilEvent.customData.AddField("rewardType", rewardType);
             }
 
             spilEvent.Send();
