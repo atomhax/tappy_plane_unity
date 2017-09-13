@@ -12,9 +12,6 @@ using Debug = UnityEngine.Debug;
 
 public class SpilIOSBuildPostProcess : MonoBehaviour
 {
-	
-	private static Spil spil;
-	
 	#if UNITY_5_6_OR_NEWER
 	private static string bundleIdentifier = PlayerSettings.applicationIdentifier;
 	#elif UNITY_5_3_OR_NEWER
@@ -66,8 +63,6 @@ public class SpilIOSBuildPostProcess : MonoBehaviour
 	[PostProcessBuild]
 	public static void OnPostprocessBuild (BuildTarget target, string pathToBuildProject)
 	{
-		spil = GameObject.FindObjectOfType<Spil>();
-		
 		if (target == BuildTarget.iOS) {
 			UnityEngine.Debug.Log ("[SPIL] Starting custom post process build script." + pathToBuildProject);
 

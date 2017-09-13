@@ -164,10 +164,10 @@ public class GameController : MonoBehaviour
 
 		Spil.Instance.OnRewardTokenClaimFailed -= OnRewardTokenClaimFailed;
 		Spil.Instance.OnRewardTokenClaimFailed += OnRewardTokenClaimFailed;
-		
+#if UNITY_ANDROID
 		Spil.Instance.OnPermissionResponse -=OnPermissionResponse;
 		Spil.Instance.OnPermissionResponse +=OnPermissionResponse;
-		
+#endif
 		GetAndApplyGameConfig ();
 		SetupNewGame ();
 		
@@ -721,10 +721,12 @@ public class GameController : MonoBehaviour
 		liveEventButton.SetActive(false);
 		overlayEnabled = false;
 	}
-	
+
+#if UNITY_ANDROID
 	private void OnPermissionResponse(SpilAndroidUnityImplementation.PermissionResponseObject permissionResponse) {
 		Debug.Log("Tappy Plane Permission Response -- Permission: " + permissionResponse.permission + ", Status: " + permissionResponse.granted + ", Is Permanently Denied: " + permissionResponse.permanentlyDenied);
 	}
+#endif
 	
 	/*public void FBShareScore ()
 	{

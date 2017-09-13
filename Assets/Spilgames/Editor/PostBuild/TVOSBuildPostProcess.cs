@@ -19,7 +19,6 @@ public class TVOSBuildPostProcess : MonoBehaviour
 
 			bool exportDefaultEntitlements = EditorPrefs.GetBool ("exportDefaultEntitlements");
 			bool useICloudKV = EditorPrefs.GetBool ("useICloudKV");
-			bool usePushNotifications = EditorPrefs.GetBool ("usePushNotifications");
 
 			String arguments = "Unity-iPhone " +
 								   exportDefaultEntitlements + " " +
