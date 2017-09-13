@@ -143,15 +143,22 @@ namespace SpilGames.Unity.Base.Implementations
 			}
 		}
 
+		public override void RequestRewardVideo(string rewardType = null, string location = null) {
+			requestRewardVideoNative(rewardType, location);
+		}
+
+		[DllImport("__Internal")]
+		private static extern void requestRewardVideoNative(string rewardType, string location);
+
 		/// <summary>
 		/// This can be called to show a video, for instance after calling "SendrequestRewardVideoEvent()"
 		/// and receiving an "AdAvailable" event the developer could call this method from the event handler.
 		/// When calling this method "SendrequestRewardVideoEvent()" must first have been called to request and cache a video.
 		/// If no video is available then nothing will happen.
 		/// </summary>
-		public override void PlayVideo()
+		public override void PlayVideo(string location)
 		{
-			playRewardVideoNative();
+			playRewardVideoNative(location);
 		}
 
 		[DllImport("__Internal")]

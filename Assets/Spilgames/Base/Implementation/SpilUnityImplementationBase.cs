@@ -1514,11 +1514,11 @@ namespace SpilGames.Unity.Base.Implementations {
         #region Advertisement
 
 
-        public abstract void RequestRewardVideo(string location = null);
+		public abstract void RequestRewardVideo(string rewardType = null, string location = null);
         
         public abstract void RequestMoreApps();
 
-        public abstract void PlayVideo();
+		public abstract void PlayVideo(string location);
 
         public abstract void PlayMoreApps();
 
