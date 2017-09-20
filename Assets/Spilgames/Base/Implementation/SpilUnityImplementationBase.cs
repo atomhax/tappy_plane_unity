@@ -14,7 +14,7 @@ namespace SpilGames.Unity.Base.Implementations {
 
         public static string AndroidVersion = "2.6.0";
         public static string iOSVersion = "2.6.0";
-
+        
         #region Game config
 
         /// <summary>
@@ -27,7 +27,6 @@ namespace SpilGames.Unity.Base.Implementations {
         /// <typeparam name="T">The user-defined class that mirrors the shape of the data in the JSON</typeparam>
         /// <returns></returns>
         public T GetConfig<T>() where T : new() {
-            // TODO: Handle exceptions gracefully
             return JsonHelper.getObjectFromJson<T>(GetConfigAll());
         }
 
@@ -40,11 +39,13 @@ namespace SpilGames.Unity.Base.Implementations {
         /// </summary>
         /// <returns>A packageshelper object filled with packages and promotions, will be empty if there are none. Returns null if no packages or promotions are present, which should only happen if the server has never been successfully queried for packages and promotions.</returns>
         public PackagesHelper GetPackagesAndPromotions() {
-            PackagesHelper helper = null;
             string packagesString = GetAllPackages();
-            if (packagesString == null) return helper;
+            
+            if (packagesString == null) 
+                return null;
+            
             List<PackageData> packagesList = JsonHelper.getObjectFromJson<List<PackageData>>(packagesString);
-            helper = new PackagesHelper(packagesList);
+            PackagesHelper helper = new PackagesHelper(packagesList);
             return helper;
         }
 
@@ -73,14 +74,17 @@ namespace SpilGames.Unity.Base.Implementations {
         /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
         /// <param name="levelName">Level name.</param>
-        /// <param name="score">Score.</param>
-        /// <param name="stars">Stars.</param>
-        /// <param name="turns">Turns.</param>
+        /// <param name="difficulty">The difficulty of the started level.</param>
         /// <param name="customCreated">If set to <c>true</c> custom created.</param>
         /// <param name="creatorId">Creator identifier.</param>
-        public void TrackLevelStartEvent(string levelName, bool customCreated = false, string creatorId = null) {
+        public void TrackLevelStartEvent(string levelName, string difficulty = null, bool customCreated = false,
+            string creatorId = null) {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("level", levelName);
+
+            if (difficulty != null) {
+                dict.Add("difficulty", difficulty);
+            }
 
             if (customCreated) {
                 dict.Add("customCreated", customCreated);
@@ -98,15 +102,22 @@ namespace SpilGames.Unity.Base.Implementations {
         /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
         /// <param name="levelName">Level name.</param>
+        /// <param name="difficulty">The difficulty of the started level.</param>
         /// <param name="score">Score.</param>
         /// <param name="stars">Stars.</param>
+        /// <param name="speed">The speed in which the level was completed.</param>
+        /// <param name="moves">The number of moves which it took the user to complete the level.</param>
         /// <param name="turns">Turns.</param>
         /// <param name="customCreated">If set to <c>true</c> custom created.</param>
         /// <param name="creatorId">Creator identifier.</param>
-        public void TrackLevelCompleteEvent(string levelName, double score = 0, int stars = 0, int turns = 0,
-            bool customCreated = false, string creatorId = null) {
+        public void TrackLevelCompleteEvent(string levelName, string difficulty = null, double score = 0, int stars = 0,
+            string speed = null, int moves = 0, int turns = 0, bool customCreated = false, string creatorId = null) {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("level", levelName);
+
+            if (difficulty != null) {
+                dict.Add("difficulty", difficulty);
+            }
 
             if (score != 0) {
                 dict.Add("score", score);
@@ -114,6 +125,14 @@ namespace SpilGames.Unity.Base.Implementations {
 
             if (stars != 0) {
                 dict.Add("stars", stars);
+            }
+
+            if (speed != null) {
+                dict.Add("speed", speed);
+            }
+
+            if (moves != 0) {
+                dict.Add("moves", moves);
             }
 
             if (turns != 0) {
@@ -136,15 +155,24 @@ namespace SpilGames.Unity.Base.Implementations {
         /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
         /// <param name="levelName">Level name.</param>
+        /// <param name="difficulty"></param>
         /// <param name="score">Score.</param>
+        /// <param name="speed">The speed in which the level was failed.</param>
+        /// <param name="moves">he number of moves which it took the user before he failed.</param>
         /// <param name="stars">Stars.</param>
         /// <param name="turns">Turns.</param>
+        /// <param name="reason">The reason of failure</param>
         /// <param name="customCreated">If set to <c>true</c> custom created.</param>
         /// <param name="creatorId">Creator identifier.</param>
-        public void TrackLevelFailedEvent(string levelName, double score = 0, int stars = 0, int turns = 0,
+        public void TrackLevelFailedEvent(string levelName, string difficulty = null, double score = 0,
+            string speed = null, int moves = 0, int stars = 0, int turns = 0, string reason = null,
             bool customCreated = false, string creatorId = null) {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("level", levelName);
+
+            if (difficulty != null) {
+                dict.Add("difficulty", difficulty);
+            }
 
             if (score != 0) {
                 dict.Add("score", score);
@@ -154,8 +182,20 @@ namespace SpilGames.Unity.Base.Implementations {
                 dict.Add("stars", stars);
             }
 
+            if (speed != null) {
+                dict.Add("speed", speed);
+            }
+
+            if (moves != 0) {
+                dict.Add("moves", moves);
+            }
+
             if (turns != 0) {
                 dict.Add("turns", turns);
+            }
+
+            if (reason != null) {
+                dict.Add("reason", reason);
             }
 
             if (customCreated) {
@@ -194,10 +234,15 @@ namespace SpilGames.Unity.Base.Implementations {
         /// </summary>
         /// <param name="equippedItem">Equipped item.</param>
         /// <param name="equippedTo">Equipped to.</param>
-        public void TrackEquipEvent(string equippedItem, string equippedTo) {
+        /// <param name="unequippedFrom">The character/object which unequipped the item.</param>
+        public void TrackEquipEvent(string equippedItem, string equippedTo, string unequippedFrom = null) {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("equippedItem", equippedItem);
             dict.Add("equippedTo", equippedTo);
+
+            if (unequippedFrom != null) {
+                dict.Add("unequippedFrom", unequippedFrom);
+            }
 
             SendCustomEvent("equip", dict);
         }
@@ -480,6 +525,109 @@ namespace SpilGames.Unity.Base.Implementations {
             });
         }
 
+        /// <summary>
+        /// Sends the "levelAppeared" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        /// <param name="level">The name/id of the level that appeared.</param>
+        /// <param name="difficulty">The difficulty of the level that appeared</param>
+        public void TrackLevelAppeared(string level, string difficulty = null) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("level", level);
+
+            if (difficulty != null) {
+                dict.Add("difficulty", difficulty);
+            }
+
+            SendCustomEvent("levelAppeared", dict);
+        }
+
+        /// <summary>
+        /// Sends the "levelDiscarded" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        /// <param name="level">The name/id of the level that appeared.</param>
+        /// <param name="difficulty">The difficulty of the level that appeared</param>
+        public void TrackLevelDiscarded(string level, string difficulty = null) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("level", level);
+
+            if (difficulty != null) {
+                dict.Add("difficulty", difficulty);
+            }
+
+            SendCustomEvent("levelDiscarded", dict);
+        }
+
+        /// <summary>
+        /// Sends the "errorShown" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        /// <param name="reason">The reason for the error to be shown.</param>
+        public void TrackErrorShown(string reason) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("reason", reason);
+
+            SendCustomEvent("errorShown", dict);
+        }
+
+        /// <summary>
+        /// Sends the "timeElapLoad" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        /// <param name="timeElap">The time elapsed between the starting point and the pointInGame in seconds.</param>
+        /// <param name="pointInGame">The point in game which is reached.</param>
+        /// <param name="startPoint">The point in game which we start to measure time.</param>
+        public void TrackTimeElapLoad(int timeElap, string pointInGame, string startPoint = null) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("timeElap", timeElap);
+            dict.Add("pointInGame", pointInGame);
+
+            if (startPoint != null) {
+                dict.Add("startPoint", startPoint);
+            }
+
+            SendCustomEvent("timeElapLoad", dict);
+        }
+        
+        /// <summary>
+        /// Sends the "timeoutDetected" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        /// <param name="timeElap">The time elapsed between the starting point and the pointInGame in seconds.</param>
+        /// <param name="pointInGame">The point in game which is reached.</param>
+        public void TrackTimeoutDetected(int timeElap, string pointInGame) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("timeElap", timeElap);
+            dict.Add("pointInGame", pointInGame);
+
+            SendCustomEvent("timeoutDetected", dict);
+        }
+        
+        /// <summary>
+        /// Sends the "objectStateChanged" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        /// <param name="changedObject">The object which changed it's state.</param>
+        /// <param name="status">The new status the object is in.</param>
+        /// <param name="reason">The reason for the state change.</param>
+        /// <param name="changedProperties">The property/properties which have changed.</param>
+        public void TrackObjectStateChanged(string changedObject, string status, string reason = null, string changedProperties = null) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("changedObject", changedObject);
+            dict.Add("status", status);
+
+            if (reason != null) {
+                dict.Add("reason", reason);
+            }
+
+            if (changedProperties != null) {
+                dict.Add("changedProperties", changedProperties);
+            }
+            
+            SendCustomEvent("objectStateChanged", dict);
+        }
+
         #endregion
 
         /// <summary>
@@ -706,7 +854,7 @@ namespace SpilGames.Unity.Base.Implementations {
 
         #endregion
 
-        #region Spil Game Objects
+        #region Spil Game Data
 
         public delegate void SpilGameDataAvailable();
 
@@ -781,7 +929,7 @@ namespace SpilGames.Unity.Base.Implementations {
             if (Spil.PlayerData != null) {
                 Spil.PlayerData.PlayerDataUpdatedHandler();
             }
-            
+
 
             if (Spil.Instance.OnPlayerDataUpdated != null) {
                 Spil.Instance.OnPlayerDataUpdated(playerDataUpdatedData.reason, playerDataUpdatedData);
@@ -1518,12 +1666,11 @@ namespace SpilGames.Unity.Base.Implementations {
 
         #region Advertisement
 
+        public abstract void RequestRewardVideo(string location = null, string rewardType = null);
 
-		public abstract void RequestRewardVideo(string location = null, string rewardType = null);
-        
         public abstract void RequestMoreApps();
 
-		public abstract void PlayVideo(string location = null, string rewardType = null);
+        public abstract void PlayVideo(string location = null, string rewardType = null);
 
         public abstract void PlayMoreApps();
 

@@ -14,9 +14,7 @@ using System;
 using SpilGames.Unity.Helpers.PlayerData;
 
 namespace SpilGames.Unity {
-    
     [HelpURL("http://www.spilgames.com/developers/integration/unity/unity-get-started/")]
-    
     public class Spil : MonoBehaviour {
         private SpilGameDataHelper GameDataObject;
         public static SpilGameDataHelper GameData;
@@ -30,22 +28,12 @@ namespace SpilGames.Unity {
 
         [Header("Android Settings")]
 #if UNITY_ANDROID || UNITY_EDITOR
-        /// <summary>
-        /// The project ID assigned to your project by Spil games.
-        /// You can get your project id from your contact person.
-        /// The project ID is used for push notifications.
-        /// </summary>
         [SerializeField] public string ProjectId = "";
-
 #endif
 
-        [Header("iOS Settings")] 
-        
-        [SerializeField] public string CustomBundleId;
+        [Header("iOS Settings")] [SerializeField] public string CustomBundleId;
 
-        [Header("Editor Settings")] 
-        
-        [SerializeField] public bool EditorLogging = true;
+        [Header("Editor Settings")] [SerializeField] public bool EditorLogging = true;
 
         [SerializeField] public bool EditorDebugMode = true;
 
@@ -60,12 +48,8 @@ namespace SpilGames.Unity {
         [SerializeField] public string iapPurchaseRequestValue;
 
         public static string IapPurchaseRequest { get; private set; }
-        
-        [Header ("Reward Settings")]
-        
-        [Header("Ads")] 
-        
-        [SerializeField] private string currencyName;
+
+        [Header("Reward Settings")] [Header("Ads")] [SerializeField] private string currencyName;
 
         public static string CurrencyName { get; private set; }
 
@@ -77,11 +61,7 @@ namespace SpilGames.Unity {
 
         public static int Reward { get; private set; }
 
-        [Space(10)]
-        
-        [Header("Daily Bonus")] 
-        
-        [SerializeField] private int dailyBonusId;
+        [Space(10)] [Header("Daily Bonus")] [SerializeField] private int dailyBonusId;
 
         public static int DailyBonusId { get; private set; }
 
@@ -101,11 +81,7 @@ namespace SpilGames.Unity {
 
         public DailyBonusRewardTypeEnum DailyBonusRewardType;
 
-        [Space(10)]
-        
-        [Header("Live Event")] 
-        
-        [SerializeField] private int liveEventRewardId;
+        [Space(10)] [Header("Live Event")] [SerializeField] private int liveEventRewardId;
 
         public static int LiveEventRewardId { get; private set; }
 
@@ -124,18 +100,13 @@ namespace SpilGames.Unity {
         };
 
         public LiveEventRewardTypeEnum LiveEventRewardType;
-        
-        [Space(10)]
-        
-        [Header("Token System")] 
-        
-        [SerializeField] private string rewardToken;
-        
+
+        [Space(10)] [Header("Token System")] [SerializeField] private string rewardToken;
+
         public static string RewardToken { get; private set; }
-        
+
         public enum RewardFeatureTypeEnum {
             DEEPLINK,
-
         };
 
         public RewardFeatureTypeEnum RewardFeatureType;
@@ -157,9 +128,9 @@ namespace SpilGames.Unity {
             ITEM,
             EXTERNAL
         };
-        
+
         public TokenRewardTypeEnum TokenRewardType;
-        
+
         public static Spil MonoInstance {
             get {
                 GameObject spilSDKObject = GameObject.Find("SpilSDK");
@@ -178,11 +149,11 @@ namespace SpilGames.Unity {
 
 		public static SpilAndroidUnityImplementation Instance = new SpilAndroidUnityImplementation();
 
-		#elif UNITY_IPHONE || UNITY_TVOS
+#elif UNITY_IPHONE || UNITY_TVOS
 
 		public static SpiliOSUnityImplementation Instance = new SpiliOSUnityImplementation();
 
-		#endif
+#endif
 
 //        public delegate void SpilSDKInitialized();
 //        
@@ -190,7 +161,7 @@ namespace SpilGames.Unity {
 //        /// This event indicates that the Spil SDK was initialised on Unity Side.
 //        /// </summary>
 //        public static event SpilSDKInitialized OnSpilSDKInitialized;
-        
+
         void Awake() {
             if (initializeOnAwake) {
                 Initialize();
@@ -200,7 +171,8 @@ namespace SpilGames.Unity {
         public void Initialize() {
             Debug.Log("SpilSDK-Unity Init");
 
-            Instance.SetPluginInformation(SpilUnityImplementationBase.PluginName, SpilUnityImplementationBase.PluginVersion);
+            Instance.SetPluginInformation(SpilUnityImplementationBase.PluginName,
+                SpilUnityImplementationBase.PluginVersion);
 
 #if UNITY_EDITOR
 
@@ -220,7 +192,8 @@ namespace SpilGames.Unity {
 
             //Check if Project Id is set
             if (ProjectId == null) {
-                throw new UnityException("Project ID not set!! Please set your Project Id with the id provided by the Spil representative!");
+                throw new UnityException(
+                    "Project ID not set!! Please set your Project Id with the id provided by the Spil representative!");
             }
 
 #endif
@@ -237,9 +210,7 @@ namespace SpilGames.Unity {
 			PlayerDataObject = new PlayerDataHelper (Instance);
 			PlayerData = PlayerDataObject;
 
-			#endif
-            
-//            Invoke ("SendOnInitializeEvent", invokeSeconds);
+#endif
         }
 
         public void InitEditor() {
@@ -255,7 +226,7 @@ namespace SpilGames.Unity {
             }
 
             IapPurchaseRequest = iapPurchaseRequestValue;
-            
+
             CurrencyName = currencyName;
             CurrencyId = currencyId;
             Reward = reward;
@@ -271,16 +242,10 @@ namespace SpilGames.Unity {
             TokenRewardId = tokenRewardId;
             TokenExternalRewardId = tokenExternalRewardId;
             TokenRewardAmount = tokenRewardAmount;
-            
+
             RewardToken = rewardToken;
         }
 
-//        private void SendOnInitializeEvent() {
-//            if (OnSpilSDKInitialized != null) {
-//                OnSpilSDKInitialized();
-//            }
-//        }
-        
         /// <summary>
         /// This method is called by the native Spil SDK, it should not be used by developers.
         /// Developers can subscribe to the Spil.Instance.AdStarted event.
@@ -434,7 +399,7 @@ namespace SpilGames.Unity {
         public void SplashScreenOpenShop() {
             SpilUnityImplementationBase.fireSplashScreenOpenShop();
         }
-        
+
         /// <summary>
         /// This method is called by the native Spil SDK, it should not be used by developers.
         /// </summary>
@@ -539,14 +504,14 @@ namespace SpilGames.Unity {
         public void IAPInvalid(string message) {
             SpilUnityImplementationBase.fireIAPInvalid(message);
         }
-        
+
         /// <summary>
         /// This event indicates that an IAP request was fired from the SDK.
         /// </summary>
         public void IAPRequestPurchase(string skuId) {
             SpilUnityImplementationBase.fireIAPRequestPurchase(skuId);
         }
-        
+
         /// <summary>
         /// This event indicates that the IAP was invalid when checked with the SLOT backend.
         /// </summary>
@@ -574,7 +539,7 @@ namespace SpilGames.Unity {
         public void LiveEventAvailable() {
             SpilUnityImplementationBase.fireLiveEventAvailable();
         }
-        
+
         /// <summary>
         /// This event indicates that the Live Event Stage has been opened.
         /// </summary>
@@ -609,7 +574,7 @@ namespace SpilGames.Unity {
         public void LiveEventReward(string receivedReward) {
             SpilUnityImplementationBase.fireLiveEventReward(receivedReward);
         }
-        
+
         /// <summary>
         /// This event indicates the reward given for the Live Event.
         /// </summary>
@@ -630,8 +595,8 @@ namespace SpilGames.Unity {
         public void LiveEventCompleted() {
             SpilUnityImplementationBase.fireLiveEventCompleted();
         }
-        
-        #if UNITY_ANDROID
+
+#if UNITY_ANDROID
         /// <summary>
         /// This event indicates the status of the permission request.
         /// Only Android.
@@ -639,7 +604,6 @@ namespace SpilGames.Unity {
         public void PermissionResponse(string message) {
             SpilUnityImplementationBase.firePermissionResponse(message);
         }
-        #endif
-     
+#endif
     }
 }

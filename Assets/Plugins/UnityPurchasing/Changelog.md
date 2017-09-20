@@ -1,3 +1,57 @@
+## [1.13.3] - 2017-09-14
+### Fixed
+- Fixed a bug that caused some iOS 11 promoted in-app purchase attempts to fail when the app was not already running in the background
+
+## [1.13.2] - 2017-09-07
+### Added
+- Android Gradle - Optional Proguard configuration file to support Gradle release builds on Unity 2017.1+: "Assets/Plugins/Android/proguard-user.txt.OPTIONAL.txt". See contents of file for more detail.
+- Installer - Compatibility with Unity 2017.2's Build Settings > Android > Xiaomi Mi Game Center SDK package add button, avoiding duplicate class definitions if previously added to `Packages/manifest.json` (new Package Manager).
+
+### Fixed
+- Windows (UWP) Store - Updates error handling for failed purchases to correctly call `OnPurchaseFailed()` with an informative `PurchaseFailureReason`
+- Fixed prices that were incorrectly parsed when the device's culture specified a number format using a comma for the decimal separator.
+- XiaomiMiPay - Limit product identifier length to 40 characters in IAP Catalog, matching store requirements.
+- Receipt Validation - Address aggressive class stripping NullReferenceException when validating receipt with preservation in Assets/Plugins/UnityPurchasing/scripts/link.xml.
+
+## [1.13.1] - 2017-08-18
+### Fixed
+- Android platforms - Fix Unity crash by stack-overflow when using the `UnityPurchasingEditor.TargetAndroidStore(AndroidStore store)` method or the Window > Unity IAP > Android > Xiaomi Mi Game Pay targeting menu.
+
+## [1.13.0] - 2017-07-31
+### Added
+- iOS and tvOS - Added support for purchases initiated from the App Store using the new API in iOS 11 and tvOS 11. For more information about this feature, watch the ["What's New in StoreKit" video from WWDC 2017](https://developer.apple.com/videos/play/wwdc2017/303/). If you intend to support this feature in your app, it is important that you initialize Unity Purchasing and be prepared to handle purchases as soon as possible when your app is launched.
+- Apple platforms - The IAP Catalog tool will now export translations when exporting to the Apple Application Loader format.
+- Apple platforms - Add support for controlling promoted items in the App Store through IAppleExtensions. This feature is available on iOS and tvOS 11. Set the order of promoted items in the App Store with IAppleExtensions.SetStorePromotionOrder, or control visiblility with IAppleExtensions.SetStorePromotionVisibility.
+```csharp
+public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
+{
+	// Set the order of the promoted items
+	var appleExtensions = extensions.GetExtension<IAppleExtensions>();
+	appleExtensions.SetStorePromotionOrder(new List<Product>{
+		controller.products.WithID("sword"),
+		controller.products.WithID("subscription")
+	});
+}
+```
+```csharp
+public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
+{
+	// Set the visibility of promoted items
+	var appleExtensions = extensions.GetExtension<IAppleExtensions>();
+	appleExtensions.SetStorePromotionVisibility(controller.products.WithID("subscription"), AppleStorePromotionVisibility.Hide);
+	appleExtensions.SetStorePromotionVisibility(controller.products.WithID("100.gold.coins"), AppleStorePromotionVisibility.Default);
+}
+```
+
+### Changed
+- AndroidStore enum - Obsoleted by superset AppStore enum. Cleans up logging mentioning Android on non-Android platforms.
+- Codeless IAP - IAP Button notifies just one purchase button for purchase failure, logging additional detail.
+
+### Fixed
+- Apple platforms - Catch NullReferenceException thrown during initialization when the app receipt cannot be correctly parsed.
+- IAP Catalog - Fix GUI slowdown when typing details for large number of products on Windows.
+- Fix internal MiniJSON namespace exposure, regression introduced in 1.11.2.
+
 ## [1.12.0] - 2017-07-25
 ### Added
 - XiaomiMiPay - Add Xiaomi Mi Game Pay app store purchasing for Android devices in China. Add the "Unity Channel" support library and service. Unity Channel helps non-China developers access the Unity-supported Chinese app store market by featuring app store user login and payment management. Use Unity Channel directly for login to Xiaomi. Unity IAP internally uses Unity Channel for Xiaomi payment. [Preliminary documentation](https://docs.google.com/document/d/1VjKatN5ZAn6xZ1KT_PIvgylmAKcXvKvf4jgJqi3OuuY) is available. See also [Xiaomi's portal](https://unity.mi.com/) and [Unity's partner guide](https://unity3d.com/partners/xiaomi/guide).
@@ -27,7 +81,6 @@
 - General - Better momentary memory performance for local receipt validation and other JSON parsing situations.
 - Editor menus - Targeted Android store menu checkmark are set and valid more often.
 - Installer - Fix error seen during install, `ReflectionTypeLoadException[...]UnityEditor.Purchasing.UnityIAPInstaller.<k_Purchasing>`.
-
 
 ## [1.11.1] - 2017-05-23
 ### Fixed
