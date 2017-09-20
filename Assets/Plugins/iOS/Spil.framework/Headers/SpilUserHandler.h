@@ -14,7 +14,7 @@
 // Spil user id
 
 -(void)syncSpilUserId;
--(NSString*)getUserId;
+-(NSString*)getSpilUserId;
 
 // Reset
 
