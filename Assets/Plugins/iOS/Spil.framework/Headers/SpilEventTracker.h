@@ -22,19 +22,10 @@
 -(void)setPushKey:(NSString*)pushKey;
 
 -(NSString*)getBundleId;
--(NSString*)getLanguage;
--(NSString*)getOsVersion;
--(NSString*)getAppVersion;
--(NSString*)getDeviceModel;
--(NSString*)getTimezoneOffset;
 -(NSString*)getSessionId;
 -(NSString*)getEndPointPath;
--(NSString*)getTimeStamp;
--(NSString*)getPluginName;
--(NSString*)getPluginVersion;
 -(NSString*)getPushKey;
 -(BOOL)getIsUnity;
--(BOOL)isUnsafe;
 -(BOOL)debugModeEnabled;
 -(BOOL)stagingEnabled;
 

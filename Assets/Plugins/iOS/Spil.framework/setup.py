@@ -125,7 +125,7 @@ for library in requiredSystemLibraries:
 
 # add custom frameworks
 print('Adding custom frameworks')
-requiredCustomFrameworks = ['AdjustSdk', 'Chartboost', 'FBAudienceNetwork', 'FacebookAdapter', 'Fyber_AdColony', 'Fyber_UnityAds', 'Fyber_Vungle', 'GoogleMobileAds', 'MMAdSDK', 'UnityAds', 'ZendeskSDK', 'ZendeskProviderSDK', 'FirebaseCore', 'FirebaseInstanceID', 'FirebaseAnalytics', 'FirebaseDynamicLinks', 'GoogleToolboxForMac']
+requiredCustomFrameworks = ['AdjustSdk', 'Chartboost', 'FBAudienceNetwork', 'FacebookAdapter', 'Fyber_AdColony', 'Fyber_UnityAds', 'Fyber_Vungle', 'GoogleMobileAds', 'MMAdSDK', 'UnityAds', 'ZendeskSDK', 'ZendeskProviderSDK', 'FirebaseCore', 'FirebaseInstanceID', 'FirebaseAnalytics', 'FirebaseDynamicLinks', 'GoogleToolboxForMac', 'FirebaseNanoPB', 'nanopb', 'MPUBMoatMobileAppKit']
 project.add_file_if_doesnt_exist('Spil.framework', parent=frameworks, weak=False)
 for framework in requiredCustomFrameworks:
 	project.add_file_if_doesnt_exist('Spil.framework/Frameworks/' + framework + '.framework', parent=frameworks, weak=False)
@@ -145,9 +145,9 @@ addBundleResource(os.getcwd() + '/Data/Raw/defaultPlayerData.json', os.getcwd() 
 addBundleResource(os.getcwd() + '/Spil.framework/ZendeskSDK.bundle', os.getcwd() + '/ZendeskSDK.bundle', bundles)
 addBundleResource(os.getcwd() + '/Spil.framework/ZendeskSDKStrings.bundle', os.getcwd() + '/ZendeskSDKStrings.bundle', bundles)
 
-# add png/xib/der resources
+# add png/xib/der/mom/momd resources
 for file in os.listdir(os.getcwd() + '/Spil.framework'):
-    if file.lower().endswith(".png") or file.lower().endswith(".xib") or file.lower().endswith(".der"):
+    if file.lower().endswith(".png") or file.lower().endswith(".xib") or file.lower().endswith(".der") or file.lower().endswith(".mom") or file.lower().endswith(".momd"):
         addBundleResource(os.getcwd() + '/Spil.framework/' + file, os.getcwd() + '/' + file, bundles)
 
 # change build settings

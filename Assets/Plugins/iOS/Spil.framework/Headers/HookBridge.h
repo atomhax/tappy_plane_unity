@@ -5,19 +5,38 @@
 //  Copyright (c) 2015 Spil Games. All rights reserved.
 //
 
-
 #import <UIKit/UIKit.h>
 
-@interface HookBridge : NSObject {
-    
-}
+@interface HookBridge : NSObject
+
+// --- Native ObjC ---
+
++ (void)sendMessage:(NSString*)messageName toObject:(NSString*)objectName withParameter:(NSString*)parameterString;
++ (NSString*)getLocalSecret;
+
+// --- C Hookbridge ---
 
 #ifdef __cplusplus
 extern "C" {
-
-    // --- Event tracking ---
+    // --- External ---
     
-    void initEventTracker();
+    // NOTE: Not defined in SpiliOSUnityImplementation.cs & HookBridge.mm, implemented by unity
+    void UnitySendMessage(const char* obj, const char* method, const char* msg);
+    
+    // NOTE: Not defined in SpiliOSUnityImplementation.cs & HookBridge.mm, implemented in libSpilSDKiOSAuth.a
+    char* getLocalSecretEx();
+    
+    // --- Util ---
+    
+    void setCustomBundleIdNative(const char* bundleId);
+    
+    char* getSpilUserIdNative();
+    
+    void setPluginInformationNative(const char* pluginName, const char* pluginVersion);
+    
+    void requestServerTimeNative();
+    
+    // --- Event tracking ---
     
     void initEventTrackerWithOptions(const char* options);
     
@@ -77,42 +96,9 @@ extern "C" {
     
     void registerForPushNotifications();
     
-    void setPushNotificationKey(const char* pushKey);
-    
-    void handlePushNotification(const char* notificationStringParams);
-    
     // --- Token claiming ---
     
     void claimTokenNative(const char* token, const char* rewardType);
-    
-    // --- App flow ---
-    
-    // Not used
-    //void applicationDidFinishLaunchingWithOptions(const char* launchOptions);
-    
-    void applicationDidEnterBackground();
-    
-    void applicationDidBecomeActive();
-    
-    // --- Util ---
-    
-    void setCustomBundleIdNative(const char* bundleId);
-    
-    void UnitySendMessage(const char* obj, const char* method, const char* msg);
-
-    char* cStringCopy(const char* string);
-    
-    char* getSpilUserIdNative();
-    
-    void setPluginInformationNative(const char* pluginName, const char* pluginVersion);
-
-    char* getLocalSecretEx();
-    
-/*    char* getPublicKeysEx();
-    
-    char* getIssuersEx();*/
-    
-    void requestServerTimeNative();
     
     // --- Config ---
     
@@ -128,8 +114,6 @@ extern "C" {
     
     char* getAllPackagesNative();
     
-    char* getPromotionNative(const char* keyName);
-    
     char* getPromotionsNative(const char* keyName);
 
     // --- ADS ---
@@ -138,21 +122,15 @@ extern "C" {
     
     void showMoreAppsNative();
     
-    void requestRewardVideoNative(const char* rewardType);
+    void requestRewardVideoNative(const char* location, const char* rewardType);
 
-    void playRewardVideoNative();
+    void playRewardVideoNative(const char* location, const char* rewardType);
     
-    void devRequestAdNative(const char* providerName, const char* adTypeName, const bool parentalGate);
-    
-    void devShowRewardVideoNative(const char* providerName);
-    
-    void devShowInterstitialNative(const char* providerName);
-    
-    void devShowMoreAppsNative(const char* providerName);
-
     void showToastOnVideoReward(const bool enabled);
     
     void closedParentalGateNative(const bool pass);
+    
+    void devRequestAdNative(const char* providerName, const char* adTypeName, const bool parentalGate);
     
     // --- Game & Player data ---
     
@@ -198,11 +176,11 @@ extern "C" {
     
     // --- User data ---
     
-    char* getUserIdNative();
+    char* getExternalUserIdNative();
     
-    char* getUserProviderNative();
+    char* getExternalUserProviderNative();
     
-    void setUserIdNative(const char* providerId, const char* userId);
+    void setExternalUserIdNative(const char* providerId, const char* userId);
 
     void setPrivateGameStateNative(const char* privateData);
 
@@ -240,10 +218,5 @@ extern "C" {
 }
 
 #endif
-
-+ (void)sendMessage:(NSString*)messageName toObject:(NSString*)objectName withParameter:(NSString*)parameterString;
-+ (NSString*) getLocalSecret;
-/*+ (NSArray*) getPublicKeys;
-+ (NSArray*) getIssuers;*/
 
 @end
