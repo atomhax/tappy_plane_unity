@@ -53,7 +53,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Editor\RichardsCuts.cs" />
-    <Compile Include="Assets\Editor\TappyPlaneTest.cs" />
     <Compile Include="Assets\Spilgames\Editor\Menu\SpilEditorConfig.cs" />
     <Compile Include="Assets\Spilgames\Editor\Menu\SpilEditorDocumentation.cs" />
     <Compile Include="Assets\Spilgames\Editor\Menu\SpilEditorReleases.cs" />
