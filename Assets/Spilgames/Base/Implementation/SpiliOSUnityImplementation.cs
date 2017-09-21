@@ -24,7 +24,8 @@ namespace SpilGames.Unity.Base.Implementations
 		[DllImport("__Internal")]
 		private static extern void setPluginInformationNative(string pluginName, string pluginVersion);
 
-    
+		#endregion
+
 		#region Game config
 	
 		/// <summary>
@@ -358,7 +359,9 @@ namespace SpilGames.Unity.Base.Implementations
 
 		[DllImport("__Internal")]
 		private static extern string getSpilGameDataNative();
-    
+
+		#endregion
+
 		#region Image loading
 	
 	        /// <summary>
@@ -408,14 +411,8 @@ namespace SpilGames.Unity.Base.Implementations
 
     		[DllImport("__Internal")]
 		private static extern void preloadItemAndBundleImagesNative();
-
-
     
 		#endregion
-	
-    
-		#endregion
-	
     
 		#region Player Data
 	
@@ -514,17 +511,7 @@ namespace SpilGames.Unity.Base.Implementations
 		[DllImport("__Internal")]
 		private static extern void resetWalletNative ();
 
-    
 		#endregion
-	
-    
-		#endregion
-	
-
-
-    
-		#region Non inherited members (iOS only members)
-	
     
 		#region Game config
 	
@@ -683,11 +670,10 @@ namespace SpilGames.Unity.Base.Implementations
 
 		[DllImport("__Internal")]
 		private static extern void registerForPushNotifications();
+    
+		#endregion
 
-    
-		#endregion
-    
-		#endregion
+		#region event tracker
 	
 		[DllImport("__Internal")]
 		private static extern void initEventTrackerWithOptions(string options);	
@@ -700,5 +686,5 @@ namespace SpilGames.Unity.Base.Implementations
     
 		#endregion
 	}        
-#endif
+	#endif
 }
