@@ -7,7 +7,6 @@ using SpilGames.Unity.Helpers.GameData;
 using SpilGames.Unity.Helpers.PlayerData;
 using SpilGames.Unity.Json;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 #if !UNITY_TVOS
@@ -176,23 +175,23 @@ public class GameController : MonoBehaviour {
 
         Spil.Instance.OnRewardTokenClaimFailed -= OnRewardTokenClaimFailed;
         Spil.Instance.OnRewardTokenClaimFailed += OnRewardTokenClaimFailed;
-        
-        
+
+
         Spil.Instance.OnLoginSuccessful -= OnLoginSuccessful;
         Spil.Instance.OnLoginSuccessful += OnLoginSuccessful;
-        
+
         Spil.Instance.OnLoginFailed -= OnLoginFailed;
         Spil.Instance.OnLoginFailed += OnLoginFailed;
-        
+
         Spil.Instance.OnLogoutSuccessful -= OnLogoutSuccessful;
         Spil.Instance.OnLogoutSuccessful += OnLogoutSuccessful;
-        
+
         Spil.Instance.OnLogoutFailed -= OnLogoutFailed;
         Spil.Instance.OnLogoutFailed += OnLogoutFailed;
-        
+
         Spil.Instance.OnAuthenticationError -= OnAuthenticationError;
         Spil.Instance.OnAuthenticationError += OnAuthenticationError;
-        
+
 #if UNITY_ANDROID
         Spil.Instance.OnPermissionResponse -= OnPermissionResponse;
         Spil.Instance.OnPermissionResponse += OnPermissionResponse;
@@ -216,7 +215,7 @@ public class GameController : MonoBehaviour {
         if (Spil.Instance.IsLoggedIn()) {
             FacebookLogin();
         }
-        
+
         if (FB.IsInitialized && FB.IsLoggedIn) {
             highScoreButton.SetActive(true);
             FBShareButton.SetActive(true);
@@ -408,8 +407,7 @@ public class GameController : MonoBehaviour {
             Debug.Log("Private Game State Updated! Request new private game state!");
             string privateGameState = Spil.Instance.GetPrivateGameState();
             Debug.Log("New Private Game state: " + privateGameState);
-        }
-        else if (access.Equals("public")) {
+        } else if (access.Equals("public")) {
             Debug.Log("Public Game State Updated! Request new public game state!");
             string publicGameState = Spil.Instance.GetPublicGameState();
             Debug.Log("New Public Game state: " + publicGameState);
@@ -624,7 +622,7 @@ public class GameController : MonoBehaviour {
     }
 
 
-    public void FBShare() {  
+    public void FBShare() {
 #if !UNITY_TVOS
         Uri url = new Uri("http://files.cdn.spilcloud.com/10/1479133368_tappy_logo.png");
         FB.ShareLink(url, "Tappy Plane", "Check out Tappy Plane for iOS and Android!", url, null);
@@ -716,7 +714,7 @@ public class GameController : MonoBehaviour {
         liveEventButton.SetActive(false);
         overlayEnabled = false;
     }
-    
+
     private void OnLoginSuccessful(bool resetData, string socialProvider, string s, bool isGuest) {
         Debug.Log("Login Successful!");
 
@@ -728,26 +726,26 @@ public class GameController : MonoBehaviour {
             Spil.Instance.ResetData();
         }
     }
-    
+
     private void OnLoginFailed(SpilErrorMessage errorMessage) {
         Debug.Log("Login failed! Error: " + errorMessage.message);
     }
 
     private void OnLogoutSuccessful() {
         Debug.Log("Logout Successful");
-        
+
         Spil.Instance.ResetData();
     }
-    
+
     private void OnLogoutFailed(SpilErrorMessage errorMessage) {
         Debug.Log("Logout failed! Error: " + errorMessage.message);
     }
 
     private void OnAuthenticationError(SpilErrorMessage errorMessage) {
         Debug.Log("Authentication Error: " + errorMessage.message);
-        
+
         Spil.Instance.UserLogout(false);
-        
+
         Spil.Instance.ShowUnauthorizedDialog("Unauthorized", "The account you are currently using is not valid. Please select one of the actions to resolve the issue:", "Re-login", "Play as Guest");
     }
 

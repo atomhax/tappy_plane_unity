@@ -167,7 +167,6 @@ namespace SpilGames.Unity.Base.Implementations {
         public void TrackLevelFailedEvent(string levelName, string difficulty = null, double score = 0,
             string speed = null, int moves = 0, int stars = 0, int turns = 0, string reason = null,
             bool customCreated = false, string creatorId = null) {
-            
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("level", levelName);
 
@@ -697,11 +696,9 @@ namespace SpilGames.Unity.Base.Implementations {
             enumAdType adType = enumAdType.Unknown;
             if (type.ToLower().Trim().Equals("rewardvideo")) {
                 adType = enumAdType.RewardVideo;
-            }
-            else if (type.ToLower().Trim().Equals("interstitial")) {
+            } else if (type.ToLower().Trim().Equals("interstitial")) {
                 adType = enumAdType.Interstitial;
-            }
-            else if (type.ToLower().Trim().Equals("moreapps")) {
+            } else if (type.ToLower().Trim().Equals("moreapps")) {
                 adType = enumAdType.MoreApps;
             }
             if (adType == enumAdType.Unknown) {
@@ -733,11 +730,9 @@ namespace SpilGames.Unity.Base.Implementations {
             enumAdType adType = enumAdType.Unknown;
             if (type.ToLower().Trim().Equals("rewardvideo")) {
                 adType = enumAdType.RewardVideo;
-            }
-            else if (type.ToLower().Trim().Equals("interstitial")) {
+            } else if (type.ToLower().Trim().Equals("interstitial")) {
                 adType = enumAdType.Interstitial;
-            }
-            else if (type.ToLower().Trim().Equals("moreapps")) {
+            } else if (type.ToLower().Trim().Equals("moreapps")) {
                 adType = enumAdType.MoreApps;
             }
             if (adType == enumAdType.Unknown) {

@@ -600,35 +600,42 @@ namespace SpilGames.Unity {
         /// This event indicates if the Social Login was completed by the user.
         /// </summary>
         public void LoginSuccessful(string message) {
-            
+            SpilUnityImplementationBase.fireLoginSuccessful(message);
         }
         
         /// <summary>
         /// This event indicates if the Social Login failed.
         /// </summary>
         public void LoginFailed(string error) {
-            
+            SpilUnityImplementationBase.fireLoginFailed(error);
         }
         
         /// <summary>
         /// This event indicates if Social Login should be initiated.
         /// </summary>
         public void RequestLogin() {
-            
+            SpilUnityImplementationBase.fireRequestLogin();
         }
         
         /// <summary>
         /// This event indicates if the Social Logout was completed by the user.
         /// </summary>
         public void LogoutSuccessful() {
-            
+            SpilUnityImplementationBase.fireLogoutSuccessful();
+        }
+        
+        /// <summary>
+        /// This event indicates if the Social Logout failed.
+        /// </summary>
+        public void LogoutFailed(string error) {
+            SpilUnityImplementationBase.fireLogoutFailed(error);
         }
         
         /// <summary>
         /// This event indicates if an authentication error has occured on any event after the Social Login.
         /// </summary>
         public void AuthenticationError(string error) {
-            
+            SpilUnityImplementationBase.fireAuthenticationError(error);
         }
 
 #if UNITY_ANDROID

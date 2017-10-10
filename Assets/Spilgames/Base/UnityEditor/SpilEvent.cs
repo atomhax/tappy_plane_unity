@@ -55,6 +55,10 @@ namespace SpilGames.Unity.Base.UnityEditor {
                 requestForm.AddField("debugMode", Convert.ToString(spil.EditorDebugMode).ToLower());
             }
 
+            if (SpilUnityEditorImplementation.spilToken != null) {
+                requestForm.AddField("spilToken", SpilUnityEditorImplementation.spilToken);
+            }
+            
             WWW request =
                 new WWW(
                     "https://apptracker.spilgames.com/v1/native-events/event/" + platform + "/" + Spil.BundleIdEditor +

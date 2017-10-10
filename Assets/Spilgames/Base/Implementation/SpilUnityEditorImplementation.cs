@@ -17,7 +17,7 @@ namespace SpilGames.Unity.Base.Implementations {
         public static PlayerDataResponse pData;
         public static GameDataResponse gData;
 
-        public static bool unauthorized = false;
+        
         public static string spilToken;
 
         #region Inherited members
@@ -750,7 +750,7 @@ namespace SpilGames.Unity.Base.Implementations {
             spilEvent.Send();
 
             Spil.SpilUserIdEditor = newUid;
-            unauthorized = false;
+            SocialLoginResponse.unauthorized = false;
             spilToken = null;
 
             JSONObject loginResponse = new JSONObject();
