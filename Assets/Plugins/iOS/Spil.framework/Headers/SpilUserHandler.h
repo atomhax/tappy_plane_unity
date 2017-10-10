@@ -11,15 +11,41 @@
 
 +(SpilUserHandler*)sharedInstance;
 
+// Properties
+
+@property (nonatomic, assign) BOOL authConflicted;
+@property (nonatomic, assign) int authErrorCode;
+
 // Spil user id
 
 -(void)syncSpilUserId;
 -(NSString*)getSpilUserId;
 
+// Device id
+
+-(NSString*)getDeviceId;
+
+// Spil user token
+
+-(NSString*)getSpilUserToken;
+
 // Reset
 
--(void)resetUID;
+-(void)resetUID:(NSString*)uid;
 -(void)resetProfile;
+
+// Login
+
+-(void)loginWithExternalUserId:(NSString*)externalUserId externalProviderId:(NSString*)externalProviderId externalToken:(NSString*)externalToken;
+-(BOOL)isLoggedIn;
+-(void)logout:(BOOL)global;
+-(void)userPlayAsGuest;
+-(void)resetData;
+-(void)showOnAuthorizedDialog:(NSString*)title message:(NSString*)message loginButtonText:(NSString*)loginButtonText guestButtonText:(NSString*)guestButtonText;
+
+// Auth errors
+
+-(void)onAuthError:(int)pAuthErrorCode;
 
 // External user id
 

@@ -685,6 +685,52 @@ namespace SpilGames.Unity.Base.Implementations
 		private static extern void trackEventWithParamsNative(string eventName, string jsonStringParams);
     
 		#endregion
+
+		#region Social Login
+
+		public override void UserLogin(string socialId, string socialProvider, string socialToken) {
+			loginNative (socialId, socialProvider, socialToken);
+		}
+
+		[DllImport("__Internal")]
+		private static extern void loginNative(string externalUserId, string externalProviderId, string externalToken);
+
+		public override void UserLogout(bool global) {
+			logoutNative (global);
+		}
+
+		[DllImport("__Internal")]
+		private static extern void logoutNative(bool global);
+
+		public override void UserPlayAsGuest() {
+			userPlayAsGuestNative ();
+		}
+
+		[DllImport("__Internal")]
+		private static extern void userPlayAsGuestNative();
+
+		public override void ShowUnauthorizedDialog(string title, string message, string loginText, string playAsGuestText) {
+			showAuthorizedDialogNative (title, message, loginText, playAsGuestText);
+		}
+
+		[DllImport("__Internal")]
+		private static extern void showAuthorizedDialogNative(string title, string message, string loginButtonText, string guestButtonText);
+
+		public override bool IsLoggedIn() {
+			return isLoggedInNative ();
+		}
+
+		[DllImport("__Internal")]
+		private static extern bool isLoggedInNative();
+
+		public override void ResetData() {
+			resetDataNative ();
+		}
+
+		[DllImport("__Internal")]
+		private static extern void resetDataNative();
+
+		#endregion
 	}        
 	#endif
 }
