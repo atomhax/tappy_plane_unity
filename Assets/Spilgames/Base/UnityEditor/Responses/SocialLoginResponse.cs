@@ -196,14 +196,14 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
                         break;
                 }
 
-                SpilUnityImplementationBase.fireLoginFailed(JsonUtility.ToJson(error));
+                SpilUnityImplementationBase.fireAuthenticationError(JsonUtility.ToJson(error));
             } else {
                 SpilErrorMessage error = new SpilErrorMessage();
                 error.id = 37;
                 error.name = "SocialLoginServerError";
                 error.message = "Error communicating with the server!";
 
-                SpilUnityImplementationBase.fireLoginFailed(JsonUtility.ToJson(error));
+                SpilUnityImplementationBase.fireAuthenticationError(JsonUtility.ToJson(error));
             }
         }
 
