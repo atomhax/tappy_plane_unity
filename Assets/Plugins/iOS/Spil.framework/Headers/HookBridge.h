@@ -102,6 +102,8 @@ extern "C" {
     
     // --- Config ---
     
+    void requestGameConfigNative();
+    
     char* getConfigNative();
     
     char* getConfigValueNative(const char* keyName);
@@ -215,6 +217,20 @@ extern "C" {
     char* getLiveEventEndDateNative();
     
     char* getLiveEventConfigNative();
+    
+    // --- Login ---
+    
+    void loginNative(char* externalUserId, char* externalProviderId, char* externalToken);
+    
+    bool isLoggedInNative();
+    
+    void logoutNative(bool global);
+    
+    void userPlayAsGuestNative();
+    
+    void showAuthorizedDialogNative(char* title, char* message, char* loginButtonText, char* guestButtonText);
+    
+    void resetDataNative();
 }
 
 #endif

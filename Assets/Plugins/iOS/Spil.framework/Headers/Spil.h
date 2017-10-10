@@ -9,7 +9,7 @@
 #import "HookBridge.h"
 #import "GAI.h"
 
-#define SPIL_SDK_VERSION @"2.6.0"
+#define SPIL_SDK_VERSION @"2.7.0"
 
 @class ImageContext;
 @class Spil;
@@ -110,6 +110,15 @@
 -(void)liveEventUsedExternalItems:(nonnull NSArray*)externalItem;
 -(void)liveEventReward:(nonnull NSArray*)rewardList;
 -(void)liveEventCompleted;
+
+// Login
+
+-(void)onLoginSuccessful:(BOOL)resetData withSocialProvider:(nullable NSString*)socialProvider withSocialId:(nullable NSString*)socialId isGuest:(BOOL)isGuest;
+-(void)onLoginFailed:(nonnull NSString*)error;
+-(void)onLogoutSuccessful;
+-(void)onLogoutFailed:(nonnull NSString*)error;
+-(void)onAuthError:(nonnull NSString*)error;
+-(void)onRequestLogin;
 
 @end
 
@@ -508,6 +517,11 @@
 +(void)claimToken:(nonnull NSString*)token withRewardType:(nonnull NSString*)rewardType;
 
 #pragma mark Config
+
+/**
+ * Request the game config
+ */
++(void)requestGameConfig;
 
 /**
  * Get the latest stored game configuration, typically a synchronized json object coming from the server.
@@ -909,6 +923,41 @@
  *  Request the live event config
  */
 +(nonnull NSDictionary*)getLiveEventConfig;
+
+#pragma user login
+
+/**
+ *  Used to login, will automatically call setExternalUserId
+ *  @param externalUserId The social user id to use
+ *  @param externalProviderId The id of the service (e.g. facebook)
+ *  @param externalToken The auth token provided by the external provider
+ */
++(void)loginWithExternalUserId:(nonnull NSString*)externalUserId externalProviderId:(nonnull NSString*)externalProviderId externalToken:(nonnull NSString*)externalToken;
+
+/**
+ *  Returns the current login status
+ */
++(BOOL)isLoggedIn;
+
+/**
+ *  Logout the user
+ */
++(void)logout:(BOOL)global;
+
+/**
+ *  Logout the user and let him continue as guest
+ */
++(void)userPlayAsGuest;
+
+/**
+ * Will reset the gameconfig, packages/promotions, gamedata, playerdata & gamestate
+ */
++(void)resetData;
+
+/**
+ * Show the default auth error dialog
+ */
++(void)showOnAuthorizedDialog:(nonnull NSString*)title message:(nonnull NSString*)message loginButtonText:(nonnull NSString*)loginButtonText guestButtonText:(nonnull NSString*)guestButtonText;
 
 #pragma test methods (dev)
 
