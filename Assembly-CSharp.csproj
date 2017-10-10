@@ -109,6 +109,7 @@
     <Compile Include="Assets\Spilgames\Base\UnityEditor\Responses\PlayerDataResponse.cs" />
     <Compile Include="Assets\Spilgames\Base\UnityEditor\Responses\Response.cs" />
     <Compile Include="Assets\Spilgames\Base\UnityEditor\Responses\RewardResponse.cs" />
+    <Compile Include="Assets\Spilgames\Base\UnityEditor\Responses\SocialLoginResponse.cs" />
     <Compile Include="Assets\Spilgames\Base\UnityEditor\SpilEvent.cs" />
     <Compile Include="Assets\Spilgames\Helpers\GameData\Bundle.cs" />
     <Compile Include="Assets\Spilgames\Helpers\GameData\Currency.cs" />

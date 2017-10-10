@@ -81,6 +81,7 @@ namespace SpilGames.Unity.Base.Implementations {
         internal override void SpilInit() {
 #if UNITY_ANDROID
             Spil spil = GameObject.FindObjectOfType<Spil>();
+            CallNativeMethod("init");
             RegisterDevice(spil.ProjectId);
             SetPluginInformation(PluginName, PluginVersion);
             UpdatePackagesAndPromotions();
@@ -195,7 +196,7 @@ namespace SpilGames.Unity.Base.Implementations {
             if (dict != null) {
                 parameters = JsonHelper.DictToJSONObject(dict).ToString();
             }
-            
+
             CallNativeMethod("trackEvent", new object[] {
                 eventName,
                 parameters
@@ -208,7 +209,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// When calling this method "SendrequestRewardVideoEvent()" must first have been called to request and cache a video.
         /// If no video is available then nothing will happen.
         /// </summary>
-		public override void PlayVideo(string location = null, string rewardType = null) {
+        public override void PlayVideo(string location = null, string rewardType = null) {
             CallNativeMethod("playVideo", new object[] {
                 location,
                 rewardType
@@ -240,7 +241,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// event to which the developer can subscribe and for instance call PlayVideo();
         /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
-		public override void RequestRewardVideo(string location = null, string rewardType = null) {
+        public override void RequestRewardVideo(string location = null, string rewardType = null) {
             CallNativeMethod("requestRewardVideo", new object[] {
                 location,
                 rewardType
@@ -499,6 +500,46 @@ namespace SpilGames.Unity.Base.Implementations {
 
         #endregion
 
+        #region Social Login
+
+        public override void UserLogin(string socialId, string socialProvider, string socialToken) {
+            CallNativeMethod("userLogin", new object[] {
+                socialId,
+                socialProvider,
+                socialToken
+            }, true);
+        }
+
+        public override void UserLogout(bool global) {
+            CallNativeMethod("userLogout", new object[] {
+                global
+            }, true);
+        }
+
+        public override void UserPlayAsGuest() {
+            CallNativeMethod("userPlayAsGuest");
+        }
+
+        public override void ShowUnauthorizedDialog(string title, string message, string loginText,
+            string playAsGuestText) {
+            CallNativeMethod("showUnauthorizedDialog", new object[] {
+                title,
+                message,
+                loginText,
+                playAsGuestText
+            }, true);
+        }
+
+        public override bool IsLoggedIn() {
+            return Convert.ToBoolean(CallNativeMethod("isLoggedIn"));
+        }
+
+        #endregion
+
+        public override void ResetData() {
+            CallNativeMethod("resetData");
+        }
+
         #region Push notifications
 
         /// <summary>
@@ -658,7 +699,7 @@ namespace SpilGames.Unity.Base.Implementations {
                 denyRationale
             }, true);
         }
-        
+
         public class Permissions {
             public static string READ_CALENDAR = "android.permission.READ_CALENDAR";
             public static string WRITE_CALENDAR = "android.permission.WRITE_CALENDAR";
@@ -683,7 +724,7 @@ namespace SpilGames.Unity.Base.Implementations {
             public bool granted;
             public bool permanentlyDenied;
         }
-        
+
         #endregion
 
         #region Environemnt Changing

@@ -10,11 +10,11 @@ using SpilGames.Unity.Helpers.IAPPackages;
 namespace SpilGames.Unity.Base.Implementations {
     public abstract class SpilUnityImplementationBase {
         public static string PluginName = "Unity";
-        public static string PluginVersion = "2.6.1";
+        public static string PluginVersion = "2.7.0";
 
-        public static string AndroidVersion = "2.6.1";
-        public static string iOSVersion = "2.6.1";
-        
+        public static string AndroidVersion = "2.7.0";
+        public static string iOSVersion = "2.7.0";
+
         #region Game config
 
         /// <summary>
@@ -40,10 +40,10 @@ namespace SpilGames.Unity.Base.Implementations {
         /// <returns>A packageshelper object filled with packages and promotions, will be empty if there are none. Returns null if no packages or promotions are present, which should only happen if the server has never been successfully queried for packages and promotions.</returns>
         public PackagesHelper GetPackagesAndPromotions() {
             string packagesString = GetAllPackages();
-            
-            if (packagesString == null) 
+
+            if (packagesString == null)
                 return null;
-            
+
             List<PackageData> packagesList = JsonHelper.getObjectFromJson<List<PackageData>>(packagesString);
             PackagesHelper helper = new PackagesHelper(packagesList);
             return helper;
@@ -167,6 +167,7 @@ namespace SpilGames.Unity.Base.Implementations {
         public void TrackLevelFailedEvent(string levelName, string difficulty = null, double score = 0,
             string speed = null, int moves = 0, int stars = 0, int turns = 0, string reason = null,
             bool customCreated = false, string creatorId = null) {
+            
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("level", levelName);
 
@@ -589,7 +590,7 @@ namespace SpilGames.Unity.Base.Implementations {
 
             SendCustomEvent("timeElapLoad", dict);
         }
-        
+
         /// <summary>
         /// Sends the "timeoutDetected" event to the native Spil SDK which will send a request to the back-end.
         /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
@@ -603,7 +604,7 @@ namespace SpilGames.Unity.Base.Implementations {
 
             SendCustomEvent("timeoutDetected", dict);
         }
-        
+
         /// <summary>
         /// Sends the "objectStateChanged" event to the native Spil SDK which will send a request to the back-end.
         /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
@@ -612,7 +613,8 @@ namespace SpilGames.Unity.Base.Implementations {
         /// <param name="status">The new status the object is in.</param>
         /// <param name="reason">The reason for the state change.</param>
         /// <param name="changedProperties">The property/properties which have changed.</param>
-        public void TrackObjectStateChanged(string changedObject, string status, string reason = null, string changedProperties = null) {
+        public void TrackObjectStateChanged(string changedObject, string status, string reason = null,
+            string changedProperties = null) {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("changedObject", changedObject);
             dict.Add("status", status);
@@ -624,7 +626,7 @@ namespace SpilGames.Unity.Base.Implementations {
             if (changedProperties != null) {
                 dict.Add("changedProperties", changedProperties);
             }
-            
+
             SendCustomEvent("objectStateChanged", dict);
         }
 
@@ -1523,7 +1525,7 @@ namespace SpilGames.Unity.Base.Implementations {
         public delegate void LiveEventError(SpilErrorMessage errorMessage);
 
         /// <summary>
-        /// This event indicates that the IAP has been validated with the SLOT backend.
+        /// This event indicates that the Live Event encountered an error.
         /// </summary>
         public event LiveEventError OnLiveEventError;
 
@@ -1595,6 +1597,110 @@ namespace SpilGames.Unity.Base.Implementations {
 
             if (Spil.Instance.OnLiveEventCompleted != null) {
                 Spil.Instance.OnLiveEventCompleted();
+            }
+        }
+
+        #endregion
+
+        #region Social Login
+
+        public delegate void LoginSuccessful(bool resetData, string socialProvider, string socialId, bool isGuest);
+
+        /// <summary>
+        /// This event indicates that the Social Login was successful.
+        /// </summary>
+        public event LoginSuccessful OnLoginSuccessful;
+
+        public static void fireLoginSuccessful(string message) {
+            Debug.Log("SpilSDK-Unity fireLoginSuccessful with message: " + message);
+
+            JSONObject loginJSON = new JSONObject(message);
+
+            bool resetData = loginJSON.GetField("resetData").b;
+            string socialProvider = loginJSON.GetField("socialProvider").str;
+            string socialId = loginJSON.GetField("socialId").str;
+            bool isGuest = loginJSON.GetField("isGuest").b;
+
+            if (Spil.Instance.OnLoginSuccessful != null) {
+                Spil.Instance.OnLoginSuccessful(resetData, socialProvider, socialId, isGuest);
+            }
+        }
+
+        public delegate void LoginFailed(SpilErrorMessage errorMessage);
+
+        /// <summary>
+        /// This event indicates that the Social Login failed.
+        /// </summary>
+        public event LoginFailed OnLoginFailed;
+
+        public static void fireLoginFailed(string error) {
+            Debug.Log("SpilSDK-Unity fireLoginFailed with data: " + error);
+
+            SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
+            if (Spil.Instance.OnLoginFailed != null) {
+                Spil.Instance.OnLoginFailed(errorMessage);
+            }
+        }
+
+        public delegate void RequestLogin();
+
+        /// <summary>
+        /// This event indicates that the Social login should be requested again.
+        /// </summary>
+        public event RequestLogin OnRequestLogin;
+
+        public static void fireRequestLogin() {
+            Debug.Log("SpilSDK-Unity fireRequestLogin");
+
+            if (Spil.Instance.OnRequestLogin != null) {
+                Spil.Instance.OnRequestLogin();
+            }
+        }
+
+        public delegate void LogoutSuccessful();
+
+        /// <summary>
+        /// This event indicates that the Social Logout was successful.
+        /// </summary>
+        public event LogoutSuccessful OnLogoutSuccessful;
+
+        public static void fireLogoutSuccessful() {
+            Debug.Log("SpilSDK-Unity fireLogoutSuccessful");
+
+            if (Spil.Instance.OnLogoutSuccessful != null) {
+                Spil.Instance.OnLogoutSuccessful();
+            }
+        }
+
+        public delegate void LogoutFailed(SpilErrorMessage errorMessage);
+
+        /// <summary>
+        /// This event indicates that the Social Logout failed.
+        /// </summary>
+        public event LogoutFailed OnLogoutFailed;
+
+        public static void fireLogoutFailed(string error) {
+            Debug.Log("SpilSDK-Unity fireLogoutFailed with data: " + error);
+
+            SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
+            if (Spil.Instance.OnLogoutFailed != null) {
+                Spil.Instance.OnLogoutFailed(errorMessage);
+            }
+        }
+
+        public delegate void AuthenticationError(SpilErrorMessage errorMessage);
+
+        /// <summary>
+        /// This event indicates that the Social Logout failed.
+        /// </summary>
+        public event AuthenticationError OnAuthenticationError;
+
+        public static void fireAuthenticationError(string error) {
+            Debug.Log("SpilSDK-Unity fireAuthenticationError with data: " + error);
+
+            SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
+            if (Spil.Instance.OnAuthenticationError != null) {
+                Spil.Instance.OnAuthenticationError(errorMessage);
             }
         }
 
@@ -1899,6 +2005,23 @@ namespace SpilGames.Unity.Base.Implementations {
         public abstract long GetLiveEventEndDate();
 
         #endregion
+
+        #region Social Login
+
+        public abstract void UserLogin(string socialId, string socialProvider, string socialToken);
+
+        public abstract void UserLogout(bool global);
+
+        public abstract void UserPlayAsGuest();
+
+        public abstract void ShowUnauthorizedDialog(string title, string message, string loginText,
+            string playAsGuestText);
+
+        public abstract bool IsLoggedIn();
+
+        #endregion
+
+        public abstract void ResetData();
 
         #endregion
     }

@@ -39,7 +39,7 @@ namespace SpilGames.Unity {
 
         [SerializeField] public string spilUserIdEditor;
 
-        public static string SpilUserIdEditor { get; private set; }
+        public static string SpilUserIdEditor { get; set; }
 
         [SerializeField] public string bundleIdEditor;
 
@@ -594,6 +594,41 @@ namespace SpilGames.Unity {
         /// </summary>
         public void LiveEventCompleted() {
             SpilUnityImplementationBase.fireLiveEventCompleted();
+        }
+
+        /// <summary>
+        /// This event indicates if the Social Login was completed by the user.
+        /// </summary>
+        public void LoginSuccessful(string message) {
+            
+        }
+        
+        /// <summary>
+        /// This event indicates if the Social Login failed.
+        /// </summary>
+        public void LoginFailed(string error) {
+            
+        }
+        
+        /// <summary>
+        /// This event indicates if Social Login should be initiated.
+        /// </summary>
+        public void RequestLogin() {
+            
+        }
+        
+        /// <summary>
+        /// This event indicates if the Social Logout was completed by the user.
+        /// </summary>
+        public void LogoutSuccessful() {
+            
+        }
+        
+        /// <summary>
+        /// This event indicates if an authentication error has occured on any event after the Social Login.
+        /// </summary>
+        public void AuthenticationError(string error) {
+            
         }
 
 #if UNITY_ANDROID

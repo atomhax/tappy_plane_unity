@@ -17,6 +17,9 @@ namespace SpilGames.Unity.Base.Implementations {
         public static PlayerDataResponse pData;
         public static GameDataResponse gData;
 
+        public static bool unauthorized = false;
+        public static string spilToken;
+
         #region Inherited members
 
         public override void SetPluginInformation(string PluginName, string PluginVersion) {
@@ -95,6 +98,10 @@ namespace SpilGames.Unity.Base.Implementations {
             RequestGameState();
             AdvertisementInit();
             UpdatePackagesAndPromotions();
+        }
+
+        public override void ResetData() {
+            //TODO
         }
 
         internal void RequestConfig() {
@@ -217,7 +224,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// When calling this method "SendrequestRewardVideoEvent()" must first have been called to request and cache a video.
         /// If no video is available then nothing will happen.
         /// </summary>
-		public override void PlayVideo(string location = null, string rewardType = null) {
+        public override void PlayVideo(string location = null, string rewardType = null) {
             AdvertisementResponse.PlayVideo();
         }
 
@@ -239,14 +246,14 @@ namespace SpilGames.Unity.Base.Implementations {
         public override void RequestMoreApps() {
             SpilUnityImplementationBase.fireAdAvailableEvent("moreApps");
         }
-        
+
         /// <summary>
         /// Sends the "requestRewardVideo" event to the native Spil SDK which will send a request to the back-end.
         /// When a response has been received from the back-end the SDK will fire either an "AdAvailable" or and "AdNotAvailable"
         /// event to which the developer can subscribe and for instance call PlayVideo();
         /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
-		public override void RequestRewardVideo(string location = null, string rewardType = null) {
+        public override void RequestRewardVideo(string location = null, string rewardType = null) {
             SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
             spilEvent.eventName = "requestRewardVideo";
 
@@ -340,23 +347,28 @@ namespace SpilGames.Unity.Base.Implementations {
             return JsonHelper.getJSONFromObject(pData.Inventory);
         }
 
-        public override void AddCurrencyToWallet(int currencyId, int amount, string reason, string location, string reasonDetails = null, string transactionId = null) {
+        public override void AddCurrencyToWallet(int currencyId, int amount, string reason, string location,
+            string reasonDetails = null, string transactionId = null) {
             pData.WalletOperation("add", currencyId, amount, reason, reasonDetails, location, transactionId);
         }
 
-        public override void SubtractCurrencyFromWallet(int currencyId, int amount, string reason, string location, string reasonDetails = null, string transactionId = null) {
+        public override void SubtractCurrencyFromWallet(int currencyId, int amount, string reason, string location,
+            string reasonDetails = null, string transactionId = null) {
             pData.WalletOperation("subtract", currencyId, amount, reason, reasonDetails, location, transactionId);
         }
 
-        public override void AddItemToInventory(int itemId, int amount, string reason, string location, string reasonDetails = null, string transactionId = null) {
+        public override void AddItemToInventory(int itemId, int amount, string reason, string location,
+            string reasonDetails = null, string transactionId = null) {
             pData.InventoryOperation("add", itemId, amount, reason, reasonDetails, location, transactionId);
         }
 
-        public override void SubtractItemFromInventory(int itemId, int amount, string reason, string location, string reasonDetails = null, string transactionId = null) {
+        public override void SubtractItemFromInventory(int itemId, int amount, string reason, string location,
+            string reasonDetails = null, string transactionId = null) {
             pData.InventoryOperation("subtract", itemId, amount, reason, reasonDetails, location, transactionId);
         }
 
-        public override void BuyBundle(int bundleId, string reason, string location, string reasonDetails = null, string transactionId = null) {
+        public override void BuyBundle(int bundleId, string reason, string location, string reasonDetails = null,
+            string transactionId = null) {
             pData.BuyBundle(bundleId, reason, reasonDetails, location, transactionId);
         }
 
@@ -663,7 +675,9 @@ namespace SpilGames.Unity.Base.Implementations {
         #region Server Time
 
         public override void RequestServerTime() {
-            long currentTime = (long) (TimeZoneInfo.ConvertTimeToUtc(DateTime.Now) - new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc)).TotalMilliseconds;
+            long currentTime =
+                (long) (TimeZoneInfo.ConvertTimeToUtc(DateTime.Now) -
+                        new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc)).TotalMilliseconds;
             string time = currentTime.ToString();
             fireServerTimeRequestSuccess(time);
         }
@@ -693,6 +707,67 @@ namespace SpilGames.Unity.Base.Implementations {
 
         public override long GetLiveEventEndDate() {
             return LiveEventResponse.GetLiveEventEndDate();
+        }
+
+        #endregion
+
+        #region Social Login
+
+        public override void UserLogin(string socialId, string socialProvider, string socialToken) {
+            SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
+            spilEvent.eventName = "userLogin";
+
+            spilEvent.customData.AddField("socialId", socialId);
+            spilEvent.customData.AddField("socialProvider", socialProvider);
+            spilEvent.customData.AddField("socialToken", socialToken);
+
+            spilEvent.Send();
+        }
+
+        public override void UserLogout(bool global) {
+            SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
+            spilEvent.eventName = "userLogout";
+
+            spilEvent.customData.AddField("global", global);
+
+            spilEvent.Send();
+
+            if (!global) {
+                SetUserId(null, null);
+                Spil.SpilUserIdEditor = Guid.NewGuid().ToString();
+                spilToken = null;
+                SpilUnityImplementationBase.fireLogoutSuccessful();
+            }
+        }
+
+        public override void UserPlayAsGuest() {
+            SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
+            spilEvent.eventName = "userPlayAsGuest";
+
+            string newUid = Guid.NewGuid().ToString();
+            spilEvent.customData.AddField("newUid", newUid);
+
+            spilEvent.Send();
+
+            Spil.SpilUserIdEditor = newUid;
+            unauthorized = false;
+            spilToken = null;
+
+            JSONObject loginResponse = new JSONObject();
+            loginResponse.AddField("resetData", true);
+            loginResponse.AddField("socialProvider", (string) null);
+            loginResponse.AddField("socialId", (string) null);
+
+            SpilUnityImplementationBase.fireLoginSuccessful(loginResponse.Print());
+        }
+
+        public override void ShowUnauthorizedDialog(string title, string message, string loginText,
+            string playAsGuestText) {
+            SocialLoginResponse.ShowUnauthorizedDialog(title, message, loginText, playAsGuestText);
+        }
+
+        public override bool IsLoggedIn() {
+            return spilToken != null;
         }
 
         #endregion
