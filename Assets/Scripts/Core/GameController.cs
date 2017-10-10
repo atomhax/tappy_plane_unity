@@ -677,10 +677,6 @@ public class GameController : MonoBehaviour {
         Spil.Instance.PlayMoreApps();
     }
 
-    private void OnSpilSDKInitialized() {
-        Debug.Log("Spil SDK Initialized");
-    }
-
     private void OnLiveEventError(SpilErrorMessage errorMessage) {
         overlayEnabled = false;
     }
@@ -724,6 +720,15 @@ public class GameController : MonoBehaviour {
 
         if (resetData) {
             Spil.Instance.ResetData();
+            Spil.Instance.RequestLiveEvent();
+            
+            PlayerPrefs.SetInt("Background", 0);
+            PlayerPrefs.SetInt("Skin", 0);
+        
+            player.SetupPlayerSkin();
+            foreach (SpriteRenderer spriteRenderer in backgroundSpriteRenderes) {
+                spriteRenderer.sprite = backgroundSprites[PlayerPrefs.GetInt("Background", 0)];
+            }
         }
     }
 
@@ -735,6 +740,17 @@ public class GameController : MonoBehaviour {
         Debug.Log("Logout Successful");
 
         Spil.Instance.ResetData();
+        Spil.Instance.RequestLiveEvent();
+            
+        PlayerPrefs.SetInt("Background", 0);
+        PlayerPrefs.SetInt("Skin", 0);
+        
+        player.SetupPlayerSkin();
+        foreach (SpriteRenderer spriteRenderer in backgroundSpriteRenderes) {
+            spriteRenderer.sprite = backgroundSprites[PlayerPrefs.GetInt("Background", 0)];
+        }
+        
+        
     }
 
     private void OnLogoutFailed(SpilErrorMessage errorMessage) {

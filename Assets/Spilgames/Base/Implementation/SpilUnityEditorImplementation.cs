@@ -17,7 +17,7 @@ namespace SpilGames.Unity.Base.Implementations {
         public static PlayerDataResponse pData;
         public static GameDataResponse gData;
 
-        
+        public static bool unauthorized = false;
         public static string spilToken;
 
         #region Inherited members
@@ -101,7 +101,10 @@ namespace SpilGames.Unity.Base.Implementations {
         }
 
         public override void ResetData() {
-            //TODO
+            gData = null;
+            pData = null;
+            
+            SpilInit();
         }
 
         internal void RequestConfig() {
@@ -750,13 +753,14 @@ namespace SpilGames.Unity.Base.Implementations {
             spilEvent.Send();
 
             Spil.SpilUserIdEditor = newUid;
-            SocialLoginResponse.unauthorized = false;
+            unauthorized = false;
             spilToken = null;
 
             JSONObject loginResponse = new JSONObject();
             loginResponse.AddField("resetData", true);
             loginResponse.AddField("socialProvider", (string) null);
             loginResponse.AddField("socialId", (string) null);
+            loginResponse.AddField("isGuest", true);
 
             SpilUnityImplementationBase.fireLoginSuccessful(loginResponse.Print());
         }

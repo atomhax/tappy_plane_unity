@@ -6,7 +6,7 @@ using UnityEngine;
 #if UNITY_EDITOR
 namespace SpilGames.Unity.Base.UnityEditor.Responses {
     public class SocialLoginResponse : ResponseEvent {
-        public static bool unauthorized = false;
+        
 
         public static void ProcessSocialLoginResponse(ResponseEvent responseEvent) {
             JSONObject socialLoginJSON = responseEvent.data;
@@ -48,7 +48,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
 
                 Spil.Instance.SetUserId(socialProvider, socialId);
 
-                unauthorized = false;
+                SpilUnityEditorImplementation.unauthorized = false;
 
                 JSONObject loginMessage = new JSONObject();
                 loginMessage.AddField("resetData", false);
@@ -94,7 +94,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
 
                 Spil.Instance.SetUserId(socialProvider, socialId);
 
-                unauthorized = false;
+                SpilUnityEditorImplementation.unauthorized = false;
 
                 JSONObject loginMessage = new JSONObject();
                 loginMessage.AddField("resetData", resetData);
@@ -165,11 +165,11 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
         }
 
         public static void ProcessUnauthorizedResponse(string errorJSONString) {
-            if (unauthorized) {
+            if (SpilUnityEditorImplementation.unauthorized) {
                 return;
             }
 
-            unauthorized = true;
+            SpilUnityEditorImplementation.unauthorized = true;
 
             JSONObject errorJSON = new JSONObject(errorJSONString);
 
@@ -268,7 +268,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
                 textFieldGuiStyle.normal = guiStyleState;
                 textFieldGuiStyle.fontSize = 24;
                 textFieldGuiStyle.padding = new RectOffset(10, 10, 10, 10);
-                textFieldGuiStyle.alignment = TextAnchor.MiddleLeft;
+                textFieldGuiStyle.alignment = TextAnchor.MiddleCenter;
 
                 return textFieldGuiStyle;
             }

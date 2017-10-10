@@ -74,8 +74,14 @@ namespace SpilGames.Unity.Base.UnityEditor {
                         "Spil Initialize might not have been called! Please make sure you call Spil.Initialize() at app start!");
                 } else if (request.responseHeaders.Count > 0) {
                     foreach (KeyValuePair<string, string> entry in request.responseHeaders) {
-                        if (entry.Key.Equals("STATUS") && entry.Value.Contains("401")) {
-                            SocialLoginResponse.ProcessUnauthorizedResponse(request.text);
+                        if (entry.Key.Equals("STATUS")){
+                            if (entry.Value.Contains("401")) {
+                                SocialLoginResponse.ProcessUnauthorizedResponse(request.text);
+                                SpilLogging.Error("Unauthorized 401 event! Error: " + request.text);
+                            } else {
+                                SpilLogging.Error("Error getting data: " + request.error);
+                                SpilLogging.Error("Error getting data: " + request.text);
+                            }
                         }
                     }
                 } else {
