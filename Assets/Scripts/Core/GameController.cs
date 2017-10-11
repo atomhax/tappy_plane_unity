@@ -738,6 +738,10 @@ public class GameController : MonoBehaviour {
 
     private void OnLoginFailed(SpilErrorMessage errorMessage) {
         Debug.Log("Login failed! Error: " + errorMessage.message);
+        
+        Spil.Instance.ShowNativeDialog("Login Error", errorMessage.message, "Ok");
+        
+        FacebookLogout();
     }
 
     private void OnLogoutSuccessful() {
@@ -759,6 +763,8 @@ public class GameController : MonoBehaviour {
 
     private void OnLogoutFailed(SpilErrorMessage errorMessage) {
         Debug.Log("Logout failed! Error: " + errorMessage.message);
+        
+        Spil.Instance.ShowNativeDialog("Logout Error", errorMessage.message, "Ok");
     }
 
     private void OnAuthenticationError(SpilErrorMessage errorMessage) {
