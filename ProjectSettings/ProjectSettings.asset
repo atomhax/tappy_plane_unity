@@ -121,7 +121,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 26
+  bundleVersion: 30
   preloadedAssets: []
   metroInputSource: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -148,7 +148,7 @@ PlayerSettings:
     tvOS: com.spilgames.tappyplane
   buildNumber:
     iOS: 0
-  AndroidBundleVersionCode: 26
+  AndroidBundleVersionCode: 30
   AndroidMinSdkVersion: 17
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1

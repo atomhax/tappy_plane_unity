@@ -192,6 +192,9 @@ public class GameController : MonoBehaviour {
         Spil.Instance.OnAuthenticationError -= OnAuthenticationError;
         Spil.Instance.OnAuthenticationError += OnAuthenticationError;
 
+        Spil.Instance.OnRequestLogin -= OnRequestLogin;
+        Spil.Instance.OnRequestLogin += OnRequestLogin;
+        
 #if UNITY_ANDROID
         Spil.Instance.OnPermissionResponse -= OnPermissionResponse;
         Spil.Instance.OnPermissionResponse += OnPermissionResponse;
@@ -716,6 +719,7 @@ public class GameController : MonoBehaviour {
 
         if (isGuest) {
             Debug.Log("User is guest!");
+            FacebookLogout();
         }
 
         if (resetData) {
@@ -760,9 +764,12 @@ public class GameController : MonoBehaviour {
     private void OnAuthenticationError(SpilErrorMessage errorMessage) {
         Debug.Log("Authentication Error: " + errorMessage.message);
 
-        Spil.Instance.UserLogout(false);
-
         Spil.Instance.ShowUnauthorizedDialog("Unauthorized", "The account you are currently using is not valid. Please select one of the actions to resolve the issue:", "Re-login", "Play as Guest");
+    }
+    
+    private void OnRequestLogin() {
+        Debug.Log("Login requested!");
+        FacebookLogin();
     }
 
 #if UNITY_ANDROID
