@@ -2018,6 +2018,8 @@ namespace SpilGames.Unity.Base.Implementations {
 
         public abstract void ResetData();
 
+        public abstract void ShowNativeDialog(string title, string message, string buttonText);
+
         #endregion
     }
 }

@@ -107,6 +107,10 @@ namespace SpilGames.Unity.Base.Implementations {
             SpilInit();
         }
 
+        public override void ShowNativeDialog(string title, string message, string buttonText) {
+            
+        }
+
         internal void RequestConfig() {
             SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
             spilEvent.eventName = "requestConfig";

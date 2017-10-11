@@ -540,6 +540,14 @@ namespace SpilGames.Unity.Base.Implementations {
             CallNativeMethod("resetData");
         }
 
+        public override void ShowNativeDialog(string title, string message, string buttonText) {
+            CallNativeMethod("showNativeDialog", new object[] {
+                title,
+                message,
+                buttonText
+            }, true);
+        }
+
         #region Push notifications
 
         /// <summary>
