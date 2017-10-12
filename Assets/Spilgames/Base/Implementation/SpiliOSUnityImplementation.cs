@@ -730,6 +730,13 @@ namespace SpilGames.Unity.Base.Implementations
 		[DllImport("__Internal")]
 		private static extern void resetDataNative();
 
+		public override void ShowNativeDialog(string title, string message, string buttonText) {
+			showDialogNative (title, message, buttonText);
+		}
+
+		[DllImport("__Internal")]
+		private static extern void showDialogNative(string title, string message, string okButtonText);
+
 		#endregion
 	}        
 	#endif
