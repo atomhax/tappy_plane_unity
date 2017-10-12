@@ -36,6 +36,8 @@ extern "C" {
     
     void requestServerTimeNative();
     
+    void showDialogNative(char* title, char* message, char* okButtonText);
+    
     // --- Event tracking ---
     
     void initEventTrackerWithOptions(const char* options);
