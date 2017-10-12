@@ -102,7 +102,9 @@ namespace SpilGames.Unity.Base.Implementations {
 
         public override void ResetData() {
             gData = null;
+            Spil.GameData = null;
             pData = null;
+            Spil.PlayerData = null;
             
             SpilInit();
         }
@@ -735,6 +737,7 @@ namespace SpilGames.Unity.Base.Implementations {
             SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
             spilEvent.eventName = "userLogout";
 
+            spilEvent.customData.AddField("newUid", Spil.SpilUserIdEditor);
             spilEvent.customData.AddField("global", global);
 
             spilEvent.Send();

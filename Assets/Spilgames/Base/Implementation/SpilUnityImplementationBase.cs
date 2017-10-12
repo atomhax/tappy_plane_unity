@@ -6,9 +6,10 @@ using System.Collections;
 using SpilGames.Unity.Json;
 using SpilGames.Unity.Base.SDK;
 using SpilGames.Unity.Helpers.IAPPackages;
+using SpilGames.Unity.Helpers.PlayerData;
 
 namespace SpilGames.Unity.Base.Implementations {
-    public abstract class SpilUnityImplementationBase {
+    public abstract class SpilUnityImplementationBase{
         public static string PluginName = "Unity";
         public static string PluginVersion = "2.7.0";
 
@@ -905,6 +906,10 @@ namespace SpilGames.Unity.Base.Implementations {
         public static void firePlayerDataAvailable() {
             Debug.Log("SpilSDK-Unity Player Data is available");
 
+            if (Spil.PlayerData != null) {
+                Spil.PlayerData.PlayerDataUpdatedHandler();
+            }
+            
             if (Spil.Instance.OnPlayerDataAvailable != null) {
                 Spil.Instance.OnPlayerDataAvailable();
             }

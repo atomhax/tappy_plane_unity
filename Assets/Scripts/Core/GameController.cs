@@ -214,15 +214,6 @@ public class GameController : MonoBehaviour {
 
         initialPosition = player.gameObject.transform.position;
         initialRotation = player.gameObject.transform.rotation;
-
-        if (Spil.Instance.IsLoggedIn()) {
-            FacebookLogin();
-        }
-
-        if (FB.IsInitialized && FB.IsLoggedIn) {
-            highScoreButton.SetActive(true);
-            FBShareButton.SetActive(true);
-        }
     }
 
     void Spil_Instance_OnReward(PushNotificationRewardResponse rewardResponse) {
@@ -408,8 +399,17 @@ public class GameController : MonoBehaviour {
     public void OnGameStateUpdated(string access) {
         if (access.Equals("private")) {
             Debug.Log("Private Game State Updated! Request new private game state!");
-            string privateGameState = Spil.Instance.GetPrivateGameState();
-            Debug.Log("New Private Game state: " + privateGameState);
+            string privateGameStateString = Spil.Instance.GetPrivateGameState();
+            Debug.Log("New Private Game state: " + privateGameStateString);
+
+            PrivateGameState privateGameState = JsonHelper.getObjectFromJson<PrivateGameState>(privateGameStateString);
+            PlayerPrefs.SetInt("Background", privateGameState.Background);
+            PlayerPrefs.SetInt("Skin", privateGameState.Skin);
+            
+            player.SetupPlayerSkin();
+            foreach (SpriteRenderer spriteRenderer in backgroundSpriteRenderes) {
+                spriteRenderer.sprite = backgroundSprites[PlayerPrefs.GetInt("Background", 0)];
+            }
         } else if (access.Equals("public")) {
             Debug.Log("Public Game State Updated! Request new public game state!");
             string publicGameState = Spil.Instance.GetPublicGameState();
@@ -476,6 +476,10 @@ public class GameController : MonoBehaviour {
 
     private void OnFBInitComplete() {
         Debug.Log("Facebook Inistialised");
+        
+        if (Spil.Instance.IsLoggedIn()) {
+            FacebookLogin();
+        }
     }
 
     public void FacebookLogin() {
@@ -569,6 +573,7 @@ public class GameController : MonoBehaviour {
         string json = "[";
 
         // Add the own user id
+        Debug.Log("Sebi: " + Spil.Instance.GetUserId());
         json += "\"" + Spil.Instance.GetUserId() + "\"";
         if (userIds.Count > 0) {
             json += ",";
