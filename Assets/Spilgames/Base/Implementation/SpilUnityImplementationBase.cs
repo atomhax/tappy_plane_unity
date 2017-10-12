@@ -1610,12 +1610,10 @@ namespace SpilGames.Unity.Base.Implementations {
             Debug.Log("SpilSDK-Unity fireLoginSuccessful with message: " + message);
 
             JSONObject loginJSON = new JSONObject(message);
-
             bool resetData = loginJSON.GetField("resetData").b;
-            string socialProvider = loginJSON.GetField("socialProvider").str;
-            string socialId = loginJSON.GetField("socialId").str;
+			string socialProvider = loginJSON.HasField("socialProvider") ? loginJSON.GetField("socialProvider").str : null;
+			string socialId = loginJSON.HasField ("socialId") ? loginJSON.GetField ("socialId").str : null;
             bool isGuest = loginJSON.GetField("isGuest").b;
-
             if (Spil.Instance.OnLoginSuccessful != null) {
                 Spil.Instance.OnLoginSuccessful(resetData, socialProvider, socialId, isGuest);
             }
