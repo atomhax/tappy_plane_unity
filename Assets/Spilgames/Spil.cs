@@ -155,13 +155,6 @@ namespace SpilGames.Unity {
 
 #endif
 
-//        public delegate void SpilSDKInitialized();
-//        
-//        /// <summary>
-//        /// This event indicates that the Spil SDK was initialised on Unity Side.
-//        /// </summary>
-//        public static event SpilSDKInitialized OnSpilSDKInitialized;
-
         void Awake() {
             if (initializeOnAwake) {
                 Initialize();
@@ -602,35 +595,35 @@ namespace SpilGames.Unity {
         public void LoginSuccessful(string message) {
             SpilUnityImplementationBase.fireLoginSuccessful(message);
         }
-        
+
         /// <summary>
         /// This event indicates if the Social Login failed.
         /// </summary>
         public void LoginFailed(string error) {
             SpilUnityImplementationBase.fireLoginFailed(error);
         }
-        
+
         /// <summary>
         /// This event indicates if Social Login should be initiated.
         /// </summary>
         public void RequestLogin() {
             SpilUnityImplementationBase.fireRequestLogin();
         }
-        
+
         /// <summary>
         /// This event indicates if the Social Logout was completed by the user.
         /// </summary>
         public void LogoutSuccessful() {
             SpilUnityImplementationBase.fireLogoutSuccessful();
         }
-        
+
         /// <summary>
         /// This event indicates if the Social Logout failed.
         /// </summary>
         public void LogoutFailed(string error) {
             SpilUnityImplementationBase.fireLogoutFailed(error);
         }
-        
+
         /// <summary>
         /// This event indicates if an authentication error has occured on any event after the Social Login.
         /// </summary>

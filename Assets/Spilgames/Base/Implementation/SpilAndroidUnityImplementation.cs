@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SpilGames.Unity.Helpers;
+using SpilGames.Unity.Helpers.GameData;
+using SpilGames.Unity.Helpers.PlayerData;
 using SpilGames.Unity.Json;
 
 namespace SpilGames.Unity.Base.Implementations {
@@ -530,7 +532,7 @@ namespace SpilGames.Unity.Base.Implementations {
             }, true);
         }
 
-        public override bool IsLoggedIn() {
+        public override bool IsLoggedIn() {     
             return Convert.ToBoolean(CallNativeMethod("isLoggedIn"));
         }
 
