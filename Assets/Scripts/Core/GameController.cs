@@ -573,7 +573,6 @@ public class GameController : MonoBehaviour {
         string json = "[";
 
         // Add the own user id
-        Debug.Log("Sebi: " + Spil.Instance.GetUserId());
         json += "\"" + Spil.Instance.GetUserId() + "\"";
         if (userIds.Count > 0) {
             json += ",";
