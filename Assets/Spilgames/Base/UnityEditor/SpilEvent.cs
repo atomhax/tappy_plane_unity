@@ -97,6 +97,7 @@ namespace SpilGames.Unity.Base.UnityEditor {
         }
 
         private void AddDefaultParameters() {
+            data.AddField("deviceId", SystemInfo.deviceUniqueIdentifier);
             data.AddField("uid", uid);
             data.AddField("locale", "en");
             data.AddField("appVersion", PlayerSettings.bundleVersion);

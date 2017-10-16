@@ -402,13 +402,18 @@ public class GameController : MonoBehaviour {
             string privateGameStateString = Spil.Instance.GetPrivateGameState();
             Debug.Log("New Private Game state: " + privateGameStateString);
 
-            PrivateGameState privateGameState = JsonHelper.getObjectFromJson<PrivateGameState>(privateGameStateString);
-            PlayerPrefs.SetInt("Background", privateGameState.Background);
-            PlayerPrefs.SetInt("Skin", privateGameState.Skin);
+            if (privateGameStateString != null && !privateGameStateString.Equals("")) {
+                privateGameStateString = privateGameStateString.Replace("\\", "");
+                PrivateGameState privateGameState = JsonHelper.getObjectFromJson<PrivateGameState>(privateGameStateString);
+                if (privateGameState != null) {
+                    PlayerPrefs.SetInt("Background", privateGameState.Background);
+                    PlayerPrefs.SetInt("Skin", privateGameState.Skin);
             
-            player.SetupPlayerSkin();
-            foreach (SpriteRenderer spriteRenderer in backgroundSpriteRenderes) {
-                spriteRenderer.sprite = backgroundSprites[PlayerPrefs.GetInt("Background", 0)];
+                    player.SetupPlayerSkin();
+                    foreach (SpriteRenderer spriteRenderer in backgroundSpriteRenderes) {
+                        spriteRenderer.sprite = backgroundSprites[PlayerPrefs.GetInt("Background", 0)];
+                    }
+                }
             }
         } else if (access.Equals("public")) {
             Debug.Log("Public Game State Updated! Request new public game state!");
@@ -527,6 +532,10 @@ public class GameController : MonoBehaviour {
                     FBShareButton.SetActive(true);
 
                     token = result.ResultDictionary[key].ToString();
+                }
+
+                if (key.Equals("error") && !Spil.Instance.IsLoggedIn()) {
+                    Spil.Instance.ShowNativeDialog("Login Error", "Error communicating with the server!", "Ok");
                 }
             }
 

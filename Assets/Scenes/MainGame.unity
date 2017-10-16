@@ -5955,7 +5955,7 @@ MonoBehaviour:
   CustomBundleId: 
   EditorLogging: 1
   EditorDebugMode: 0
-  spilUserIdEditor: 5a956e09-26d0-4aea-ae9e-9724658f41bd
+  spilUserIdEditor: 
   bundleIdEditor: com.spilgames.tappyplane
   iapPurchaseRequestValue: com.spilgames.tappyplane.diamondpack01
   currencyName: Reward

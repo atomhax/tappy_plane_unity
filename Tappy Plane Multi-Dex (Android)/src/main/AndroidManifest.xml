@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.spilgames.tappyplane"
     android:installLocation="preferExternal"
-    android:versionCode="29"
-    android:versionName="29">
+    android:versionCode="30"
+    android:versionName="30">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
