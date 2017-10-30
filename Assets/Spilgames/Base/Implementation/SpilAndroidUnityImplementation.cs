@@ -98,6 +98,10 @@ namespace SpilGames.Unity.Base.Implementations {
             return CallNativeMethod("getUserId");
         }
 
+        public override string GetDeviceId() {
+            return CallNativeMethod("getDeviceId");
+        }
+
         public override void SetCustomBundleId(string bundleId) {
             // TODO
         }

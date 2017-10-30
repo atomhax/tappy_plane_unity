@@ -499,6 +499,10 @@ namespace SpilGames.Unity.Base.Implementations {
             return Response.externalId;
         }
 
+        public override string GetDeviceId() {
+            return SystemInfo.deviceUniqueIdentifier;
+        }
+
         public override void SetCustomBundleId(string bundleId) {
             // TODO
         }

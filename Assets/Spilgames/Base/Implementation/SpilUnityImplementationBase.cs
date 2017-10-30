@@ -1838,6 +1838,12 @@ namespace SpilGames.Unity.Base.Implementations {
         public abstract string GetUserId();
 
         /// <summary>
+        /// Gets the device identifier.
+        /// </summary>
+        /// <returns>The user identifier.</returns>
+        public abstract string GetDeviceId();
+        
+        /// <summary>
         /// Sets the custom bundle identifier.
         /// Use this when the bundle id used to connect to our backend differs from the one used to build.
         /// </summary>
@@ -1849,46 +1855,6 @@ namespace SpilGames.Unity.Base.Implementations {
         /// </summary>
         /// <returns>The user provider native.</returns>
         public abstract string GetUserProvider();
-
-        #endregion
-
-        #region Game State
-
-        /// <summary>
-        /// Request the users Private and Public Game State.
-        /// </summary>
-        public abstract void RequestMyGameState();
-
-        /// <summary>
-        /// Sets the state of the private game.
-        /// </summary>
-        /// <param name="privateData">Private data.</param>
-        public abstract void SetPrivateGameState(string privateData);
-
-        /// <summary>
-        /// Gets the state of the private game.
-        /// </summary>
-        /// <returns>The private game state.</returns>
-        public abstract string GetPrivateGameState();
-
-        /// <summary>
-        /// Sets the public game state.
-        /// </summary>
-        /// <param name="publicData">Public data.</param>
-        public abstract void SetPublicGameState(string publicData);
-
-        /// <summary>
-        /// Gets the public game state.
-        /// </summary>
-        /// <returns>The public game state.</returns>
-        public abstract string GetPublicGameState();
-
-        /// <summary>
-        /// Gets the public game state of other users.
-        /// </summary>
-        /// <param name="provider">Provider.</param>
-        /// <param name="userIdsJsonArray">User identifiers json array.</param>
-        public abstract void GetOtherUsersGameState(string provider, string userIdsJsonArray);
 
         #endregion
 
@@ -1930,10 +1896,21 @@ namespace SpilGames.Unity.Base.Implementations {
 
         #endregion
 
-        #region Player Data and Game Data
+        #region Game Data, Player Data and Game State
 
         public abstract string GetSpilGameDataFromSdk();
 
+        /// <summary>
+        /// Request the users data from SLOT.
+        /// </summary>
+        public abstract void RequestUserData();
+
+        public abstract void MergeUserData(string mergeData, string mergeType);
+
+        public abstract void ShowMergeConflictDialog(string title, string message, string localButtonText, string remoteButtonText, string mergeButtonText = null);
+
+        public abstract void ShowSyncErrorDialog(string title, string message, string startMergeButtonText);
+        
         public abstract string GetWalletFromSdk();
 
         public abstract string GetInvetoryFromSdk();
@@ -1954,7 +1931,38 @@ namespace SpilGames.Unity.Base.Implementations {
             string transactionId = null);
 
         public abstract void OpenGacha(int gachaId, string reason, string location, string reasonDetails = null);
+        
+        /// <summary>
+        /// Sets the state of the private game.
+        /// </summary>
+        /// <param name="privateData">Private data.</param>
+        public abstract void SetPrivateGameState(string privateData);
 
+        /// <summary>
+        /// Gets the state of the private game.
+        /// </summary>
+        /// <returns>The private game state.</returns>
+        public abstract string GetPrivateGameState();
+
+        /// <summary>
+        /// Sets the public game state.
+        /// </summary>
+        /// <param name="publicData">Public data.</param>
+        public abstract void SetPublicGameState(string publicData);
+
+        /// <summary>
+        /// Gets the public game state.
+        /// </summary>
+        /// <returns>The public game state.</returns>
+        public abstract string GetPublicGameState();
+
+        /// <summary>
+        /// Gets the public game state of other users.
+        /// </summary>
+        /// <param name="provider">Provider.</param>
+        /// <param name="userIdsJsonArray">User identifiers json array.</param>
+        public abstract void GetOtherUsersGameState(string provider, string userIdsJsonArray);
+        
         public abstract void ResetPlayerData();
 
         public abstract void ResetInventory();
