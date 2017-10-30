@@ -14,7 +14,7 @@ public class ShopPanelController : MonoBehaviour {
 
 	public GameController gameController;
 
-	public Text starsAmountText, diamonsAmountText, starsRewardedText, tapperAmountText, tappyChestAmountText;
+	public Text starsAmountText, diamonsAmountText, starsRewardedText, tapperAmountText, tappyChestAmountText, spilIds;
 
 	public List<GameObject> shopTabs = new List<GameObject> ();
 	public List<GameObject> tabButtons = new List<GameObject> ();
@@ -48,6 +48,9 @@ public class ShopPanelController : MonoBehaviour {
 
 		Spil.Instance.RequestRewardVideo("Shop");
 		Spil_Instance_OnPlayerDataUpdated("Opened", null);
+
+		spilIds.text = "DeviceId: " + Spil.Instance.GetDeviceId() + "\nUserId: " + Spil.Instance.GetSpilUserId();
+		
 		ResetShop();
 		CreateShop ();
 	}
