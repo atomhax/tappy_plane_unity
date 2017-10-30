@@ -196,6 +196,7 @@ extern "C" {
 
     void getOtherUsersGameStateNative(const char* provider, const char* userIdsJsonArray);
     
+    // NOTE: This method will be depricated, use requestUserDataNative() instead.
     void requestMyGameStateNative();
     
     // --- Image cache ---
@@ -233,6 +234,12 @@ extern "C" {
     void showAuthorizedDialogNative(char* title, char* message, char* loginButtonText, char* guestButtonText);
     
     void resetDataNative();
+    
+    // --- Data syncing ---
+    
+    void requestUserDataNative();
+    
+    void mergeUserDataNative(char* mergedUserData);
 }
 
 #endif

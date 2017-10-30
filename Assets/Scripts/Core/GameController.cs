@@ -534,8 +534,12 @@ public class GameController : MonoBehaviour {
                     token = result.ResultDictionary[key].ToString();
                 }
 
-                if (key.Equals("error") && !Spil.Instance.IsLoggedIn()) {
-                    Spil.Instance.ShowNativeDialog("Login Error", "Error communicating with the server!", "Ok");
+				if (key.Equals("error") || result.Cancelled) {
+					if (!Spil.Instance.IsLoggedIn ()) {
+						Spil.Instance.ShowNativeDialog ("Login Error", "Error communicating with the server!", "Ok");
+					} else {
+						ShowAuthErrorDialog ();
+					}
                 }
             }
 
@@ -782,9 +786,13 @@ public class GameController : MonoBehaviour {
 
     private void OnAuthenticationError(SpilErrorMessage errorMessage) {
         Debug.Log("Authentication Error: " + errorMessage.message);
-
-        Spil.Instance.ShowUnauthorizedDialog("Unauthorized", "The account you are currently using is not valid. Please select one of the actions to resolve the issue:", "Re-login", "Play as Guest");
+		
+		ShowAuthErrorDialog();
     }
+
+	private void ShowAuthErrorDialog() {
+		Spil.Instance.ShowUnauthorizedDialog("Unauthorized", "The account you are currently using is not valid. Please select one of the actions to resolve the issue:", "Re-login", "Play as Guest");
+	}
     
     private void OnRequestLogin() {
         Debug.Log("Login requested!");

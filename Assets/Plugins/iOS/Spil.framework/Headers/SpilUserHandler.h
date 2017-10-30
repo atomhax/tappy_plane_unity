@@ -11,30 +11,31 @@
 
 +(SpilUserHandler*)sharedInstance;
 
-// Properties
+// --- Properties ---
 
 @property (nonatomic, assign) BOOL authConflicted;
 @property (nonatomic, assign) int authErrorCode;
 
-// Spil user id
+// --- Spil user id ---
 
 -(void)syncSpilUserId;
 -(NSString*)getSpilUserId;
 
-// Device id
+// --- Device id ---
 
 -(NSString*)getDeviceId;
 
-// Spil user token
+// --- Spil user token ---
 
 -(NSString*)getSpilUserToken;
 
-// Reset
+// --- Reset ---
 
 -(void)resetUID:(NSString*)uid;
+-(void)resetSpilUserToken:(NSString*)token;
 -(void)resetProfile;
 
-// Login
+// --- Login ---
 
 -(void)loginWithExternalUserId:(NSString*)externalUserId externalProviderId:(NSString*)externalProviderId externalToken:(NSString*)externalToken;
 -(BOOL)isLoggedIn;
@@ -43,18 +44,23 @@
 -(void)resetData;
 -(void)showOnAuthorizedDialog:(NSString*)title message:(NSString*)message loginButtonText:(NSString*)loginButtonText guestButtonText:(NSString*)guestButtonText;
 
-// Auth errors
+// --- Userdata syncing ---
+
+-(void)requestUserData;
+-(void)mergeUserData:(NSString*)mergedUserData;
+
+// --- Auth errors ---
 
 -(void)onAuthError:(int)pAuthErrorCode;
 
-// External user id
+// --- External user id ---
 
 -(void)setExternalUserId:(NSString*)userId forProviderId:(NSString*)providerId;
 -(NSString*)getExternalUserId;
 -(NSString*)getExternalUserProvider;
 -(NSDictionary*)getExternalUserRequestData;
 
-// User data
+// --- User data ---
 
 -(void)setPrivateGameState:(NSString*)privateData sendUpdate:(Boolean)sendUpdate;
 -(NSString*)getPrivateGameState;
@@ -63,7 +69,7 @@
 -(void)getOtherUsersGameState:(NSString*)provider userIds:(NSArray*)userIds;
 -(void)requestMyGameState;
 
-// Updates
+// --- Updates ---
 
 -(void)gameStateUpdateReceived:(NSString*)privateData public:(NSString*)publicData;
 -(void)friendsGameStateLoaded:(NSDictionary*)gameStates provider:(NSString*)provider;
