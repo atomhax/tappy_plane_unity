@@ -116,14 +116,14 @@
 -(void)onRequestLogin;
 
 // Userdata syncing
+-(void)userDataAvailable;
+-(void)userDataError:(nonnull NSString*)error;
 -(void)userDataMergeConflict:(nonnull NSString*)localData remoteData:(nonnull NSString*)remoteData;
 -(void)userDataMergeSuccessful;
 -(void)userDataMergeFailed:(nonnull NSString*)mergeData mergeType:(nonnull NSString*)mergeType;
 -(void)userDataHandleMerge:(nonnull NSString*)mergeType; // Called when a merge conflict option button was pressed
 -(void)userDataSyncError;
 -(void)userDatalockError;
--(void)userDataError:(nonnull NSString*)mergeType;
--(void)userDataAvailable;
 
 @end
 
@@ -942,6 +942,11 @@
  * Show the default merge error dialog
  */
 +(void)showSyncErrorDialog:(nonnull NSString*)title message:(nonnull NSString*)message mergeButtonText:(nonnull NSString*)mergeButtonText;
+
+/**
+ * Show the default user data merge failed dialog
+ */
++(void)showUserDataMergeFailedDialog:(nonnull NSString*)title withMessage:(nonnull NSString*)message retryButtonText:(nonnull NSString*)retryButton mergeData:(nonnull NSString*)mergeData mergeType:(nonnull NSString*)mergeType;
 
 #pragma test methods (dev)
 

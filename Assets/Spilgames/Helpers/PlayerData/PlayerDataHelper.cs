@@ -121,7 +121,7 @@ namespace SpilGames.Unity.Helpers.PlayerData {
             UpdatePlayerData();
         }
 
-        private void UpdatePlayerData() {
+		public void UpdatePlayerData() {
             string walletString = Spil.Instance.GetWalletFromSdk();
             string inventoryString = Spil.Instance.GetInvetoryFromSdk();
             if (walletString != null && inventoryString != null) {

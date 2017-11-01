@@ -48,6 +48,9 @@ public class GameController : MonoBehaviour {
 
     List<GameObject> listOfObsticles = new List<GameObject>();
 
+	private MergeConflictData localData;
+	private MergeConflictData remoteData;
+
     public GameObject startPanel,
         ingamePanel,
         gameoverPanel,
@@ -194,6 +197,31 @@ public class GameController : MonoBehaviour {
 
         Spil.Instance.OnRequestLogin -= OnRequestLogin;
         Spil.Instance.OnRequestLogin += OnRequestLogin;
+
+
+		Spil.Instance.OnUserDataAvailable -= OnUserDataAvailable;
+		Spil.Instance.OnUserDataAvailable += OnUserDataAvailable;
+
+		Spil.Instance.OnUserDataError -= OnUserDataError;
+		Spil.Instance.OnUserDataError += OnUserDataError;
+
+		Spil.Instance.OnUserDataMergeConflict -= OnUserDataMergeConflict;
+		Spil.Instance.OnUserDataMergeConflict += OnUserDataMergeConflict;
+
+		Spil.Instance.OnUserDataMergeSuccessful -= OnUserDataMergeSuccessful;
+		Spil.Instance.OnUserDataMergeSuccessful += OnUserDataMergeSuccessful;
+
+		Spil.Instance.OnUserDataMergeFailed -= OnUserDataMergeFailed;
+		Spil.Instance.OnUserDataMergeFailed += OnUserDataMergeFailed;
+
+		Spil.Instance.OnUserDataHandleMerge -= OnUserDataHandleMerge;
+		Spil.Instance.OnUserDataHandleMerge += OnUserDataHandleMerge;
+
+		Spil.Instance.OnUserDataSyncError -= OnUserDataSyncError;
+		Spil.Instance.OnUserDataSyncError += OnUserDataSyncError;
+
+		Spil.Instance.OnUserDatalockError -= OnUserDatalockError;
+		Spil.Instance.OnUserDatalockError += OnUserDatalockError;
         
 #if UNITY_ANDROID
         Spil.Instance.OnPermissionResponse -= OnPermissionResponse;
@@ -798,6 +826,88 @@ public class GameController : MonoBehaviour {
         Debug.Log("Login requested!");
         FacebookLogin();
     }
+
+	void OnUserDataAvailable() {
+		// Refresh the data
+		Debug.Log("Private Game State Updated! Request new private game state!");
+		string privateGameStateString = Spil.Instance.GetPrivateGameState();
+		Debug.Log("New Private Game state: " + privateGameStateString);
+		if (privateGameStateString != null && !privateGameStateString.Equals("")) {
+			privateGameStateString = privateGameStateString.Replace("\\", "");
+			PrivateGameState privateGameState = JsonHelper.getObjectFromJson<PrivateGameState>(privateGameStateString);
+			if (privateGameState != null) {
+				PlayerPrefs.SetInt("Background", privateGameState.Background);
+				PlayerPrefs.SetInt("Skin", privateGameState.Skin);
+
+				player.SetupPlayerSkin();
+				foreach (SpriteRenderer spriteRenderer in backgroundSpriteRenderes) {
+					spriteRenderer.sprite = backgroundSprites[PlayerPrefs.GetInt("Background", 0)];
+				}
+			}
+		}
+		Spil.PlayerData.UpdatePlayerData();
+	}
+
+	void OnUserDataError(SpilErrorMessage errorMessage) {
+		Spil.Instance.ShowNativeDialog("User data error", errorMessage.message, "Ok");
+	}
+
+	void OnUserDataMergeConflict(MergeConflictData localData, MergeConflictData remoteData) {
+		this.localData = localData;
+		this.remoteData = remoteData;
+		string message = "Local time: " + localData.metaData.clientTime.ToString () + ", Local device model: " + localData.metaData.deviceModel +
+		                 "Remote time: " + remoteData.metaData.clientTime.ToString () + ", Remote device model: " + remoteData.metaData.deviceModel;
+		Spil.Instance.ShowMergeConflictDialog("Merge conflict", message, "Local", "Remote", "Merge");
+	}
+
+	void OnUserDataMergeSuccessful() {
+		Spil.Instance.ShowNativeDialog ("Merge successful", "", "Ok!");
+
+		// Refresh the data
+		Debug.Log("Private Game State Updated! Request new private game state!");
+		string privateGameStateString = Spil.Instance.GetPrivateGameState();
+		Debug.Log("New Private Game state: " + privateGameStateString);
+		if (privateGameStateString != null && !privateGameStateString.Equals("")) {
+			privateGameStateString = privateGameStateString.Replace("\\", "");
+			PrivateGameState privateGameState = JsonHelper.getObjectFromJson<PrivateGameState>(privateGameStateString);
+			if (privateGameState != null) {
+				PlayerPrefs.SetInt("Background", privateGameState.Background);
+				PlayerPrefs.SetInt("Skin", privateGameState.Skin);
+
+				player.SetupPlayerSkin();
+				foreach (SpriteRenderer spriteRenderer in backgroundSpriteRenderes) {
+					spriteRenderer.sprite = backgroundSprites[PlayerPrefs.GetInt("Background", 0)];
+				}
+			}
+		}
+		Spil.PlayerData.UpdatePlayerData();
+	}
+
+	void OnUserDataMergeFailed(string mergeData, string mergeType) {
+		Spil.Instance.ShowMergeFailedDialog ("Merge failed", "Could not merge the data, please try again", "Retry", mergeData, mergeType);
+	}
+
+	void OnUserDataHandleMerge(string mergeType) {
+		if (mergeType == "local") {
+			Spil.Instance.MergeUserData (localData, mergeType);
+		} if (mergeType == "remote") {
+			Spil.Instance.MergeUserData (remoteData, mergeType);
+		} if (mergeType == "merge") {
+			MergeConflictData mergedData = new MergeConflictData ();
+			mergedData.playerData = localData.playerData;
+			mergedData.gameStates = remoteData.gameStates;
+			mergedData.metaData = localData.metaData;
+			Spil.Instance.MergeUserData (mergeType, mergeType);
+		}
+	}
+
+	void OnUserDataSyncError() {
+		Spil.Instance.ShowSyncErrorDialog ("Sync error", "Merge conflict", "Resolve conflict");
+	}
+
+	void OnUserDatalockError() {
+		Spil.Instance.ShowNativeDialog ("Lock error", "Please try again later", "Ok..");
+	}
 
 #if UNITY_ANDROID
     private void OnPermissionResponse(SpilAndroidUnityImplementation.PermissionResponseObject permissionResponse) {

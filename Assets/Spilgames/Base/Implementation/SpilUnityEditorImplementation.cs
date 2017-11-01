@@ -154,22 +154,6 @@ namespace SpilGames.Unity.Base.Implementations {
             spilEvent.Send();
         }
 
-        internal void RequestGameState() {
-            SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
-            spilEvent.eventName = "requestMyGameState";
-
-            JSONObject json = new JSONObject(JSONObject.Type.ARRAY);
-            json.Add("private");
-
-            if (Response.externalId != null && Response.provider != null) {
-                json.Add("public");
-            }
-
-            spilEvent.customData.AddField("access", json);
-
-            spilEvent.Send();
-        }
-
         internal void AdvertisementInit() {
             SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
             spilEvent.eventName = "advertisementInit";
@@ -622,6 +606,10 @@ namespace SpilGames.Unity.Base.Implementations {
         public override void ShowHelpCenterWebview(string url) {
             // TODO
         }
+
+		public override void ShowMergeFailedDialog(string title, string message, string retryButtonText, string mergeData, string mergeType) {
+			// TODO
+		}
 
         #endregion
 

@@ -1979,6 +1979,8 @@ namespace SpilGames.Unity.Base.Implementations {
         public abstract void ShowMergeConflictDialog(string title, string message, string localButtonText, string remoteButtonText, string mergeButtonText = null);
 
         public abstract void ShowSyncErrorDialog(string title, string message, string startMergeButtonText);
+
+		public abstract void ShowMergeFailedDialog(string title, string message, string retryButtonText, string mergeData, string mergeType);
         
         public abstract string GetWalletFromSdk();
 

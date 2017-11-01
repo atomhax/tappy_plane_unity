@@ -246,6 +246,8 @@ extern "C" {
     void showMergeConflictDialogNative(char* title, char* message, char* localButtonText, char* remoteButtonText, char* mergeButtonText);
     
     void showSyncErrorDialogNative(char* title, char* message, char* mergeButtonText);
+    
+    void showMergeFailedDialogNative(char* title, char* message, char* retryButtonText, char* mergeData, char* mergeType);
 }
 
 #endif

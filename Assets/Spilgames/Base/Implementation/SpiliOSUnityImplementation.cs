@@ -761,6 +761,12 @@ namespace SpilGames.Unity.Base.Implementations
 		[DllImport("__Internal")]
 		private static extern void showSyncErrorDialogNative(string title, string message, string mergeButtonText);
 
+		public override void ShowMergeFailedDialog(string title, string message, string retryButtonText, string mergeData, string mergeType) {
+			showMergeFailedDialogNative (title, message, retryButtonText, mergeData, mergeType);
+		}
+		[DllImport("__Internal")]
+		private static extern void showMergeFailedDialogNative(string title, string message, string retryButtonText, string mergeData, string mergeType);
+
 		#endregion
 	}        
 	#endif

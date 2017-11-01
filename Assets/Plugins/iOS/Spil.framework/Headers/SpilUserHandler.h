@@ -47,6 +47,7 @@
 -(void)showOnAuthorizedDialog:(NSString*)title message:(NSString*)message loginButtonText:(NSString*)loginButtonText guestButtonText:(NSString*)guestButtonText;
 -(void)showOnMergeDialog:(NSString*)title message:(NSString*)message localButtonText:(NSString*)localButtonText remoteButtonText:(NSString*)remoteButtonText mergeButtonText:(NSString*)mergeButtonText;
 -(void)showOnSyncDialog:(NSString*)title message:(NSString*)message mergeButtonText:(NSString*)mergeButtonText;
+-(void)showUserDataMergeFailedDialog:(NSString*)title withMessage:(NSString*)message retryButtonText:(NSString*)retryButton mergeData:(NSString*)mergeData mergeType:(NSString*)mergeType;
 
 // --- Userdata ---
 
