@@ -210,7 +210,7 @@ public class GameController : MonoBehaviour {
 #endif
 
         Debug.Log("Requesting Game State!!!!");
-        Spil.Instance.RequestMyGameState();
+		//Spil.Instance.RequestUserData();
 
         initialPosition = player.gameObject.transform.position;
         initialRotation = player.gameObject.transform.rotation;

@@ -12,7 +12,7 @@
 
 -(NSString*)stringForKey:(NSString*)def;
 
--(void)etString:(NSString*)s forKey:(NSString*)def;
+-(void)setString:(NSString*)s forKey:(NSString*)def;
 
 -(void)setString:(NSString*)s forKey:(NSString*)def accessibleAttribute:(CFTypeRef)aa;
 

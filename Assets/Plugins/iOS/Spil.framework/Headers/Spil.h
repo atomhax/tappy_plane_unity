@@ -71,15 +71,12 @@
 -(void)spilGameDataError:(nonnull NSString*)message;
 
 // Player data events
--(void)playerDataAvailable;
--(void)playerDataError:(nonnull NSString*)message;
 -(void)playerDataUpdated:(nonnull NSString*)reason updatedData:(nonnull NSString*)updatedData;
 -(void)playerDataEmptyGacha;
 
 // User data events
 -(void)gameStateUpdated:(nonnull NSString*)access; // Access: private|public
 -(void)otherUsersGameStateLoaded:(nonnull NSDictionary*)data forProvider:(nonnull NSString*)provider; // Data: <NSString* userId, NSString* data>
--(void)gameStateError:(nonnull NSString*)message;
 
 // Image cache
 -(void)imageLoadSuccess:(nonnull NSString*)localPath imageContext:(nonnull ImageContext*)imageContext;
@@ -98,7 +95,6 @@
 // Server time
 -(void)serverTimeRequestSuccess:(nonnull NSString*)unixTimestamp;
 -(void)serverTimeRequestFailed:(nonnull NSString*)error;
--(void)gameStateServerError:(nonnull NSString*)error;
 
 // Live events
 -(void)liveEventStageOpen;
@@ -112,7 +108,6 @@
 -(void)liveEventCompleted;
 
 // Login
-
 -(void)onLoginSuccessful:(BOOL)resetData withSocialProvider:(nullable NSString*)socialProvider withSocialId:(nullable NSString*)socialId isGuest:(BOOL)isGuest;
 -(void)onLoginFailed:(nonnull NSString*)error;
 -(void)onLogoutSuccessful;
@@ -121,7 +116,14 @@
 -(void)onRequestLogin;
 
 // Userdata syncing
--(void)mergeConflict:(nonnull NSString*)localData remoteData:(nonnull NSString*)remoteData;
+-(void)userDataMergeConflict:(nonnull NSString*)localData remoteData:(nonnull NSString*)remoteData;
+-(void)userDataMergeSuccessful;
+-(void)userDataMergeFailed:(nonnull NSString*)mergeData mergeType:(nonnull NSString*)mergeType;
+-(void)userDataHandleMerge:(nonnull NSString*)mergeType; // Called when a merge conflict option button was pressed
+-(void)userDataSyncError;
+-(void)userDatalockError;
+-(void)userDataError:(nonnull NSString*)mergeType;
+-(void)userDataAvailable;
 
 @end
 
@@ -179,6 +181,16 @@
  * Request the server timestamp
  */
 +(void)requestServerTime;
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnullability-completeness"
+
+/**
+ * Shows a simple dialog, useful while debugging
+ */
++(void)showDialog:(NSString*)title withMessage:(NSString*)message withOkButton:(NSString*)okButtonText handler:(void (^ __nullable)(UIAlertAction *action))handler;
+
+#pragma clang diagnostic pop
 
 #pragma mark App flow
 
@@ -583,11 +595,6 @@
 /**
  * Request the player data
  */
-+(void)requestPlayerData;
-
-/**
- * Request the player data
- */
 +(void)updatePlayerData;
 
 /**
@@ -814,6 +821,7 @@
 +(void)getOtherUsersGameState:(nonnull NSString*)provider userIds:(nonnull NSArray*)userIds;
 
 /**
+ * NOTE: Depricated
  * Request the private gamestate.
  */
 +(void)requestMyGameState;
@@ -910,6 +918,11 @@
 #pragma mark data syncing
 
 /**
+ * Get the device id
+ */
++(nonnull NSString*)getDeviceId;
+
+/**
  * Request the current userdata, which includes the wallet, inventory and private gamestate
  */
 +(void)requestUserData;
@@ -918,7 +931,17 @@
  * Used to merge resolve a merge conflict in the current userdata which is triggered by mergeConflict:remoteData: delegate
  * @param mergedUserData The result of the merge
  */
-+(void)mergeUserData:(nonnull NSString*)mergedUserData;
++(void)mergeUserData:(nonnull NSString*)mergedUserData mergeType:(nonnull NSString*)mergeType;
+
+/**
+ * Show the default merge error dialog
+ */
++(void)showMergeConflictDialog:(nonnull NSString*)title message:(nonnull NSString*)message localButtonText:(nonnull NSString*)localButtonText remoteButtonText:(nonnull NSString*)remoteButtonText mergeButtonText:(nonnull NSString*)mergeButtonText;
+
+/**
+ * Show the default merge error dialog
+ */
++(void)showSyncErrorDialog:(nonnull NSString*)title message:(nonnull NSString*)message mergeButtonText:(nonnull NSString*)mergeButtonText;
 
 #pragma test methods (dev)
 

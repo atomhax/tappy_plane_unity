@@ -515,10 +515,6 @@ namespace SpilGames.Unity.Base.Implementations {
             return Response.provider;
         }
 
-        public override void RequestMyGameState() {
-            RequestGameState();
-        }
-
         /// <summary>
         /// Sets the state of the private game.
         /// </summary>
@@ -786,6 +782,26 @@ namespace SpilGames.Unity.Base.Implementations {
         }
 
         #endregion
+
+		#region Userdata syncing
+
+		public override void RequestUserData() {
+			// TODO
+		}
+
+		public override void MergeUserData(string mergeData, string mergeType) {
+			// TODO
+		}
+
+		public override void ShowMergeConflictDialog(string title, string message, string localButtonText, string remoteButtonText, string mergeButtonText = null) {
+			// TODO
+		}
+
+		public override void ShowSyncErrorDialog(string title, string message, string startMergeButtonText) {
+			// TODO
+		}
+
+		#endregion
     }
 }
 #endif

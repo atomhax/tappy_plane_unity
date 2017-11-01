@@ -36,6 +36,10 @@
 -(BOOL)getIsUnity;
 -(BOOL)debugModeEnabled;
 -(BOOL)stagingEnabled;
+-(double)getClientTime;
+-(int)getTimezoneOffset;
+-(NSString*)getDeviceModel;
+-(NSString*)getAppVersion;
 
 // --- Event tracking ---
 

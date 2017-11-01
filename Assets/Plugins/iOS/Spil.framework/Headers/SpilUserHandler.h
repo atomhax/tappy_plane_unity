@@ -15,6 +15,8 @@
 
 @property (nonatomic, assign) BOOL authConflicted;
 @property (nonatomic, assign) int authErrorCode;
+@property (nonatomic, retain) NSMutableDictionary *deviceVersions;
+@property (nonatomic, retain) NSMutableDictionary *metadata;
 
 // --- Spil user id ---
 
@@ -43,11 +45,22 @@
 -(void)userPlayAsGuest;
 -(void)resetData;
 -(void)showOnAuthorizedDialog:(NSString*)title message:(NSString*)message loginButtonText:(NSString*)loginButtonText guestButtonText:(NSString*)guestButtonText;
+-(void)showOnMergeDialog:(NSString*)title message:(NSString*)message localButtonText:(NSString*)localButtonText remoteButtonText:(NSString*)remoteButtonText mergeButtonText:(NSString*)mergeButtonText;
+-(void)showOnSyncDialog:(NSString*)title message:(NSString*)message mergeButtonText:(NSString*)mergeButtonText;
+
+// --- Userdata ---
+
+-(void)setPrivateGameState:(NSString*)privateData sendUpdate:(Boolean)sendUpdate;
+-(NSString*)getPrivateGameState;
+-(void)setPublicGameState:(NSString*)publicData sendUpdate:(Boolean)sendUpdate;
+-(NSString*)getPublicGameState;
+-(void)getOtherUsersGameState:(NSString*)provider userIds:(NSArray*)userIds;
 
 // --- Userdata syncing ---
 
 -(void)requestUserData;
--(void)mergeUserData:(NSString*)mergedUserData;
+-(void)mergeUserData:(NSString*)mergedUserData mergeType:(NSString*)mergeType;
+-(void)increaseDeviceVersion;
 
 // --- Auth errors ---
 
@@ -60,18 +73,8 @@
 -(NSString*)getExternalUserProvider;
 -(NSDictionary*)getExternalUserRequestData;
 
-// --- User data ---
-
--(void)setPrivateGameState:(NSString*)privateData sendUpdate:(Boolean)sendUpdate;
--(NSString*)getPrivateGameState;
--(void)setPublicGameState:(NSString*)publicData sendUpdate:(Boolean)sendUpdate;
--(NSString*)getPublicGameState;
--(void)getOtherUsersGameState:(NSString*)provider userIds:(NSArray*)userIds;
--(void)requestMyGameState;
-
 // --- Updates ---
 
--(void)gameStateUpdateReceived:(NSString*)privateData public:(NSString*)publicData;
 -(void)friendsGameStateLoaded:(NSDictionary*)gameStates provider:(NSString*)provider;
 
 @end

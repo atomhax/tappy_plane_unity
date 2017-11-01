@@ -339,16 +339,6 @@ namespace SpilGames.Unity.Base.Implementations
 
 		[DllImport("__Internal")]
 		private static extern void getOtherUsersGameStateNative(string provider, string userIdsJsonArray);
-    
-		/// <summary>
-		/// Request to the SDK the latest Private and Public Game State.
-		/// </summary>
-		public override void RequestMyGameState() {
-			requestMyGameStateNative ();
-		}
-
-		[DllImport("__Internal")]
-		private static extern void requestMyGameStateNative();
 
 		#region Spil Game Objects
 	
@@ -736,6 +726,40 @@ namespace SpilGames.Unity.Base.Implementations
 
 		[DllImport("__Internal")]
 		private static extern void showDialogNative(string title, string message, string okButtonText);
+
+		#endregion
+
+		#region Userdata syncing
+
+		public override string GetDeviceId() {
+			return getDeviceIdNative ();
+		}
+		[DllImport("__Internal")]
+		private static extern string getDeviceIdNative();
+
+		public override void RequestUserData() {
+			requestUserDataNative ();
+		}
+		[DllImport("__Internal")]
+		private static extern void requestUserDataNative();
+
+		public override void MergeUserData(string mergeData, string mergeType) {
+			mergeUserDataNative (mergeData, mergeType);
+		}
+		[DllImport("__Internal")]
+		private static extern void mergeUserDataNative(string mergedUserData, string mergeType);
+
+		public override void ShowMergeConflictDialog(string title, string message, string localButtonText, string remoteButtonText, string mergeButtonText = null) {
+			showMergeConflictDialogNative (title, message, localButtonText, remoteButtonText, mergeButtonText);
+		}
+		[DllImport("__Internal")]
+		private static extern void showMergeConflictDialogNative(string title, string message, string localButtonText, string remoteButtonText, string mergeButtonText);
+
+		public override void ShowSyncErrorDialog(string title, string message, string startMergeButtonText) {
+			showSyncErrorDialogNative (title, message, startMergeButtonText);
+		}
+		[DllImport("__Internal")]
+		private static extern void showSyncErrorDialogNative(string title, string message, string mergeButtonText);
 
 		#endregion
 	}        

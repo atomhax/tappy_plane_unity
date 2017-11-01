@@ -237,9 +237,15 @@ extern "C" {
     
     // --- Data syncing ---
     
+    char* getDeviceIdNative();
+    
     void requestUserDataNative();
     
-    void mergeUserDataNative(char* mergedUserData);
+    void mergeUserDataNative(char* mergedUserData, char* mergeType);
+    
+    void showMergeConflictDialogNative(char* title, char* message, char* localButtonText, char* remoteButtonText, char* mergeButtonText);
+    
+    void showSyncErrorDialogNative(char* title, char* message, char* mergeButtonText);
 }
 
 #endif

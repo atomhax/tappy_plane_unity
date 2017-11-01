@@ -631,6 +631,62 @@ namespace SpilGames.Unity {
             SpilUnityImplementationBase.fireAuthenticationError(error);
         }
 
+		/// <summary>
+		/// This event indicates if a merge conflict occured
+		/// </summary>
+		public void UserDataMergeConflict(string localData, string remoteData) {
+			SpilUnityImplementationBase.fireUserDataMergeConflict(localData, remoteData);
+		}
+
+		/// <summary>
+		/// This event indicates if a merge conflict was successfully resolved.
+		/// </summary>
+		public void UserDataMergeSuccessful() {
+			SpilUnityImplementationBase.fireUserDataMergeSuccessful();
+		}
+
+		/// <summary>
+		/// This event indicates if a merge conflict failed.
+		/// </summary>
+		public void UserDataMergeFailed(string mergeData, string mergeType) {
+			SpilUnityImplementationBase.fireUserDataMergeFailed(mergeData, mergeType);
+		}
+
+		/// <summary>
+		/// This event indicates if a merge conflict needs to be handled for a certain type.
+		/// </summary>
+		public void UserDataHandleMerge(string mergeType) {
+			SpilUnityImplementationBase.fireUserDataHandleMerge(mergeType);
+		}
+
+		/// <summary>
+		/// This event indicates if a userdata sync error occured.
+		/// </summary>
+		public void UserDataSyncError() {
+			SpilUnityImplementationBase.fireUserDataSyncError();
+		}
+
+		/// <summary>
+		/// This event indicates if a userdata lock occured.
+		/// </summary>
+		public void UserDatalockError() {
+			SpilUnityImplementationBase.fireUserDatalockError();
+		}
+
+		/// <summary>
+		/// This event indicates if a general userdata error occured.
+		/// </summary>
+		public void UserDataError(string mergeType) {
+			SpilUnityImplementationBase.fireUserDataError(mergeType);
+		}
+
+		/// <summary>
+		/// This event indicates if an authentication error has occured on any event after the Social Login.
+		/// </summary>
+		public void UserDataAvailable() {
+			SpilUnityImplementationBase.fireUserDataAvailable();
+		}
+
 #if UNITY_ANDROID
         /// <summary>
         /// This event indicates the status of the permission request.

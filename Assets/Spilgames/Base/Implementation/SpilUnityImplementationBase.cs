@@ -1702,6 +1702,131 @@ namespace SpilGames.Unity.Base.Implementations {
             }
         }
 
+		public delegate void UserDataMergeConflict(MergeConflictData localDataMergeData, MergeConflictData remoteDataMergeData);
+
+		/// <summary>
+		/// This event indicates there was a merge conflict, the current local data and the conflicted remote data are passed.
+		/// </summary>
+		public event UserDataMergeConflict OnUserDataMergeConflict;
+
+		public static void fireUserDataMergeConflict(string localData, string remoteData) {
+			Debug.Log("SpilSDK-Unity fireUserDataMergeConflict");
+
+			MergeConflictData localDataMergeData = JsonHelper.getObjectFromJson<MergeConflictData>(localData);
+			MergeConflictData remoteDataMergeData = JsonHelper.getObjectFromJson<MergeConflictData>(remoteData);
+
+			if (Spil.Instance.OnUserDataMergeConflict != null) {
+				Spil.Instance.OnUserDataMergeConflict(localDataMergeData, remoteDataMergeData);
+			}
+		}
+
+		public delegate void UserDataMergeSuccessful();
+
+		/// <summary>
+		/// This event indicates that the data was merged successfully.
+		/// </summary>
+		public event UserDataMergeSuccessful OnUserDataMergeSuccessful;
+
+		public static void fireUserDataMergeSuccessful() {
+			Debug.Log("SpilSDK-Unity fireUserDataMergeSuccessful");
+
+			if (Spil.Instance.OnUserDataMergeSuccessful != null) {
+				Spil.Instance.OnUserDataMergeSuccessful();
+			}
+		}
+
+		public delegate void UserDataMergeFailed(string mergeData, string mergeType);
+
+		/// <summary>
+		/// This event indicates that the user data merge failed, 
+		/// the mergeData and mergeType params can be used to retry.
+		/// </summary>
+		public event UserDataMergeFailed OnUserDataMergeFailed;
+
+		public static void fireUserDataMergeFailed(string mergeData, string mergeType) {
+			Debug.Log("SpilSDK-Unity fireUserDataMergeFailed");
+
+			if (Spil.Instance.OnUserDataMergeFailed != null) {
+				Spil.Instance.OnUserDataMergeFailed(mergeData, mergeType);
+			}
+		}
+
+		public delegate void UserDataHandleMerge(string mergeType);
+
+		/// <summary>
+		/// This event indicates that the user data merge has to be handled for the specified merge type.
+		/// </summary>
+		public event UserDataHandleMerge OnUserDataHandleMerge;
+
+		public static void fireUserDataHandleMerge(string mergeType) {
+			Debug.Log("SpilSDK-Unity fireUserDataHandleMerge");
+
+			if (Spil.Instance.OnUserDataHandleMerge != null) {
+				Spil.Instance.OnUserDataHandleMerge(mergeType);
+			}
+		}
+
+		public delegate void UserDataSyncError();
+
+		/// <summary>
+		/// This event indicates that there was a sync error.
+		/// </summary>
+		public event UserDataSyncError OnUserDataSyncError;
+
+		public static void fireUserDataSyncError() {
+			Debug.Log("SpilSDK-Unity fireUserDataSyncError");
+
+			if (Spil.Instance.OnUserDataSyncError != null) {
+				Spil.Instance.OnUserDataSyncError();
+			}
+		}
+
+		public delegate void UserDatalockError();
+
+		/// <summary>
+		/// This event indicates that there was a lock error.
+		/// </summary>
+		public event UserDatalockError OnUserDatalockError;
+
+		public static void fireUserDatalockError() {
+			Debug.Log("SpilSDK-Unity fireUserDatalockError");
+
+			if (Spil.Instance.OnUserDatalockError != null) {
+				Spil.Instance.OnUserDatalockError();
+			}
+		}
+
+		public delegate void UserDataError(SpilErrorMessage errorMessage);
+
+		/// <summary>
+		/// This event indicates that there was a general user data error.
+		/// </summary>
+		public event UserDataError OnUserDataError;
+
+		public static void fireUserDataError(string error) {
+			Debug.Log("SpilSDK-Unity fireUserDataError with data: " + error);
+
+			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
+			if (Spil.Instance.OnUserDataError != null) {
+				Spil.Instance.OnUserDataError(errorMessage);
+			}
+		}
+
+		public delegate void UserDataAvailable();
+
+		/// <summary>
+		/// This event indicates that the user data is available.
+		/// </summary>
+		public event UserDataAvailable OnUserDataAvailable;
+
+		public static void fireUserDataAvailable() {
+			Debug.Log("SpilSDK-Unity fireUserDataAvailable");
+
+			if (Spil.Instance.OnUserDataAvailable != null) {
+				Spil.Instance.OnUserDataAvailable();
+			}
+		}
+
         #endregion
 
 #if UNITY_ANDROID
