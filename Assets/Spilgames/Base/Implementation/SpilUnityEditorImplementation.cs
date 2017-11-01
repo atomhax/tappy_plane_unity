@@ -95,7 +95,6 @@ namespace SpilGames.Unity.Base.Implementations {
             RequestConfig();
             RequestGameData();
             RequestPlayerData();
-            RequestGameState();
             AdvertisementInit();
             UpdatePackagesAndPromotions();
         }

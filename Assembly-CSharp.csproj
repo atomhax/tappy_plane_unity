@@ -95,6 +95,7 @@
     <Compile Include="Assets\Spilgames\Base\SDK\Responses\GameStateResponse.cs" />
     <Compile Include="Assets\Spilgames\Base\SDK\Responses\IAPPackagesResponse.cs" />
     <Compile Include="Assets\Spilgames\Base\SDK\Responses\ImageResponse.cs" />
+    <Compile Include="Assets\Spilgames\Base\SDK\Responses\MergeConflictResponse.cs" />
     <Compile Include="Assets\Spilgames\Base\SDK\Responses\PlayerDataResponse.cs" />
     <Compile Include="Assets\Spilgames\Base\SDK\Responses\RewardResponse.cs" />
     <Compile Include="Assets\Spilgames\Base\SDK\SpilResponse.cs" />
