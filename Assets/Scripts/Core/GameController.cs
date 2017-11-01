@@ -889,15 +889,18 @@ public class GameController : MonoBehaviour {
 
 	void OnUserDataHandleMerge(string mergeType) {
 		if (mergeType == "local") {
-			Spil.Instance.MergeUserData (localData, mergeType);
+			string json = JsonHelper.getJSONFromObject (localData);
+			Spil.Instance.MergeUserData (json, mergeType);
 		} if (mergeType == "remote") {
-			Spil.Instance.MergeUserData (remoteData, mergeType);
+			string json = JsonHelper.getJSONFromObject (localData);
+			Spil.Instance.MergeUserData (json, mergeType);
 		} if (mergeType == "merge") {
 			MergeConflictData mergedData = new MergeConflictData ();
 			mergedData.playerData = localData.playerData;
 			mergedData.gameStates = remoteData.gameStates;
 			mergedData.metaData = localData.metaData;
-			Spil.Instance.MergeUserData (mergeType, mergeType);
+			string json = JsonHelper.getJSONFromObject (localData);
+			Spil.Instance.MergeUserData (json, mergeType);
 		}
 	}
 

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace SpilGames.Unity.Base.SDK {
 	public class ConflictedPlayerData {
-		public bool externalChange;
 		public WalletData wallet;
 		public InventoryData inventory;
 	}
