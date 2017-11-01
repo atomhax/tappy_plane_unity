@@ -895,26 +895,6 @@ namespace SpilGames.Unity.Base.Implementations {
 
         #region Player Data
 
-        public delegate void PlayerDataAvailable();
-
-        /// <summary>
-        /// This is fired by the native Spil SDK after player data has been received from the server.
-        /// The developer can subscribe to this event and then request the Player Data (Wallet & Inventory).
-        /// </summary>
-        public event PlayerDataAvailable OnPlayerDataAvailable;
-
-        public static void firePlayerDataAvailable() {
-            Debug.Log("SpilSDK-Unity Player Data is available");
-
-            if (Spil.PlayerData != null) {
-                Spil.PlayerData.PlayerDataUpdatedHandler();
-            }
-            
-            if (Spil.Instance.OnPlayerDataAvailable != null) {
-                Spil.Instance.OnPlayerDataAvailable();
-            }
-        }
-
         public delegate void PlayerDataUpdated(string reason, PlayerDataUpdatedData updatedData);
 
         /// <summary>
@@ -954,24 +934,6 @@ namespace SpilGames.Unity.Base.Implementations {
             }
         }
 
-        public delegate void PlayerDataError(SpilErrorMessage errorMessage);
-
-        /// <summary>
-        /// This is fired by the native Spil SDK after player data has failed to be retrieved.
-        /// The developer can subscribe to this event and check the reason.
-        /// </summary>
-        public event PlayerDataError OnPlayerDataError;
-
-        public static void firePlayerDataError(string reason) {
-            Debug.Log("SpilSDK-Unity Player Data error with reason = " + reason);
-
-            SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(reason);
-
-            if (Spil.Instance.OnPlayerDataError != null) {
-                Spil.Instance.OnPlayerDataError(errorMessage);
-            }
-        }
-
         public delegate void GameStateUpdated(string access);
 
         /// <summary>
@@ -1003,24 +965,6 @@ namespace SpilGames.Unity.Base.Implementations {
 
             if (Spil.Instance.OnOtherUsersGameStateDataLoaded != null) {
                 Spil.Instance.OnOtherUsersGameStateDataLoaded(data);
-            }
-        }
-
-        public delegate void GameStateError(SpilErrorMessage errorMessage);
-
-        /// <summary>
-        /// This is fired by the native Spil SDK when the game state has failed to be retrieved.
-        /// The developer can subscribe to this event and check the reason.
-        /// </summary>
-        public event GameStateError OnGameStateError;
-
-        public static void fireGameStateError(string reason) {
-            Debug.Log("SpilSDK-Unity Game State Data error with reason = " + reason);
-
-            SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(reason);
-
-            if (Spil.Instance.OnGameStateError != null) {
-                Spil.Instance.OnGameStateError(errorMessage);
             }
         }
 

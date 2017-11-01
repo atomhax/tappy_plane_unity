@@ -319,13 +319,6 @@ namespace SpilGames.Unity {
         /// <summary>
         /// This method is called by the native Spil SDK, it should not be used by developers.
         /// </summary>
-        public void PlayerDataAvailable() {
-            SpilUnityImplementationBase.firePlayerDataAvailable();
-        }
-
-        /// <summary>
-        /// This method is called by the native Spil SDK, it should not be used by developers.
-        /// </summary>
         public void PlayerDataUpdated(string data) {
             SpilUnityImplementationBase.firePlayerDataUpdated(data);
         }
@@ -340,13 +333,6 @@ namespace SpilGames.Unity {
         /// <summary>
         /// This method is called by the native Spil SDK, it should not be used by developers.
         /// </summary>
-        public void PlayerDataError(string reason) {
-            SpilUnityImplementationBase.firePlayerDataError(reason);
-        }
-
-        /// <summary>
-        /// This method is called by the native Spil SDK, it should not be used by developers.
-        /// </summary>
         public void GameStateUpdated(string access) {
             SpilUnityImplementationBase.fireGameStateUpdated(access);
         }
@@ -356,13 +342,6 @@ namespace SpilGames.Unity {
         /// </summary>
         public void OtherUsersGameStateLoaded(string message) {
             SpilUnityImplementationBase.fireOtherUsersGameStateLoaded(message);
-        }
-
-        /// <summary>
-        /// This method is called by the native Spil SDK, it should not be used by developers.
-        /// </summary>
-        public void GameStateError(string message) {
-            SpilUnityImplementationBase.fireGameStateError(message);
         }
 
         /// <summary>

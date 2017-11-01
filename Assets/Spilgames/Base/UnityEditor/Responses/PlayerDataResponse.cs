@@ -266,7 +266,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
 
                 SpilUnityImplementationBase.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
             }
-            SpilUnityImplementationBase.firePlayerDataAvailable();
+			SpilUnityImplementationBase.fireUserDataAvailable();
         }
 
         public void WalletOperation(string action, int currencyId, int amount, string reason, string reasonDetails, string location, string transactionId) {

@@ -103,7 +103,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Responses {
                 error.name = "UserIdMissing";
                 error.message =
                     "Error adding public game state data! A custom user id must be set in order to save public game state data";
-                SpilUnityImplementationBase.fireGameStateError(JsonUtility.ToJson(error));
+				SpilUnityImplementationBase.fireUserDataError(JsonUtility.ToJson(error));
             }
         }
     }
