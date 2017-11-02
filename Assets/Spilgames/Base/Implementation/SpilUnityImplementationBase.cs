@@ -1653,14 +1653,13 @@ namespace SpilGames.Unity.Base.Implementations {
 		/// </summary>
 		public event UserDataMergeConflict OnUserDataMergeConflict;
 
-		public static void fireUserDataMergeConflict(string localData, string remoteData) {
+		public static void fireUserDataMergeConflict(string data) {
 			Debug.Log("SpilSDK-Unity fireUserDataMergeConflict");
 
-			MergeConflictData localDataMergeData = JsonHelper.getObjectFromJson<MergeConflictData>(localData);
-			MergeConflictData remoteDataMergeData = JsonHelper.getObjectFromJson<MergeConflictData>(remoteData);
+			MergeConflict mergeConflict = JsonHelper.getObjectFromJson<MergeConflict>(data);
 
 			if (Spil.Instance.OnUserDataMergeConflict != null) {
-				Spil.Instance.OnUserDataMergeConflict(localDataMergeData, remoteDataMergeData);
+				Spil.Instance.OnUserDataMergeConflict(mergeConflict.localData, mergeConflict.remoteData);
 			}
 		}
 
