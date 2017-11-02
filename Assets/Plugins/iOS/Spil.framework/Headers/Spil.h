@@ -913,7 +913,7 @@
 /**
  * Show the default auth error dialog
  */
-+(void)showOnAuthorizedDialog:(nonnull NSString*)title message:(nonnull NSString*)message loginButtonText:(nonnull NSString*)loginButtonText guestButtonText:(nonnull NSString*)guestButtonText;
++(void)showAuthorizedDialog:(nonnull NSString*)title message:(nonnull NSString*)message loginButtonText:(nonnull NSString*)loginButtonText guestButtonText:(nonnull NSString*)guestButtonText;
 
 #pragma mark data syncing
 

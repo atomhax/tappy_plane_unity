@@ -613,8 +613,8 @@ namespace SpilGames.Unity {
 		/// <summary>
 		/// This event indicates if a merge conflict occured
 		/// </summary>
-		public void UserDataMergeConflict(string localData, string remoteData) {
-			SpilUnityImplementationBase.fireUserDataMergeConflict(localData, remoteData);
+		public void UserDataMergeConflict(string data) {
+			SpilUnityImplementationBase.fireUserDataMergeConflict(data);
 		}
 
 		/// <summary>
@@ -655,8 +655,8 @@ namespace SpilGames.Unity {
 		/// <summary>
 		/// This event indicates if a general userdata error occured.
 		/// </summary>
-		public void UserDataError(string mergeType) {
-			SpilUnityImplementationBase.fireUserDataError(mergeType);
+		public void UserDataError(string errorMessage) {
+			SpilUnityImplementationBase.fireUserDataError(errorMessage);
 		}
 
 		/// <summary>

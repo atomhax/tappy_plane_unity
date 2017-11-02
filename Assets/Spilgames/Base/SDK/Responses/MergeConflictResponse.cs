@@ -13,16 +13,21 @@ namespace SpilGames.Unity.Base.SDK {
 	}
 
 	public class MetaData {
-		public int clientTime;
+		public long clientTime;
 		public int timezoneOffset;
-		public int deviceModel;
-		public int serverTime;
-		public int appVersion;
+		public string deviceModel;
+		public long serverTime;
+		public string appVersion;
 	}
 
 	public class MergeConflictData {
 		public ConflictedPlayerData playerData;
 		public MetaData metaData;
 		public List<ConflictedGameState> gameStates;
+	}
+
+	public class MergeConflict {
+		public MergeConflictData localData;
+		public MergeConflictData remoteData;
 	}
 }

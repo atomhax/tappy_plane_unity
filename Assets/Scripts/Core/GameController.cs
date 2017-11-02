@@ -148,6 +148,9 @@ public class GameController : MonoBehaviour {
         Spil.Instance.OnLiveEventAvailable -= OnLiveEventAvailable;
         Spil.Instance.OnLiveEventAvailable += OnLiveEventAvailable;
 
+		Spil.Instance.OnLiveEventNotAvailable -= OnLiveEventNotAvailable;
+		Spil.Instance.OnLiveEventNotAvailable += OnLiveEventNotAvailable;
+
         Spil.Instance.OnLiveEventStageOpen -= OnLiveEventStageOpen;
         Spil.Instance.OnLiveEventStageOpen += OnLiveEventStageOpen;
 
@@ -749,6 +752,11 @@ public class GameController : MonoBehaviour {
         liveEventButton.SetActive(true);
     }
 
+	private void OnLiveEventNotAvailable() {
+		Debug.Log("Live Event Not Available");
+		liveEventButton.SetActive(false);
+	}
+
     public void OpenLiveEvent() {
         overlayEnabled = true;
         Spil.Instance.OpenLiveEvent();
@@ -849,7 +857,7 @@ public class GameController : MonoBehaviour {
 	}
 
 	void OnUserDataError(SpilErrorMessage errorMessage) {
-		Spil.Instance.ShowNativeDialog("User data error", errorMessage.message, "Ok");
+		//Spil.Instance.ShowNativeDialog("User data error", errorMessage.message, "Ok");
 	}
 
 	void OnUserDataMergeConflict(MergeConflictData localData, MergeConflictData remoteData) {
