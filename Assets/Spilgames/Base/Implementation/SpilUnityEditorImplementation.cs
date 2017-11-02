@@ -606,10 +606,6 @@ namespace SpilGames.Unity.Base.Implementations {
             // TODO
         }
 
-		public override void ShowMergeFailedDialog(string title, string message, string retryButtonText, string mergeData, string mergeType) {
-			// TODO
-		}
-
         #endregion
 
         #region Daily Bonus
@@ -787,7 +783,11 @@ namespace SpilGames.Unity.Base.Implementations {
 		public override void ShowSyncErrorDialog(string title, string message, string startMergeButtonText) {
 			// TODO
 		}
-
+        
+        public override void ShowMergeFailedDialog(string title, string message, string retryButtonText, string mergeData, string mergeType) {
+            // TODO
+        }
+        
 		#endregion
     }
 }

@@ -538,21 +538,44 @@ namespace SpilGames.Unity.Base.Implementations {
         #region Userdata syncing
 
         public override void RequestUserData() {
-            // TODO
+            CallNativeMethod("requestUserData");
         }
 
         public override void MergeUserData(string mergeData, string mergeType) {
-            // TODO
+            CallNativeMethod("mergeUserData", new object[] {
+                mergeData,
+                mergeType,
+            }, true);
         }
 
         public override void ShowMergeConflictDialog(string title, string message, string localButtonText, string remoteButtonText, string mergeButtonText = null) {
-            // TODO
+            CallNativeMethod("showMergeConflictDialog", new object[] {
+                title,
+                message,
+                localButtonText,
+                remoteButtonText,
+                mergeButtonText
+            }, true);
         }
 
         public override void ShowSyncErrorDialog(string title, string message, string startMergeButtonText) {
-            // TODO
+            CallNativeMethod("showSyncErrorDialog", new object[] {
+                title,
+                message,
+                startMergeButtonText
+            }, true);
         }
 
+        public override void ShowMergeFailedDialog(string title, string message, string retryButtonText, string mergeData, string mergeType) {
+            CallNativeMethod("showSyncErrorDialog", new object[] {
+                title,
+                message,
+                retryButtonText,
+                mergeData,
+                mergeType
+            }, true);
+        }
+        
         #endregion
 
         public override void ResetData() {

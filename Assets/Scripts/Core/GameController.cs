@@ -855,8 +855,8 @@ public class GameController : MonoBehaviour {
 	void OnUserDataMergeConflict(MergeConflictData localData, MergeConflictData remoteData) {
 		this.localData = localData;
 		this.remoteData = remoteData;
-		string message = "Local time: " + localData.metaData.clientTime.ToString () + ", Local device model: " + localData.metaData.deviceModel +
-		                 "Remote time: " + remoteData.metaData.clientTime.ToString () + ", Remote device model: " + remoteData.metaData.deviceModel;
+		string message = "Local time: " + localData.metaData.clientTime.ToString () + "\nLocal device model: " + localData.metaData.deviceModel + "\n" +
+		                 "\nRemote time: " + remoteData.metaData.clientTime.ToString () + "\nRemote device model: " + remoteData.metaData.deviceModel;
 		Spil.Instance.ShowMergeConflictDialog("Merge conflict", message, "Local", "Remote", "Merge");
 	}
 
