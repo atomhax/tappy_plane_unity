@@ -8,6 +8,10 @@ namespace SpilGames.Unity.Base.SDK {
 	}
 
 	public class ConflictedGameState {
+		public List<ConflictedGameStateObject> gameStates;
+	}
+	
+	public class ConflictedGameStateObject {
 		public string access;
 		public string data;
 	}
@@ -22,8 +26,8 @@ namespace SpilGames.Unity.Base.SDK {
 
 	public class MergeConflictData {
 		public ConflictedPlayerData playerData;
+		public ConflictedGameState gameState;
 		public MetaData metaData;
-		public List<ConflictedGameState> gameStates;
 	}
 
 	public class MergeConflict {

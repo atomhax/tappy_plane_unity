@@ -32,6 +32,8 @@ public class GameController : MonoBehaviour {
 
     public PlayerController player;
 
+    public ShopPanelController shopPanelController;
+
     public Transform playerStartLocation;
 
     public float obsitcleSpawnFrequency;
@@ -74,7 +76,11 @@ public class GameController : MonoBehaviour {
     public static List<string> userNames = new List<string>();
     public bool fbLoggedIn = false;
 
-    public bool overlayEnabled = false;
+    public bool overlayEnabled = false;    
+    
+    private bool showSyncDialog = true;
+    private bool showMergeDialog = true;
+    private bool showLockDialog = true;
 
     private Vector3 initialPosition;
     private Quaternion initialRotation;
@@ -519,14 +525,17 @@ public class GameController : MonoBehaviour {
     }
 
     public void FacebookLogin() {
-        Debug.Log("Requesting Log In information");
-        overlayEnabled = true;
 #if !UNITY_TVOS
-        FB.LogInWithReadPermissions(new List<string>() {
-            "public_profile",
-            "email",
-            "user_friends"
-        }, this.HandleResult);
+//        if (!FB.IsLoggedIn) {
+            Debug.Log("Requesting Log In information");
+            overlayEnabled = true;
+            
+            FB.LogInWithReadPermissions(new List<string>() {
+                "public_profile",
+                "email",
+                "user_friends"
+            }, this.HandleResult);
+//        }
 #endif
     }
 
@@ -854,22 +863,32 @@ public class GameController : MonoBehaviour {
 			}
 		}
 		Spil.PlayerData.UpdatePlayerData();
+	    
+	    shopPanelController.updatePlayerValues();
+	    
+	    showMergeDialog = true;
+	    showSyncDialog = true;
 	}
 
 	void OnUserDataError(SpilErrorMessage errorMessage) {
-		//Spil.Instance.ShowNativeDialog("User data error", errorMessage.message, "Ok");
+		Debug.Log("Error: " + errorMessage.message);
 	}
 
 	void OnUserDataMergeConflict(MergeConflictData localData, MergeConflictData remoteData) {
-		this.localData = localData;
-		this.remoteData = remoteData;
-		string message = "Local time: " + localData.metaData.clientTime.ToString () + "\nLocal device model: " + localData.metaData.deviceModel + "\n" +
-		                 "\nRemote time: " + remoteData.metaData.clientTime.ToString () + "\nRemote device model: " + remoteData.metaData.deviceModel;
-		Spil.Instance.ShowMergeConflictDialog("Merge conflict", message, "Local", "Remote", "Merge");
+	    if (showMergeDialog) {
+	        this.localData = localData;
+	        this.remoteData = remoteData;
+	        string message = "Local time: " + localData.metaData.clientTime + "\nLocal device model: " + localData.metaData.deviceModel + "\n" +
+	                         "\nRemote time: " + remoteData.metaData.clientTime + "\nRemote device model: " + remoteData.metaData.deviceModel;
+	        Spil.Instance.ShowMergeConflictDialog("Merge Conflict", message, "Local", "Remote", "Merge");
+
+	        showMergeDialog = false;
+	        showSyncDialog = false;
+	    }
 	}
 
 	void OnUserDataMergeSuccessful() {
-		Spil.Instance.ShowNativeDialog ("Merge successful", "", "Ok!");
+		Spil.Instance.ShowNativeDialog ("Merge Successful", "The User Data was merged succesfully!", "Ok!");
 
 		// Refresh the data
 		Debug.Log("Private Game State Updated! Request new private game state!");
@@ -889,36 +908,60 @@ public class GameController : MonoBehaviour {
 			}
 		}
 		Spil.PlayerData.UpdatePlayerData();
+	    
+	    shopPanelController.updatePlayerValues();
+	    
+	    showMergeDialog = true;
+	    showSyncDialog = true;
 	}
 
 	void OnUserDataMergeFailed(string mergeData, string mergeType) {
-		Spil.Instance.ShowMergeFailedDialog ("Merge failed", "Could not merge the data, please try again", "Retry", mergeData, mergeType);
+	    showMergeDialog = true;
+	    showSyncDialog = true;
+	    
+		Spil.Instance.ShowMergeFailedDialog ("Merge Failed", "User Data could not be merged. Please try again!", "Try Again", mergeData, mergeType);
 	}
 
 	void OnUserDataHandleMerge(string mergeType) {
+	    string jsonString = null;
 		if (mergeType == "local") {
-			string json = JsonHelper.getJSONFromObject (localData);
-			Spil.Instance.MergeUserData (json, mergeType);
+			jsonString = JsonHelper.getJSONFromObject (localData);
 		} if (mergeType == "remote") {
-			string json = JsonHelper.getJSONFromObject (localData);
-			Spil.Instance.MergeUserData (json, mergeType);
+	        jsonString = JsonHelper.getJSONFromObject (remoteData);
 		} if (mergeType == "merge") {
 			MergeConflictData mergedData = new MergeConflictData ();
 			mergedData.playerData = localData.playerData;
-			mergedData.gameStates = remoteData.gameStates;
+			mergedData.gameState = remoteData.gameState;
 			mergedData.metaData = localData.metaData;
-			string json = JsonHelper.getJSONFromObject (localData);
-			Spil.Instance.MergeUserData (json, mergeType);
+	        jsonString = JsonHelper.getJSONFromObject (mergedData);
 		}
+	    
+	    Debug.Log(mergeType + " Merge data: " + jsonString);
+	    
+	    Spil.Instance.MergeUserData (jsonString, mergeType);
 	}
 
 	void OnUserDataSyncError() {
-		Spil.Instance.ShowSyncErrorDialog ("Sync error", "Merge conflict", "Resolve conflict");
+	    if (showSyncDialog) {
+	        Spil.Instance.ShowSyncErrorDialog ("Sync Error", "User Data synchronization error occurred. Please initiate merging process.", "Start merging process");
+	        showSyncDialog = false;
+	    }
+		
 	}
 
 	void OnUserDatalockError() {
-		Spil.Instance.ShowNativeDialog ("Lock error", "Please try again later", "Ok..");
+	    if (showLockDialog) {
+	        Spil.Instance.ShowNativeDialog ("Lock Error", "User Data could not be written to the backend. Please try again in a few moments.", "Ok");
+	        showLockDialog = false;
+	           
+	        Invoke("SetShowLockDialog", 5);
+	    }
+	
 	}
+
+    void SetShowLockDialog() {
+        showLockDialog = true;
+    }
 
 #if UNITY_ANDROID
     private void OnPermissionResponse(SpilAndroidUnityImplementation.PermissionResponseObject permissionResponse) {

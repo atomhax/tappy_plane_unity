@@ -1,12 +1,10 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.UI;
+﻿using System.Collections.Generic;
 using SpilGames.Unity;
-using SpilGames.Unity.Helpers.GameData;
 using SpilGames.Unity.Base.SDK;
+using SpilGames.Unity.Helpers.GameData;
 using SpilGames.Unity.Helpers.PlayerData;
-
+using UnityEngine;
+using UnityEngine.UI;
 
 public class ShopPanelController : MonoBehaviour {
 
@@ -25,11 +23,11 @@ public class ShopPanelController : MonoBehaviour {
 	private bool closeShopAfterReward;
 
 	void OnEnable(){
-		Spil.Instance.OnAdAvailable -= Spil_Instance_OnAdAvailable;
-		Spil.Instance.OnAdAvailable += Spil_Instance_OnAdAvailable;
+		Spil.Instance.OnAdAvailable -= OnAdAvailable;
+		Spil.Instance.OnAdAvailable += OnAdAvailable;
 
-		Spil.Instance.OnPlayerDataUpdated -= Spil_Instance_OnPlayerDataUpdated;	
-		Spil.Instance.OnPlayerDataUpdated += Spil_Instance_OnPlayerDataUpdated;
+		Spil.Instance.OnPlayerDataUpdated -= OnPlayerDataUpdated;	
+		Spil.Instance.OnPlayerDataUpdated += OnPlayerDataUpdated;
 
 		Spil.Instance.OnSplashScreenOpen -= OnSplashScreenOpen;
 		Spil.Instance.OnSplashScreenOpen += OnSplashScreenOpen;
@@ -47,7 +45,7 @@ public class ShopPanelController : MonoBehaviour {
 		Spil.Instance.OnSplashScreenOpenShop += OnSplashScreenOpenShop;
 
 		Spil.Instance.RequestRewardVideo("Shop");
-		Spil_Instance_OnPlayerDataUpdated("Opened", null);
+		OnPlayerDataUpdated("Opened", null);
 
 		spilIds.text = "DeviceId: " + Spil.Instance.GetDeviceId() + "\nUserId: " + Spil.Instance.GetSpilUserId();
 		
@@ -94,9 +92,23 @@ public class ShopPanelController : MonoBehaviour {
 	void OnDisable(){
 		gameController.UpdateSkins ();
 	}
-		
-	void Spil_Instance_OnPlayerDataUpdated (string reason, PlayerDataUpdatedData updatedData)
-	{
+
+	public void updatePlayerValues() {
+		starsAmountText.text = Spil.PlayerData.GetCurrencyBalance (25).ToString ();
+		diamonsAmountText.text = Spil.PlayerData.GetCurrencyBalance (28).ToString ();
+		if (Spil.PlayerData.GetItemAmount(100077) < 0) {
+			tapperAmountText.text = "0";
+		} else {
+			tapperAmountText.text = Spil.PlayerData.GetItemAmount(100077).ToString();
+		}
+		if (Spil.PlayerData.GetItemAmount(100088) < 0) {
+			tappyChestAmountText.text = "0";
+		} else {
+			tappyChestAmountText.text = Spil.PlayerData.GetItemAmount(100088).ToString();
+		}
+	}
+	
+	void OnPlayerDataUpdated (string reason, PlayerDataUpdatedData updatedData) {
 		starsAmountText.text = Spil.PlayerData.GetCurrencyBalance (25).ToString ();
 		diamonsAmountText.text = Spil.PlayerData.GetCurrencyBalance (28).ToString ();
 		if (Spil.PlayerData.GetItemAmount(100077) < 0) {
@@ -111,9 +123,8 @@ public class ShopPanelController : MonoBehaviour {
 		}
 	}
 		
-	void Spil_Instance_OnAdAvailable (SpilGames.Unity.Base.SDK.enumAdType adType)
-	{
-		if (adType == SpilGames.Unity.Base.SDK.enumAdType.RewardVideo) {
+	void OnAdAvailable (enumAdType adType) {
+		if (adType == enumAdType.RewardVideo) {
 			getFreeCoinsButton.SetActive (true);
 		}
 	}
@@ -124,8 +135,7 @@ public class ShopPanelController : MonoBehaviour {
 		Spil.Instance.PlayVideo ("Shop Button");
 	}
 
-	void Spil_Instance_OnAdFinished (SpilAdFinishedResponse response)
-	{
+	void Spil_Instance_OnAdFinished (SpilAdFinishedResponse response) {
 		getFreeCoinsButton.SetActive (false);
 		if(response.reward != null) {
 			gameController.latestRewardAmount = 0;
@@ -167,28 +177,23 @@ public class ShopPanelController : MonoBehaviour {
 		Spil.PlayerData.OpenGacha(100088, PlayerDataUpdateReasons.OpenGacha, "Shop", "Opening Tappy Chest");
 	}
 	
-	void OnSplashScreenOpen()
-	{
+	void OnSplashScreenOpen() {
 		Debug.Log ("SplashScreenOpen");
 	}
 
-	void OnSplashScreenClosed()
-	{
+	void OnSplashScreenClosed() {
 		Debug.Log ("SplashScreenClosed");
 	}
 
-	void OnSplashScreenNotAvailable()
-	{
+	void OnSplashScreenNotAvailable() {
 		Debug.Log ("SplashScreenNotAvailable");
 	}
 
-	void OnSplashScreenError(SpilErrorMessage error)
-	{
+	void OnSplashScreenError(SpilErrorMessage error) {
 		Debug.Log ("SplashScreenError with reason: " + error.message);
 	}
 
-	void OnSplashScreenOpenShop()
-	{
+	void OnSplashScreenOpenShop() {
 		Debug.Log ("SplashScreenOpenShop");
 		gameController.OpenShop ();
 	}

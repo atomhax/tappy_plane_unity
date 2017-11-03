@@ -79,10 +79,11 @@ public class BundleDisplayPanelController : MonoBehaviour
 	public void BuyBundle ()
 	{
 		if (CanAffordBundle ()) {
-//			SpendCurrencyForBundle ();
-//			AddItemsToInventory ();
 			BuyBundleFromSDK ();
-			buyButton.SetActive (false);
+			if (bundleDisplayed.Id != 100100) {
+				buyButton.SetActive (false);
+			}
+			
 			GameObject.Find ("GameController").GetComponent<GameController> ().InGamePurchaesSuccess (bundleDisplayed.Name);
 		} else {
 			GameObject.Find ("GameController").GetComponent<GameController> ().InGamePurchaesFail (bundleDisplayed);

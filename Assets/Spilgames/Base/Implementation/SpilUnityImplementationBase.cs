@@ -1686,9 +1686,13 @@ namespace SpilGames.Unity.Base.Implementations {
 		/// </summary>
 		public event UserDataMergeFailed OnUserDataMergeFailed;
 
-		public static void fireUserDataMergeFailed(string mergeData, string mergeType) {
+		public static void fireUserDataMergeFailed(string data) {
 			Debug.Log("SpilSDK-Unity fireUserDataMergeFailed");
 
+		    JSONObject jsonData = new JSONObject(data);
+		    string mergeData = jsonData.HasField ("mergeData") ? jsonData.GetField ("mergeData").str : null;
+		    string mergeType = jsonData.HasField ("mergeType") ? jsonData.GetField ("mergeType").str : null;
+		    
 			if (Spil.Instance.OnUserDataMergeFailed != null) {
 				Spil.Instance.OnUserDataMergeFailed(mergeData, mergeType);
 			}

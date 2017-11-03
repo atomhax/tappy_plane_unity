@@ -627,8 +627,8 @@ namespace SpilGames.Unity {
 		/// <summary>
 		/// This event indicates if a merge conflict failed.
 		/// </summary>
-		public void UserDataMergeFailed(string mergeData, string mergeType) {
-			SpilUnityImplementationBase.fireUserDataMergeFailed(mergeData, mergeType);
+		public void UserDataMergeFailed(string data) {
+			SpilUnityImplementationBase.fireUserDataMergeFailed(data);
 		}
 
 		/// <summary>
