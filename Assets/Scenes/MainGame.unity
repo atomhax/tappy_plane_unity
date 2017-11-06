@@ -9344,6 +9344,7 @@ MonoBehaviour:
   purchaceCompleteText: {fileID: 1246650168}
   purchaceFailText: {fileID: 1038123634}
   player: {fileID: 1126162262}
+  shopPanelController: {fileID: 2145718198}
   playerStartLocation: {fileID: 287294331}
   obsitcleSpawnFrequency: 2
   obsticleSpawnYVarience: 1.3
