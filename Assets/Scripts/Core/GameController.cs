@@ -520,7 +520,30 @@ public class GameController : MonoBehaviour {
         Debug.Log("Facebook Inistialised");
         
         if (Spil.Instance.IsLoggedIn()) {
+#if UNITY_IOS
+			if (FB.IsLoggedIn) {
+				Debug.Log("FB already Logged In!");
+
+				String socialId = AccessToken.CurrentAccessToken.UserId;
+				String token = AccessToken.CurrentAccessToken.TokenString;
+				if (socialId != null && token != null) {
+					Debug.Log("Saving User Id");
+					Spil.Instance.UserLogin(socialId, "facebook", token);
+
+					Debug.Log("Requesting friends list");
+					FB.API("/me/friends?fields=id,name", HttpMethod.GET, HandleFriendsLoaded);
+
+					FBLoginButton.SetActive(false);
+					FBLogoutButton.SetActive(true);
+					highScoreButton.SetActive(true);
+					FBShareButton.SetActive(true);
+				}
+			} else {
+				FacebookLogin();
+			}
+#else
             FacebookLogin();
+#endif
         }
     }
 
