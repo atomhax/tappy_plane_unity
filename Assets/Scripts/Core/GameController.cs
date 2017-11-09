@@ -229,8 +229,8 @@ public class GameController : MonoBehaviour {
 		Spil.Instance.OnUserDataSyncError -= OnUserDataSyncError;
 		Spil.Instance.OnUserDataSyncError += OnUserDataSyncError;
 
-		Spil.Instance.OnUserDatalockError -= OnUserDatalockError;
-		Spil.Instance.OnUserDatalockError += OnUserDatalockError;
+		Spil.Instance.OnUserDataLockError -= OnUserDataLockError;
+		Spil.Instance.OnUserDataLockError += OnUserDataLockError;
         
 #if UNITY_ANDROID
         Spil.Instance.OnPermissionResponse -= OnPermissionResponse;
@@ -883,7 +883,7 @@ public class GameController : MonoBehaviour {
 	        Spil.Instance.ShowMergeConflictDialog("Merge Conflict", message, "Local", "Remote", "Merge");
 
 	        showMergeDialog = false;
-	        showSyncDialog = false;
+	        showSyncDialog = true;
 	    }
 	}
 
@@ -942,6 +942,7 @@ public class GameController : MonoBehaviour {
 	}
 
 	void OnUserDataSyncError() {
+	    showMergeDialog = true;
 	    if (showSyncDialog) {
 	        Spil.Instance.ShowSyncErrorDialog ("Sync Error", "User Data synchronization error occurred. Please initiate merging process.", "Start merging process");
 	        showSyncDialog = false;
@@ -949,7 +950,7 @@ public class GameController : MonoBehaviour {
 		
 	}
 
-	void OnUserDatalockError() {
+	void OnUserDataLockError() {
 	    if (showLockDialog) {
 	        Spil.Instance.ShowNativeDialog ("Lock Error", "User Data could not be written to the backend. Please try again in a few moments.", "Ok");
 	        showLockDialog = false;

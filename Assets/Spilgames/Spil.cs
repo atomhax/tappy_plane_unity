@@ -649,7 +649,7 @@ namespace SpilGames.Unity {
 		/// This event indicates if a userdata lock occured.
 		/// </summary>
 		public void UserDatalockError() {
-			SpilUnityImplementationBase.fireUserDatalockError();
+			SpilUnityImplementationBase.fireUserDataLockError();
 		}
 
 		/// <summary>

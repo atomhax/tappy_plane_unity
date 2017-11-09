@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Collections;
 using SpilGames.Unity.Base.Implementations;
 using SpilGames.Unity.Json;
-using SpilGames.Unity.Base.UnityEditor.Responses;
+using SpilGames.Unity.Base.UnityEditor.Managers;
 
 namespace SpilGames.Unity.Base.UnityEditor {
     public class ResponseEvent : SpilEvent {
@@ -43,11 +43,14 @@ namespace SpilGames.Unity.Base.UnityEditor {
                         break;
                     case "notification":
                         break;
-                    case "playerdata":
-                        SpilUnityEditorImplementation.pData.ProcessPlayerDataResponse(responseEvent);
-                        break;
                     case "gamedata":
-                        SpilUnityEditorImplementation.gData.ProcessGameDataResponse(responseEvent);
+                        GameDataResponse.ProcessGameDataResponse(responseEvent);
+                        break;
+                    case "userdata":
+                        UserDataResponse.ProcessUserDataResponse(responseEvent);
+                        break;
+                    case "playerdata":
+                        PlayerDataResponse.ProcessPlayerDataResponse(responseEvent);
                         break;
                     case "gamestate":
                         GameStateResponse.ProcessGameStateResponse(responseEvent);
@@ -65,6 +68,13 @@ namespace SpilGames.Unity.Base.UnityEditor {
             }
             GameObject.Destroy(responseEvent);
         }
+    }
+    
+    public class Response {
+        public static string provider;
+        public static string externalId;
+        public static string pluginName;
+        public static string pluginVersion;
     }
 }
 #endif

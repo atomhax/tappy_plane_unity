@@ -1728,18 +1728,18 @@ namespace SpilGames.Unity.Base.Implementations {
 			}
 		}
 
-		public delegate void UserDatalockError();
+		public delegate void UserDataLockError();
 
 		/// <summary>
 		/// This event indicates that there was a lock error.
 		/// </summary>
-		public event UserDatalockError OnUserDatalockError;
+		public event UserDataLockError OnUserDataLockError;
 
-		public static void fireUserDatalockError() {
-			Debug.Log("SpilSDK-Unity fireUserDatalockError");
+		public static void fireUserDataLockError() {
+			Debug.Log("SpilSDK-Unity fireUserDataLockError");
 
-			if (Spil.Instance.OnUserDatalockError != null) {
-				Spil.Instance.OnUserDatalockError();
+			if (Spil.Instance.OnUserDataLockError != null) {
+				Spil.Instance.OnUserDataLockError();
 			}
 		}
 

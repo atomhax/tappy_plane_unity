@@ -10,7 +10,7 @@ using SpilGames.Unity.Helpers;
 using System.Collections;
 using System;
 using SpilGames.Unity.Json;
-using SpilGames.Unity.Base.UnityEditor.Responses;
+using SpilGames.Unity.Base.UnityEditor.Managers;
 
 namespace SpilGames.Unity.Base.UnityEditor {
     public class SpilEvent : MonoBehaviour {
@@ -76,7 +76,7 @@ namespace SpilGames.Unity.Base.UnityEditor {
                     foreach (KeyValuePair<string, string> entry in request.responseHeaders) {
                         if (entry.Key.Equals("STATUS")){
                             if (entry.Value.Contains("401")) {
-                                SocialLoginResponse.ProcessUnauthorizedResponse(request.text);
+                                SocialLoginManager.ProcessUnauthorizedResponse(request.text);
                                 SpilLogging.Error("Unauthorized 401 event! Error: " + request.text);
                             } else {
                                 SpilLogging.Error("Error getting data: " + request.error);

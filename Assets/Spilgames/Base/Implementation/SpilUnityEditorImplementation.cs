@@ -6,7 +6,7 @@ using System.IO;
 using Newtonsoft.Json;
 using SpilGames.Unity.Helpers;
 using System;
-using SpilGames.Unity.Base.UnityEditor.Responses;
+using SpilGames.Unity.Base.UnityEditor.Managers;
 using SpilGames.Unity.Json;
 using SpilGames.Unity.Base.UnityEditor;
 using SpilGames.Unity.Helpers.GameData;
@@ -14,8 +14,8 @@ using SpilGames.Unity.Helpers.PlayerData;
 
 namespace SpilGames.Unity.Base.Implementations {
     public class SpilUnityEditorImplementation : SpilUnityImplementationBase {
-        public static PlayerDataResponse pData;
-        public static GameDataResponse gData;
+        public static PlayerDataManager pData;
+        public static GameDataManager gData;
 
         public static bool unauthorized = false;
         public static string spilToken;
@@ -35,7 +35,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// </summary>
         /// <returns></returns>     
         public override string GetConfigAll() {
-            return ConfigResponse.getConfigAll();
+            return ConfigManager.getConfigAll();
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// <param name="key"></param>
         /// <returns></returns>
         public override string GetConfigValue(string key) {
-            return ConfigResponse.getConfigValue(key);
+            return ConfigManager.getConfigValue(key);
         }
 
         #endregion
@@ -63,11 +63,11 @@ namespace SpilGames.Unity.Base.Implementations {
         }
 
         protected override string GetAllPackages() {
-            return JsonHelper.getJSONFromObject(PackagesResponse.GamePackagesData);
+            return JsonHelper.getJSONFromObject(PackagesManager.GamePackagesData);
         }
 
         protected override string GetPackage(string key) {
-            return PackagesResponse.getPackage(key);
+            return PackagesManager.getPackage(key);
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// Internal method names start with a lower case so you can easily recognise and avoid them.
         /// </summary>
         internal override string GetPromotions(string key) {
-            return PackagesResponse.getPromotions(key);
+            return PackagesManager.getPromotions(key);
         }
 
         #endregion
@@ -87,14 +87,14 @@ namespace SpilGames.Unity.Base.Implementations {
         /// Internal method names start with a lower case so you can easily recognise and avoid them.
         /// </summary>
         internal override void SpilInit() {
-            gData = new GameDataResponse();
-            pData = new PlayerDataResponse();
+            gData = new GameDataManager();
+            pData = new PlayerDataManager();
 
             SetPluginInformation(PluginName, PluginVersion);
 
             RequestConfig();
             RequestGameData();
-            RequestPlayerData();
+            RequestUserData();
             AdvertisementInit();
             UpdatePackagesAndPromotions();
         }
@@ -104,12 +104,11 @@ namespace SpilGames.Unity.Base.Implementations {
             Spil.GameData = null;
             pData = null;
             Spil.PlayerData = null;
-            
+
             SpilInit();
         }
 
         public override void ShowNativeDialog(string title, string message, string buttonText) {
-            
         }
 
         internal void RequestConfig() {
@@ -126,29 +125,6 @@ namespace SpilGames.Unity.Base.Implementations {
 
             SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
             spilEvent.eventName = "requestGameData";
-
-            spilEvent.Send();
-        }
-
-        internal void RequestPlayerData() {
-            pData.Wallet = pData.InitWallet();
-            pData.Inventory = pData.InitInventory();
-
-            Spil.PlayerData = new PlayerDataHelper(this);
-
-            pData.SetInitalWalletValues();
-            pData.SetInitalInventoryValues();
-
-            SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
-            spilEvent.eventName = "requestPlayerData";
-
-            JSONObject j1 = new JSONObject();
-            j1.AddField("offset", pData.Wallet.offset);
-            spilEvent.customData.AddField("wallet", j1);
-
-            JSONObject j2 = new JSONObject();
-            j2.AddField("offset", pData.Inventory.offset);
-            spilEvent.customData.AddField("inventory", j2);
 
             spilEvent.Send();
         }
@@ -217,7 +193,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// If no video is available then nothing will happen.
         /// </summary>
         public override void PlayVideo(string location = null, string rewardType = null) {
-            AdvertisementResponse.PlayVideo();
+            AdvertisementManager.PlayVideo();
         }
 
         /// <summary>
@@ -227,7 +203,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// If no video is available then nothing will happen.
         /// </summary>
         public override void PlayMoreApps() {
-            AdvertisementResponse.PlayMoreApps();
+            AdvertisementManager.PlayMoreApps();
         }
 
         /// <summary>
@@ -503,7 +479,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// </summary>
         /// <param name="privateData">Private data.</param>
         public override void SetPrivateGameState(string privateData) {
-            GameStateResponse.SetPrivateGameState(privateData);
+            GameStateManager.SetPrivateGameState(privateData);
         }
 
         /// <summary>
@@ -511,7 +487,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// </summary>
         /// <returns>The private game state.</returns>
         public override string GetPrivateGameState() {
-            return GameStateResponse.PrivateGameStateData;
+            return GameStateManager.PrivateGameStateData;
         }
 
         /// <summary>
@@ -519,7 +495,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// </summary>
         /// <param name="publicData">Public data.</param>
         public override void SetPublicGameState(string publicData) {
-            GameStateResponse.SetPublicGameState(publicData);
+            GameStateManager.SetPublicGameState(publicData);
         }
 
         /// <summary>
@@ -527,7 +503,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// </summary>
         /// <returns>The public game state.</returns>
         public override string GetPublicGameState() {
-            return GameStateResponse.PublicGameStateData;
+            return GameStateManager.PublicGameStateData;
         }
 
         /// <summary>
@@ -686,19 +662,19 @@ namespace SpilGames.Unity.Base.Implementations {
         }
 
         public override void OpenLiveEvent() {
-            LiveEventResponse.OpenLiveEvent();
+            LiveEventManager.OpenLiveEvent();
         }
 
         public override string GetLiveEventConfig() {
-            return LiveEventResponse.GetLiveEventConfig();
+            return LiveEventManager.GetLiveEventConfig();
         }
 
         public override long GetLiveEventStartDate() {
-            return LiveEventResponse.GetLiveEventStartDate();
+            return LiveEventManager.GetLiveEventStartDate();
         }
 
         public override long GetLiveEventEndDate() {
-            return LiveEventResponse.GetLiveEventEndDate();
+            return LiveEventManager.GetLiveEventEndDate();
         }
 
         #endregion
@@ -757,7 +733,7 @@ namespace SpilGames.Unity.Base.Implementations {
 
         public override void ShowUnauthorizedDialog(string title, string message, string loginText,
             string playAsGuestText) {
-            SocialLoginResponse.ShowUnauthorizedDialog(title, message, loginText, playAsGuestText);
+            SocialLoginManager.ShowUnauthorizedDialog(title, message, loginText, playAsGuestText);
         }
 
         public override bool IsLoggedIn() {
@@ -766,29 +742,67 @@ namespace SpilGames.Unity.Base.Implementations {
 
         #endregion
 
-		#region Userdata syncing
+        #region Userdata syncing
 
-		public override void RequestUserData() {
-			// TODO
-		}
+        public override void RequestUserData() {
+            pData.Wallet = pData.InitWallet();
+            pData.Inventory = pData.InitInventory();
 
-		public override void MergeUserData(string mergeData, string mergeType) {
-			// TODO
-		}
+            Spil.PlayerData = new PlayerDataHelper(this);
 
-		public override void ShowMergeConflictDialog(string title, string message, string localButtonText, string remoteButtonText, string mergeButtonText = null) {
-			// TODO
-		}
+            pData.SetInitalWalletValues();
+            pData.SetInitalInventoryValues();
 
-		public override void ShowSyncErrorDialog(string title, string message, string startMergeButtonText) {
-			// TODO
-		}
-        
-        public override void ShowMergeFailedDialog(string title, string message, string retryButtonText, string mergeData, string mergeType) {
-            // TODO
+            SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
+            spilEvent.eventName = "requestUserData";
+
+            JSONObject playerDataJSON = new JSONObject();
+
+            JSONObject walletJSON = new JSONObject();
+            walletJSON.AddField("offset", pData.Wallet.offset);
+            playerDataJSON.AddField("wallet", walletJSON);
+
+            JSONObject inventoryJSON = new JSONObject();
+            inventoryJSON.AddField("offset", pData.Inventory.offset);
+            playerDataJSON.AddField("inventory", inventoryJSON);
+
+            spilEvent.customData.AddField("playerData", playerDataJSON);
+
+            JSONObject gameStateJSON = new JSONObject();
+
+            JSONObject gameStateArray = new JSONObject(JSONObject.Type.ARRAY);
+            gameStateArray.Add("private");
+
+            if (Response.provider != null & Response.externalId != null) {
+                gameStateArray.Add("public");
+            }
+
+            gameStateJSON.AddField("access", gameStateArray);
+
+            spilEvent.customData.AddField("gameState", gameStateJSON);
+
+            spilEvent.customData.AddField("deviceVersions", UserDataManager.GenerateUserDataVersionsJSON(UserDataManager.userDataVersions));
+
+            spilEvent.Send();
         }
-        
-		#endregion
+
+        public override void MergeUserData(string mergeData, string mergeType) {
+            UserDataManager.MergeUserData(mergeData, mergeType);
+        }
+
+        public override void ShowMergeConflictDialog(string title, string message, string localButtonText, string remoteButtonText, string mergeButtonText = null) {
+            UserDataManager.ShowMergeConflictDialog(title, message, localButtonText, remoteButtonText, mergeButtonText);
+        }
+
+        public override void ShowSyncErrorDialog(string title, string message, string startMergeButtonText) {
+            UserDataManager.ShowSyncErrorDialog(title, message, startMergeButtonText);
+        }
+
+        public override void ShowMergeFailedDialog(string title, string message, string retryButtonText, string mergeData, string mergeType) {
+            UserDataManager.ShowMergeFailedDialog(title, message, retryButtonText, mergeData, mergeType);
+        }
+
+        #endregion
     }
 }
 #endif
