@@ -26,7 +26,7 @@ public class HighScoresPanelController : MonoBehaviour {
 
 	public void RequestHighScores(){
 		string facebookIds = GameController.GetFriendIdsJson();
-		Spil.Instance.GetOtherUsersGameState("Facebook", facebookIds);
+		Spil.Instance.GetOtherUsersGameState("facebook", facebookIds);
 	}
 
 	void DisplayHighScores(OtherUsersGameStateData data){
