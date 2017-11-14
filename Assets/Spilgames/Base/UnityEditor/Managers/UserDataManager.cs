@@ -559,6 +559,8 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 UserDataManager.ProcessMergeUserData(userDataVersions);
             } else if (responseEvent.action.ToLower().Trim().Equals("lockerror")) {
                 UserDataManager.ProcessLockError();
+            } else if (responseEvent.action.ToLower().Trim().Equals("syncerror")) {
+                UserDataManager.ProcessSyncError();
             }
         }
     }
