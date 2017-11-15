@@ -102,6 +102,8 @@ namespace SpilGames.Unity.Base.Implementations {
         public override void ResetData() {
             gData = null;
             Spil.GameData = null;
+            GameDataManager.updatedFromServer = false;
+            
             pData = null;
             Spil.PlayerData = null;
 
