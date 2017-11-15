@@ -107,6 +107,9 @@ namespace SpilGames.Unity.Base.Implementations {
             pData = null;
             Spil.PlayerData = null;
 
+            GameStateManager.PrivateGameStateData = null;
+            GameStateManager.PublicGameStateData = null;
+
             SpilInit();
         }
 
