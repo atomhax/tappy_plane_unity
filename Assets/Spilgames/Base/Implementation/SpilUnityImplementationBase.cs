@@ -5,6 +5,7 @@ using SpilGames.Unity.Helpers.GameData;
 using System.Collections;
 using SpilGames.Unity.Json;
 using SpilGames.Unity.Base.SDK;
+using SpilGames.Unity.Base.UnityEditor;
 using SpilGames.Unity.Helpers.IAPPackages;
 using SpilGames.Unity.Helpers.PlayerData;
 
@@ -1656,6 +1657,7 @@ namespace SpilGames.Unity.Base.Implementations {
 		public static void fireUserDataMergeConflict(string data) {
 			Debug.Log("SpilSDK-Unity fireUserDataMergeConflict");
 
+		    SpilLogging.Log(data);
 			MergeConflict mergeConflict = JsonHelper.getObjectFromJson<MergeConflict>(data);
 
 			if (Spil.Instance.OnUserDataMergeConflict != null) {

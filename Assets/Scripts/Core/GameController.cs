@@ -235,6 +235,10 @@ public class GameController : MonoBehaviour {
         Spil.Instance.OnPermissionResponse -= OnPermissionResponse;
         Spil.Instance.OnPermissionResponse += OnPermissionResponse;
 #endif
+#if UNITY_EDITOR
+        PlayerPrefs.SetInt("Background", 0);
+        PlayerPrefs.SetInt("Skin", 0);
+#endif
         GetAndApplyGameConfig();
         SetupNewGame();
 
@@ -245,11 +249,8 @@ public class GameController : MonoBehaviour {
         }
 #endif
 
-        Debug.Log("Requesting Game State!!!!");
-		//Spil.Instance.RequestUserData();
-
         initialPosition = player.gameObject.transform.position;
-        initialRotation = player.gameObject.transform.rotation;
+        initialRotation = player.gameObject.transform.rotation; 
     }
 
     void Spil_Instance_OnReward(PushNotificationRewardResponse rewardResponse) {
