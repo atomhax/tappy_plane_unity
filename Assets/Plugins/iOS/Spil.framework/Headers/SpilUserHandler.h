@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface SpilUserHandler : NSObject
+@interface SpilUserHandler : NSObject 
 
 +(SpilUserHandler*)sharedInstance;
 
