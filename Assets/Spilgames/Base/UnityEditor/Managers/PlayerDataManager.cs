@@ -590,9 +590,6 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 if (rand >= low && rand < high) {
                     gachaPlayerItem.amount = gachaPlayerItem.amount - 1;
                     gachaPlayerItem.delta = gachaPlayerItem.delta - 1;
-
-                    UserDataManager.UpdateUserDataVersions();
-                    UserDataManager.UpdateUserDataMeta();
                     
                     UpdateItem(gachaPlayerItem);
 
@@ -610,6 +607,9 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                             InventoryOperation("add", gachaContent.id, gachaContent.amount, reason, reasonDetails, location, null);
                             break;
                         case "NONE":
+                            UserDataManager.UpdateUserDataVersions();
+                            UserDataManager.UpdateUserDataMeta();
+                            
                             PlayerDataUpdatedData updatedData = new PlayerDataUpdatedData();
                             updatedData.items.Add(gachaPlayerItem);
                             updatedData.reason = reason;

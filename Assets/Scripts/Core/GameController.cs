@@ -207,7 +207,6 @@ public class GameController : MonoBehaviour {
         Spil.Instance.OnRequestLogin -= OnRequestLogin;
         Spil.Instance.OnRequestLogin += OnRequestLogin;
 
-
 		Spil.Instance.OnUserDataAvailable -= OnUserDataAvailable;
 		Spil.Instance.OnUserDataAvailable += OnUserDataAvailable;
 
@@ -895,6 +894,11 @@ public class GameController : MonoBehaviour {
 
 	void OnUserDataError(SpilErrorMessage errorMessage) {
 		Debug.Log("Error: " + errorMessage.message);
+
+	    if (errorMessage.id == 38) {
+	        showMergeDialog = true;
+	        showSyncDialog = true;
+	    }
 	}
 
 	void OnUserDataMergeConflict(MergeConflictData localData, MergeConflictData remoteData) {
@@ -958,8 +962,6 @@ public class GameController : MonoBehaviour {
 			mergedData.metaData = localData.metaData;
 	        jsonString = JsonHelper.getJSONFromObject (mergedData);
 		}
-	    
-	    Debug.Log(mergeType + " Merge data: " + jsonString);
 	    
 	    Spil.Instance.MergeUserData (jsonString, mergeType);
 	}
