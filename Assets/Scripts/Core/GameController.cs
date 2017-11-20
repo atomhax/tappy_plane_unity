@@ -952,11 +952,11 @@ public class GameController : MonoBehaviour {
 
 	void OnUserDataHandleMerge(string mergeType) {
 	    string jsonString = null;
-		if (mergeType == "local") {
+		if (mergeType == MergeConflict.Local) {
 			jsonString = JsonHelper.getJSONFromObject (localData);
-		} if (mergeType == "remote") {
+		} if (mergeType == MergeConflict.Remote) {
 	        jsonString = JsonHelper.getJSONFromObject (remoteData);
-		} if (mergeType == "merge") {
+		} if (mergeType == MergeConflict.Merge) {
 			MergeConflictData mergedData = new MergeConflictData ();
 			mergedData.playerData = localData.playerData;
 			mergedData.gameState = remoteData.gameState;
