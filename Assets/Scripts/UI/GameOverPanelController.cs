@@ -35,7 +35,7 @@ public class GameOverPanelController : MonoBehaviour {
 		PublicGameState gameState = new PublicGameState();
 		gameState.setHighScore(highScore);
 
-		string gameStateJson = JsonHelper.getJSONFromObject(gameState);
+		string gameStateJson = JsonUtility.ToJson(gameState);
 		Spil.Instance.SetPublicGameState(gameStateJson);
 	}
 

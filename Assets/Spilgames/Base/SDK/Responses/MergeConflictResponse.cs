@@ -33,5 +33,9 @@ namespace SpilGames.Unity.Base.SDK {
 	public class MergeConflict {
 		public MergeConflictData localData;
 		public MergeConflictData remoteData;
+
+		public static String Local = "local";
+		public static String Remote = "remote";
+		public static String Merge = "merge";
 	}
 }

@@ -4,6 +4,7 @@ using System.Collections;
 using SpilGames.Unity;
 using System;
 using System.Collections.Generic;
+using NUnit.Framework.Internal;
 using SpilGames.Unity.Base.Implementations;
 using SpilGames.Unity.Json;
 using SpilGames.Unity.Base.SDK;
@@ -30,9 +31,16 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
                 if (access == null || data == null) continue;
                 if (access.Equals("private")) {
+                    if (data.Contains("\"")) {
+                        data = data.Replace("\"", "\\\"").Replace("\\\\", "\\");
+                    }
+                    
                     PrivateGameStateData = data;
                     SpilUnityImplementationBase.fireGameStateUpdated("private");
                 } else if (access.Equals("public")) {
+                    if (data.Contains("\"")) {
+                        data = data.Replace("\"", "\\\"").Replace("\\\\", "\\");
+                    }
                     PublicGameStateData = data;
                     SpilUnityImplementationBase.fireGameStateUpdated("public");
                 }
@@ -60,13 +68,15 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         public static void SetPrivateGameState(String gameState) {
             UserDataManager.UpdateUserDataVersions();
             UserDataManager.UpdateUserDataMeta();
-            
-            PrivateGameStateData = gameState;
 
             SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
             spilEvent.eventName = "updateGameState";
-
-            gameState = gameState.Replace("\"", "\\\"");
+             
+            if (gameState.Contains("\"")) {
+                gameState = gameState.Replace("\"", "\\\"").Replace("\\\\", "\\");
+            }
+            
+            PrivateGameStateData = gameState;
 
             JSONObject gameStateJSONArray = new JSONObject(JSONObject.Type.ARRAY);
             JSONObject gameStateJSON = new JSONObject();
@@ -84,14 +94,16 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         public static void SetPublicGameState(String gameState) {
             if (Response.externalId != null && Response.provider != null) {
                 UserDataManager.UpdateUserDataVersions();
-                UserDataManager.UpdateUserDataMeta();
-                
-                PublicGameStateData = gameState;
+                UserDataManager.UpdateUserDataMeta();              
 
                 SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
                 spilEvent.eventName = "updateGameState";
 
-                gameState = gameState.Replace("\"", "\\\"");
+                if (gameState.Contains("\"")) {
+                    gameState = gameState.Replace("\"", "\\\"").Replace("\\\\", "\\");
+                }
+                
+                PublicGameStateData = gameState;
 
                 JSONObject gameStateJSONArray = new JSONObject(JSONObject.Type.ARRAY);
                 JSONObject gameStateJSON = new JSONObject();
