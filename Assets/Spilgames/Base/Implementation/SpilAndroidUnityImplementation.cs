@@ -723,8 +723,10 @@ namespace SpilGames.Unity.Base.Implementations {
             CallNativeMethod("requestDailyBonus");
         }
 
-        public override void RequestSplashScreen() {
-            CallNativeMethod("requestSplashScreen");
+        public override void RequestSplashScreen(string type = null) {
+            CallNativeMethod("requestSplashScreen", new object[] {
+                type,
+            }, true);
         }
 
         #endregion

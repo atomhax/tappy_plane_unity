@@ -598,10 +598,14 @@ namespace SpilGames.Unity.Base.Implementations {
             spilEvent.Send();
         }
 
-        public override void RequestSplashScreen() {
+        public override void RequestSplashScreen(string type = null) {
             SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
             spilEvent.eventName = "requestSplashscreen";
 
+            if (type != null) {
+                spilEvent.customData.AddField("type", type);
+            }
+            
             spilEvent.Send();
         }
 

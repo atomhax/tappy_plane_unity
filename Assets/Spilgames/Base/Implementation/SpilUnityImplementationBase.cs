@@ -1939,7 +1939,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// <summary>
         /// Requests the splashscreen.
         /// </summary>
-        public abstract void RequestSplashScreen();
+        public abstract void RequestSplashScreen(string type = null);
 
         #endregion
 
