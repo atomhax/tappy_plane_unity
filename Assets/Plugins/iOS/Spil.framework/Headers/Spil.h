@@ -9,7 +9,7 @@
 #import "HookBridge.h"
 #import "GAI.h"
 
-#define SPIL_SDK_VERSION @"2.7.0"
+#define SPIL_SDK_VERSION @"2.7.1"
 
 @class ImageContext;
 @class Spil;
@@ -745,16 +745,6 @@
 #pragma mark Customer support
 
 /**
- * Shows the help center
- */
-+(void)showHelpCenter;
-
-/**
- * Shows the contact center
- */
-+(void)showContactCenter;
-
-/**
  * Shows the help center webview version
  * @param url   The url to open
  */
@@ -769,8 +759,9 @@
 
 /**
  * Request a splash screen
+ * @param type   The type of splashscreen to request
  */
-+(void)requestSplashScreen;
++(void)requestSplashScreen:(nullable NSString*)type;
 
 #pragma mark User data
 

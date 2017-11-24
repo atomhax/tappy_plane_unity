@@ -115,7 +115,7 @@ for root, dirs, files in os.walk(os.getcwd() + "/Spil.framework"):
 print('Adding system frameworks')
 frameworks = project.get_or_create_group('Frameworks')
 requiredSystemFrameworks = ['Accounts', 'AdSupport', 'AssetsLibrary', 'AudioToolbox', 'AVFoundation', 'EventKit', 'EventKitUI', 'CoreData', 'CoreGraphics', 
-							'CoreLocation', 'CoreMedia', 'CoreMotion', 'CoreTelephony', 'iAd', 'MapKit', 'MediaPlayer', 'MessageUI', 'QuartzCore', 
+							'CoreLocation', 'CoreMedia', 'CoreMotion', 'CoreTelephony', 'GLKit', 'iAd', 'MapKit', 'MediaPlayer', 'MessageUI', 'QuartzCore', 
 							'Social', 'StoreKit', 'SystemConfiguration', 'Twitter', 'WebKit']
 for framework in requiredSystemFrameworks:
 	project.add_file_if_doesnt_exist('System/Library/Frameworks/' + framework + '.framework', parent=frameworks, weak=False, tree='SDKROOT')
@@ -125,7 +125,7 @@ for library in requiredSystemLibraries:
 
 # add custom frameworks
 print('Adding custom frameworks')
-requiredCustomFrameworks = ['AdjustSdk', 'Chartboost', 'FBAudienceNetwork', 'FacebookAdapter', 'Fyber_AdColony', 'Fyber_UnityAds', 'Fyber_Vungle', 'GoogleMobileAds', 'MMAdSDK', 'UnityAds', 'ZendeskSDK', 'ZendeskProviderSDK', 'FirebaseCore', 'FirebaseInstanceID', 'FirebaseAnalytics', 'FirebaseDynamicLinks', 'GoogleToolboxForMac', 'FirebaseNanoPB', 'nanopb', 'MPUBMoatMobileAppKit']
+requiredCustomFrameworks = ['AdjustSdk', 'Chartboost', 'Fyber_AdColony', 'Fyber_UnityAds', 'Fyber_Vungle', 'Fyber_FacebookAudienceNetwork', 'Fyber_AdMob', 'GoogleMobileAds', 'MMAdSDK', 'UnityAds', 'FirebaseCore', 'FirebaseCoreDiagnostics', 'FirebaseInstanceID', 'FirebaseAnalytics', 'FirebaseDynamicLinks', 'GoogleToolboxForMac', 'FirebaseNanoPB', 'nanopb', 'MPUBMoatMobileAppKit']
 project.add_file_if_doesnt_exist('Spil.framework', parent=frameworks, weak=False)
 for framework in requiredCustomFrameworks:
 	project.add_file_if_doesnt_exist('Spil.framework/Frameworks/' + framework + '.framework', parent=frameworks, weak=False)
@@ -142,8 +142,7 @@ addBundleResource(os.getcwd() + '/Spil.framework/MRAID.bundle', os.getcwd() + '/
 addBundleResource(os.getcwd() + '/Data/Raw/defaultGameConfig.json', os.getcwd() + '/defaultGameConfig.json', bundles)
 addBundleResource(os.getcwd() + '/Data/Raw/defaultGameData.json', os.getcwd() + '/defaultGameData.json', bundles)
 addBundleResource(os.getcwd() + '/Data/Raw/defaultPlayerData.json', os.getcwd() + '/defaultPlayerData.json', bundles)
-addBundleResource(os.getcwd() + '/Spil.framework/ZendeskSDK.bundle', os.getcwd() + '/ZendeskSDK.bundle', bundles)
-addBundleResource(os.getcwd() + '/Spil.framework/ZendeskSDKStrings.bundle', os.getcwd() + '/ZendeskSDKStrings.bundle', bundles)
+addBundleResource(os.getcwd() + '/Spil.framework/FYBFacebookAudienceNetwork.h', os.getcwd() + '/FYBFacebookAudienceNetwork.h', bundles)
 
 # add png/xib/der/mom/momd resources
 for file in os.listdir(os.getcwd() + '/Spil.framework'):
@@ -175,7 +174,7 @@ shutil.copy2(sourcePath, destPath)
 # modify plist
 print('Modifying info.plist')
 plist = plistlib.readPlist(currentPlistPath)
-plist['NSAppTransportSecurity'] = dict(NSAllowsArbitraryLoads = True)
+plist['NSAppTransportSecurity'] = dict(NSAllowsArbitraryLoads = True, NSAllowsArbitraryLoadsForMedia = True, NSAllowsArbitraryLoadsInWebContent = True)
 plist['UIBackgroundModes'] = ["remote-notification"]
 plist['NSCameraUsageDescription'] = "Used to take a photo."
 plist['NSCalendarsUsageDescription'] = "Used to access the calendar."

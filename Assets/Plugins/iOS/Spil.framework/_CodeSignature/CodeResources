@@ -8,73 +8,81 @@
 		<data>
 		n6jeEW5sQwWs9aFSfHXIMiQG/38=
 		</data>
-		<key>FYBBackIconiPad@2x.png</key>
-		<data>
-		4pREeeOCk7zkPhpdY0g/i/CDgcM=
-		</data>
-		<key>FYBBackIconiPhone@2x.png</key>
-		<data>
-		y3Uezfm65mXDcqo7aGEZiL9d7nk=
-		</data>
 		<key>FYBIntegrationAnalyzerViewController~ipad.nib/objects-8.0+.nib</key>
 		<data>
-		ppDWbxQkHNu0meaEmzLzSlfB5a4=
+		S8a6HnzpSNIE6QuxkkIvWc7Ylo8=
 		</data>
 		<key>FYBIntegrationAnalyzerViewController~ipad.nib/runtime.nib</key>
 		<data>
-		eRQG/H4AuqS+HYnJCUj0N8O7IE0=
+		Wwlu/qu9dA4EWeGqBEJ4HTcEeX4=
 		</data>
 		<key>FYBIntegrationAnalyzerViewController~iphone.nib/objects-8.0+.nib</key>
 		<data>
-		gQPWze9JBJXHPfPyDWFcGnmlc50=
+		atyp7vC6srcqHLSfsZYQBxpcooM=
 		</data>
 		<key>FYBIntegrationAnalyzerViewController~iphone.nib/runtime.nib</key>
 		<data>
-		LIdYcV6JJSRN0oe+CLjPf0nG4Nw=
+		rHjQFug0arQzZqwfOvaoz9j7WaM=
 		</data>
 		<key>Frameworks/AdjustSdk.framework/AdjustSdk</key>
 		<data>
-		Q7sAcEHEGm2H0MJvSwWjSBBFNco=
+		ZnzJ+lDdHpPxcrP3jg/g0kmxGlY=
 		</data>
 		<key>Frameworks/Chartboost.framework/Chartboost</key>
 		<data>
-		+clh5di+pucgmba9woqaE0mLmq4=
-		</data>
-		<key>Frameworks/FBAudienceNetwork.framework/FBAudienceNetwork</key>
-		<data>
-		5Y+fQKMcIoVUCgCZkflb4+1Dy2s=
-		</data>
-		<key>Frameworks/FBAudienceNetwork.framework/Info.plist</key>
-		<data>
-		4l+fGFQ06ZwTflnOwg7Ld40PnhE=
-		</data>
-		<key>Frameworks/FacebookAdapter.framework/FacebookAdapter</key>
-		<data>
-		flZNScq5JRjw+C0EUUo+lp/67zU=
+		maxA3UIFGDTBUP+MHfyjMPf2S+g=
 		</data>
 		<key>Frameworks/FirebaseAnalytics.framework/FirebaseAnalytics</key>
 		<data>
-		FjAEI5JEy4zazhvo3ZCjLRbqb6c=
+		I+EBiOTkf0SX3FPSESjw3SGJfZ4=
 		</data>
 		<key>Frameworks/FirebaseCore.framework/FirebaseCore</key>
 		<data>
-		VeB9yFxHPslv07Ml2Y7t6Z1Wtlo=
+		9DuPbSu4WcjqvzNmU3fg63UmUIQ=
+		</data>
+		<key>Frameworks/FirebaseCoreDiagnostics.framework/FirebaseCoreDiagnostics</key>
+		<data>
+		F8jDq/Yxkns06W6VE2NBrxb/Vpw=
 		</data>
 		<key>Frameworks/FirebaseDynamicLinks.framework/FirebaseDynamicLinks</key>
 		<data>
-		qtLWh9kn2fYz3WQ9Ds07Hu73YMI=
+		5omvtbwrLkKtQU1w2Ec3OOBb1SM=
 		</data>
 		<key>Frameworks/FirebaseInstanceID.framework/FirebaseInstanceID</key>
 		<data>
-		83Vjh+7eFkKGb/QBZLT8oPTkNaU=
+		Q7K1XA560BW290WUyZV22BC9Xqw=
 		</data>
 		<key>Frameworks/FirebaseNanoPB.framework/FirebaseNanoPB</key>
 		<data>
-		NOLWNfENKF/lYD7AerXHDEOzRmU=
+		IPtDV26K2V1vFJzq939//eu+sNQ=
 		</data>
 		<key>Frameworks/Fyber_AdColony.framework/Fyber_AdColony</key>
 		<data>
 		umnxNraEvz2Kz1l5GoPcKbmjJus=
+		</data>
+		<key>Frameworks/Fyber_AdMob.framework/Fyber_AdMob</key>
+		<data>
+		BbwKGLY3zhCA/NJ9ndLhy2v7Fhg=
+		</data>
+		<key>Frameworks/Fyber_AdMob.framework/Resources/FYBAdMob.h</key>
+		<data>
+		Cb1Uvac+HUns4QFpRTSR9LFKXjw=
+		</data>
+		<key>Frameworks/Fyber_AdMob.framework/Resources/Info.plist</key>
+		<data>
+		6tjgf++nrQs5IQ+au6HLYfEKY9E=
+		</data>
+		<key>Frameworks/Fyber_FacebookAudienceNetwork.framework/Fyber_FacebookAudienceNetwork</key>
+		<data>
+		a9EeJtCsb2cbNsA7WuAtYSaU10E=
+		</data>
+		<key>Frameworks/Fyber_FacebookAudienceNetwork.framework/Resources/FYBFacebookAudienceNetwork.h</key>
+		<data>
+		GWK9dK85aj2a6g4NXBV7Kuy5HJs=
+		</data>
+		<key>Frameworks/Fyber_FacebookAudienceNetwork.framework/Resources/Info.plist</key>
+		<data>
+		N9KRBBcZHbi0FMOH0cviBIhX/mw=
 		</data>
 		<key>Frameworks/Fyber_UnityAds.framework/Frameworks/UnityAds.framework/Info.plist</key>
 		<data>
@@ -82,64 +90,35 @@
 		</data>
 		<key>Frameworks/Fyber_UnityAds.framework/Frameworks/UnityAds.framework/UnityAds</key>
 		<data>
-		lTjwBL9QbtAq7/RcLkwCVw4MzRI=
+		IlLwZibIafADxK28RMfrEwdTd6U=
 		</data>
 		<key>Frameworks/Fyber_UnityAds.framework/Fyber_UnityAds</key>
 		<data>
-		CJKEOZ4X1KwFtkWeO/x/7SaRLXU=
+		Mv5L9UWQV8nukbjCKPNqe5HbVfM=
 		</data>
 		<key>Frameworks/Fyber_UnityAds.framework/Resources/Info.plist</key>
 		<data>
-		Hb+fb2CQmjig+2SvwJLx7inQs3g=
-		</data>
-		<key>Frameworks/Fyber_UnityAds.framework/Resources/UnityAds.bundle/Info.plist</key>
-		<data>
-		Q2MNqv4uL+M4j34o2IzfxlwodAA=
-		</data>
-		<key>Frameworks/Fyber_UnityAds.framework/Resources/UnityAds.bundle/audio_mute.png</key>
-		<data>
-		odsAzZCdQwrv21ZNqvg+dP8zz0A=
-		</data>
-		<key>Frameworks/Fyber_UnityAds.framework/Resources/UnityAds.bundle/audio_mute@2x.png</key>
-		<data>
-		ge4dgW56jqwyZ/E7ySNujYMRXhI=
-		</data>
-		<key>Frameworks/Fyber_UnityAds.framework/Resources/UnityAds.bundle/audio_on.png</key>
-		<data>
-		z7q5a3NoMvwqlg581EeBX+mPSho=
-		</data>
-		<key>Frameworks/Fyber_UnityAds.framework/Resources/UnityAds.bundle/audio_on@2x.png</key>
-		<data>
-		0Rs+e2J2q4ys4YQe276Sm37yqjc=
-		</data>
-		<key>Frameworks/Fyber_UnityAds.framework/Resources/UnityAds.bundle/en.lproj/InfoPlist.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			zmV6UqBSo6r1NOz798vd5O4zTBA=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>Frameworks/Fyber_UnityAds.framework/Resources/UnityAdsCompiler-Info.plist</key>
-		<data>
-		BQYuLMDKtFFGDBjVXxwsJo61rVw=
+		5oUZWIhEDdTRnzHo5I20XkSnYZw=
 		</data>
 		<key>Frameworks/Fyber_Vungle.Framework/Fyber_Vungle</key>
 		<data>
-		UQ96XbvXYYq8CGzp9e3IdXqgoK4=
+		jhAqD66WtiNXDgQ+JIPc83awmZo=
+		</data>
+		<key>Frameworks/Fyber_Vungle.Framework/Resources/Info.plist</key>
+		<data>
+		c2e7wA3jLHw/Zd3Sshud7WWRACQ=
 		</data>
 		<key>Frameworks/GoogleMobileAds.framework/GoogleMobileAds</key>
 		<data>
-		UxzQMagLIXLkLzNjXvz7B1A1I2g=
+		sVVL/GEIRJaZ+72tI0a0Wau3v5E=
 		</data>
 		<key>Frameworks/GoogleToolboxForMac.framework/GoogleToolboxForMac</key>
 		<data>
-		omxVnVTj/wTd5v8FPYnTBDmIscE=
+		vV/IlAYowqpHQIYIEuQTZq2jbno=
 		</data>
 		<key>Frameworks/MMAdSDK.framework/MMAdSDK</key>
 		<data>
-		pxoQ7YeZ6rehouC9CA8hKF4oS/c=
+		75p6Sx1vb9cSDaHCBqHnbNLo3O0=
 		</data>
 		<key>Frameworks/MPUBMoatMobileAppKit.framework/Versions/A/MPUBMoatMobileAppKit</key>
 		<data>
@@ -151,23 +130,7 @@
 		</data>
 		<key>Frameworks/UnityAds.framework/UnityAds</key>
 		<data>
-		lTjwBL9QbtAq7/RcLkwCVw4MzRI=
-		</data>
-		<key>Frameworks/ZendeskProviderSDK.framework/Info.plist</key>
-		<data>
-		YFq7NihTlZCqARvF9phCPq2Gsro=
-		</data>
-		<key>Frameworks/ZendeskProviderSDK.framework/ZendeskProviderSDK</key>
-		<data>
-		U4YSX9LOwjnlFJUNhyuKSBM2fcM=
-		</data>
-		<key>Frameworks/ZendeskSDK.framework/Info.plist</key>
-		<data>
-		ITWHjEne2iN5msrG8vkh2F6Uo8g=
-		</data>
-		<key>Frameworks/ZendeskSDK.framework/ZendeskSDK</key>
-		<data>
-		vithCrGHLl1BfxDsWCi9ZOZRtC8=
+		IlLwZibIafADxK28RMfrEwdTd6U=
 		</data>
 		<key>Frameworks/libAdIdAccess.a</key>
 		<data>
@@ -175,7 +138,7 @@
 		</data>
 		<key>Frameworks/libAdMobMMAdapter.a</key>
 		<data>
-		cWJ5Hc3Saqi4wGEIcYFlYtuDMwM=
+		VRWl7EJ3U1NQMput8q9iIGeghqU=
 		</data>
 		<key>Frameworks/libAdapterSDKMoPub.a</key>
 		<data>
@@ -187,7 +150,7 @@
 		</data>
 		<key>Frameworks/libFyberSDK.a</key>
 		<data>
-		uWvWV0ZK2QFJ5vZtYhmovMRBwHU=
+		prrVbgdMaOV1fP0SMiwO/7tMkGs=
 		</data>
 		<key>Frameworks/libGoogleAnalyticsServices.a</key>
 		<data>
@@ -195,7 +158,7 @@
 		</data>
 		<key>Frameworks/nanopb.framework/nanopb</key>
 		<data>
-		14LWfIbKJzMp7Wdk6iSFfLbtAc4=
+		C0qH7K6CO4rXRltPaAM2ah2kPZ8=
 		</data>
 		<key>Headers/APSmartStorage.h</key>
 		<data>
@@ -239,7 +202,7 @@
 		</data>
 		<key>Headers/HookBridge.h</key>
 		<data>
-		OwZtV1pCl4AmmU5/D99OGEjLwGw=
+		/fU/3jaVGfKwzlYAUb5mYEPW+NQ=
 		</data>
 		<key>Headers/ImageContext.h</key>
 		<data>
@@ -287,7 +250,7 @@
 		</data>
 		<key>Headers/Spil.h</key>
 		<data>
-		EYLyOTNHbpNpCkNZT+leCZrH6uY=
+		A7djQHpxroY+ITolaQIUU9yKQWw=
 		</data>
 		<key>Headers/SpilActionHandler.h</key>
 		<data>
@@ -313,17 +276,13 @@
 		<data>
 		ryTZErV5eCvMllLFIdhz84wvp8Q=
 		</data>
-		<key>LICENSE</key>
-		<data>
-		+k0zFZ5W2a/QqZkA7YecIph4HVI=
-		</data>
 		<key>MPAdBrowserController.nib</key>
 		<data>
-		Oek0GKNZ0+WL3NzFWg+mfnEjeHE=
+		qFcEhcYtvwvB6pNv4na79hfy5hw=
 		</data>
 		<key>MPAdBrowserController.xib</key>
 		<data>
-		xZAsF/SXgCeSfDylgoqmJPBjA5k=
+		XDLDTddf6BIQVt3RKFPVnxftS1g=
 		</data>
 		<key>MPCloseBtn.png</key>
 		<data>
@@ -438,353 +397,6 @@
 		<data>
 		pFaitwc/GDuV0DbA4MoGtgxHfLo=
 		</data>
-		<key>Version.txt</key>
-		<data>
-		IxiSLZ3JpKIStTY5VzoeFqwaBOA=
-		</data>
-		<key>ZendeskSDK.bundle/Info.plist</key>
-		<data>
-		D60gJM6bE898EnsBLz+EZmmUZYw=
-		</data>
-		<key>ZendeskSDK.bundle/ModelIdentifier.plist</key>
-		<data>
-		+dYUmZJXx52v0QJQ/sxIgzrkITc=
-		</data>
-		<key>ZendeskSDK.bundle/ZDKCreateRequestViewController.nib</key>
-		<data>
-		qo91BMeAs7BVJNLs1JSWf5MXdmw=
-		</data>
-		<key>ZendeskSDK.bundle/ZDKHelpCenterArticleRatingView.nib</key>
-		<data>
-		J95v6ApDYS/nkEaWY8s3fZ390TE=
-		</data>
-		<key>ZendeskSDK.bundle/ZDKHelpCenterOverviewArticleTableViewCell.nib</key>
-		<data>
-		wT28erusaVceC+Yc4YRZstTgzDE=
-		</data>
-		<key>ZendeskSDK.bundle/ZDKHelpCenterOverviewController.nib</key>
-		<data>
-		2U6ObLWj/5bFrzqOcpuLSO9qZBk=
-		</data>
-		<key>ZendeskSDK.bundle/ZDKHelpCenterOverviewFooterView.nib</key>
-		<data>
-		aefDSM6miEGVnE75DoDXKNebtXU=
-		</data>
-		<key>ZendeskSDK.bundle/ZDKHelpCenterOverviewHeaderView.nib</key>
-		<data>
-		2x/MTWqkhu7PjKAqj7Is8NFGR4E=
-		</data>
-		<key>ZendeskSDK.bundle/ZDKHelpCenterOverviewLoadingTableViewCell.nib</key>
-		<data>
-		7r3KUTIHxdntHKNgVU4XjILhhFg=
-		</data>
-		<key>ZendeskSDK.bundle/ZDKHelpCenterOverviewSectionTableViewCell.nib</key>
-		<data>
-		hRIiGfn6oEO39EpMLVWQRqXvN6A=
-		</data>
-		<key>ZendeskSDK.bundle/ZDKHelpCenterOverviewSeeAllTableViewCell.nib</key>
-		<data>
-		oA8avFq78+LqbmLKHBCP1VyH/dE=
-		</data>
-		<key>ZendeskSDK.bundle/ZDKHelpCenterOverviewSpacerTableViewCell.nib</key>
-		<data>
-		tYSBiKnNw6nhkfCIyXDwvioX3j4=
-		</data>
-		<key>ZendeskSDK.bundle/ZDKHelpCenterSearchResultTableViewCell.nib</key>
-		<data>
-		KaFrp5lxYTpC9qE6L69U45krq2o=
-		</data>
-		<key>ZendeskSDK.bundle/ZDKHelpCenterSearchResultViewController.nib</key>
-		<data>
-		31/dHFaD3IR00oBk/SV11gaJQYE=
-		</data>
-		<key>ZendeskSDK.bundle/btnAttach.png</key>
-		<data>
-		A60sX8Y5CMG5CulTF6El0eAn6y4=
-		</data>
-		<key>ZendeskSDK.bundle/btnAttach@2x.png</key>
-		<data>
-		feQhTfUg3xn2zYO8LaLuyqbtS1g=
-		</data>
-		<key>ZendeskSDK.bundle/btnAttach@3x.png</key>
-		<data>
-		G/a2kIABx/geEvCxYvFq+vojY28=
-		</data>
-		<key>ZendeskSDK.bundle/help_center_article_style.css</key>
-		<data>
-		KXGMYMIyh6yTJ1QUbCt3gvEKM74=
-		</data>
-		<key>ZendeskSDK.bundle/icoAdd.png</key>
-		<data>
-		zX0sCoD4p/QYvgxu3nrWJFYyM64=
-		</data>
-		<key>ZendeskSDK.bundle/icoAdd@2x.png</key>
-		<data>
-		3CLKLAgvdOXc/1RHKc5/KzDanIc=
-		</data>
-		<key>ZendeskSDK.bundle/icoAdd@3x.png</key>
-		<data>
-		gMD+W24QQ9kQGovoq7aD4WiFutA=
-		</data>
-		<key>ZendeskSDK.bundle/icoAttach.png</key>
-		<data>
-		6/buDEdP4BuLTdwzx+RBRK4BJ84=
-		</data>
-		<key>ZendeskSDK.bundle/icoAttach@2x.png</key>
-		<data>
-		6DB4ZKb3sm/jjYPbrUaYPfK24vE=
-		</data>
-		<key>ZendeskSDK.bundle/icoAttach@3x.png</key>
-		<data>
-		mz6b6Ne7cQZUVHH+0LGs4oWPcCU=
-		</data>
-		<key>ZendeskSDK.bundle/icoClose.png</key>
-		<data>
-		qShFL3iNeYsHucAAA2o4+ZgcNxU=
-		</data>
-		<key>ZendeskSDK.bundle/icoClose@2x.png</key>
-		<data>
-		9EePbZNoOpPb4TiBCCcERh4pJaM=
-		</data>
-		<key>ZendeskSDK.bundle/icoClose@3x.png</key>
-		<data>
-		6FUjj3FvlYiJC/NPeMHbJcRHFIY=
-		</data>
-		<key>ZendeskSDK.bundle/icoDown.png</key>
-		<data>
-		SBuT+PBdgCoC1upVejrhluN4eog=
-		</data>
-		<key>ZendeskSDK.bundle/icoDown@2x.png</key>
-		<data>
-		QZBvc+XaIiFNPNnYGTn9z4i5To4=
-		</data>
-		<key>ZendeskSDK.bundle/icoDown@3x.png</key>
-		<data>
-		uTylllD83viWYzAoOy3lpZ8rpkw=
-		</data>
-		<key>ZendeskSDK.bundle/icoVoteDown.png</key>
-		<data>
-		uGTjk2yHYIKqKTMqwyM5O/JDIfM=
-		</data>
-		<key>ZendeskSDK.bundle/icoVoteDown@2x.png</key>
-		<data>
-		V9FJ0EwuuQCESRmBj0kVuYuEVws=
-		</data>
-		<key>ZendeskSDK.bundle/icoVoteDown@3x.png</key>
-		<data>
-		M+DAEAv7PLQXYnzRiEBhuKhqQ6o=
-		</data>
-		<key>ZendeskSDK.bundle/icoVoteUp.png</key>
-		<data>
-		rMvk1cQdAa2at/mMwDXfqQFodpI=
-		</data>
-		<key>ZendeskSDK.bundle/icoVoteUp@2x.png</key>
-		<data>
-		CYSPRmau2fHyPe2oB00x4ciXWmE=
-		</data>
-		<key>ZendeskSDK.bundle/icoVoteUp@3x.png</key>
-		<data>
-		O5paoCkhrxE7epIVoRJhrZdMeGc=
-		</data>
-		<key>ZendeskSDK.bundle/ico_coversations.png</key>
-		<data>
-		V4dI3qzw6UJjd8/tP3bnb9fQlNA=
-		</data>
-		<key>ZendeskSDK.bundle/ico_coversations@2x.png</key>
-		<data>
-		fe0YVvznEMd9UdiL2SEkJDax2Ag=
-		</data>
-		<key>ZendeskSDK.bundle/ico_coversations@3x.png</key>
-		<data>
-		opW6UMJn9J1Iw8f0IjmKobEYPpU=
-		</data>
-		<key>ZendeskSDK.bundle/ico_newticket.png</key>
-		<data>
-		N5HroUPrAOvmsDbGUortxgAVP+A=
-		</data>
-		<key>ZendeskSDK.bundle/ico_newticket@2x.png</key>
-		<data>
-		QWAzuT21nsQUG8QQyi9mPqnhBVQ=
-		</data>
-		<key>ZendeskSDK.bundle/ico_newticket@3x.png</key>
-		<data>
-		u687L/wWYQSF4oga62JCP8sdjp0=
-		</data>
-		<key>ZendeskSDKStrings.bundle/Info.plist</key>
-		<data>
-		T3Nwi0uBhfaYbIClLXMjIky8sks=
-		</data>
-		<key>ZendeskSDKStrings.bundle/da.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			12aTa9JHwdYkAwKKzY7mbwrVuLU=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/de.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			szsTnA+KQ2O38DLaqPItizjbwRw=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/en-GB.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			z4IShUzML+h9CdvdA+EEQCSDVJI=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/en.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			XGieQbV4pO5hZsppG1Cv0fAv+A0=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/es.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			4oWg5PBD4YRObchwh1gybhBOS2c=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/fi.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			9Sk62uCcfiJJofttkSSb7bFFKFA=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/fr.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			gDytazJiddCIIzLRyro1F0uYZC4=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/it.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			GnYfWLLSMuy2JzXq0MJcEwKEx5o=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/ja.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			Ip3Y+CZtjaP12hgYVOMD80Bnxkc=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/ko.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			OY9TD5YCr9j2QwuszbgmeS1OCVo=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/nb.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			GA+IuhgPuiALymN+cSgFBcUK5GA=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/nl.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			E6w0MhFPne1/kM/6ywxA0zDwA7c=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/pl.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			oRmkIB8oP+gn/CfasrUQfC+uluo=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/pt.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			x+kh1riIcrCvqRR8CVc4plBsvQo=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/ru.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			ywbP43NXRn47+rpgpMVcIVexVF0=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/sv.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			tTlrs5QbnGwtzoteSw5I3GNE5bw=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/tr.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			uQNzIbWWvaYt4319X1UARstapxM=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/zh-Hans.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			wsNiYa9ZN+xLpWj/ShQ3NG1SRMg=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/zh-Hant.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			0zBR1wv8hn+XnU7aqieyzPMkwzE=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
 		<key>mod_pbxproj.py</key>
 		<data>
 		DSPT1Q95FKxMA2drNgY4hs9HbJw=
@@ -795,7 +407,11 @@
 		</data>
 		<key>setup.py</key>
 		<data>
-		MUMD0hw4OsPV1R0QuikZrMSzpMQ=
+		AcBw9NSJ8YSI+s5+KiOZXoUsUjg=
+		</data>
+		<key>version.txt</key>
+		<data>
+		pM9rrfroSDA9N07GcShb6ZXSyM8=
 		</data>
 		<key>vg_close.png</key>
 		<data>
@@ -831,180 +447,136 @@
 			qlchi0W8CK/T9XuhIBxPdS63v2ZeTZBpJ5lINhUigec=
 			</data>
 		</dict>
-		<key>FYBBackIconiPad@2x.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			4pREeeOCk7zkPhpdY0g/i/CDgcM=
-			</data>
-			<key>hash2</key>
-			<data>
-			umQvDl7I5YsNAtx+1W3c1VFffUYYbCLxiRQprn7UwG8=
-			</data>
-		</dict>
-		<key>FYBBackIconiPhone@2x.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			y3Uezfm65mXDcqo7aGEZiL9d7nk=
-			</data>
-			<key>hash2</key>
-			<data>
-			6jskTSJ3uCY1X9bDNANoFlEezz4Ix3S5c+bnNYJD9VI=
-			</data>
-		</dict>
 		<key>FYBIntegrationAnalyzerViewController~ipad.nib/objects-8.0+.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			ppDWbxQkHNu0meaEmzLzSlfB5a4=
+			S8a6HnzpSNIE6QuxkkIvWc7Ylo8=
 			</data>
 			<key>hash2</key>
 			<data>
-			agAdnBFYG4vma4VkJrpDZi6EO2veaLmumZoBGe1SBko=
+			ZoeGPTOgZZRqFNDQ5Gw2LhWf778ZkZiQGN2hfoFf5TQ=
 			</data>
 		</dict>
 		<key>FYBIntegrationAnalyzerViewController~ipad.nib/runtime.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			eRQG/H4AuqS+HYnJCUj0N8O7IE0=
+			Wwlu/qu9dA4EWeGqBEJ4HTcEeX4=
 			</data>
 			<key>hash2</key>
 			<data>
-			uTVs6PWd+i8jgm2qWMldVFJveSwfgKsm+7gVf6JI5eY=
+			Uep6E/bSEtU+SpNoKhZ9booTtFnzKb9/WGSrE6iGGpY=
 			</data>
 		</dict>
 		<key>FYBIntegrationAnalyzerViewController~iphone.nib/objects-8.0+.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			gQPWze9JBJXHPfPyDWFcGnmlc50=
+			atyp7vC6srcqHLSfsZYQBxpcooM=
 			</data>
 			<key>hash2</key>
 			<data>
-			W8h4LvKvw0vwW+CAxfpBIaN8HcyTbfOoQ0xAqm7R2vE=
+			pcqUfhwHHRPJY3zJhF/4UHFo5yzHFWc/V7t3AkinaR4=
 			</data>
 		</dict>
 		<key>FYBIntegrationAnalyzerViewController~iphone.nib/runtime.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			LIdYcV6JJSRN0oe+CLjPf0nG4Nw=
+			rHjQFug0arQzZqwfOvaoz9j7WaM=
 			</data>
 			<key>hash2</key>
 			<data>
-			W5C+C/cTslE+n0R3GP5yrZMIo6lt4VpDKvuD7iiQmhY=
+			y6hKPEdrzPXGwA507d4aCc3rnp4LErK70w1K/uvCBRk=
 			</data>
 		</dict>
 		<key>Frameworks/AdjustSdk.framework/AdjustSdk</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Q7sAcEHEGm2H0MJvSwWjSBBFNco=
+			ZnzJ+lDdHpPxcrP3jg/g0kmxGlY=
 			</data>
 			<key>hash2</key>
 			<data>
-			RrP76asHT+vHslnuYocuas1oVPhuQMR3sJHJp4N54q0=
+			/iXQ0jqKOgbJZ9mH0QtncXqBaSiLl1IXhkQeF4nNijY=
 			</data>
 		</dict>
 		<key>Frameworks/Chartboost.framework/Chartboost</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			+clh5di+pucgmba9woqaE0mLmq4=
+			maxA3UIFGDTBUP+MHfyjMPf2S+g=
 			</data>
 			<key>hash2</key>
 			<data>
-			x0/JE72DtcET5SgK7Dybb5sW5sQ9Gi0WNeXDow8keNw=
-			</data>
-		</dict>
-		<key>Frameworks/FBAudienceNetwork.framework/FBAudienceNetwork</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			5Y+fQKMcIoVUCgCZkflb4+1Dy2s=
-			</data>
-			<key>hash2</key>
-			<data>
-			iUcdR3G7iOXdT92kED2z+a/s5dbXlrGldoUaWJNt8kU=
-			</data>
-		</dict>
-		<key>Frameworks/FBAudienceNetwork.framework/Info.plist</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			4l+fGFQ06ZwTflnOwg7Ld40PnhE=
-			</data>
-			<key>hash2</key>
-			<data>
-			2AVsDYy4NUXI54hCV+OapflDbUX3/e/fUJymZQPI47o=
-			</data>
-		</dict>
-		<key>Frameworks/FacebookAdapter.framework/FacebookAdapter</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			flZNScq5JRjw+C0EUUo+lp/67zU=
-			</data>
-			<key>hash2</key>
-			<data>
-			UfquDHdzBGoUJP296wK/Zu1kgwkePcUCADVFl5zHuaE=
+			X9iaIjJMhrgr7XWCKfMGjmaRj+dr3tCSnB+vNRtMF2o=
 			</data>
 		</dict>
 		<key>Frameworks/FirebaseAnalytics.framework/FirebaseAnalytics</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			FjAEI5JEy4zazhvo3ZCjLRbqb6c=
+			I+EBiOTkf0SX3FPSESjw3SGJfZ4=
 			</data>
 			<key>hash2</key>
 			<data>
-			mzBPQEnDpX7phHwikSGjZ8ogFUYlWVvDa2hW7xirlSc=
+			AtL40FCZWFOc5zWlkkckbH38+HKjhdEiEaQ+yEnFVyE=
 			</data>
 		</dict>
 		<key>Frameworks/FirebaseCore.framework/FirebaseCore</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			VeB9yFxHPslv07Ml2Y7t6Z1Wtlo=
+			9DuPbSu4WcjqvzNmU3fg63UmUIQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			OIu8w1eRgSG2gcB6cWPNkyDEPm5czaBlO2p8oGH/A0s=
+			cEO3KVrRj51YnA266eij0Ue5+SGYve06Mis6EnycAr8=
+			</data>
+		</dict>
+		<key>Frameworks/FirebaseCoreDiagnostics.framework/FirebaseCoreDiagnostics</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			F8jDq/Yxkns06W6VE2NBrxb/Vpw=
+			</data>
+			<key>hash2</key>
+			<data>
+			oVEvVd3cSRnCS9dbyvDnZGq3lcha2bVzI09vgCnaeYc=
 			</data>
 		</dict>
 		<key>Frameworks/FirebaseDynamicLinks.framework/FirebaseDynamicLinks</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			qtLWh9kn2fYz3WQ9Ds07Hu73YMI=
+			5omvtbwrLkKtQU1w2Ec3OOBb1SM=
 			</data>
 			<key>hash2</key>
 			<data>
-			pmbuIyDZhBJco7R+3xqsymqmhMoJTGfbVdFZ583xQa8=
+			C/JLTmc6iJ/I7BJKyDHgT2RaHzKt+I1FJOuu3eGj/g0=
 			</data>
 		</dict>
 		<key>Frameworks/FirebaseInstanceID.framework/FirebaseInstanceID</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			83Vjh+7eFkKGb/QBZLT8oPTkNaU=
+			Q7K1XA560BW290WUyZV22BC9Xqw=
 			</data>
 			<key>hash2</key>
 			<data>
-			uAb5r2WbJlMcqX7T3jarQ4jLQBMRw7L7a9otOliZQiQ=
+			psmsrVXiAV6boLwK0SGB1aFrfgM3p+49VClRr+nCAqM=
 			</data>
 		</dict>
 		<key>Frameworks/FirebaseNanoPB.framework/FirebaseNanoPB</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			NOLWNfENKF/lYD7AerXHDEOzRmU=
+			IPtDV26K2V1vFJzq939//eu+sNQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			m27uw6DitijI6/UA5ULuSNi+sv5O9CHZdUby6qa4ftA=
+			ekoWJQykhkFvaVBT4HB6/b3l8rzNS7i/vSpIqhTjToI=
 			</data>
 		</dict>
 		<key>Frameworks/Fyber_AdColony.framework/Fyber_AdColony</key>
@@ -1016,6 +588,72 @@
 			<key>hash2</key>
 			<data>
 			wOybq1/jISxXwRIuorbhBb18fyS3QiutZBM2puL2lAQ=
+			</data>
+		</dict>
+		<key>Frameworks/Fyber_AdMob.framework/Fyber_AdMob</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			BbwKGLY3zhCA/NJ9ndLhy2v7Fhg=
+			</data>
+			<key>hash2</key>
+			<data>
+			jjCfSHWLXSkJjKw35lFr+I41yEdszqMXwGqHujlv7dw=
+			</data>
+		</dict>
+		<key>Frameworks/Fyber_AdMob.framework/Resources/FYBAdMob.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			Cb1Uvac+HUns4QFpRTSR9LFKXjw=
+			</data>
+			<key>hash2</key>
+			<data>
+			IWGGjYATRnGSiGta6GFkcUcMOlIY2b6nSYaBZ5oQw3Q=
+			</data>
+		</dict>
+		<key>Frameworks/Fyber_AdMob.framework/Resources/Info.plist</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			6tjgf++nrQs5IQ+au6HLYfEKY9E=
+			</data>
+			<key>hash2</key>
+			<data>
+			B0+JpYOlPnNBGuUSJm5ghGQvKTgtatx+DRs7oK896NY=
+			</data>
+		</dict>
+		<key>Frameworks/Fyber_FacebookAudienceNetwork.framework/Fyber_FacebookAudienceNetwork</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			a9EeJtCsb2cbNsA7WuAtYSaU10E=
+			</data>
+			<key>hash2</key>
+			<data>
+			sc7L/uO8reyd0CJYxoU3TDOHHKcVPECNirL/GviNb44=
+			</data>
+		</dict>
+		<key>Frameworks/Fyber_FacebookAudienceNetwork.framework/Resources/FYBFacebookAudienceNetwork.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			GWK9dK85aj2a6g4NXBV7Kuy5HJs=
+			</data>
+			<key>hash2</key>
+			<data>
+			c3mJ+eUbg3npfj7SNyTyiZ2dfPxjv3jThEryN/T/Hfo=
+			</data>
+		</dict>
+		<key>Frameworks/Fyber_FacebookAudienceNetwork.framework/Resources/Info.plist</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			N9KRBBcZHbi0FMOH0cviBIhX/mw=
+			</data>
+			<key>hash2</key>
+			<data>
+			VI27WN8gATLd7mVvTWod0NkYiNpyn5xnabxeAYHg078=
 			</data>
 		</dict>
 		<key>Frameworks/Fyber_UnityAds.framework/Frameworks/UnityAds.framework/Info.plist</key>
@@ -1033,156 +671,88 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			lTjwBL9QbtAq7/RcLkwCVw4MzRI=
+			IlLwZibIafADxK28RMfrEwdTd6U=
 			</data>
 			<key>hash2</key>
 			<data>
-			uV6Bx7z2qo6FicK2id+3OpkCSftXOS7XYP+YGVZtvrM=
+			xQV5W4ZReDsqOx9LTh+FLFCL/8ivgV2XZlDJQ0gJdIo=
 			</data>
 		</dict>
 		<key>Frameworks/Fyber_UnityAds.framework/Fyber_UnityAds</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			CJKEOZ4X1KwFtkWeO/x/7SaRLXU=
+			Mv5L9UWQV8nukbjCKPNqe5HbVfM=
 			</data>
 			<key>hash2</key>
 			<data>
-			bZ/txLxv4xjYJYqQbGKILTXiqpN3J8ac7PedE3anu8M=
+			exdt4DrvLb5myIqRdjosVEvw1smTqZBmVPKbRny7U38=
 			</data>
 		</dict>
 		<key>Frameworks/Fyber_UnityAds.framework/Resources/Info.plist</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Hb+fb2CQmjig+2SvwJLx7inQs3g=
+			5oUZWIhEDdTRnzHo5I20XkSnYZw=
 			</data>
 			<key>hash2</key>
 			<data>
-			RFl99KFUHmcSBJ692T9a4OT6ZW4BP2ue8fTNU56yu10=
-			</data>
-		</dict>
-		<key>Frameworks/Fyber_UnityAds.framework/Resources/UnityAds.bundle/Info.plist</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			Q2MNqv4uL+M4j34o2IzfxlwodAA=
-			</data>
-			<key>hash2</key>
-			<data>
-			q9sdqVw8oPwoSzVKh7rIzSNoiRJtvx3rAesmmFlNIgM=
-			</data>
-		</dict>
-		<key>Frameworks/Fyber_UnityAds.framework/Resources/UnityAds.bundle/audio_mute.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			odsAzZCdQwrv21ZNqvg+dP8zz0A=
-			</data>
-			<key>hash2</key>
-			<data>
-			hIadqu8EOT6Obl+4xLvLbCvMiCIl8gZxErr84HiTKN0=
-			</data>
-		</dict>
-		<key>Frameworks/Fyber_UnityAds.framework/Resources/UnityAds.bundle/audio_mute@2x.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			ge4dgW56jqwyZ/E7ySNujYMRXhI=
-			</data>
-			<key>hash2</key>
-			<data>
-			vNCCROnc4bgOy0SWlUyOy/4EOOLaMb1mFBpzLowJJ0k=
-			</data>
-		</dict>
-		<key>Frameworks/Fyber_UnityAds.framework/Resources/UnityAds.bundle/audio_on.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			z7q5a3NoMvwqlg581EeBX+mPSho=
-			</data>
-			<key>hash2</key>
-			<data>
-			QovxA+5LenmJZS1dSEHCBF1E600NFhhEbd5S/mwNlMM=
-			</data>
-		</dict>
-		<key>Frameworks/Fyber_UnityAds.framework/Resources/UnityAds.bundle/audio_on@2x.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			0Rs+e2J2q4ys4YQe276Sm37yqjc=
-			</data>
-			<key>hash2</key>
-			<data>
-			5h6WFxEqM8hwZgWeFxeE5H3zu7ESY02WlUYVaqlKYEk=
-			</data>
-		</dict>
-		<key>Frameworks/Fyber_UnityAds.framework/Resources/UnityAds.bundle/en.lproj/InfoPlist.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			zmV6UqBSo6r1NOz798vd5O4zTBA=
-			</data>
-			<key>hash2</key>
-			<data>
-			kmHsztpgjvF0JW5f3HdMHm49z1M0CcG8OT1JDQHHE/E=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>Frameworks/Fyber_UnityAds.framework/Resources/UnityAdsCompiler-Info.plist</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			BQYuLMDKtFFGDBjVXxwsJo61rVw=
-			</data>
-			<key>hash2</key>
-			<data>
-			3HPItWR02jHgkEfHcQpymppYKFB/0IB1ATfpS/jy9c0=
+			qwBha5FZUELChUlT++jUcPPT0+T0HvgPp+9ruEwie5c=
 			</data>
 		</dict>
 		<key>Frameworks/Fyber_Vungle.Framework/Fyber_Vungle</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			UQ96XbvXYYq8CGzp9e3IdXqgoK4=
+			jhAqD66WtiNXDgQ+JIPc83awmZo=
 			</data>
 			<key>hash2</key>
 			<data>
-			WyKeTOaPGnpEJw9w563UvZQ5snh4Gx+WYnosSQR0uA4=
+			JlW4ya37hMyCjDlRYmnIxE9TE8cF0zO6eR6Pfu1CjxA=
+			</data>
+		</dict>
+		<key>Frameworks/Fyber_Vungle.Framework/Resources/Info.plist</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			c2e7wA3jLHw/Zd3Sshud7WWRACQ=
+			</data>
+			<key>hash2</key>
+			<data>
+			Zu0ynNUKJXSd+Q+gwtZRW4lBgrp3s5hX2cZ7b9FmktY=
 			</data>
 		</dict>
 		<key>Frameworks/GoogleMobileAds.framework/GoogleMobileAds</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			UxzQMagLIXLkLzNjXvz7B1A1I2g=
+			sVVL/GEIRJaZ+72tI0a0Wau3v5E=
 			</data>
 			<key>hash2</key>
 			<data>
-			uazTOlHuvPy2g+6lA3rDUWrHu4nDsHFbTMN5VKh888c=
+			l0IZJMW5Q0KtYkepFR/L6Bv3+eRZVPaNDVWat+EvDlo=
 			</data>
 		</dict>
 		<key>Frameworks/GoogleToolboxForMac.framework/GoogleToolboxForMac</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			omxVnVTj/wTd5v8FPYnTBDmIscE=
+			vV/IlAYowqpHQIYIEuQTZq2jbno=
 			</data>
 			<key>hash2</key>
 			<data>
-			v+z06w7q+7B0iGyw31qxINrY+NtRaRTppZQNJ90uBEo=
+			anR6YIyZGbbyzZ4GIkZKCgvfq2uI3nmyYWMOx2jfENA=
 			</data>
 		</dict>
 		<key>Frameworks/MMAdSDK.framework/MMAdSDK</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			pxoQ7YeZ6rehouC9CA8hKF4oS/c=
+			75p6Sx1vb9cSDaHCBqHnbNLo3O0=
 			</data>
 			<key>hash2</key>
 			<data>
-			9DhqD2vHneoGthCAaBH42tXx8P1hOLbZxswXNZvVLqI=
+			hGjIA5k2dUEXRcG1sUBP7hO1Y+Kx2xJPs1hLombb4fM=
 			</data>
 		</dict>
 		<key>Frameworks/MPUBMoatMobileAppKit.framework/MPUBMoatMobileAppKit</key>
@@ -1221,55 +791,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			lTjwBL9QbtAq7/RcLkwCVw4MzRI=
+			IlLwZibIafADxK28RMfrEwdTd6U=
 			</data>
 			<key>hash2</key>
 			<data>
-			uV6Bx7z2qo6FicK2id+3OpkCSftXOS7XYP+YGVZtvrM=
-			</data>
-		</dict>
-		<key>Frameworks/ZendeskProviderSDK.framework/Info.plist</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			YFq7NihTlZCqARvF9phCPq2Gsro=
-			</data>
-			<key>hash2</key>
-			<data>
-			SiIZwC1kk5kl4SIFzTZiWyecxg8piTOJFZr3lcZAMeY=
-			</data>
-		</dict>
-		<key>Frameworks/ZendeskProviderSDK.framework/ZendeskProviderSDK</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			U4YSX9LOwjnlFJUNhyuKSBM2fcM=
-			</data>
-			<key>hash2</key>
-			<data>
-			kxxVHu9UzonpiIKBu0I3AJxShBXwCQEnt+8tQ9HS7Ww=
-			</data>
-		</dict>
-		<key>Frameworks/ZendeskSDK.framework/Info.plist</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			ITWHjEne2iN5msrG8vkh2F6Uo8g=
-			</data>
-			<key>hash2</key>
-			<data>
-			8an2AqA4G2J+4urXDdQSA8iGSBbJWIgmxXsDgvHACIw=
-			</data>
-		</dict>
-		<key>Frameworks/ZendeskSDK.framework/ZendeskSDK</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			vithCrGHLl1BfxDsWCi9ZOZRtC8=
-			</data>
-			<key>hash2</key>
-			<data>
-			L0DHYDUWtWNEquaNRIBJzi736LRoWVabl7jXJONWE5w=
+			xQV5W4ZReDsqOx9LTh+FLFCL/8ivgV2XZlDJQ0gJdIo=
 			</data>
 		</dict>
 		<key>Frameworks/libAdIdAccess.a</key>
@@ -1287,11 +813,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			cWJ5Hc3Saqi4wGEIcYFlYtuDMwM=
+			VRWl7EJ3U1NQMput8q9iIGeghqU=
 			</data>
 			<key>hash2</key>
 			<data>
-			RRGRnEGUHO9hfuV8693iss5tCllg3XGs6tkAAE1y5iA=
+			lYsZ6noOsHOcZhmGP7B+DCFy+i0tgmfXKSXDs4CG2uQ=
 			</data>
 		</dict>
 		<key>Frameworks/libAdapterSDKMoPub.a</key>
@@ -1320,11 +846,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			uWvWV0ZK2QFJ5vZtYhmovMRBwHU=
+			prrVbgdMaOV1fP0SMiwO/7tMkGs=
 			</data>
 			<key>hash2</key>
 			<data>
-			CUu5Xg47xNSeVnQ7cbhO8Mjf/CiUruLa24HJv3Js79Q=
+			wSTdAKaCFAwXk6QKvLbaCm2+KZainNjOISknMATcRC4=
 			</data>
 		</dict>
 		<key>Frameworks/libGoogleAnalyticsServices.a</key>
@@ -1342,11 +868,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			14LWfIbKJzMp7Wdk6iSFfLbtAc4=
+			C0qH7K6CO4rXRltPaAM2ah2kPZ8=
 			</data>
 			<key>hash2</key>
 			<data>
-			tvQz5JLnQvFgAGHmusK3pkK6UZrJwuLqxoOI6iFi5sw=
+			8PQQOK2lkfwcV3K635k4Yb0VpfxDNqGnx3P5iq0id4w=
 			</data>
 		</dict>
 		<key>Headers/APSmartStorage.h</key>
@@ -1463,11 +989,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			OwZtV1pCl4AmmU5/D99OGEjLwGw=
+			/fU/3jaVGfKwzlYAUb5mYEPW+NQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			iRn62HI4QCANVgmIrKi1nMA984CwcEXEMZmH9P2VRSQ=
+			wk6WJTRLLJqay/kgx0vsxlGkumJtfxSKs8IpYOb/EXU=
 			</data>
 		</dict>
 		<key>Headers/ImageContext.h</key>
@@ -1595,11 +1121,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			EYLyOTNHbpNpCkNZT+leCZrH6uY=
+			A7djQHpxroY+ITolaQIUU9yKQWw=
 			</data>
 			<key>hash2</key>
 			<data>
-			4BNEkQWRvFC3MtL676s70DiIZ/HtmUw3/U63/940/QQ=
+			aEMITmA23UlXh1rFlqT9a3Cv0TQv+ZOrBvZxHcSavR4=
 			</data>
 		</dict>
 		<key>Headers/SpilActionHandler.h</key>
@@ -1657,37 +1183,26 @@
 			9tRbkOk/9KWByz5BcoO02QPYtoYcwNPaN/V88R1l5tE=
 			</data>
 		</dict>
-		<key>LICENSE</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			+k0zFZ5W2a/QqZkA7YecIph4HVI=
-			</data>
-			<key>hash2</key>
-			<data>
-			D30YlL3ZFtORN9gcy5kWnFrZodu1lqMxL/qCiyXA2Qk=
-			</data>
-		</dict>
 		<key>MPAdBrowserController.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Oek0GKNZ0+WL3NzFWg+mfnEjeHE=
+			qFcEhcYtvwvB6pNv4na79hfy5hw=
 			</data>
 			<key>hash2</key>
 			<data>
-			ehaOV/RRu5enqbsk4xFsqWGwlS00pxmZ/rl1MWcMDhw=
+			kPalRvsQnR1QLHLSU9CUBFfUA02DQu+RPC47nvT8jN0=
 			</data>
 		</dict>
 		<key>MPAdBrowserController.xib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			xZAsF/SXgCeSfDylgoqmJPBjA5k=
+			XDLDTddf6BIQVt3RKFPVnxftS1g=
 			</data>
 			<key>hash2</key>
 			<data>
-			kDjaiVNWDb8DnNqLq6t5ZTpXBVlSJ+/PIIJT95mlhBI=
+			YCsI4LpgYpdg+yBWiFAPGTctKF82IBoZpwlg1Nq5kq0=
 			</data>
 		</dict>
 		<key>MPCloseBtn.png</key>
@@ -1989,737 +1504,6 @@
 			NMgqzmBV+R5ZV+p2OGDcKg0cmJncy/hYLGngUBoIbeU=
 			</data>
 		</dict>
-		<key>Version.txt</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			IxiSLZ3JpKIStTY5VzoeFqwaBOA=
-			</data>
-			<key>hash2</key>
-			<data>
-			2Jio/42bOK4JabsK/PNpHhZA7kyW5v0rxwLSJkSyTpc=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/Info.plist</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			D60gJM6bE898EnsBLz+EZmmUZYw=
-			</data>
-			<key>hash2</key>
-			<data>
-			ZVu8TmnMxBAPG91Jwt7fiBfQtofMKZM+brIcoue8Nr8=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/ModelIdentifier.plist</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			+dYUmZJXx52v0QJQ/sxIgzrkITc=
-			</data>
-			<key>hash2</key>
-			<data>
-			HDAhVlhYT3IiLGb6pWQC9JJFfwoSHjWPg+0CGoJL6e4=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/ZDKCreateRequestViewController.nib</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			qo91BMeAs7BVJNLs1JSWf5MXdmw=
-			</data>
-			<key>hash2</key>
-			<data>
-			qUebFU0YjnFOMsgFBEJSa5lXi7fxQbAbwYQnshbas7I=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/ZDKHelpCenterArticleRatingView.nib</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			J95v6ApDYS/nkEaWY8s3fZ390TE=
-			</data>
-			<key>hash2</key>
-			<data>
-			KJayA0jdlQhErG6TD+VmeGQlIZxVFj4CA294WgDQmqM=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/ZDKHelpCenterOverviewArticleTableViewCell.nib</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			wT28erusaVceC+Yc4YRZstTgzDE=
-			</data>
-			<key>hash2</key>
-			<data>
-			NgMjTgBhp93Yz3AVMYPE/oQtdGCx8STpkPhLava5gIg=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/ZDKHelpCenterOverviewController.nib</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			2U6ObLWj/5bFrzqOcpuLSO9qZBk=
-			</data>
-			<key>hash2</key>
-			<data>
-			41l1FNHzYyz+hErwSi5/3kbRozcsoqxgvaOCa7g+Uwk=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/ZDKHelpCenterOverviewFooterView.nib</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			aefDSM6miEGVnE75DoDXKNebtXU=
-			</data>
-			<key>hash2</key>
-			<data>
-			aAsi1OLlM2DppU5Ga5o/i6lJEMF4jbKuFy9IYwR1gVM=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/ZDKHelpCenterOverviewHeaderView.nib</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			2x/MTWqkhu7PjKAqj7Is8NFGR4E=
-			</data>
-			<key>hash2</key>
-			<data>
-			a/64AQx6fKOA9IMQPoGh+41xZNTFOpnpovTXEGNlgc4=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/ZDKHelpCenterOverviewLoadingTableViewCell.nib</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			7r3KUTIHxdntHKNgVU4XjILhhFg=
-			</data>
-			<key>hash2</key>
-			<data>
-			Phn6uM3xH1s/89sJiS14xB/+cQCZkFDYxPYPlhjuVbg=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/ZDKHelpCenterOverviewSectionTableViewCell.nib</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			hRIiGfn6oEO39EpMLVWQRqXvN6A=
-			</data>
-			<key>hash2</key>
-			<data>
-			8O4tPiuhnitBsL3xjwbYvoDTQb0oRmXDEIxg0Q6RDG8=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/ZDKHelpCenterOverviewSeeAllTableViewCell.nib</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			oA8avFq78+LqbmLKHBCP1VyH/dE=
-			</data>
-			<key>hash2</key>
-			<data>
-			Wd40x8rOitJ8wjMob24kWninTs4ez9aNbw5cerRlUgA=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/ZDKHelpCenterOverviewSpacerTableViewCell.nib</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			tYSBiKnNw6nhkfCIyXDwvioX3j4=
-			</data>
-			<key>hash2</key>
-			<data>
-			nBfHd87paQwx/2kbX3175UdTLb1az+9ZukB0OMpFBOo=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/ZDKHelpCenterSearchResultTableViewCell.nib</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			KaFrp5lxYTpC9qE6L69U45krq2o=
-			</data>
-			<key>hash2</key>
-			<data>
-			WxoKUi5a6J4scVzNA8OJCdymxmUOFiTCo43DxZ4iLQM=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/ZDKHelpCenterSearchResultViewController.nib</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			31/dHFaD3IR00oBk/SV11gaJQYE=
-			</data>
-			<key>hash2</key>
-			<data>
-			a9IRrMNERThliBMk8HOwYcAYPE+CkR1lxUibCX8ypFo=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/btnAttach.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			A60sX8Y5CMG5CulTF6El0eAn6y4=
-			</data>
-			<key>hash2</key>
-			<data>
-			lUe8fFVwVh2giCicEO6BiWGalUXPDDoq5zREuUD6xMc=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/btnAttach@2x.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			feQhTfUg3xn2zYO8LaLuyqbtS1g=
-			</data>
-			<key>hash2</key>
-			<data>
-			+tuq6fTuFNKRxPxGpnJFu8LnsHfTs6baCvXfA9clwN0=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/btnAttach@3x.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			G/a2kIABx/geEvCxYvFq+vojY28=
-			</data>
-			<key>hash2</key>
-			<data>
-			LoSunjzOtlXY7NiRyhZRaxKEAH5DOFX2+lMnMIN2jho=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/help_center_article_style.css</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			KXGMYMIyh6yTJ1QUbCt3gvEKM74=
-			</data>
-			<key>hash2</key>
-			<data>
-			9HRF5nq6tj+aZm3WcYVg50D8GP4xr/xM4idFQqt92wE=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/icoAdd.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			zX0sCoD4p/QYvgxu3nrWJFYyM64=
-			</data>
-			<key>hash2</key>
-			<data>
-			efSXlFssC4o+EegMY3cBBfUob2NQ95vtlUJdE1ZarrU=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/icoAdd@2x.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			3CLKLAgvdOXc/1RHKc5/KzDanIc=
-			</data>
-			<key>hash2</key>
-			<data>
-			4ItSO65GgxfAVM3bizBt5288w57wlFDzyroAfh+PD5k=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/icoAdd@3x.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			gMD+W24QQ9kQGovoq7aD4WiFutA=
-			</data>
-			<key>hash2</key>
-			<data>
-			LVQuacJ02wvtw2gJGjcrAKSu+f8SwOBwYdWJQKMUEQw=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/icoAttach.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			6/buDEdP4BuLTdwzx+RBRK4BJ84=
-			</data>
-			<key>hash2</key>
-			<data>
-			mkXNxExw+kqL/afFW0+A5wK4ereaffXTdomlnZ3SqCs=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/icoAttach@2x.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			6DB4ZKb3sm/jjYPbrUaYPfK24vE=
-			</data>
-			<key>hash2</key>
-			<data>
-			Z2S5A2vXw4b7eBLN/YfGTpA8KB5gPdjVSYuYHvSbHn4=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/icoAttach@3x.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			mz6b6Ne7cQZUVHH+0LGs4oWPcCU=
-			</data>
-			<key>hash2</key>
-			<data>
-			oCdiowVJV+1wFeEEnJhGBewLZfnyU2xetawhOTHoIPQ=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/icoClose.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			qShFL3iNeYsHucAAA2o4+ZgcNxU=
-			</data>
-			<key>hash2</key>
-			<data>
-			xfYDmccInsXTf2aK2w/oQT9wpQSAFoKNFo0tVPzVJ8s=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/icoClose@2x.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			9EePbZNoOpPb4TiBCCcERh4pJaM=
-			</data>
-			<key>hash2</key>
-			<data>
-			o+k+wntI6j4pKTrfaPRfQQfnu17Djv+ULRK/MBGt4wE=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/icoClose@3x.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			6FUjj3FvlYiJC/NPeMHbJcRHFIY=
-			</data>
-			<key>hash2</key>
-			<data>
-			7YLhCGzCm5hovjhON5APS4DzQ4lyYMCqUNKpJR11roo=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/icoDown.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			SBuT+PBdgCoC1upVejrhluN4eog=
-			</data>
-			<key>hash2</key>
-			<data>
-			A9NUhV1f0kJFZh5zzg9yc7nhZY/Mx+YDPkB6oOM0JyM=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/icoDown@2x.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			QZBvc+XaIiFNPNnYGTn9z4i5To4=
-			</data>
-			<key>hash2</key>
-			<data>
-			TDnfXNwnceYj/+ylNrDBNi1tymcHmNgQV+j+1YtzYgY=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/icoDown@3x.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			uTylllD83viWYzAoOy3lpZ8rpkw=
-			</data>
-			<key>hash2</key>
-			<data>
-			/Qq2dM3i0vc5LhvbjnBEJKHCC3CsXDjknS39nXNMp34=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/icoVoteDown.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			uGTjk2yHYIKqKTMqwyM5O/JDIfM=
-			</data>
-			<key>hash2</key>
-			<data>
-			KlVVS4MsR981E9geLHz8In7CVMuyW9jIwZDqiMgidOY=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/icoVoteDown@2x.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			V9FJ0EwuuQCESRmBj0kVuYuEVws=
-			</data>
-			<key>hash2</key>
-			<data>
-			yFfelMOGUC9wZV4tB8Vjq4qcUd6kO7xZehaTBjC3KgU=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/icoVoteDown@3x.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			M+DAEAv7PLQXYnzRiEBhuKhqQ6o=
-			</data>
-			<key>hash2</key>
-			<data>
-			1BZ1qLYYqHPOT9jFgzZ1k+p2avvN3hjTOw7p9BmJ2Rc=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/icoVoteUp.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			rMvk1cQdAa2at/mMwDXfqQFodpI=
-			</data>
-			<key>hash2</key>
-			<data>
-			nAtu9Q6vZVn/ezVnACdmEEcz1TstYSxskxWFnnrBMtI=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/icoVoteUp@2x.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			CYSPRmau2fHyPe2oB00x4ciXWmE=
-			</data>
-			<key>hash2</key>
-			<data>
-			d+0qyAkKaDEOnrhHm+oKOIFlI1lEcrZJPKRYKTXZKHM=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/icoVoteUp@3x.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			O5paoCkhrxE7epIVoRJhrZdMeGc=
-			</data>
-			<key>hash2</key>
-			<data>
-			RkT+UUGUMVu+4gnffpbLcHlRrKy+dlEJUR4r0iByQCQ=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/ico_coversations.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			V4dI3qzw6UJjd8/tP3bnb9fQlNA=
-			</data>
-			<key>hash2</key>
-			<data>
-			jFijPTrS0Pojo6BCaTspo6oH+L6jg5oNUUPj8ub6Ahc=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/ico_coversations@2x.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			fe0YVvznEMd9UdiL2SEkJDax2Ag=
-			</data>
-			<key>hash2</key>
-			<data>
-			1mU7xT4cVq0fDkjzpfMXQr7ZnRov34UNOsCao7oL5H0=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/ico_coversations@3x.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			opW6UMJn9J1Iw8f0IjmKobEYPpU=
-			</data>
-			<key>hash2</key>
-			<data>
-			qcXcFq0dTQnRKxDVIhmQlc4w+haaBKrIu6SDEUDBtfk=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/ico_newticket.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			N5HroUPrAOvmsDbGUortxgAVP+A=
-			</data>
-			<key>hash2</key>
-			<data>
-			6ncuiBUPqaxvsxiBtGpT2Xnbzhta2DbyFimH7e070SE=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/ico_newticket@2x.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			QWAzuT21nsQUG8QQyi9mPqnhBVQ=
-			</data>
-			<key>hash2</key>
-			<data>
-			iMjGXfbtG7JyKrQBy6guDkdLCJKLhUb1oz3nAXHhm2c=
-			</data>
-		</dict>
-		<key>ZendeskSDK.bundle/ico_newticket@3x.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			u687L/wWYQSF4oga62JCP8sdjp0=
-			</data>
-			<key>hash2</key>
-			<data>
-			sZiEjJ7V+qzve3Kg/hdWv/ZpVxkv/t61Fl40QsSvOtU=
-			</data>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/Info.plist</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			T3Nwi0uBhfaYbIClLXMjIky8sks=
-			</data>
-			<key>hash2</key>
-			<data>
-			S6oze+sSMZVxDMGpkslSqRcSCGmIySRXkhPe5IYwPPY=
-			</data>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/da.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			12aTa9JHwdYkAwKKzY7mbwrVuLU=
-			</data>
-			<key>hash2</key>
-			<data>
-			JksHlGWmh+bD7Y2PNF+YdRL/bpP8hbET0vnYri7CLEE=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/de.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			szsTnA+KQ2O38DLaqPItizjbwRw=
-			</data>
-			<key>hash2</key>
-			<data>
-			/jI8O3Sw7+jt+0+BLHhVkLd9ZDf+AkWM0pJPQEvd58g=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/en-GB.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			z4IShUzML+h9CdvdA+EEQCSDVJI=
-			</data>
-			<key>hash2</key>
-			<data>
-			XoRieAdspE+h9fJKvFqqVWEK5jZ1/rzS0Co94HirgTA=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/en.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			XGieQbV4pO5hZsppG1Cv0fAv+A0=
-			</data>
-			<key>hash2</key>
-			<data>
-			jqMeh+SutOXF9t+FA41nFsteYQoGbtqBdZoVLEbVaMo=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/es.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			4oWg5PBD4YRObchwh1gybhBOS2c=
-			</data>
-			<key>hash2</key>
-			<data>
-			7Clj1ajJ+y7V6foa5c5zFlemNzKXZ7D5Dr3yH7V8/bU=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/fi.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			9Sk62uCcfiJJofttkSSb7bFFKFA=
-			</data>
-			<key>hash2</key>
-			<data>
-			CHP+Oe/0D4+n/4dLXjQPx9BE9ndg8zQ+HAsAzECV4i4=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/fr.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			gDytazJiddCIIzLRyro1F0uYZC4=
-			</data>
-			<key>hash2</key>
-			<data>
-			0m+vYS27Vv//uFG7qujPDlWlc7HZA9AAaAE6I1lJGDg=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/it.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			GnYfWLLSMuy2JzXq0MJcEwKEx5o=
-			</data>
-			<key>hash2</key>
-			<data>
-			qEBoPPrndVYwFVWe6TPNsxaN9Ca+JQOn9jzlx0W32S8=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/ja.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			Ip3Y+CZtjaP12hgYVOMD80Bnxkc=
-			</data>
-			<key>hash2</key>
-			<data>
-			tggexklln5LnwRCEXJKiO1aMo6U/yBVG3NrFn7yeUZw=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/ko.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			OY9TD5YCr9j2QwuszbgmeS1OCVo=
-			</data>
-			<key>hash2</key>
-			<data>
-			yTvHwrby9EDHQaeh/0oKmdYrk65pARF2oBr7cwhdf1k=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/nb.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			GA+IuhgPuiALymN+cSgFBcUK5GA=
-			</data>
-			<key>hash2</key>
-			<data>
-			vEU9sD13s3oE2Vg3t6mCYfjYK7dhZtza1/egqvrPR+8=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/nl.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			E6w0MhFPne1/kM/6ywxA0zDwA7c=
-			</data>
-			<key>hash2</key>
-			<data>
-			D6Xgv08KaHXwBXB/VPApOLG91oW4rt04XRGfIJeSwQY=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/pl.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			oRmkIB8oP+gn/CfasrUQfC+uluo=
-			</data>
-			<key>hash2</key>
-			<data>
-			NUHTdQ4PrQpqltDQIWjAoWyioR00wV0YyZeippHGs9k=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/pt.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			x+kh1riIcrCvqRR8CVc4plBsvQo=
-			</data>
-			<key>hash2</key>
-			<data>
-			LympGElh3U3R/dJCs4QFR+m5y2FqT962+147USUgeIw=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/ru.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			ywbP43NXRn47+rpgpMVcIVexVF0=
-			</data>
-			<key>hash2</key>
-			<data>
-			f0xuJBhEdBks/YhwU+/PEfd883bdB6zy78W43/oGsKU=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/sv.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			tTlrs5QbnGwtzoteSw5I3GNE5bw=
-			</data>
-			<key>hash2</key>
-			<data>
-			Svqc0c54iQ9JMGTvafRBLn7AlWeM+uSo1XXPRo97UTM=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/tr.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			uQNzIbWWvaYt4319X1UARstapxM=
-			</data>
-			<key>hash2</key>
-			<data>
-			FnHpfA7asX1XstD+FkpF8tkNFb9vWxQ/2dM9PsSIfyk=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/zh-Hans.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			wsNiYa9ZN+xLpWj/ShQ3NG1SRMg=
-			</data>
-			<key>hash2</key>
-			<data>
-			Uo4fwGocra4UnLpS1nB3XLiCK2WUN8Y07wdgHlT6p5w=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>ZendeskSDKStrings.bundle/zh-Hant.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			0zBR1wv8hn+XnU7aqieyzPMkwzE=
-			</data>
-			<key>hash2</key>
-			<data>
-			vM7Fk3ki0TjXA+yUb+3o1AnafqGJRWNj8jcKE3K5Y4M=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
 		<key>mod_pbxproj.py</key>
 		<dict>
 			<key>hash</key>
@@ -2746,11 +1530,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			MUMD0hw4OsPV1R0QuikZrMSzpMQ=
+			AcBw9NSJ8YSI+s5+KiOZXoUsUjg=
 			</data>
 			<key>hash2</key>
 			<data>
-			co1ByNKfHAQSh5tdKIvVCfJ2kZhssW+4N+B0TVzbj5I=
+			s2elzOWq4XWI9l4T5KODCzOWsZVFOf9wUdt6/q7wu9A=
+			</data>
+		</dict>
+		<key>version.txt</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			pM9rrfroSDA9N07GcShb6ZXSyM8=
+			</data>
+			<key>hash2</key>
+			<data>
+			gp6Sb8x0++ZJHqxfled8diyMQaSuC2NN3qXISUQBKgc=
 			</data>
 		</dict>
 		<key>vg_close.png</key>
