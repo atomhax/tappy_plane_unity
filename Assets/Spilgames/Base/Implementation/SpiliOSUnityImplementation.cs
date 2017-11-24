@@ -583,19 +583,9 @@ namespace SpilGames.Unity.Base.Implementations
 
 		#region Customer support
 
-	        public override void ShowHelpCenter() {
-	            showHelpCenterNative();
-	        }
+	        public override void ShowHelpCenter() {}
 
-	        [DllImport("__Internal")]
-	        private static extern void showHelpCenterNative();
-
-	        public override void ShowContactCenter() {
-	            showContactCenterNative();
-	        }
-
-	        [DllImport("__Internal")]
-	        private static extern void showContactCenterNative();
+	        public override void ShowContactCenter() {}
 
 	        public override void ShowHelpCenterWebview(string url)
 	        {
@@ -619,13 +609,13 @@ namespace SpilGames.Unity.Base.Implementations
 		[DllImport("__Internal")]
 		private static extern void requestDailyBonusNative();
 
-		public override void RequestSplashScreen ()
+		public override void RequestSplashScreen (string type = null)
 		{
-			requestSplashScreenNative ();
+			requestSplashScreenNative (type);
 		}
 
 		[DllImport("__Internal")]
-		private static extern void requestSplashScreenNative();
+		private static extern void requestSplashScreenNative(string type);
 
     
 		#endregion

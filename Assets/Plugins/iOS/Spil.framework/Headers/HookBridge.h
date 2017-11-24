@@ -166,17 +166,13 @@ extern "C" {
     
     // --- Customer support ---
     
-    void showHelpCenterNative();
-    
-    void showContactCenterNative();
-    
     void showHelpCenterWebviewNative(char* url);
     
     // --- Web ---
     
     void requestDailyBonusNative();
     
-    void requestSplashScreenNative();
+    void requestSplashScreenNative(const char* type);
     
     // --- User data ---
     
