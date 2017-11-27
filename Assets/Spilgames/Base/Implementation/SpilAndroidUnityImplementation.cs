@@ -701,14 +701,6 @@ namespace SpilGames.Unity.Base.Implementations {
 
         #region Customer support
 
-        public override void ShowHelpCenter() {
-            CallNativeMethod("showZendeskHelpCenter");
-        }
-
-        public override void ShowContactCenter() {
-            CallNativeMethod("showContactZendeskCenter");
-        }
-
         public override void ShowHelpCenterWebview(string url) {
             CallNativeMethod("showZendeskWebViewHelpCenter", new object[] {
                 url,

@@ -575,14 +575,6 @@ namespace SpilGames.Unity.Base.Implementations {
 
         #region Customer support
 
-        public override void ShowHelpCenter() {
-            // TODO
-        }
-
-        public override void ShowContactCenter() {
-            // TODO
-        }
-
         public override void ShowHelpCenterWebview(string url) {
             // TODO
         }

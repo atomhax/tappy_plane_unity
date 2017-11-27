@@ -2051,10 +2051,6 @@ namespace SpilGames.Unity.Base.Implementations {
 
         #region Customer Support
 
-        public abstract void ShowHelpCenter();
-
-        public abstract void ShowContactCenter();
-
         public abstract void ShowHelpCenterWebview(string url);
 
         #endregion
