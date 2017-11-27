@@ -33,6 +33,10 @@
 
 // Used to handle deeplinking, through a url scheme
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *, id> *)options {
+    
+    NSString *inUrl = [url absoluteString];
+    NSLog(@"[SPIL] (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *, id> *)options, with URL: %@. With options: %@", inUrl, options);
+    
     NSString *sourceApplication = options[UIApplicationOpenURLOptionsSourceApplicationKey];
     NSString *annotation = options[UIApplicationOpenURLOptionsAnnotationKey];
     return [self application:app openURL:url sourceApplication:sourceApplication annotation:annotation];
@@ -40,6 +44,10 @@
 
 // Used to handle deeplinking, through a url scheme
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    
+    NSString *inUrl = [url absoluteString];
+    NSLog(@"[SPIL] (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation, with URL: %@", inUrl);
+    
     // Temp: added to prevent a fb sdk login crash when sourceApplication or annotation is nil
     if (annotation == nil) {
         annotation = [NSNull null];
@@ -53,8 +61,13 @@
 
 // Used to handle deeplinking, through a universal link
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *))restorationHandler {
+    
     [Spil application:application continueUserActivity:userActivity restorationHandler:restorationHandler];
-    return [super application:application continueUserActivity:userActivity restorationHandler:restorationHandler];
+    
+    return TRUE;
+    
+    // This throws an exception because the method does not exist.
+    // return [super application:application continueUserActivity:userActivity restorationHandler:restorationHandler];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
