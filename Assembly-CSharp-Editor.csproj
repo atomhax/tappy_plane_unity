@@ -63,7 +63,6 @@
     <None Include="Assets\Plugins\iOS\Spil.framework\Version.txt" />
     <None Include="Assets\Plugins\UnityPurchasing\script\link.xml" />
     <None Include="Assets\link.xml" />
-    <None Include="Assets\PlayServicesResolver\Editor\play-services-resolver.txt" />
     <None Include="Assets\FacebookSDK\link.xml" />
     <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
     <Reference Include="UnityEngine.UI">
@@ -131,18 +130,6 @@
     </Reference>
     <Reference Include="UnityEditor.OSXStandalone.Extensions">
       <HintPath>/Applications/Unity/Unity.app/Contents/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.VersionHandler">
-      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/PlayServicesResolver/Editor/Google.VersionHandler.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.PackageManager">
-      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/PlayServicesResolver/Editor/Google.PackageManager.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.JarResolver">
-      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/PlayServicesResolver/Editor/Google.JarResolver.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.IOSResolver">
-      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/PlayServicesResolver/Editor/Google.IOSResolver.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/Newtonsoft.Json.dll</HintPath>

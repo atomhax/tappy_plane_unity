@@ -63,7 +63,6 @@
     <None Include="Assets\Plugins\iOS\Spil.framework\Version.txt" />
     <None Include="Assets\Plugins\UnityPurchasing\script\link.xml" />
     <None Include="Assets\link.xml" />
-    <None Include="Assets\PlayServicesResolver\Editor\play-services-resolver.txt" />
     <None Include="Assets\FacebookSDK\link.xml" />
     <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
     <Reference Include="UnityEngine.UI">
