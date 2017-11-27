@@ -149,11 +149,7 @@ public class SpilEditorConfig : EditorWindow {
                 }
 
                 GUILayout.Label("Android", EditorStyles.boldLabel);
-                string androidConfig = "";
-
-                for (int i = 0; i < android.Count; i++) {
-                    androidConfig = androidConfig + android.keys[i] + ": " + android.list[i].Print(false) + "\n";
-                }
+                string androidConfig = android.Print(true);
                 GUILayout.Label(androidConfig, EditorStyles.wordWrappedLabel);
             }
             GUILayout.Label("");
@@ -163,11 +159,7 @@ public class SpilEditorConfig : EditorWindow {
                 }
 
                 GUILayout.Label("iOS", EditorStyles.boldLabel);
-                string iosConfig = "";
-
-                for (int i = 0; i < ios.Count; i++) {
-                    iosConfig = iosConfig + ios.keys[i] + ": " + ios.list[i].Print(false) + "\n";
-                }
+                string iosConfig = ios.Print(true);
                 GUILayout.Label(iosConfig, EditorStyles.wordWrappedLabel);
             }
         }
