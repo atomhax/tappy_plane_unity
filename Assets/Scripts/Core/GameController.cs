@@ -273,6 +273,7 @@ public class GameController : MonoBehaviour {
         ClearOutOldObsticles();
         playerScore = 0;
         tapperScore = 0;
+        player.tapperCount = 0;
 
         player.dead = false;
         player.idleMode = true;

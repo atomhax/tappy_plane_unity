@@ -75,6 +75,7 @@ public class BundleDisplayPanelController : MonoBehaviour {
         } else {
             if (bundleDisplayed.Id == 100100) {
                 panelInstance.bundleImage.sprite = Sprite.Create(gachaImage, new Rect(0, 0, gachaImage.width, gachaImage.height), new Vector2());
+                panelInstance.bundleImage.preserveAspect = true;
             } else {
                 bundleImage.sprite = null;
             }
@@ -84,6 +85,7 @@ public class BundleDisplayPanelController : MonoBehaviour {
     private void OnImageLoadFailed(ImageContext imageContext, SpilErrorMessage errorMessage) {
         if (bundleDisplayed.Id == 100100) {
             panelInstance.bundleImage.sprite = Sprite.Create(gachaImage, new Rect(0, 0, gachaImage.width, gachaImage.height), new Vector2());
+            panelInstance.bundleImage.preserveAspect = true;
         }
     }
 
