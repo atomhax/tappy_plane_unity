@@ -583,10 +583,6 @@ namespace SpilGames.Unity.Base.Implementations
 
 		#region Customer support
 
-	        public override void ShowHelpCenter() {}
-
-	        public override void ShowContactCenter() {}
-
 	        public override void ShowHelpCenterWebview(string url)
 	        {
 				showHelpCenterWebviewNative(url);
