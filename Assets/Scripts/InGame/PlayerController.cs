@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour {
 
 	public bool idleMode = false;
 
-	private int tapperCount = 0;
+	public int tapperCount = 0;
 
 	void Start(){
 		SetupPlayerSkin ();

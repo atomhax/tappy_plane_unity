@@ -10,10 +10,10 @@ using SpilGames.Unity.Helpers.IAPPackages;
 namespace SpilGames.Unity.Base.Implementations {
     public abstract class SpilUnityImplementationBase{
         public static string PluginName = "Unity";
-        public static string PluginVersion = "2.7.0";
+        public static string PluginVersion = "2.7.1";
 
-        public static string AndroidVersion = "2.7.0";
-        public static string iOSVersion = "2.7.0";
+        public static string AndroidVersion = "2.7.1";
+        public static string iOSVersion = "2.7.1";
 
         #region Game config
 
