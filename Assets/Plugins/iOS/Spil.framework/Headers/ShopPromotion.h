@@ -7,6 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import "BundlePrice.h"
+#import "ImageEntry.h"
 
 @interface ShopPromotion : NSObject
 
@@ -16,6 +17,7 @@
 @property (nonatomic, strong) NSString* discount;
 @property (nonatomic, strong) NSString* startDate;
 @property (nonatomic, strong) NSString* endDate;
+@property (nonatomic, strong) NSMutableArray *imageEntries; // ImageEntry
 
 -(id)initWithDictionary:(NSDictionary*)data;
 
