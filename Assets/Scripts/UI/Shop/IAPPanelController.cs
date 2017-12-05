@@ -63,6 +63,7 @@ public class IAPPanelController : MonoBehaviour {
 					promotionText = "PROMOTION!\n" + package.GetConcattedDiscountLabel() + " extra gems!";
 					gemAmount = package.Items [0].PromotionValue.Replace(".0","");
 				}
+				
 				iapButtons [i].PopulateIAPButton (gemAmount, promotionText, cost, package.Id);
 				iapButtons [i].gameObject.SetActive (true);
 			}

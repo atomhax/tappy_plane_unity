@@ -13,6 +13,7 @@ namespace SpilGames.Unity.Base.SDK {
         public DateTime startTime;
         public DateTime endTime;
         public string type;
+        public List<PackageImageEntry> imageEntries;
     }
 
     // Example packages JSON string (contains List<Packages>)): "[{ \"packageId\":\"87596\",\"items\":[{\"id\":\"13\",\"type\":\"CURRENCY\",\"value\":\"100\"},{\"id\":\"256\",\"type\":\"ITEM\",\"value\":\"2\"}],\"discountLabel\":\"35%\",\"hasPromotion\":false},{\"packageId\":\"87600\",\"items\":[{\"id\":\"14\",\"type\":\"CURRENCY\",\"value\":\"200\"}],\"discountLabel\":\"15%\",\"hasPromotion\":true}]"
@@ -22,11 +23,17 @@ namespace SpilGames.Unity.Base.SDK {
         public List<PackageItemData> items;
         public string discountLabel;
         public bool hasPromotion;
+        public List<PackageImageEntry> imageEntries;
     }
 
     public class PackageItemData {
         public string id;
         public string type;
         public string value;
+    }
+    
+    public class PackageImageEntry {
+        public string name;
+        public string imageUrl;
     }
 }

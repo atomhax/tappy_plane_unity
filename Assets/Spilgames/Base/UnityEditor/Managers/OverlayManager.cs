@@ -1,24 +1,29 @@
 ﻿#if UNITY_EDITOR
-using UnityEngine;
-using System.Collections;
-using SpilGames.Unity.Base.Implementations;
 using System.Collections.Generic;
-using SpilGames.Unity.Helpers;
-using SpilGames.Unity.Json;
+using SpilGames.Unity.Base.Implementations;
 using SpilGames.Unity.Helpers.PlayerData;
+using SpilGames.Unity.Json;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace SpilGames.Unity.Base.UnityEditor.Managers {
-    public class OverlayManager {
-        private static Spil.DailyBonusRewardTypeEnum rewardType = Spil.MonoInstance.DailyBonusRewardType;
-        
+    public class OverlayManager : MonoBehaviour {
+        public static GameObject SplashScreen;
+        public static GameObject DailyBonus;
+
+        private static Spil.DailyBonusRewardTypeEnum rewardType;
+
+        void Awake() {
+            rewardType = Spil.MonoInstance.DailyBonusRewardType;
+        }
+
         public static void ShowSplashScreen(JSONObject data, string url) {
             SpilLogging.Log("Opening URL: " + url + " With data: " + data.Print(false));
 
             SpilUnityImplementationBase.fireSplashScreenOpen();
 
-            GameObject overlayObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            WebOverlay overlay = overlayObject.AddComponent<WebOverlay>();
-            overlay.overlayType = "splashScreen";
+            SplashScreen = (GameObject) Instantiate(Resources.Load("Spilgames/SplashScreenPrefab"));
+            SplashScreen.SetActive(true);
         }
 
         public static void ShowDailyBonus(JSONObject data, string url) {
@@ -26,94 +31,78 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
             SpilUnityImplementationBase.fireDailyBonusOpen();
 
-            GameObject overlayObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            WebOverlay overlay = overlayObject.AddComponent<WebOverlay>();
-            overlay.overlayType = "dailyBonus";
+            DailyBonus = (GameObject) Instantiate(Resources.Load("Spilgames/DailyBonusPrefab"));
+            DailyBonus.SetActive(true);
         }
 
-        public class WebOverlay : MonoBehaviour {
-            public string overlayType;
+        public void CloseSplashScreen() {
+            SpilUnityImplementationBase.fireSplashScreenClosed();
 
-            void OnGUI() {
-                if (overlayType.Equals("splashScreen")) {
-                    if (GUI.Button(new Rect(10, 10, (Screen.width - 20), (Screen.height - 20) / 3), "Close")) {
-                        SpilUnityImplementationBase.fireSplashScreenClosed();
+            Destroy(SplashScreen);
+        }
 
-                        GameObject.Destroy(this.gameObject);
-                    }
+        public void OpenShop() {
+            SpilUnityImplementationBase.fireSplashScreenOpenShop();
 
-                    if (GUI.Button(new Rect(10, (Screen.height / 3 + 10), (Screen.width - 20), (Screen.height - 20) / 3),
-                        "Open Shop")) {
-                        SpilUnityImplementationBase.fireSplashScreenOpenShop();
+            Destroy(SplashScreen);
+        }
 
-                        GameObject.Destroy(this.gameObject);
-                    }
+        public void IAPPurchaseRequest() {
+            if (Spil.IapPurchaseRequest == null || Spil.IapPurchaseRequest.Equals("")) {
+                SpilLogging.Error("Iap Purchase Request SKU Id not set! Please configure value in the Spil SDK object!");
+            } else {
+                SpilUnityImplementationBase.fireIAPRequestPurchase(Spil.IapPurchaseRequest);
+            }
 
-                    if (GUI.Button(new Rect(10, (2 * Screen.height / 3 + 10), (Screen.width - 20), (Screen.height - 20) / 3),
-                        "IAP Purchase Request")) {
-                        if (Spil.IapPurchaseRequest == null || Spil.IapPurchaseRequest.Equals("")) {
-                            SpilLogging.Error("Iap Purchase Request SKU Id not set! Please configure value in the Spil SDK object!");
-                        }
-                        else {
-                            SpilUnityImplementationBase.fireIAPRequestPurchase(Spil.IapPurchaseRequest);
-                        }
+            Destroy(SplashScreen);
+        }
 
-                        GameObject.Destroy(this.gameObject);
-                    }
+        public void CloseDailyBonus() {
+            SpilUnityImplementationBase.fireDailyBonusClosed();
+
+            Destroy(DailyBonus);
+        }
+
+        public void CollectReward() {
+            if (rewardType == Spil.DailyBonusRewardTypeEnum.EXTERNAL) {
+                List<Reward> rewards = new List<Reward>();
+
+                Reward reward = new Reward();
+                reward.externalId = Spil.DailyBonusExternalId;
+                reward.amount = Spil.DailyBonusAmount;
+
+                rewards.Add(reward);
+
+                string rewardsJSON = JsonHelper.getJSONFromObject(rewards);
+
+                JSONObject json = new JSONObject();
+                json.AddField("data", rewardsJSON);
+
+                SpilUnityImplementationBase.fireDailyBonusReward(json.Print(false));
+            } else {
+                int id = Spil.DailyBonusId;
+                int amount = Spil.DailyBonusAmount;
+
+                if (id == 0 || amount == 0) {
+                    SpilLogging.Error("Daily Bonus Rewards not configured for Editor!");
                 }
-                else if (overlayType.Equals("dailyBonus")) {
-                    if (GUI.Button(new Rect(10, 10, (Screen.width - 20), (Screen.height - 20) / 2), "Close")) {
-                        SpilUnityImplementationBase.fireDailyBonusClosed();
 
-                        GameObject.Destroy(this.gameObject);
-                    }
-
-                    if (GUI.Button(new Rect(10, Screen.height / 2, (Screen.width - 20), (Screen.height - 20) / 2),
-                        "Collect Reward")) {
-                        if (rewardType == Spil.DailyBonusRewardTypeEnum.EXTERNAL) {
-                            List<Reward> rewards = new List<Reward>();
-
-                            Reward reward = new Reward();
-                            reward.externalId = Spil.DailyBonusExternalId;
-                            reward.amount = Spil.DailyBonusAmount;
-
-                            rewards.Add(reward);
-
-                            string rewardsJSON = JsonHelper.getJSONFromObject(rewards);
-
-                            JSONObject json = new JSONObject();
-                            json.AddField("data", rewardsJSON);
-
-                            SpilUnityImplementationBase.fireDailyBonusReward(json.Print(false));
-                        }
-                        else {
-                            int id = Spil.DailyBonusId;
-                            int amount = Spil.DailyBonusAmount;
-
-                            if (id == 0 || amount == 0) {
-                                SpilLogging.Error("Daily Bonus Rewards not configured for Editor!");
-                            }
-
-                            if (rewardType == Spil.DailyBonusRewardTypeEnum.CURRENCY) {
-                                SpilUnityEditorImplementation.pData.WalletOperation("add", id, amount, PlayerDataUpdateReasons.DailyBonus, null, "DailyBonus", null);
-                            }
-                            else if (rewardType == Spil.DailyBonusRewardTypeEnum.ITEM) {
-                                SpilUnityEditorImplementation.pData.InventoryOperation("add", id, amount, PlayerDataUpdateReasons.DailyBonus, null, "DailyBonus", null);
-                            }
-                        }
-
-                        GameObject.Destroy(this.gameObject);
-                    }
+                if (rewardType == Spil.DailyBonusRewardTypeEnum.CURRENCY) {
+                    SpilUnityEditorImplementation.pData.WalletOperation("add", id, amount, PlayerDataUpdateReasons.DailyBonus, null, "DailyBonus", null);
+                } else if (rewardType == Spil.DailyBonusRewardTypeEnum.ITEM) {
+                    SpilUnityEditorImplementation.pData.InventoryOperation("add", id, amount, PlayerDataUpdateReasons.DailyBonus, null, "DailyBonus", null);
                 }
             }
-        }
 
-        public class Reward {
-            public int id;
-            public string externalId;
-            public string type;
-            public int amount;
+            Destroy(DailyBonus);
         }
+    }
+
+    public class Reward {
+        public int id;
+        public string externalId;
+        public string type;
+        public int amount;
     }
     
     public class OverlayResponse : Response {

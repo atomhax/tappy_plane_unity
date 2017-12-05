@@ -226,7 +226,7 @@ namespace SpilGames.Unity.Helpers.GameData {
 
             if (promotions != null) {
                 foreach (SpilShopPromotionData promotion in promotions) {
-                    Promotions.Add(new Promotion(promotion.bundleId, promotion.amount, promotion.prices, promotion.discount, promotion.startDate, promotion.endDate));
+                    Promotions.Add(new Promotion(promotion.bundleId, promotion.amount, promotion.prices, promotion.discount, promotion.startDate, promotion.endDate, promotion.imageEntries));
                 }
             }
         }

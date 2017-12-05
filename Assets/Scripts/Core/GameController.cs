@@ -886,8 +886,7 @@ public class GameController : MonoBehaviour {
 				}
 			}
 		}
-		Spil.PlayerData.UpdatePlayerData();
-	    
+		
 	    shopPanelController.updatePlayerValues();
 	    
 	    showMergeDialog = true;

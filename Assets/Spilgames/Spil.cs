@@ -209,6 +209,8 @@ namespace SpilGames.Unity {
         public void InitEditor() {
             if (string.IsNullOrEmpty(spilUserIdEditor)) {
                 spilUserIdEditor = Guid.NewGuid().ToString();
+            } else {
+                Debug.Log("Using a manually set user id. Social Login feature may not work properly!");
             }
             SpilUserIdEditor = spilUserIdEditor;
             Debug.Log("SpilSDK-Unity Using SpilUserIdEditor: " + SpilUserIdEditor);

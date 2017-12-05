@@ -1768,6 +1768,8 @@ namespace SpilGames.Unity.Base.Implementations {
 		public static void fireUserDataAvailable() {
 			Debug.Log("SpilSDK-Unity fireUserDataAvailable");
 
+		    Spil.PlayerData.UpdatePlayerData();
+		    
 			if (Spil.Instance.OnUserDataAvailable != null) {
 				Spil.Instance.OnUserDataAvailable();
 			}

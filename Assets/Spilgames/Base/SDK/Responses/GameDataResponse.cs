@@ -71,10 +71,12 @@ namespace SpilGames.Unity.Base.SDK {
         public int bundleId;
         public string label;
         public int position;
+        public List<SpilShopImageEntry> imageEntries;
     }
 
     public class SpilShopTabData {
         public string name;
+        public List<SpilShopImageEntry> imageEntries;
         public List<SpilShopEntryData> entries;
     }
 
@@ -85,6 +87,12 @@ namespace SpilGames.Unity.Base.SDK {
         public string discount;
         public DateTime startDate;
         public DateTime endDate;
+        public List<SpilShopImageEntry> imageEntries;
+    }
+
+    public class SpilShopImageEntry {
+        public string name;
+        public string imageUrl;
     }
 
     #endregion
