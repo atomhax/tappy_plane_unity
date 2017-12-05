@@ -22,7 +22,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
             SpilUnityImplementationBase.fireSplashScreenOpen();
 
-            SplashScreen = (GameObject) Instantiate(Resources.Load("Spilgames/SplashScreenPrefab"));
+            SplashScreen = (GameObject) Instantiate(Resources.Load("Spilgames/Editor/SplashScreen"));
             SplashScreen.SetActive(true);
         }
 
@@ -31,7 +31,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
             SpilUnityImplementationBase.fireDailyBonusOpen();
 
-            DailyBonus = (GameObject) Instantiate(Resources.Load("Spilgames/DailyBonusPrefab"));
+            DailyBonus = (GameObject) Instantiate(Resources.Load("Spilgames/Editor/DailyBonus"));
             DailyBonus.SetActive(true);
         }
 

@@ -5,12 +5,65 @@ using SpilGames.Unity.Base.Implementations;
 using SpilGames.Unity.Base.SDK;
 using SpilGames.Unity.Json;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace SpilGames.Unity.Base.UnityEditor.Managers {
-    public class UserDataManager {
+    public class UserDataManager : MonoBehaviour {
         public static List<UserDataVersion> userDataVersions = new List<UserDataVersion>();
         private static List<UserDataVersion> remoteUserDataVersions;
         private static UserDataMeta userDataMeta;
+
+        public static GameObject SyncError;
+        public Text SyncTitle;
+        public Text SyncMessage;
+        public Text SyncPozitiveButton;
+
+        public static GameObject MergeFailed;
+        public Text MergeFailedTitle;
+        public Text MergeFailedMessage;
+        public Text MergeFailedPozitiveButton;
+        
+        public static GameObject MergeConflict;
+        public Text MergeConflictTitle;
+        public Text MergeConflictMessage;
+        public Text MergeConflictPozitiveButton;
+        public Text MergeConflictNegativeButton;
+        public Text MergeConflictNeutralButton;
+        
+        public static string title;
+        public static string message;
+        public static string pozitiveButton;
+        public static string negativeButton;
+        public static string neutralButton;
+
+        public static string mergeData;
+        public static string mergeType;
+        
+        public static string overlayType;
+
+        private void Update() {
+            if (overlayType != null) {
+                switch (overlayType) {
+                    case "syncError":
+                        SyncTitle.text = title;
+                        SyncMessage.text = message;
+                        SyncPozitiveButton.text = pozitiveButton;
+                        break;
+                    case "mergeFailed":
+                        MergeFailedTitle.text = title;
+                        MergeFailedMessage.text = message;
+                        MergeFailedPozitiveButton.text = pozitiveButton;
+                        break;
+                    case "mergeConflict":
+                        MergeConflictTitle.text = title;
+                        MergeConflictMessage.text = message;
+                        MergeConflictPozitiveButton.text = pozitiveButton;
+                        MergeConflictNegativeButton.text = negativeButton;
+                        MergeConflictNeutralButton.text = neutralButton;
+                        break;
+                }
+            }
+        }
 
         public static void ProcessRequestUserData(WalletData receivedWallet, InventoryData receivedInventory, bool externalChange, string gameStateData, List<UserDataVersion> receivedUserDataVersions, UserDataMeta receivedUserDataMeta) {
             SpilUnityEditorImplementation.pData.CalculatePlayerDataResponse(receivedWallet, receivedInventory);
@@ -298,145 +351,81 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             return userDataVersionsJSON;
         }
 
-        public static void ShowSyncErrorDialog(string title, string message, string mergeButton) {
-            GameObject overlayObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            overlayObject.GetComponent<MeshRenderer>().enabled = false;
-            UserDataOverlay overlay = overlayObject.AddComponent<UserDataOverlay>();
+        public static void ShowSyncErrorDialog(string selectedTitle, string selectedMessage, string selectedMergeButton) {
+            SyncError = (GameObject) Instantiate(Resources.Load("Spilgames/Editor/SyncError"));
+            SyncError.SetActive(true);
 
-            overlay.title = title;
-            overlay.message = message;
-            overlay.pozitiveButton = mergeButton;
-            overlay.overlayType = "syncError";
+            title = selectedTitle;
+            message = selectedMessage;
+            pozitiveButton = selectedMergeButton;
+            overlayType = "syncError";
         }
 
-        public static void ShowMergeFailedDialog(string title, string message, string retryButton, string mergeData, string mergeType) {
-            GameObject overlayObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            overlayObject.GetComponent<MeshRenderer>().enabled = false;
-            UserDataOverlay overlay = overlayObject.AddComponent<UserDataOverlay>();
+        public static void ShowMergeFailedDialog(string selectedTitle, string selectedMessage, string selectedRetryButton, string selectedMergeData, string selectedMergeType) {
+            MergeFailed = (GameObject) Instantiate(Resources.Load("Spilgames/Editor/MergeFailed"));
+            MergeFailed.SetActive(true);
 
-            overlay.title = title;
-            overlay.message = message;
-            overlay.pozitiveButton = retryButton;
-            overlay.mergeData = mergeData;
-            overlay.mergeType = mergeType;
-            overlay.overlayType = "mergeFailed";
+            title = selectedTitle;
+            message = selectedMessage;
+            pozitiveButton = selectedRetryButton;
+            mergeData = selectedMergeData;
+            mergeType = selectedMergeType;
+            overlayType = "mergeFailed";
         }
 
-        public static void ShowMergeConflictDialog(string title, string message, string localButton, string remoteButton, string mergeButton) {
-            GameObject overlayObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            overlayObject.GetComponent<MeshRenderer>().enabled = false;
-            UserDataOverlay overlay = overlayObject.AddComponent<UserDataOverlay>();
+        public static void ShowMergeConflictDialog(string selectedTitle, string selectedMessage, string selectedLocalButton, string selectedRemoteButton, string selectedMergeButton) {
+            MergeConflict = (GameObject) Instantiate(Resources.Load("Spilgames/Editor/MergeConflict"));
+            MergeConflict.SetActive(true);
 
-            overlay.title = title;
-            overlay.message = message;
-            overlay.pozitiveButton = localButton;
-            overlay.negativeButton = remoteButton;
-            overlay.neutralButton = mergeButton;
-            overlay.overlayType = "mergeConflict";
+            title = selectedTitle;
+            message = selectedMessage;
+            pozitiveButton = selectedLocalButton;
+            negativeButton = selectedRemoteButton;
+            neutralButton = selectedMergeButton;
+            overlayType = "mergeConflict";
         }
 
-        public class UserDataOverlay : MonoBehaviour {
-            public string title;
-            public string message;
-            public string pozitiveButton;
-            public string negativeButton;
-            public string neutralButton;
+        public void SyncErrorRequest() {
+            Spil.Instance.RequestUserData();
+            Destroy(SyncError);
+            ClearValues();
+        }
 
-            public string mergeData;
-            public string mergeType;
+        public void MergeFailedRequest() {
+            Spil.Instance.MergeUserData(mergeData, mergeType);
+            Destroy(MergeFailed);
+            ClearValues();
+        }
 
-            public string overlayType;
+        public void MergeConflictPozitive() {
+            SpilUnityImplementationBase.fireUserDataHandleMerge("local");
+            Destroy(MergeConflict);
+            ClearValues();
+        }
 
-            private GUIStyle textFieldGuiStyle;
+        public void MergeConflictNegative() {
+            SpilUnityImplementationBase.fireUserDataHandleMerge("remote");
+            Destroy(MergeConflict);
+            ClearValues();
+        }
 
-            private void Start() {
-                textFieldGuiStyle = CreateGuiStyleTextField();
-            }
+        public void MergeConflictNeutral() {
+            SpilUnityImplementationBase.fireUserDataHandleMerge("merge");
+            Destroy(MergeConflict);
+            ClearValues();
+        }
+        
+        public void ClearValues() {
+            title = null;
+            message = null;
+            pozitiveButton = null;
+            negativeButton = null;
+            neutralButton = null;
 
-            void OnGUI() {
-                switch (overlayType) {
-                    case "syncError":
-                        ShowSyncError();
-                        break;
-                    case "mergeFailed":
-                        ShowMergeFailed();
-                        break;
-                    case "mergeConflict":
-                        ShowMergeConflict();
-                        break;
-                }
-            }
-
-            private void ShowSyncError() {
-                GUI.Label(new Rect(10, 10, (Screen.width - 20), (Screen.height - 20) / 3), title, textFieldGuiStyle);
-
-                GUI.Label(new Rect(10, 10 + Screen.height / 3, (Screen.width - 20), (Screen.height - 20) / 3), message, textFieldGuiStyle);
-
-                if (GUI.Button(new Rect(10, 10 + 2 * Screen.height / 3, (Screen.width - 20), (Screen.height - 20) / 3), pozitiveButton)) {
-                    Spil.Instance.RequestUserData();
-                    GameObject.Destroy(this.gameObject);
-                }
-            }
-
-            private void ShowMergeFailed() {
-                GUI.Label(new Rect(10, 10, (Screen.width - 20), (Screen.height - 20) / 3), title, textFieldGuiStyle);
-
-                GUI.Label(new Rect(10, 10 + Screen.height / 3, (Screen.width - 20), (Screen.height - 20) / 3), message, textFieldGuiStyle);
-
-                if (GUI.Button(new Rect(10, 10 + 2 * Screen.height / 3, (Screen.width - 20), (Screen.height - 20) / 3), pozitiveButton)) {
-                    Spil.Instance.MergeUserData(mergeData, mergeType);
-                    GameObject.Destroy(this.gameObject);
-                }
-            }
-
-            private void ShowMergeConflict() {
-                GUI.Label(new Rect(10, 10, (Screen.width - 20), (Screen.height - 20) / 3), title, textFieldGuiStyle);
-
-                GUI.Label(new Rect(10, 10 + Screen.height / 3, (Screen.width - 20), (Screen.height - 20) / 3), message, textFieldGuiStyle);
-
-                if (GUI.Button(new Rect(10, 10 + 2 * Screen.height / 3, (Screen.width - 20) / 3, (Screen.height - 20) / 3), pozitiveButton)) {
-                    SpilUnityImplementationBase.fireUserDataHandleMerge("local");
-                    GameObject.Destroy(this.gameObject);
-                }
-
-                if (GUI.Button(new Rect(10 + (Screen.width - 20) / 3, 10 + 2 * Screen.height / 3, (Screen.width - 20) / 3, (Screen.height - 20) / 3), negativeButton)) {
-                    SpilUnityImplementationBase.fireUserDataHandleMerge("remote");
-                    GameObject.Destroy(this.gameObject);
-                }
-
-                if (neutralButton != null) {
-                    if (GUI.Button(new Rect(10 + 2 * (Screen.width - 20) / 3, 10 + 2 * Screen.height / 3, (Screen.width - 20) / 3, (Screen.height - 20) / 3), neutralButton)) {
-                        SpilUnityImplementationBase.fireUserDataHandleMerge("merge");
-                        GameObject.Destroy(this.gameObject);
-                    }
-                }
-            }
-
-            private GUIStyle CreateGuiStyleTextField() {
-                GUIStyle textFieldGuiStyle = new GUIStyle();
-                GUIStyleState guiStyleState = new GUIStyleState();
-                guiStyleState.textColor = Color.white;
-                Color color = new Color(0f, 0f, 0f, 0.39f);
-                Texture2D blackBackground = new Texture2D((Screen.width - 20), (Screen.height - 20) / 2);
-
-                var fillColorArray = blackBackground.GetPixels();
-
-                for (var i = 0; i < fillColorArray.Length; ++i) {
-                    fillColorArray[i] = color;
-                }
-
-                blackBackground.SetPixels(fillColorArray);
-
-                blackBackground.Apply();
-
-                guiStyleState.background = blackBackground;
-                textFieldGuiStyle.normal = guiStyleState;
-                textFieldGuiStyle.fontSize = 24;
-                textFieldGuiStyle.padding = new RectOffset(10, 10, 10, 10);
-                textFieldGuiStyle.alignment = TextAnchor.MiddleCenter;
-
-                return textFieldGuiStyle;
-            }
+            mergeData = null;
+            mergeType = null;
+        
+            overlayType = null;
         }
     }
 

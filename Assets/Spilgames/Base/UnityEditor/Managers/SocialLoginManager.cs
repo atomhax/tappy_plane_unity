@@ -2,10 +2,30 @@
 using SpilGames.Unity.Base.Implementations;
 using SpilGames.Unity.Base.SDK;
 using UnityEngine;
+using UnityEngine.UI;
 
 #if UNITY_EDITOR
 namespace SpilGames.Unity.Base.UnityEditor.Managers {
-    public class SocialLoginManager {
+    public class SocialLoginManager : MonoBehaviour {
+
+        public static GameObject SocialOverlay;
+        public Text Title;
+        public Text Message;
+        public Text LoginText;
+        public Text PlayAsGuestText;
+        
+        public static string title;
+        public static string message;
+        public static string loginText;
+        public static string playAsGuestText;
+        
+        void Update() {
+            Title.text = title;
+            Message.text = message;
+            LoginText.text = loginText;
+            PlayAsGuestText.text = playAsGuestText;
+        }
+        
         public static void ProcessUserRegister(JSONObject socialLoginJSON) {
             if (socialLoginJSON == null) {
                 SpilErrorMessage error = new SpilErrorMessage();
@@ -190,71 +210,33 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             }
         }
 
-        public static void ShowUnauthorizedDialog(string title, string message, string loginText,
-            string playAsGuestText) {
-            GameObject overlayObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            overlayObject.GetComponent<MeshRenderer>().enabled = false;
-            SocialOverlay overlay = overlayObject.AddComponent<SocialOverlay>();
+        public static void ShowUnauthorizedDialog(string selectedTitle, string selectedMessage, string selectedLoginText,
+            string selectedPlayAsGuestText) {
+            SocialOverlay = (GameObject) Instantiate(Resources.Load("Spilgames/Editor/SocialLogin"));
+            SocialOverlay.SetActive(true);
 
-            overlay.title = title;
-            overlay.message = message;
-            overlay.loginText = loginText;
-            overlay.playAsGuestText = playAsGuestText;
+            title = selectedTitle;
+            message = selectedMessage;
+            loginText = selectedLoginText;
+            playAsGuestText = selectedPlayAsGuestText;
         }
 
-        public class SocialOverlay : MonoBehaviour {
-            public string title;
-            public string message;
-            public string loginText;
-            public string playAsGuestText;
+        public void PlayAsGuest() {
+            Spil.Instance.UserPlayAsGuest();
+            title = null;
+            message = null;
+            loginText = null;
+            playAsGuestText = null;
+            Destroy(SocialOverlay);
+        }
 
-            private GUIStyle textFieldGuiStyle;
-
-            private void Start() {
-                textFieldGuiStyle = CreateGuiStyleTextField();
-            }
-
-            void OnGUI() {
-                GUI.Label(new Rect(10, 10, (Screen.width - 20), (Screen.height - 20) / 3), title, textFieldGuiStyle);
-
-                GUI.Label(new Rect(10, 10 + Screen.height / 3, (Screen.width - 20), (Screen.height - 20) / 3), message, textFieldGuiStyle);
-
-                if (GUI.Button(new Rect(10, 10 + 2 * Screen.height / 3, (Screen.width - 20) / 2, (Screen.height - 20) / 3), playAsGuestText)) {
-                    Spil.Instance.UserPlayAsGuest();
-                    GameObject.Destroy(this.gameObject);
-                }
-
-                if (GUI.Button(new Rect(10 + (Screen.width - 20) / 2, 10 + 2 * Screen.height / 3, (Screen.width - 20) / 2, (Screen.height - 20) / 3), loginText)) {
-                    SpilUnityImplementationBase.fireRequestLogin();
-                    GameObject.Destroy(this.gameObject);
-                }
-            }
-
-            private GUIStyle CreateGuiStyleTextField() {
-                GUIStyle textFieldGuiStyle = new GUIStyle();
-                GUIStyleState guiStyleState = new GUIStyleState();
-                guiStyleState.textColor = Color.white;
-                Color color = new Color(0f, 0f, 0f, 0.39f);
-                Texture2D blackBackground = new Texture2D((Screen.width - 20), (Screen.height - 20) / 2);
-
-                var fillColorArray = blackBackground.GetPixels();
-
-                for (var i = 0; i < fillColorArray.Length; ++i) {
-                    fillColorArray[i] = color;
-                }
-
-                blackBackground.SetPixels(fillColorArray);
-
-                blackBackground.Apply();
-
-                guiStyleState.background = blackBackground;
-                textFieldGuiStyle.normal = guiStyleState;
-                textFieldGuiStyle.fontSize = 24;
-                textFieldGuiStyle.padding = new RectOffset(10, 10, 10, 10);
-                textFieldGuiStyle.alignment = TextAnchor.MiddleCenter;
-
-                return textFieldGuiStyle;
-            }
+        public void RequestLogin() {
+            SpilUnityImplementationBase.fireRequestLogin();
+            title = null;
+            message = null;
+            loginText = null;
+            playAsGuestText = null;
+            Destroy(SocialOverlay);
         }
     }
     
