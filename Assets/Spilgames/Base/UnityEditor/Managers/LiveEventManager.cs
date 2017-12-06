@@ -6,25 +6,58 @@ using SpilGames.Unity.Helpers.GameData;
 using SpilGames.Unity.Helpers.PlayerData;
 using SpilGames.Unity.Json;
 using UnityEngine;
+using UnityEngine.UI;
 
 #if UNITY_EDITOR
 
 
 namespace SpilGames.Unity.Base.UnityEditor.Managers {
     public class LiveEventManager : MonoBehaviour{
-        public static GameObject overlayObject;
-        public static WebOverlay overlay;
-
-        enum StageType {
+        public enum StageType {
             START,
             PROGRESS,
             INFO
         }
+        
+        public static StageType StageTypeValue;
+        public static JSONObject stageData;
+        public static JSONObject currentStage;
 
-        private static Spil.LiveEventRewardTypeEnum rewardType = Spil.MonoInstance.LiveEventRewardType;
+        public static JSONObject applyItems;
+
+        public static string id = "";
+        public static string amount = "";
+        
+        public static GameObject LiveEventStart;
+        public static GameObject LiveEventProgress;
+        public static GameObject LiveEventInfo;
+
+        public Text InfoText;
+        public InputField IdField;
+        public InputField AmountField;
+
+        private static Spil.LiveEventRewardTypeEnum rewardType;
+        void Awake() {
+            rewardType = Spil.MonoInstance.LiveEventRewardType; 
+        }
+        
+        void Update() {
+            switch (StageTypeValue) {
+                    case StageType.START:
+                        break;
+                    case StageType.PROGRESS:
+                        InfoText.text = "\nProgress Page \n Requirements: " + currentStage.GetField("requirements").Print() + " \n \n Progress: " + (currentStage.HasField("progress") ? currentStage.GetField("progress").Print() : "") + "\n \n Applied Items: " + applyItems.Print();
+                        id = IdField.text;
+                        amount = AmountField.text;
+                        break;
+                    case StageType.INFO:
+                        break;
+            }
+        }
+
         public static LiveEventOverview liveEventOverview = new LiveEventOverview();
         
-        public static void AdvanceToNextStage() {
+        public void AdvanceToNextStage() {
             if (liveEventOverview.currentStage != null && liveEventOverview.alwaysShowStartStage) {
                 OpenStageView(StageType.PROGRESS, liveEventOverview.currentStage);
             }
@@ -38,7 +71,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             }
         }
 
-        public static void ApplyItems(JSONObject items) {
+        public void ApplyItems(JSONObject items) {
             SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
             spilEvent.eventName = "liveEventApplyItems";
 
@@ -235,36 +268,48 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
             CloseStageView();
 
+            StageTypeValue = stageType;
             switch (stageType) {
                 case StageType.START:
-                    overlayObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                    overlayObject.GetComponent<MeshRenderer>().enabled = false;
-                    overlay = overlayObject.AddComponent<WebOverlay>();
-                    overlay.overlayType = "start";
-                    overlay.stageData = stage;
+                    LiveEventStart = (GameObject) Instantiate(Resources.Load("Spilgames/Editor/LiveEventStart"));
+                    LiveEventStart.SetActive(true);
+                   
+                    stageData = stage;
                     break;
                 case StageType.PROGRESS:
-                    overlayObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                    overlayObject.GetComponent<MeshRenderer>().enabled = false;
-                    overlay = overlayObject.AddComponent<WebOverlay>();
-                    overlay.overlayType = "progress";
-                    overlay.currentStage = stage;
+                    LiveEventProgress = (GameObject) Instantiate(Resources.Load("Spilgames/Editor/LiveEventProgress"));
+                    LiveEventProgress.SetActive(true);
+                    
+                    applyItems = new JSONObject(JSONObject.Type.ARRAY);
+                    currentStage = stage;
                     break;
                 case StageType.INFO:
-                    overlayObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                    overlayObject.GetComponent<MeshRenderer>().enabled = false;
-                    overlay = overlayObject.AddComponent<WebOverlay>();
-                    overlay.overlayType = "info";
-                    overlay.currentStage = stage;
+                    LiveEventInfo = (GameObject) Instantiate(Resources.Load("Spilgames/Editor/LiveEventInfo"));
+                    LiveEventInfo.SetActive(true);
+                    
+                    currentStage = stage;
                     break;
             }
         }
 
         private static void CloseStageView() {
-            if (overlayObject == null || overlay == null) return;
-            Destroy(overlayObject);
-            overlayObject = null;
-            overlay = null;
+            stageData = null;
+            currentStage = null;
+            id = "";
+            amount = "";
+            applyItems = null;
+            
+            switch (StageTypeValue) {
+                case StageType.START:
+                    Destroy(LiveEventStart);
+                    break;
+                case StageType.PROGRESS:
+                    Destroy(LiveEventProgress);
+                    break;
+                case StageType.INFO:
+                    Destroy(LiveEventInfo);
+                    break;
+            }
         }
 
         public static long GetLiveEventStartDate() {
@@ -279,146 +324,44 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             return liveEventOverview != null ? liveEventOverview.liveEventConfig.Print() : null;
         }
 
-        public class WebOverlay : MonoBehaviour {
-            public string overlayType;
-            public JSONObject stageData;
-            public JSONObject currentStage;
+        public void AddItemToList() {
+            AddItemToList(id, amount);
+            id = "";
+            amount = "";
+            IdField.text = "";
+            AmountField.text = "";
+        }
+        
+        public void AddItemToList(string id, string amount) {
+            if (id.Equals("") || amount.Equals("")) return;
+            int idValue = Convert.ToInt32(id);
+            int amountValue = Convert.ToInt32(amount);
+            for (int i = 0; i < applyItems.Count; i++) {
+                JSONObject jsonObject = applyItems.list[i];
+                if (jsonObject.GetField("id").n != idValue) continue;
+                int oldAmount = (int) jsonObject.GetField("amount").n;
+                int newAmount = oldAmount + amountValue;
 
-            public JSONObject applyItems = new JSONObject(JSONObject.Type.ARRAY);
+                jsonObject.RemoveField("amount");
+                jsonObject.AddField("amount", newAmount);
 
-            public string id = "";
-            public string amount = "";
-
-            private GUIStyle infoGuiStyle;
-            private GUIStyle itemsGuiStyle;
-            private GUIStyle textFieldGuiStyle;
-
-            private void Start() {
-                infoGuiStyle = CreateGuiStyleForText(false);
-                itemsGuiStyle = CreateGuiStyleForText(true);
-
-                textFieldGuiStyle = CreateGuiStyleTextField();
+                return;
             }
 
-            void OnGUI() {
-                if (overlayType.Equals("start")) {
-                    GUI.Label(new Rect(10, 10, (Screen.width - 20), (Screen.height - 20) / 2), "\nStart Page", infoGuiStyle);
+            JSONObject item = new JSONObject();
+            item.AddField("id", idValue);
+            item.AddField("amount", amountValue);
 
-                    if (GUI.Button(new Rect(10, Screen.height / 2, (Screen.width - 20), (Screen.height - 20) / 2), "Continue")) {
-                        AdvanceToNextStage();
-                    }
-                }
-                else if (overlayType.Equals("progress")) {
-                    GUI.Label(new Rect(10, 10, (Screen.width - 20), (Screen.height - 20) / 2),
-                        "\nProgress Page \n Requirements: " + currentStage.GetField("requirements").Print() + " \n \n Progress: " + (currentStage.HasField("progress") ? currentStage.GetField("progress").Print() : "") + "\n \n Applied Items: " + applyItems.Print(), infoGuiStyle);
-
-                    GUI.Label(new Rect(10, (Screen.height / 2 + 10), 200, (Screen.height - 20) / 12 - 10), "Id", itemsGuiStyle);
-                    id = GUI.TextField(new Rect(220, (Screen.height / 2 + 10), Screen.width - 230, (Screen.height - 20) / 12 - 10), id, textFieldGuiStyle);
-
-                    GUI.Label(new Rect(10, (Screen.height / 2 + Screen.height / 12 + 10), 200, (Screen.height - 20) / 12 - 10), "Amount", itemsGuiStyle);
-                    amount = GUI.TextField(new Rect(220, (Screen.height / 2 + Screen.height / 12 + 10), Screen.width - 230, (Screen.height - 20) / 12 - 10), amount, textFieldGuiStyle);
-
-                    if (GUI.Button(new Rect(10, (Screen.height / 2 + Screen.height / 6), (Screen.width - 20), (Screen.height - 20) / 12 - 10), "Add Item")) {
-                        AddItemToList(id, amount);
-                    }
-
-                    if (GUI.Button(new Rect(10, (Screen.height / 2 + Screen.height / 4), (Screen.width - 20), (Screen.height - 20) / 8), "Apply Items")) {
-                        ApplyItems(applyItems);
-                    }
-
-                    if (GUI.Button(new Rect(10, (Screen.height / 2 + Screen.height / 4 + Screen.height / 8), (Screen.width - 20), (Screen.height - 20) / 8), "Close")) {
-                        GameObject.Destroy(this.gameObject);
-                    }
-                }
-                else if (overlayType.Equals("info")) {
-                    GUI.Label(new Rect(10, 10, (Screen.width - 20), (Screen.height - 20) / 2), "\nInfo/Claim Reward Page", infoGuiStyle);
-
-                    if (GUI.Button(new Rect(10, Screen.height / 2, (Screen.width - 20), (Screen.height - 20) / 2), "Continue")) {
-                        AdvanceToNextStage();
-                    }
-                }
-            }
-
-            private GUIStyle CreateGuiStyleForText(bool alignMiddle) {
-                GUIStyle infoGuiStyle = new GUIStyle();
-                GUIStyleState guiStyleState = new GUIStyleState();
-                guiStyleState.textColor = Color.white;
-                Color color = new Color(0f, 0f, 0f, 0.39f);
-                Texture2D blackBackground = new Texture2D(Screen.width - 230, (Screen.height - 20) / 12 - 10);
-
-                var fillColorArray = blackBackground.GetPixels();
-
-                for (var i = 0; i < fillColorArray.Length; ++i) {
-                    fillColorArray[i] = color;
-                }
-
-                blackBackground.SetPixels(fillColorArray);
-
-                blackBackground.Apply();
-
-                guiStyleState.background = blackBackground;
-                infoGuiStyle.normal = guiStyleState;
-                infoGuiStyle.wordWrap = true;
-                infoGuiStyle.fontSize = 24;
-                infoGuiStyle.padding = new RectOffset(10, 10, 10, 10);
-
-                if (alignMiddle) {
-                    infoGuiStyle.alignment = TextAnchor.MiddleLeft;
-                }
-
-                return infoGuiStyle;
-            }
-
-            private GUIStyle CreateGuiStyleTextField() {
-                GUIStyle textFieldGuiStyle = new GUIStyle();
-                GUIStyleState guiStyleState = new GUIStyleState();
-                guiStyleState.textColor = Color.white;
-                Color color = new Color(0f, 0f, 0f, 0.39f);
-                Texture2D blackBackground = new Texture2D((Screen.width - 20), (Screen.height - 20) / 2);
-
-                var fillColorArray = blackBackground.GetPixels();
-
-                for (var i = 0; i < fillColorArray.Length; ++i) {
-                    fillColorArray[i] = color;
-                }
-
-                blackBackground.SetPixels(fillColorArray);
-
-                blackBackground.Apply();
-
-                guiStyleState.background = blackBackground;
-                textFieldGuiStyle.normal = guiStyleState;
-                textFieldGuiStyle.fontSize = 24;
-                textFieldGuiStyle.padding = new RectOffset(10, 10, 10, 10);
-                textFieldGuiStyle.alignment = TextAnchor.MiddleLeft;
-
-                return textFieldGuiStyle;
-            }
-
-            private void AddItemToList(string id, string amount) {
-                if (id.Equals("") || amount.Equals("")) return;
-                int idValue = Convert.ToInt32(id);
-                int amountValue = Convert.ToInt32(amount);
-                for (int i = 0; i < applyItems.Count; i++) {
-                    JSONObject jsonObject = applyItems.list[i];
-                    if (jsonObject.GetField("id").n != idValue) continue;
-                    int oldAmount = (int) jsonObject.GetField("amount").n;
-                    int newAmount = oldAmount + amountValue;
-
-                    jsonObject.RemoveField("amount");
-                    jsonObject.AddField("amount", newAmount);
-
-                    return;
-                }
-
-                JSONObject item = new JSONObject();
-                item.AddField("id", idValue);
-                item.AddField("amount", amountValue);
-
-                applyItems.Add(item);
-            }
+            applyItems.Add(item);
         }
 
+        public void ApplyItems() {
+            ApplyItems(applyItems);
+        }
+
+        public void CloseStage() {
+            CloseStageView();
+        }        
         public class LiveEventOverview {
             public int liveEventId;
             public JSONObject startStage = null;
