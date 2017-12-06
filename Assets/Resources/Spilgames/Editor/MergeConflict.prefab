@@ -583,8 +583,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: PlayAsGuest
+      - m_Target: {fileID: 114154499334065800}
+        m_MethodName: MergeConflictNeutral
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -689,8 +689,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: PlayAsGuest
+      - m_Target: {fileID: 114154499334065800}
+        m_MethodName: MergeConflictPozitive
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -823,8 +823,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: PlayAsGuest
+      - m_Target: {fileID: 114154499334065800}
+        m_MethodName: MergeConflictNegative
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
