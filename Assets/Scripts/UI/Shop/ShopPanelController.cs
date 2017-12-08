@@ -76,7 +76,8 @@ public class ShopPanelController : MonoBehaviour {
     void CreateTabButton(Tab tab, int position) {
         GameObject newTabButton = (GameObject) Instantiate(tabButtonPrefab);
         newTabButton.transform.SetParent(tabButtonPanel);
-        newTabButton.GetComponent<TabButtonController>().SetupButton(tab.Name, position, this);
+        newTabButton.GetComponent<TabButtonController>().SetupButton(tab.Name, position, tab.HasActivePromotions, this);
+        newTabButton.SetActive(true);
         tabButtons.Add(newTabButton);
     }
 

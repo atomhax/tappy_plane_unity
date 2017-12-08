@@ -6,6 +6,8 @@ public class TabButtonController : MonoBehaviour {
 
 	public Text buttonLabelText;
 
+	public GameObject saleImage;
+
 	public int tabNumber = 0;
 
 	ShopPanelController shopUIController;
@@ -15,10 +17,14 @@ public class TabButtonController : MonoBehaviour {
 		shopUIController.shopTabs [tabNumber].SetActive (true);
 	}
 
-	public void SetupButton(string tabName, int tabNumber, ShopPanelController parentController){
+	public void SetupButton(string tabName, int tabNumber, bool hasActivePromotion, ShopPanelController parentController){
 		buttonLabelText.text = tabName;
 		this.tabNumber = tabNumber;
 		shopUIController = parentController;
+
+		if (hasActivePromotion) {
+			saleImage.SetActive(true);
+		}
 	}
 
 }

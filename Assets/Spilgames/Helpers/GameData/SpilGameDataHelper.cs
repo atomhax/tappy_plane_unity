@@ -194,6 +194,22 @@ namespace SpilGames.Unity.Helpers.GameData {
             }
         }
 
+        /// <summary>
+        /// Helper method that returns the Promotion for a given bundle id
+        /// Returns null if no promotion was found
+        /// </summary>
+        public Promotion GetPromotion(int bundleId) {
+            if (Promotions != null) {
+                foreach (Promotion promotion in Promotions) {
+                    if (promotion.BundleId == bundleId) {
+                        return promotion;
+                    }
+                }
+                return null;
+            }
+            return null;
+        }
+        
         private void AddDataToHelper(List<SpilCurrencyData> currencies, List<SpilItemData> items, List<SpilBundleData> bundles, List<SpilShopTabData> shop, List<SpilShopPromotionData> promotions) {
             Currencies.Clear();
 

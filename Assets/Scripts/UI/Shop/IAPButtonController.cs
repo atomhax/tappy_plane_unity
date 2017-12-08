@@ -6,6 +6,8 @@ public class IAPButtonController : MonoBehaviour {
 
 	public Text gemAmountText, promotionText, costText;
 
+	public GameObject saleImage;
+
 	public string bundleID;
 
 	public MyIAPManager iapManager;
@@ -15,6 +17,10 @@ public class IAPButtonController : MonoBehaviour {
 		this.promotionText.text = promotionText;
 		costText.text = cost;
 		this.bundleID = bundleID;
+
+		if (!promotionText.Equals("")) {
+			saleImage.SetActive(true);
+		}
 	}
 
 	public void ButtonClicked(){

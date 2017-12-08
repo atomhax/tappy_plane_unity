@@ -27,6 +27,7 @@ public class BundleDisplayPanelController : MonoBehaviour {
     public void SetupBundleDisplayPanel(Bundle bundle) {
         panelInstance = this;
         bundleDisplayed = bundle;
+        Promotion bundlePromotion = Spil.GameData.GetPromotion(bundleDisplayed.Id);      
         starsCostText.text = diamondCostText.text = "0";
 
         if (bundle.DisplayName != null && !bundle.DisplayName.Equals("")) {
@@ -41,17 +42,33 @@ public class BundleDisplayPanelController : MonoBehaviour {
             bundleDescriptionText.text = "";
         }
 
+        starsCostText.color = Color.white;
+        diamondCostText.color = Color.white;
+        
         listOfItemsInBundle.text = "Contains:";
         for (int i = 0; i < bundle.Items.Count; i++) {
             Item item = Spil.GameData.GetItem(bundle.Items[i].Id);
             listOfItemsInBundle.text += "\n" + "• " + item.Name;
-            for (int x = 0; x < bundle.Prices.Count; x++) {
-                if (bundle.Prices[x].CurrencyId == 25) {
-                    starsCostText.text = bundle.Prices[x].Value.ToString();
-                } else if (bundle.Prices[x].CurrencyId == 28) {
-                    diamondCostText.text = bundle.Prices[x].Value.ToString();
+            if (bundlePromotion != null) {
+                for (int x = 0; x < bundlePromotion.Prices.Count; x++) {
+                    if (bundlePromotion.Prices[x].CurrencyId == 25) {
+                        starsCostText.text = bundlePromotion.Prices[x].Value.ToString();
+                        starsCostText.color = new Color(0.76f, 0.1f, 0.11f);
+                    } else if (bundlePromotion.Prices[x].CurrencyId == 28) {
+                        diamondCostText.text = bundlePromotion.Prices[x].Value.ToString();
+                        diamondCostText.color = new Color(0.76f, 0.1f, 0.11f);
+                    }
+                } 
+            } else {
+                for (int x = 0; x < bundle.Prices.Count; x++) {
+                    if (bundle.Prices[x].CurrencyId == 25) {
+                        starsCostText.text = bundle.Prices[x].Value.ToString();                       
+                    } else if (bundle.Prices[x].CurrencyId == 28) {
+                        diamondCostText.text = bundle.Prices[x].Value.ToString();                        
+                    }
                 }
             }
+            
         }
 
         gameObject.SetActive(true);
@@ -65,7 +82,14 @@ public class BundleDisplayPanelController : MonoBehaviour {
         Spil.Instance.OnImageLoadFailed -= OnImageLoadFailed;
         Spil.Instance.OnImageLoadFailed += OnImageLoadFailed;
 
-        if (bundle.HasImage()) {
+        if (bundlePromotion != null && bundlePromotion.ImageEntries != null) {
+            string promotionImage = bundlePromotion.ImageEntries[0].ImageUrl;
+            
+            if (promotionImage != null) {
+                Debug.Log("Image already preloaded with path: " + promotionImage);
+                Spil.Instance.LoadImage(this, promotionImage);
+            }
+        } else if (bundle.HasImage()) {
             string imagePath = bundle.GetImagePath();
 
             if (imagePath != null) {

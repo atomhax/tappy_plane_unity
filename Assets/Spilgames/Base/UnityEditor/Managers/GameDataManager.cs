@@ -96,23 +96,6 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 }
             }
 
-            if (response.data.HasField("shop")) {
-                if (SpilUnityEditorImplementation.gData.shop == null) {
-                    SpilUnityEditorImplementation.gData.shop = new List<SpilShopTabData>();
-                }
-
-                if (SpilUnityEditorImplementation.gData.shop.Count > 0) {
-                    SpilUnityEditorImplementation.gData.shop.Clear();
-                }
-
-                JSONObject shopJSON = response.data.GetField("shop");
-
-                for (int i = 0; i < shopJSON.Count; i++) {
-                    SpilShopTabData tab = JsonHelper.getObjectFromJson<SpilShopTabData>(shopJSON.list[i].Print(false));
-                    SpilUnityEditorImplementation.gData.shop.Add(tab);
-                }
-            }
-
             if (response.data.HasField("promotions")) {
                 if (SpilUnityEditorImplementation.gData.promotions == null) {
                     SpilUnityEditorImplementation.gData.promotions = new List<SpilShopPromotionData>();
@@ -128,6 +111,34 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     SpilShopPromotionData bundle =
                         JsonHelper.getObjectFromJson<SpilShopPromotionData>(promotionsJSON.list[i].Print(false));
                     SpilUnityEditorImplementation.gData.promotions.Add(bundle);
+                }
+            }
+            
+            if (response.data.HasField("shop")) {
+                if (SpilUnityEditorImplementation.gData.shop == null) {
+                    SpilUnityEditorImplementation.gData.shop = new List<SpilShopTabData>();
+                }
+
+                if (SpilUnityEditorImplementation.gData.shop.Count > 0) {
+                    SpilUnityEditorImplementation.gData.shop.Clear();
+                }
+
+                JSONObject shopJSON = response.data.GetField("shop");
+
+                for (int i = 0; i < shopJSON.Count; i++) {
+                    SpilShopTabData tab = JsonHelper.getObjectFromJson<SpilShopTabData>(shopJSON.list[i].Print(false));
+
+                    if (SpilUnityEditorImplementation.gData.promotions != null) {
+                        foreach (SpilShopEntryData entryData in tab.entries) {
+                            foreach (SpilShopPromotionData shopPromotionData in SpilUnityEditorImplementation.gData.promotions) {
+                                if (entryData.bundleId == shopPromotionData.bundleId) {
+                                    tab.hasActivePromotions = true;
+                                }
+                            }
+                        }
+                    }                 
+                    
+                    SpilUnityEditorImplementation.gData.shop.Add(tab);
                 }
             }
 

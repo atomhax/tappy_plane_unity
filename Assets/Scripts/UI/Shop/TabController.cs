@@ -8,7 +8,7 @@ public class TabController : MonoBehaviour {
 	public Text tabTitle;
 
 	public Transform listOfEntryButtonsParent;
-
+	
 	public GameObject entryButtonPrefab;
 
 	public BundleDisplayPanelController bundleDisplayPanel;

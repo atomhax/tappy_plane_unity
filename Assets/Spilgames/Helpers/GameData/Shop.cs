@@ -68,6 +68,16 @@ namespace SpilGames.Unity.Helpers.GameData {
         
         public Tab(string name, List<SpilShopEntryData> entries, List<SpilShopImageEntry> imageEntries, bool hasActivePromotions) {
             _Name = name;
+
+            if (imageEntries != null) {
+                foreach (SpilShopImageEntry spilShopImageEntry in imageEntries) {
+                    ImageEntry imageEntry = new ImageEntry(spilShopImageEntry.name, spilShopImageEntry.imageUrl);
+                    ImageEntries.Add(imageEntry);
+                }
+            }
+
+            _HasActivePromotions = hasActivePromotions;
+            
             if (entries != null) {
                 foreach (SpilShopEntryData entry in entries) {
                     _Entries.Add(new Entry(entry.bundleId, entry.label, entry.position, entry.imageEntries));
