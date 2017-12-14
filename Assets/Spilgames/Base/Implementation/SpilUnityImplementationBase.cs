@@ -1672,6 +1672,10 @@ namespace SpilGames.Unity.Base.Implementations {
 		public static void fireUserDataMergeSuccessful() {
 			Debug.Log("SpilSDK-Unity fireUserDataMergeSuccessful");
 
+		    if (Spil.PlayerData != null) {
+		        Spil.PlayerData.UpdatePlayerData();
+		    }
+		    
 			if (Spil.Instance.OnUserDataMergeSuccessful != null) {
 				Spil.Instance.OnUserDataMergeSuccessful();
 			}

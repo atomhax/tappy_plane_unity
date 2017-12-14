@@ -110,7 +110,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             ResetInventory();
         }
 
-        public void CalculatePlayerDataResponse(WalletData receivedWallet, InventoryData receivedInventory) {
+        public void CalculatePlayerDataResponse(WalletData receivedWallet, InventoryData receivedInventory, bool fromInit) {
             bool updated = false;
             PlayerDataUpdatedData updatedData = new PlayerDataUpdatedData();
 
@@ -214,7 +214,10 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
                 SpilUnityImplementationBase.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
             }
-            SpilUnityImplementationBase.fireUserDataAvailable();
+
+            if (!fromInit) {
+                SpilUnityImplementationBase.fireUserDataAvailable();
+            }
         }
 
         public void WalletOperation(string action, int currencyId, int amount, string reason, string reasonDetails, string location, string transactionId) {
@@ -869,7 +872,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             }
 
             if (response.action.ToLower().Trim().Equals("update")) {
-                SpilUnityEditorImplementation.pData.CalculatePlayerDataResponse(receivedWallet, receivedInventory);
+                SpilUnityEditorImplementation.pData.CalculatePlayerDataResponse(receivedWallet, receivedInventory, false);
             } else if (response.action.ToLower().Trim().Equals("syncerror")) {
                 UserDataManager.ProcessSyncError();
             } else if (response.action.ToLower().Trim().Equals("dropped")) {

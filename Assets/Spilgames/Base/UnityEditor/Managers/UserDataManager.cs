@@ -66,7 +66,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         }
 
         public static void ProcessRequestUserData(WalletData receivedWallet, InventoryData receivedInventory, bool externalChange, string gameStateData, List<UserDataVersion> receivedUserDataVersions, UserDataMeta receivedUserDataMeta) {
-            SpilUnityEditorImplementation.pData.CalculatePlayerDataResponse(receivedWallet, receivedInventory);
+            SpilUnityEditorImplementation.pData.CalculatePlayerDataResponse(receivedWallet, receivedInventory, true);
             GameStateManager.ProcessMyGameStateResponse(new JSONObject(gameStateData));
 
             if (receivedUserDataVersions != null) {
