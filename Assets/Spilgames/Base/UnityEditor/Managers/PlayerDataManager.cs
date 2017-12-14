@@ -30,6 +30,34 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 temp = JsonHelper.getObjectFromJson<TempUserInfo>(placeholder);
             }
 
+            // Currencies and items loaded from playerdata don't have fields like initialValue because those are defined in the gamedata. Add the missing information.
+            // TODO: Should playerdata ever be used to access these fields or only gamedata? A. Check where these fields are being used (they shouldnt be? see SendUpdatePlayerDataEvent tho) and B. Consider maybe this is the wrong inheritance structure / we're exposing fields that shouldn't be exposed for playerdata items/currencies?
+            // TODO: Make this prettier? Load both defaultPlayerData and defaultGameData.json and create/initialise wallet+inventory by combining data (instead of deserialising playerdata and adding missing data from gamedata afterwards)?
+            if (temp != null && temp.wallet != null && temp.wallet.currencies != null)
+            {
+                if (SpilUnityEditorImplementation.gData == null)
+                {
+                    throw new NotImplementedException("GameData must be initialised before calling this method.");
+                }
+
+                foreach(PlayerCurrencyData currency in temp.wallet.currencies)
+                {
+                    SpilCurrencyData gameDataCurrency = SpilUnityEditorImplementation.gData.currencies.FirstOrDefault(a => a.id == currency.id);
+                    if (gameDataCurrency != null)
+                    {
+                        currency.displayDescription = gameDataCurrency.displayDescription;
+                        currency.displayName = gameDataCurrency.displayName;
+                        currency.imageUrl = gameDataCurrency.imageUrl;
+                        currency.initialValue = gameDataCurrency.initialValue;
+                        currency.name = gameDataCurrency.name;
+                        currency.type = gameDataCurrency.type;
+                    } else {
+                        // TODO: Playerdata contains a currency that is not defined in the gamedata, should this throw an exception?
+                        // TODO: Remove the currency from the list or keep it with missing data (as it is now)?
+                    }
+                }
+            }
+
             return temp.wallet;
         }
 
@@ -49,14 +77,31 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         }
 
         public void ResetWallet() {
-            foreach (PlayerCurrencyData playerCurrency in SpilUnityEditorImplementation.pData.Wallet.currencies) {
-                int initialValue = SpilUnityEditorImplementation.gData.currencies
-                    .FirstOrDefault(a => a.id == playerCurrency.id).initialValue;
+
+            // For currencies already in the player wallet reset the amount to the initialValue.
+
+            foreach (PlayerCurrencyData playerCurrency in SpilUnityEditorImplementation.pData.Wallet.currencies)
+            {
+                int initialValue = SpilUnityEditorImplementation.gData.currencies.FirstOrDefault(a => a.id == playerCurrency.id).initialValue;
                 int newDelta = initialValue - playerCurrency.currentBalance;
 
                 playerCurrency.currentBalance = initialValue;
-                playerCurrency.delta =
-                    newDelta + playerCurrency.delta;
+                playerCurrency.delta = newDelta + playerCurrency.delta;
+            }
+
+            // Check the currencies in the game data, if a currency is not currently in the wallet but has an initialvalue > 0 then add it.
+
+            foreach (SpilCurrencyData gameDataCurrency in SpilUnityEditorImplementation.gData.currencies)
+            {
+                if (gameDataCurrency.initialValue > 0 && !SpilUnityEditorImplementation.pData.Wallet.currencies.Any(a => a.id == gameDataCurrency.id))
+                {
+                    PlayerCurrencyData playerCurrency = new PlayerCurrencyData(gameDataCurrency);
+
+                    playerCurrency.currentBalance = gameDataCurrency.initialValue;
+                    playerCurrency.delta = gameDataCurrency.initialValue;
+
+                    SpilUnityEditorImplementation.pData.Wallet.currencies.Add(playerCurrency);
+                }
             }
         }
 
@@ -73,6 +118,36 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 string placeholder =
                     "{\"wallet\":{\"currencies\":[],\"offset\": 0,\"logic\": \"CLIENT\"},\"inventory\":{\"items\":[],\"offset\":0,\"logic\": \"\"}}";
                 temp = JsonHelper.getObjectFromJson<TempUserInfo>(placeholder);
+            }
+
+            // Currencies and items loaded from playerdata don't have fields like initialValue because those are defined in the gamedata. Add the missing information.
+            // TODO: Should playerdata ever be used to access these fields or only gamedata? A. Check where these fields are being used (they shouldnt be? see SendUpdatePlayerDataEvent tho) and B. Consider maybe this is the wrong inheritance structure / we're exposing fields that shouldn't be exposed for playerdata items/currencies?
+            // TODO: Make this prettier? Load both defaultPlayerData and defaultGameData.json and create/initialise wallet+inventory by combining data (instead of deserialising playerdata and adding missing data from gamedata afterwards)?
+            if (temp != null && temp.inventory != null && temp.inventory.items != null)
+            {
+                if (SpilUnityEditorImplementation.gData == null)
+                {
+                    throw new NotImplementedException("GameData must be initialised before calling this method.");
+                }
+
+                foreach (PlayerItemData item in temp.inventory.items)
+                {
+                    SpilItemData gameDataItem = SpilUnityEditorImplementation.gData.items.FirstOrDefault(a => a.id == item.id);
+                    if (gameDataItem != null)
+                    {
+                        item.content = gameDataItem.content;
+                        item.displayDescription = gameDataItem.displayDescription;
+                        item.displayName = gameDataItem.displayName;
+                        item.imageUrl = gameDataItem.imageUrl;
+                        item.initialValue = gameDataItem.initialValue;
+                        item.isGacha = gameDataItem.isGacha;
+                        item.name = gameDataItem.name;
+                        item.type = gameDataItem.type;
+                    } else {
+                        // TODO: Playerdata contains an item that is not defined in the gamedata, should this throw an exception?
+                        // TODO: Remove the item from the list or keep it with missing data (as it is now)?
+                    }
+                }
             }
 
             return temp.inventory;
@@ -94,14 +169,31 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         }
 
         public void ResetInventory() {
-            foreach (PlayerItemData playerItem in SpilUnityEditorImplementation.pData.Inventory.items) {
-                int initialValue = SpilUnityEditorImplementation.gData.items.FirstOrDefault(a => a.id == playerItem.id)
-                    .initialValue;
+
+            // For items already in the player inventory reset the amount to the initialValue.
+
+            foreach (PlayerItemData playerItem in SpilUnityEditorImplementation.pData.Inventory.items)
+            {
+                int initialValue = SpilUnityEditorImplementation.gData.items.FirstOrDefault(a => a.id == playerItem.id).initialValue;
                 int newDelta = initialValue - playerItem.amount;
 
                 playerItem.amount = initialValue;
-                playerItem.delta =
-                    newDelta + playerItem.delta;
+                playerItem.delta = newDelta + playerItem.delta;
+            }
+
+            // Check the items in the game data, if an item is not currently in the inventory but has an initialvalue > 0 then add it.
+
+            foreach (SpilItemData gameDataItem in SpilUnityEditorImplementation.gData.items)
+            {
+                if(gameDataItem.initialValue > 0 && !SpilUnityEditorImplementation.pData.Inventory.items.Any(a => a.id == gameDataItem.id))
+                {
+                    PlayerItemData playerItem = new PlayerItemData(gameDataItem);
+
+                    playerItem.amount = gameDataItem.initialValue;
+                    playerItem.delta = gameDataItem.initialValue;
+
+                    SpilUnityEditorImplementation.pData.Inventory.items.Add(playerItem);
+                }
             }
         }
 
