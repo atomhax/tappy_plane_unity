@@ -44,7 +44,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         }
 
         public static void PlayMoreApps() {
-            AdOverlay = (GameObject) Instantiate(Resources.Load("Spilgames/AdOverlayPrefab"));
+            AdOverlay = (GameObject) Instantiate(Resources.Load("Spilgames/Editor/AdOverlay"));
             AdOverlay.SetActive(true);
             provider = "Spil";
             adType = "moreApps";
