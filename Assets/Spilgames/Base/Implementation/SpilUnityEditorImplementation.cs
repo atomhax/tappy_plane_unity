@@ -166,26 +166,6 @@ namespace SpilGames.Unity.Base.Implementations {
                     spilEvent.customData.AddField("trackingOnly", true);
                     dict.Remove("trackingOnly");
                 }
-//                foreach (KeyValuePair<string, object> dictValue in dict) {
-//                    if (dictValue.Key.Equals("wallet") || dictValue.Key.Equals("inventory")) {
-//                        JSONObject json = new JSONObject((string) dictValue.Value);
-//                        spilEvent.customData.AddField(dictValue.Key, json);
-//                    } else {
-//                        if (dictValue.Value is int) {
-//                            spilEvent.customData.AddField(dictValue.Key, (int) dictValue.Value);
-//                        } else if (dictValue.Value is string) {
-//                            spilEvent.customData.AddField(dictValue.Key, dictValue.Value.ToString());
-//                        } else if (dictValue.Value is bool) {
-//                            spilEvent.customData.AddField(dictValue.Key, (bool) dictValue.Value);
-//                        } else if (dictValue.Value is float) {
-//                            spilEvent.customData.AddField(dictValue.Key, (float) dictValue.Value);
-//                        } else if (dictValue.Value is JSONObject) {
-//                            spilEvent.customData.AddField(dictValue.Key, (JSONObject) dictValue.Value);
-//                        } else {
-//                            spilEvent.customData.AddField(dictValue.Key, dictValue.Value.ToString());
-//                        }
-//                    }
-//                }
             }
 
             spilEvent.Send();

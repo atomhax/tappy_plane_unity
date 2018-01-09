@@ -60,11 +60,24 @@
     <Compile Include="Assets\Plugins\UnityPurchasing\script\IAPDemo.cs" />
     <Compile Include="Assets\Plugins\UnityPurchasing\script\IAPListener.cs" />
     <Compile Include="Assets\Plugins\UnityPurchasing\script\PurchasingCheck.cs" />
+    <None Include="Assets\Fabric\NOTICE.txt" />
     <None Include="Assets\Plugins\iOS\Spil.framework\version.txt" />
+    <None Include="Assets\Plugins\Android\fabric\AndroidManifest.xml" />
+    <None Include="Assets\Plugins\Android\crashlytics\NOTICE.txt" />
+    <None Include="Assets\Plugins\Android\crashlytics-wrapper\AndroidManifest.xml" />
+    <None Include="Assets\Plugins\Android\fabric-init\AndroidManifest.xml" />
+    <None Include="Assets\Plugins\Android\crashlytics\THIRDPARTYLICENSE.txt" />
+    <None Include="Assets\Plugins\Android\answers\AndroidManifest.xml" />
+    <None Include="Assets\Plugins\Android\fabric\NOTICE.txt" />
     <None Include="Assets\Plugins\UnityPurchasing\script\link.xml" />
+    <None Include="Assets\Plugins\Android\fabric\Template-AndroidManifest.xml" />
     <None Include="Assets\link.xml" />
     <None Include="Assets\FacebookSDK\link.xml" />
+    <None Include="Assets\Plugins\Android\fabric\res\values\strings.xml" />
+    <None Include="Assets\Plugins\Android\beta\AndroidManifest.xml" />
+    <None Include="Assets\Plugins\Android\crashlytics\AndroidManifest.xml" />
     <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
+    <None Include="Assets\Plugins\Android\fabric\THIRDPARTYLICENSE.txt" />
     <Reference Include="UnityEngine.UI">
       <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
     </Reference>
@@ -136,6 +149,12 @@
     </Reference>
     <Reference Include="FacebookNamedPipeClient">
       <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/FacebookSDK/Plugins/Gameroom/FacebookNamedPipeClient.dll</HintPath>
+    </Reference>
+    <Reference Include="Analytics">
+      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Fabric/Managed/Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="Validator">
+      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Fabric/Managed/Validator.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Analytics">
       <HintPath>/Users/sebastian/Library/Unity/cache/packages/packages.unity.com/com.unity.analytics@1.0.1/UnityEngine.Analytics.dll</HintPath>

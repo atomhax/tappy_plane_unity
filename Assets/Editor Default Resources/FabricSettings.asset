@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09ad9ddc0e5b942a98ec392b434d39bd, type: 3}
+  m_Name: FabricSettings
+  m_EditorClassIdentifier: 
+  email: fabric_okta@spilgames.com
+  rawToken: '{"access_token":"473d30241af89cb57756f720268058ea6d7a99b3261c018d6f9ba207d17790ec","refresh_token":"d3bb6813175b39e9ebc1db4c91bd081b4da34a69902f26451607bce62743e594","token_type":"bearer","expires_in":86400}'
+  organization:
+    Name: Spil Games
+    Id: 56cad20e0a4e98a1b1000199
+    ApiKey: c543fa4d460db498699eba6dac6fa0ee1197f1b2
+    BuildSecret: c7d6d9b62986f01c0e4f182daf1734a702ec61079684f0d6a95d525166538f8b
+  iconUrl: https://s3.amazonaws.com/assets.crashlytics.com/production/project/7550006/project_icon/3709999/icon.png
+  dashboardUrl: https://www.fabric.io/spil-games2/android/apps/com.spilgames.tappyplane
+  initialization: 0
+  flowSequence: 300
+  conflict: 
+  kit: 
+  installedKits:
+  - Name: Crashlytics
+    InstallationStatus: 2
+    Installed: 1
+    Enabled: 1
+    Meta:
+    - Key: ConfiguredTimestamp
+      Value: 1515428943
+      Platform: 
+    - Key: Dependencies
+      Value: '[{"name":"Crashlytics-Android","version":"2.6.8"},{"name":"Crashlytics-Core-Android","version":"2.3.17"},{"name":"Fabric-Android","version":"1.3.17"},{"name":"Answers-Android","version":"1.3.13"},{"name":"Beta-Android","version":"1.2.5"},{"name":"Crashlytics-iOS","version":"3.8.3"},{"name":"Crashlytics-Wrapper-iOS","version":"0.0.0"},{"name":"Crashlytics-Wrapper-Android","version":"0.0.0"}]'
+      Platform: 

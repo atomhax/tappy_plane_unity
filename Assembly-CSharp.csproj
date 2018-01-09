@@ -52,6 +52,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Fabric\Kits\Answers\Runtime\Answers.cs" />
+    <Compile Include="Assets\Fabric\Kits\Answers\Runtime\Internal\AnswersAndroidImplementation.cs" />
+    <Compile Include="Assets\Fabric\Kits\Answers\Runtime\Internal\AnswersAppleImplementation.cs" />
+    <Compile Include="Assets\Fabric\Kits\Answers\Runtime\Internal\AnswersStubImplementation.cs" />
+    <Compile Include="Assets\Fabric\Kits\Answers\Runtime\Internal\IAnswers.cs" />
+    <Compile Include="Assets\Fabric\Kits\Crashlytics\Runtime\Crashlytics.cs" />
+    <Compile Include="Assets\Fabric\Kits\Crashlytics\Runtime\CrashlyticsInit.cs" />
+    <Compile Include="Assets\Fabric\Kits\Crashlytics\Runtime\Internal\AndroidImpl.cs" />
+    <Compile Include="Assets\Fabric\Kits\Crashlytics\Runtime\Internal\Impl.cs" />
+    <Compile Include="Assets\Fabric\Kits\Crashlytics\Runtime\Internal\IOSImpl.cs" />
+    <Compile Include="Assets\Fabric\Runtime\Fabric.cs" />
+    <Compile Include="Assets\Fabric\Runtime\FabricInit.cs" />
+    <Compile Include="Assets\Fabric\Runtime\FabricUtils.cs" />
+    <Compile Include="Assets\Fabric\Runtime\Internal\AndroidImpl.cs" />
+    <Compile Include="Assets\Fabric\Runtime\Internal\Impl.cs" />
+    <Compile Include="Assets\Fabric\Runtime\Internal\IOSImpl.cs" />
+    <Compile Include="Assets\Fabric\ThirdParty\MiniJSON.cs" />
     <Compile Include="Assets\FacebookSDK\Examples\Scripts\ConsoleBase.cs" />
     <Compile Include="Assets\FacebookSDK\Examples\Scripts\LogView.cs" />
     <Compile Include="Assets\FacebookSDK\Examples\Scripts\MenuBase.cs" />
@@ -127,11 +144,24 @@
     <Compile Include="Assets\Spilgames\Json\JSONHelper.cs" />
     <Compile Include="Assets\Spilgames\Json\JSONObject.cs" />
     <Compile Include="Assets\Spilgames\Spil.cs" />
+    <None Include="Assets\Fabric\NOTICE.txt" />
     <None Include="Assets\Plugins\iOS\Spil.framework\version.txt" />
+    <None Include="Assets\Plugins\Android\fabric\AndroidManifest.xml" />
+    <None Include="Assets\Plugins\Android\crashlytics\NOTICE.txt" />
+    <None Include="Assets\Plugins\Android\crashlytics-wrapper\AndroidManifest.xml" />
+    <None Include="Assets\Plugins\Android\fabric-init\AndroidManifest.xml" />
+    <None Include="Assets\Plugins\Android\crashlytics\THIRDPARTYLICENSE.txt" />
+    <None Include="Assets\Plugins\Android\answers\AndroidManifest.xml" />
+    <None Include="Assets\Plugins\Android\fabric\NOTICE.txt" />
     <None Include="Assets\Plugins\UnityPurchasing\script\link.xml" />
+    <None Include="Assets\Plugins\Android\fabric\Template-AndroidManifest.xml" />
     <None Include="Assets\link.xml" />
     <None Include="Assets\FacebookSDK\link.xml" />
+    <None Include="Assets\Plugins\Android\fabric\res\values\strings.xml" />
+    <None Include="Assets\Plugins\Android\beta\AndroidManifest.xml" />
+    <None Include="Assets\Plugins\Android\crashlytics\AndroidManifest.xml" />
     <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
+    <None Include="Assets\Plugins\Android\fabric\THIRDPARTYLICENSE.txt" />
     <Reference Include="UnityEngine.UI">
       <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
     </Reference>
@@ -203,6 +233,12 @@
     </Reference>
     <Reference Include="FacebookNamedPipeClient">
       <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/FacebookSDK/Plugins/Gameroom/FacebookNamedPipeClient.dll</HintPath>
+    </Reference>
+    <Reference Include="Analytics">
+      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Fabric/Managed/Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="Validator">
+      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Fabric/Managed/Validator.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Analytics">
       <HintPath>/Users/sebastian/Library/Unity/cache/packages/packages.unity.com/com.unity.analytics@1.0.1/UnityEngine.Analytics.dll</HintPath>

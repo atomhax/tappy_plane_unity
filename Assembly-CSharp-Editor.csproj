@@ -53,6 +53,81 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Editor\RichardsCuts.cs" />
+    <Compile Include="Assets\Fabric\Editor\CommonBuild\FabricCommonBuild.cs" />
+    <Compile Include="Assets\Fabric\Editor\FabricSetup.cs" />
+    <Compile Include="Assets\Fabric\Editor\FabricUtils.cs" />
+    <Compile Include="Assets\Fabric\Editor\GUI\API\AsyncV1.cs" />
+    <Compile Include="Assets\Fabric\Editor\GUI\API\Parser.cs" />
+    <Compile Include="Assets\Fabric\Editor\GUI\API\V1.cs" />
+    <Compile Include="Assets\Fabric\Editor\GUI\Controller\KitController.cs" />
+    <Compile Include="Assets\Fabric\Editor\GUI\Controller\KitInstallationChecker.cs" />
+    <Compile Include="Assets\Fabric\Editor\GUI\Controller\KitUtils.cs" />
+    <Compile Include="Assets\Fabric\Editor\GUI\Controller\PluginController.cs" />
+    <Compile Include="Assets\Fabric\Editor\GUI\Detail\AsyncTaskRunner.cs" />
+    <Compile Include="Assets\Fabric\Editor\GUI\Detail\AsyncTaskRunnerBuilder.cs" />
+    <Compile Include="Assets\Fabric\Editor\GUI\Detail\Runner.cs" />
+    <Compile Include="Assets\Fabric\Editor\GUI\Detail\Strings.cs" />
+    <Compile Include="Assets\Fabric\Editor\GUI\Detail\TimeUtils.cs" />
+    <Compile Include="Assets\Fabric\Editor\GUI\Editor.cs" />
+    <Compile Include="Assets\Fabric\Editor\GUI\Images\Loader.cs" />
+    <Compile Include="Assets\Fabric\Editor\GUI\Model\App.cs" />
+    <Compile Include="Assets\Fabric\Editor\GUI\Model\ImportedKit.cs" />
+    <Compile Include="Assets\Fabric\Editor\GUI\Model\KitStatus.cs" />
+    <Compile Include="Assets\Fabric\Editor\GUI\Model\Organization.cs" />
+    <Compile Include="Assets\Fabric\Editor\GUI\Model\Settings.cs" />
+    <Compile Include="Assets\Fabric\Editor\GUI\Net\Constants.cs" />
+    <Compile Include="Assets\Fabric\Editor\GUI\Net\OAuth\Client.cs" />
+    <Compile Include="Assets\Fabric\Editor\GUI\Net\Utils.cs" />
+    <Compile Include="Assets\Fabric\Editor\GUI\Resources\Manager.cs" />
+    <Compile Include="Assets\Fabric\Editor\GUI\View\Animation\Driver.cs" />
+    <Compile Include="Assets\Fabric\Editor\GUI\View\ConflictResolutionPage.cs" />
+    <Compile Include="Assets\Fabric\Editor\GUI\View\KitSelectionPage.cs" />
+    <Compile Include="Assets\Fabric\Editor\GUI\View\LoginPage.cs" />
+    <Compile Include="Assets\Fabric\Editor\GUI\View\ManualInitializationPage.cs" />
+    <Compile Include="Assets\Fabric\Editor\GUI\View\OrganizationsPage.cs" />
+    <Compile Include="Assets\Fabric\Editor\GUI\View\Page.cs" />
+    <Compile Include="Assets\Fabric\Editor\GUI\View\Render.cs" />
+    <Compile Include="Assets\Fabric\Editor\GUI\View\Templates\InstructionsPage.cs" />
+    <Compile Include="Assets\Fabric\Editor\GUI\View\Templates\PrefabPage.cs" />
+    <Compile Include="Assets\Fabric\Editor\GUI\View\UpdatePage.cs" />
+    <Compile Include="Assets\Fabric\Editor\GUI\View\ValidationPage.cs" />
+    <Compile Include="Assets\Fabric\Editor\Info.cs" />
+    <Compile Include="Assets\Fabric\Editor\Postbuild\FabricBuildEventAndroid.cs" />
+    <Compile Include="Assets\Fabric\Editor\Postbuild\FabricPostBuildiOS.cs" />
+    <Compile Include="Assets\Fabric\Editor\Postbuild\PostBuildiOS.cs" />
+    <Compile Include="Assets\Fabric\Editor\Prebuild\AndroidBuildPropertiesManager.cs" />
+    <Compile Include="Assets\Fabric\Editor\Prebuild\FabricAndroidPrebuild.cs" />
+    <Compile Include="Assets\Fabric\Editor\Prebuild\PropertiesWriter.cs" />
+    <Compile Include="Assets\Fabric\Editor\ThirdParty\xcodeapi\AssetCatalog.cs" />
+    <Compile Include="Assets\Fabric\Editor\ThirdParty\xcodeapi\JsonParser.cs" />
+    <Compile Include="Assets\Fabric\Editor\ThirdParty\xcodeapi\PBX\Elements.cs" />
+    <Compile Include="Assets\Fabric\Editor\ThirdParty\xcodeapi\PBX\Lexer.cs" />
+    <Compile Include="Assets\Fabric\Editor\ThirdParty\xcodeapi\PBX\Objects.cs" />
+    <Compile Include="Assets\Fabric\Editor\ThirdParty\xcodeapi\PBX\Parser.cs" />
+    <Compile Include="Assets\Fabric\Editor\ThirdParty\xcodeapi\PBX\Sections.cs" />
+    <Compile Include="Assets\Fabric\Editor\ThirdParty\xcodeapi\PBX\Serializer.cs" />
+    <Compile Include="Assets\Fabric\Editor\ThirdParty\xcodeapi\PBX\Utils.cs" />
+    <Compile Include="Assets\Fabric\Editor\ThirdParty\xcodeapi\PBXProject.cs" />
+    <Compile Include="Assets\Fabric\Editor\ThirdParty\xcodeapi\PBXProjectData.cs" />
+    <Compile Include="Assets\Fabric\Editor\ThirdParty\xcodeapi\PlistParser.cs" />
+    <Compile Include="Assets\Fabric\Editor\ThirdParty\xcodeapi\Properties\AssemblyInfo.cs" />
+    <Compile Include="Assets\Fabric\Editor\Update\Custodian.cs" />
+    <Compile Include="Assets\Fabric\Editor\Update\Dependency\DependencyGraphLegacy.cs" />
+    <Compile Include="Assets\Fabric\Editor\Update\Dependency\DependencyGraphManager.cs" />
+    <Compile Include="Assets\Fabric\Editor\Update\Dependency\DependencyGraphObject.cs" />
+    <Compile Include="Assets\Fabric\Editor\Update\Dependency\DependencyGraphResolver.cs" />
+    <Compile Include="Assets\Fabric\Editor\Update\FabricInstaller.cs" />
+    <Compile Include="Assets\Fabric\Editor\Update\FileUtils.cs" />
+    <Compile Include="Assets\Fabric\Editor\Update\PeriodicAnalyticsPinger.cs" />
+    <Compile Include="Assets\Fabric\Editor\Update\PeriodicUpdateChecker.cs" />
+    <Compile Include="Assets\Fabric\Editor\Update\PeriodicUpdateManager.cs" />
+    <Compile Include="Assets\Fabric\Editor\Update\TimeoutWebClient.cs" />
+    <Compile Include="Assets\Fabric\Kits\Crashlytics\Editor\CrashlyticsSetup.cs" />
+    <Compile Include="Assets\Fabric\Kits\Crashlytics\Editor\GUI\Controller\Controller.cs" />
+    <Compile Include="Assets\Fabric\Kits\Crashlytics\Editor\GUI\CrashlyticsMenuItems.cs" />
+    <Compile Include="Assets\Fabric\Kits\Crashlytics\Editor\GUI\View\DashboardPage.cs" />
+    <Compile Include="Assets\Fabric\Kits\Crashlytics\Editor\Info.cs" />
+    <Compile Include="Assets\Fabric\Kits\Crashlytics\Editor\Postbuild\CrashlyticsPostBuildiOS.cs" />
     <Compile Include="Assets\Spilgames\Editor\Menu\SpilEditorConfig.cs" />
     <Compile Include="Assets\Spilgames\Editor\Menu\SpilEditorDocumentation.cs" />
     <Compile Include="Assets\Spilgames\Editor\Menu\SpilEditorReleases.cs" />
@@ -60,11 +135,24 @@
     <Compile Include="Assets\Spilgames\Editor\PostBuild\SpilAndroidBuildPostProcess.cs" />
     <Compile Include="Assets\Spilgames\Editor\PostBuild\SpilIOSBuildPostProcess.cs" />
     <Compile Include="Assets\Spilgames\Editor\PostBuild\TVOSBuildPostProcess.cs" />
+    <None Include="Assets\Fabric\NOTICE.txt" />
     <None Include="Assets\Plugins\iOS\Spil.framework\version.txt" />
+    <None Include="Assets\Plugins\Android\fabric\AndroidManifest.xml" />
+    <None Include="Assets\Plugins\Android\crashlytics\NOTICE.txt" />
+    <None Include="Assets\Plugins\Android\crashlytics-wrapper\AndroidManifest.xml" />
+    <None Include="Assets\Plugins\Android\fabric-init\AndroidManifest.xml" />
+    <None Include="Assets\Plugins\Android\crashlytics\THIRDPARTYLICENSE.txt" />
+    <None Include="Assets\Plugins\Android\answers\AndroidManifest.xml" />
+    <None Include="Assets\Plugins\Android\fabric\NOTICE.txt" />
     <None Include="Assets\Plugins\UnityPurchasing\script\link.xml" />
+    <None Include="Assets\Plugins\Android\fabric\Template-AndroidManifest.xml" />
     <None Include="Assets\link.xml" />
     <None Include="Assets\FacebookSDK\link.xml" />
+    <None Include="Assets\Plugins\Android\fabric\res\values\strings.xml" />
+    <None Include="Assets\Plugins\Android\beta\AndroidManifest.xml" />
+    <None Include="Assets\Plugins\Android\crashlytics\AndroidManifest.xml" />
     <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
+    <None Include="Assets\Plugins\Android\fabric\THIRDPARTYLICENSE.txt" />
     <Reference Include="UnityEngine.UI">
       <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
     </Reference>
@@ -178,6 +266,12 @@
     </Reference>
     <Reference Include="Facebook.Unity.Editor">
       <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/FacebookSDK/Plugins/Editor/Facebook.Unity.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Analytics">
+      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Fabric/Managed/Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="Validator">
+      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Fabric/Managed/Validator.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.Advertisements">
       <HintPath>/Users/sebastian/Library/Unity/cache/packages/packages.unity.com/com.unity.ads@1.0.7/Editor/UnityEditor.Advertisements.dll</HintPath>

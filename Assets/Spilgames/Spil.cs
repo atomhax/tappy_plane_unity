@@ -190,8 +190,7 @@ namespace SpilGames.Unity {
             }
 
 #endif
-
-            Instance.SpilInit();
+            
             DontDestroyOnLoad(gameObject);
             gameObject.name = "SpilSDK";
 
@@ -668,6 +667,13 @@ namespace SpilGames.Unity {
 			SpilUnityImplementationBase.fireUserDataAvailable();
 		}
 
+        /// <summary>
+        /// This event indicates if the Privacy Policy was accepted by the user.
+        /// </summary>
+        public void PrivacyPolicyStatus(string accepted) {
+            SpilUnityImplementationBase.firePrivacyPolicyStatus(Convert.ToBoolean(accepted));
+        }
+        
 #if UNITY_ANDROID
         /// <summary>
         /// This event indicates the status of the permission request.

@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest package="io.fabric.unity.crashlytics.android.crashlyticswrapper">
+  <application>
+  </application>
+</manifest>

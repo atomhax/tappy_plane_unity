@@ -121,6 +121,9 @@ public class GameController : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
+        Spil.Instance.OnPrivacyPolicyStatus -= OnPrivacyPolicyStatus;
+        Spil.Instance.OnPrivacyPolicyStatus += OnPrivacyPolicyStatus;
+        
         Spil.Instance.OnReward -= Spil_Instance_OnReward;
         Spil.Instance.OnReward += Spil_Instance_OnReward;
 
@@ -175,9 +178,6 @@ public class GameController : MonoBehaviour {
         FireTrackEventSample();
 
 //		Spil.Instance.PreloadItemAndBundleImages();
-
-        Spil.Instance.RequestServerTime();
-        Spil.Instance.RequestLiveEvent();
 
         Spil.Instance.OnRewardTokenReceived -= OnRewardTokenReceived;
         Spil.Instance.OnRewardTokenReceived += OnRewardTokenReceived;
@@ -251,6 +251,17 @@ public class GameController : MonoBehaviour {
 
         initialPosition = player.gameObject.transform.position;
         initialRotation = player.gameObject.transform.rotation; 
+    }
+
+    private void OnPrivacyPolicyStatus(bool accepted) {
+        if (accepted) {
+            Debug.Log("Privacy Policy accepted!");
+            Spil.Instance.SpilInit();
+            Spil.Instance.RequestServerTime();
+            Spil.Instance.RequestLiveEvent();
+        } else {
+            Debug.Log("Privacy Policy not accepted!");
+        }
     }
 
     void Spil_Instance_OnReward(PushNotificationRewardResponse rewardResponse) {

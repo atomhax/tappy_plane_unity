@@ -1781,6 +1781,22 @@ namespace SpilGames.Unity.Base.Implementations {
 
         #endregion
 
+        #region Privacy Policy
+
+        public delegate void PrivacyPolicyStatus(bool accepted);
+
+        public event PrivacyPolicyStatus OnPrivacyPolicyStatus;
+
+        public static void firePrivacyPolicyStatus(bool accepted) {
+            Debug.Log("SpilSDK-Unity firePrivacyPolicyStatus");
+		    
+            if (Spil.Instance.OnPrivacyPolicyStatus != null) {
+                Spil.Instance.OnPrivacyPolicyStatus(accepted);
+            }
+        }
+
+        #endregion
+        
 #if UNITY_ANDROID
 
         #region Permission
@@ -1788,16 +1804,8 @@ namespace SpilGames.Unity.Base.Implementations {
         public delegate void PermissionResponse(
             SpilAndroidUnityImplementation.PermissionResponseObject permissionResponse);
 
-        /// <summary>
-        /// This is fired by the native Spil SDK when the config was updated.
-        /// The developer can subscribe to this event and for instance re-enable the in-game sound.
-        /// </summary>
         public event PermissionResponse OnPermissionResponse;
 
-        /// <summary>
-        /// This is called by the native Spil SDK and will fire an ConfigUpdated event to which the developer 
-        /// can subscribe, it will only be called when the config values are different from the previous loaded config.
-        /// </summary>
         public static void firePermissionResponse(string message) {
             Debug.Log("SpilSDK-Unity Permission response with message: " + message);
 
