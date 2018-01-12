@@ -21,11 +21,11 @@ namespace SpilGames.Unity {
 
         private PlayerDataHelper PlayerDataObject;
         public static PlayerDataHelper PlayerData;
-
+        
         [SerializeField] public bool initializeOnAwake = true;
 
-        [SerializeField] public int invokeSeconds = 1;
-
+        private bool checkPrivacyPolicy = true;
+        
         [Header("Android Settings")]
 #if UNITY_ANDROID || UNITY_EDITOR
         [SerializeField] public string ProjectId = "";
@@ -164,44 +164,41 @@ namespace SpilGames.Unity {
         public void Initialize() {
             Debug.Log("SpilSDK-Unity Init");
 
-            Instance.SetPluginInformation(SpilUnityImplementationBase.PluginName,
-                SpilUnityImplementationBase.PluginVersion);
+            Instance.SetPluginInformation(SpilUnityImplementationBase.PluginName, SpilUnityImplementationBase.PluginVersion);
 
 #if UNITY_EDITOR
-
             InitEditor();
-
 #endif
 
 #if UNITY_IOS
-
 			if (!string.IsNullOrEmpty (CustomBundleId)) {
 				Instance.SetCustomBundleId (CustomBundleId);
 			}
-
 			#endif
 
 #if UNITY_ANDROID
-
             //Check if Project Id is set
             if (ProjectId == null) {
                 throw new UnityException(
                     "Project ID not set!! Please set your Project Id with the id provided by the Spil representative!");
             }
-
 #endif
+
+            if (checkPrivacyPolicy) {
+                Instance.CheckPrivacyPolicy();
+            } else {
+                Instance.SpilInit();
+            }            
             
             DontDestroyOnLoad(gameObject);
             gameObject.name = "SpilSDK";
 
 #if !UNITY_EDITOR
-
 			GameDataObject = new SpilGameDataHelper (Instance);
 			GameData = GameDataObject;
 
 			PlayerDataObject = new PlayerDataHelper (Instance);
 			PlayerData = PlayerDataObject;
-
 #endif
         }
 

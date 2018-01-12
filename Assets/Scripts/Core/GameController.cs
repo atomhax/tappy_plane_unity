@@ -86,9 +86,7 @@ public class GameController : MonoBehaviour {
     private Quaternion initialRotation;
 
     void Awake() {
-#if !UNITY_TVOS
-        FB.Init(this.OnFBInitComplete);
-#endif
+
     }
 
 #if UNITY_TVOS
@@ -239,8 +237,6 @@ public class GameController : MonoBehaviour {
         PlayerPrefs.SetInt("Background", 0);
         PlayerPrefs.SetInt("Skin", 0);
 #endif
-        GetAndApplyGameConfig();
-        SetupNewGame();
 
 #if UNITY_EDITOR
         if (Spil.RewardToken != null && !Spil.RewardToken.Equals("")) {
@@ -256,9 +252,17 @@ public class GameController : MonoBehaviour {
     private void OnPrivacyPolicyStatus(bool accepted) {
         if (accepted) {
             Debug.Log("Privacy Policy accepted!");
-            Spil.Instance.SpilInit();
+            
+#if !UNITY_TVOS
+            FB.Init(OnFBInitComplete);
+            Fabric.Runtime.Fabric.Initialize();
+#endif
+       
             Spil.Instance.RequestServerTime();
             Spil.Instance.RequestLiveEvent();
+            
+            GetAndApplyGameConfig();
+            SetupNewGame();
         } else {
             Debug.Log("Privacy Policy not accepted!");
         }

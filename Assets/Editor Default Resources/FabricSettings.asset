@@ -20,8 +20,8 @@ MonoBehaviour:
     BuildSecret: c7d6d9b62986f01c0e4f182daf1734a702ec61079684f0d6a95d525166538f8b
   iconUrl: https://s3.amazonaws.com/assets.crashlytics.com/production/project/7550006/project_icon/3709999/icon.png
   dashboardUrl: https://www.fabric.io/spil-games2/android/apps/com.spilgames.tappyplane
-  initialization: 0
-  flowSequence: 300
+  initialization: 1
+  flowSequence: 0
   conflict: 
   kit: 
   installedKits:

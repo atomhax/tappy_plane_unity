@@ -1789,7 +1789,11 @@ namespace SpilGames.Unity.Base.Implementations {
 
         public static void firePrivacyPolicyStatus(bool accepted) {
             Debug.Log("SpilSDK-Unity firePrivacyPolicyStatus");
-		    
+
+            if (accepted) {
+                Spil.Instance.SpilInit();
+            }
+            
             if (Spil.Instance.OnPrivacyPolicyStatus != null) {
                 Spil.Instance.OnPrivacyPolicyStatus(accepted);
             }
@@ -1841,6 +1845,8 @@ namespace SpilGames.Unity.Base.Implementations {
         /// </summary>
         internal abstract void SpilInit();
 
+        internal abstract void CheckPrivacyPolicy();
+        
         public abstract void SetPluginInformation(string PluginName, string PluginVersion);
 
         #endregion
