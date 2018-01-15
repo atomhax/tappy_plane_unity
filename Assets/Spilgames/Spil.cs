@@ -196,7 +196,7 @@ namespace SpilGames.Unity {
             if (checkPrivacyPolicy) {
                 Instance.CheckPrivacyPolicy();
             } else {
-                Instance.SpilInit();
+                Instance.SpilInit(false);
             }
 
             DontDestroyOnLoad(gameObject);
