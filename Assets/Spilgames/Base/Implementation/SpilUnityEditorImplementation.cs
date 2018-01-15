@@ -98,13 +98,11 @@ namespace SpilGames.Unity.Base.Implementations {
             AdvertisementInit();
             UpdatePackagesAndPromotions();
 
-            if (withPrivacyPolicy) {
-                firePrivacyPolicyStatus(true);
-            }
+            firePrivacyPolicyStatus(true);
         }
 
         internal override void CheckPrivacyPolicy() {
-            SpilInit(true);
+            PrivacyPolicyManager.ShowPrivacyPolicy();
         }
 
         public override void ResetData() {

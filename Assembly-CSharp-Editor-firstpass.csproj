@@ -59,7 +59,7 @@
     <Compile Include="Assets\Plugins\UnityChannel\XiaomiSupport\Editor\XiaomiPackageNameExtension.cs" />
     <Compile Include="Assets\Plugins\UnityPurchasing\Editor\IAPButtonEditor.cs" />
     <None Include="Assets\Fabric\NOTICE.txt" />
-    <None Include="Assets\Plugins\iOS\Spil.framework\version.txt" />
+    <None Include="Assets\Plugins\iOS\Spil.framework\Version.txt" />
     <None Include="Assets\Plugins\Android\fabric\AndroidManifest.xml" />
     <None Include="Assets\Plugins\Android\crashlytics\NOTICE.txt" />
     <None Include="Assets\Plugins\Android\crashlytics-wrapper\AndroidManifest.xml" />

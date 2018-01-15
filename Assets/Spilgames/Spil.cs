@@ -23,7 +23,9 @@ namespace SpilGames.Unity {
         public static PlayerDataHelper PlayerData;
         
         [SerializeField] public bool initializeOnAwake = true;
+        
         [SerializeField] public bool checkPrivacyPolicy = true;
+        public static bool CheckPrivacyPolicy { get; private set; }
         
         [Header("Android Settings")]
 #if UNITY_ANDROID || UNITY_EDITOR
@@ -183,6 +185,8 @@ namespace SpilGames.Unity {
             }
 #endif
 
+            CheckPrivacyPolicy = checkPrivacyPolicy;
+            
             if (checkPrivacyPolicy) {
                 Instance.CheckPrivacyPolicy();
             } else {

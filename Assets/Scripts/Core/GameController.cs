@@ -89,7 +89,6 @@ public class GameController : MonoBehaviour
 
     void Awake()
     {
-
     }
 
 #if UNITY_TVOS
@@ -125,7 +124,7 @@ public class GameController : MonoBehaviour
     {
         Spil.Instance.OnPrivacyPolicyStatus -= OnPrivacyPolicyStatus;
         Spil.Instance.OnPrivacyPolicyStatus += OnPrivacyPolicyStatus;
-
+        
         Spil.Instance.OnReward -= Spil_Instance_OnReward;
         Spil.Instance.OnReward += Spil_Instance_OnReward;
 
@@ -250,29 +249,34 @@ public class GameController : MonoBehaviour
         }
 #endif
 
-#if UNITY_IOS
         GetAndApplyGameConfig();
         SetupNewGame();
-#endif
 
         initialPosition = player.gameObject.transform.position;
-        initialRotation = player.gameObject.transform.rotation; 
+        initialRotation = player.gameObject.transform.rotation;
+
+        if (!Spil.CheckPrivacyPolicy) {
+            InitComponents();
+        }
     }
 
+    private void InitComponents() {
+#if !UNITY_TVOS
+        FB.Init(OnFBInitComplete);
+        Fabric.Runtime.Fabric.Initialize();
+#endif
+       
+        Spil.Instance.RequestServerTime();
+        Spil.Instance.RequestLiveEvent();
+        SavePrivateGameState();
+        RequestMoreApps();
+    }
+    
     private void OnPrivacyPolicyStatus(bool accepted) {
         if (accepted) {
             Debug.Log("Privacy Policy accepted!");
             
-#if !UNITY_TVOS
-            FB.Init(OnFBInitComplete);
-            Fabric.Runtime.Fabric.Initialize();
-#endif
-       
-            Spil.Instance.RequestServerTime();
-            Spil.Instance.RequestLiveEvent();
-
-            GetAndApplyGameConfig();
-            SetupNewGame();
+            InitComponents();
         } else {
             Debug.Log("Privacy Policy not accepted!");
         }
@@ -317,8 +321,6 @@ public class GameController : MonoBehaviour
         Spil.Instance.OnGameStateUpdated -= OnGameStateUpdated;
         Spil.Instance.OnGameStateUpdated += OnGameStateUpdated;
 
-        SavePrivateGameState();
-
         Spil.Instance.OnAdAvailable -= Spil_Instance_OnAdAvailable;
         Spil.Instance.OnAdAvailable += Spil_Instance_OnAdAvailable;
 
@@ -327,8 +329,6 @@ public class GameController : MonoBehaviour
 
         Spil.Instance.OnAdFinished -= Spil_Instance_OnAdFinished;
         Spil.Instance.OnAdFinished += Spil_Instance_OnAdFinished;
-
-        RequestMoreApps();
 
         UpdateUI(GameStates.Start);
     }
