@@ -86,7 +86,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// The Spil Unity SDK is not packaged as a seperate assembly yet so this method is currently visible, this will be fixed in the future.
         /// Internal method names start with a lower case so you can easily recognise and avoid them.
         /// </summary>
-        internal override void SpilInit(){
+        internal override void SpilInit(bool withPrivacyPolicy){
             gData = new GameDataManager();
             pData = new PlayerDataManager();
 
@@ -97,10 +97,12 @@ namespace SpilGames.Unity.Base.Implementations {
             RequestUserData();
             AdvertisementInit();
             UpdatePackagesAndPromotions();
+
+            firePrivacyPolicyStatus(true);
         }
 
         internal override void CheckPrivacyPolicy() {
-            SpilInit();
+            PrivacyPolicyManager.ShowPrivacyPolicy();
         }
 
         public override void ResetData() {
@@ -114,7 +116,7 @@ namespace SpilGames.Unity.Base.Implementations {
             GameStateManager.PrivateGameStateData = null;
             GameStateManager.PublicGameStateData = null;
 
-            SpilInit();
+            SpilInit(true);
         }
 
         public override void ShowNativeDialog(string title, string message, string buttonText) {
