@@ -26,6 +26,10 @@ extern "C" {
     // NOTE: Not defined in SpiliOSUnityImplementation.cs & HookBridge.mm, implemented in libSpilSDKiOSAuth.a
     char* getLocalSecretEx();
     
+    // --- GDPR ---
+    
+    void checkPrivacyPolicyNative();
+    
     // --- Util ---
     
     void setCustomBundleIdNative(const char* bundleId);

@@ -144,10 +144,15 @@ addBundleResource(os.getcwd() + '/Data/Raw/defaultGameData.json', os.getcwd() + 
 addBundleResource(os.getcwd() + '/Data/Raw/defaultPlayerData.json', os.getcwd() + '/defaultPlayerData.json', bundles)
 addBundleResource(os.getcwd() + '/Spil.framework/FYBFacebookAudienceNetwork.h', os.getcwd() + '/FYBFacebookAudienceNetwork.h', bundles)
 
-# add png/xib/der/mom/momd resources
+# add png/xib/der resources
 for file in os.listdir(os.getcwd() + '/Spil.framework'):
-    if file.lower().endswith(".png") or file.lower().endswith(".xib") or file.lower().endswith(".der") or file.lower().endswith(".mom") or file.lower().endswith(".momd"):
+    if file.lower().endswith(".png") or file.lower().endswith(".xib") or file.lower().endswith(".der") or file.lower().endswith(".storyboardc"):
         addBundleResource(os.getcwd() + '/Spil.framework/' + file, os.getcwd() + '/' + file, bundles)
+
+# copy coredata model
+cdRoot = project.get_or_create_group('SpilSDK.momd')
+for file in os.listdir(os.getcwd() + '/Spil.framework/SpilSDK.momd'):
+    project.add_file_if_doesnt_exist(os.getcwd() + '/Spil.framework/SpilSDK.momd/' + file, parent=cdRoot, weak=False)
 
 # change build settings
 print('Modifying project build settings')

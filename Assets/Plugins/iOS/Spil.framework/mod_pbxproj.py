@@ -174,6 +174,7 @@ class PBXFileReference(PBXType):
         '.txt': ('text', 'PBXResourcesBuildPhase'),
         '.xcodeproj': ('wrapper.pb-project', None),
         '.xib': ('file.xib', 'PBXResourcesBuildPhase'),
+        '.storyboardc': ('wrapper.storyboardc', 'PBXResourcesBuildPhase'),
         '.strings': ('text.plist.strings', 'PBXResourcesBuildPhase'),
         '.bundle': ('wrapper.plug-in', 'PBXResourcesBuildPhase'),
         '.dylib': ('compiled.mach-o.dylib', 'PBXFrameworksBuildPhase'),
@@ -582,7 +583,7 @@ class XCConfigurationList(PBXType):
 
 class XcodeProject(PBXDict):
     plutil_path = 'plutil'
-    special_folders = ['.bundle', '.framework', '.xcodeproj', '.xcassets', '.xcdatamodeld']
+    special_folders = ['.bundle', '.framework', '.xcodeproj', '.xcassets', '.xcdatamodeld', '.storyboardc']
 
     def __init__(self, d=None, path=None):
         if not path:

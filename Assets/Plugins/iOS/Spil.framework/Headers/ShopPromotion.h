@@ -23,4 +23,6 @@
 
 -(NSDictionary*)toJSONObject;
 
+-(NSString*)getImageUrl:(NSString*)name;
+
 @end

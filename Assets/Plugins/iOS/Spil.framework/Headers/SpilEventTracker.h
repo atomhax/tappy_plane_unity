@@ -13,6 +13,7 @@
 
 // --- Properties ---
 
+@property (nonatomic) BOOL isUnity;
 @property (nonatomic, retain) NSString *adjustId;
 
 // --- Singleton ---

@@ -23,8 +23,7 @@ namespace SpilGames.Unity {
         public static PlayerDataHelper PlayerData;
         
         [SerializeField] public bool initializeOnAwake = true;
-
-        private bool checkPrivacyPolicy = true;
+        [SerializeField] public bool checkPrivacyPolicy = true;
         
         [Header("Android Settings")]
 #if UNITY_ANDROID || UNITY_EDITOR
@@ -174,7 +173,7 @@ namespace SpilGames.Unity {
 			if (!string.IsNullOrEmpty (CustomBundleId)) {
 				Instance.SetCustomBundleId (CustomBundleId);
 			}
-			#endif
+#endif
 
 #if UNITY_ANDROID
             //Check if Project Id is set
