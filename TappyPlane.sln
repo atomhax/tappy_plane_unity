@@ -1,13 +1,13 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio for Mac
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TappyPlane", "TappyPlane.csproj", "{34ECF506-53CF-B1C4-AD8C-68775675E563}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TappyPlane.Plugins", "TappyPlane.Plugins.csproj", "{F71F9995-5BAE-8FAD-7B17-0D6645C28432}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TappyPlane.Editor.Plugins", "TappyPlane.Editor.Plugins.csproj", "{2707F18C-9724-A924-3DD9-D03E8C18B547}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TappyPlane.Editor", "TappyPlane.Editor.csproj", "{D948824D-2B95-AB54-1DCD-C2658B33BFE4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TappyPlane.Editor.Plugins", "TappyPlane.Editor.Plugins.csproj", "{2707F18C-9724-A924-3DD9-D03E8C18B547}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,14 +23,14 @@ Global
 		{F71F9995-5BAE-8FAD-7B17-0D6645C28432}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F71F9995-5BAE-8FAD-7B17-0D6645C28432}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F71F9995-5BAE-8FAD-7B17-0D6645C28432}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2707F18C-9724-A924-3DD9-D03E8C18B547}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2707F18C-9724-A924-3DD9-D03E8C18B547}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2707F18C-9724-A924-3DD9-D03E8C18B547}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2707F18C-9724-A924-3DD9-D03E8C18B547}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D948824D-2B95-AB54-1DCD-C2658B33BFE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D948824D-2B95-AB54-1DCD-C2658B33BFE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D948824D-2B95-AB54-1DCD-C2658B33BFE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D948824D-2B95-AB54-1DCD-C2658B33BFE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2707F18C-9724-A924-3DD9-D03E8C18B547}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2707F18C-9724-A924-3DD9-D03E8C18B547}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2707F18C-9724-A924-3DD9-D03E8C18B547}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2707F18C-9724-A924-3DD9-D03E8C18B547}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

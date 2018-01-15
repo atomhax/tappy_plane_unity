@@ -22,4 +22,6 @@
 
 -(Bundle*)getBundle;
 
+-(NSString*)getImageUrl:(NSString*)name;
+
 @end

@@ -23,15 +23,15 @@ namespace SpilGames.Unity {
         public static PlayerDataHelper PlayerData;
         
         [SerializeField] public bool initializeOnAwake = true;
-
-        private bool checkPrivacyPolicy = true;
         
         [Header("Android Settings")]
 #if UNITY_ANDROID || UNITY_EDITOR
         [SerializeField] public string ProjectId = "";
 #endif
 
-        [Header("iOS Settings")] [SerializeField] public string CustomBundleId;
+        [Header("iOS Settings")] 
+        [SerializeField] public string CustomBundleId;
+        [SerializeField] public bool checkPrivacyPolicy = true;
 
         [Header("Editor Settings")] [SerializeField] public bool EditorLogging = true;
 
@@ -174,7 +174,7 @@ namespace SpilGames.Unity {
 			if (!string.IsNullOrEmpty (CustomBundleId)) {
 				Instance.SetCustomBundleId (CustomBundleId);
 			}
-			#endif
+#endif
 
 #if UNITY_ANDROID
             //Check if Project Id is set
@@ -184,12 +184,16 @@ namespace SpilGames.Unity {
             }
 #endif
 
+#if UNITY_IOS
             if (checkPrivacyPolicy) {
                 Instance.CheckPrivacyPolicy();
             } else {
                 Instance.SpilInit();
-            }            
-            
+            }  
+#else
+            Instance.CheckPrivacyPolicy();            
+#endif
+
             DontDestroyOnLoad(gameObject);
             gameObject.name = "SpilSDK";
 
@@ -668,6 +672,7 @@ namespace SpilGames.Unity {
         /// This event indicates if the Privacy Policy was accepted by the user.
         /// </summary>
         public void PrivacyPolicyStatus(string accepted) {
+            Debug.Log("PrivacyPolicyStatus:" + accepted);
             SpilUnityImplementationBase.firePrivacyPolicyStatus(Convert.ToBoolean(accepted));
         }
         

@@ -14,8 +14,10 @@ using Facebook.Unity;
 
 #endif
 
-public class GameController : MonoBehaviour {
-    public enum GameStates {
+public class GameController : MonoBehaviour
+{
+    public enum GameStates
+    {
         Start,
         InGame,
         GameOver,
@@ -50,8 +52,8 @@ public class GameController : MonoBehaviour {
 
     List<GameObject> listOfObsticles = new List<GameObject>();
 
-	private MergeConflictData localData;
-	private MergeConflictData remoteData;
+    private MergeConflictData localData;
+    private MergeConflictData remoteData;
 
     public GameObject startPanel,
         ingamePanel,
@@ -76,8 +78,8 @@ public class GameController : MonoBehaviour {
     public static List<string> userNames = new List<string>();
     public bool fbLoggedIn = false;
 
-    public bool overlayEnabled = false;    
-    
+    public bool overlayEnabled = false;
+
     private bool showSyncDialog = true;
     private bool showMergeDialog = true;
     private bool showLockDialog = true;
@@ -85,7 +87,8 @@ public class GameController : MonoBehaviour {
     private Vector3 initialPosition;
     private Quaternion initialRotation;
 
-    void Awake() {
+    void Awake()
+    {
 
     }
 
@@ -115,13 +118,14 @@ public class GameController : MonoBehaviour {
 			}
 		}
 	}
-	#endif
+#endif
 
     // Use this for initialization
-    void Start() {
+    void Start()
+    {
         Spil.Instance.OnPrivacyPolicyStatus -= OnPrivacyPolicyStatus;
         Spil.Instance.OnPrivacyPolicyStatus += OnPrivacyPolicyStatus;
-        
+
         Spil.Instance.OnReward -= Spil_Instance_OnReward;
         Spil.Instance.OnReward += Spil_Instance_OnReward;
 
@@ -155,8 +159,8 @@ public class GameController : MonoBehaviour {
         Spil.Instance.OnLiveEventAvailable -= OnLiveEventAvailable;
         Spil.Instance.OnLiveEventAvailable += OnLiveEventAvailable;
 
-		Spil.Instance.OnLiveEventNotAvailable -= OnLiveEventNotAvailable;
-		Spil.Instance.OnLiveEventNotAvailable += OnLiveEventNotAvailable;
+        Spil.Instance.OnLiveEventNotAvailable -= OnLiveEventNotAvailable;
+        Spil.Instance.OnLiveEventNotAvailable += OnLiveEventNotAvailable;
 
         Spil.Instance.OnLiveEventStageOpen -= OnLiveEventStageOpen;
         Spil.Instance.OnLiveEventStageOpen += OnLiveEventStageOpen;
@@ -205,30 +209,30 @@ public class GameController : MonoBehaviour {
         Spil.Instance.OnRequestLogin -= OnRequestLogin;
         Spil.Instance.OnRequestLogin += OnRequestLogin;
 
-		Spil.Instance.OnUserDataAvailable -= OnUserDataAvailable;
-		Spil.Instance.OnUserDataAvailable += OnUserDataAvailable;
+        Spil.Instance.OnUserDataAvailable -= OnUserDataAvailable;
+        Spil.Instance.OnUserDataAvailable += OnUserDataAvailable;
 
-		Spil.Instance.OnUserDataError -= OnUserDataError;
-		Spil.Instance.OnUserDataError += OnUserDataError;
+        Spil.Instance.OnUserDataError -= OnUserDataError;
+        Spil.Instance.OnUserDataError += OnUserDataError;
 
-		Spil.Instance.OnUserDataMergeConflict -= OnUserDataMergeConflict;
-		Spil.Instance.OnUserDataMergeConflict += OnUserDataMergeConflict;
+        Spil.Instance.OnUserDataMergeConflict -= OnUserDataMergeConflict;
+        Spil.Instance.OnUserDataMergeConflict += OnUserDataMergeConflict;
 
-		Spil.Instance.OnUserDataMergeSuccessful -= OnUserDataMergeSuccessful;
-		Spil.Instance.OnUserDataMergeSuccessful += OnUserDataMergeSuccessful;
+        Spil.Instance.OnUserDataMergeSuccessful -= OnUserDataMergeSuccessful;
+        Spil.Instance.OnUserDataMergeSuccessful += OnUserDataMergeSuccessful;
 
-		Spil.Instance.OnUserDataMergeFailed -= OnUserDataMergeFailed;
-		Spil.Instance.OnUserDataMergeFailed += OnUserDataMergeFailed;
+        Spil.Instance.OnUserDataMergeFailed -= OnUserDataMergeFailed;
+        Spil.Instance.OnUserDataMergeFailed += OnUserDataMergeFailed;
 
-		Spil.Instance.OnUserDataHandleMerge -= OnUserDataHandleMerge;
-		Spil.Instance.OnUserDataHandleMerge += OnUserDataHandleMerge;
+        Spil.Instance.OnUserDataHandleMerge -= OnUserDataHandleMerge;
+        Spil.Instance.OnUserDataHandleMerge += OnUserDataHandleMerge;
 
-		Spil.Instance.OnUserDataSyncError -= OnUserDataSyncError;
-		Spil.Instance.OnUserDataSyncError += OnUserDataSyncError;
+        Spil.Instance.OnUserDataSyncError -= OnUserDataSyncError;
+        Spil.Instance.OnUserDataSyncError += OnUserDataSyncError;
 
-		Spil.Instance.OnUserDataLockError -= OnUserDataLockError;
-		Spil.Instance.OnUserDataLockError += OnUserDataLockError;
-        
+        Spil.Instance.OnUserDataLockError -= OnUserDataLockError;
+        Spil.Instance.OnUserDataLockError += OnUserDataLockError;
+
 #if UNITY_ANDROID
         Spil.Instance.OnPermissionResponse -= OnPermissionResponse;
         Spil.Instance.OnPermissionResponse += OnPermissionResponse;
@@ -239,10 +243,16 @@ public class GameController : MonoBehaviour {
 #endif
 
 #if UNITY_EDITOR
-        if (Spil.RewardToken != null && !Spil.RewardToken.Equals("")) {
+        if (Spil.RewardToken != null && !Spil.RewardToken.Equals(""))
+        {
             Spil.TokenRewardTypeEnum rewardType = Spil.MonoInstance.TokenRewardType;
             Spil.Instance.ClaimToken(Spil.RewardToken, rewardType.ToString());
         }
+#endif
+
+#if UNITY_IOS
+        GetAndApplyGameConfig();
+        SetupNewGame();
 #endif
 
         initialPosition = player.gameObject.transform.position;
@@ -260,7 +270,7 @@ public class GameController : MonoBehaviour {
        
             Spil.Instance.RequestServerTime();
             Spil.Instance.RequestLiveEvent();
-            
+
             GetAndApplyGameConfig();
             SetupNewGame();
         } else {
@@ -393,7 +403,7 @@ public class GameController : MonoBehaviour {
 #if UNITY_TVOS
 		EventSystem eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
 		eventSystem.firstSelectedGameObject = GameObject.Find("GoBackToStartButton");
-		#endif
+#endif
     }
 
     public void UpdateUI(GameStates gameState) {
@@ -422,7 +432,7 @@ public class GameController : MonoBehaviour {
 			default:
 				break;
 		}
-		#endif
+#endif
     }
 
     public void InGamePurchaesFail(Bundle bundle) {
@@ -442,7 +452,7 @@ public class GameController : MonoBehaviour {
 #if UNITY_TVOS
 		EventSystem eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
 		eventSystem.firstSelectedGameObject = GameObject.Find("OkButton");
-		#endif
+#endif
     }
 
     public void LoadSkinsPanelAfterPurchase() {

@@ -9,7 +9,8 @@
 #import "HookBridge.h"
 #import "GAI.h"
 
-#define SPIL_SDK_VERSION @"2.7.2"
+#define SPIL_SDK_VERSION @"2.7.4"
+#define GDPR_ENABLED true
 
 @class ImageContext;
 @class Spil;
@@ -125,6 +126,9 @@
 -(void)userDataSyncError;
 -(void)userDatalockError;
 
+// GDPR
+-(void)privacyPolicyStatus:(BOOL)accepted;
+
 @end
 
 @interface Spil : NSObject {
@@ -133,6 +137,7 @@
 
 // Define delegate property
 @property (nonatomic, assign, nullable) id  delegate;
+@property (nonatomic, assign) BOOL initialized;
 
 +(nonnull Spil*)sharedInstance;
 
@@ -193,6 +198,12 @@
 #pragma clang diagnostic pop
 
 #pragma mark App flow
+
+/**
+ * Check if the privacy policy popup was completed by the user.
+ * Present the popup if it was never completed by the user.
+ */
++(void)checkPrivacyPolicy;
 
 /**
  * Forwarding Delegate method to let the Spil framework know when the app was launched

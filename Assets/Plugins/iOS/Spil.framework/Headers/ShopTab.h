@@ -19,6 +19,10 @@
 
 -(id)initWithDictionary:(NSDictionary*)data;
 
+-(void)updateHasPromotions;
+
 -(NSDictionary*)toJSONObject;
+
+-(NSString*)getImageUrl:(NSString*)name;
 
 @end

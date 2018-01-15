@@ -16,9 +16,9 @@ public class PlayerController : MonoBehaviour {
 
 	public float maxYVelocity;
 
-	public bool dead = true;
+    public bool dead = false;
 
-	public bool idleMode = false;
+	public bool idleMode = true;
 
 	public int tapperCount = 0;
 
