@@ -161,6 +161,12 @@ namespace SpilGames.Unity {
             }
         }
 
+        void OnValidate() {
+#if UNITY_EDITOR
+            UnityEditor.EditorPrefs.SetBool("gdprEnabled", checkPrivacyPolicy);
+#endif
+        }
+
         public void Initialize() {
             Debug.Log("SpilSDK-Unity Init");
 
@@ -189,7 +195,7 @@ namespace SpilGames.Unity {
                 Instance.CheckPrivacyPolicy();
             } else {
                 Instance.SpilInit();
-            }  
+            }
 #else
             Instance.CheckPrivacyPolicy();            
 #endif
