@@ -10,10 +10,10 @@ using SpilGames.Unity.Helpers.IAPPackages;
 namespace SpilGames.Unity.Base.Implementations {
     public abstract class SpilUnityImplementationBase{
         public static string PluginName = "Unity";
-        public static string PluginVersion = "2.7.2";
+        public static string PluginVersion = "2.7.4";
 
-        public static string AndroidVersion = "2.7.2";
-        public static string iOSVersion = "2.7.2";
+        public static string AndroidVersion = "2.7.4";
+        public static string iOSVersion = "2.7.4";
 
         #region Game config
 
@@ -1791,7 +1791,7 @@ namespace SpilGames.Unity.Base.Implementations {
             Debug.Log("SpilSDK-Unity firePrivacyPolicyStatus");
 
             if (accepted) {
-                Spil.Instance.SpilInit();
+                Spil.Instance.SpilInit(true);
             }
             
             if (Spil.Instance.OnPrivacyPolicyStatus != null) {
@@ -1843,7 +1843,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// The Spil Unity SDK is not packaged as a seperate assembly yet so unfortunately this method is currently visible.
         /// Internal method names start with a lower case so you can easily recognise and avoid them.
         /// </summary>
-        internal abstract void SpilInit();
+        internal abstract void SpilInit(bool withPrivacyPolicy);
 
         internal abstract void CheckPrivacyPolicy();
         
