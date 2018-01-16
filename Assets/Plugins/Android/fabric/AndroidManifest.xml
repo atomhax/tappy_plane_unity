@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="io.fabric.sdk.android.unity">
+  <uses-sdk android:minSdkVersion="17" android:targetSdkVersion="26" />
   <application>
     <meta-data android:name="io.fabric.ApiKey" android:value="c543fa4d460db498699eba6dac6fa0ee1197f1b2" />
     <meta-data android:name="io.fabric.unity.crashlytics.version" android:value="1.2.5" />

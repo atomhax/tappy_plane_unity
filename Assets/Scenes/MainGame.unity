@@ -6365,7 +6365,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initializeOnAwake: 1
-  checkPrivacyPolicy: 0
+  checkPrivacyPolicy: 1
   ProjectId: 492493592102
   CustomBundleId: 
   EditorLogging: 1

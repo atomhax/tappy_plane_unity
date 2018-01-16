@@ -1790,11 +1790,10 @@ namespace SpilGames.Unity.Base.Implementations {
         public static void firePrivacyPolicyStatus(bool accepted) {
             Debug.Log("SpilSDK-Unity firePrivacyPolicyStatus");
 
-#if !UNITY_EDITOR
             if (accepted) {
                 Spil.Instance.SpilInit(true);
             }
-#endif
+            
             if (Spil.Instance.OnPrivacyPolicyStatus != null) {
                 Spil.Instance.OnPrivacyPolicyStatus(accepted);
             }
