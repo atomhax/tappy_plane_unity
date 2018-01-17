@@ -639,12 +639,13 @@ public class SpilEditorConfig : EditorWindow {
             return;
         }
 
-        if (!(applicationNode.Attributes["android:name"].Value
-                .Equals("com.spilgames.spilsdk.activities.SpilSDKApplication")) && !(applicationNode
-                .Attributes["android:name"].Value
-                .Equals("com.spilgames.spilsdk.activities.SpilSDKApplicationWithFabric"))) {
-            SpilLogging.Error(
-                "The application name from your \"AndroidManifest.xml\" file is set incorrectly. Please set it to either \"com.spilgames.spilsdk.activities.SpilSDKApplication\" or \"com.spilgames.spilsdk.activities.SpilSDKApplicationWithFabric\" (if you are using Crashlytics) if you want for the Spil SDK to function correctly");
+        if (!applicationNode.Attributes["android:name"].Value.Equals("com.spilgames.spilsdk.activities.SpilSDKApplication")){
+            SpilLogging.Error("The application name from your \"AndroidManifest.xml\" file is set incorrectly. Please set it to either \"com.spilgames.spilsdk.activities.SpilSDKApplication\" if you want for the Spil SDK to function correctly");
+            isEverythingCorrect = false;
+        }
+
+        if (applicationNode.Attributes["android:name"].Value.Equals("com.spilgames.spilsdk.activities.SpilSDKApplicationWithFabric")) {
+            SpilLogging.Error("The application name found in your \"AndroidManifest.xml\" file is set incorrectly. The application name \"com.spilgames.spilsdk.activities.SpilSDKApplicationWithFabric\" has been removed from the Spil SDK. Please use the standard \"com.spilgames.spilsdk.activities.SpilSDKApplication\". The Fabric (Crashlytics functionality has been moved to this application name.");
             isEverythingCorrect = false;
         }
 

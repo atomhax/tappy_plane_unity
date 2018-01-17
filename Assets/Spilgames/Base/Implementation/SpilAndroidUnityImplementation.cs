@@ -84,8 +84,7 @@ namespace SpilGames.Unity.Base.Implementations {
 #if UNITY_ANDROID
             Spil spil = GameObject.FindObjectOfType<Spil>();
             CallNativeMethod("init", new object[] {withPrivacyPolicy}, true);
-            RegisterDevice(spil.ProjectId);
-            SetPluginInformation(PluginName, PluginVersion);
+            RegisterDevice(spil.ProjectId); 
             UpdatePackagesAndPromotions();
 #endif
         }

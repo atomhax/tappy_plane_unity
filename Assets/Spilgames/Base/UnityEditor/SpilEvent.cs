@@ -72,7 +72,7 @@ namespace SpilGames.Unity.Base.UnityEditor {
                 if (Spil.BundleIdEditor == null || Spil.BundleIdEditor.Equals("")) {
                     SpilLogging.Error(
                         "Spil Initialize might not have been called! Please make sure you call Spil.Initialize() at app start!");
-                } else if (request.responseHeaders.Count > 0) {
+                } else if (request.responseHeaders != null && request.responseHeaders.Count > 0) {
                     foreach (KeyValuePair<string, string> entry in request.responseHeaders) {
                         if (entry.Key.Equals("STATUS")){
                             if (entry.Value.Contains("401")) {
