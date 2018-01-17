@@ -97,8 +97,6 @@ namespace SpilGames.Unity.Base.Implementations {
             RequestUserData();
             AdvertisementInit();
             UpdatePackagesAndPromotions();
-
-            firePrivacyPolicyStatus(true);
         }
 
         internal override void CheckPrivacyPolicy() {

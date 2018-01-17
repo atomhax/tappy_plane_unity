@@ -1,5 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest package="io.fabric.unity.crashlytics.android.crashlyticswrapper">
+<manifest package="io.fabric.unity.crashlytics.android.crashlyticswrapper"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+  <uses-sdk
+      android:minSdkVersion="17"
+      android:targetSdkVersion="26" />
   <application>
   </application>
 </manifest>
