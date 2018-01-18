@@ -125,7 +125,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 34
+  bundleVersion: 35
   preloadedAssets: []
   metroInputSource: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -157,7 +157,7 @@ PlayerSettings:
     tvOS: com.spilgames.tappyplane
   buildNumber:
     iOS: 0
-  AndroidBundleVersionCode: 34
+  AndroidBundleVersionCode: 35
   AndroidMinSdkVersion: 17
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1
@@ -234,7 +234,7 @@ PlayerSettings:
   AndroidSplashScreenScale: 2
   androidSplashScreen: {fileID: 0}
   AndroidKeystoreName: /Users/sebastian/Work/Unity Projects/spilkey.keystore
-  AndroidKeyaliasName: release
+  AndroidKeyaliasName: 
   AndroidTVCompatibility: 1
   AndroidIsGame: 1
   AndroidEnableTango: 0
