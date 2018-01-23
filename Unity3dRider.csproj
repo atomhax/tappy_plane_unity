@@ -10,10 +10,10 @@
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace>
     </RootNamespace>
-    <ProjectGuid>{F4EAF2BE-4DEE-4F99-C860-C2F87F3D0D46}</ProjectGuid>
+    <ProjectGuid>{D2C215CE-6790-747C-4777-CA0A040E6324}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <AssemblyName>Unity3dRider</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>Assets</BaseDirectory>
@@ -52,102 +52,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Fabric\Kits\Answers\Runtime\Answers.cs" />
-    <Compile Include="Assets\Fabric\Kits\Answers\Runtime\Internal\AnswersAndroidImplementation.cs" />
-    <Compile Include="Assets\Fabric\Kits\Answers\Runtime\Internal\AnswersAppleImplementation.cs" />
-    <Compile Include="Assets\Fabric\Kits\Answers\Runtime\Internal\AnswersStubImplementation.cs" />
-    <Compile Include="Assets\Fabric\Kits\Answers\Runtime\Internal\IAnswers.cs" />
-    <Compile Include="Assets\Fabric\Kits\Crashlytics\Runtime\Crashlytics.cs" />
-    <Compile Include="Assets\Fabric\Kits\Crashlytics\Runtime\CrashlyticsInit.cs" />
-    <Compile Include="Assets\Fabric\Kits\Crashlytics\Runtime\Internal\AndroidImpl.cs" />
-    <Compile Include="Assets\Fabric\Kits\Crashlytics\Runtime\Internal\Impl.cs" />
-    <Compile Include="Assets\Fabric\Kits\Crashlytics\Runtime\Internal\IOSImpl.cs" />
-    <Compile Include="Assets\Fabric\Runtime\Fabric.cs" />
-    <Compile Include="Assets\Fabric\Runtime\FabricInit.cs" />
-    <Compile Include="Assets\Fabric\Runtime\FabricUtils.cs" />
-    <Compile Include="Assets\Fabric\Runtime\Internal\AndroidImpl.cs" />
-    <Compile Include="Assets\Fabric\Runtime\Internal\Impl.cs" />
-    <Compile Include="Assets\Fabric\Runtime\Internal\IOSImpl.cs" />
-    <Compile Include="Assets\Fabric\ThirdParty\MiniJSON.cs" />
-    <Compile Include="Assets\FacebookSDK\Examples\Scripts\ConsoleBase.cs" />
-    <Compile Include="Assets\FacebookSDK\Examples\Scripts\LogView.cs" />
-    <Compile Include="Assets\FacebookSDK\Examples\Scripts\MenuBase.cs" />
-    <Compile Include="Assets\FacebookSDK\Examples\Scripts\SubMenus\AccessTokenMenu.cs" />
-    <Compile Include="Assets\FacebookSDK\Examples\Scripts\SubMenus\AppEvents.cs" />
-    <Compile Include="Assets\FacebookSDK\Examples\Scripts\SubMenus\AppInvites.cs" />
-    <Compile Include="Assets\FacebookSDK\Examples\Scripts\SubMenus\AppLinks.cs" />
-    <Compile Include="Assets\FacebookSDK\Examples\Scripts\SubMenus\AppRequests.cs" />
-    <Compile Include="Assets\FacebookSDK\Examples\Scripts\SubMenus\DialogShare.cs" />
-    <Compile Include="Assets\FacebookSDK\Examples\Scripts\SubMenus\GraphRequest.cs" />
-    <Compile Include="Assets\FacebookSDK\Examples\Scripts\SubMenus\MainMenu.cs" />
-    <Compile Include="Assets\FacebookSDK\Examples\Scripts\SubMenus\Pay.cs" />
-    <Compile Include="Assets\Scripts\Core\GameController.cs" />
-    <Compile Include="Assets\Scripts\Core\PrivateGameState.cs" />
-    <Compile Include="Assets\Scripts\Core\PublicGameState.cs" />
-    <Compile Include="Assets\Scripts\InGame\BackgroundScroll.cs" />
-    <Compile Include="Assets\Scripts\InGame\DestroyObsticles.cs" />
-    <Compile Include="Assets\Scripts\InGame\MoveLeft.cs" />
-    <Compile Include="Assets\Scripts\InGame\ObsticleController.cs" />
-    <Compile Include="Assets\Scripts\InGame\PlayerController.cs" />
-    <Compile Include="Assets\Scripts\UI\GameOverPanelController.cs" />
-    <Compile Include="Assets\Scripts\UI\HighScoresPanel\HighScoresPanelController.cs" />
-    <Compile Include="Assets\Scripts\UI\InGamePanelController.cs" />
-    <Compile Include="Assets\Scripts\UI\MyIAPManager.cs" />
-    <Compile Include="Assets\Scripts\UI\Shop\BundleDisplayPanelController.cs" />
-    <Compile Include="Assets\Scripts\UI\Shop\EntryButtonController.cs" />
-    <Compile Include="Assets\Scripts\UI\Shop\IAPButtonController.cs" />
-    <Compile Include="Assets\Scripts\UI\Shop\IAPPanelController.cs" />
-    <Compile Include="Assets\Scripts\UI\Shop\ShopPanelController.cs" />
-    <Compile Include="Assets\Scripts\UI\Shop\TabButtonController.cs" />
-    <Compile Include="Assets\Scripts\UI\Shop\TabController.cs" />
-    <Compile Include="Assets\Scripts\UI\SkinsPanel\BackgroundButtonController.cs" />
-    <Compile Include="Assets\Scripts\UI\SkinsPanel\PlaneSkinButtonController.cs" />
-    <Compile Include="Assets\Scripts\UI\SkinsPanel\SkinSelectPanelController.cs" />
-    <Compile Include="Assets\Spilgames\Base\Implementation\SpilAndroidUnityImplementation.cs" />
-    <Compile Include="Assets\Spilgames\Base\Implementation\SpiliOSUnityImplementation.cs" />
-    <Compile Include="Assets\Spilgames\Base\Implementation\SpilUnityEditorImplementation.cs" />
-    <Compile Include="Assets\Spilgames\Base\Implementation\SpilUnityImplementationBase.cs" />
-    <Compile Include="Assets\Spilgames\Base\SDK\Responses\AdvertisementResponse.cs" />
-    <Compile Include="Assets\Spilgames\Base\SDK\Responses\GameDataResponse.cs" />
-    <Compile Include="Assets\Spilgames\Base\SDK\Responses\GameStateResponse.cs" />
-    <Compile Include="Assets\Spilgames\Base\SDK\Responses\IAPPackagesResponse.cs" />
-    <Compile Include="Assets\Spilgames\Base\SDK\Responses\ImageResponse.cs" />
-    <Compile Include="Assets\Spilgames\Base\SDK\Responses\MergeConflictResponse.cs" />
-    <Compile Include="Assets\Spilgames\Base\SDK\Responses\PlayerDataResponse.cs" />
-    <Compile Include="Assets\Spilgames\Base\SDK\Responses\RewardResponse.cs" />
-    <Compile Include="Assets\Spilgames\Base\SDK\SpilResponse.cs" />
-    <Compile Include="Assets\Spilgames\Base\UnityEditor\Managers\AdvertisementManager.cs" />
-    <Compile Include="Assets\Spilgames\Base\UnityEditor\Managers\ConfigManager.cs" />
-    <Compile Include="Assets\Spilgames\Base\UnityEditor\Managers\GameDataManager.cs" />
-    <Compile Include="Assets\Spilgames\Base\UnityEditor\Managers\GameStateManager.cs" />
-    <Compile Include="Assets\Spilgames\Base\UnityEditor\Managers\LiveEventManager.cs" />
-    <Compile Include="Assets\Spilgames\Base\UnityEditor\Managers\OverlayManager.cs" />
-    <Compile Include="Assets\Spilgames\Base\UnityEditor\Managers\PackagesManager.cs" />
-    <Compile Include="Assets\Spilgames\Base\UnityEditor\Managers\PlayerDataManager.cs" />
-    <Compile Include="Assets\Spilgames\Base\UnityEditor\Managers\PrivacyPolicyManager.cs" />
-    <Compile Include="Assets\Spilgames\Base\UnityEditor\Managers\RewardManager.cs" />
-    <Compile Include="Assets\Spilgames\Base\UnityEditor\Managers\SocialLoginManager.cs" />
-    <Compile Include="Assets\Spilgames\Base\UnityEditor\Managers\UserDataManager.cs" />
-    <Compile Include="Assets\Spilgames\Base\UnityEditor\ResponseEvent.cs" />
-    <Compile Include="Assets\Spilgames\Base\UnityEditor\SpilEvent.cs" />
-    <Compile Include="Assets\Spilgames\Helpers\GameData\Bundle.cs" />
-    <Compile Include="Assets\Spilgames\Helpers\GameData\Currency.cs" />
-    <Compile Include="Assets\Spilgames\Helpers\GameData\GachaContent.cs" />
-    <Compile Include="Assets\Spilgames\Helpers\GameData\Item.cs" />
-    <Compile Include="Assets\Spilgames\Helpers\GameData\Shop.cs" />
-    <Compile Include="Assets\Spilgames\Helpers\GameData\SpilGameDataHelper.cs" />
-    <Compile Include="Assets\Spilgames\Helpers\GameData\Tracking.cs" />
-    <Compile Include="Assets\Spilgames\Helpers\IAPPackages\Package.cs" />
-    <Compile Include="Assets\Spilgames\Helpers\IAPPackages\PackagesHelper.cs" />
-    <Compile Include="Assets\Spilgames\Helpers\PlayerData\Inventory.cs" />
-    <Compile Include="Assets\Spilgames\Helpers\PlayerData\PlayerDataHelper.cs" />
-    <Compile Include="Assets\Spilgames\Helpers\PlayerData\Wallet.cs" />
-    <Compile Include="Assets\Spilgames\Json\JSONHelper.cs" />
-    <Compile Include="Assets\Spilgames\Json\JSONObject.cs" />
-    <Compile Include="Assets\Spilgames\Spil.cs" />
-    <None Include="Assets\Fabric\NOTICE.txt" />
-    <None Include="Assets\link.xml" />
-    <None Include="Assets\FacebookSDK\link.xml" />
+    <Compile Include="Assets\Plugins\Editor\JetBrains\Unity3DRider.cs" />
     <Reference Include="UnityEngine.UI">
       <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
     </Reference>
@@ -289,12 +194,6 @@
     <Reference Include="UnityEngine.StandardEvents">
       <HintPath>/Users/sebastian/Library/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.10/UnityEngine.StandardEvents.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{12C0FBD5-B090-A94D-1AF8-3A80511B45DB}</Project>
-      <Name>Assembly-CSharp-firstpass</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

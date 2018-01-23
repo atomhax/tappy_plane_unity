@@ -1,13 +1,13 @@
 
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio for Mac
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TappyPlane", "TappyPlane.csproj", "{34ECF506-53CF-B1C4-AD8C-68775675E563}"
+Project("{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1}") = "TappyPlane", "TappyPlane.csproj", "{34ECF506-53CF-B1C4-AD8C-68775675E563}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TappyPlane.Plugins", "TappyPlane.Plugins.csproj", "{F71F9995-5BAE-8FAD-7B17-0D6645C28432}"
+Project("{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1}") = "TappyPlane.Plugins", "TappyPlane.Plugins.csproj", "{F71F9995-5BAE-8FAD-7B17-0D6645C28432}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TappyPlane.Editor", "TappyPlane.Editor.csproj", "{D948824D-2B95-AB54-1DCD-C2658B33BFE4}"
+Project("{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1}") = "TappyPlane.Editor", "TappyPlane.Editor.csproj", "{D948824D-2B95-AB54-1DCD-C2658B33BFE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TappyPlane.Editor.Plugins", "TappyPlane.Editor.Plugins.csproj", "{2707F18C-9724-A924-3DD9-D03E8C18B547}"
+Project("{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1}") = "TappyPlane.Editor.Plugins", "TappyPlane.Editor.Plugins.csproj", "{2707F18C-9724-A924-3DD9-D03E8C18B547}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
