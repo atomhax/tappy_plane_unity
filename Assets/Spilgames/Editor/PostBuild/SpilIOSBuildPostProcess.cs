@@ -83,22 +83,7 @@ public class SpilIOSBuildPostProcess : MonoBehaviour
 								   false + " " +
 				                   useICloudKV + " " +
 				                   false;
-
-            try
-            {
-                bool privacyPolicyEnabled = EditorPrefs.GetBool("gdprEnabled", true);
-                string privacyPolicyEnabledString = privacyPolicyEnabled ? "true" : "false";
-                UnityEngine.Debug.Log("[SPIL] Injecting privacy policy status in Spil.h");
-                Process privacyPolicyProcess = new Process();
-                privacyPolicyProcess.StartInfo.WorkingDirectory = pathToBuildProject;
-                privacyPolicyProcess.StartInfo.FileName = "sed";
-                privacyPolicyProcess.StartInfo.Arguments = "-i \"\" -e 's/.*#define GDPR_ENABLED.*/#define GDPR_ENABLED " + privacyPolicyEnabledString + "/' Spil.framework/Headers/spil.h";
-                privacyPolicyProcess.StartInfo.UseShellExecute = false;
-                privacyPolicyProcess.StartInfo.RedirectStandardOutput = true;
-                privacyPolicyProcess.Start();
-                privacyPolicyProcess.WaitForExit();
-            } catch (Exception e) {Debug.Log("[SPIL] Injecting privacy policy status in Spil.h failed" + e.StackTrace);}
-
+            
 			UnityEngine.Debug.Log ("[SPIL] Executing: python " + pathToBuildProject + "/Spil.framework/setup.py " + arguments);
 			Process setupProcess = new Process ();
 			setupProcess.StartInfo.WorkingDirectory = pathToBuildProject;
