@@ -90,8 +90,6 @@ namespace SpilGames.Unity.Base.Implementations {
             gData = new GameDataManager();
             pData = new PlayerDataManager();
 
-            SetPluginInformation(PluginName, PluginVersion);
-
             RequestConfig();
             RequestGameData();
             RequestUserData();
