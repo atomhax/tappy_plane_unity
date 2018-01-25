@@ -110,6 +110,7 @@ namespace SpilGames.Unity.Base.Implementations
         {
             JSONObject options = new JSONObject();
             options.AddField("isUnity", true);
+            options.AddField("privacyPolicyEnabled", withPrivacyPolicy);
             initEventTrackerWithOptions(options.ToString());
             UpdatePackagesAndPromotions();
         }

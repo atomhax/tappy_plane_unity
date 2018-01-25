@@ -14,6 +14,7 @@
 // --- Properties ---
 
 @property (nonatomic) BOOL isUnity;
+@property (nonatomic) BOOL privacyPolicyEnabled;
 @property (nonatomic, retain) NSString *adjustId;
 
 // --- Singleton ---
@@ -22,7 +23,7 @@
 
 // --- Init ---
 
--(void)startUsingUnity:(BOOL)pUnityEnabled;
+-(void)startUsingUnity:(BOOL)pUnityEnabled privacyPolicyEnabled:(BOOL)pPrivacyPolicyEnabled;
 
 // --- Meta data --
 
