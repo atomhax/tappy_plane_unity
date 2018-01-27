@@ -56,7 +56,7 @@ namespace Fabric.Internal.Editor.Model
 		[SerializeField]
 		private string email;
 
-		[HideInInspector]
+		//[HideInInspector]
 		public string Email
 		{
 			get { return Instance.email; }
@@ -74,7 +74,7 @@ namespace Fabric.Internal.Editor.Model
 		[HideInInspector]
 		private Client.Token token;
 
-		[HideInInspector]
+		//[HideInInspector]
 		public Client.Token Token
 		{
 			get {
@@ -94,7 +94,7 @@ namespace Fabric.Internal.Editor.Model
 		[SerializeField]
 		private Organization organization;
 
-		[HideInInspector]
+		//[HideInInspector]
 		public Organization Organization
 		{
 			get { return Instance.organization; }
@@ -109,7 +109,7 @@ namespace Fabric.Internal.Editor.Model
 		[SerializeField]
 		private string iconUrl;
 
-		[HideInInspector]
+		//[HideInInspector]
 		public string IconUrl
 		{
 			get { return Instance.iconUrl; }
@@ -124,7 +124,7 @@ namespace Fabric.Internal.Editor.Model
 		[SerializeField]
 		private string dashboardUrl;
 
-		[HideInInspector]
+		//[HideInInspector]
 		public string DashboardUrl
 		{
 			get { return Instance.dashboardUrl; }
@@ -141,7 +141,7 @@ namespace Fabric.Internal.Editor.Model
 		[SerializeField]
 		private InitializationType initialization;
 
-		[HideInInspector]
+		//[HideInInspector]
 		public InitializationType Initialization
 		{
 			get { return Instance.initialization; }
@@ -156,7 +156,7 @@ namespace Fabric.Internal.Editor.Model
 		[SerializeField]
 		private int flowSequence = 0;
 
-		[HideInInspector]
+		//[HideInInspector]
 		public int FlowSequence
 		{
 			get { return Instance.flowSequence; }
@@ -171,7 +171,7 @@ namespace Fabric.Internal.Editor.Model
 		[SerializeField]
 		private string conflict;
 
-		[HideInInspector]
+		//[HideInInspector]
 		public string Conflict
 		{
 			get { return Instance.conflict; }
@@ -187,7 +187,7 @@ namespace Fabric.Internal.Editor.Model
 		[SerializeField]
 		private string kit;
 		
-		[HideInInspector]
+		//[HideInInspector]
 		public string Kit
 		{
 			get { return Instance.kit; }
@@ -238,7 +238,7 @@ namespace Fabric.Internal.Editor.Model
 		[SerializeField]
 		private List<InstalledKit> installedKits = new List<InstalledKit> ();
 		
-		[HideInInspector]
+		//[HideInInspector]
 		public List<InstalledKit> InstalledKits
 		{
 			get { return Instance.installedKits; }
