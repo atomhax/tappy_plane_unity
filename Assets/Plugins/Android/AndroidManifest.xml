@@ -21,7 +21,7 @@
         <category android:name="android.intent.category.BROWSABLE" />
         <data android:host="www.spilgames.com" android:scheme="http" />
         <data android:host="www.spilgames.com" android:scheme="https" />
-        <data android:scheme="spilgames" />
+        <data android:scheme="tappyplane" />
       </intent-filter>
     </activity>
     <meta-data android:name="unityplayer.SkipPermissionsDialog" android:value="true" />

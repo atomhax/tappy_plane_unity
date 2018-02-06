@@ -21,7 +21,7 @@ MonoBehaviour:
   iconUrl: https://s3.amazonaws.com/assets.crashlytics.com/production/project/7550006/project_icon/3709999/icon.png
   dashboardUrl: https://www.fabric.io/spil-games2/android/apps/com.spilgames.tappyplane
   initialization: 1
-  flowSequence: 0
+  flowSequence: 300
   conflict: 
   kit: 
   installedKits:
