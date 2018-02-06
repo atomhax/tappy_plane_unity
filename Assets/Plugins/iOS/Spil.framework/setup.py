@@ -119,9 +119,9 @@ requiredSystemFrameworks = ['Accounts', 'AdSupport', 'AssetsLibrary', 'AudioTool
 							'Social', 'StoreKit', 'SystemConfiguration', 'Twitter', 'WebKit']
 for framework in requiredSystemFrameworks:
 	project.add_file_if_doesnt_exist('System/Library/Frameworks/' + framework + '.framework', parent=frameworks, weak=False, tree='SDKROOT')
-requiredSystemLibraries = ['libxml2', 'libz','libsqlite3', 'libc++']
+requiredSystemLibraries = ['libxml2.tbd', 'libz.tbd','libsqlite3.tbd', 'libc++.tbd', 'libxml2.dylib']
 for library in requiredSystemLibraries:
-	project.add_file_if_doesnt_exist('usr/lib/' + library + '.tbd', parent=frameworks, weak=False, tree='SDKROOT')
+	project.add_file_if_doesnt_exist('usr/lib/' + library, parent=frameworks, weak=False, tree='SDKROOT')
 
 # add custom frameworks
 print('Adding custom frameworks')
