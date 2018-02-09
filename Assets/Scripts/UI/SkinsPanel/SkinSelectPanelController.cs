@@ -15,7 +15,7 @@ public class SkinSelectPanelController : MonoBehaviour {
 
 	public GameController gameController;
 
-	public MyIAPManager iapManager;
+	public PrimeIAPManager iapManager;
 
 	public void OnEnable() {
 		#if UNITY_TVOS

@@ -10,7 +10,7 @@ public class IAPButtonController : MonoBehaviour {
 
 	public string bundleID;
 
-	public MyIAPManager iapManager;
+	public PrimeIAPManager iapManager;
 
 	public void PopulateIAPButton(string gemAmount, string promotionText, string cost, string bundleID){
 		gemAmountText.text = gemAmount;

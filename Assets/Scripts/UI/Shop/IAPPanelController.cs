@@ -11,7 +11,7 @@ public class IAPPanelController : MonoBehaviour {
 
 	public IAPButtonController[] iapButtons;
 
-	public MyIAPManager iapManager;
+	public PrimeIAPManager iapManager;
 
 	public GameObject pleaseWaitPanel, purchaseSuccessPanel, purchaseFailedPanel;
 

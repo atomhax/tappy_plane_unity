@@ -260,7 +260,7 @@ MonoBehaviour:
   costText: {fileID: 1287053363}
   saleImage: {fileID: 951438115}
   bundleID: 
-  iapManager: {fileID: 1996137884}
+  iapManager: {fileID: 1996137886}
 --- !u!114 &25588754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1161,7 +1161,7 @@ MonoBehaviour:
   - {fileID: 1466066179}
   - {fileID: 25588753}
   - {fileID: 2026447135}
-  iapManager: {fileID: 1996137884}
+  iapManager: {fileID: 1996137886}
   pleaseWaitPanel: {fileID: 153466650}
   purchaseSuccessPanel: {fileID: 1469675573}
   purchaseFailedPanel: {fileID: 796345484}
@@ -9473,7 +9473,7 @@ MonoBehaviour:
   costText: {fileID: 900541736}
   saleImage: {fileID: 1756275546}
   bundleID: 
-  iapManager: {fileID: 1996137884}
+  iapManager: {fileID: 1996137886}
 --- !u!114 &1466066180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10036,7 +10036,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.4304375, y: 0.46500003}
   m_AnchorMax: {x: 0.50859374, y: 0.58875006}
-  m_AnchoredPosition: {x: -1.5599976, y: -0.49994}
+  m_AnchoredPosition: {x: -1.5599976, y: -0.49994087}
   m_SizeDelta: {x: -2, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1555181414
@@ -12099,7 +12099,7 @@ MonoBehaviour:
   - {fileID: 1693889312}
   - {fileID: 1162049860}
   gameController: {fileID: 1536161943}
-  iapManager: {fileID: 1996137884}
+  iapManager: {fileID: 0}
 --- !u!1 &1847448356
 GameObject:
   m_ObjectHideFlags: 0
@@ -13204,6 +13204,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1996137885}
+  - component: {fileID: 1996137886}
   - component: {fileID: 1996137884}
   m_Layer: 0
   m_Name: IAPManager
@@ -13223,15 +13224,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 984c350248bb947f491ca9a1676cd897, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  googleProductIDs:
-  - com.spilgames.tappyplane.diamondpack01
-  - com.spilgames.tappyplane.diamondpack02
-  - com.spilgames.tappyplane.diamondpack03
-  appleProductIDs:
-  - com.spilgames.tappyplane.diamondpack01
-  - com.spilgames.tappyplane.diamondpack02
-  - com.spilgames.tappyplane.diamondpack03
-  iapPanelController: {fileID: 192589519}
 --- !u!4 &1996137885
 Transform:
   m_ObjectHideFlags: 0
@@ -13245,6 +13237,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1996137886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1996137883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b48cf62232e4462bc978959ff45a0f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  googleProducts:
+  - com.spilgames.tappyplane.diamondpack01
+  - com.spilgames.tappyplane.diamondpack02
+  - com.spilgames.tappyplane.diamondpack03
+  googleIAPKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAohTfXeH6cbRDuE7BLSUriL6riZirxLp+vE0l+0Dy7rU4mgvfOHod7drnE413S7KuIA2thkEeUFoDh6GiEDpoIuyuuWINplbznezFgMaxrVqSZuF138yAInfHkd/nWZ3DOQ/NLXCUpREHh0ZQgQClOyaAyow11JZHMkuebMuZbD2SnnDhbe4NfbzAYpO69to3sNvB4RLxg9Of1UJ9dBRyOtsW0jDd3FVTqn0iXWnb3w4YfjAUYpxs4gcVSHCk7DbHFXBZH1E013s+NfCJPr0BJRRtalYPD+sg7MI8W9eUPw1omAr9sS7nPrEPSEYg9mmVJgOqwEAYHNn7I3AcbR5oNwIDAQAB
+  appleProducts:
+  - com.spilgames.tappyplane.diamondpack01
+  - com.spilgames.tappyplane.diamondpack02
+  - com.spilgames.tappyplane.diamondpack03
+  iapPanelController: {fileID: 192589519}
 --- !u!1 &1998957876
 GameObject:
   m_ObjectHideFlags: 0
@@ -13688,7 +13701,7 @@ MonoBehaviour:
   costText: {fileID: 1288317788}
   saleImage: {fileID: 806303544}
   bundleID: 
-  iapManager: {fileID: 1996137884}
+  iapManager: {fileID: 1996137886}
 --- !u!114 &2026447136
 MonoBehaviour:
   m_ObjectHideFlags: 0
