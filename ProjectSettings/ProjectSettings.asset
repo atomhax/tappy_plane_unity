@@ -254,7 +254,7 @@ PlayerSettings:
   AndroidSplashScreenScale: 2
   androidSplashScreen: {fileID: 0}
   AndroidKeystoreName: /Users/sebastian/Work/Unity Projects/spilkey.keystore
-  AndroidKeyaliasName: release
+  AndroidKeyaliasName: 
   AndroidTVCompatibility: 1
   AndroidIsGame: 1
   AndroidEnableTango: 0
