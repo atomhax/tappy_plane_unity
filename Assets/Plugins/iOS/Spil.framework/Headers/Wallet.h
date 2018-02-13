@@ -12,7 +12,7 @@
 @interface Wallet : NSObject
 
 @property (strong, nonatomic) NSMutableArray *currencies; // PlayerCurrency
-@property (nonatomic) int offset;
+@property (nonatomic) long long offset;
 @property (strong, nonatomic) NSString* logic;
 
 -(id)init;

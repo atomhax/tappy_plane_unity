@@ -116,7 +116,7 @@ print('Adding system frameworks')
 frameworks = project.get_or_create_group('Frameworks')
 requiredSystemFrameworks = ['Accounts', 'AdSupport', 'AssetsLibrary', 'AudioToolbox', 'AVFoundation', 'EventKit', 'EventKitUI', 'CoreData', 'CoreGraphics', 
 							'CoreLocation', 'CoreMedia', 'CoreMotion', 'CoreTelephony', 'GLKit', 'iAd', 'MapKit', 'MediaPlayer', 'MessageUI', 'QuartzCore', 
-							'Social', 'StoreKit', 'SystemConfiguration', 'Twitter', 'WebKit']
+							'Social', 'StoreKit', 'SystemConfiguration', 'Twitter', 'WatchConnectivity', 'WebKit']
 for framework in requiredSystemFrameworks:
 	project.add_file_if_doesnt_exist('System/Library/Frameworks/' + framework + '.framework', parent=frameworks, weak=False, tree='SDKROOT')
 requiredSystemLibraries = ['libxml2.tbd', 'libz.tbd','libsqlite3.tbd', 'libc++.tbd', 'libxml2.dylib']
@@ -125,7 +125,7 @@ for library in requiredSystemLibraries:
 
 # add custom frameworks
 print('Adding custom frameworks')
-requiredCustomFrameworks = ['AdjustSdk', 'Chartboost', 'Fyber_AdColony', 'Fyber_UnityAds', 'Fyber_Vungle', 'Fyber_FacebookAudienceNetwork', 'Fyber_AdMob', 'GoogleMobileAds', 'MMAdSDK', 'UnityAds', 'FirebaseCore', 'FirebaseCoreDiagnostics', 'FirebaseInstanceID', 'FirebaseAnalytics', 'FirebaseDynamicLinks', 'GoogleToolboxForMac', 'FirebaseNanoPB', 'nanopb', 'MPUBMoatMobileAppKit']
+requiredCustomFrameworks = ['AdjustSdk', 'Chartboost', 'Fyber_AdColony', 'Fyber_UnityAds', 'Fyber_Vungle', 'Fyber_FacebookAudienceNetwork', 'Fyber_AdMob', 'GoogleMobileAds', 'MMAdSDK', 'UnityAds', 'FirebaseCore', 'FirebaseCoreDiagnostics', 'FirebaseInstanceID', 'FirebaseAnalytics', 'FirebaseDynamicLinks', 'GoogleToolboxForMac', 'FirebaseNanoPB', 'nanopb']
 project.add_file_if_doesnt_exist('Spil.framework', parent=frameworks, weak=False)
 for framework in requiredCustomFrameworks:
 	project.add_file_if_doesnt_exist('Spil.framework/Frameworks/' + framework + '.framework', parent=frameworks, weak=False)
