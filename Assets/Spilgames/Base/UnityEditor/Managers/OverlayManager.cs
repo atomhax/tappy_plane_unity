@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using SpilGames.Unity.Base.Implementations;
 using SpilGames.Unity.Helpers.PlayerData;
 using SpilGames.Unity.Json;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,7 +23,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
             SpilUnityImplementationBase.fireSplashScreenOpen();
 
-            SplashScreen = (GameObject) Instantiate(Resources.Load("Spilgames/Editor/SplashScreen"));
+            SplashScreen = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/SplashScreen.prefab"));
             SplashScreen.SetActive(true);
         }
 
@@ -31,7 +32,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
             SpilUnityImplementationBase.fireDailyBonusOpen();
 
-            DailyBonus = (GameObject) Instantiate(Resources.Load("Spilgames/Editor/DailyBonus"));
+            DailyBonus = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/DailyBonus.prefab"));
             DailyBonus.SetActive(true);
         }
 

@@ -5,6 +5,7 @@ using System.Collections;
 using SpilGames.Unity.Base.Implementations;
 using SpilGames.Unity.Helpers;
 using SpilGames.Unity.Json;
+using UnityEditor;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -26,7 +27,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         }
         
         public static void PlayVideo() {
-            AdOverlay = (GameObject) Instantiate(Resources.Load("Spilgames/Editor/AdOverlay"));
+            AdOverlay = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/AdOverlay.prefab"));
             AdOverlay.SetActive(true);
             provider = "Fyber";
             adType = "rewardVideo";
@@ -35,7 +36,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         }
 
         public static void PlayInterstitial(string selectedProvider) {
-            AdOverlay = (GameObject) Instantiate(Resources.Load("Spilgames/Editor/AdOverlay"));
+            AdOverlay = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/AdOverlay.prefab"));
             AdOverlay.SetActive(true);
             provider = selectedProvider;
             adType = "interstitial";
@@ -44,7 +45,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         }
 
         public static void PlayMoreApps() {
-            AdOverlay = (GameObject) Instantiate(Resources.Load("Spilgames/Editor/AdOverlay"));
+            AdOverlay = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/AdOverlay.prefab"));
             AdOverlay.SetActive(true);
             provider = "Spil";
             adType = "moreApps";

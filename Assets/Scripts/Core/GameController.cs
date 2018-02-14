@@ -375,6 +375,12 @@ public class GameController : MonoBehaviour
         CancelInvoke("SpawnObsticle");
         UpdateUI(GameStates.GameOver);
         Spil.Instance.TrackPlayerDiesEvent("MainGame");
+        Dictionary<string, object> values = new Dictionary<string, object>();
+        values.Add("itemId", "main_level");
+        values.Add("itemType", "level");
+        values.Add("label", "yolo_run");
+        values.Add("matchId", Random.Range(0, 1000000000));
+        Spil.Instance.SendCustomEvent("matchComplete", values);
     }
 
     void SpawnObsticle() {

@@ -1,6 +1,6 @@
 /*
  * Spil Games Unity SDK 2016
- * Version 2.7.5
+ * Version 2.8.0
  *
  * If you have any questions, don't hesitate to e-mail us at info@spilgames.com
  * Be sure to check the github page for documentation and the latest updates
@@ -21,20 +21,34 @@ namespace SpilGames.Unity {
 
         private PlayerDataHelper PlayerDataObject;
         public static PlayerDataHelper PlayerData;
-        
+
         [SerializeField] public bool initializeOnAwake = true;
-        
-        [SerializeField] public bool checkPrivacyPolicy = true;
-        public static bool CheckPrivacyPolicy { get; private set; }
-        
+
+        [SerializeField] private bool checkPrivacyPolicyAndroid = true;
+
+        [SerializeField] private bool checkPrivacyPolicyIOS = true;
+
+        public static bool CheckPrivacyPolicy {
+            get {
+#if UNITY_ANDROID
+                return MonoInstance.checkPrivacyPolicyAndroid;
+#else
+			return MonoInstance.checkPrivacyPolicyIOS;
+#endif
+            }
+        }
+
         [Header("Android Settings")]
 #if UNITY_ANDROID || UNITY_EDITOR
-        [SerializeField] public string ProjectId = "";
+        [SerializeField]
+        public string ProjectId = "";
 #endif
 
-        [Header("iOS Settings")] [SerializeField] public string CustomBundleId;
+        [Header("iOS Settings")] [SerializeField]
+        public string CustomBundleId;
 
-        [Header("Editor Settings")] [SerializeField] public bool EditorLogging = true;
+        [Header("Editor Settings")] [SerializeField]
+        public bool EditorLogging = true;
 
         [SerializeField] public bool EditorDebugMode = true;
 
@@ -50,7 +64,8 @@ namespace SpilGames.Unity {
 
         public static string IapPurchaseRequest { get; private set; }
 
-        [Header("Reward Settings")] [Header("Ads")] [SerializeField] private string currencyName;
+        [Header("Reward Settings")] [Header("Ads")] [SerializeField]
+        private string currencyName;
 
         public static string CurrencyName { get; private set; }
 
@@ -62,7 +77,8 @@ namespace SpilGames.Unity {
 
         public static int Reward { get; private set; }
 
-        [Space(10)] [Header("Daily Bonus")] [SerializeField] private int dailyBonusId;
+        [Space(10)] [Header("Daily Bonus")] [SerializeField]
+        private int dailyBonusId;
 
         public static int DailyBonusId { get; private set; }
 
@@ -82,7 +98,8 @@ namespace SpilGames.Unity {
 
         public DailyBonusRewardTypeEnum DailyBonusRewardType;
 
-        [Space(10)] [Header("Live Event")] [SerializeField] private int liveEventRewardId;
+        [Space(10)] [Header("Live Event")] [SerializeField]
+        private int liveEventRewardId;
 
         public static int LiveEventRewardId { get; private set; }
 
@@ -102,7 +119,8 @@ namespace SpilGames.Unity {
 
         public LiveEventRewardTypeEnum LiveEventRewardType;
 
-        [Space(10)] [Header("Token System")] [SerializeField] private string rewardToken;
+        [Space(10)] [Header("Token System")] [SerializeField]
+        private string rewardToken;
 
         public static string RewardToken { get; private set; }
 
@@ -132,13 +150,18 @@ namespace SpilGames.Unity {
 
         public TokenRewardTypeEnum TokenRewardType;
 
+        private static Spil monoInstance;
+
         public static Spil MonoInstance {
             get {
-                GameObject spilSDKObject = GameObject.Find("SpilSDK");
-                if (spilSDKObject == null) {
-                    throw new NullReferenceException("Could not find a gameobject in the scene named \"SpilSDK\".");
+                if (monoInstance == null) {
+                    monoInstance = FindObjectOfType<Spil>();
+                    if (monoInstance == null) {
+                        throw new NullReferenceException("Could not find a gameobject in the scene named \"SpilSDK\".");
+                    }
                 }
-                return spilSDKObject.GetComponent<Spil>();
+
+                return monoInstance;
             }
         }
 
@@ -147,16 +170,27 @@ namespace SpilGames.Unity {
         public static SpilUnityEditorImplementation Instance = new SpilUnityEditorImplementation();
 
 #elif UNITY_ANDROID
-
 		public static SpilAndroidUnityImplementation Instance = new SpilAndroidUnityImplementation();
 
 #elif UNITY_IPHONE || UNITY_TVOS
-
 		public static SpiliOSUnityImplementation Instance = new SpiliOSUnityImplementation();
 
 #endif
 
         void Awake() {
+            if ((monoInstance != null) && (this != monoInstance)) {
+                if (Application.isPlaying) {
+                    Destroy (gameObject);
+                }
+                return;
+            }
+
+            monoInstance = this;
+            
+            if (Application.isPlaying) {
+                DontDestroyOnLoad (gameObject);
+            }
+            
             if (initializeOnAwake) {
                 Initialize();
             }
@@ -164,7 +198,7 @@ namespace SpilGames.Unity {
 
         void OnValidate() {
 #if UNITY_EDITOR
-            UnityEditor.EditorPrefs.SetBool("gdprEnabled", checkPrivacyPolicy);
+            UnityEditor.EditorPrefs.SetBool("gdprEnabled", CheckPrivacyPolicy);
 #endif
         }
 
@@ -191,15 +225,12 @@ namespace SpilGames.Unity {
             }
 #endif
 
-            CheckPrivacyPolicy = checkPrivacyPolicy;
-            
-            if (checkPrivacyPolicy) {
+            if (CheckPrivacyPolicy) {
                 Instance.CheckPrivacyPolicy();
             } else {
                 Instance.SpilInit(false);
             }
-
-            DontDestroyOnLoad(gameObject);
+            
             gameObject.name = "SpilSDK";
 
 #if !UNITY_EDITOR
@@ -217,6 +248,7 @@ namespace SpilGames.Unity {
             } else {
                 Debug.Log("Using a manually set user id. Social Login feature may not work properly!");
             }
+
             SpilUserIdEditor = spilUserIdEditor;
             Debug.Log("SpilSDK-Unity Using SpilUserIdEditor: " + SpilUserIdEditor);
 
@@ -617,61 +649,61 @@ namespace SpilGames.Unity {
             SpilUnityImplementationBase.fireAuthenticationError(error);
         }
 
-		/// <summary>
-		/// This event indicates if a merge conflict occured
-		/// </summary>
-		public void UserDataMergeConflict(string data) {
-			SpilUnityImplementationBase.fireUserDataMergeConflict(data);
-		}
+        /// <summary>
+        /// This event indicates if a merge conflict occured
+        /// </summary>
+        public void UserDataMergeConflict(string data) {
+            SpilUnityImplementationBase.fireUserDataMergeConflict(data);
+        }
 
-		/// <summary>
-		/// This event indicates if a merge conflict was successfully resolved.
-		/// </summary>
-		public void UserDataMergeSuccessful() {
-			SpilUnityImplementationBase.fireUserDataMergeSuccessful();
-		}
+        /// <summary>
+        /// This event indicates if a merge conflict was successfully resolved.
+        /// </summary>
+        public void UserDataMergeSuccessful() {
+            SpilUnityImplementationBase.fireUserDataMergeSuccessful();
+        }
 
-		/// <summary>
-		/// This event indicates if a merge conflict failed.
-		/// </summary>
-		public void UserDataMergeFailed(string data) {
-			SpilUnityImplementationBase.fireUserDataMergeFailed(data);
-		}
+        /// <summary>
+        /// This event indicates if a merge conflict failed.
+        /// </summary>
+        public void UserDataMergeFailed(string data) {
+            SpilUnityImplementationBase.fireUserDataMergeFailed(data);
+        }
 
-		/// <summary>
-		/// This event indicates if a merge conflict needs to be handled for a certain type.
-		/// </summary>
-		public void UserDataHandleMerge(string mergeType) {
-			SpilUnityImplementationBase.fireUserDataHandleMerge(mergeType);
-		}
+        /// <summary>
+        /// This event indicates if a merge conflict needs to be handled for a certain type.
+        /// </summary>
+        public void UserDataHandleMerge(string mergeType) {
+            SpilUnityImplementationBase.fireUserDataHandleMerge(mergeType);
+        }
 
-		/// <summary>
-		/// This event indicates if a userdata sync error occured.
-		/// </summary>
-		public void UserDataSyncError() {
-			SpilUnityImplementationBase.fireUserDataSyncError();
-		}
+        /// <summary>
+        /// This event indicates if a userdata sync error occured.
+        /// </summary>
+        public void UserDataSyncError() {
+            SpilUnityImplementationBase.fireUserDataSyncError();
+        }
 
-		/// <summary>
-		/// This event indicates if a userdata lock occured.
-		/// </summary>
-		public void UserDatalockError() {
-			SpilUnityImplementationBase.fireUserDataLockError();
-		}
+        /// <summary>
+        /// This event indicates if a userdata lock occured.
+        /// </summary>
+        public void UserDatalockError() {
+            SpilUnityImplementationBase.fireUserDataLockError();
+        }
 
-		/// <summary>
-		/// This event indicates if a general userdata error occured.
-		/// </summary>
-		public void UserDataError(string errorMessage) {
-			SpilUnityImplementationBase.fireUserDataError(errorMessage);
-		}
+        /// <summary>
+        /// This event indicates if a general userdata error occured.
+        /// </summary>
+        public void UserDataError(string errorMessage) {
+            SpilUnityImplementationBase.fireUserDataError(errorMessage);
+        }
 
-		/// <summary>
-		/// This event indicates if an authentication error has occured on any event after the Social Login.
-		/// </summary>
-		public void UserDataAvailable() {
-			SpilUnityImplementationBase.fireUserDataAvailable();
-		}
+        /// <summary>
+        /// This event indicates if an authentication error has occured on any event after the Social Login.
+        /// </summary>
+        public void UserDataAvailable() {
+            SpilUnityImplementationBase.fireUserDataAvailable();
+        }
 
         /// <summary>
         /// This event indicates if the Privacy Policy was accepted by the user.
@@ -679,7 +711,7 @@ namespace SpilGames.Unity {
         public void PrivacyPolicyStatus(string accepted) {
             SpilUnityImplementationBase.firePrivacyPolicyStatus(Convert.ToBoolean(accepted));
         }
-        
+
 #if UNITY_ANDROID
         /// <summary>
         /// This event indicates the status of the permission request.

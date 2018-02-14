@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using SpilGames.Unity.Base.Implementations;
-using SpilGames.Unity.Base.SDK;
-using SpilGames.Unity.Helpers.GameData;
 using SpilGames.Unity.Helpers.PlayerData;
 using SpilGames.Unity.Json;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 using UnityEngine;
 using UnityEngine.UI;
 
 #if UNITY_EDITOR
-
-
 namespace SpilGames.Unity.Base.UnityEditor.Managers {
     public class LiveEventManager : MonoBehaviour{
         public enum StageType {
@@ -271,20 +270,20 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             StageTypeValue = stageType;
             switch (stageType) {
                 case StageType.START:
-                    LiveEventStart = (GameObject) Instantiate(Resources.Load("Spilgames/Editor/LiveEventStart"));
+                    LiveEventStart = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/LiveEventStart.prefab"));
                     LiveEventStart.SetActive(true);
                    
                     stageData = stage;
                     break;
                 case StageType.PROGRESS:
-                    LiveEventProgress = (GameObject) Instantiate(Resources.Load("Spilgames/Editor/LiveEventProgress"));
+                    LiveEventProgress = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/LiveEventProgress.prefab"));
                     LiveEventProgress.SetActive(true);
                     
                     applyItems = new JSONObject(JSONObject.Type.ARRAY);
                     currentStage = stage;
                     break;
                 case StageType.INFO:
-                    LiveEventInfo = (GameObject) Instantiate(Resources.Load("Spilgames/Editor/LiveEventInfo"));
+                    LiveEventInfo = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/LiveEventInfo.prefab"));
                     LiveEventInfo.SetActive(true);
                     
                     currentStage = stage;

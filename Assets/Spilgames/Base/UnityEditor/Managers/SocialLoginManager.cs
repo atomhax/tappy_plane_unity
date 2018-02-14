@@ -1,6 +1,9 @@
 ﻿using System;
 using SpilGames.Unity.Base.Implementations;
 using SpilGames.Unity.Base.SDK;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -212,7 +215,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
         public static void ShowUnauthorizedDialog(string selectedTitle, string selectedMessage, string selectedLoginText,
             string selectedPlayAsGuestText) {
-            SocialOverlay = (GameObject) Instantiate(Resources.Load("Spilgames/Editor/SocialLogin"));
+            SocialOverlay = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/SocialLogin.prefab"));
             SocialOverlay.SetActive(true);
 
             title = selectedTitle;

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using SpilGames.Unity.Base.Implementations;
 using SpilGames.Unity.Base.SDK;
 using SpilGames.Unity.Json;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -352,7 +353,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         }
 
         public static void ShowSyncErrorDialog(string selectedTitle, string selectedMessage, string selectedMergeButton) {
-            SyncError = (GameObject) Instantiate(Resources.Load("Spilgames/Editor/SyncError"));
+            SyncError = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/SyncError.prefab"));
             SyncError.SetActive(true);
 
             title = selectedTitle;
@@ -362,7 +363,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         }
 
         public static void ShowMergeFailedDialog(string selectedTitle, string selectedMessage, string selectedRetryButton, string selectedMergeData, string selectedMergeType) {
-            MergeFailed = (GameObject) Instantiate(Resources.Load("Spilgames/Editor/MergeFailed"));
+            MergeFailed = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/MergeFailed.prefab"));
             MergeFailed.SetActive(true);
 
             title = selectedTitle;
@@ -374,7 +375,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         }
 
         public static void ShowMergeConflictDialog(string selectedTitle, string selectedMessage, string selectedLocalButton, string selectedRemoteButton, string selectedMergeButton) {
-            MergeConflict = (GameObject) Instantiate(Resources.Load("Spilgames/Editor/MergeConflict"));
+            MergeConflict = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/MergeConflict.prefab"));
             MergeConflict.SetActive(true);
 
             title = selectedTitle;
