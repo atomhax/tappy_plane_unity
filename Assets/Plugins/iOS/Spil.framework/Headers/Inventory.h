@@ -11,7 +11,7 @@
 @interface Inventory : NSObject
 
 @property (strong, nonatomic) NSMutableArray *items; // PlayerItem
-@property (nonatomic) int offset;
+@property (nonatomic) long long offset;
 @property (strong, nonatomic) NSString* logic;
 
 -(id)init;

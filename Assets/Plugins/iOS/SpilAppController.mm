@@ -10,6 +10,7 @@
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *, id> *)options;
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation;
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *))restorationHandler;
+- (NSUInteger)application:(UIApplication*)application supportedInterfaceOrientationsForWindow:(UIWindow*)window;
 
 @end
 
@@ -37,8 +38,8 @@
     NSString *inUrl = [url absoluteString];
     NSLog(@"[SPIL] (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *, id> *)options, with URL: %@. With options: %@", inUrl, options);
     
-    NSString *sourceApplication = options[UIApplicationOpenURLOptionsSourceApplicationKey];
-    NSString *annotation = options[UIApplicationOpenURLOptionsAnnotationKey];
+    NSString *sourceApplication = options != nil ? options[UIApplicationOpenURLOptionsSourceApplicationKey] : nil;
+    NSString *annotation = options != nil ? options[UIApplicationOpenURLOptionsAnnotationKey] : nil;
     return [self application:app openURL:url sourceApplication:sourceApplication annotation:annotation];
 }
 
@@ -78,6 +79,11 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     [Spil applicationDidEnterBackground:application];
     [super applicationDidEnterBackground:application];
+}
+
+- (NSUInteger)application:(UIApplication*)application supportedInterfaceOrientationsForWindow:(UIWindow*)window {
+    return (1 << UIInterfaceOrientationLandscapeLeft) |
+           (1 << UIInterfaceOrientationLandscapeRight);
 }
 
 @end
