@@ -107,6 +107,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 		catch (Exception e) {
 			// ... by reporting any unexpected exception for later diagnosis.
 			Debug.Log ("BuyProductID: FAIL. Exception during purchase. " + e);
+			iapPanelController.pleaseWaitPanel.SetActive(false);
 		}
 	}
 

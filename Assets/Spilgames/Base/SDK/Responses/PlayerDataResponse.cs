@@ -7,10 +7,10 @@ namespace SpilGames.Unity.Base.SDK {
         public int currentBalance;
         public int delta;
 
-        public PlayerCurrencyData() { }
+        public PlayerCurrencyData() {
+        }
 
-        public PlayerCurrencyData(SpilCurrencyData spilCurrencyData)
-        {
+        public PlayerCurrencyData(SpilCurrencyData spilCurrencyData) {
             id = spilCurrencyData.id;
             name = spilCurrencyData.name;
             initialValue = spilCurrencyData.initialValue;
@@ -32,10 +32,10 @@ namespace SpilGames.Unity.Base.SDK {
         public int delta;
         public int value;
 
-        public PlayerItemData() { }
+        public PlayerItemData() {
+        }
 
-        public PlayerItemData (SpilItemData spilItemData)
-        {
+        public PlayerItemData(SpilItemData spilItemData) {
             id = spilItemData.id;
             name = spilItemData.name;
             initialValue = spilItemData.initialValue;
