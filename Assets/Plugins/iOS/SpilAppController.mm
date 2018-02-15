@@ -81,10 +81,11 @@
     [super applicationDidEnterBackground:application];
 }
 
-- (NSUInteger)application:(UIApplication*)application supportedInterfaceOrientationsForWindow:(UIWindow*)window {
+// NOTE: Enable this if case the app only support landscape orientation
+/*- (NSUInteger)application:(UIApplication*)application supportedInterfaceOrientationsForWindow:(UIWindow*)window {
     return (1 << UIInterfaceOrientationLandscapeLeft) |
            (1 << UIInterfaceOrientationLandscapeRight);
-}
+}*/
 
 @end
 
