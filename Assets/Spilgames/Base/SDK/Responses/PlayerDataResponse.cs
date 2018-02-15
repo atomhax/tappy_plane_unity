@@ -23,7 +23,7 @@ namespace SpilGames.Unity.Base.SDK {
 
     public class WalletData {
         public List<PlayerCurrencyData> currencies;
-        public int offset;
+        public long offset;
         public string logic;
     }
 
@@ -50,7 +50,7 @@ namespace SpilGames.Unity.Base.SDK {
 
     public class InventoryData {
         public List<PlayerItemData> items;
-        public int offset;
+        public long offset;
         public string logic;
     }
 
