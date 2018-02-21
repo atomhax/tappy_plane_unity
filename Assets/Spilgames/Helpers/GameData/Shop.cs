@@ -80,7 +80,7 @@ namespace SpilGames.Unity.Helpers.GameData {
             
             if (entries != null) {
                 foreach (SpilShopEntryData entry in entries) {
-                    _Entries.Add(new Entry(entry.bundleId, entry.label, entry.position, entry.imageEntries));
+                    _Entries.Add(new Entry(entry.id, entry.type, entry.label, entry.position, entry.imageEntries));
                 }
             }
         }
@@ -91,14 +91,23 @@ namespace SpilGames.Unity.Helpers.GameData {
     /// </summary>
     public class Entry {
         /// <summary>
-        /// The bundle Id assoctiated with this shop entry
+        /// The Id assoctiated with this shop entry
         /// </summary>
-        public int BundleId {
-            get { return _BundleId; }
+        public int Id {
+            get { return _Id; }
         }
 
-        private int _BundleId;
+        private int _Id;
 
+        /// <summary>
+        /// The entry type
+        /// </summary>
+        public string Type {
+            get { return _Type; }
+        }
+
+        private string _Type;
+        
         /// <summary>
         /// The entry label
         /// </summary>
@@ -126,100 +135,12 @@ namespace SpilGames.Unity.Helpers.GameData {
 
         private List<ImageEntry> _ImageEntries = new List<ImageEntry>();
         
-        public Entry(int bundleId, string label, int position, List<SpilShopImageEntry> imageEntries) {
-            _BundleId = bundleId;
+        public Entry(int id, string type, string label, int position, List<SpilShopImageEntry> imageEntries) {
+            _Id = id;
+            _Type = type;
             _Label = label;
             _Position = position;
             
-            if (imageEntries != null) {
-                foreach (SpilShopImageEntry imageEntry in imageEntries) {
-                    _ImageEntries.Add(new ImageEntry(imageEntry.name, imageEntry.imageUrl));
-                }
-            }
-        }
-    }
-
-    /// <summary>
-    /// This is the business object that the developer can use to work with for the InGame Shop Promotion.
-    /// </summary>
-    public class Promotion {
-        /// <summary>
-        /// The bundle Id assoctiated with this shop promotion
-        /// </summary>
-        public int BundleId {
-            get { return _BundleId; }
-        }
-
-        private int _BundleId;
-
-        /// <summary>
-        /// The amount of bundles for the shop promotion
-        /// </summary>
-        public int Amount {
-            get { return _Amount; }
-        }
-
-        private int _Amount;
-
-        /// <summary>
-        /// The promotion Prices. Can have multiple prices with different currencies
-        /// </summary>
-        public List<BundlePrice> Prices {
-            get { return _Prices; }
-        }
-
-        private List<BundlePrice> _Prices = new List<BundlePrice>();
-
-        /// <summary>
-        /// The promotion discount label
-        /// </summary>
-        public string Discount {
-            get { return _Discount; }
-        }
-
-        private string _Discount;
-
-        /// <summary>
-        /// The begin date of an active promotion for this bundle. Returns DateTime.Min if there is no active promotion for this bundle.
-        /// </summary>
-        public DateTime PromotionBeginDate {
-            get { return _StartDate; }
-        }
-
-        private DateTime _StartDate;
-
-        /// <summary>
-        /// The begin date of an active promotion for this bundle. Returns DateTime.Min if there is no active promotion for this bundle.
-        /// </summary>
-        public DateTime PromotionEndDate {
-            get { return _EndDate; }
-        }
-
-        private DateTime _EndDate;
-
-        /// <summary>
-        /// The promotion images. Can have multiple images.
-        /// </summary>
-        public List<ImageEntry> ImageEntries {
-            get { return _ImageEntries; }
-        }
-
-        private List<ImageEntry> _ImageEntries = new List<ImageEntry>();
-        
-        public Promotion(int bundleId, int amount, List<SpilBundlePriceData> prices, string discount, DateTime startDate, DateTime endDate, List<SpilShopImageEntry> imageEntries) {
-            _BundleId = bundleId;
-            _Amount = amount;
-
-            if (prices != null) {
-                foreach (SpilBundlePriceData bundlePriceData in prices) {
-                    _Prices.Add(new BundlePrice(bundlePriceData.currencyId, bundlePriceData.value));
-                }
-            }
-
-            _Discount = discount;
-            _StartDate = startDate;
-            _EndDate = endDate;
-
             if (imageEntries != null) {
                 foreach (SpilShopImageEntry imageEntry in imageEntries) {
                     _ImageEntries.Add(new ImageEntry(imageEntry.name, imageEntry.imageUrl));
