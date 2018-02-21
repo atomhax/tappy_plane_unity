@@ -66,6 +66,9 @@ public class PrimeIAPManager : MonoBehaviour {
 		
 		StoreKitManager.purchaseFailedEvent -= StoreKitManagerOnPurchaseFailedEvent;
 		StoreKitManager.purchaseFailedEvent += StoreKitManagerOnPurchaseFailedEvent;
+
+		StoreKitManager.purchaseCancelledEvent -= StoreKitManagerOnPurchaseCancelledEvent;
+		StoreKitManager.purchaseCancelledEvent += StoreKitManagerOnPurchaseCancelledEvent;
 		
 		RequestIAPData();
 		string restoredPurchases = PlayerPrefs.GetString("iosRestoredPurchase", "false");
@@ -186,6 +189,11 @@ public class PrimeIAPManager : MonoBehaviour {
 	}
 	
 	private void StoreKitManagerOnPurchaseFailedEvent(string s) {
+		iapPanelController.PurchaseFailed ();
+		Spil.Instance.TrackIAPFailedEvent (s, lastProductSKU);
+	}
+
+	private void StoreKitManagerOnPurchaseCancelledEvent(string s) {
 		iapPanelController.PurchaseFailed ();
 		Spil.Instance.TrackIAPFailedEvent (s, lastProductSKU);
 	}
