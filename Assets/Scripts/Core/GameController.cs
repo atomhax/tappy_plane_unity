@@ -7,8 +7,10 @@ using SpilGames.Unity.Helpers.GameData;
 using SpilGames.Unity.Helpers.PlayerData;
 using SpilGames.Unity.Json;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
+using CloudOnce;
 #if !UNITY_TVOS
 using Facebook.Unity;
 
@@ -258,7 +260,21 @@ public class GameController : MonoBehaviour
         if (!Spil.CheckPrivacyPolicy) {
             InitComponents();
         }
+        
+        Debug.Log ("open shop");
+        //Social.localUser.Authenticate (ProcessAuthentication);
+        //Cloud.OnInitializeComplete += CloudOnceInitializeComplete;
+        //Cloud.Initialize();
     }
+    
+    /*public void CloudOnceInitializeComplete()
+    {
+        Debug.Log ("CloudOnceInitializeComplete");
+        Cloud.OnInitializeComplete -= CloudOnceInitializeComplete;
+
+        // Do anything that requires CloudOnce to be initialized,
+        // for example disabling your loading screen
+    }*/
 
     private void InitComponents() {
 #if !UNITY_TVOS
@@ -397,6 +413,35 @@ public class GameController : MonoBehaviour
 
     public void OpenShop() {
         shopPanel.SetActive(true);
+    }
+    
+    // This function gets called when Authenticate completes
+    // Note that if the operation is successful, Social.localUser will contain data from the server. 
+    private void ProcessAuthentication(bool success) {
+        if (success) {
+            Debug.Log("Authenticated, checking achievements");
+
+            // Request loaded achievements, and register a callback for processing them
+            Social.LoadAchievements(ProcessLoadedAchievements);
+        } else {
+            Debug.Log("Failed to authenticate");
+        }
+    }
+    
+    // This function gets called when the LoadAchievement call completes
+    private void ProcessLoadedAchievements (IAchievement[] achievements) {
+        if (achievements.Length == 0)
+            Debug.Log ("Error: no achievements found");
+        else
+            Debug.Log ("Got " + achievements.Length + " achievements");
+    
+        // You can also call into the functions like this
+        //Social.ReportProgress ("Achievement01", 100.0, function(result) {
+        //    if (result)
+        //        Debug.Log ("Successfully reported achievement progress");
+        //    else
+        //        Debug.Log ("Failed to report achievement");
+        //});
     }
 
     public void OpenShop(PlayerCurrencyData currency) {

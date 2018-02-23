@@ -1,0 +1,22 @@
+{
+	"AchievementIDs":[
+		{
+			"InternalID":"CompletedLevel",
+			"AppleID":"grp.spilgames.tappyplane.completedlevel",
+			"GoogleID":"",
+			"AmazonID":""
+		}
+	],
+	"LeaderboardIDs":[],
+	"CloudVariables":[],
+	"AppleSupported":true,
+	"GoogleSupported":false,
+	"AmazonSupported":false,
+	"AndroidPlatform":"0",
+	"GoogleAppID":"",
+	"GoogleSetupRun":false,
+	"DebugModeEnabled":true,
+	"Version":"2.5.0",
+	"APIKey":"",
+	"SettingsLocation":"0"
+}

@@ -10,7 +10,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace>
     </RootNamespace>
-    <ProjectGuid>{F4EAF2BE-4DEE-4F99-C860-C2F87F3D0D46}</ProjectGuid>
+    <ProjectGuid>{FCF3EBED-1117-7C63-5D4A-C0589384D5DC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -23,7 +23,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_3_0;UNITY_2017_3;UNITY_2017;UNITY_ANALYTICS;UNITY_PURCHASING;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_GRID;ENABLE_TILEMAP;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_DIRECTOR;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_TIMELINE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;ENABLE_SPRITE_MASKING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;ENABLE_MONO_BDWGC;PLATFORM_SUPPORTS_MONO;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_VIDEO;ENABLE_RMGUI;ENABLE_PACKMAN;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_STYLE_SHEETS;ENABLE_LOCALIZATION;PLATFORM_ANDROID;UNITY_ANDROID;UNITY_ANDROID_API;ENABLE_SUBSTANCE;ENABLE_EGL;ENABLE_NETWORK;ENABLE_RUNTIME_GI;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_EVENT_QUEUE;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_NATIVE_CRASH_REPORTING;PLATFORM_SUPPORTS_ADS_ID;UNITY_CAN_SHOW_SPLASH_SCREEN;ENABLE_VR;ENABLE_AR;ENABLE_SPATIALTRACKING;ENABLE_UNITYADS_RUNTIME;UNITY_UNITYADS_API;ENABLE_MONO;NET_2_0_SUBSET;DEVELOPMENT_BUILD;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_OSX;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE;UNITY_HAS_GOOGLEVR;UNITY_HAS_TANGO</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_3_0;UNITY_2017_3;UNITY_2017;UNITY_ANALYTICS;UNITY_PURCHASING;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_GRID;ENABLE_TILEMAP;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_DIRECTOR;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_TIMELINE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;ENABLE_SPRITE_MASKING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;ENABLE_MONO_BDWGC;PLATFORM_SUPPORTS_MONO;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_VIDEO;ENABLE_RMGUI;ENABLE_PACKMAN;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_STYLE_SHEETS;ENABLE_LOCALIZATION;ENABLE_RUNTIME_GI;ENABLE_SUBSTANCE;ENABLE_GAMECENTER;ENABLE_NETWORK;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_IOS_NATIVE_CRASH_REPORTING;PLAYERCONNECTION_LISTENS_FIXED_PORT;DEBUGGER_LISTENS_FIXED_PORT;PLATFORM_SUPPORTS_ADS_ID;SUPPORT_ENVIRONMENT_VARIABLES;PLATFORM_SUPPORTS_PROFILER;PLATFORM_HAS_NO_SUPPORT_FOR_BUCKET_ALLOCATOR;STRICTCPP_NEW_DELETE_SIGNATURES;HAS_NEON_SKINNIG;UNITY_GFX_USE_PLATFORM_VSYNC;UNITY_INPUT_SIMULATE_EVENTS;PLATFORM_ALWAYS_USES_STDOUT_FOR_LOG;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_VR;ENABLE_AR;ENABLE_SPATIALTRACKING;ENABLE_UNITYADS_RUNTIME;UNITY_UNITYADS_API;PLATFORM_IOS;UNITY_IOS;PLATFORM_IPHONE;UNITY_IPHONE;UNITY_IPHONE_API;SUPPORT_MULTIPLE_DISPLAYS;ENABLE_IL2CPP;NET_2_0_SUBSET;DEVELOPMENT_BUILD;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_OSX;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE;NO_GPGS;CLOUDONCE_DEBUG;ENABLE_IOS_ON_DEMAND_RESOURCES;ENABLE_IOS_APP_SLICING;UNITY_HAS_GOOGLEVR;ENABLE_MONO</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
@@ -52,6 +52,320 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Extensions\Amazon\AmazonCommon\Source\AmazonJavaWrapper.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonCommon\Source\AmazonLogging.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonCommon\Source\MiniJSON\MiniJSON.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\AchievementsClient\AGSAchievementsClient.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\AchievementsClient\DataModel\AGSAchievement.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\AchievementsClient\Responses\AGSRequestAchievementsForPlayerResponse.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\AchievementsClient\Responses\AGSRequestAchievementsResponse.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\AchievementsClient\Responses\AGSUpdateAchievementResponse.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\AGSClient.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\AGSRequestResponse.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\LeaderboardsClient\AGSLeaderboardsClient.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\LeaderboardsClient\DataModel\AGSLeaderboard.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\LeaderboardsClient\DataModel\AGSLeaderboardPercentile.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\LeaderboardsClient\DataModel\AGSScore.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\LeaderboardsClient\Responses\AGSRequestLeaderboardsResponse.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\LeaderboardsClient\Responses\AGSRequestPercentilesForPlayerResponse.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\LeaderboardsClient\Responses\AGSRequestPercentilesResponse.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\LeaderboardsClient\Responses\AGSRequestScoreForPlayerResponse.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\LeaderboardsClient\Responses\AGSRequestScoreResponse.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\LeaderboardsClient\Responses\AGSRequestScoresResponse.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\LeaderboardsClient\Responses\AGSSubmitScoreResponse.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\PlayerClient\AGSPlayerClient.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\PlayerClient\DataModel\AGSPlayer.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\PlayerClient\Responses\AGSRequestBatchFriendsResponse.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\PlayerClient\Responses\AGSRequestFriendIdsResponse.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\PlayerClient\Responses\AGSRequestPlayerResponse.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\ProfilesClient\AGSProfilesClient.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\ProfilesClient\DataModel\AGSProfile.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\UnitySocialAPI\AGSSocialAchievement.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\UnitySocialAPI\AGSSocialAchievementDescription.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\UnitySocialAPI\AGSSocialLeaderboard.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\UnitySocialAPI\AGSSocialLeaderboardScore.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\UnitySocialAPI\AGSSocialLocalUser.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\UnitySocialAPI\AGSSocialUser.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\UnitySocialAPI\GameCircleSocial.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\WhispersyncClient\AGSWhispersyncClient.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\WhispersyncClient\DataModel\AGSGameDataMap.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\WhispersyncClient\DataModel\AGSLatestStringList.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\WhispersyncClient\DataModel\AGSSyncable.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\WhispersyncClient\DataModel\AGSSyncableAccumulatingNumber.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\WhispersyncClient\DataModel\AGSSyncableDeveloperString.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\WhispersyncClient\DataModel\AGSSyncableElement.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\WhispersyncClient\DataModel\AGSSyncableList.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\WhispersyncClient\DataModel\AGSSyncableNumber.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\WhispersyncClient\DataModel\AGSSyncableNumberElement.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\WhispersyncClient\DataModel\AGSSyncableNumberList.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\WhispersyncClient\DataModel\AGSSyncableString.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\WhispersyncClient\DataModel\AGSSyncableStringElement.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\WhispersyncClient\DataModel\AGSSyncableStringList.cs" />
+    <Compile Include="Assets\Extensions\Amazon\AmazonGameCirclePlugin\Source\WhispersyncClient\DataModel\AGSSyncableStringSet.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Data\Achievements.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Data\CloudIDs.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Data\CloudPrefs\CloudBool.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Data\CloudPrefs\CloudCurrencyFloat.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Data\CloudPrefs\CloudCurrencyInt.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Data\CloudPrefs\CloudDateTime.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Data\CloudPrefs\CloudDecimal.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Data\CloudPrefs\CloudDouble.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Data\CloudPrefs\CloudFloat.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Data\CloudPrefs\CloudInt.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Data\CloudPrefs\CloudLong.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Data\CloudPrefs\CloudString.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Data\CloudPrefs\CloudUInt.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Data\CloudRequestResult.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Data\CloudVariables.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Data\DataEnums.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Data\Leaderboards.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\AchievementsBridge.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\CloudOnceEvents.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\CloudOnceExceptions.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\CloudOnceInternalEnums.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\CloudProviderBase.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\Data\CloudPrefs\CurrencyValue.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\Data\CloudPrefs\PersistentCurrency.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\Data\CloudPrefs\PersistentValue.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\Data\CloudPrefs\SyncableCurrency.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\Data\CloudPrefs\SyncableItem.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\Data\CloudPrefs\SyncableItemMetaData.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\Data\ConflictResolver.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\Data\DataManager.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\Data\GameData.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\Data\iCloud\iCloudBridge.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\Data\iCloud\iCloudListener.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\Data\JSONObject\JsonHelper.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\Data\JSONObject\JsonInterfaces.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\Data\JSONObject\JSONObject.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\GenericAchievementsWrapper.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\GenericLeaderboardsWrapper.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\Interfaces\IAchievementUtils.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\Interfaces\ICloudProvider.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\Interfaces\ICloudStorageProvider.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\Interfaces\ILeaderboardUtils.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\Interfaces\IPersistent.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\UnifiedAchievement.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\UnifiedLeaderboard.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\Utils\AmazonAchievementUtils.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\Utils\AmazonLeaderboardUtils.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\Utils\AppleAchievementUtils.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\Utils\AppleLeaderboardUtils.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\Utils\CloudOnceUtils.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\Utils\EditorAchievementUtils.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\Utils\EditorLeaderboardUtils.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\Utils\GoogleAchievementUtils.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\Utils\GoogleLeaderboardUtils.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Internal\Utils\InternetConnectionUtils.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Providers\AmazonGameCircle\AmazonCloudProvider.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Providers\AmazonGameCircle\AmazonWhisperSyncWrapper.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Providers\AppleGameCenter\iOSCloudProvider.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Providers\AppleGameCenter\iOSCloudSaveWrapper.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Providers\Cloud.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Providers\DummyProvider\DummyProvider.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Providers\DummyProvider\DummyStorageWrapper.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Providers\GooglePlayGames\GooglePlayGamesCloudProvider.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Providers\GooglePlayGames\GooglePlayGamesCloudSaveWrapper.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Providers\TestProvider\TestProvider.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Providers\TestProvider\TestProviderStorageWrapper.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Quick Start Scripts\AchievementsButton.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Quick Start Scripts\DeactivateOnAwakeIfNotGoogle.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Quick Start Scripts\DeactivateOnCloudOnceEvent.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Quick Start Scripts\GoogleSignOutButton.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Quick Start Scripts\InitializeCloudOnce.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Quick Start Scripts\LeaderboardsButton.cs" />
+    <Compile Include="Assets\Extensions\CloudOnce\Quick Start Scripts\LoadSceneOnCloudOnceEvent.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\Achievement.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\CommonStatusCodes.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\CommonTypes.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\DummyClient.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\Events\IEvent.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\Events\IEventsClient.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\IPlayGamesClient.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\LeaderboardScoreData.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\Multiplayer\Invitation.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\Multiplayer\IRealTimeMultiplayerClient.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\Multiplayer\ITurnBasedMultiplayerClient.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\Multiplayer\MatchOutcome.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\Multiplayer\Participant.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\Multiplayer\Player.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\Multiplayer\RealTimeMultiplayerListener.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\Multiplayer\TurnBasedMatch.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\Nearby\AdvertisingResult.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\Nearby\ConnectionRequest.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\Nearby\ConnectionResponse.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\Nearby\DummyNearbyConnectionClient.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\Nearby\EndpointDetails.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\Nearby\INearbyConnectionClient.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\Nearby\NearbyConnectionConfiguration.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\PlayerStats.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\PlayGamesClientConfiguration.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\Quests\IQuest.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\Quests\IQuestMilestone.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\Quests\IQuestsClient.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\SavedGame\ISavedGameClient.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\SavedGame\ISavedGameMetadata.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\SavedGame\SavedGameMetadataUpdate.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\ScorePageToken.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\Video\CaptureOverlayStateListener.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\Video\iVideoClient.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\Video\VideoCapabilities.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\BasicApi\Video\VideoCaptureState.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\GameInfo.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\ISocialPlatform\PlayGamesAchievement.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\ISocialPlatform\PlayGamesLeaderboard.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\ISocialPlatform\PlayGamesLocalUser.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\ISocialPlatform\PlayGamesPlatform.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\ISocialPlatform\PlayGamesScore.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\ISocialPlatform\PlayGamesUserProfile.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\OurUtils\Logger.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\OurUtils\Misc.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\OurUtils\PlatformUtils.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\OurUtils\PlayGamesHelperObject.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Android\AndroidClient.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Android\AndroidTokenClient.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Android\Developers\JavaInterfaceProxy.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Android\Developers\JavaObjWrapper.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Android\Gms\Common\Api\GoogleApiClient.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Android\Gms\Common\Api\PendingResult.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Android\Gms\Common\Api\Result.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Android\Gms\Common\Api\ResultCallback.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Android\Gms\Common\Api\ResultCallbackProxy.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Android\Gms\Common\Api\Status.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Android\Gms\Common\ConnectionResult.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Android\Gms\Games\Games.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Android\Gms\Games\Stats\LoadPlayerStatsResultObject.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Android\Gms\Games\Stats\PlayerStats.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Android\Gms\Games\Stats\PlayerStatsObject.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Android\Gms\Games\Stats\Stats.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Android\Gms\Games\Stats\StatsObject.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\IClientImpl.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\IOS\IOSClient.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\IOS\IOSTokenClient.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\CallbackUtils.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\ConversionUtils.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\Achievement.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\AchievementManager.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\AndroidPlatformConfiguration.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\Builder.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\CaptureOverlayStateListenerHelper.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\CommonErrorStatus.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\EndpointDiscoveryListenerHelper.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\Event.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\EventManager.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\GameServices.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\InternalHooks.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\IosPlatformConfiguration.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\Leaderboard.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\LeaderboardManager.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\MessageListenerHelper.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\MultiplayerInvitation.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\MultiplayerParticipant.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\NearbyConnections.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\NearbyConnectionsBuilder.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\NearbyConnectionsStatus.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\NearbyConnectionTypes.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\ParticipantResults.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\Player.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\PlayerManager.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\PlayerStats.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\Quest.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\QuestManager.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\QuestMilestone.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\RealTimeEventListenerHelper.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\RealTimeMultiplayerManager.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\RealTimeRoom.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\RealTimeRoomConfig.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\RealTimeRoomConfigBuilder.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\Score.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\ScorePage.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\ScoreSummary.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\Sentinels.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\SnapshotManager.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\SnapshotMetadata.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\SnapshotMetadataChange.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\SnapshotMetadataChangeBuilder.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\StatsManager.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\Status.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\SymbolLocation.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\TurnBasedMatch.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\TurnBasedMatchConfig.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\TurnBasedMatchConfigBuilder.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\TurnBasedMultiplayerManager.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\Types.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\VideoCapabilities.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\VideoCaptureState.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\Cwrapper\VideoManager.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\JavaUtils.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\NativeClient.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\NativeEventClient.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\NativeNearbyConnectionClientFactory.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\NativeNearbyConnectionsClient.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\NativeQuestClient.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\NativeRealtimeMultiplayerClient.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\NativeSavedGameClient.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\NativeTurnBasedMultiplayerClient.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\NativeVideoClient.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\AchievementManager.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\AndroidPlatformConfiguration.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\BaseReferenceHolder.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\Callbacks.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\CaptureOverlayStateListenerHelper.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\EventManager.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\GameServices.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\GameServicesBuilder.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\IosPlatformConfiguration.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\LeaderboardManager.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\MultiplayerInvitation.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\MultiplayerParticipant.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\NativeAchievement.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\NativeAppIdentifier.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\NativeConnectionRequest.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\NativeConnectionResponse.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\NativeEndpointDetails.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\NativeEndpointDiscoveryListenerHelper.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\NativeEvent.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\NativeLeaderboard.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\NativeMessageListenerHelper.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\NativePlayer.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\NativePlayerStats.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\NativeQuest.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\NativeQuestMilestone.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\NativeRealTimeRoom.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\NativeScore.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\NativeScoreEntry.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\NativeScorePage.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\NativeScorePageToken.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\NativeScoreSummary.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\NativeSnapshotMetadata.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\NativeSnapshotMetadataChange.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\NativeStartAdvertisingResult.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\NativeTurnBasedMatch.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\NativeVideoCapabilities.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\NativeVideoCaptureState.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\NearbyConnectionsManager.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\NearbyConnectionsManagerBuilder.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\ParticipantResults.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\PInvokeUtilities.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\PlatformConfiguration.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\PlayerManager.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\PlayerSelectUIResponse.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\QuestManager.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\RealTimeEventListenerHelper.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\RealtimeManager.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\RealtimeRoomConfig.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\RealtimeRoomConfigBuilder.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\SnapshotManager.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\StatsManager.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\TurnBasedManager.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\TurnBasedMatchConfig.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\TurnBasedMatchConfigBuilder.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\PInvoke\VideoManager.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\Native\UnsupportedSavedGamesClient.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\NearbyConnectionClientFactory.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\PlayGamesClientFactory.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\Platforms\TokenClient.cs" />
+    <Compile Include="Assets\Extensions\GooglePlayGames\PluginVersion.cs" />
     <Compile Include="Assets\Fabric\Kits\Answers\Runtime\Answers.cs" />
     <Compile Include="Assets\Fabric\Kits\Answers\Runtime\Internal\AnswersAndroidImplementation.cs" />
     <Compile Include="Assets\Fabric\Kits\Answers\Runtime\Internal\AnswersAppleImplementation.cs" />
@@ -145,9 +459,23 @@
     <Compile Include="Assets\Spilgames\Json\JSONHelper.cs" />
     <Compile Include="Assets\Spilgames\Json\JSONObject.cs" />
     <Compile Include="Assets\Spilgames\Spil.cs" />
+    <None Include="Assets\Extensions\Amazon\AmazonGameCircleLicense.txt" />
     <None Include="Assets\Fabric\NOTICE.txt" />
+    <None Include="Assets\Extensions\Amazon\AmazonGameCirclePluginVersion.txt" />
+    <None Include="Assets\Extensions\CloudOnce\Internal\Data\Templates\CloudVariablesTemplate.cs.txt" />
+    <None Include="Assets\Extensions\CloudOnce\Internal\Data\Templates\LeaderboardsTemplate.cs.txt" />
+    <None Include="Assets\Extensions\CloudOnce\Internal\Data\Templates\CloudIDsPropertyTemplate.cs.txt" />
+    <None Include="Assets\Extensions\CloudOnce\Internal\Data\Templates\CloudIDsTemplate.cs.txt" />
+    <None Include="Assets\Extensions\Amazon\AmazonGameCircleNotice.txt" />
+    <None Include="Assets\Extensions\CloudOnce\readme.txt" />
+    <None Include="Assets\Extensions\CloudOnce\Internal\Data\Templates\LeaderboardsPropertyTemplate.cs.txt" />
+    <None Include="Assets\Extensions\CloudOnce\Internal\Data\Templates\CloudVariablesPropertyTemplate.cs.txt" />
+    <None Include="Assets\Extensions\CloudOnce\Internal\Data\Templates\AndroidManifestTemplate.xml" />
     <None Include="Assets\link.xml" />
     <None Include="Assets\FacebookSDK\link.xml" />
+    <None Include="Assets\Extensions\Amazon\AmazonCommon\Source\MiniJSON\MiniJSONLicense.txt" />
+    <None Include="Assets\Extensions\CloudOnce\Internal\Data\Templates\AchievementsTemplate.cs.txt" />
+    <None Include="Assets\Extensions\CloudOnce\Internal\Data\Templates\AchievementsPropertyTemplate.cs.txt" />
     <Reference Include="UnityEngine.UI">
       <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
     </Reference>
@@ -167,7 +495,7 @@
       <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
-      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Library/resharper-unity-libs/nunit3.5.0/nunit.framework.dll</HintPath>
+      <HintPath>/Users/frankslofstra/Documents/Projects/TappyPlane/Library/resharper-unity-libs/nunit3.5.0/nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Timeline">
       <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Timeline/RuntimeEditor/UnityEngine.Timeline.dll</HintPath>
@@ -208,9 +536,6 @@
     <Reference Include="UnityEditor.Graphs">
       <HintPath>/Applications/Unity/Unity.app/Contents/Managed/UnityEditor.Graphs.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor.Android.Extensions">
-      <HintPath>/Applications/Unity/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor.iOS.Extensions">
       <HintPath>/Applications/Unity/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll</HintPath>
     </Reference>
@@ -218,84 +543,96 @@
       <HintPath>/Applications/Unity/Unity.app/Contents/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/Newtonsoft.Json.dll</HintPath>
+      <HintPath>/Users/frankslofstra/Documents/Projects/TappyPlane/Assets/Plugins/Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Editor">
-      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/UnityPurchasing/Bin/Editor.dll</HintPath>
+      <HintPath>/Users/frankslofstra/Documents/Projects/TappyPlane/Assets/Plugins/UnityPurchasing/Bin/Editor.dll</HintPath>
     </Reference>
     <Reference Include="Purchasing.Common">
-      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/UnityPurchasing/Bin/Purchasing.Common.dll</HintPath>
+      <HintPath>/Users/frankslofstra/Documents/Projects/TappyPlane/Assets/Plugins/UnityPurchasing/Bin/Purchasing.Common.dll</HintPath>
     </Reference>
     <Reference Include="Stores">
-      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/UnityPurchasing/Bin/Stores.dll</HintPath>
+      <HintPath>/Users/frankslofstra/Documents/Projects/TappyPlane/Assets/Plugins/UnityPurchasing/Bin/Stores.dll</HintPath>
     </Reference>
     <Reference Include="Apple">
-      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/UnityPurchasing/Bin/Apple/Apple.dll</HintPath>
+      <HintPath>/Users/frankslofstra/Documents/Projects/TappyPlane/Assets/Plugins/UnityPurchasing/Bin/Apple/Apple.dll</HintPath>
     </Reference>
     <Reference Include="Security">
-      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/UnityPurchasing/Bin/Security/live/Security.dll</HintPath>
+      <HintPath>/Users/frankslofstra/Documents/Projects/TappyPlane/Assets/Plugins/UnityPurchasing/Bin/Security/live/Security.dll</HintPath>
     </Reference>
     <Reference Include="FacebookStore">
-      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/UnityPurchasing/Bin/Facebook/FacebookStore.dll</HintPath>
+      <HintPath>/Users/frankslofstra/Documents/Projects/TappyPlane/Assets/Plugins/UnityPurchasing/Bin/Facebook/FacebookStore.dll</HintPath>
     </Reference>
     <Reference Include="Tizen">
-      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/UnityPurchasing/Bin/Tizen/Tizen.dll</HintPath>
+      <HintPath>/Users/frankslofstra/Documents/Projects/TappyPlane/Assets/Plugins/UnityPurchasing/Bin/Tizen/Tizen.dll</HintPath>
     </Reference>
     <Reference Include="winrt">
-      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/UnityPurchasing/winrt/winrt.dll</HintPath>
+      <HintPath>/Users/frankslofstra/Documents/Projects/TappyPlane/Assets/Plugins/UnityPurchasing/winrt/winrt.dll</HintPath>
     </Reference>
     <Reference Include="ChannelPurchase">
-      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/UnityChannel/ChannelPurchase.dll</HintPath>
+      <HintPath>/Users/frankslofstra/Documents/Projects/TappyPlane/Assets/Plugins/UnityChannel/ChannelPurchase.dll</HintPath>
     </Reference>
     <Reference Include="UnityStore">
-      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Plugins/UnityChannel/UnityStore.dll</HintPath>
+      <HintPath>/Users/frankslofstra/Documents/Projects/TappyPlane/Assets/Plugins/UnityChannel/UnityStore.dll</HintPath>
     </Reference>
     <Reference Include="Facebook.Unity">
-      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/FacebookSDK/Plugins/Facebook.Unity.dll</HintPath>
+      <HintPath>/Users/frankslofstra/Documents/Projects/TappyPlane/Assets/FacebookSDK/Plugins/Facebook.Unity.dll</HintPath>
     </Reference>
     <Reference Include="Facebook.Unity.Settings">
-      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/FacebookSDK/Plugins/Settings/Facebook.Unity.Settings.dll</HintPath>
+      <HintPath>/Users/frankslofstra/Documents/Projects/TappyPlane/Assets/FacebookSDK/Plugins/Settings/Facebook.Unity.Settings.dll</HintPath>
     </Reference>
     <Reference Include="Facebook.Unity.Gameroom">
-      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/FacebookSDK/Plugins/Gameroom/Facebook.Unity.Gameroom.dll</HintPath>
+      <HintPath>/Users/frankslofstra/Documents/Projects/TappyPlane/Assets/FacebookSDK/Plugins/Gameroom/Facebook.Unity.Gameroom.dll</HintPath>
     </Reference>
     <Reference Include="FacebookNamedPipeClient">
-      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/FacebookSDK/Plugins/Gameroom/FacebookNamedPipeClient.dll</HintPath>
+      <HintPath>/Users/frankslofstra/Documents/Projects/TappyPlane/Assets/FacebookSDK/Plugins/Gameroom/FacebookNamedPipeClient.dll</HintPath>
     </Reference>
     <Reference Include="Facebook.Unity.Editor">
-      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/FacebookSDK/Plugins/Editor/Facebook.Unity.Editor.dll</HintPath>
+      <HintPath>/Users/frankslofstra/Documents/Projects/TappyPlane/Assets/FacebookSDK/Plugins/Editor/Facebook.Unity.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Analytics">
-      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Fabric/Managed/Analytics.dll</HintPath>
+      <HintPath>/Users/frankslofstra/Documents/Projects/TappyPlane/Assets/Fabric/Managed/Analytics.dll</HintPath>
     </Reference>
     <Reference Include="Validator">
-      <HintPath>/Users/sebastian/Work/Unity Projects/tappy_plane_unity/Assets/Fabric/Managed/Validator.dll</HintPath>
+      <HintPath>/Users/frankslofstra/Documents/Projects/TappyPlane/Assets/Fabric/Managed/Validator.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Advertisements">
-      <HintPath>/Users/sebastian/Library/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.3/UnityEngine.Advertisements.dll</HintPath>
+      <HintPath>/Users/frankslofstra/Library/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.3/UnityEngine.Advertisements.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.Advertisements">
-      <HintPath>/Users/sebastian/Library/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.3/Editor/UnityEditor.Advertisements.dll</HintPath>
+      <HintPath>/Users/frankslofstra/Library/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.3/Editor/UnityEditor.Advertisements.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Analytics">
-      <HintPath>/Users/sebastian/Library/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.13/UnityEngine.Analytics.dll</HintPath>
+      <HintPath>/Users/frankslofstra/Library/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.13/UnityEngine.Analytics.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.Analytics">
-      <HintPath>/Users/sebastian/Library/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.13/Editor/UnityEditor.Analytics.dll</HintPath>
+      <HintPath>/Users/frankslofstra/Library/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.13/Editor/UnityEditor.Analytics.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Purchasing">
-      <HintPath>/Users/sebastian/Library/Unity/cache/packages/packages.unity.com/com.unity.purchasing@0.0.19/UnityEngine.Purchasing.dll</HintPath>
+      <HintPath>/Users/frankslofstra/Library/Unity/cache/packages/packages.unity.com/com.unity.purchasing@0.0.19/UnityEngine.Purchasing.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.Purchasing">
-      <HintPath>/Users/sebastian/Library/Unity/cache/packages/packages.unity.com/com.unity.purchasing@0.0.19/Editor/UnityEditor.Purchasing.dll</HintPath>
+      <HintPath>/Users/frankslofstra/Library/Unity/cache/packages/packages.unity.com/com.unity.purchasing@0.0.19/Editor/UnityEditor.Purchasing.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.StandardEvents">
-      <HintPath>/Users/sebastian/Library/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.10/UnityEngine.StandardEvents.dll</HintPath>
+      <HintPath>/Users/frankslofstra/Library/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.10/UnityEngine.StandardEvents.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.JarResolver_v1.2.61.0">
+      <HintPath>/Users/frankslofstra/Documents/Projects/TappyPlane/Assets/PlayServicesResolver/Editor/Google.JarResolver_v1.2.61.0.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.VersionHandler">
+      <HintPath>/Users/frankslofstra/Documents/Projects/TappyPlane/Assets/PlayServicesResolver/Editor/Google.VersionHandler.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.IOSResolver_v1.2.61.0">
+      <HintPath>/Users/frankslofstra/Documents/Projects/TappyPlane/Assets/PlayServicesResolver/Editor/Google.IOSResolver_v1.2.61.0.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.VersionHandlerImpl_v1.2.61.0">
+      <HintPath>/Users/frankslofstra/Documents/Projects/TappyPlane/Assets/PlayServicesResolver/Editor/Google.VersionHandlerImpl_v1.2.61.0.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{12C0FBD5-B090-A94D-1AF8-3A80511B45DB}</Project>
+      <Project>{835344B5-D482-29B1-1E0D-943F475887E4}</Project>
       <Name>Assembly-CSharp-firstpass</Name>
     </ProjectReference>
   </ItemGroup>
@@ -307,4 +644,34 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>/Applications/Unity/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>/Applications/Unity/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Common.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>/Applications/Unity/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>/Applications/Unity/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Common.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>/Applications/Unity/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>/Applications/Unity/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Common.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>
