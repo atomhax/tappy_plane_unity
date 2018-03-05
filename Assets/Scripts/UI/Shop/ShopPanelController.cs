@@ -173,10 +173,14 @@ public class ShopPanelController : MonoBehaviour {
         Spil.Instance.ShowHelpCenterWebview(null);
     }
 
-    public void ShowPrivacyPolicy() {
-        Application.OpenURL("http://www.spilgames.com/mobile-apps-privacy-policy/");
+    public void ShowPrivacyPolicySettings() {
+        Spil.Instance.ShowPrivacyPolicySettings();
     }
 
+    public void ShowTermsAndConditions() {
+        Application.OpenURL("http://www.spilgames.com/terms-of-use/");
+    }
+    
     public void OpenTappyChest() {
         Spil.PlayerData.OpenGacha(100088, PlayerDataUpdateReasons.OpenGacha, "Shop", "Opening Tappy Chest");
     }

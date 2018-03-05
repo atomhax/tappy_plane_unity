@@ -5,7 +5,8 @@ using SpilGames.Unity;
 using SpilGames.Unity.Helpers.GameData;
 
 public class EntryButtonController : MonoBehaviour {
-
+	Entry entry;
+	
 	Bundle bundle;
 
 	public Text buttonLabel;
@@ -14,7 +15,8 @@ public class EntryButtonController : MonoBehaviour {
 
 	TabController parentTabController;
 
-	public void SetupButton(Entry entry, TabController parent){
+	public void SetupButton(Entry entryValue, TabController parent) {
+		entry = entryValue;
 		parentTabController = parent;
 		bundle = Spil.GameData.GetBundle (entry.BundleId);
 		buttonLabel.text = entry.Label;
@@ -26,7 +28,7 @@ public class EntryButtonController : MonoBehaviour {
 	}
 
 	public void EntryButtonPressed(){
-		parentTabController.bundleDisplayPanel.SetupBundleDisplayPanel (bundle);
+		parentTabController.bundleDisplayPanel.SetupBundleDisplayPanel (bundle, entry);
 	}
 
 

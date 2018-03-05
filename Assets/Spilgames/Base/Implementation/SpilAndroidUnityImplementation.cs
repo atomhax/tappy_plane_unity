@@ -93,6 +93,10 @@ namespace SpilGames.Unity.Base.Implementations {
             CallNativeMethod("checkPrivacyPolicy");
         }
 
+        public override void ShowPrivacyPolicySettings() {
+            CallNativeMethod("showPrivacyPolicySettings");
+        }
+
         public override void SetUserId(string providerId, string userId) {
             CallNativeMethod("setUserId", new object[] {providerId, userId}, true);
         }
