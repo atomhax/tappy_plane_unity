@@ -101,6 +101,10 @@ namespace SpilGames.Unity.Base.Implementations {
             PrivacyPolicyManager.ShowPrivacyPolicy();
         }
 
+        public override void ShowPrivacyPolicySettings() {
+            
+        }
+
         public override void ResetData() {
             gData = null;
             Spil.GameData = null;

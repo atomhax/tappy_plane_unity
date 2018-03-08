@@ -24,7 +24,7 @@ public class BundleDisplayPanelController : MonoBehaviour {
 
     public Image bundleImage;
 
-    public void SetupBundleDisplayPanel(Bundle bundle) {
+    public void SetupBundleDisplayPanel(Bundle bundle, Entry entry) {
         panelInstance = this;
         bundleDisplayed = bundle;
         Promotion bundlePromotion = Spil.GameData.GetPromotion(bundleDisplayed.Id);      
@@ -82,12 +82,19 @@ public class BundleDisplayPanelController : MonoBehaviour {
         Spil.Instance.OnImageLoadFailed -= OnImageLoadFailed;
         Spil.Instance.OnImageLoadFailed += OnImageLoadFailed;
 
-        if (bundlePromotion != null && bundlePromotion.ImageEntries != null) {
+        if (bundlePromotion != null && bundlePromotion.ImageEntries != null && bundlePromotion.ImageEntries.Count > 0) {
             string promotionImage = bundlePromotion.ImageEntries[0].ImageUrl;
             
             if (promotionImage != null) {
                 Debug.Log("Image already preloaded with path: " + promotionImage);
                 Spil.Instance.LoadImage(this, promotionImage);
+            }
+        } else if (entry.ImageEntries != null && entry.ImageEntries.Count > 0) {
+            string entryImage = entry.ImageEntries[0].ImageUrl;
+            
+            if (entryImage != null) {
+                Debug.Log("Image already preloaded with path: " + entryImage);
+                Spil.Instance.LoadImage(this, entryImage);
             }
         } else if (bundle.HasImage()) {
             string imagePath = bundle.GetImagePath();
