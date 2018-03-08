@@ -9,7 +9,7 @@
 #import "HookBridge.h"
 #import "GAI.h"
 
-#define SPIL_SDK_VERSION @"2.8.1"
+#define SPIL_SDK_VERSION @"2.9.0"
 
 @class ImageContext;
 @class Spil;
@@ -203,6 +203,17 @@
  * Present the popup if it was never completed by the user.
  */
 +(void)checkPrivacyPolicy:(BOOL)isUnity;
+
+/**
+ * Opens the privacy policy settings screen
+ */
++(void)showPrivacyPolicySettings;
+
+/**
+ * Saves the priv value and updates the 3rd party libraries accordingly.
+ * @param priv The new priv value to use
+ */
++(void)savePrivValue:(int)priv;
 
 /**
  * Forwarding Delegate method to let the Spil framework know when the app was launched

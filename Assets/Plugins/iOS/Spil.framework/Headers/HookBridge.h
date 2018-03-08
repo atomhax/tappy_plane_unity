@@ -30,6 +30,10 @@ extern "C" {
     
     void checkPrivacyPolicyNative();
     
+    void showPrivacyPolicySettings();
+    
+    void savePrivValue(int priv);
+    
     // --- Util ---
     
     void setCustomBundleIdNative(const char* bundleId);

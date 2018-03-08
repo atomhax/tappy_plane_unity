@@ -30,6 +30,7 @@
 -(void)setCustomBundleId:(NSString*)bundleId;
 -(void)setPluginInformation:(NSString*)pluginNameParam pluginVersion:(NSString*)pluginVersionParam;
 -(void)setPushKey:(NSString*)pushKey;
+-(void)setPrivValue:(int)privValue;
 
 -(NSString*)getBundleId;
 -(NSString*)getSessionId;
@@ -42,6 +43,7 @@
 -(int)getTimezoneOffset;
 -(NSString*)getDeviceModel;
 -(NSString*)getAppVersion;
+-(NSString*)getPrivValue;
 
 // --- Event tracking ---
 
