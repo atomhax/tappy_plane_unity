@@ -24,20 +24,33 @@ namespace SpilGames.Unity {
 
         [SerializeField] public bool initializeOnAwake = true;
 
+        [Header("Privacy Policy Settings")]
+        
         [SerializeField] private bool checkPrivacyPolicyAndroid = true;
 
         [SerializeField] private bool checkPrivacyPolicyIOS = true;
-
+        
         public static bool CheckPrivacyPolicy {
             get {
 #if UNITY_ANDROID
                 return MonoInstance.checkPrivacyPolicyAndroid;
 #else
-			return MonoInstance.checkPrivacyPolicyIOS;
+			    return MonoInstance.checkPrivacyPolicyIOS;
 #endif
             }
         }
 
+        [SerializeField] private bool useUnityPrefab;
+
+        public static bool UseUnityPrefab;
+
+        public enum PrivacyPolicyPrefabOrientationEnum {
+            Landscape,
+            Portrait
+        }
+
+        public PrivacyPolicyPrefabOrientationEnum PrefabOrientation;
+        
         [Header("Android Settings")]
 #if UNITY_ANDROID || UNITY_EDITOR
         [SerializeField]
@@ -225,8 +238,14 @@ namespace SpilGames.Unity {
             }
 #endif
 
+            UseUnityPrefab = useUnityPrefab;
+            
             if (CheckPrivacyPolicy) {
-                Instance.CheckPrivacyPolicy();
+                if (useUnityPrefab) {
+                    Instance.CheckPrivacyPolicyUnity();
+                } else {
+                    Instance.CheckPrivacyPolicy();
+                }
             } else {
                 Instance.SpilInit(false);
             }

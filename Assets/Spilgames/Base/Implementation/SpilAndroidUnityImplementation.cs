@@ -94,7 +94,22 @@ namespace SpilGames.Unity.Base.Implementations {
         }
 
         public override void ShowPrivacyPolicySettings() {
-            CallNativeMethod("showPrivacyPolicySettings");
+            if (Spil.UseUnityPrefab) {
+                PrivacyPolicyHelper.PrivacyPolicyObject = (GameObject) Instantiate(Resources.Load("Spilgames/PrivacyPolicy/PrivacyPolicyUnity" + Spil.MonoInstance.PrefabOrientation));
+                PrivacyPolicyHelper.PrivacyPolicyObject.SetActive(true);
+            
+                PrivacyPolicyHelper.Instance.ShowSettingsScreen(1);
+            } else {
+                CallNativeMethod("showPrivacyPolicySettings");
+            }    
+        }
+
+        public override void SavePrivValue(int priv) {
+            CallNativeMethod("savePrivValue", new object[] {priv}, true);
+        }
+
+        public override int GetPrivValue() {
+            return Convert.ToInt32(CallNativeMethod("getPrivValue"));
         }
 
         public override void SetUserId(string providerId, string userId) {
@@ -216,6 +231,13 @@ namespace SpilGames.Unity.Base.Implementations {
         /// If no video is available then nothing will happen.
         /// </summary>
         public override void PlayVideo(string location = null, string rewardType = null) {
+            int priv = Spil.Instance.GetPrivValue();
+
+            if (priv < 2 && priv > -1) {
+                ShowAdsScreen();
+                return;
+            }
+            
             CallNativeMethod("playVideo", new object[] {
                 location,
                 rewardType
@@ -248,6 +270,13 @@ namespace SpilGames.Unity.Base.Implementations {
         /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
         public override void RequestRewardVideo(string location = null, string rewardType = null) {
+            int priv = Spil.Instance.GetPrivValue();
+
+            if (priv < 2 && priv > -1) {
+                fireAdAvailableEvent("rewardVideo");
+                return;
+            }
+            
             CallNativeMethod("requestRewardVideo", new object[] {
                 location,
                 rewardType

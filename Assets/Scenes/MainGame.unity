@@ -6490,6 +6490,8 @@ MonoBehaviour:
   initializeOnAwake: 1
   checkPrivacyPolicyAndroid: 1
   checkPrivacyPolicyIOS: 1
+  useUnityPrefab: 1
+  PrefabOrientation: 0
   ProjectId: 492493592102
   CustomBundleId: 
   EditorLogging: 1
@@ -10159,7 +10161,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.4304375, y: 0.46500003}
   m_AnchorMax: {x: 0.50859374, y: 0.58875006}
-  m_AnchoredPosition: {x: -1.5599976, y: -0.49994}
+  m_AnchoredPosition: {x: -1.5599976, y: -0.49994087}
   m_SizeDelta: {x: -2, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1555181414

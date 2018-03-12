@@ -50,6 +50,10 @@ namespace SpilGames.Unity.Base.UnityEditor {
 
             requestForm.AddField("ts", time.ToString());
             requestForm.AddField("queued", 0);
+            if (Spil.Instance.GetPrivValue() > -1) {
+                requestForm.AddField("priv", Spil.Instance.GetPrivValue());
+            }
+            
 
             if (spil.EditorDebugMode) {
                 requestForm.AddField("debugMode", Convert.ToString(spil.EditorDebugMode).ToLower());

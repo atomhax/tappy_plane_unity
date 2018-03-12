@@ -43,7 +43,7 @@ public class ShopPanelController : MonoBehaviour {
         Spil.Instance.OnSplashScreenOpenShop -= OnSplashScreenOpenShop;
         Spil.Instance.OnSplashScreenOpenShop += OnSplashScreenOpenShop;
 
-        Spil.Instance.RequestRewardVideo("Shop");
+        Invoke("RequestRewardVideo", 2); 
         OnPlayerDataUpdated("Opened", null);
 
         spilIds.text = "DeviceId: " + Spil.Instance.GetDeviceId() + "\nUserId: " + Spil.Instance.GetSpilUserId();
@@ -129,6 +129,10 @@ public class ShopPanelController : MonoBehaviour {
         }
     }
 
+    void RequestRewardVideo() {
+        Spil.Instance.RequestRewardVideo("Shop");
+    }
+    
     public void StartRewardedVideo() {
         Spil.Instance.OnAdFinished -= Spil_Instance_OnAdFinished;
         Spil.Instance.OnAdFinished += Spil_Instance_OnAdFinished;
