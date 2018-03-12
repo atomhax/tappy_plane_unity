@@ -1877,6 +1877,19 @@ namespace SpilGames.Unity.Base.Implementations{
             
             PrivacyPolicyHelper.Instance.ShowAdsScreen(2);
         }
+
+        public void TrackPrivacyPolicyChanged(bool withPersonalisedAds, bool withPersonalisedContent, string location, bool fromStartScreen) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("personalizedAds", withPersonalisedAds);
+            dict.Add("personalizedContents", withPersonalisedContent);
+            dict.Add("loction", location);
+
+            if (fromStartScreen) {
+                dict.Add("acceptGDPR", true);
+            }
+
+            SendCustomEvent("privacyChanged", dict);
+        }
         
         public abstract void SavePrivValue(int priv);
 

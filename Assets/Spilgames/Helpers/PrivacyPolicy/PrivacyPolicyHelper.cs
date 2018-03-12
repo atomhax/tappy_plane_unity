@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using SpilGames.Unity;
 using SpilGames.Unity.Base.Implementations;
-using SpilGames.Unity.Base.UnityEditor;
 using SpilGames.Unity.Json;
 using UnityEngine;
 using UnityEngine.Experimental.UIElements;
@@ -270,15 +269,7 @@ public class PrivacyPolicyHelper : MonoBehaviour {
             
             SpilUnityImplementationBase.firePrivacyPolicyStatus(true);
             
-            SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
-            spilEvent.eventName = "privacyChanged";
-
-            spilEvent.customData.AddField("acceptGDPR", true);
-            spilEvent.customData.AddField("personalizedAds", withPersonalisedAds);
-            spilEvent.customData.AddField("personalizedContents", withPersonalisedContent);
-            spilEvent.customData.AddField("loction", "StartScreen");
-            
-            spilEvent.Send();
+            Spil.Instance.TrackPrivacyPolicyChanged(withPersonalisedAds, withPersonalisedContent, "StartScreen", true);
         } else {
             firstCheck = true;
         }
@@ -295,7 +286,6 @@ public class PrivacyPolicyHelper : MonoBehaviour {
     public void SaveSettings() {
         int oldPriv;
         int newPriv;
-        SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();;
         switch (openId) {
             case 0:
                 //Needed this way due to Toggle not having an OnClick and if toggle off it will fire an on value changed event which would close the whole popup
@@ -318,15 +308,9 @@ public class PrivacyPolicyHelper : MonoBehaviour {
                 } else {
                     Destroy(PrivacyPolicyObject);
                     Instance = null;
-                }
+                }         
                 
-                spilEvent.eventName = "privacyChanged";
-                
-                spilEvent.customData.AddField("personalizedAds", withPersonalisedAds);
-                spilEvent.customData.AddField("personalizedContents", withPersonalisedContent);
-                spilEvent.customData.AddField("loction", "GeneralSettingsScreen");
-            
-                spilEvent.Send();
+                Spil.Instance.TrackPrivacyPolicyChanged(withPersonalisedAds, withPersonalisedContent, "GeneralSettingsScreen", false);
                 
                 break;
             case 2:
@@ -340,13 +324,7 @@ public class PrivacyPolicyHelper : MonoBehaviour {
                     Instance = null;
                 }
 
-                spilEvent.eventName = "privacyChanged";
-
-                spilEvent.customData.AddField("personalizedAds", withPersonalisedAds);
-                spilEvent.customData.AddField("personalizedContents", withPersonalisedContent);
-                spilEvent.customData.AddField("loction", "AdsSettingsScreen");
-            
-                spilEvent.Send();
+                Spil.Instance.TrackPrivacyPolicyChanged(withPersonalisedAds, withPersonalisedContent, "AdsSettingsScreen", false);
                 
                 break;
         }
