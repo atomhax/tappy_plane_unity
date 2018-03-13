@@ -796,6 +796,13 @@ namespace SpilGames.Unity.Base.Implementations
         [DllImport("__Internal")]
         private static extern void checkPrivacyPolicyNative();
 
+        public override void ShowPrivacyPolicySettings()
+        {
+            showPrivacyPolicySettings();
+        }
+        [DllImport("__Internal")]
+        private static extern void showPrivacyPolicySettings();
+        
         #endregion
     }        
 #endif

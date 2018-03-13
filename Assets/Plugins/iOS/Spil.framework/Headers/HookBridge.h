@@ -32,7 +32,9 @@ extern "C" {
     
     void showPrivacyPolicySettings();
     
-    void savePrivValue(int priv);
+    void savePrivValueNative(int priv);
+    
+    int getPrivValueNative();
     
     // --- Util ---
     

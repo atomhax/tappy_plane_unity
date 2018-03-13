@@ -216,6 +216,11 @@
 +(void)savePrivValue:(int)priv;
 
 /**
+ * Returns the priv value
+ */
++(int)getPrivValue;
+
+/**
  * Forwarding Delegate method to let the Spil framework know when the app was launched
  * @param application Delegate application to be passed
  * @param launchOptions Dictionary with launch options
