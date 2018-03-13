@@ -15,24 +15,24 @@ public class TabController : MonoBehaviour {
 
 	public void SetupTab(Tab tab){
 		tabTitle.text = tab.Name;
-		foreach(Entry entry in tab.Entries){
-			bool hasItem = false;
-			Bundle bundle = Spil.GameData.GetBundle (entry.BundleId);
-			for (int i = 0; i < bundle.Items.Count; i++) {
-				Item gacha  = Spil.GameData.GetGacha(bundle.Items[i].Id);
-				bool isGacha = false;
-				if (gacha != null) {
-					isGacha = Spil.GameData.GetGacha(bundle.Items[i].Id).IsGacha;
-				}
-				
-				if(Spil.PlayerData.InventoryHasItem(bundle.Items[i].Id) && !isGacha){
-					hasItem = true;
-				}
-			}	
-			if (!hasItem) {
-				CreateBundleButton (entry);
-			}
-		}
+//		foreach(Entry entry in tab.Entries){
+//			bool hasItem = false;
+//			Bundle bundle = Spil.GameData.GetBundle (entry.BundleId);
+//			for (int i = 0; i < bundle.Items.Count; i++) {
+//				Item gacha  = Spil.GameData.GetGacha(bundle.Items[i].Id);
+//				bool isGacha = false;
+//				if (gacha != null) {
+//					isGacha = Spil.GameData.GetGacha(bundle.Items[i].Id).IsGacha;
+//				}
+//				
+//				if(Spil.PlayerData.InventoryHasItem(bundle.Items[i].Id) && !isGacha){
+//					hasItem = true;
+//				}
+//			}	
+//			if (!hasItem) {
+//				CreateBundleButton (entry);
+//			}
+//		}
 	}
 		
 	void CreateBundleButton(Entry entry){

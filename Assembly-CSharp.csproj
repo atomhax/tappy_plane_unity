@@ -142,6 +142,7 @@
     <Compile Include="Assets\Spilgames\Helpers\PlayerData\Inventory.cs" />
     <Compile Include="Assets\Spilgames\Helpers\PlayerData\PlayerDataHelper.cs" />
     <Compile Include="Assets\Spilgames\Helpers\PlayerData\Wallet.cs" />
+    <Compile Include="Assets\Spilgames\Helpers\PrivacyPolicy\PrivacyPolicyHelper.cs" />
     <Compile Include="Assets\Spilgames\Json\JSONHelper.cs" />
     <Compile Include="Assets\Spilgames\Json\JSONObject.cs" />
     <Compile Include="Assets\Spilgames\Spil.cs" />

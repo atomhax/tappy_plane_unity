@@ -270,6 +270,8 @@ public class GameController : MonoBehaviour
         Spil.Instance.RequestLiveEvent();
         SavePrivateGameState();
         RequestMoreApps();
+        
+        
     }
     
     private void OnPrivacyPolicyStatus(bool accepted) {

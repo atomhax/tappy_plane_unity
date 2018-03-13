@@ -7,8 +7,8 @@ using SpilGames.Unity.Json;
 using SpilGames.Unity.Base.SDK;
 using SpilGames.Unity.Helpers.IAPPackages;
 
-namespace SpilGames.Unity.Base.Implementations {
-    public abstract class SpilUnityImplementationBase{
+namespace SpilGames.Unity.Base.Implementations{
+    public abstract class SpilUnityImplementationBase : MonoBehaviour{
         public static string PluginName = "Unity";
         public static string PluginVersion = "2.9.0";
 
@@ -1791,7 +1791,11 @@ namespace SpilGames.Unity.Base.Implementations {
             Debug.Log("SpilSDK-Unity firePrivacyPolicyStatus");
 
             if (accepted) {
-                Spil.Instance.SpilInit(true);
+                if (Spil.UseUnityPrefab) {
+                    Spil.Instance.SpilInit(false);
+                } else {
+                    Spil.Instance.SpilInit(true);
+                }
             }
             
             if (Spil.Instance.OnPrivacyPolicyStatus != null) {
@@ -1847,7 +1851,49 @@ namespace SpilGames.Unity.Base.Implementations {
 
         internal abstract void CheckPrivacyPolicy();
 
+        public void CheckPrivacyPolicyUnity() {
+            #if UNITY_EDITOR
+            int isPrivacyPolicyAccepted = PlayerPrefs.GetInt(GetSpilUserId() + "-unityPrivacyPolicyStatus", 0);
+            #else
+            int isPrivacyPolicyAccepted = PlayerPrefs.GetInt("unityPrivacyPolicyStatus", 0);
+            #endif
+            
+            if (isPrivacyPolicyAccepted == 0) {
+                PrivacyPolicyHelper.PrivacyPolicyObject = (GameObject) Instantiate(Resources.Load("Spilgames/PrivacyPolicy/PrivacyPolicyUnity" + Spil.MonoInstance.PrefabOrientation));
+                PrivacyPolicyHelper.PrivacyPolicyObject.SetActive(true);
+                
+                PrivacyPolicyHelper.Instance.ShowMainScreen(0);
+            } else {
+                firePrivacyPolicyStatus(true);
+            }
+             
+        }
+
         public abstract void ShowPrivacyPolicySettings();
+
+        internal void ShowAdsScreen() {
+            PrivacyPolicyHelper.PrivacyPolicyObject = (GameObject) Instantiate(Resources.Load("Spilgames/PrivacyPolicy/PrivacyPolicyUnity" + Spil.MonoInstance.PrefabOrientation));
+            PrivacyPolicyHelper.PrivacyPolicyObject.SetActive(true);
+            
+            PrivacyPolicyHelper.Instance.ShowAdsScreen(2);
+        }
+
+        public void TrackPrivacyPolicyChanged(bool withPersonalisedAds, bool withPersonalisedContent, string location, bool fromStartScreen) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("personalizedAds", withPersonalisedAds);
+            dict.Add("personalizedContents", withPersonalisedContent);
+            dict.Add("loction", location);
+
+            if (fromStartScreen) {
+                dict.Add("acceptGDPR", true);
+            }
+
+            SendCustomEvent("privacyChanged", dict);
+        }
+        
+        public abstract void SavePrivValue(int priv);
+
+        public abstract int GetPrivValue();
         
         public abstract void SetPluginInformation(string PluginName, string PluginVersion);
 
