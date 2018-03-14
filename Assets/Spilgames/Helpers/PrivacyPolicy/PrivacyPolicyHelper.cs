@@ -253,9 +253,7 @@ public class PrivacyPolicyHelper : MonoBehaviour {
     }
 
     public void PrivacyPolicyAccepted() {
-        if (firstCheck) {
-            MainAcceptToggle.isOn = true;
-            
+        if (firstCheck) {        
             SavePrivValue();
             
             #if UNITY_EDITOR
