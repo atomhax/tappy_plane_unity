@@ -154,6 +154,13 @@ namespace SpilGames.Unity.Base.Implementations
 
         public override void RequestRewardVideo(string location = null, string rewardType = null)
         {
+            int priv = Spil.Instance.GetPrivValue();
+
+            if (priv < 2 && priv > -1) {
+                fireAdAvailableEvent("rewardVideo");
+                return;
+            }
+            
             requestRewardVideoNative(location, rewardType);
         }
 
@@ -168,6 +175,13 @@ namespace SpilGames.Unity.Base.Implementations
         /// </summary>
         public override void PlayVideo(string location = null, string rewardType = null)
         {
+            int priv = Spil.Instance.GetPrivValue();
+
+            if (priv < 2 && priv > -1) {
+                ShowAdsScreen();
+                return;
+            }
+            
             playRewardVideoNative(location, rewardType);
         }
 
@@ -792,16 +806,38 @@ namespace SpilGames.Unity.Base.Implementations
         {
             checkPrivacyPolicyNative();
         }
-
         [DllImport("__Internal")]
         private static extern void checkPrivacyPolicyNative();
 
         public override void ShowPrivacyPolicySettings()
         {
-            showPrivacyPolicySettings();
+            if (Spil.UseUnityPrefab) {
+                PrivacyPolicyHelper.PrivacyPolicyObject = (GameObject) Instantiate(Resources.Load("Spilgames/PrivacyPolicy/PrivacyPolicyUnity" + Spil.MonoInstance.PrefabOrientation));
+                PrivacyPolicyHelper.PrivacyPolicyObject.SetActive(true);
+            
+                PrivacyPolicyHelper.Instance.ShowSettingsScreen(1);
+            }
+            else
+            {
+                showPrivacyPolicySettings();
+            }
         }
         [DllImport("__Internal")]
         private static extern void showPrivacyPolicySettings();
+        
+        public override void SavePrivValue(int priv)
+        {
+            savePrivValueNative(priv);
+        }
+        [DllImport("__Internal")]
+        private static extern void savePrivValueNative(int priv);
+    
+        public override int GetPrivValue()
+        {
+            return getPrivValueNative();
+        }
+        [DllImport("__Internal")]
+        private static extern int getPrivValueNative();
         
         #endregion
     }        
