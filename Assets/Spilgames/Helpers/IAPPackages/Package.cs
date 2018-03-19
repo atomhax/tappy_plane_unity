@@ -10,120 +10,56 @@ namespace SpilGames.Unity.Helpers.IAPPackages {
     /// This is the business object that the developer can use to work with Packages and Promotions.
     /// </summary>
     public class Package {
-        /// <summary>
-        /// The package Id
-        /// </summary>
-        public string Id {
+
+        public int Id {
             get { return id; }
         }
 
-        private string id;
+        private int id;
 
+        /// <summary>
+        /// The package Id
+        /// </summary>
+        public string PackageId {
+            get { return packageId; }
+        }
+
+        private string packageId;
+        
         /// <summary>
         /// The original discount label of the item before any promotion is applied.
         /// </summary>
-        public string OriginalDiscountLabel {
-            get { return originalDiscountLabel; }
+        public string DiscountLabel {
+            get { return discountLabel; }
         }
 
-        private string originalDiscountLabel;
+        private string discountLabel;
 
         public List<PackageItem> Items;
 
-        public List<PromotionData> promotions;
-
-        public Package(string id, string originalDiscountLabel, List<PackageItemData> packageItems, List<PromotionData> promotions = null) {
+        public Package(int id, string packageId, string discountLabel, List<PackageItemData> packageItems) {
             this.id = id;
-            this.originalDiscountLabel = originalDiscountLabel;
-
-            this.promotions = promotions;
-            if (this.promotions == null) {
-                this.promotions = new List<PromotionData>();
-            }
+            this.packageId = packageId;
+            this.discountLabel = discountLabel;
 
             Items = new List<PackageItem>();
 
             // Populate items
             foreach (PackageItemData packageItem in packageItems) {
-                double promotionValue = 0;
-                double extraValue = 0;
-
-                foreach (PromotionData promotion in this.promotions) {
-                    if (promotion.items != null) {
-                        // Apply regular promotions
-                        if (String.IsNullOrEmpty(promotion.type) || promotion.type.Equals("PERCENTAGE")) {
-                            foreach (PackageItemData promotionItem in promotion.items) {
-                                if (promotionItem.id.Equals(packageItem.id)) {
-                                    double.TryParse(promotionItem.value, out promotionValue);
-                                }
-                            }
-                        }
-                        // Apply extra item promotions
-                        if (promotion.type.Equals("EXTRAITEM")) {
-                            foreach (PackageItemData promotionItem in promotion.items) {
-                                if (promotionItem.id.Equals(packageItem.id)) {
-                                    double.TryParse(promotionItem.value, out extraValue);
-                                }
-                            }
-                        }
-                    }
-                }
-
-                double packageValue = 0;
-                double.TryParse(packageItem.value, out packageValue);
-				double totalPromotion = packageValue;
-				if (promotionValue != 0) {
-					totalPromotion += (promotionValue - packageValue);
-				}
-				if (extraValue != 0) {
-					totalPromotion += (promotionValue - extraValue);
-				}
-                Items.Add(new PackageItem(packageItem.id, packageItem.type, packageItem.value,
-                    totalPromotion != 0 ? totalPromotion.ToString() : null));
+                Items.Add(new PackageItem(packageItem.id, packageItem.type, packageItem.value));
             }
-        }
-
-        /// <summary>
-        /// Get a list with discounts labels which apply to this package. 
-        /// </summary>
-        /// <returns>The list with discount labels.</returns>
-        public List<string> GetDiscountLabels() {
-            List<string> result = new List<string>();
-            foreach (PromotionData promotion in promotions) {
-                if (String.IsNullOrEmpty(promotion.discountLabel)) {
-                    continue;
-                }
-                result.Add(promotion.discountLabel);
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// Get a concatted discount label for this package. 
-        /// </summary>
-        /// <returns>The list with discount labels.</returns>
-        public string GetConcattedDiscountLabel() {
-            string result = "";
-            List<string> labels = GetDiscountLabels();
-            foreach (string label in labels) {
-                if (result.Length > 0) {
-                    result += " + ";
-                }
-                result += label;
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// Checks for any active promotion for this package, also checks if the current date is between the promotion's begin and end date. 
-        /// </summary>
-        /// <returns>True if there is an active promotion, false if there is no active promotion.</returns>
-        public bool HasActivePromotion() {
-            return promotions.Count > 0;
         }
 
         public PackageItem GetItemById(string itemId) {
             return Items.FirstOrDefault(a => a.Id.Equals(itemId));
+        }
+        
+        /// <summary>
+        /// Checks for any active promotion for this item, also checks if the current date is between the promotion's begin and end date. 
+        /// </summary>
+        /// <returns>True if there is an active promotion, false if there is no active promotion.</returns>
+        public bool HasActivePromotion() {
+            return Spil.Instance.GetPromotions().HasPackagePromotion(packageId);
         }
     }
 
@@ -152,42 +88,16 @@ namespace SpilGames.Unity.Helpers.IAPPackages {
         /// <summary>
         /// The original value of the item before any promotion is applied.
         /// </summary>
-        public string OriginalValue {
-            get { return originalValue; }
+        public string Value {
+            get { return value; }
         }
 
-        private string originalValue;
+        private string value;
 
-        /// <summary>
-        /// The value of the item if there is an active promotion for this item. Returns null if there is no promotion.
-        /// </summary>
-        public string PromotionValue {
-            get { return promotionValue; }
-        }
-
-        private string promotionValue;
-
-        public PackageItem(string id, string type, string originalValue, string promotionValue = null) {
+        public PackageItem(string id, string type, string value) {
             this.id = id;
             this.type = type;
-            this.originalValue = originalValue;
-            this.promotionValue = promotionValue;
-        }
-
-        /// <summary>
-        /// Gets the actual value of this item. Checks for any active promotion for this item. 
-        /// </summary>
-        /// <returns>The original value if there is no active promotion or the promotion value if there is an active promotion.</returns>
-        public string GetRealValue() {
-            return PromotionValue != null ? PromotionValue : OriginalValue;
-        }
-
-        /// <summary>
-        /// Checks for any active promotion for this item, also checks if the current date is between the promotion's begin and end date. 
-        /// </summary>
-        /// <returns>True if there is an active promotion, false if there is no active promotion.</returns>
-        public bool HasActivePromotion() {
-            return PromotionValue != null;
+            this.value = value;
         }
     }
 }

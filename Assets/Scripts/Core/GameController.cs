@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml;
 using SpilGames.Unity;
 using SpilGames.Unity.Base.Implementations;
 using SpilGames.Unity.Base.SDK;
@@ -176,8 +177,6 @@ public class GameController : MonoBehaviour
         Spil.Instance.OnLiveEventCompleted -= OnLiveEventCompleted;
         Spil.Instance.OnLiveEventCompleted += OnLiveEventCompleted;
 
-        FireTrackEventSample();
-
 //		Spil.Instance.PreloadItemAndBundleImages();
 
         Spil.Instance.OnRewardTokenReceived -= OnRewardTokenReceived;
@@ -271,7 +270,7 @@ public class GameController : MonoBehaviour
         SavePrivateGameState();
         RequestMoreApps();
         
-        
+        FireTrackEventSample();
     }
     
     private void OnPrivacyPolicyStatus(bool accepted) {
@@ -718,11 +717,13 @@ public class GameController : MonoBehaviour
         item1.amount = 2;
         item1.delta = 1;
         item1.type = 0;
+        item1.uniqueItemId = Guid.NewGuid().ToString();
+        item1.uniqueItemIdType = "test";
         items.Add(item1);
 
 //		Spil.Instance.TrackWalletInventoryEvent("Test1", "GameStart", currencies);
 //		Spil.Instance.TrackWalletInventoryEvent("Test2", "GameStart", null, items);
-//		Spil.Instance.TrackWalletInventoryEvent("Test3", "GameStart", currencies, items, "Main Menu", "GPA.1234-5678-9123-45678");
+		Spil.Instance.TrackWalletInventoryEvent("Test3", "GameStart", currencies, items, "Main Menu", "GPA.1234-5678-9123-45678");
     }
 
     void RewardHandler(PushNotificationRewardResponse rewardResponse) {

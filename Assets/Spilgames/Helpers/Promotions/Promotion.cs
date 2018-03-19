@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using SpilGames.Unity.Base.SDK;
+using UnityEngine;
 
 namespace SpilGames.Unity.Helpers.Promotions {
     public class Promotion {
@@ -17,6 +18,7 @@ namespace SpilGames.Unity.Helpers.Promotions {
         
         public int AmountPurchased {
             get { return amountPurchased; }
+            set { amountPurchased = value; }
         }
 
         private int amountPurchased;
@@ -81,6 +83,10 @@ namespace SpilGames.Unity.Helpers.Promotions {
             foreach (SpilPromotionGameAsset gameAsset in gameAssets) {
                 GameAsset.Add(new GameAsset(gameAsset.name, gameAsset.locale, gameAsset.position, gameAsset.type, gameAsset.value));
             }
+        }
+
+        public bool IsValid() {
+            return endDate > System.DateTime.Now.Millisecond && (amountPurchased < maxPurchase || maxPurchase == 0);
         }
     }
 

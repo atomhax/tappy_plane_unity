@@ -14,11 +14,10 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         public List<SpilItemData> items;
         public List<SpilBundleData> bundles;
         public List<SpilShopTabData> shop;
-        public List<SpilShopPromotionData> promotions;
 
         public static bool updatedFromServer;
         
-        public string GetGameObjects() {
+        public string GetGameData() {
             if (!updatedFromServer) {
                 try {
                     string gameData = File.ReadAllText(Application.streamingAssetsPath + "/defaultGameData.json");
@@ -31,11 +30,30 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     return placeholder;
                 }
             }
+
+            if (shop != null) {
+                foreach (SpilShopTabData tab in shop) {
+                    foreach (SpilShopEntryData entry in tab.entries) {
+                        if(entry.type.Equals("BUNDLE")){
+                            if(PromotionsManager.HasBundlePromotion(entry.id)) {
+                                tab.hasActivePromotions = true;
+                                break;
+                            }
+                        } else if(entry.type.Equals("PACKAGE")){
+                            if(PromotionsManager.HasPackagePromotion(entry.id)) {
+                                tab.hasActivePromotions = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            
             return JsonHelper.getJSONFromObject(this);
         }
 
         public GameDataManager InitialiseGameObjects() {
-            string gameData = GetGameObjects();
+            string gameData = GetGameData();
 
             return JsonHelper.getObjectFromJson<GameDataManager>(gameData);
         }
@@ -95,24 +113,6 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     SpilUnityEditorImplementation.gData.bundles.Add(bundle);
                 }
             }
-
-            if (response.data.HasField("promotions")) {
-                if (SpilUnityEditorImplementation.gData.promotions == null) {
-                    SpilUnityEditorImplementation.gData.promotions = new List<SpilShopPromotionData>();
-                }
-
-                if (SpilUnityEditorImplementation.gData.promotions.Count > 0) {
-                    SpilUnityEditorImplementation.gData.promotions.Clear();
-                }
-
-                JSONObject promotionsJSON = response.data.GetField("promotions");
-
-                for (int i = 0; i < promotionsJSON.Count; i++) {
-                    SpilShopPromotionData bundle =
-                        JsonHelper.getObjectFromJson<SpilShopPromotionData>(promotionsJSON.list[i].Print(false));
-                    SpilUnityEditorImplementation.gData.promotions.Add(bundle);
-                }
-            }
             
             if (response.data.HasField("shop")) {
                 if (SpilUnityEditorImplementation.gData.shop == null) {
@@ -127,17 +127,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
                 for (int i = 0; i < shopJSON.Count; i++) {
                     SpilShopTabData tab = JsonHelper.getObjectFromJson<SpilShopTabData>(shopJSON.list[i].Print(false));
-
-                    if (SpilUnityEditorImplementation.gData.promotions != null) {
-                        foreach (SpilShopEntryData entryData in tab.entries) {
-                            foreach (SpilShopPromotionData shopPromotionData in SpilUnityEditorImplementation.gData.promotions) {
-                                if (entryData.bundleId == shopPromotionData.bundleId) {
-                                    tab.hasActivePromotions = true;
-                                }
-                            }
-                        }
-                    }                 
-                    
+   
                     SpilUnityEditorImplementation.gData.shop.Add(tab);
                 }
             }

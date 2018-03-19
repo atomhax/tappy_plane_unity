@@ -6,6 +6,7 @@ using System.Collections;
 using SpilGames.Unity.Json;
 using SpilGames.Unity.Base.SDK;
 using SpilGames.Unity.Helpers.IAPPackages;
+using SpilGames.Unity.Helpers.Promotions;
 
 namespace SpilGames.Unity.Base.Implementations{
     public abstract class SpilUnityImplementationBase : MonoBehaviour{
@@ -32,13 +33,13 @@ namespace SpilGames.Unity.Base.Implementations{
 
         #endregion
 
-        #region Packages and promotions
+        #region Packages
 
         /// <summary>
-        /// Fetch packages and promotions locally. Packages and promotions are requested from the server when the app starts and are cached.
+        /// Fetch packages locally. Packages are requested from the server when the app starts and are cached.
         /// </summary>
-        /// <returns>A packageshelper object filled with packages and promotions, will be empty if there are none. Returns null if no packages or promotions are present, which should only happen if the server has never been successfully queried for packages and promotions.</returns>
-        public PackagesHelper GetPackagesAndPromotions() {
+        /// <returns>A packageshelper object filled with packages, will be empty if there are none. Returns null if no packages are present, which should only happen if the server has never been successfully queried for packages.</returns>
+        public PackagesHelper GetPackages() {
             string packagesString = GetAllPackages();
 
             if (packagesString == null)
@@ -51,6 +52,21 @@ namespace SpilGames.Unity.Base.Implementations{
 
         #endregion
 
+        #region Promotions
+
+        public PromotionsHelper GetPromotions() {
+            string promotionsString = GetAllPromotions();
+
+            if (promotionsString == null)
+                return null;
+
+            List<SpilPromotionData> promotionsList = JsonHelper.getObjectFromJson<List<SpilPromotionData>>(promotionsString);
+            PromotionsHelper helper = new PromotionsHelper(promotionsList);
+            return helper;
+        }
+
+        #endregion
+        
         #region Events
 
         #region Standard Spil events
@@ -409,7 +425,7 @@ namespace SpilGames.Unity.Base.Implementations{
         /// </summary>
         /// <param name="skuId">The product identifier of the item that was purchased</param>
         /// <param name="transactionId ">The transaction identifier of the item that was purchased (also called orderId)</param>
-        public void TrackIAPPurchasedEvent(string skuId, string transactionId, string token = "") {
+        public void TrackIAPPurchasedEvent(string skuId, string transactionId, string token = "", string reason = null, string location = null) {
             Dictionary<string, object> dictionary = new Dictionary<string, object>();
             dictionary.Add("skuId", skuId);
             dictionary.Add("transactionId", transactionId);
@@ -420,6 +436,14 @@ namespace SpilGames.Unity.Base.Implementations{
                 dictionary.Add("token", token);
             }
 #endif
+
+            if (reason != null) {
+                dictionary.Add("reason", reason);
+            }
+
+            if (location != null) {
+                dictionary.Add("location", location);
+            }
 
             SendCustomEvent("iapPurchased", dictionary);
         }
@@ -1882,7 +1906,7 @@ namespace SpilGames.Unity.Base.Implementations{
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("personalizedAds", withPersonalisedAds);
             dict.Add("personalizedContents", withPersonalisedContent);
-            dict.Add("loction", location);
+            dict.Add("location", location);
 
             if (fromStartScreen) {
                 dict.Add("acceptGDPR", true);
@@ -1941,15 +1965,8 @@ namespace SpilGames.Unity.Base.Implementations{
         //Method that returns a package based on key
         protected abstract string GetPackage(string key);
 
-        /// <summary>
-        /// This method is marked as internal and should not be exposed to developers.
-        /// The Spil Unity SDK is not packaged as a seperate assembly yet so this method is currently visible, this will be fixed in the future.
-        /// Internal method names start with a lower case so you can easily recognise and avoid them.
-        /// </summary>
-        internal abstract string GetPromotions(string key);
-
         // This is not essential so could be removed but might be handy for some developers so we left it in.
-        public abstract void UpdatePackagesAndPromotions();
+        public abstract void RequestPackages();
 
         #endregion
 
@@ -2039,6 +2056,16 @@ namespace SpilGames.Unity.Base.Implementations{
 
         public abstract string GetSpilGameDataFromSdk();
 
+        public abstract void RequestPromotions();
+
+        public abstract string GetAllPromotions();
+
+        public abstract string GetBundlePromotion(int bundleId);
+
+        public abstract string GetPackagePromotion(string packageId);
+
+        public abstract void ShowPromotionScreen(int promotionId);
+        
         /// <summary>
         /// Request the users data from SLOT.
         /// </summary>

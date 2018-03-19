@@ -811,6 +811,11 @@ namespace SpilGames.Unity.Base.Implementations
 
         public override void ShowPrivacyPolicySettings()
         {
+            if (!Spil.CheckPrivacyPolicy) {
+                Debug.Log("Privacy Policy not enabled. Will not show privacy policy settings screen");
+                return;
+            }
+    
             if (Spil.UseUnityPrefab) {
                 PrivacyPolicyHelper.PrivacyPolicyObject = (GameObject) Instantiate(Resources.Load("Spilgames/PrivacyPolicy/PrivacyPolicyUnity" + Spil.MonoInstance.PrefabOrientation));
                 PrivacyPolicyHelper.PrivacyPolicyObject.SetActive(true);

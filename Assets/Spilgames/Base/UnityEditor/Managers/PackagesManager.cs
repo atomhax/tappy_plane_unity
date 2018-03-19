@@ -9,7 +9,6 @@ using SpilGames.Unity.Json;
 namespace SpilGames.Unity.Base.UnityEditor.Managers {
     public class PackagesManager {
         public static List<PackageData> GamePackagesData;
-        public static List<PromotionData> GamePromotionData;
 
         public static string getPackage(string packageId) {
             for (int i = 0; i < GamePackagesData.Count; i++) {
@@ -18,21 +17,6 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 }
             }
 
-            return null;
-        }
-
-        public static string getPromotions(string packageId) {
-            List<PromotionData> promotions = new List<PromotionData>();
-
-            for (int i = 0; i < GamePromotionData.Count; i++) {
-                if (GamePromotionData[i].packageId.Equals(packageId)) {
-                    promotions.Add(GamePromotionData[i]);
-                }
-            }
-
-            if (promotions.Count > 0) {
-                return JsonHelper.getJSONFromObject(promotions);
-            }
             return null;
         }
     }
@@ -44,12 +28,6 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 JSONObject json = new JSONObject();
                 json.AddField("data", response.data.GetField("packages").Print(false));
                 PackagesManager.GamePackagesData = JsonHelper.getObjectFromJson<List<PackageData>>(json.GetField("data").str);
-            }
-
-            if (response.data.HasField("promotions")) {
-                JSONObject json = new JSONObject();
-                json.AddField("data", response.data.GetField("promotions").Print(false));
-                PackagesManager.GamePromotionData = JsonHelper.getObjectFromJson<List<PromotionData>>(json.GetField("data").str);
             }
         }
     }

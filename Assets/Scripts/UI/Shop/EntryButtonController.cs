@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using SpilGames.Unity;
 using SpilGames.Unity.Helpers.GameData;
+using SpilGames.Unity.Helpers.Promotions;
 
 public class EntryButtonController : MonoBehaviour {
 	Entry entry;
@@ -18,13 +19,8 @@ public class EntryButtonController : MonoBehaviour {
 	public void SetupButton(Entry entryValue, TabController parent) {
 		entry = entryValue;
 		parentTabController = parent;
-		bundle = Spil.GameData.GetBundle (entry.BundleId);
+		bundle = Spil.GameData.GetBundle (entry.Id);
 		buttonLabel.text = entry.Label;
-
-		Promotion promotion = Spil.GameData.GetPromotion(entry.BundleId);
-		if (promotion != null) {
-			saleImage.SetActive(true);
-		}
 	}
 
 	public void EntryButtonPressed(){

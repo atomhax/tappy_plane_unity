@@ -21,6 +21,8 @@ public class ShopPanelController : MonoBehaviour {
     public GameObject tabButtonPrefab, tabPrefab;
     private bool closeShopAfterReward;
 
+    public GameObject privacyPolicySettingsButton;
+
     void OnEnable() {
         Spil.Instance.OnAdAvailable -= OnAdAvailable;
         Spil.Instance.OnAdAvailable += OnAdAvailable;
@@ -48,6 +50,10 @@ public class ShopPanelController : MonoBehaviour {
 
         spilIds.text = "DeviceId: " + Spil.Instance.GetDeviceId() + "\nUserId: " + Spil.Instance.GetSpilUserId();
 
+        if (!Spil.CheckPrivacyPolicy) {
+            privacyPolicySettingsButton.SetActive(false);
+        }
+        
         ResetShop();
         CreateShop();
     }

@@ -47,7 +47,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// This is called automatically by the Spil SDK when the game starts.
         /// This is not essential so could be removed but might be handy for some developers so we left it in.
         /// </summary>
-        public override void UpdatePackagesAndPromotions() {
+        public override void RequestPackages() {
             CallNativeMethod("requestPackages");
         }
 
@@ -63,16 +63,6 @@ namespace SpilGames.Unity.Base.Implementations {
             return CallNativeMethod("getPackage", key, true);
         }
 
-        /// <summary>
-        /// This method is marked as internal and should not be exposed to developers.
-        /// The Spil Unity SDK is not packaged as a seperate assembly yet so this method is currently visible, this will be fixed in the future.
-        /// Internal method names start with a lower case so you can easily recognise and avoid them.
-        /// </summary>
-        internal override string GetPromotions(string key) {
-            Debug.Log("GetPromotion: " + CallNativeMethod("getPromotions", key, true));
-            return CallNativeMethod("getPromotions", key, true);
-        }
-
         #endregion
 
         /// <summary>
@@ -85,7 +75,7 @@ namespace SpilGames.Unity.Base.Implementations {
             Spil spil = GameObject.FindObjectOfType<Spil>();
             CallNativeMethod("init", new object[] {withPrivacyPolicy}, true);
             RegisterDevice(spil.ProjectId); 
-            UpdatePackagesAndPromotions();
+            RequestPackages();
 #endif
         }
 
@@ -94,6 +84,11 @@ namespace SpilGames.Unity.Base.Implementations {
         }
 
         public override void ShowPrivacyPolicySettings() {
+            if (!Spil.CheckPrivacyPolicy) {
+                Debug.Log("Privacy Policy not enabled. Will not show privacy policy settings screen");
+                return;
+            }
+            
             if (Spil.UseUnityPrefab) {
                 PrivacyPolicyHelper.PrivacyPolicyObject = (GameObject) Instantiate(Resources.Load("Spilgames/PrivacyPolicy/PrivacyPolicyUnity" + Spil.MonoInstance.PrefabOrientation));
                 PrivacyPolicyHelper.PrivacyPolicyObject.SetActive(true);
@@ -303,6 +298,32 @@ namespace SpilGames.Unity.Base.Implementations {
 
         public override string GetSpilGameDataFromSdk() {
             return CallNativeMethod("getSpilGameData");
+        }
+
+        public override void RequestPromotions() {
+            CallNativeMethod("requestPromotions");
+        }
+
+        public override string GetAllPromotions() {
+            return CallNativeMethod("getAllPromotions");
+        }
+
+        public override string GetBundlePromotion(int bundleId) {
+            return CallNativeMethod("getBundlePromotion", new object[] {
+                bundleId
+            }, true);
+        }
+
+        public override string GetPackagePromotion(string packageId) {
+            return CallNativeMethod("getPackagePromotion", new object[] {
+                packageId
+            }, true);
+        }
+
+        public override void ShowPromotionScreen(int promotionId) {
+            CallNativeMethod("showPromotionScreen", new object[] {
+                promotionId
+            }, true);
         }
 
         #endregion

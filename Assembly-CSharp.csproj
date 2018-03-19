@@ -125,6 +125,7 @@
     <Compile Include="Assets\Spilgames\Base\UnityEditor\Managers\PackagesManager.cs" />
     <Compile Include="Assets\Spilgames\Base\UnityEditor\Managers\PlayerDataManager.cs" />
     <Compile Include="Assets\Spilgames\Base\UnityEditor\Managers\PrivacyPolicyManager.cs" />
+    <Compile Include="Assets\Spilgames\Base\UnityEditor\Managers\PromotionsManager.cs" />
     <Compile Include="Assets\Spilgames\Base\UnityEditor\Managers\RewardManager.cs" />
     <Compile Include="Assets\Spilgames\Base\UnityEditor\Managers\SocialLoginManager.cs" />
     <Compile Include="Assets\Spilgames\Base\UnityEditor\Managers\UserDataManager.cs" />
@@ -143,6 +144,8 @@
     <Compile Include="Assets\Spilgames\Helpers\PlayerData\PlayerDataHelper.cs" />
     <Compile Include="Assets\Spilgames\Helpers\PlayerData\Wallet.cs" />
     <Compile Include="Assets\Spilgames\Helpers\PrivacyPolicy\PrivacyPolicyHelper.cs" />
+    <Compile Include="Assets\Spilgames\Helpers\Promotions\Promotion.cs" />
+    <Compile Include="Assets\Spilgames\Helpers\Promotions\PromotionsHelper.cs" />
     <Compile Include="Assets\Spilgames\Json\JSONHelper.cs" />
     <Compile Include="Assets\Spilgames\Json\JSONObject.cs" />
     <Compile Include="Assets\Spilgames\Spil.cs" />

@@ -5,6 +5,7 @@ using SpilGames.Unity;
 using SpilGames.Unity.Helpers;
 using SpilGames.Unity.Helpers.IAPPackages;
 using SpilGames.Unity.Base.SDK;
+using SpilGames.Unity.Helpers.Promotions;
 
 
 public class IAPPanelController : MonoBehaviour {
@@ -45,8 +46,7 @@ public class IAPPanelController : MonoBehaviour {
 			iapButtons [i].gameObject.SetActive (false);
 		}
 
-
-		PackagesHelper helper = Spil.Instance.GetPackagesAndPromotions ();
+		PackagesHelper helper = Spil.Instance.GetPackages ();
 		if(helper != null){
 			if (helper.Packages.Count == 0) {
 			gameObject.SetActive (false);
@@ -57,15 +57,14 @@ public class IAPPanelController : MonoBehaviour {
 			for (int i = 0; i < helper.Packages.Count; i++) {
 				Package package = helper.Packages [i];
 				string promotionText = "";
-				string gemAmount = package.Items [0].OriginalValue;
-				string cost = iapManager.packageCosts[package.Id];
-				if(package.HasActivePromotion()){
-					promotionText = "PROMOTION!\n" + package.GetConcattedDiscountLabel() + " extra gems!";
-					gemAmount = package.Items [0].PromotionValue.Replace(".0","");
-                    //package.promotions[0].GetImageUrl("banner");
+				string gemAmount = package.Items [0].Value;
+				string cost = iapManager.packageCosts[package.PackageId];
+				if(package.HasActivePromotion()) {
+					Promotion packagePromotion = Spil.Instance.GetPromotions().GetPackagePromotion(package.PackageId);
+					promotionText = "PROMOTION!\n" + packagePromotion.Label + packagePromotion.ExtraEntities[0].Amount + " extra gems!";
 				}
 				
-				iapButtons [i].PopulateIAPButton (gemAmount, promotionText, cost, package.Id);
+				iapButtons [i].PopulateIAPButton (gemAmount, promotionText, cost, package.PackageId);
 				iapButtons [i].gameObject.SetActive (true);
 			}
 		}

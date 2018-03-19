@@ -15,14 +15,13 @@ namespace SpilGames.Unity.Helpers.GameData {
         public List<Item> Items = new List<Item>();
         public List<Bundle> Bundles = new List<Bundle>();
         public Shop Shop;
-        public List<Promotion> Promotions = new List<Promotion>();
 
         public SpilGameDataHelper(SpilUnityImplementationBase Instance) {
             string spilGameDataString = Instance.GetSpilGameDataFromSdk();
             if (spilGameDataString != null) {
                 SpilGameData spilGameData = JsonHelper.getObjectFromJson<SpilGameData>(spilGameDataString);
                 if (spilGameData != null) {
-                    AddDataToHelper(spilGameData.currencies, spilGameData.items, spilGameData.bundles, spilGameData.shop, spilGameData.promotions);
+                    AddDataToHelper(spilGameData.currencies, spilGameData.items, spilGameData.bundles, spilGameData.shop);
                     Debug.Log("Spil GameData created");
                 } else {
                     Debug.Log("Spil GameData not created, Instance.GetSpilGameDataFromsdk() did not return any data.");
@@ -35,7 +34,7 @@ namespace SpilGames.Unity.Helpers.GameData {
             if (spilGameDataString != null) {
                 SpilGameData spilGameData = JsonHelper.getObjectFromJson<SpilGameData>(spilGameDataString);
                 if (spilGameData != null) {
-                    AddDataToHelper(spilGameData.currencies, spilGameData.items, spilGameData.bundles, spilGameData.shop, spilGameData.promotions);
+                    AddDataToHelper(spilGameData.currencies, spilGameData.items, spilGameData.bundles, spilGameData.shop);
                     Debug.Log("Spil GameData Refreshed");
                 } else {
                     Debug.Log("Spil GameData not created, Instance.GetSpilGameDataFromsdk() did not return any data.");
@@ -193,24 +192,8 @@ namespace SpilGames.Unity.Helpers.GameData {
                 return null;
             }
         }
-
-        /// <summary>
-        /// Helper method that returns the Promotion for a given bundle id
-        /// Returns null if no promotion was found
-        /// </summary>
-        public Promotion GetPromotion(int bundleId) {
-            if (Promotions != null) {
-                foreach (Promotion promotion in Promotions) {
-                    if (promotion.BundleId == bundleId) {
-                        return promotion;
-                    }
-                }
-                return null;
-            }
-            return null;
-        }
         
-        private void AddDataToHelper(List<SpilCurrencyData> currencies, List<SpilItemData> items, List<SpilBundleData> bundles, List<SpilShopTabData> shop, List<SpilShopPromotionData> promotions) {
+        private void AddDataToHelper(List<SpilCurrencyData> currencies, List<SpilItemData> items, List<SpilBundleData> bundles, List<SpilShopTabData> shop) {
             Currencies.Clear();
 
             if (currencies != null) {
@@ -237,25 +220,17 @@ namespace SpilGames.Unity.Helpers.GameData {
 
             //Adding shop data to helper
             Shop = new Shop(shop);
-
-            Promotions.Clear();
-
-            if (promotions != null) {
-                foreach (SpilShopPromotionData promotion in promotions) {
-                    Promotions.Add(new Promotion(promotion.bundleId, promotion.amount, promotion.prices, promotion.discount, promotion.startDate, promotion.endDate, promotion.imageEntries));
-                }
-            }
         }
 
         public void SpilGameDataHandler() {
             UpdateSpilGameData();
         }
 
-        private void UpdateSpilGameData() {
+        public void UpdateSpilGameData() {
             string spilGameDataString = Spil.Instance.GetSpilGameDataFromSdk();
             if (spilGameDataString != null) {
                 SpilGameData spilGameData = JsonHelper.getObjectFromJson<SpilGameData>(spilGameDataString);
-                AddDataToHelper(spilGameData.currencies, spilGameData.items, spilGameData.bundles, spilGameData.shop, spilGameData.promotions);
+                AddDataToHelper(spilGameData.currencies, spilGameData.items, spilGameData.bundles, spilGameData.shop);
                 Debug.Log("Spil Game Data Updated");
             }
         }

@@ -6,6 +6,7 @@ using SpilGames.Unity;
 using SpilGames.Unity.Helpers.GameData;
 using SpilGames.Unity.Base.SDK;
 using SpilGames.Unity.Helpers.PlayerData;
+using SpilGames.Unity.Helpers.Promotions;
 
 public class BundleDisplayPanelController : MonoBehaviour {
     public static BundleDisplayPanelController panelInstance;
@@ -27,7 +28,7 @@ public class BundleDisplayPanelController : MonoBehaviour {
     public void SetupBundleDisplayPanel(Bundle bundle, Entry entry) {
         panelInstance = this;
         bundleDisplayed = bundle;
-        Promotion bundlePromotion = Spil.GameData.GetPromotion(bundleDisplayed.Id);      
+        Promotion bundlePromotion = Spil.Instance.GetPromotions().GetBundlePromotion(bundleDisplayed.Id);      
         starsCostText.text = diamondCostText.text = "0";
 
         if (bundle.DisplayName != null && !bundle.DisplayName.Equals("")) {
@@ -50,12 +51,12 @@ public class BundleDisplayPanelController : MonoBehaviour {
             Item item = Spil.GameData.GetItem(bundle.Items[i].Id);
             listOfItemsInBundle.text += "\n" + "• " + item.Name;
             if (bundlePromotion != null) {
-                for (int x = 0; x < bundlePromotion.Prices.Count; x++) {
-                    if (bundlePromotion.Prices[x].CurrencyId == 25) {
-                        starsCostText.text = bundlePromotion.Prices[x].Value.ToString();
+                for (int x = 0; x < bundlePromotion.PriceOverride.Count; x++) {
+                    if (bundlePromotion.PriceOverride[x].Id == 25) {
+                        starsCostText.text = bundlePromotion.PriceOverride[x].Amount.ToString();
                         starsCostText.color = new Color(0.76f, 0.1f, 0.11f);
-                    } else if (bundlePromotion.Prices[x].CurrencyId == 28) {
-                        diamondCostText.text = bundlePromotion.Prices[x].Value.ToString();
+                    } else if (bundlePromotion.PriceOverride[x].Id == 28) {
+                        diamondCostText.text = bundlePromotion.PriceOverride[x].Amount.ToString();
                         diamondCostText.color = new Color(0.76f, 0.1f, 0.11f);
                     }
                 } 
@@ -82,8 +83,8 @@ public class BundleDisplayPanelController : MonoBehaviour {
         Spil.Instance.OnImageLoadFailed -= OnImageLoadFailed;
         Spil.Instance.OnImageLoadFailed += OnImageLoadFailed;
 
-        if (bundlePromotion != null && bundlePromotion.ImageEntries != null && bundlePromotion.ImageEntries.Count > 0) {
-            string promotionImage = bundlePromotion.ImageEntries[0].ImageUrl;
+        if (bundlePromotion != null && bundlePromotion.GameAsset.Count > 0) {
+            string promotionImage = bundlePromotion.GameAsset[0].Value;
             
             if (promotionImage != null) {
                 Debug.Log("Image already preloaded with path: " + promotionImage);

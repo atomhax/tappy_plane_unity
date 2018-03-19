@@ -456,7 +456,7 @@ public class PrivacyPolicyHelper : MonoBehaviour {
     }
 
     public void OnAdsPersonalisedAdsToggle() {
-        withPersonalisedAds = SettingsAdsToggle.isOn;
+        withPersonalisedAds = AdsPeronalised.isOn;
     }
     
     public PrivacyPolicyConfiguration GetPrivacyPolicyConfiguration() {

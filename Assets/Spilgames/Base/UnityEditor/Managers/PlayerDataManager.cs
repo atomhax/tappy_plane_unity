@@ -5,7 +5,9 @@ using System.IO;
 using System.Linq;
 using SpilGames.Unity.Base.Implementations;
 using SpilGames.Unity.Base.SDK;
+using SpilGames.Unity.Helpers.GameData;
 using SpilGames.Unity.Helpers.PlayerData;
+using SpilGames.Unity.Helpers.Promotions;
 using SpilGames.Unity.Json;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -496,14 +498,26 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 return;
             }
 
-            SpilShopPromotionData promotion = GetPromotionFromObjects(bundleId);
+            Promotion promotion = Spil.Instance.GetPromotions().GetBundlePromotion(bundleId);
             bool isPromotionValid = false;
 
             if (promotion != null) {
-                isPromotionValid = IsPromotionValid(promotion);
+                isPromotionValid = promotion.IsValid();
             }
 
-            List<SpilBundlePriceData> bundlePrices = isPromotionValid ? promotion.prices : bundle.prices;
+            List<SpilBundlePriceData> bundlePrices = new List<SpilBundlePriceData>();
+            
+            if (isPromotionValid) {
+                foreach (PriceOverride priceOverride in promotion.PriceOverride) {
+                    SpilBundlePriceData bundlePriceData = new SpilBundlePriceData();
+                    bundlePriceData.currencyId = priceOverride.Id;
+                    bundlePriceData.value = priceOverride.Amount;
+                    
+                    bundlePrices.Add(bundlePriceData);
+                }
+            } else {
+                bundlePrices = bundle.prices;
+            }
 
             foreach (SpilBundlePriceData bundlePrice in bundlePrices) {
                 PlayerCurrencyData currency = GetCurrencyFromWallet(bundlePrice.currencyId);
@@ -537,7 +551,10 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             foreach (SpilBundleItemData bundleItem in bundle.items) {
                 SpilItemData gameItem = GetItemFromObjects(bundleItem.id);
 
-                if (gameItem == null) continue;
+                if (gameItem == null) {
+                    SpilLogging.Error("Item does not exist!");
+                    return;
+                };
                 PlayerItemData item = new PlayerItemData();
                 item.id = gameItem.id;
                 item.name = gameItem.name;
@@ -554,13 +571,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 if (inventoryItem != null) {
                     inventoryItemAmount = inventoryItem.amount;
 
-                    int promoAmount = 1;
-
-                    if (isPromotionValid) {
-                        promoAmount = promotion.amount;
-                    }
-
-                    inventoryItemAmount = inventoryItemAmount + bundleItem.amount * promoAmount;
+                    inventoryItemAmount = inventoryItemAmount + bundleItem.amount;
 
                     inventoryItem.delta = bundleItem.amount;
                     inventoryItem.amount = inventoryItemAmount;
@@ -572,10 +583,6 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 else {
                     inventoryItemAmount = bundleItem.amount;
 
-                    if (isPromotionValid) {
-                        inventoryItemAmount = inventoryItemAmount * promotion.amount;
-                    }
-
                     item.delta = inventoryItemAmount;
                     item.amount = inventoryItemAmount;
 
@@ -585,6 +592,92 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 }
             }
 
+            if (isPromotionValid) {
+                foreach (ExtraEntity extraEntity in promotion.ExtraEntities) {
+                    if (extraEntity.Type.Equals("CURRENCY")) {
+                        PlayerCurrencyData currency = GetCurrencyFromWallet(extraEntity.Id);
+                        
+                        if (currency == null) {
+                            SpilLogging.Error("Currency does not exist!");
+                            return;
+                        }
+
+                        currency.currentBalance = currency.currentBalance + extraEntity.Amount;
+                        currency.delta = currency.delta + extraEntity.Amount;
+
+                        UpdateCurrency(currency);
+
+                        PlayerCurrencyData temp = null;
+                        
+                        foreach (PlayerCurrencyData playerCurrency in updatedData.currencies) {
+                            if (playerCurrency.id == extraEntity.Id) {
+                                temp = playerCurrency;
+                            }
+                        }
+
+                        if (temp != null) {
+                            updatedData.currencies.Remove(temp);
+                        }
+                        
+                        updatedData.currencies.Add(currency);
+                    } else if (extraEntity.Type.Equals("ITEM") || extraEntity.Type.Equals("GACHA")) {
+                        SpilItemData gameItem = GetItemFromObjects(extraEntity.Id);
+
+                        if (gameItem == null) {
+                            SpilLogging.Error("Item does not exist!");
+                            return;
+                        };
+                        PlayerItemData item = new PlayerItemData();
+                        item.id = gameItem.id;
+                        item.name = gameItem.name;
+                        item.type = gameItem.type;
+                        item.displayName = gameItem.displayName;
+                        item.displayDescription = gameItem.displayDescription;
+                        item.isGacha = gameItem.isGacha;
+                        item.content = gameItem.content;
+
+                        PlayerItemData inventoryItem = GetItemFromInventory(extraEntity.Id);
+
+                        int inventoryItemAmount;
+
+                        if (inventoryItem != null) {
+                            inventoryItemAmount = inventoryItem.amount;
+
+                            inventoryItemAmount = inventoryItemAmount + extraEntity.Amount;
+
+                            inventoryItem.delta = extraEntity.Amount;
+                            inventoryItem.amount = inventoryItemAmount;
+
+                            UpdateItem(inventoryItem);
+
+                            PlayerItemData temp = null;
+                        
+                            foreach (PlayerItemData playerItem in updatedData.items) {
+                                if (playerItem.id == extraEntity.Id) {
+                                    temp = playerItem;
+                                }
+                            }
+
+                            if (temp != null) {
+                                updatedData.items.Remove(temp);
+                            }
+                            
+                            updatedData.items.Add(inventoryItem);
+                        }
+                        else {
+                            inventoryItemAmount = extraEntity.Amount;
+
+                            item.delta = inventoryItemAmount;
+                            item.amount = inventoryItemAmount;
+
+                            Inventory.items.Add(item);
+
+                            updatedData.items.Add(item);
+                        }
+                    }
+                }
+            }
+            
             UserDataManager.UpdateUserDataVersions();
             UserDataManager.UpdateUserDataMeta();
             
@@ -592,6 +685,12 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
             SpilUnityImplementationBase.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
 
+            if (isPromotionValid) {
+                Spil.Instance.GetPromotions().GetBundlePromotion(bundleId).AmountPurchased = Spil.Instance.GetPromotions().GetBundlePromotion(bundleId).AmountPurchased + 1;
+                
+                PromotionsManager.SendBoughtPromotion(promotion.Id);
+            }
+            
             SendUpdatePlayerDataEvent(bundle, reason, reasonDetails, location, transactionId);
         }
 
@@ -606,20 +705,6 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             }
 
             return null;
-        }
-
-        private SpilShopPromotionData GetPromotionFromObjects(int bundleId) {
-            foreach (SpilShopPromotionData shopPromotionData in SpilUnityEditorImplementation.gData.promotions) {
-                if (shopPromotionData.bundleId == bundleId) {
-                    return shopPromotionData;
-                }
-            }
-
-            return null;
-        }
-
-        private bool IsPromotionValid(SpilShopPromotionData promotion) {
-            return DateTime.Now > promotion.startDate && DateTime.Now < promotion.endDate;
         }
 
         public void OpenGacha(int gachaId, string reason, string reasonDetails, string location) {

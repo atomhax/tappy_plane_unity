@@ -36,13 +36,11 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     }
                     
                     PrivateGameStateData = data;
-                    SpilUnityImplementationBase.fireGameStateUpdated("private");
                 } else if (access.Equals("public")) {
                     if (data.Contains("\"")) {
                         data = data.Replace("\"", "\\\"").Replace("\\\\", "\\");
                     }
                     PublicGameStateData = data;
-                    SpilUnityImplementationBase.fireGameStateUpdated("public");
                 }
             }
         }

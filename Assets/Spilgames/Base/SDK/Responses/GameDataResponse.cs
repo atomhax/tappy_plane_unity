@@ -60,7 +60,6 @@ namespace SpilGames.Unity.Base.SDK {
         public List<SpilItemData> items;
         public List<SpilBundleData> bundles;
         public List<SpilShopTabData> shop;
-        public List<SpilShopPromotionData> promotions;
     }
 
     #endregion
@@ -68,7 +67,8 @@ namespace SpilGames.Unity.Base.SDK {
     #region Shop
 
     public class SpilShopEntryData {
-        public int bundleId;
+        public int id;
+        public string type;
         public string label;
         public int position;
         public List<SpilShopImageEntry> imageEntries;
@@ -81,20 +81,53 @@ namespace SpilGames.Unity.Base.SDK {
         public bool hasActivePromotions;
     }
 
-    public class SpilShopPromotionData {
-        public int bundleId;
-        public int amount;
-        public List<SpilBundlePriceData> prices;
-        public string discount;
-        public DateTime startDate;
-        public DateTime endDate;
-        public List<SpilShopImageEntry> imageEntries;
-    }
-
     public class SpilShopImageEntry {
         public string name;
         public string imageUrl;
     }
+    
+    #endregion
+    
+    #region Promotions
+    
+    public class SpilPromotionData {
+        public int id;
+        public string name;
+        public int amountPurchased;
+        public int maxPurchase;
+        public string label;
+        public long startDate;
+        public long endDate;
+        public List<SpilPromotionAffectedEntity> affectedEntities;
+        public List<SpilPromotionExtraEntity> extraEntities;
+        public List<SpilPromotionPriceOverride> priceOverride;
+        public List<SpilPromotionGameAsset> gameAssets;
+    }
 
+    public class SpilPromotionAffectedEntity {
+        public int id;
+        public string type;
+    }
+
+    public class SpilPromotionExtraEntity {
+        public int id;
+        public string type;
+        public int amount;
+    }
+
+    public class SpilPromotionGameAsset {
+        public string name;
+        public string locale;
+        public string position;
+        public string type;
+        public string value;
+    }
+
+    public class SpilPromotionPriceOverride {
+        public int id;
+        public string type;
+        public int amount;
+    }
+    
     #endregion
 }

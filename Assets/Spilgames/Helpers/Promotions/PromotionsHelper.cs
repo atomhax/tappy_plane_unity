@@ -31,7 +31,7 @@ namespace SpilGames.Unity.Helpers.Promotions {
         }
 
         public Promotion GetPackagePromotion(string packageId) {
-            Package package = Spil.Instance.GetPackages().GetPackageById(packageId);
+            Package package = Spil.Instance.GetPackages().GetPackageByPackageId(packageId);
 
             if (package == null) {
                 return null;
@@ -61,7 +61,7 @@ namespace SpilGames.Unity.Helpers.Promotions {
         }
 
         public bool HasPackagePromotion(String packageId) {
-            Package package = Spil.Instance.GetPackages().GetPackageById(packageId);
+            Package package = Spil.Instance.GetPackages().GetPackageByPackageId(packageId);
 
             if (package == null) {
                 return false;

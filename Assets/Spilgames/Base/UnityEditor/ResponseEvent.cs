@@ -46,6 +46,9 @@ namespace SpilGames.Unity.Base.UnityEditor {
                     case "gamedata":
                         GameDataResponse.ProcessGameDataResponse(responseEvent);
                         break;
+                    case "promotions":
+                        PromotionsResponse.ProcessPromotionResponse(responseEvent);
+                        break;
                     case "userdata":
                         UserDataResponse.ProcessUserDataResponse(responseEvent);
                         break;
