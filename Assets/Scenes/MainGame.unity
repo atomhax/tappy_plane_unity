@@ -6488,8 +6488,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initializeOnAwake: 1
-  checkPrivacyPolicyAndroid: 1
-  checkPrivacyPolicyIOS: 1
+  checkPrivacyPolicyAndroid: 0
+  checkPrivacyPolicyIOS: 0
   useUnityPrefab: 0
   PrefabOrientation: 0
   ProjectId: 492493592102
@@ -14416,3 +14416,4 @@ MonoBehaviour:
   tabsPanel: {fileID: 677320074}
   tabButtonPrefab: {fileID: 139730, guid: 56976e344d7f84e8983bce00fb080d24, type: 2}
   tabPrefab: {fileID: 199632, guid: 12289c34dcf414950bc21c74b96faea1, type: 2}
+  privacyPolicySettingsButton: {fileID: 1473230734}
