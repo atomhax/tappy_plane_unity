@@ -22,9 +22,18 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 }
             }
 
+            bool maxReached = false;
             if (promotion != null && (promotion.amountPurchased == promotion.maxPurchase || promotion.amountPurchased > promotion.maxPurchase)) {
                 PromotionData.Remove(promotion);
+                maxReached = true;
             }
+
+            JSONObject data = new JSONObject();
+            data.AddField("promotionId", boughtPromotion.id);
+            data.AddField("amountPurchased", boughtPromotion.amountPurchased);
+            data.AddField("maxAmountReached", maxReached);
+            
+            SpilUnityImplementationBase.firePromotionAmountBought(data.Print());
         }
         
         public static void ShowPromotionScreen(int promotionId) {
@@ -116,7 +125,10 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
     
     public class PromotionsResponse : Response {
         public static void ProcessPromotionResponse(ResponseEvent response) {
-            if (response.data == null) return;
+            if (response.data == null) {
+                SpilUnityImplementationBase.firePromotionsNotAvailable();
+                return;
+            }
 
             if (response.action.Equals("request")) {
                 if (response.data.HasField("promotions")) {
@@ -216,9 +228,8 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                         
                         PromotionsManager.PromotionData.Add(promotionData);
                     }
+                    SpilUnityImplementationBase.firePromotionsAvailable();
                 }
-                
-                Spil.GameData.UpdateSpilGameData();
             } else if (response.action.Equals("update")) {
                
                 SpilPromotionData boughtPromotion = new SpilPromotionData();

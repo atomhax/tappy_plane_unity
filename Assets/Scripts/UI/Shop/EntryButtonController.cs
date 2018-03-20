@@ -21,6 +21,10 @@ public class EntryButtonController : MonoBehaviour {
 		parentTabController = parent;
 		bundle = Spil.GameData.GetBundle (entry.Id);
 		buttonLabel.text = entry.Label;
+
+		if (Spil.Instance.GetPromotions().HasActiveEntryPromotion(entryValue)) {
+			saleImage.SetActive(true);
+		}
 	}
 
 	public void EntryButtonPressed(){

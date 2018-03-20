@@ -21,7 +21,7 @@ namespace SpilGames.Unity.Helpers.GameData {
         public Shop(List<SpilShopTabData> shop) {
             if (shop != null) {
                 foreach (SpilShopTabData tab in shop) {
-                    _Tabs.Add(new Tab(tab.name, tab.entries, tab.imageEntries, tab.hasActivePromotions));
+                    _Tabs.Add(new Tab(tab.name, tab.entries, tab.imageEntries));
                 }
             }
         }
@@ -59,14 +59,8 @@ namespace SpilGames.Unity.Helpers.GameData {
         }
 
         private List<ImageEntry> _ImageEntries = new List<ImageEntry>();
-
-        public bool HasActivePromotions {
-            get { return _HasActivePromotions; }
-        }
-
-        private bool _HasActivePromotions;
         
-        public Tab(string name, List<SpilShopEntryData> entries, List<SpilShopImageEntry> imageEntries, bool hasActivePromotions) {
+        public Tab(string name, List<SpilShopEntryData> entries, List<SpilShopImageEntry> imageEntries) {
             _Name = name;
 
             if (imageEntries != null) {
@@ -75,8 +69,6 @@ namespace SpilGames.Unity.Helpers.GameData {
                     ImageEntries.Add(imageEntry);
                 }
             }
-
-            _HasActivePromotions = hasActivePromotions;
             
             if (entries != null) {
                 foreach (SpilShopEntryData entry in entries) {

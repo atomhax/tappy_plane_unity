@@ -30,24 +30,6 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     return placeholder;
                 }
             }
-
-            if (shop != null) {
-                foreach (SpilShopTabData tab in shop) {
-                    foreach (SpilShopEntryData entry in tab.entries) {
-                        if(entry.type.Equals("BUNDLE")){
-                            if(PromotionsManager.HasBundlePromotion(entry.id)) {
-                                tab.hasActivePromotions = true;
-                                break;
-                            }
-                        } else if(entry.type.Equals("PACKAGE")){
-                            if(PromotionsManager.HasPackagePromotion(entry.id)) {
-                                tab.hasActivePromotions = true;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
             
             return JsonHelper.getJSONFromObject(this);
         }

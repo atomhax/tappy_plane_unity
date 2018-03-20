@@ -21,7 +21,7 @@ public class TabButtonController : MonoBehaviour {
 		buttonLabelText.text = tabName;
 		this.tabNumber = tabNumber;
 		shopUIController = parentController;
-
+		
 		if (hasActivePromotion) {
 			saleImage.SetActive(true);
 		}

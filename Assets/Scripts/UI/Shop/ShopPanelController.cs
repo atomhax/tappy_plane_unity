@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SpilGames.Unity;
 using SpilGames.Unity.Base.SDK;
 using SpilGames.Unity.Helpers.GameData;
 using SpilGames.Unity.Helpers.PlayerData;
+using SpilGames.Unity.Json;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -45,6 +47,9 @@ public class ShopPanelController : MonoBehaviour {
         Spil.Instance.OnSplashScreenOpenShop -= OnSplashScreenOpenShop;
         Spil.Instance.OnSplashScreenOpenShop += OnSplashScreenOpenShop;
 
+        Spil.Instance.OnPromotionsAvailable -= OnPromotionsAvailable;
+        Spil.Instance.OnPromotionsAvailable += OnPromotionsAvailable;
+        
         Invoke("RequestRewardVideo", 2); 
         OnPlayerDataUpdated("Opened", null);
 
@@ -54,6 +59,11 @@ public class ShopPanelController : MonoBehaviour {
             privacyPolicySettingsButton.SetActive(false);
         }
         
+        ResetShop();
+        CreateShop();
+    }
+
+    private void OnPromotionsAvailable() {
         ResetShop();
         CreateShop();
     }
@@ -82,7 +92,8 @@ public class ShopPanelController : MonoBehaviour {
     void CreateTabButton(Tab tab, int position) {
         GameObject newTabButton = (GameObject) Instantiate(tabButtonPrefab);
         newTabButton.transform.SetParent(tabButtonPanel);
-        newTabButton.GetComponent<TabButtonController>().SetupButton(tab.Name, position, tab.HasActivePromotions, this);
+        bool hasActivePromotion = Spil.Instance.GetPromotions().HasActiveTabPromotion(tab);
+        newTabButton.GetComponent<TabButtonController>().SetupButton(tab.Name, position, hasActivePromotion, this);
         newTabButton.SetActive(true);
         tabButtons.Add(newTabButton);
     }

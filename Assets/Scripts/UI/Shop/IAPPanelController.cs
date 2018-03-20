@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using SpilGames.Unity;
@@ -18,6 +19,17 @@ public class IAPPanelController : MonoBehaviour {
 
 	public Text successPanelText;
 
+	void Awake() {
+		Spil.Instance.OnIAPValid -= OnIAPValid;
+		Spil.Instance.OnIAPValid += OnIAPValid;
+
+		Spil.Instance.OnIAPInvalid -= OnIAPInvalid;
+		Spil.Instance.OnIAPInvalid += OnIAPInvalid;
+
+		Spil.Instance.OnIAPServerError -= OnIAPServerError;
+		Spil.Instance.OnIAPServerError += OnIAPServerError;
+	}
+
 	public void PurchaseStarted(){
 		pleaseWaitPanel.SetActive (true);
 	}
@@ -32,16 +44,6 @@ public class IAPPanelController : MonoBehaviour {
 	}
 		
 	public void SetupIAPButtons(){
-
-		Spil.Instance.OnIAPValid -= OnIAPValid;
-		Spil.Instance.OnIAPValid += OnIAPValid;
-
-		Spil.Instance.OnIAPInvalid -= OnIAPInvalid;
-		Spil.Instance.OnIAPInvalid += OnIAPInvalid;
-
-		Spil.Instance.OnIAPServerError -= OnIAPServerError;
-		Spil.Instance.OnIAPServerError += OnIAPServerError;
-
 		for(int i = 0 ; i < iapButtons.Length; i ++){
 			iapButtons [i].gameObject.SetActive (false);
 		}
@@ -64,7 +66,7 @@ public class IAPPanelController : MonoBehaviour {
 					promotionText = "PROMOTION!\n" + packagePromotion.Label + packagePromotion.ExtraEntities[0].Amount + " extra gems!";
 				}
 				
-				iapButtons [i].PopulateIAPButton (gemAmount, promotionText, cost, package.PackageId);
+				iapButtons [i].PopulateIAPButton (gemAmount, promotionText, package.HasActivePromotion(), cost, package.PackageId);
 				iapButtons [i].gameObject.SetActive (true);
 			}
 		}

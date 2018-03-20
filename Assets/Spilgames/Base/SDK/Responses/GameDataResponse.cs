@@ -78,7 +78,6 @@ namespace SpilGames.Unity.Base.SDK {
         public string name;
         public List<SpilShopImageEntry> imageEntries;
         public List<SpilShopEntryData> entries;
-        public bool hasActivePromotions;
     }
 
     public class SpilShopImageEntry {

@@ -731,6 +731,38 @@ namespace SpilGames.Unity {
             SpilUnityImplementationBase.firePrivacyPolicyStatus(Convert.ToBoolean(accepted));
         }
 
+        /// <summary>
+        /// This event indicates if the Packages are available to be used by the game.
+        /// </summary>
+        public void PackagesAvailable() {
+            SpilUnityImplementationBase.firePackagesAvailable();
+        }
+        
+        /// <summary>
+        /// This event indicates if the Packages are not available to be used by the game.
+        /// </summary>
+        public void PackagesNotAvailable() {
+            SpilUnityImplementationBase.firePackagesNotAvailable();
+        }
+        
+        /// <summary>
+        /// This event indicates if the Promotions are available to be used by the game.
+        /// </summary>
+        public void PromotionsAvailable() {
+            SpilUnityImplementationBase.firePromotionsAvailable();
+        }
+        
+        /// <summary>
+        /// This event indicates if the Promotions are not available to be used by the game.
+        /// </summary>
+        public void PromotionsNotAvailable() {
+            SpilUnityImplementationBase.firePromotionsNotAvailable();
+        }
+
+        public void PromotionAmountBought(string data) {
+            SpilUnityImplementationBase.firePromotionAmountBought(data);
+        }
+        
 #if UNITY_ANDROID
         /// <summary>
         /// This event indicates the status of the permission request.

@@ -50,6 +50,36 @@ namespace SpilGames.Unity.Base.Implementations{
             return helper;
         }
 
+        public delegate void PackagesAvailable();
+
+        /// <summary>
+        /// This event indicates that the IAP packages can be retrieved.
+        /// </summary>
+        public event PackagesAvailable OnPackagesAvailable;
+
+        public static void firePackagesAvailable() {
+            Debug.Log("SpilSDK-Unity firePackagesAvailable");
+
+            if (Spil.Instance.OnPackagesAvailable != null) {
+                Spil.Instance.OnPackagesAvailable();
+            }
+        }
+        
+        public delegate void PackagesNotAvailable();
+
+        /// <summary>
+        /// This event indicates that the IAP packages are not available in the SDK.
+        /// </summary>
+        public event PackagesNotAvailable OnPackagesNotAvailable;
+
+        public static void firePackagesNotAvailable() {
+            Debug.Log("SpilSDK-Unity firePackagesNotAvailable");
+
+            if (Spil.Instance.OnPackagesNotAvailable != null) {
+                Spil.Instance.OnPackagesNotAvailable();
+            }
+        }
+        
         #endregion
 
         #region Promotions
@@ -65,6 +95,61 @@ namespace SpilGames.Unity.Base.Implementations{
             return helper;
         }
 
+        public delegate void PromotionsAvailable();
+
+        /// <summary>
+        /// This event indicates that the promotions for IAP and In-Game items can be retrieved.
+        /// </summary>
+        public event PromotionsAvailable OnPromotionsAvailable;
+
+        public static void firePromotionsAvailable() {
+            Debug.Log("SpilSDK-Unity firePromotionsAvailable");
+
+            if (Spil.GameData != null) {
+                Spil.GameData.SpilGameDataHandler();
+            }
+            
+            if (Spil.Instance.OnPromotionsAvailable != null) {
+                Spil.Instance.OnPromotionsAvailable();
+            }
+        }
+        
+        public delegate void PromotionsNotAvailable();
+
+        /// <summary>
+        /// This event indicates that the promotions for IAP and In-Game items are not available in the SDK.
+        /// </summary>
+        public event PromotionsNotAvailable OnPromotionsNotAvailable;
+
+        public static void firePromotionsNotAvailable() {
+            Debug.Log("SpilSDK-Unity firePromotionsNotAvailable");
+
+            if (Spil.Instance.OnPromotionsNotAvailable != null) {
+                Spil.Instance.OnPromotionsNotAvailable();
+            }
+        }
+
+
+        public delegate void PromotionAmountBought(int promotionId, int currentAmount, bool maxAmountReached);
+        
+        /// <summary>
+        /// This event informs the updated status of a promotion when something is bought.
+        /// </summary>
+        public event PromotionAmountBought OnPromotionAmountBought;
+        
+        public static void firePromotionAmountBought(string data) {
+            Debug.Log("SpilSDK-Unity firePromotionAmountBought with data: " + data);
+
+            JSONObject promotionInfo = new JSONObject(data);
+            int promotionId = (int) promotionInfo.GetField("promotionId").i;
+            int currentAmount = (int) promotionInfo.GetField("amountPurchased").i;
+            bool maxAmountReached = promotionInfo.GetField("maxAmountReached").b;
+            
+            if (Spil.Instance.OnPromotionAmountBought != null) {
+                Spil.Instance.OnPromotionAmountBought(promotionId, currentAmount, maxAmountReached);
+            }
+        }
+        
         #endregion
         
         #region Events

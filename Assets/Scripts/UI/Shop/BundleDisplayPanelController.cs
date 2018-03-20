@@ -96,6 +96,10 @@ public class BundleDisplayPanelController : MonoBehaviour {
             if (entryImage != null) {
                 Debug.Log("Image already preloaded with path: " + entryImage);
                 Spil.Instance.LoadImage(this, entryImage);
+                
+                Color c = panelInstance.bundleImage.color;
+                c.a = 255;
+                panelInstance.bundleImage.color = c;
             }
         } else if (bundle.HasImage()) {
             string imagePath = bundle.GetImagePath();
@@ -103,11 +107,18 @@ public class BundleDisplayPanelController : MonoBehaviour {
             if (imagePath != null) {
                 Debug.Log("Image already preloaded with path: " + imagePath);
                 Spil.Instance.LoadImage(this, imagePath);
+                
+                Color c = panelInstance.bundleImage.color;
+                c.a = 255;
+                panelInstance.bundleImage.color = c;
             }
         } else {
             if (bundleDisplayed.Id == 100100) {
                 panelInstance.bundleImage.sprite = Sprite.Create(gachaImage, new Rect(0, 0, gachaImage.width, gachaImage.height), new Vector2());
                 panelInstance.bundleImage.preserveAspect = true;
+                Color c = panelInstance.bundleImage.color;
+                c.a = 255;
+                panelInstance.bundleImage.color = c;
             } else {
                 bundleImage.sprite = null;
             }
@@ -156,6 +167,10 @@ public class BundleDisplayPanelController : MonoBehaviour {
         if (localPath != null) {
             Debug.Log("Finished downloading image with local path: " + localPath);
             Spil.Instance.LoadImage(this, localPath);
+            
+            Color c = panelInstance.bundleImage.color;
+            c.a = 255;
+            panelInstance.bundleImage.color = c;
         }
     }
 }

@@ -130,6 +130,12 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 }
             }
             else if (response.action.Equals("show")) {
+                int priv = Spil.Instance.GetPrivValue();
+
+                if (priv < 2 && priv > -1) { 
+                    return;
+                }
+                
                 string provider = response.data.GetField("provider").str;
                 string adType = response.data.GetField("adType").str;
 

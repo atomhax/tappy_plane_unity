@@ -77,5 +77,53 @@ namespace SpilGames.Unity.Helpers.Promotions {
 
             return false;
         }
+
+        public bool HasPackagePromotion(int id) {
+            Package package = Spil.Instance.GetPackages().GetPackageById(id);
+
+            if (package == null) {
+                return false;
+            }
+
+            foreach (Promotion promotion in Promotions) {
+                foreach (AffectedEntity affectedEntity in promotion.AffectedEntities) {
+                    if (affectedEntity.Id == package.Id) {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public bool HasActiveEntryPromotion(Entry entry) {
+            if(entry.Type.Equals("BUNDLE")){
+                if(HasBundlePromotion(entry.Id)) {
+                    return true;
+                }
+            } else if(entry.Type.Equals("PACKAGE")){
+                if(HasPackagePromotion(entry.Id)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public bool HasActiveTabPromotion(Tab tab) {
+            foreach (Entry entry in tab.Entries) {
+                if(entry.Type.Equals("BUNDLE")){
+                    if(HasBundlePromotion(entry.Id)) {
+                        return true;
+                    }
+                } else if(entry.Type.Equals("PACKAGE")){
+                    if(HasPackagePromotion(entry.Id)) {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
     }
 }

@@ -847,10 +847,6 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 199632, guid: 12289c34dcf414950bc21c74b96faea1, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 12289c34dcf414950bc21c74b96faea1, type: 2}
   m_IsPrefabParent: 0
@@ -6488,8 +6484,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initializeOnAwake: 1
-  checkPrivacyPolicyAndroid: 0
-  checkPrivacyPolicyIOS: 0
+  checkPrivacyPolicyAndroid: 1
+  checkPrivacyPolicyIOS: 1
   useUnityPrefab: 0
   PrefabOrientation: 0
   ProjectId: 492493592102

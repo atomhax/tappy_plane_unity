@@ -37,8 +37,24 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 		if (m_StoreController == null) {
 			InitializePurchasing ();
 		}
+		
+		Spil.Instance.OnPackagesAvailable -= OnPackagesAvailable;
+		Spil.Instance.OnPackagesAvailable += OnPackagesAvailable;
+		
+		Spil.Instance.OnPromotionsAvailable -= OnPromotionsAvailable;
+		Spil.Instance.OnPromotionsAvailable += OnPromotionsAvailable;
 	}
 
+	public void OnPackagesAvailable() {
+		Debug.Log("Hello1");
+		iapPanelController.SetupIAPButtons();
+	}
+	
+	public void OnPromotionsAvailable() {
+		Debug.Log("Hello2");
+		iapPanelController.SetupIAPButtons();
+	}
+	
 	public void InitializePurchasing ()
 	{
 		#if UNITY_TVOS
