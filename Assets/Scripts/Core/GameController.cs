@@ -464,6 +464,11 @@ public class GameController : MonoBehaviour
 
     public void LoadSkinsPanelAfterPurchase() {
         inGamePurchaseSuccessPanel.SetActive(false);
+        shopPanelController.tabsPanel.gameObject.SetActive(false);
+        shopPanelController.ResetShop();
+        shopPanelController.CreateShop();
+        shopPanelController.iapManager.iapPanelController.SetupIAPButtons();
+        shopPanelController.RequestRewardVideo();
     }
 
     public void OnGameStateUpdated(string access) {

@@ -27,7 +27,11 @@ public class BundleDisplayPanelController : MonoBehaviour {
 
     public Image stickerImage;
 
+    public GameObject promotionScreenButton;
+
     private static string entryImageUrl;
+
+    private Promotion bundlePromotion;
 
     void Start() {
         Spil.Instance.OnImageLoaded -= OnImageLoaded;
@@ -38,6 +42,9 @@ public class BundleDisplayPanelController : MonoBehaviour {
         
         Spil.Instance.OnImageLoadFailed -= OnImageLoadFailed;
         Spil.Instance.OnImageLoadFailed += OnImageLoadFailed;
+        
+        Spil.Instance.OnPromotionAmountBought -= OnPromotionAmountBought;
+        Spil.Instance.OnPromotionAmountBought += OnPromotionAmountBought;
     }
 
     public void SetupBundleDisplayPanel(Bundle bundle, Entry entry) {
@@ -46,14 +53,22 @@ public class BundleDisplayPanelController : MonoBehaviour {
 
         entryImageUrl = null;
         stickerImage.gameObject.SetActive(false);
+        promotionScreenButton.SetActive(false);
         
-        Promotion bundlePromotion = Spil.Instance.GetPromotions().GetBundlePromotion(bundleDisplayed.Id);      
+        bundlePromotion = Spil.Instance.GetPromotions().GetBundlePromotion(bundleDisplayed.Id);
+        if (bundlePromotion != null) {
+            promotionScreenButton.SetActive(true);
+        }
         starsCostText.text = diamondCostText.text = "0";
 
         if (bundle.DisplayName != null && !bundle.DisplayName.Equals("")) {
             bundleTitleText.text = bundle.DisplayName;
         } else {
             bundleTitleText.text = bundle.Name;
+        }
+
+        if (bundlePromotion != null) {
+            bundleTitleText.text += " - Promotion";
         }
 
         if (bundle.DisplayDescription != null && !bundle.DisplayDescription.Equals("")) {
@@ -88,7 +103,15 @@ public class BundleDisplayPanelController : MonoBehaviour {
                     }
                 }
             }
-            
+        }
+
+        if (bundlePromotion != null) {
+            listOfItemsInBundle.text += "\n\nPromo Status: ";
+            listOfItemsInBundle.text += "\n" + "• " + "Bought: " + bundlePromotion.AmountPurchased;
+
+            if (bundlePromotion.MaxPurchase > 0) {
+                listOfItemsInBundle.text += "\n" + "• " + "Max: " + bundlePromotion.MaxPurchase;
+            }
         }
 
         gameObject.SetActive(true);
@@ -145,6 +168,13 @@ public class BundleDisplayPanelController : MonoBehaviour {
         }
     }
 
+    private void OnPromotionAmountBought(int promotionId, int currentAmount, bool maxAmountReached) {
+        Debug.Log("Current promo amount: " + currentAmount);
+        if (maxAmountReached) {
+            Debug.Log("Promtion amount reached!");
+        }
+    }
+    
     public void BuyBundle() {
         if (CanAffordBundle()) {
             BuyBundleFromSDK();
@@ -158,6 +188,12 @@ public class BundleDisplayPanelController : MonoBehaviour {
         }
     }
 
+    public void ShowPromotionScreen() {
+        if (bundlePromotion != null) {
+            Spil.Instance.ShowPromotionScreen(bundlePromotion.Id);
+        }
+    }
+    
     bool CanAffordBundle() {
         bool canAfford = true;
         for (int i = 0; i < bundleDisplayed.Prices.Count; i++) {

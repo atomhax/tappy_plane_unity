@@ -686,7 +686,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             SpilUnityImplementationBase.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
 
             if (isPromotionValid) {
-                Spil.Instance.GetPromotions().GetBundlePromotion(bundleId).AmountPurchased = Spil.Instance.GetPromotions().GetBundlePromotion(bundleId).AmountPurchased + 1;
+                PromotionsManager.PromotionData.First(a => a.id == promotion.Id).amountPurchased++;
                 
                 PromotionsManager.SendBoughtPromotion(promotion.Id);
             }

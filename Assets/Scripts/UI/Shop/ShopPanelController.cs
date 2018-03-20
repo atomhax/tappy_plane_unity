@@ -25,6 +25,8 @@ public class ShopPanelController : MonoBehaviour {
 
     public GameObject privacyPolicySettingsButton;
 
+    public MyIAPManager iapManager;
+
     void OnEnable() {
         Spil.Instance.OnAdAvailable -= OnAdAvailable;
         Spil.Instance.OnAdAvailable += OnAdAvailable;
@@ -69,7 +71,7 @@ public class ShopPanelController : MonoBehaviour {
     }
 
     //this method will take the Spil game data and create the shop from it
-    void CreateShop() {
+    public void CreateShop() {
         //First create the buttons for each shop tab/window
         for (int i = 0; i < Spil.GameData.Shop.Tabs.Count; i++) {
             CreateTabButton(Spil.GameData.Shop.Tabs[i], i);
@@ -77,7 +79,7 @@ public class ShopPanelController : MonoBehaviour {
         }
     }
 
-    void ResetShop() {
+    public void ResetShop() {
         getFreeCoinsButton.SetActive(false);
         for (int i = 0; i < tabButtons.Count; i++) {
             Destroy(tabButtons[i]);
@@ -146,7 +148,7 @@ public class ShopPanelController : MonoBehaviour {
         }
     }
 
-    void RequestRewardVideo() {
+    public void RequestRewardVideo() {
         Spil.Instance.RequestRewardVideo("Shop");
     }
     

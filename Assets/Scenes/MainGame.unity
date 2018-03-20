@@ -14413,3 +14413,4 @@ MonoBehaviour:
   tabButtonPrefab: {fileID: 139730, guid: 56976e344d7f84e8983bce00fb080d24, type: 2}
   tabPrefab: {fileID: 199632, guid: 12289c34dcf414950bc21c74b96faea1, type: 2}
   privacyPolicySettingsButton: {fileID: 1473230734}
+  iapManager: {fileID: 1996137884}

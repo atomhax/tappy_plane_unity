@@ -243,7 +243,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 }
                 
                 if (response.data.HasField("maxPurchase")) {
-                    boughtPromotion.amountPurchased = (int) response.data.GetField("maxPurchase").i;
+                    boughtPromotion.maxPurchase = (int) response.data.GetField("maxPurchase").i;
                 }
                 
                 PromotionsManager.ProcessBoughtPromotionResponse(boughtPromotion);
