@@ -7,6 +7,7 @@ using SpilGames.Unity.Json;
 using SpilGames.Unity.Base.SDK;
 using SpilGames.Unity.Helpers.IAPPackages;
 using SpilGames.Unity.Helpers.Promotions;
+using UnityEngine.Analytics;
 
 namespace SpilGames.Unity.Base.Implementations{
     public abstract class SpilUnityImplementationBase : MonoBehaviour{
@@ -1997,7 +1998,68 @@ namespace SpilGames.Unity.Base.Implementations{
                 dict.Add("acceptGDPR", true);
             }
 
+            TrackPrivacyPolicyChangedUnityAnalytics();
+            
             SendCustomEvent("privacyChanged", dict);
+        }
+        
+        
+        // For Android we cannot reliably check if the Privacy policy was rejected
+        // because ApplicationQuit isn't always called when the app is closed.
+        // Instead track a "PrivacyPolicyAsked" event the first time the app is started
+        // and later send a "PrivacyPolicyAccepted" event if the user accepts.
+        public void TrackPrivacyPolicyAskedUnityAnalytics() {
+        
+            Debug.Log("SpilSDK-Unity PrivacyPolicyAsked");
+            
+            if(Spil.MonoInstance.sendPrivacyPolicyTrackingEvents) {
+                
+                // Only do this on the first app start.
+                if (Spil.CheckPrivacyPolicy && !PlayerPrefs.HasKey("PrivacyPolicyAskedUnityAnalytics")) {
+                
+                    PlayerPrefs.SetInt("PrivacyPolicyAskedUnityAnalytics", 1);
+                    
+                    string ipAddress = Network.player.ipAddress;
+                    int ipAddressAsHash = Animator.StringToHash(ipAddress);
+
+                    Analytics.CustomEvent("PrivacyPolicyAsked", new Dictionary<string, object> {{"hash", ipAddressAsHash}});
+                    Debug.Log("SpilSDK-Unity Sent PrivacyPolicyAsked tracking event for ip " + ipAddress + " with hash " + ipAddressAsHash);
+                }
+                else if (Spil.CheckPrivacyPolicy && PlayerPrefs.HasKey("PrivacyPolicyAskedUnityAnalytics")) {
+                    Debug.Log("SpilSDK-Unity PrivacyPolicyAsked tracking event already sent for this user, ignoring.");
+                }
+            }
+        }
+        
+        void TrackPrivacyPolicyChangedUnityAnalytics() {
+
+            if(Spil.MonoInstance.sendPrivacyPolicyTrackingEvents && Spil.CheckPrivacyPolicy) {
+                                
+                Dictionary<string, object> eventParams = new Dictionary<string, object>();
+                    
+                string ipAddress = Network.player.ipAddress;
+                int ipAddressAsHash = Animator.StringToHash(ipAddress);
+                eventParams.Add("hash", ipAddressAsHash);
+
+                // Get the user's choice (Personalised ads/content allowed or not).
+                int privValue = Spil.Instance.GetPrivValue();
+                eventParams.Add("priv", privValue);
+                
+                // If the privacy policy has been accepted for the first time send a PrivacyPolicyAccepted
+                // event via Unity Analytics, otherwise send PrivacyPolicyChanged.
+                // Unity Analytics is also used to track PrivacyPolicyAsked on app start.
+                if (!PlayerPrefs.HasKey("PrivacyPolicyAcceptedUnityAnalytics")) {
+                    
+                    PlayerPrefs.SetInt("PrivacyPolicyAcceptedUnityAnalytics", 1);
+                    
+                    Analytics.CustomEvent("PrivacyPolicyAccepted", eventParams);
+                    Debug.Log("SpilSDK-Unity Sent PrivacyPolicyAccepted tracking event for ip " + ipAddress + " with hash " + ipAddressAsHash + " and priv=" + privValue);
+                } else {
+                    
+                    Analytics.CustomEvent("PrivacyPolicyChanged", eventParams);
+                    Debug.Log("SpilSDK-Unity Sent PrivacyPolicyChanged tracking event for ip " + ipAddress + " with hash " + ipAddressAsHash + " and priv=" + privValue);           
+                }
+            }
         }
         
         public abstract void SavePrivValue(int priv);
