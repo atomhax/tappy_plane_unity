@@ -122,14 +122,22 @@ extern "C" {
     
     // --- Packages & Promotions ---
     
-    void requestPackagesNative();
-    
-    char* getPackageNative(const char* keyName);
-    
     char* getAllPackagesNative();
     
-    char* getPromotionsNative(const char* keyName);
-
+    char* getPackageNative(const char* packageId); // NOTE: Changed param name
+    
+    char* getPackageByIDNative(int packageId); // NOTE: New method
+    
+    char* getBundlePromotionNative(int bundleId); // NOTE: Method name change
+    
+    char* getPackagePromotionNative(const char* packageId); // NOTE: New method
+    
+    void requestPackagesNative();
+    
+    void requestPromotionsNative();
+    
+    void showPromotionScreenNative(int promotionId);
+    
     // --- ADS ---
     
     void requestMoreAppsNative();
