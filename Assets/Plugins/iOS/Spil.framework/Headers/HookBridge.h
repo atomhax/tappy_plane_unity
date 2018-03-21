@@ -124,6 +124,8 @@ extern "C" {
     
     char* getAllPackagesNative();
     
+    char* getAllPromotionsNative();
+    
     char* getPackageNative(const char* packageId); // NOTE: Changed param name
     
     char* getPackageByIDNative(int packageId); // NOTE: New method

@@ -59,46 +59,54 @@ namespace SpilGames.Unity.Base.Implementations
         /// This is called automatically by the Spil SDK when the game starts.
         /// This is not essential so could be removed but might be handy for some developers so we left it in.
         /// </summary>
-        public override void UpdatePackagesAndPromotions()
-        {
+        public override void RequestPackages() {
             requestPackagesNative();
         }
-
-        // Method that returns the all packages
-        protected override string GetAllPackages()
-        {
-            return getAllPackagesNative();
-        }
-
-        // Method that returns a package based on key
-        protected override string GetPackage(string key)
-        {
-            return getPackageNative(key);
-        }
-
-        /// <summary>
-        /// This method is marked as internal and should not be exposed to developers.
-        /// The Spil Unity SDK is not packaged as a seperate assembly yet so this method is currently visible, this will be fixed in the future.
-        /// Internal method names start with a lower case so you can easily recognise and avoid them.
-        /// </summary>
-        internal override string GetPromotions(string key)
-        {
-            return getPromotionsNative(key);
-        }
-
         [DllImport("__Internal")]
         private static extern void requestPackagesNative();
+        
+        public override void RequestPromotions() {
+            requestPromotionsNative();
+        }
+        [DllImport("__Internal")]
+        private static extern void requestPromotionsNative();
 
+        // Method that returns the all packages
+        protected override string GetAllPackages() {
+            return getAllPackagesNative();
+        }
+        [DllImport("__Internal")]
+        private static extern string getAllPackagesNative();
+        
+        // Method that returns a package based on key
+        protected override string GetPackage(string key) {
+            return getPackageNative(key);
+        }
         [DllImport("__Internal")]
         private static extern string getPackageNative(string keyName);
 
+        public override string GetAllPromotions() {
+            return getAllPromotionsNative();
+        }
         [DllImport("__Internal")]
-        private static extern string getAllPackagesNative();
+        private static extern string getAllPromotionsNative();
 
+        public override string GetBundlePromotion(int bundleId) {
+            return getBundlePromotionNative(bundleId);
+        }
         [DllImport("__Internal")]
-        private static extern string getPromotionsNative(string keyName);
-
-
+        private static extern string getBundlePromotionNative(int bundleId);
+        
+        public override string GetPackagePromotion(string packageId) {
+            return getPackagePromotionNative(packageId);
+        }
+        private static extern string getPackagePromotionNative(string packageId);
+        
+        public override void ShowPromotionScreen(int promotionId) {
+            showPromotionScreenNative(promotionId);
+        }
+        private static extern void showPromotionScreenNative(int promotionId);
+        
         #endregion
 
         /// <summary>
@@ -112,7 +120,7 @@ namespace SpilGames.Unity.Base.Implementations
             options.AddField("isUnity", true);
             options.AddField("privacyPolicyEnabled", withPrivacyPolicy);
             initEventTrackerWithOptions(options.ToString());
-            UpdatePackagesAndPromotions();
+            RequestPackages();
         }
 
         /// <summary>
