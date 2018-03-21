@@ -8,6 +8,7 @@ using SpilGames.Unity.Helpers;
 using SpilGames.Unity.Json;
 using SpilGames.Unity.Helpers.IAPPackages;
 using SpilGames.Unity.Helpers.PlayerData;
+using SpilGames.Unity.Helpers.Promotions;
 
 
 public class MyIAPManager : MonoBehaviour, IStoreListener
@@ -36,8 +37,24 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 		if (m_StoreController == null) {
 			InitializePurchasing ();
 		}
+		
+		Spil.Instance.OnPackagesAvailable -= OnPackagesAvailable;
+		Spil.Instance.OnPackagesAvailable += OnPackagesAvailable;
+		
+		Spil.Instance.OnPromotionsAvailable -= OnPromotionsAvailable;
+		Spil.Instance.OnPromotionsAvailable += OnPromotionsAvailable;
 	}
 
+	public void OnPackagesAvailable() {
+		Debug.Log("Hello1");
+		iapPanelController.SetupIAPButtons();
+	}
+	
+	public void OnPromotionsAvailable() {
+		Debug.Log("Hello2");
+		iapPanelController.SetupIAPButtons();
+	}
+	
 	public void InitializePurchasing ()
 	{
 		#if UNITY_TVOS
@@ -171,7 +188,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 			transactionID = token;
 		}
 
-		Spil.Instance.TrackIAPPurchasedEvent (skuId, transactionID, token);
+		Spil.Instance.TrackIAPPurchasedEvent (skuId, transactionID, token, "diamonPurchase", "store");
 
 		#elif UNITY_IOS
 
@@ -191,10 +208,15 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 		return;
 		#endif
 
-		PackagesHelper helper = Spil.Instance.GetPackagesAndPromotions ();
+		PackagesHelper helper = Spil.Instance.GetPackages ();
 		for (int i = 0; i < helper.Packages.Count; i++) {
-			if (lastProductSKU == helper.Packages [i].Id) {
-				Spil.PlayerData.Wallet.Add (int.Parse (helper.Packages [i].Items [0].Id), int.Parse (helper.Packages [i].Items [0].GetRealValue ().Replace (".0", "")), PlayerDataUpdateReasons.IAP, "Shop", transactionId);
+			if (lastProductSKU == helper.Packages [i].PackageId) {
+				int packageValue = int.Parse(helper.Packages[i].Items[0].Value.Replace(".0", ""));
+				if (helper.Packages[i].HasActivePromotion()) {
+					Promotion packagePromotion = Spil.Instance.GetPromotions().GetPackagePromotion(helper.Packages[i].PackageId);
+					packageValue = packageValue + packagePromotion.ExtraEntities[0].Amount;
+				}
+				Spil.PlayerData.Wallet.Add (int.Parse (helper.Packages [i].Items [0].Id), packageValue, PlayerDataUpdateReasons.IAP, "Shop", transactionId);
 			}
 		}
 

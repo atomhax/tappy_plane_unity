@@ -50,5 +50,15 @@ namespace SpilGames.Unity.Helpers.GameData {
         /// The type of item. Should be -1 - +99
         /// </summary>
         public int type;
+
+        /// <summary>
+        /// The unique id for the item.
+        /// </summary>
+        public string uniqueItemId;
+
+        /// <summary>
+        /// The unique id type.
+        /// </summary>
+        public string uniqueItemIdType;
     }
 }

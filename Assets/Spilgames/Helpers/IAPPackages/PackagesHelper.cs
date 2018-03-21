@@ -18,31 +18,18 @@ namespace SpilGames.Unity.Helpers.IAPPackages {
 
             // Create package objects with promotion data (if any)
             if (packages != null) {
-                foreach (PackageData packageData in packages) {
-                    List<PromotionData> activePromotions = new List<PromotionData>();
-
-                    if (packageData.hasPromotion) {
-                        string promotionsString = Spil.Instance.GetPromotions(packageData.packageId);
-                        if (!string.IsNullOrEmpty(promotionsString)) {
-                            List<PromotionData> promotions = JsonHelper.getObjectFromJson<List<PromotionData>>(promotionsString);
-
-                            // Check datetime, even though the server shouldn't send inactive promotions the data we're using might be old.
-                            foreach (PromotionData promotionData in promotions) {
-                                DateTime currentTime = DateTime.Now;
-                                if (currentTime >= promotionData.startTime && currentTime <= promotionData.endTime) {
-                                    activePromotions.Add(promotionData);
-                                }
-                            }
-                        }
-                    }
-
-                    Packages.Add(new Package(packageData.packageId, packageData.discountLabel, packageData.items, activePromotions));
+                foreach (PackageData packageData in packages) {     
+                    Packages.Add(new Package(packageData.id, packageData.packageId, packageData.discountLabel, packageData.items));
                 }
             }
         }
 
-        public Package GetPackageById(string packageId) {
-            return Packages.FirstOrDefault(a => a.Id.Equals(packageId));
+        public Package GetPackageByPackageId(string packageId) {
+            return Packages.FirstOrDefault(a => a.PackageId.Equals(packageId));
+        }
+
+        public Package GetPackageById(int id) {
+            return Packages.FirstOrDefault(a => a.Id == id);
         }
     }
 }

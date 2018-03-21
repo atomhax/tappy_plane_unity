@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SpilGames.Unity;
 using SpilGames.Unity.Base.SDK;
 using SpilGames.Unity.Helpers.GameData;
 using SpilGames.Unity.Helpers.PlayerData;
+using SpilGames.Unity.Json;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,6 +22,10 @@ public class ShopPanelController : MonoBehaviour {
 
     public GameObject tabButtonPrefab, tabPrefab;
     private bool closeShopAfterReward;
+
+    public GameObject privacyPolicySettingsButton;
+
+    public MyIAPManager iapManager;
 
     void OnEnable() {
         Spil.Instance.OnAdAvailable -= OnAdAvailable;
@@ -43,17 +49,29 @@ public class ShopPanelController : MonoBehaviour {
         Spil.Instance.OnSplashScreenOpenShop -= OnSplashScreenOpenShop;
         Spil.Instance.OnSplashScreenOpenShop += OnSplashScreenOpenShop;
 
+        Spil.Instance.OnPromotionsAvailable -= OnPromotionsAvailable;
+        Spil.Instance.OnPromotionsAvailable += OnPromotionsAvailable;
+        
         Invoke("RequestRewardVideo", 2); 
         OnPlayerDataUpdated("Opened", null);
 
         spilIds.text = "DeviceId: " + Spil.Instance.GetDeviceId() + "\nUserId: " + Spil.Instance.GetSpilUserId();
 
+        if (!Spil.CheckPrivacyPolicy) {
+            privacyPolicySettingsButton.SetActive(false);
+        }
+        
+        ResetShop();
+        CreateShop();
+    }
+
+    private void OnPromotionsAvailable() {
         ResetShop();
         CreateShop();
     }
 
     //this method will take the Spil game data and create the shop from it
-    void CreateShop() {
+    public void CreateShop() {
         //First create the buttons for each shop tab/window
         for (int i = 0; i < Spil.GameData.Shop.Tabs.Count; i++) {
             CreateTabButton(Spil.GameData.Shop.Tabs[i], i);
@@ -61,7 +79,7 @@ public class ShopPanelController : MonoBehaviour {
         }
     }
 
-    void ResetShop() {
+    public void ResetShop() {
         getFreeCoinsButton.SetActive(false);
         for (int i = 0; i < tabButtons.Count; i++) {
             Destroy(tabButtons[i]);
@@ -76,7 +94,8 @@ public class ShopPanelController : MonoBehaviour {
     void CreateTabButton(Tab tab, int position) {
         GameObject newTabButton = (GameObject) Instantiate(tabButtonPrefab);
         newTabButton.transform.SetParent(tabButtonPanel);
-        newTabButton.GetComponent<TabButtonController>().SetupButton(tab.Name, position, tab.HasActivePromotions, this);
+        bool hasActivePromotion = Spil.Instance.GetPromotions().HasActiveTabPromotion(tab);
+        newTabButton.GetComponent<TabButtonController>().SetupButton(tab.Name, position, hasActivePromotion, this);
         newTabButton.SetActive(true);
         tabButtons.Add(newTabButton);
     }
@@ -129,7 +148,7 @@ public class ShopPanelController : MonoBehaviour {
         }
     }
 
-    void RequestRewardVideo() {
+    public void RequestRewardVideo() {
         Spil.Instance.RequestRewardVideo("Shop");
     }
     

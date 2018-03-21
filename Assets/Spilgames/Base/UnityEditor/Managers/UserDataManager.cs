@@ -248,11 +248,9 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
                     if (access == null || data == null) continue;
                     if (access.Equals("private")) {
-                        GameStateManager.PrivateGameStateData = data;
-                        SpilUnityImplementationBase.fireGameStateUpdated("private");
+                        GameStateManager.PrivateGameStateData = data;                    
                     } else if (access.Equals("public")) {
                         GameStateManager.PublicGameStateData = data;
-                        SpilUnityImplementationBase.fireGameStateUpdated("public");
                     }
                 }
 

@@ -263,8 +263,6 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         }
 
         private static void OpenStageView(StageType stageType, JSONObject stage) {
-            SpilLogging.Log(stage.Print());
-
             CloseStageView();
 
             StageTypeValue = stageType;
@@ -289,6 +287,8 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     currentStage = stage;
                     break;
             }
+            
+            SpilUnityImplementationBase.fireLiveEventStageOpen();
         }
 
         private static void CloseStageView() {
@@ -309,6 +309,8 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     Destroy(LiveEventInfo);
                     break;
             }
+            
+            SpilUnityImplementationBase.fireLiveEventStageClosed();
         }
 
         public static long GetLiveEventStartDate() {
