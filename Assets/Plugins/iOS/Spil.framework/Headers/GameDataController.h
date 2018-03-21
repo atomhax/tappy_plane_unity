@@ -11,7 +11,6 @@
 @class Item;
 @class Bundle;
 @class Currency;
-@class ShopPromotion;
 
 @interface GameDataController : NSObject
 
@@ -26,8 +25,8 @@
 -(Bundle*)getBundle:(int)bundleId;
 
 -(NSString*)getShop;
--(NSString*)getShopPromotions;
--(ShopPromotion*)getPromotion:(int)bundleId;
+//-(NSString*)getShopPromotions;
+//-(ShopPromotion*)getPromotion:(int)bundleId;
 
 -(void)updateGameData:(GameData*)gameData;
 

@@ -177,7 +177,7 @@ namespace SpilGames.Unity.Base.Implementations
         {
             int priv = Spil.Instance.GetPrivValue();
 
-            if (priv < 2 && priv > -1) {
+            if (priv < 2 && priv > -1 && Spil.UseUnityPrefab) {
                 ShowAdsScreen();
                 return;
             }

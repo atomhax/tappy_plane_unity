@@ -20,6 +20,8 @@
 @class PlayerItem;
 @class Wallet;
 @class Inventory;
+@class Package;
+@class ShopEntry;
 
 @protocol SpilDelegate
 
@@ -63,8 +65,13 @@
 -(void)configUpdated;
 -(void)configError:(nonnull NSString*)error;
 
-// Package events
--(void)packagesLoaded;
+// Package & promotion events
+-(void)packagesAvailable;
+-(void)packagesNotAvailable;
+-(void)promotionsAvailable;
+-(void)promotionsNotAvailable;
+-(void)onBoughtPromotion:(int)id amount:(int)amountPurchased maxPurchase:(int)maxPurchase;
+-(void)promotionsAmountBought:(int)id amount:(int)amountPurchased maxPurchaseReached:(BOOL)maxReached;
 
 // Game data events
 -(void)spilGameDataAvailable;
@@ -552,10 +559,17 @@
 
 /**
  * Get a specific package from the store
- * @param Name of the key. Type must be NSString.
+ * @param packageId. Must be NSString.
  * @return returns the store package, or nil if not found
  */
-+(nullable NSDictionary*)getPackageByID:(nonnull NSString*)keyString;
++(nullable NSDictionary*)getPackageByPackageID:(nonnull NSString*)packageId;
+    
+/**
+ * Get a specific package from the store
+ * @param id. Must be int.
+ * @return returns the store package, or nil if not found
+ */
++(nullable NSDictionary*)getPackageByID:(int)id;
 
 /**
  * Get the latest stored store promotions.
@@ -564,16 +578,55 @@
 +(nullable NSArray*)getAllPromotions;
 
 /**
- * Get all promotion for a package
- * @param Name of the key. Type must be NSString.
- * @return returns a promotions list for the package id
+ * Get the promotion for a bundle
+ * @param id    Id of the bundle. Type must be int.
+ * @return returns a promotion for the package id
  */
-+(nullable NSArray*)getPromotionsByID:(nonnull NSString*)keyString;
++(nullable NSDictionary*)getBundlePromotion:(int)bundleId;
 
 /**
- * Refresh the package and promotion data
+ * Get the promotion for a package
+ * @param id    Id of the package. Type must be NSString.
+ * @return returns a promotions for the bundle id
+ */
++(nullable NSDictionary*)getPackagePromotion:(nonnull NSString*)packageId;
+
+/**
+ * Refresh the package data
  */
 +(void)requestPackages;
+    
+/**
+ * Refresh the promotion data
+ */
++(void)requestPromotions;
+
+/**
+ * Show the promotion screen
+ * @param promotionId the promotion id to show the screen for
+ */
++(void)showPromotionScreen:(int)promotionId;
+
+/**
+ * Check for an active promotion
+ * @param tabId the tab to check
+ * returns if there is a promotion
+ */
++(BOOL)hasActiveTabPromotion:(int)tabId;
+
+/**
+ * Check for an active promotion
+ * @param shop entry the entry to check
+ * returns if there is a promotion
+ */
++(BOOL)hasActiveEntryPromotion:(ShopEntry*)shopEntry;
+
+/**
+ * Check for an active promotion
+ * @param packageId the tab to check
+ * returns if there is a promotion
+ */
++(BOOL)hasPackagePromotion:(nonnull NSString*)packageId;
 
 #pragma mark Ads
 
@@ -661,12 +714,12 @@
 /**
  * Returns the shop data as json
  */
-+(nullable NSString*)getShop;
+//+(nullable NSString*)getShop;
 
 /**
  * Returns the shop promotions data as json
  */
-+(nullable NSString*)getShopPromotions;
+//+(nullable NSString*)getShopPromotions;
 
 /**
  * Add currency to the wallet
