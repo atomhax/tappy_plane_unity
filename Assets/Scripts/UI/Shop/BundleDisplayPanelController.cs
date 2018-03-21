@@ -27,9 +27,12 @@ public class BundleDisplayPanelController : MonoBehaviour {
 
     public Image stickerImage;
 
+    public Image promoImage;
+
     public GameObject promotionScreenButton;
 
     private static string entryImageUrl;
+    private static string promoImageUrl;
 
     private Promotion bundlePromotion;
 
@@ -51,8 +54,12 @@ public class BundleDisplayPanelController : MonoBehaviour {
         panelInstance = this;
         bundleDisplayed = bundle;
 
+        gameObject.SetActive(true);
+        
         entryImageUrl = null;
+        promoImageUrl = null;
         stickerImage.gameObject.SetActive(false);
+        promoImage.gameObject.SetActive(false);
         promotionScreenButton.SetActive(false);
         
         bundlePromotion = Spil.Instance.GetPromotions().GetBundlePromotion(bundleDisplayed.Id);
@@ -125,18 +132,23 @@ public class BundleDisplayPanelController : MonoBehaviour {
             if (bundlePromotion.MaxPurchase > 0) {
                 listOfItemsInBundle.text += "\n" + "• " + "Max: " + bundlePromotion.MaxPurchase;
             }
+
+            if (bundlePromotion.GameAsset.Count > 0) {
+                promoImage.gameObject.SetActive(true);
+                promoImageUrl = bundlePromotion.GameAsset[0].Value;
+            
+                if (promoImageUrl != null) {
+                    Debug.Log("Image already preloaded with path: " + promoImageUrl);
+                    Spil.Instance.LoadImage(promoImage, promoImageUrl);
+                
+                    Color c = panelInstance.promoImage.color;
+                    c.a = 255;
+                    panelInstance.promoImage.color = c;
+                }
+            }
         }
 
-        gameObject.SetActive(true);
-
-        if (bundlePromotion != null && bundlePromotion.GameAsset.Count > 0) {
-            string promotionImageUrl = bundlePromotion.GameAsset[0].Value;
-            
-            if (promotionImageUrl != null) {
-                Debug.Log("Image already preloaded with path: " + promotionImageUrl);
-                Spil.Instance.LoadImage(bundleImage, promotionImageUrl);
-            }
-        } else if (bundle.HasImage()) {
+        if (bundle.HasImage()) {
             string bundleImageUrl = bundle.GetImagePath();
 
             if (bundleImageUrl != null) {
@@ -172,6 +184,8 @@ public class BundleDisplayPanelController : MonoBehaviour {
                 panelInstance.stickerImage.color = c;
             }
         }
+
+        bundleImage.preserveAspect = true;
     }
 
     private void OnImageLoadFailed(ImageContext imageContext, SpilErrorMessage errorMessage) {
@@ -209,11 +223,21 @@ public class BundleDisplayPanelController : MonoBehaviour {
     
     bool CanAffordBundle() {
         bool canAfford = true;
-        for (int i = 0; i < bundleDisplayed.Prices.Count; i++) {
-            if (Spil.PlayerData.GetCurrencyBalance(bundleDisplayed.Prices[i].CurrencyId) < bundleDisplayed.Prices[i].Value) {
-                canAfford = false;
+
+        if (bundlePromotion != null) {
+            for (int i = 0; i < bundlePromotion.PriceOverride.Count; i++) {
+                if (Spil.PlayerData.GetCurrencyBalance(bundleDisplayed.Prices[i].CurrencyId) < bundlePromotion.PriceOverride[i].Amount) {
+                    canAfford = false;
+                }
+            }
+        } else {
+            for (int i = 0; i < bundleDisplayed.Prices.Count; i++) {
+                if (Spil.PlayerData.GetCurrencyBalance(bundleDisplayed.Prices[i].CurrencyId) < bundleDisplayed.Prices[i].Value) {
+                    canAfford = false;
+                }
             }
         }
+
         return canAfford;
     }
 
@@ -224,6 +248,8 @@ public class BundleDisplayPanelController : MonoBehaviour {
     public void OnImageLoaded(Texture2D image, string localPath) {
         if (localPath.Equals(entryImageUrl)) {
             panelInstance.stickerImage.sprite = Sprite.Create(image, new Rect(0, 0, image.width, image.height), new Vector2());
+        } else if (localPath.Equals(promoImageUrl)) {
+            panelInstance.promoImage.sprite = Sprite.Create(image, new Rect(0, 0, image.width, image.height), new Vector2());
         } else {
             panelInstance.bundleImage.sprite = Sprite.Create(image, new Rect(0, 0, image.width, image.height), new Vector2());
         }
@@ -238,6 +264,12 @@ public class BundleDisplayPanelController : MonoBehaviour {
                 Color c = panelInstance.stickerImage.color;
                 c.a = 255;
                 panelInstance.stickerImage.color = c;
+            } else if(localPath.Equals(promoImageUrl)) {
+                Spil.Instance.LoadImage(promoImage, localPath);
+                
+                Color c = panelInstance.promoImage.color;
+                c.a = 255;
+                panelInstance.promoImage.color = c;
             } else {
                 Spil.Instance.LoadImage(bundleImage, localPath);
                 

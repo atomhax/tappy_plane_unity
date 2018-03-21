@@ -188,11 +188,11 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 			transactionID = token;
 		}
 
-		Spil.Instance.TrackIAPPurchasedEvent (skuId, transactionID, token, "diamonPurchase", "store");
+		Spil.Instance.TrackIAPPurchasedEvent (skuId, transactionID, token, "diamondPurchase", "store");
 
 		#elif UNITY_IOS
 
-		Spil.Instance.TrackIAPPurchasedEvent(args.purchasedProduct.definition.storeSpecificId, args.purchasedProduct.transactionID);
+		Spil.Instance.TrackIAPPurchasedEvent(args.purchasedProduct.definition.storeSpecificId, args.purchasedProduct.transactionID, null, "diamondPurchase", "store");
 
 		#endif
 
