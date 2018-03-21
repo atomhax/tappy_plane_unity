@@ -1007,7 +1007,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     }
                 }
 
-                receivedWallet.offset = (int) walletJSON.GetField("offset").n;
+                receivedWallet.offset = (long) walletJSON.GetField("offset").n;
                 receivedWallet.logic = walletJSON.GetField("logic").str;
             }
 
@@ -1032,7 +1032,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     }
                 }
 
-                receivedInventory.offset = (int) inventoryJSON.GetField("offset").n;
+                receivedInventory.offset = (long) inventoryJSON.GetField("offset").n;
                 receivedInventory.logic = inventoryJSON.GetField("logic").str;
             }
 
