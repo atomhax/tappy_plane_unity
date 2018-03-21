@@ -106,6 +106,19 @@ public class BundleDisplayPanelController : MonoBehaviour {
         }
 
         if (bundlePromotion != null) {
+            if (bundlePromotion.ExtraEntities.Count > 0) {
+                listOfItemsInBundle.text += "\n\nExtra: ";
+            }
+            foreach (ExtraEntity extraEntity in bundlePromotion.ExtraEntities) {
+                if (extraEntity.Type.Equals("CURRENCY")) {
+                    Currency currency = Spil.GameData.GetCurrency(extraEntity.Id);
+                    listOfItemsInBundle.text += "\n" + "• " + currency.Name + ": " + extraEntity.Amount;
+                } else {
+                    Item item = Spil.GameData.GetItem(extraEntity.Id);
+                    listOfItemsInBundle.text += "\n" + "• " + item.Name + ": " + extraEntity.Amount;
+                }
+            }
+            
             listOfItemsInBundle.text += "\n\nPromo Status: ";
             listOfItemsInBundle.text += "\n" + "• " + "Bought: " + bundlePromotion.AmountPurchased;
 
