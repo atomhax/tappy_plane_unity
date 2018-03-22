@@ -46,12 +46,10 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 	}
 
 	public void OnPackagesAvailable() {
-		Debug.Log("Hello1");
 		iapPanelController.SetupIAPButtons();
 	}
 	
 	public void OnPromotionsAvailable() {
-		Debug.Log("Hello2");
 		iapPanelController.SetupIAPButtons();
 	}
 	
