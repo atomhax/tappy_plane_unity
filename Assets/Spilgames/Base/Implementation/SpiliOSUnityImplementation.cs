@@ -105,6 +105,7 @@ namespace SpilGames.Unity.Base.Implementations
         public override void ShowPromotionScreen(int promotionId) {
             showPromotionScreenNative(promotionId);
         }
+        [DllImport("__Internal")]
         private static extern void showPromotionScreenNative(int promotionId);
         
         #endregion
