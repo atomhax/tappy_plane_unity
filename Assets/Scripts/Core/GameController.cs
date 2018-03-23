@@ -90,39 +90,6 @@ public class GameController : MonoBehaviour
 
     void Awake()
     {
-    }
-
-#if UNITY_TVOS
-	void FixedUpdate ()
-	{
-		if (player.idleMode) 
-		{
-			if(Input.GetKeyDown(KeyCode.Joystick1Button15))
-			{
-				Debug.Log ("New game!");
-				StartNewGame ();
-			}
-		} 
-		else 
-		{
-			Debug.LogWarning ("Check!");
-			if(Input.GetKeyDown(KeyCode.Joystick1Button14) || Input.GetKeyDown(KeyCode.Joystick1Button15))
-			{
-				Debug.Log ("Jump!");
-				if (GameObject.Find ("GameOverPanel")) {
-					Debug.LogWarning ("found!");
-					GameObject.Find ("GameOverPanel").GetComponent<GameOverPanelController> ().Restart ();
-				} else {
-					player.Jump ();
-				}
-			}
-		}
-	}
-#endif
-
-    // Use this for initialization
-    void Start()
-    {
         Spil.Instance.OnPrivacyPolicyStatus -= OnPrivacyPolicyStatus;
         Spil.Instance.OnPrivacyPolicyStatus += OnPrivacyPolicyStatus;
         
@@ -259,6 +226,39 @@ public class GameController : MonoBehaviour
         }
     }
 
+#if UNITY_TVOS
+	void FixedUpdate ()
+	{
+		if (player.idleMode) 
+		{
+			if(Input.GetKeyDown(KeyCode.Joystick1Button15))
+			{
+				Debug.Log ("New game!");
+				StartNewGame ();
+			}
+		} 
+		else 
+		{
+			Debug.LogWarning ("Check!");
+			if(Input.GetKeyDown(KeyCode.Joystick1Button14) || Input.GetKeyDown(KeyCode.Joystick1Button15))
+			{
+				Debug.Log ("Jump!");
+				if (GameObject.Find ("GameOverPanel")) {
+					Debug.LogWarning ("found!");
+					GameObject.Find ("GameOverPanel").GetComponent<GameOverPanelController> ().Restart ();
+				} else {
+					player.Jump ();
+				}
+			}
+		}
+	}
+#endif
+
+    // Use this for initialization
+    void Start()
+    {
+    }
+
     private void InitComponents() {
 #if !UNITY_TVOS
         FB.Init(OnFBInitComplete);
@@ -273,7 +273,7 @@ public class GameController : MonoBehaviour
         FireTrackEventSample();
     }
     
-    private void OnPrivacyPolicyStatus(bool accepted) {
+    public void OnPrivacyPolicyStatus(bool accepted) {
         if (accepted) {
             Debug.Log("Privacy Policy accepted!");
             
