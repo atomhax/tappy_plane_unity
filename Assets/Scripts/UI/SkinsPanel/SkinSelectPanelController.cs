@@ -24,8 +24,16 @@ public class SkinSelectPanelController : MonoBehaviour {
 		#endif
 		Spil.Instance.RequestSplashScreen ();
 		
+		Spil.Instance.OnSplashScreenOpenShop -= OnSplashScreenOpenShop;
+		Spil.Instance.OnSplashScreenOpenShop += OnSplashScreenOpenShop;
+		
 		Spil.Instance.OnIAPRequestPurchase -= OnIapRequestPurchase;
 		Spil.Instance.OnIAPRequestPurchase += OnIapRequestPurchase;
+	}
+
+	private void OnSplashScreenOpenShop() {
+		CloseSkinsPanel();
+		gameController.OpenShop();
 	}
 
 	private void OnIapRequestPurchase(string skuId) {

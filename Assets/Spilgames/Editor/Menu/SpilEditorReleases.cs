@@ -4,9 +4,9 @@ using UnityEditor;
 using SpilGames.Unity.Base.Implementations;
 using SpilGames.Unity.Json;
 
-public class SpilEditorReleases : EditorWindow
-{
+public class SpilEditorReleases : EditorWindow {
 
+	private static string releaseNotes;
 	Vector2 scrollPos;
 
 	[MenuItem ("Spil SDK/Release notes", false, 2)]
@@ -32,8 +32,10 @@ public class SpilEditorReleases : EditorWindow
 
 		GUILayout.Label("");
 
-		string releaseNotes = GetReleaseNotes();
-
+		if (releaseNotes == null) {
+			releaseNotes = GetReleaseNotes();
+		}
+		
 		GUILayout.Label(releaseNotes, EditorStyles.wordWrappedLabel);
 
 		EditorGUILayout.EndScrollView();
@@ -68,7 +70,7 @@ public class SpilEditorReleases : EditorWindow
 		while (!request.isDone);
 
 		if(request.error == null || request.error.Equals("")){
-			releaseNotes = request.text;
+			releaseNotes = request.text.Substring(0, 15000);
 		}
 
 		return releaseNotes;

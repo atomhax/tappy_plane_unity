@@ -93,6 +93,7 @@ namespace SpilGames.Unity.Helpers.GameData {
 
         /// <summary>
         /// The entry type
+        /// Can be BUNDLE or PACKAGE
         /// </summary>
         public string Type {
             get { return _Type; }
