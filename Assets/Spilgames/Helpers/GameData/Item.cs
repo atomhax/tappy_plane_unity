@@ -107,7 +107,7 @@ namespace SpilGames.Unity.Helpers.GameData {
             this.content = new List<GachaContent>();
             if (content != null && content.Count > 0) {
                 foreach (SpilGachaContent gachaContent in content) {
-                    this.content.Add(new GachaContent(gachaContent.id, gachaContent.type, gachaContent.amount, gachaContent.weight));
+                    this.content.Add(new GachaContent(gachaContent.id, gachaContent.type, gachaContent.amount, gachaContent.weight, gachaContent.position, gachaContent.imageUrl));
                 }
             }
         }

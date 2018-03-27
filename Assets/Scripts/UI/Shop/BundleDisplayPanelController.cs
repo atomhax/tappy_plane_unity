@@ -1,6 +1,4 @@
-﻿using System;
-using UnityEngine;
-using System.Collections;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using SpilGames.Unity;
 using SpilGames.Unity.Helpers.GameData;
@@ -89,8 +87,16 @@ public class BundleDisplayPanelController : MonoBehaviour {
         
         listOfItemsInBundle.text = "Contains:";
         for (int i = 0; i < bundle.Items.Count; i++) {
-            Item item = Spil.GameData.GetItem(bundle.Items[i].Id);
-            listOfItemsInBundle.text += "\n" + "• " + item.Name;
+            string itemText = "";
+            if (bundle.Items[i].Type.Equals("CURRENCY")) {
+               Currency currency = Spil.GameData.GetCurrency(bundle.Items[i].Id);
+                itemText = currency.Name;
+            } else {
+               Item item = Spil.GameData.GetItem(bundle.Items[i].Id);
+                itemText = item.Name;
+            }
+
+            listOfItemsInBundle.text += "\n" + "• " + itemText;
             if (bundlePromotion != null) {
                 for (int x = 0; x < bundlePromotion.PriceOverride.Count; x++) {
                     if (bundlePromotion.PriceOverride[x].Id == 25) {
@@ -184,8 +190,6 @@ public class BundleDisplayPanelController : MonoBehaviour {
                 panelInstance.stickerImage.color = c;
             }
         }
-
-        bundleImage.preserveAspect = true;
     }
 
     private void OnImageLoadFailed(ImageContext imageContext, SpilErrorMessage errorMessage) {

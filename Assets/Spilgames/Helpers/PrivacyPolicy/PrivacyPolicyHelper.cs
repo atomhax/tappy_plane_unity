@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using SpilGames.Unity;
 using SpilGames.Unity.Base.Implementations;
 using SpilGames.Unity.Json;
 using UnityEngine;
-using UnityEngine.Experimental.UIElements;
-using UnityEngine.Rendering;
 using UnityEngine.UI;
 using Button = UnityEngine.UI.Button;
 using Toggle = UnityEngine.UI.Toggle;

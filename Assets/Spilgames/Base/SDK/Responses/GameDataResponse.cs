@@ -33,6 +33,8 @@ namespace SpilGames.Unity.Base.SDK {
         public string type;
         public int amount;
         public int weight;
+        public int position;
+        public string imageUrl;
     }
 
     public class SpilBundlePriceData {
@@ -42,6 +44,7 @@ namespace SpilGames.Unity.Base.SDK {
 
     public class SpilBundleItemData {
         public int id;
+        public string type;
         public int amount;
     }
 

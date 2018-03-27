@@ -105,7 +105,7 @@ namespace SpilGames.Unity.Helpers.GameData {
             //Adding Items to Bundle
             if (items != null) {
                 foreach (SpilBundleItemData bundleItemData in items) {
-                    _Items.Add(new BundleItem(bundleItemData.id, bundleItemData.amount));
+                    _Items.Add(new BundleItem(bundleItemData.id, bundleItemData.type, bundleItemData.amount));
                 }
             }
         }
@@ -152,6 +152,12 @@ namespace SpilGames.Unity.Helpers.GameData {
 
         private int _Id;
 
+        public string Type { 
+            get { return _Type; }
+        }
+
+        private string _Type;
+        
         /// <summary>
         /// The amount if items contained withing the Bundle Item
         /// </summary>
@@ -161,8 +167,9 @@ namespace SpilGames.Unity.Helpers.GameData {
 
         private int _Amount;
 
-        public BundleItem(int id, int amount) {
+        public BundleItem(int id, string type, int amount) {
             _Id = id;
+            _Type = type;
             _Amount = amount;
         }
     }

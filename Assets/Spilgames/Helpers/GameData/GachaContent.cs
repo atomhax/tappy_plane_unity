@@ -39,11 +39,31 @@
 
         private int weight;
 
-        public GachaContent(int id, string type, int amount, int weight) {
+        /// <summary>
+        /// The position on which the gacha should be displayed.
+        /// </summary>
+        public int Position {
+            get { return position; }
+        }
+
+        private int position;
+        
+        /// <summary>
+        /// The image url for the customised 
+        /// </summary>
+        public string ImageUrl {
+            get { return imageUrl; }
+        }
+
+        private string imageUrl;
+        
+        public GachaContent(int id, string type, int amount, int weight, int position, string imageUrl) {
             this.id = id;
             this.type = type;
             this.amount = amount;
             this.weight = weight;
+            this.position = position;
+            this.imageUrl = imageUrl;
         }
     }
 }

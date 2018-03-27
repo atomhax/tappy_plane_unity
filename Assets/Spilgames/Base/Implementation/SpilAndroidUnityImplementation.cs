@@ -90,7 +90,7 @@ namespace SpilGames.Unity.Base.Implementations {
             }
             
             if (Spil.UseUnityPrefab) {
-                PrivacyPolicyHelper.PrivacyPolicyObject = (GameObject) Instantiate(Resources.Load("Spilgames/PrivacyPolicy/PrivacyPolicyUnity" + Spil.MonoInstance.PrefabOrientation));
+                PrivacyPolicyHelper.PrivacyPolicyObject = (GameObject) GameObject.Instantiate(Resources.Load("Spilgames/PrivacyPolicy/PrivacyPolicyUnity" + Spil.MonoInstance.PrefabOrientation));
                 PrivacyPolicyHelper.PrivacyPolicyObject.SetActive(true);
             
                 PrivacyPolicyHelper.Instance.ShowSettingsScreen(1);

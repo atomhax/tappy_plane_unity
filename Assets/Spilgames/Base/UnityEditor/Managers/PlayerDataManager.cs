@@ -549,46 +549,60 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             }
 
             foreach (SpilBundleItemData bundleItem in bundle.items) {
-                SpilItemData gameItem = GetItemFromObjects(bundleItem.id);
+                if (bundleItem.type.Equals("CURRENCY")) {
+                    PlayerCurrencyData currency = GetCurrencyFromWallet(bundleItem.id);
+                        
+                    if (currency == null) {
+                        SpilLogging.Error("Currency does not exist!");
+                        return;
+                    }
 
-                if (gameItem == null) {
-                    SpilLogging.Error("Item does not exist!");
-                    return;
-                };
-                PlayerItemData item = new PlayerItemData();
-                item.id = gameItem.id;
-                item.name = gameItem.name;
-                item.type = gameItem.type;
-                item.displayName = gameItem.displayName;
-                item.displayDescription = gameItem.displayDescription;
-                item.isGacha = gameItem.isGacha;
-                item.content = gameItem.content;
+                    currency.currentBalance = currency.currentBalance + bundleItem.amount;
+                    currency.delta = currency.delta + bundleItem.amount;
 
-                PlayerItemData inventoryItem = GetItemFromInventory(bundleItem.id);
+                    UpdateCurrency(currency);
+                } else {
+                    SpilItemData gameItem = GetItemFromObjects(bundleItem.id);
 
-                int inventoryItemAmount;
+                    if (gameItem == null) {
+                        SpilLogging.Error("Item does not exist!");
+                        return;
+                    };
+                    PlayerItemData item = new PlayerItemData();
+                    item.id = gameItem.id;
+                    item.name = gameItem.name;
+                    item.type = gameItem.type;
+                    item.displayName = gameItem.displayName;
+                    item.displayDescription = gameItem.displayDescription;
+                    item.isGacha = gameItem.isGacha;
+                    item.content = gameItem.content;
 
-                if (inventoryItem != null) {
-                    inventoryItemAmount = inventoryItem.amount;
+                    PlayerItemData inventoryItem = GetItemFromInventory(bundleItem.id);
 
-                    inventoryItemAmount = inventoryItemAmount + bundleItem.amount;
+                    int inventoryItemAmount;
 
-                    inventoryItem.delta = bundleItem.amount;
-                    inventoryItem.amount = inventoryItemAmount;
+                    if (inventoryItem != null) {
+                        inventoryItemAmount = inventoryItem.amount;
 
-                    UpdateItem(inventoryItem);
+                        inventoryItemAmount = inventoryItemAmount + bundleItem.amount;
 
-                    updatedData.items.Add(inventoryItem);
-                }
-                else {
-                    inventoryItemAmount = bundleItem.amount;
+                        inventoryItem.delta = bundleItem.amount;
+                        inventoryItem.amount = inventoryItemAmount;
 
-                    item.delta = inventoryItemAmount;
-                    item.amount = inventoryItemAmount;
+                        UpdateItem(inventoryItem);
 
-                    Inventory.items.Add(item);
+                        updatedData.items.Add(inventoryItem);
+                    }
+                    else {
+                        inventoryItemAmount = bundleItem.amount;
 
-                    updatedData.items.Add(item);
+                        item.delta = inventoryItemAmount;
+                        item.amount = inventoryItemAmount;
+
+                        Inventory.items.Add(item);
+
+                        updatedData.items.Add(item);
+                    } 
                 }
             }
 

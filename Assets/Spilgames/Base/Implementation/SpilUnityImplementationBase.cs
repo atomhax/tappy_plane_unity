@@ -10,12 +10,12 @@ using SpilGames.Unity.Helpers.Promotions;
 using UnityEngine.Analytics;
 
 namespace SpilGames.Unity.Base.Implementations{
-    public abstract class SpilUnityImplementationBase : MonoBehaviour{
+    public abstract class SpilUnityImplementationBase{
         public static string PluginName = "Unity";
-        public static string PluginVersion = "2.9.0";
+        public static string PluginVersion = "2.10.0";
 
-        public static string AndroidVersion = "2.9.0";
-        public static string iOSVersion = "2.9.0";
+        public static string AndroidVersion = "2.10.0";
+        public static string iOSVersion = "2.10.0";
 
         #region Game config
 
@@ -1969,7 +1969,7 @@ namespace SpilGames.Unity.Base.Implementations{
             #endif
             
             if (isPrivacyPolicyAccepted == 0) {
-                PrivacyPolicyHelper.PrivacyPolicyObject = (GameObject) Instantiate(Resources.Load("Spilgames/PrivacyPolicy/PrivacyPolicyUnity" + Spil.MonoInstance.PrefabOrientation));
+                PrivacyPolicyHelper.PrivacyPolicyObject = (GameObject) GameObject.Instantiate(Resources.Load("Spilgames/PrivacyPolicy/PrivacyPolicyUnity" + Spil.MonoInstance.PrefabOrientation));
                 PrivacyPolicyHelper.PrivacyPolicyObject.SetActive(true);
                 
                 PrivacyPolicyHelper.Instance.ShowMainScreen(0);
@@ -1982,7 +1982,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public abstract void ShowPrivacyPolicySettings();
 
         internal void ShowAdsScreen() {
-            PrivacyPolicyHelper.PrivacyPolicyObject = (GameObject) Instantiate(Resources.Load("Spilgames/PrivacyPolicy/PrivacyPolicyUnity" + Spil.MonoInstance.PrefabOrientation));
+            PrivacyPolicyHelper.PrivacyPolicyObject = (GameObject) GameObject.Instantiate(Resources.Load("Spilgames/PrivacyPolicy/PrivacyPolicyUnity" + Spil.MonoInstance.PrefabOrientation));
             PrivacyPolicyHelper.PrivacyPolicyObject.SetActive(true);
             
             PrivacyPolicyHelper.Instance.ShowAdsScreen(2);
