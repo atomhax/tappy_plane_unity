@@ -58,16 +58,18 @@ public class IAPPanelController : MonoBehaviour {
 			}
 			for (int i = 0; i < helper.Packages.Count; i++) {
 				Package package = helper.Packages [i];
-				string promotionText = "";
-				string gemAmount = package.Items [0].Value;
-				string cost = iapManager.packageCosts[package.PackageId];
-				if(package.HasActivePromotion()) {
-					Promotion packagePromotion = Spil.Instance.GetPromotions().GetPackagePromotion(package.PackageId);
-					promotionText = "PROMOTION!\n" + packagePromotion.Label + packagePromotion.ExtraEntities[0].Amount + " extra gems!";
-				}
+				if (package != null) {
+					string promotionText = "";
+					string gemAmount = package.Items [0].Value;
+					string cost = iapManager.packageCosts[package.PackageId];
+					if(package.HasActivePromotion()) {
+						Promotion packagePromotion = Spil.Instance.GetPromotions().GetPackagePromotion(package.PackageId);
+						promotionText = "PROMOTION!\n" + packagePromotion.Label + packagePromotion.ExtraEntities[0].Amount + " extra gems!";
+					}
 				
-				iapButtons [i].PopulateIAPButton (gemAmount, promotionText, package.HasActivePromotion(), cost, package.PackageId);
-				iapButtons [i].gameObject.SetActive (true);
+					iapButtons [i].PopulateIAPButton (gemAmount, promotionText, package.HasActivePromotion(), cost, package.PackageId);
+					iapButtons [i].gameObject.SetActive (true);
+				}
 			}
 		}
 

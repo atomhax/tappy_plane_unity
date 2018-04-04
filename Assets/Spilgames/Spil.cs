@@ -232,7 +232,9 @@ namespace SpilGames.Unity {
 
         void OnValidate() {
 #if UNITY_EDITOR
-            UnityEditor.EditorPrefs.SetBool("gdprEnabled", CheckPrivacyPolicy);
+            if (FindObjectOfType<Spil>() != null) {
+                UnityEditor.EditorPrefs.SetBool("gdprEnabled", CheckPrivacyPolicy); 
+            }
 #endif
         }
 
