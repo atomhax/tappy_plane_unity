@@ -9,7 +9,7 @@
 #import "HookBridge.h"
 #import "GAI.h"
 
-#define SPIL_SDK_VERSION @"2.9.0"
+#define SPIL_SDK_VERSION @"2.10.0"
 
 @class ImageContext;
 @class Spil;
@@ -141,9 +141,9 @@
     
 }
 
-// Define delegate property
 @property (nonatomic, assign, nullable) id  delegate;
 @property (nonatomic, assign) BOOL initialized;
+@property (nonatomic, retain) NSDictionary * _Nullable privacySettingsToSendAfterInit;
 
 +(nonnull Spil*)sharedInstance;
 
@@ -619,7 +619,7 @@
  * @param shop entry the entry to check
  * returns if there is a promotion
  */
-+(BOOL)hasActiveEntryPromotion:(ShopEntry*)shopEntry;
++(BOOL)hasActiveEntryPromotion:(nonnull ShopEntry*)shopEntry;
 
 /**
  * Check for an active promotion
