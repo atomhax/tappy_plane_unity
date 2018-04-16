@@ -13,6 +13,8 @@
 @property (assign, nonatomic) int id;
 @property (strong, nonatomic) NSString *type;
 @property (assign, nonatomic) int weight;
+@property (assign, nonatomic) int position;
+@property (strong, nonatomic) NSString *imageUrl;
 
 -(id)initWithDictionary:(NSDictionary*)data;
 
