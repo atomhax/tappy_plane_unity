@@ -443,13 +443,8 @@ public class GameController : MonoBehaviour
     }
 
     public void InGamePurchaesFail(Bundle bundle) {
-        purchaceFailText.text = "Purchase Not Possible \n you need \n";
-        for (int i = 0; i < bundle.Prices.Count; i++) {
-            if (bundle.Prices[i].Value > 0) {
-                purchaceFailText.text += bundle.Prices[i].Value.ToString() + " " +
-                                         Spil.GameData.GetCurrency(bundle.Prices[i].CurrencyId).Name;
-            }
-        }
+        purchaceFailText.text = "Purchase not possible!\nYou need more currency\n";
+       
         inGamePurchaseFailPanel.SetActive(true);
     }
 

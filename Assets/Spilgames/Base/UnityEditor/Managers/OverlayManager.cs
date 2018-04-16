@@ -95,6 +95,8 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 }
             }
 
+            SpilUnityImplementationBase.fireDailyBonusClosed();
+            
             Destroy(DailyBonus);
         }
     }

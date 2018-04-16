@@ -135,14 +135,14 @@ namespace SpilGames.Unity.Base.Implementations {
         public override void ShowNativeDialog(string title, string message, string buttonText) {
         }
 
-        internal void RequestConfig() {
+        private void RequestConfig() {
             SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
             spilEvent.eventName = "requestConfig";
 
             spilEvent.Send();
         }
 
-        internal void RequestGameData() {
+        private void RequestGameData() {
             gData = gData.InitialiseGameObjects();
 
             Spil.GameData = new SpilGameDataHelper(this);
@@ -252,15 +252,6 @@ namespace SpilGames.Unity.Base.Implementations {
             }
 
             spilEvent.Send();
-        }
-
-        /// <summary>
-        /// When Fyber has shown a reward video and the user goes back to the game to receive his/her reward Fyber can
-        /// automatically show a toast message with information about the reward, for instance "You've received 50 coins". 
-        /// This is disabled by default to allow the developer to create a reward notification for the user.
-        /// Developers can call SetShowToastOnVideoReward(true) to enable Fyber's automatic toast message.
-        /// </summary>
-        public override void SetShowToastOnVideoReward(bool value) {
         }
 
         /// <summary>

@@ -18,8 +18,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         private static String provider;
         private static String adType;
 
-        public static bool DFPEnabled = false;
-        public static bool FyberEnabled = false;
+        public static bool AdMobEnabled = false;
         public static bool ChartboostEnabled = false;
 
         void Update() {
@@ -114,14 +113,9 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             if (response.action.Equals("init")) {
                 JSONObject provider = response.data.GetField("providers");
 
-                if (provider.HasField("DFP")) {
-                    AdvertisementManager.DFPEnabled = true;
-                    SpilLogging.Log("DFP Enabled");
-                }
-
-                if (provider.HasField("Fyber")) {
-                    AdvertisementManager.FyberEnabled = true;
-                    SpilLogging.Log("Fyber Enabled");
+                if (provider.HasField("AdMob")) {
+                    AdvertisementManager.AdMobEnabled = true;
+                    SpilLogging.Log("AdMob Enabled");
                 }
 
                 if (provider.HasField("Chartboost") || provider.HasField("ChartBoost")) {
@@ -142,28 +136,17 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 int probability = Random.Range(0, 100);
                 bool available = probability > 20;
 
-                if (provider.ToLower().Trim().Equals("dfp")) {
+                if (provider.ToLower().Trim().Equals("admob")) {
                     if (available) {
-                        SpilLogging.Log("DFP Show");
+                        SpilLogging.Log("AdMob Show");
                         SpilUnityImplementationBase.fireAdAvailableEvent(adType);
-                        AdvertisementManager.PlayInterstitial("DFP");
+                        AdvertisementManager.PlayInterstitial("AdMob");
                     }
                     else {
-                        SpilLogging.Log("DFP Not Available");
+                        SpilLogging.Log("AdMob Not Available");
                         SpilUnityImplementationBase.fireAdNotAvailableEvent(adType);
                     }
-                }
-                else if (provider.ToLower().Trim().Equals("fyber")) {
-                    if (available) {
-                        SpilLogging.Log("Fyber Show");
-                        SpilUnityImplementationBase.fireAdAvailableEvent(adType);
-                    }
-                    else {
-                        SpilLogging.Log("Fyber Not Available");
-                        SpilUnityImplementationBase.fireAdNotAvailableEvent(adType);
-                    }
-                }
-                else if (provider.ToLower().Trim().Equals("chartboost")) {
+                } else if (provider.ToLower().Trim().Equals("chartboost")) {
                     if (available) {
                         SpilLogging.Log("Chartboost Show");
                         SpilUnityImplementationBase.fireAdAvailableEvent(adType);

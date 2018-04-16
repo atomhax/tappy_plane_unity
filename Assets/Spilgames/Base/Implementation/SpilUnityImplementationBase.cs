@@ -2091,14 +2091,6 @@ namespace SpilGames.Unity.Base.Implementations{
         public abstract void TestRequestAd(string providerName, string adType, bool parentalGate);
 
         /// <summary>
-        /// When Fyber has shown a reward video and the user goes back to the game to receive his/her reward Fyber can
-        /// automatically show a toast message with information about the reward, for instance "You've received 50 coins". 
-        /// This is disabled by default to allow the developer to create a reward notification for the user.
-        /// Developers can call SetShowToastOnVideoReward(true) to enable Fyber's automatic toast message.
-        /// </summary>
-        public abstract void SetShowToastOnVideoReward(bool value);
-
-        /// <summary>
         /// Call to inform the SDK that the parental gate was (not) passes
         /// </summary>
         public abstract void ClosedParentalGate(bool pass);

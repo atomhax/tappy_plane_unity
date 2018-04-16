@@ -424,9 +424,6 @@ namespace SpilGames.Unity.Base.Implementations {
 
         #endregion
 
-        public override void SetShowToastOnVideoReward(bool enabled) {
-        }
-
         #region Image loading
 
         /// <summary>

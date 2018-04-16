@@ -208,6 +208,10 @@ public class ShopPanelController : MonoBehaviour {
         Spil.PlayerData.OpenGacha(100088, PlayerDataUpdateReasons.OpenGacha, "Shop", "Opening Tappy Chest");
     }
 
+    public void ShowTappyWheel() {
+        Spil.Instance.RequestSplashScreen("tappyWheel");
+    }
+    
     void OnSplashScreenOpen() {
         Debug.Log("SplashScreenOpen");
     }

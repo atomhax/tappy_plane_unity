@@ -18,7 +18,9 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             if (Spil.Instance.GetPrivValue() < 0) {
                 Spil.Instance.SavePrivValue(3);
                 SpilUnityImplementationBase.firePrivacyPolicyStatus(true);
-            } 
+            } else {
+                SpilUnityImplementationBase.firePrivacyPolicyStatus(true);
+            }
             
             Destroy(PrivacyPolicy);
         }
