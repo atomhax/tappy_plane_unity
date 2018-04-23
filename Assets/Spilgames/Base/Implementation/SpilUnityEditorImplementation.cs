@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using System.IO;
-using Newtonsoft.Json;
-using SpilGames.Unity.Helpers;
 using System;
 using SpilGames.Unity.Base.UnityEditor.Managers;
 using SpilGames.Unity.Json;
 using SpilGames.Unity.Base.UnityEditor;
 using SpilGames.Unity.Helpers.GameData;
 using SpilGames.Unity.Helpers.PlayerData;
+using SpilGames.Unity.Base.SDK;
 
 namespace SpilGames.Unity.Base.Implementations {
     public class SpilUnityEditorImplementation : SpilUnityImplementationBase {
@@ -703,6 +701,30 @@ namespace SpilGames.Unity.Base.Implementations {
 
         public override long GetLiveEventEndDate() {
             return LiveEventManager.GetLiveEventEndDate();
+        }
+
+        #endregion
+
+        #region Tiered Events
+
+        public override void RequestTieredEvents() {
+            TieredEventManager.RequestTieredEvents();
+        }
+
+        public override List<TieredEvent> GetAllTieredEvents() {
+            return new List<TieredEvent>(TieredEventManager.GetTieredEventsOverview().tieredEvents.Values);
+        }
+
+        public override void ShowTieredEventProgress(int tieredEventId) {
+            TieredEventManager.ShowTieredEventProgress(tieredEventId);
+        }
+
+        public void ClaimTierReward(int tieredEventId, int tierId) {
+            TieredEventManager.ClaimTierReward(tieredEventId, tierId);
+        }
+
+        public void UpdateTierProgress(int tieredEventId, int tierId, int entityId, string entityType, int entityAmount) {
+            TieredEventManager.UpdateTierProgress(tieredEventId, tierId, entityId, entityType, entityAmount);
         }
 
         #endregion

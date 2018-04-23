@@ -5,6 +5,7 @@ using SpilGames.Unity.Helpers;
 using SpilGames.Unity.Helpers.GameData;
 using SpilGames.Unity.Helpers.PlayerData;
 using SpilGames.Unity.Json;
+using SpilGames.Unity.Base.SDK;
 
 namespace SpilGames.Unity.Base.Implementations {
 #if UNITY_ANDROID
@@ -549,6 +550,29 @@ namespace SpilGames.Unity.Base.Implementations {
 
         public override long GetLiveEventEndDate() {
             return Convert.ToInt64(CallNativeMethod("getLiveEventEndDate"));
+        }
+
+        #endregion
+
+        #region Tiered Events
+
+        public override void RequestTieredEvents() {
+            CallNativeMethod("requestTieredEvents");
+        }
+
+        public override List<TieredEvent> GetAllTieredEvents() {
+            string tieredEventsJson = CallNativeMethod("getAllTieredEvents");
+            if (tieredEventsJson != null) {
+                // TODO: Test this, probably wont work because the list is inside a root node.
+                return JsonHelper.getObjectFromJson<List<TieredEvent>>(tieredEventsJson);
+            }
+            return null;
+        }
+
+        public override void ShowTieredEventProgress(int tieredEventId) {
+            CallNativeMethod("showTieredEventProgress", new object[] {
+                tieredEventId
+            }, true);
         }
 
         #endregion

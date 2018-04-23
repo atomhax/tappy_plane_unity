@@ -163,6 +163,7 @@ namespace SpilGames.Unity.Helpers.PlayerData {
         public static string LiveEvent = "Live Event From Client";
         public static string OpenGacha = "Open Gacha";
         public static string DebugTest = "Debug test";
+        public static string TierReward = "Tiered Reward From Client";
 
         public PlayerDataUpdateReasons() {
         }

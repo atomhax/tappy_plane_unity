@@ -35,7 +35,7 @@ namespace SpilGames.Unity.Base.UnityEditor {
             bundleIdentifier = PlayerSettings.applicationIdentifier;
 #elif UNITY_5_3_OR_NEWER
 			bundleIdentifier = PlayerSettings.bundleIdentifier;
-			#endif
+#endif
 
             AddDefaultParameters();
 
@@ -63,10 +63,17 @@ namespace SpilGames.Unity.Base.UnityEditor {
                 requestForm.AddField("spilToken", SpilUnityEditorImplementation.spilToken);
             }
             
+/*
             WWW request =
                 new WWW(
                     "https://apptracker.spilgames.com/v1/native-events/event/" + platform + "/" + Spil.BundleIdEditor +
                     "/" + eventName, requestForm);
+*/
+            WWW request =
+                new WWW(
+                    "https://apptracker-stg.spilgames.com/v1/native-events/event/" + platform + "/" + Spil.BundleIdEditor +
+                    "/" + eventName, requestForm);
+
             yield return request;
 
             SpilLogging.Log("Sending event: " + "Name: " + eventName + " \nData: " + data + " \nCustom Data: " +

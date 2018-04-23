@@ -300,6 +300,7 @@ public class GameController : MonoBehaviour
     }
 
     public void SetupNewGame() {
+
         ClearOutOldObsticles();
         playerScore = 0;
         tapperScore = 0;
@@ -363,6 +364,9 @@ public class GameController : MonoBehaviour
 
     public void StartNewGame() {
         if (overlayEnabled) return;
+
+        Spil.Instance.RequestTieredEvents();
+
         player.idleMode = false;
         player.dead = false;
         InvokeRepeating("SpawnObsticle", 0, obsitcleSpawnFrequency);
