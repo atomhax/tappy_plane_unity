@@ -14,7 +14,7 @@ namespace SpilGames.Unity.Base.Implementations
     public class SpiliOSUnityImplementation : SpilUnityImplementationBase
     {
 
-        #region Inherited members
+    #region Inherited members
 
         public override void SetPluginInformation(string PluginName, string PluginVersion)
         {
@@ -24,9 +24,9 @@ namespace SpilGames.Unity.Base.Implementations
         [DllImport("__Internal")]
         private static extern void setPluginInformationNative(string pluginName, string pluginVersion);
 
-        #endregion
+    #endregion
 
-        #region Game config
+    #region Game config
 
         /// <summary>
         /// Returns the game config as a json string.
@@ -49,10 +49,10 @@ namespace SpilGames.Unity.Base.Implementations
         }
 
 
-        #endregion
+    #endregion
 
 
-        #region Packages and promotions
+    #region Packages and promotions
 
         /// <summary>
         /// Method that requests packages and promotions from the server.
@@ -108,7 +108,7 @@ namespace SpilGames.Unity.Base.Implementations
         [DllImport("__Internal")]
         private static extern void showPromotionScreenNative(int promotionId);
         
-        #endregion
+    #endregion
 
         /// <summary>
         /// This method is marked as internal and should not be exposed to developers.
@@ -376,7 +376,7 @@ namespace SpilGames.Unity.Base.Implementations
         [DllImport("__Internal")]
         private static extern void getOtherUsersGameStateNative(string provider, string userIdsJsonArray);
 
-        #region Spil Game Objects
+    #region Spil Game Objects
 
         public override string GetSpilGameDataFromSdk()
         {
@@ -386,9 +386,9 @@ namespace SpilGames.Unity.Base.Implementations
         [DllImport("__Internal")]
         private static extern string getSpilGameDataNative();
 
-        #endregion
+    #endregion
 
-        #region Image loading
+    #region Image loading
 
         /// <summary>
         /// Used to get the image from the cache, based on the url provided.
@@ -441,9 +441,9 @@ namespace SpilGames.Unity.Base.Implementations
         [DllImport("__Internal")]
         private static extern void preloadItemAndBundleImagesNative();
 
-        #endregion
+    #endregion
 
-        #region Player Data
+    #region Player Data
 
         public override void UpdatePlayerData()
         {
@@ -541,9 +541,9 @@ namespace SpilGames.Unity.Base.Implementations
         [DllImport("__Internal")]
         private static extern void resetWalletNative();
 
-        #endregion
+    #endregion
 
-        #region Game config
+    #region Game config
 
         [DllImport("__Internal")]
         private static extern string getConfigNative();
@@ -552,9 +552,9 @@ namespace SpilGames.Unity.Base.Implementations
         private static extern string getConfigValueNative(string keyName);
 
 
-        #endregion
+    #endregion
 
-        #region Reward
+    #region Reward
 
         [DllImport("__Internal")]
         private static extern void claimTokenNative(string token, string rewardType);
@@ -564,9 +564,9 @@ namespace SpilGames.Unity.Base.Implementations
             claimTokenNative(token, rewardType);
         }
 
-        #endregion
+    #endregion
 
-        #region Server Time
+    #region Server Time
 
         [DllImport("__Internal")]
         private static extern void requestServerTimeNative();
@@ -576,9 +576,9 @@ namespace SpilGames.Unity.Base.Implementations
             requestServerTimeNative();
         }
 
-        #endregion
+    #endregion
 
-        #region Live Event
+    #region Live Event
 
         public override void RequestLiveEvent()
         {
@@ -620,9 +620,43 @@ namespace SpilGames.Unity.Base.Implementations
         [DllImport("__Internal")]
         private static extern string getLiveEventEndDateNative();
 
-        #endregion
+    #endregion
 
-        #region Customer support
+    #region Tiered Events
+
+        public override void RequestTieredEvents()
+        {
+            requestTieredEventsNative();
+        }
+
+        [DllImport("__Internal")]
+        private static extern string requestTieredEventsNative();
+
+        public override List<TieredEvent> GetAllTieredEvents()
+        {
+            string tieredEventsJson = getAllTieredEventsNative();
+            if (tieredEventsJson != null)
+            {
+                // TODO: Test this, probably wont work because the list is inside a root node.
+                return JsonHelper.getObjectFromJson<List<TieredEvent>>(tieredEventsJson);
+            }
+            return null;
+        }
+
+        [DllImport("__Internal")]
+        private static extern string getAllTieredEventsNative();
+
+        public override void ShowTieredEventProgress(int tieredEventId)
+        {
+            showTieredEventProgressNative(tieredEventId);
+        }
+
+        [DllImport("__Internal")]
+        private static extern void showTieredEventProgressNative(int tieredEventId);
+
+    #endregion
+
+    #region Customer support
 
         public override void ShowHelpCenterWebview(string url)
         {
@@ -633,10 +667,10 @@ namespace SpilGames.Unity.Base.Implementations
         private static extern void showHelpCenterWebviewNative(string url);
 
 
-        #endregion
+    #endregion
 
 
-        #region Web
+    #region Web
 
         public override void RequestDailyBonus()
         {
@@ -655,10 +689,10 @@ namespace SpilGames.Unity.Base.Implementations
         private static extern void requestSplashScreenNative(string type);
 
 
-        #endregion
+    #endregion
 
 
-        #region Push notifications
+    #region Push notifications
 
         /// <summary>
         /// Disables the automatic register for push notifications.
@@ -688,9 +722,9 @@ namespace SpilGames.Unity.Base.Implementations
         [DllImport("__Internal")]
         private static extern void registerForPushNotifications();
 
-        #endregion
+    #endregion
 
-        #region event tracker
+    #region event tracker
 
         [DllImport("__Internal")]
         private static extern void initEventTrackerWithOptions(string options);
@@ -701,9 +735,9 @@ namespace SpilGames.Unity.Base.Implementations
         [DllImport("__Internal")]
         private static extern void trackEventWithParamsNative(string eventName, string jsonStringParams);
 
-        #endregion
+    #endregion
 
-        #region Social Login
+    #region Social Login
 
         public override void UserLogin(string socialId, string socialProvider, string socialToken)
         {
@@ -761,9 +795,9 @@ namespace SpilGames.Unity.Base.Implementations
         [DllImport("__Internal")]
         private static extern void showDialogNative(string title, string message, string okButtonText);
 
-        #endregion
+    #endregion
 
-        #region Userdata syncing
+    #region Userdata syncing
 
         public override string GetDeviceId()
         {
@@ -807,9 +841,9 @@ namespace SpilGames.Unity.Base.Implementations
         [DllImport("__Internal")]
         private static extern void showMergeFailedDialogNative(string title, string message, string retryButtonText, string mergeData, string mergeType);
 
-        #endregion
+    #endregion
 
-        #region privacy policy
+    #region privacy policy
 
         internal override void CheckPrivacyPolicy()
         {
@@ -853,7 +887,7 @@ namespace SpilGames.Unity.Base.Implementations
         [DllImport("__Internal")]
         private static extern int getPrivValueNative();
         
-        #endregion
+    #endregion
     }        
 #endif
 }

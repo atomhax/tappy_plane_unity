@@ -8,6 +8,7 @@ using SpilGames.Unity.Base.SDK;
 using SpilGames.Unity.Helpers.IAPPackages;
 using SpilGames.Unity.Helpers.Promotions;
 using UnityEngine.Analytics;
+using SpilGames.Unity.Helpers.EventParams;
 
 namespace SpilGames.Unity.Base.Implementations{
     public abstract class SpilUnityImplementationBase{
@@ -212,8 +213,9 @@ namespace SpilGames.Unity.Base.Implementations{
         /// <param name="turns">Turns.</param>
         /// <param name="customCreated">If set to <c>true</c> custom created.</param>
         /// <param name="creatorId">Creator identifier.</param>
+        /// <param name="objectUsed">A list of objects used.</param>
         public void TrackLevelCompleteEvent(string levelName, string difficulty = null, double score = 0, int stars = 0,
-            string speed = null, int moves = 0, int turns = 0, bool customCreated = false, string creatorId = null) {
+            string speed = null, int moves = 0, int turns = 0, bool customCreated = false, string creatorId = null, List<LevelCompleteObjectUsed> objectUsed = null) {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("level", levelName);
 
@@ -249,6 +251,11 @@ namespace SpilGames.Unity.Base.Implementations{
                 dict.Add("creatorId", creatorId);
             }
 
+            if (objectUsed != null)
+            {
+                dict.Add("objectUsed", new JSONObject(JsonHelper.getJSONFromObject(objectUsed)));
+            }
+
             SendCustomEvent("levelComplete", dict);
         }
 
@@ -268,7 +275,7 @@ namespace SpilGames.Unity.Base.Implementations{
         /// <param name="creatorId">Creator identifier.</param>
         public void TrackLevelFailedEvent(string levelName, string difficulty = null, double score = 0,
             string speed = null, int moves = 0, int stars = 0, int turns = 0, string reason = null,
-            bool customCreated = false, string creatorId = null) {
+            bool customCreated = false, string creatorId = null, List<LevelCompleteObjectUsed> objectUsed = null) {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("level", levelName);
 
@@ -306,6 +313,11 @@ namespace SpilGames.Unity.Base.Implementations{
 
             if (creatorId != null) {
                 dict.Add("creatorId", creatorId);
+            }
+
+            if (objectUsed != null)
+            {
+                dict.Add("objectUsed", new JSONObject(JsonHelper.getJSONFromObject(objectUsed)));
             }
 
             SendCustomEvent("levelFailed", dict);
@@ -1655,6 +1667,147 @@ namespace SpilGames.Unity.Base.Implementations{
 
         #endregion
 
+        #region Tiered Events
+
+        public delegate void TieredEventsAvailable();
+
+        /// <summary>
+        /// This event indicates that tiered events are available.
+        /// </summary>
+        public event TieredEventsAvailable OnTieredEventsAvailable;
+
+        public static void fireTieredEventsAvailable() {
+            Debug.Log("SpilSDK-Unity fireTieredEventsAvailable");
+
+            if (Spil.Instance.OnTieredEventsAvailable != null) {
+                Spil.Instance.OnTieredEventsAvailable();
+            }
+        }
+
+        public delegate void TieredEventNotAvailable();
+
+        /// <summary>
+        /// This event indicates that tiered events are not available.
+        /// </summary>
+        public event TieredEventNotAvailable OnTieredEventsNotAvailable;
+
+        public static void fireTieredEventsNotAvailable() {
+            Debug.Log("SpilSDK-Unity fireTieredEventsNotAvailable");
+
+            if (Spil.Instance.OnTieredEventsNotAvailable != null) {
+                Spil.Instance.OnTieredEventsNotAvailable();
+            }
+        }
+
+        public delegate void TieredEventUpdated(TieredEventProgress tieredProgress);
+
+        /// <summary>
+        /// This event indicates that tiered event progress has been updated.
+        /// </summary>
+        public event TieredEventUpdated OnTieredEventUpdated;
+
+        public static void fireTieredEventUpdated(TieredEventProgress tieredProgress) {
+            Debug.Log("SpilSDK-Unity fireTieredEventUpdated");
+
+            if (Spil.Instance.OnTieredEventUpdated != null) {
+                Spil.Instance.OnTieredEventUpdated(tieredProgress);
+            }
+        }
+
+        public delegate void TieredEventRewardClaimed(int tieredEventId, ClaimRewardData reward);
+
+        /// <summary>
+        /// This event indicates that one or more tiered reward events were given to the player.
+        /// </summary>
+        public event TieredEventRewardClaimed OnTieredEventRewardClaimed;
+
+        public static void fireTieredEventRewardClaimed(int tieredEventId, ClaimRewardData reward) {
+            Debug.Log("SpilSDK-Unity fireTieredEventRewardClaimed");
+
+            if (Spil.Instance.OnTieredEventRewardClaimed != null) {
+                Spil.Instance.OnTieredEventRewardClaimed(tieredEventId, reward);
+            }
+        }
+
+
+        public delegate void TieredEventShowProgressError(SpilErrorMessage error);
+
+        /// <summary>
+        /// This event indicates that something went wrong with the TieredEventShowProgressError request.
+        /// </summary>
+        public event TieredEventShowProgressError OnTieredEventShowProgressError;
+
+        public static void fireTieredEventShowProgressError(SpilErrorMessage error) {
+            Debug.Log("SpilSDK-Unity fireTieredEventShowProgressError");
+
+            if (Spil.Instance.OnTieredEventShowProgressError != null) {
+                Spil.Instance.OnTieredEventShowProgressError(error);
+            }
+        }
+
+        public delegate void TieredEventUpdateProgressError(SpilErrorMessage error);
+
+        /// <summary>
+        /// This event indicates that something went wrong with the TieredEventUpdateProgress request.
+        /// </summary>
+        public event TieredEventUpdateProgressError OnTieredEventUpdateProgressError;
+
+        public static void fireTieredEventUpdateProgressError(SpilErrorMessage error) {
+            Debug.Log("SpilSDK-Unity fireTieredEventUpdateProgressError");
+
+            if (Spil.Instance.OnTieredEventUpdateProgressError != null) {
+                Spil.Instance.OnTieredEventUpdateProgressError(error);
+            }
+        }
+
+
+        public delegate void TieredEventClaimTierError(SpilErrorMessage error);
+
+        /// <summary>
+        /// This event indicates that something went wrong with the TieredEventClaimTier request.
+        /// </summary>
+        public event TieredEventClaimTierError OnTieredEventClaimTierError;
+
+        public static void fireTieredEventClaimTierError(SpilErrorMessage error) {
+            Debug.Log("SpilSDK-Unity fireTieredEventClaimTierError");
+
+            if (Spil.Instance.OnTieredEventClaimTierError != null) {
+                Spil.Instance.OnTieredEventClaimTierError(error);
+            }
+        }
+
+        public delegate void TieredEventStageOpen();
+
+        /// <summary>
+        /// This event indicates that the Tiered Event Stage has been opened.
+        /// </summary>
+        public event TieredEventStageOpen OnTieredEventStageOpen;
+
+        public static void fireTieredEventStageOpen() {
+            Debug.Log("SpilSDK-Unity fireTieredEventStageOpen");
+
+            if (Spil.Instance.OnTieredEventStageOpen != null) {
+                Spil.Instance.OnTieredEventStageOpen();
+            }
+        }
+
+        public delegate void TieredEventStageClosed();
+
+        /// <summary>
+        /// This event indicates that the Tiered Event Stage has been closed.
+        /// </summary>
+        public event LiveEventStageClosed OnTieredEventStageClosed;
+
+        public static void fireTieredEventStageClosed() {
+            Debug.Log("SpilSDK-Unity fireTieredEventStageClosed");
+
+            if (Spil.Instance.OnTieredEventStageClosed != null) {
+                Spil.Instance.OnTieredEventStageClosed();
+            }
+        }
+
+        #endregion
+
         #region Social Login
 
         public delegate void LoginSuccessful(bool resetData, string socialProvider, string socialId, bool isGuest);
@@ -2312,6 +2465,16 @@ namespace SpilGames.Unity.Base.Implementations{
         public abstract long GetLiveEventStartDate();
 
         public abstract long GetLiveEventEndDate();
+
+        #endregion
+
+        #region Tiered events
+
+        public abstract void RequestTieredEvents();
+
+        public abstract List<TieredEvent> GetAllTieredEvents();
+
+        public abstract void ShowTieredEventProgress(int tieredEventId);
 
         #endregion
 

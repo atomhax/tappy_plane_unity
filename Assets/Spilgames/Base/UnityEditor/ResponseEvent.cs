@@ -67,6 +67,9 @@ namespace SpilGames.Unity.Base.UnityEditor {
                     case "authentication":
                         SocialLoginResponse.ProcessSocialLoginResponse(responseEvent);
                         break;
+                    case "tieredevent":
+                        TieredEventResponse.ProcessTieredEventResponse(responseEvent);
+                        break;
                 }
             }
             GameObject.Destroy(responseEvent);
