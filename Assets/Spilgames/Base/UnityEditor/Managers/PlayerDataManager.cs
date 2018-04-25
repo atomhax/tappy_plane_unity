@@ -356,6 +356,8 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 SpilUnityImplementationBase.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
 
                 SendUpdatePlayerDataEvent(null, reason, reasonDetails, location, transactionId);
+                
+                UpdateTieredEvent(currency.id, amount, "CURRENCY");
             }
             else if (Wallet.logic.Equals("SERVER")) {
             }
@@ -438,6 +440,8 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             SpilUnityImplementationBase.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
 
             SendUpdatePlayerDataEvent(null, reason, reasonDetails, location, transactionId);
+            
+            UpdateTieredEvent(item.id, amount, item.isGacha ? "GACHA" : "ITEM");
         }
 
         private SpilItemData GetItemFromObjects(int itemId) {
@@ -706,6 +710,10 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             }
             
             SendUpdatePlayerDataEvent(bundle, reason, reasonDetails, location, transactionId);
+
+            foreach (SpilBundlePriceData bundlePrice in bundlePrices) {
+                UpdateTieredEvent(bundlePrice.currencyId, -bundlePrice.value, "CURRENCY");
+            }
         }
 
         private void OpenBundle(int bundleId, int amount, string reason, string reasonDetails, string location) {
@@ -992,6 +1000,62 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         public class TempUserInfo {
             public WalletData wallet;
             public InventoryData inventory;
+        }
+        
+        private static void UpdateTieredEvent(int entityId, int amount, String entityType) {
+            TieredEvent selectedTieredEvent = null;
+    
+            if(TieredEventManager.tieredEventsOverview.tieredEvents.Count == 0) {
+                SpilUnityImplementationBase.fireTieredEventsNotAvailable();
+                return;
+            }
+
+            foreach (TieredEvent tieredEvent in TieredEventManager.tieredEventsOverview.tieredEvents.Values) {
+                if (!(tieredEvent.endDate > System.DateTime.Now.Millisecond)) {
+                    continue;
+                }
+
+                foreach (TieredEventTier tier in tieredEvent.tiers) {
+                    if (tier.entityId == entityId && tier.entityType.Equals(entityType)) {
+                        selectedTieredEvent = tieredEvent;
+                        break;
+                    }
+                }
+            }
+    
+            if (selectedTieredEvent == null) {
+                SpilUnityImplementationBase.fireTieredEventsNotAvailable();
+                return;
+            }
+    
+            if ((selectedTieredEvent.type.Equals("spend") && amount > 0)) {
+                SpilLogging.Log("Entity operation not meeting Tiered Event requirements. Tiered Event progress will not be updated.");
+                SpilErrorMessage error = new SpilErrorMessage(42, "TieredEventShowProgressError", "Unable to show tiered event progress.");
+                SpilUnityImplementationBase.fireTieredEventsError(JsonHelper.getJSONFromObject(error));
+                return;
+            }
+    
+            TieredEventProgress tieredProgress = TieredEventManager.tieredEventsOverview.progress[selectedTieredEvent.id];
+    
+            TieredEventTier currentTier = null;
+
+            foreach (TieredEventTier tier in selectedTieredEvent.tiers) {
+                if (tier.id == tieredProgress.currentTierId) {
+                    currentTier = tier;
+                    break;
+                }
+            }
+    
+            if (currentTier == null) {
+                SpilUnityImplementationBase.fireTieredEventsNotAvailable();
+                return;
+            }
+    
+            if (amount < 0) {
+                amount = -amount;
+            }
+    
+            TieredEventManager.UpdateTierProgress(selectedTieredEvent.id, currentTier.id, entityId, entityType, amount);
         }
     }
 

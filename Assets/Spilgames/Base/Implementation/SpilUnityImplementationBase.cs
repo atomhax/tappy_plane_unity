@@ -1706,73 +1706,30 @@ namespace SpilGames.Unity.Base.Implementations{
         /// </summary>
         public event TieredEventUpdated OnTieredEventUpdated;
 
-        public static void fireTieredEventUpdated(TieredEventProgress tieredProgress) {
-            Debug.Log("SpilSDK-Unity fireTieredEventUpdated");
+        public static void fireTieredEventUpdated(string data) {
+            Debug.Log("SpilSDK-Unity fireTieredEventUpdated with data = " + data);
 
+            TieredEventProgress tieredProgress = JsonHelper.getObjectFromJson<TieredEventProgress>(data);
+            
             if (Spil.Instance.OnTieredEventUpdated != null) {
                 Spil.Instance.OnTieredEventUpdated(tieredProgress);
             }
         }
 
-        public delegate void TieredEventRewardClaimed(int tieredEventId, ClaimRewardData reward);
+        public delegate void TieredEventsError(SpilErrorMessage error);
 
         /// <summary>
-        /// This event indicates that one or more tiered reward events were given to the player.
+        /// This event indicates that something went wrong with the TieredEventsError request.
         /// </summary>
-        public event TieredEventRewardClaimed OnTieredEventRewardClaimed;
+        public event TieredEventsError OnTieredEventsError;
 
-        public static void fireTieredEventRewardClaimed(int tieredEventId, ClaimRewardData reward) {
-            Debug.Log("SpilSDK-Unity fireTieredEventRewardClaimed");
+        public static void fireTieredEventsError(string reason) {
+            Debug.Log("SpilSDK-Unity Tiered Events Error with reason = " + reason);
 
-            if (Spil.Instance.OnTieredEventRewardClaimed != null) {
-                Spil.Instance.OnTieredEventRewardClaimed(tieredEventId, reward);
-            }
-        }
+            SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(reason);
 
-
-        public delegate void TieredEventShowProgressError(SpilErrorMessage error);
-
-        /// <summary>
-        /// This event indicates that something went wrong with the TieredEventShowProgressError request.
-        /// </summary>
-        public event TieredEventShowProgressError OnTieredEventShowProgressError;
-
-        public static void fireTieredEventShowProgressError(SpilErrorMessage error) {
-            Debug.Log("SpilSDK-Unity fireTieredEventShowProgressError");
-
-            if (Spil.Instance.OnTieredEventShowProgressError != null) {
-                Spil.Instance.OnTieredEventShowProgressError(error);
-            }
-        }
-
-        public delegate void TieredEventUpdateProgressError(SpilErrorMessage error);
-
-        /// <summary>
-        /// This event indicates that something went wrong with the TieredEventUpdateProgress request.
-        /// </summary>
-        public event TieredEventUpdateProgressError OnTieredEventUpdateProgressError;
-
-        public static void fireTieredEventUpdateProgressError(SpilErrorMessage error) {
-            Debug.Log("SpilSDK-Unity fireTieredEventUpdateProgressError");
-
-            if (Spil.Instance.OnTieredEventUpdateProgressError != null) {
-                Spil.Instance.OnTieredEventUpdateProgressError(error);
-            }
-        }
-
-
-        public delegate void TieredEventClaimTierError(SpilErrorMessage error);
-
-        /// <summary>
-        /// This event indicates that something went wrong with the TieredEventClaimTier request.
-        /// </summary>
-        public event TieredEventClaimTierError OnTieredEventClaimTierError;
-
-        public static void fireTieredEventClaimTierError(SpilErrorMessage error) {
-            Debug.Log("SpilSDK-Unity fireTieredEventClaimTierError");
-
-            if (Spil.Instance.OnTieredEventClaimTierError != null) {
-                Spil.Instance.OnTieredEventClaimTierError(error);
+            if (Spil.Instance.OnTieredEventsError != null) {
+                Spil.Instance.OnTieredEventsError(errorMessage);
             }
         }
 
@@ -2474,6 +2431,8 @@ namespace SpilGames.Unity.Base.Implementations{
 
         public abstract List<TieredEvent> GetAllTieredEvents();
 
+        public abstract TieredEventProgress GetTieredEventProgress(int tieredEventId);
+        
         public abstract void ShowTieredEventProgress(int tieredEventId);
 
         #endregion

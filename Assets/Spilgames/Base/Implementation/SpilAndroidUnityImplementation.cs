@@ -563,10 +563,23 @@ namespace SpilGames.Unity.Base.Implementations {
         public override List<TieredEvent> GetAllTieredEvents() {
             string tieredEventsJson = CallNativeMethod("getAllTieredEvents");
             if (tieredEventsJson != null) {
-                // TODO: Test this, probably wont work because the list is inside a root node.
+                Debug.Log(tieredEventsJson);
                 return JsonHelper.getObjectFromJson<List<TieredEvent>>(tieredEventsJson);
             }
             return null;
+        }
+
+        public override TieredEventProgress GetTieredEventProgress(int tieredEventId) {
+            string tieredEventProgressJson = CallNativeMethod("getTieredEventProgress", new object[] {
+                tieredEventId
+            }, true);
+
+            if (tieredEventProgressJson == null) {
+                return null;
+            }
+            
+            Debug.Log(tieredEventProgressJson);
+            return JsonHelper.getObjectFromJson<TieredEventProgress>(tieredEventProgressJson);
         }
 
         public override void ShowTieredEventProgress(int tieredEventId) {

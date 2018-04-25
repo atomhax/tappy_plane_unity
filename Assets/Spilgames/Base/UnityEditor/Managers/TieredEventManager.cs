@@ -15,9 +15,9 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
     public class TieredEventManager : MonoBehaviour {
         // Event names
         const string EventRequestTieredEvent = "requestTieredEvents";
-        const string EventUpdateTierProgress = "updateTierProgress";
+        const string EventUpdateTierProgress = "updateTieredEventProgress";
         const string EventClaimTierReward = "claimTierReward";
-        const string EventShowTierProgress = "showTierProgress";
+        const string EventShowTierProgress = "showTieredEventProgress";
 
         // Event params
         const string TieredEventId = "tieredEventId";
@@ -34,7 +34,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         const string Item = "ITEM";
         const string Progress = "progress";
 
-        static TieredEventsOverview tieredEventsOverview = new TieredEventsOverview();
+        public static TieredEventsOverview tieredEventsOverview = new TieredEventsOverview();
 
         public static void RequestTieredEvents() {
             SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
@@ -54,9 +54,6 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     tieredEventsOverview.progress.Add(tieredProgress.tieredEventId, tieredProgress);
                 }
                 SpilUnityImplementationBase.fireTieredEventsAvailable();
-                
-                // For testing
-                UpdateTierProgress(tieredEventsOverview.tieredEvents.First().Key, tieredEventsOverview.tieredEvents.First().Value.tiers.First().id, 0, "Derp", 0);
             } else {
                 SpilLogging.Error("Error retrieving tiered event data!");
                 SpilUnityImplementationBase.fireTieredEventsNotAvailable();
@@ -86,20 +83,26 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         }
 
         public static void ProcessUpdateTierProgress(JSONObject responseData) {
-            TieredEventProgress progress = JsonHelper.getObjectFromJson<TieredEventProgress>(responseData.ToString());
-            tieredEventsOverview.progress.Remove(progress.tieredEventId);
-            tieredEventsOverview.progress.Add(progress.tieredEventId, progress);
+            if (responseData != null && responseData.Count > 0) {
+                TieredEventProgress progress = JsonHelper.getObjectFromJson<TieredEventProgress>(responseData.ToString());
+                tieredEventsOverview.progress.Remove(progress.tieredEventId);
+                tieredEventsOverview.progress.Add(progress.tieredEventId, progress);
 
-            SpilUnityImplementationBase.fireTieredEventUpdated(progress);
+                SpilUnityImplementationBase.fireTieredEventUpdated(JsonHelper.getJSONFromObject(progress));
+            }
+            else {
+                SpilErrorMessage error = new SpilErrorMessage(42, "TieredEventShowProgressError", "Unable to show tiered event progress.");
+                SpilUnityImplementationBase.fireTieredEventsError(JsonHelper.getJSONFromObject(error));
+            }
             
-            // For testing
-            ClaimTierReward(progress.tieredEventId, progress.currentTierId);
         }
 
         public static void ClaimTierReward(int tieredEventId, int tierId) {
             TieredEvent tieredEvent = tieredEventsOverview.tieredEvents[tieredEventId];
 
             if(tieredEvent == null) {
+                SpilErrorMessage error = new SpilErrorMessage(44, "TieredEventClaimTierError", "Unable to claim the tier reward.");
+                SpilUnityImplementationBase.fireTieredEventsError(JsonHelper.getJSONFromObject(error));
                 return;
             }
 
@@ -135,17 +138,14 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     }
                 }
             }
-
-            SpilUnityImplementationBase.fireTieredEventRewardClaimed(rewardDataResponse.tieredEventId, rewardDataResponse);
-
-            // For testing
-            ShowTieredEventProgress(rewardDataResponse.tieredEventId);
         }
 
         public static void ShowTieredEventProgress(int tieredEventId) {
             TieredEvent tieredEvent = tieredEventsOverview.tieredEvents[tieredEventId];
 
             if(tieredEvent == null) {
+                SpilErrorMessage error = new SpilErrorMessage(42, "TieredEventShowProgressError", "Unable to show tiered event progress.");
+                SpilUnityImplementationBase.fireTieredEventsError(JsonHelper.getJSONFromObject(error));
                 return;
             }
 
@@ -197,16 +197,28 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 switch (response.action.ToLower().Trim()) {
                     case "request":
                         TieredEventManager.ProcessRequestTieredEvents(response.data);
-                    break;
+                        break;
                     case "update":
                         TieredEventManager.ProcessUpdateTierProgress(response.data);
-                    break;
+                        break;
                     case  "claim":
                         TieredEventManager.ProcessClaimTierReward(response.data);
-                    break;
+                        break;
                     case "show":
                         TieredEventManager.ProcessShowTieredEventProgress(response.data);
-                    break;
+                        break;
+                    case "error":
+                        SpilErrorMessage errorMessage = new SpilErrorMessage();
+                        if (response.name.Contains("claimTierReward")) {
+                            errorMessage = new SpilErrorMessage(44, "TieredEventClaimTierError", "Unable to claim the tier reward.");
+                        } else if(response.name.Contains("showTieredEventProgress")) {
+                            errorMessage = new SpilErrorMessage(42, "TieredEventShowProgressError", "Unable to show tiered event progress.");
+                        } else if (response.name.Contains("updateTIeredEventProgress")) {
+                            errorMessage = new SpilErrorMessage(43, "TieredEventUpdateProgressError", "Unable to update the tiered event progress.");
+                        }
+                        
+                        SpilUnityImplementationBase.fireTieredEventsError(JsonHelper.getJSONFromObject(errorMessage));
+                        break;
                 }
             }
         }

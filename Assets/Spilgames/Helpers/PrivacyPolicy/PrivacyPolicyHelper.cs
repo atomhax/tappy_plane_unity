@@ -17,7 +17,6 @@ public class PrivacyPolicyHelper : MonoBehaviour {
     public GameObject MainScreen;
     public Text MainDescription;
     public Button MainAcceptButton;
-    public Toggle MainAcceptToggle;
     public Button MainSettingsButton;
 
     public GameObject SettingsScreen;
@@ -67,7 +66,6 @@ public class PrivacyPolicyHelper : MonoBehaviour {
     string adsDescription = "";
     string adsSave = "";  
     
-    private bool firstCheck;
     private int openId;
 
     private bool withPersonalisedContent;
@@ -151,8 +149,6 @@ public class PrivacyPolicyHelper : MonoBehaviour {
         MainDescription.text = mainDescription;
         MainAcceptButton.GetComponentInChildren<Text>().text = mainAccept;
         MainSettingsButton.GetComponentInChildren<Text>().text = mainSettings;
-
-        MainAcceptToggle.isOn = false;
         
         MainScreen.SetActive(true);
         SettingsScreen.SetActive(false);
@@ -250,24 +246,20 @@ public class PrivacyPolicyHelper : MonoBehaviour {
     }
 
     public void PrivacyPolicyAccepted() {
-        if (firstCheck) {        
-            SavePrivValue();
+        SavePrivValue();
             
-            #if UNITY_EDITOR
-            PlayerPrefs.SetInt(Spil.Instance.GetSpilUserId() + "-unityPrivacyPolicyStatus", 1);
-            #else
+        #if UNITY_EDITOR
+        PlayerPrefs.SetInt(Spil.Instance.GetSpilUserId() + "-unityPrivacyPolicyStatus", 1);
+        #else
             PlayerPrefs.SetInt("unityPrivacyPolicyStatus", 1);
             #endif
             
-            Destroy(PrivacyPolicyObject);
-            Instance = null;
+        Destroy(PrivacyPolicyObject);
+        Instance = null;
             
-            SpilUnityImplementationBase.firePrivacyPolicyStatus(true);
+        SpilUnityImplementationBase.firePrivacyPolicyStatus(true);
             
-            Spil.Instance.TrackPrivacyPolicyChanged(withPersonalisedAds, withPersonalisedContent, "StartScreen", true);
-        } else {
-            firstCheck = true;
-        }
+        Spil.Instance.TrackPrivacyPolicyChanged(withPersonalisedAds, withPersonalisedContent, "StartScreen", true);
     }
 
     public void OpenLearnMoreLink() {
@@ -282,17 +274,11 @@ public class PrivacyPolicyHelper : MonoBehaviour {
         int oldPriv;
         int newPriv;
         switch (openId) {
-            case 0:
-                //Needed this way due to Toggle not having an OnClick and if toggle off it will fire an on value changed event which would close the whole popup
-                firstCheck = false;
-                MainAcceptToggle.isOn = false;
-                firstCheck = false;
-                
+            case 0:                
                 MainScreen.SetActive(true);
                 SettingsScreen.SetActive(false);
                 InfoScreen.SetActive(false);
                 AdsScreen.SetActive(false);
-               
                 break;
             case 1:
                 oldPriv = Spil.Instance.GetPrivValue();
@@ -300,13 +286,12 @@ public class PrivacyPolicyHelper : MonoBehaviour {
 
                 if (oldPriv != newPriv) {
                     ShowInfoScreen();
+                    Spil.Instance.TrackPrivacyPolicyChanged(withPersonalisedAds, withPersonalisedContent, "GeneralSettingsScreen", false);
                 } else {
                     Destroy(PrivacyPolicyObject);
                     Instance = null;
                 }         
-                
-                Spil.Instance.TrackPrivacyPolicyChanged(withPersonalisedAds, withPersonalisedContent, "GeneralSettingsScreen", false);
-                
+       
                 break;
             case 2:
                 oldPriv = Spil.Instance.GetPrivValue();
@@ -314,13 +299,12 @@ public class PrivacyPolicyHelper : MonoBehaviour {
 
                 if (oldPriv != newPriv) {
                     ShowInfoScreen();
+                    Spil.Instance.TrackPrivacyPolicyChanged(withPersonalisedAds, withPersonalisedContent, "AdsSettingsScreen", false);
                 } else {
                     Destroy(PrivacyPolicyObject);
                     Instance = null;
                 }
-
-                Spil.Instance.TrackPrivacyPolicyChanged(withPersonalisedAds, withPersonalisedContent, "AdsSettingsScreen", false);
-                
+            
                 break;
         }
     }

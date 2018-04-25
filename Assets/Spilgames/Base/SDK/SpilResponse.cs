@@ -18,5 +18,15 @@ namespace SpilGames.Unity.Base.SDK {
         public int id;
         public string name;
         public string message;
+
+        public SpilErrorMessage() {
+            
+        }
+        
+        public SpilErrorMessage(int id, string name, string message) {
+            this.id = id;
+            this.name = name;
+            this.message = message;
+        }
     }
 }

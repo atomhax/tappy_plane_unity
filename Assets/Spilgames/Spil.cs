@@ -785,6 +785,18 @@ namespace SpilGames.Unity {
         public void PromotionAmountBought(string data) {
             SpilUnityImplementationBase.firePromotionAmountBought(data);
         }
+
+        public void TieredEventsAvailable() {
+            SpilUnityImplementationBase.fireTieredEventsAvailable();
+        }
+
+        public void TieredEventsNotAvailable() {
+            SpilUnityImplementationBase.fireTieredEventsNotAvailable();
+        }
+
+        public void TieredEventUpdated(string data) {
+            SpilUnityImplementationBase.fireTieredEventUpdated(data);
+        }
         
 #if UNITY_ANDROID
         /// <summary>

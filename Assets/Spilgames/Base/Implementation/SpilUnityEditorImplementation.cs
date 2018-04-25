@@ -715,12 +715,12 @@ namespace SpilGames.Unity.Base.Implementations {
             return new List<TieredEvent>(TieredEventManager.GetTieredEventsOverview().tieredEvents.Values);
         }
 
-        public override void ShowTieredEventProgress(int tieredEventId) {
-            TieredEventManager.ShowTieredEventProgress(tieredEventId);
+        public override TieredEventProgress GetTieredEventProgress(int tieredEventId) {
+            return TieredEventManager.GetTieredEventsOverview().progress[tieredEventId];
         }
 
-        public void ClaimTierReward(int tieredEventId, int tierId) {
-            TieredEventManager.ClaimTierReward(tieredEventId, tierId);
+        public override void ShowTieredEventProgress(int tieredEventId) {
+            TieredEventManager.ShowTieredEventProgress(tieredEventId);
         }
 
         public void UpdateTierProgress(int tieredEventId, int tierId, int entityId, string entityType, int entityAmount) {
