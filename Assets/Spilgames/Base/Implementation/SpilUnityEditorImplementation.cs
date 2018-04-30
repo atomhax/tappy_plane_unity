@@ -79,6 +79,8 @@ namespace SpilGames.Unity.Base.Implementations {
             gData = new GameDataManager();
             pData = new PlayerDataManager();
 
+            TrackEditorInstall();
+            
             RequestConfig();
             RequestGameData();
             RequestUserData();
@@ -133,6 +135,13 @@ namespace SpilGames.Unity.Base.Implementations {
         public override void ShowNativeDialog(string title, string message, string buttonText) {
         }
 
+        private void TrackEditorInstall() {
+            SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
+            spilEvent.eventName = "install";
+
+            spilEvent.Send();
+        }
+        
         private void RequestConfig() {
             SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
             spilEvent.eventName = "requestConfig";
