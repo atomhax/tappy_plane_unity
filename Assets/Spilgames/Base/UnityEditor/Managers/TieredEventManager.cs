@@ -69,17 +69,17 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 }
             }
 
-            Spil.Instance.SendCustomEvent(
-                EventUpdateTierProgress,
-                new Dictionary<string, object>() {
-                    { TieredEventId, tieredEventId },
-                    { TierEventName, tieredEventsOverview.tieredEvents[tieredEventId].name },
-                    { EntityId, entityId },
-                    { EntityType, entityType },
-                    { EntityAmount, entityAmount },
-                    { TierName, tierName }
-                }
-            );
+            SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
+            spilEvent.eventName = EventUpdateTierProgress;
+
+            spilEvent.customData.AddField(TieredEventId, tieredEventId);
+            spilEvent.customData.AddField(TierEventName, tieredEventsOverview.tieredEvents[tieredEventId].name);
+            spilEvent.customData.AddField(TierName, tierName);
+            spilEvent.customData.AddField(EntityId, entityId);
+            spilEvent.customData.AddField(EntityType, entityType);
+            spilEvent.customData.AddField(EntityAmount, entityAmount);
+            
+            spilEvent.Send();
         }
 
         public static void ProcessUpdateTierProgress(JSONObject responseData) {
@@ -114,14 +114,14 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 }
             }
 
-            Spil.Instance.SendCustomEvent(
-                EventClaimTierReward,
-                new Dictionary<string, object>() {
-                    { TieredEventId, tieredEventId },
-                    { TierEventName, tieredEventsOverview.tieredEvents[tieredEventId].name },
-                    { TierName, tierName }                    
-                }
-            );
+            SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
+            spilEvent.eventName = EventClaimTierReward;
+
+            spilEvent.customData.AddField(TieredEventId, tieredEventId);
+            spilEvent.customData.AddField(TierEventName, tieredEventsOverview.tieredEvents[tieredEventId].name);
+            spilEvent.customData.AddField(TierName, tierName);
+            
+            spilEvent.Send();
         }
 
         public static void ProcessClaimTierReward(JSONObject responseData) {
@@ -149,13 +149,13 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 return;
             }
 
-            Spil.Instance.SendCustomEvent(
-                EventShowTierProgress, 
-                new Dictionary<string, object>() {
-                    { TieredEventId, tieredEventId },
-                    { TierEventName, tieredEventsOverview.tieredEvents[tieredEventId].name }
-                }
-            );
+            SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
+            spilEvent.eventName = EventClaimTierReward;
+
+            spilEvent.customData.AddField(TieredEventId, tieredEventId);
+            spilEvent.customData.AddField(TierEventName, tieredEventsOverview.tieredEvents[tieredEventId].name);
+            
+            spilEvent.Send();
         }
         
         public static void ProcessShowTieredEventProgress(JSONObject responseData) {

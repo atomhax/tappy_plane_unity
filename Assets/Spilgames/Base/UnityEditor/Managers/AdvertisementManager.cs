@@ -140,7 +140,10 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     if (available) {
                         SpilLogging.Log("AdMob Show");
                         SpilUnityImplementationBase.fireAdAvailableEvent(adType);
-                        AdvertisementManager.PlayInterstitial("AdMob");
+
+                        if (adType.Equals("interstitial")) {
+                            AdvertisementManager.PlayInterstitial("AdMob"); 
+                        } 
                     }
                     else {
                         SpilLogging.Log("AdMob Not Available");

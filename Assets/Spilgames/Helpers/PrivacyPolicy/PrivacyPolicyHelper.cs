@@ -448,7 +448,7 @@ public class PrivacyPolicyHelper : MonoBehaviour {
             gameConfig = File.ReadAllText(Application.streamingAssetsPath + "/defaultGameConfig.json");
         }
         catch (FileNotFoundException e) {
-            Debug.Log("defaultGameConfig.json not found!");
+            Debug.Log("defaultGameConfig.json not found!\n" + e);
             return null;
         }
         #else

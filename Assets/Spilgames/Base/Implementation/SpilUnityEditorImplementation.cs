@@ -171,7 +171,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// </summary>
         /// <param name="eventName"></param>
         /// <param name="dict"></param>
-        public override void SendCustomEvent(string eventName, Dictionary<string, object> dict) {
+        protected override void SendCustomEvent(string eventName, Dictionary<string, object> dict) {
             SpilLogging.Log("SpilSDK-Unity SendCustomEvent " + eventName);
             SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
             spilEvent.eventName = eventName;

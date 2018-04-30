@@ -193,7 +193,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// </summary>
         /// <param name="eventName"></param>
         /// <param name="dict"></param>
-        public override void SendCustomEvent(string eventName, Dictionary<string, object> dict) {
+        protected override void SendCustomEvent(string eventName, Dictionary<string, object> dict) {
             Debug.Log("SpilSDK-Unity SendCustomEvent " + eventName);
 
             if (eventName.Equals("updatePlayerData") && dict.ContainsKey("inventory") &&

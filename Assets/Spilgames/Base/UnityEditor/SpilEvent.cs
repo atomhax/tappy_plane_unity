@@ -23,6 +23,9 @@ namespace SpilGames.Unity.Base.UnityEditor {
 
         private string platform;
 
+        private static string PRODUCTION = "https://apptracker.spilgames.com";
+        private static string STAGING = "https://apptracker-stg.spilgames.com";
+        
         public void Send() {
             this.StartCoroutine(SendCoroutine());
         }
@@ -63,15 +66,9 @@ namespace SpilGames.Unity.Base.UnityEditor {
                 requestForm.AddField("spilToken", SpilUnityEditorImplementation.spilToken);
             }
             
-/*
             WWW request =
                 new WWW(
-                    "https://apptracker.spilgames.com/v1/native-events/event/" + platform + "/" + Spil.BundleIdEditor +
-                    "/" + eventName, requestForm);
-*/
-            WWW request =
-                new WWW(
-                    "https://apptracker-stg.spilgames.com/v1/native-events/event/" + platform + "/" + Spil.BundleIdEditor +
+                    PRODUCTION + "/v1/native-events/event/" + platform + "/" + Spil.BundleIdEditor +
                     "/" + eventName, requestForm);
 
             yield return request;

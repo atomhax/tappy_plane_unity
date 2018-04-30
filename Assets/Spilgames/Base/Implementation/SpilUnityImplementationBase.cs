@@ -163,13 +163,28 @@ namespace SpilGames.Unity.Base.Implementations{
         /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
         /// <param name="name"></param>
-        public void TrackMilestoneAchievedEvent(string name) {
-            SendCustomEvent("milestoneAchieved", new Dictionary<string, object>() {
-                {
-                    "name",
-                    name
-                }
-            });
+        public void TrackMilestoneAchievedEvent(string name, string milestoneDescription = null, float score = -1, string location = null, int iteration = 0) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            
+            dict.Add("name", name);
+            
+            if (milestoneDescription != null) {
+                dict.Add("milestoneDescription", milestoneDescription);
+            }
+            
+            if (score != -1) {
+                dict.Add("score", score);
+            }
+            
+            if (location != null) {
+                dict.Add("location", location);
+            }
+            
+            if (iteration != 0) {
+                dict.Add("iteration", iteration);
+            }
+            
+            SendCustomEvent("milestoneAchieved", dict);
         }
 
         /// <summary>
@@ -181,7 +196,7 @@ namespace SpilGames.Unity.Base.Implementations{
         /// <param name="customCreated">If set to <c>true</c> custom created.</param>
         /// <param name="creatorId">Creator identifier.</param>
         public void TrackLevelStartEvent(string levelName, string difficulty = null, bool customCreated = false,
-            string creatorId = null) {
+            string creatorId = null, List<String> activeBooster = null) {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("level", levelName);
 
@@ -195,6 +210,10 @@ namespace SpilGames.Unity.Base.Implementations{
 
             if (creatorId != null) {
                 dict.Add("creatorId", creatorId);
+            }
+
+            if (activeBooster != null) {
+                dict.Add("activeBooster", new JSONObject(JsonHelper.getJSONFromObject(activeBooster)));
             }
 
             SendCustomEvent("levelStart", dict);
@@ -215,10 +234,15 @@ namespace SpilGames.Unity.Base.Implementations{
         /// <param name="creatorId">Creator identifier.</param>
         /// <param name="objectUsed">A list of objects used.</param>
         public void TrackLevelCompleteEvent(string levelName, string difficulty = null, double score = 0, int stars = 0,
-            string speed = null, int moves = 0, int turns = 0, bool customCreated = false, string creatorId = null, List<LevelCompleteObjectUsed> objectUsed = null) {
+            string speed = null, int moves = 0, int turns = 0, bool customCreated = false, string creatorId = null, List<LevelCompleteObjectUsed> objectUsed = null, string levelId = null,
+            string achievement = null, float avgCombos = 0, int movesLeft = -1, string rating = null, int timeLeft = -1) {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("level", levelName);
 
+            if (levelId != null) {
+                dict.Add("levelId", levelId);
+            }
+            
             if (difficulty != null) {
                 dict.Add("difficulty", difficulty);
             }
@@ -251,11 +275,30 @@ namespace SpilGames.Unity.Base.Implementations{
                 dict.Add("creatorId", creatorId);
             }
 
-            if (objectUsed != null)
-            {
+            if (objectUsed != null) {
                 dict.Add("objectUsed", new JSONObject(JsonHelper.getJSONFromObject(objectUsed)));
             }
 
+            if (achievement != null) {
+                dict.Add("achievement", achievement);
+            }
+
+            if (avgCombos != 0) {
+                dict.Add("avgCombos", avgCombos);
+            }
+
+            if (movesLeft != -1) {
+                dict.Add("movesLeft", movesLeft);
+            }
+            
+            if (rating != null) {
+                dict.Add("rating", rating);
+            }
+            
+            if (timeLeft != -1) {
+                dict.Add("timeLeft", timeLeft);
+            }
+            
             SendCustomEvent("levelComplete", dict);
         }
 
@@ -275,7 +318,8 @@ namespace SpilGames.Unity.Base.Implementations{
         /// <param name="creatorId">Creator identifier.</param>
         public void TrackLevelFailedEvent(string levelName, string difficulty = null, double score = 0,
             string speed = null, int moves = 0, int stars = 0, int turns = 0, string reason = null,
-            bool customCreated = false, string creatorId = null, List<LevelCompleteObjectUsed> objectUsed = null) {
+            bool customCreated = false, string creatorId = null, List<LevelCompleteObjectUsed> objectUsed = null,
+            string achievement = null, float avgCombos = 0, int movesLeft = -1, int timeLeft = -1) {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("level", levelName);
 
@@ -315,11 +359,26 @@ namespace SpilGames.Unity.Base.Implementations{
                 dict.Add("creatorId", creatorId);
             }
 
-            if (objectUsed != null)
-            {
+            if (objectUsed != null) {
                 dict.Add("objectUsed", new JSONObject(JsonHelper.getJSONFromObject(objectUsed)));
             }
 
+            if (achievement != null) {
+                dict.Add("achievement", achievement);
+            }
+            
+            if (avgCombos != 0) {
+                dict.Add("avgCombos", avgCombos);
+            }
+            
+            if (timeLeft != -1) {
+                dict.Add("timeLeft", timeLeft);
+            }
+            
+            if (movesLeft != -1) {
+                dict.Add("movesLeft", movesLeft);
+            }
+            
             SendCustomEvent("levelFailed", dict);
         }
 
@@ -330,7 +389,7 @@ namespace SpilGames.Unity.Base.Implementations{
         /// <param name="level">Level.</param>
         /// <param name="objectId">Object identifier.</param>
         /// <param name="skillId">Skill identifier.</param>
-        public void TrackLevelUpEvent(string level, string objectId, string skillId = null) {
+        public void TrackLevelUpEvent(string level, string objectId, string skillId = null, string sourceId = null, string sourceUniqueId = null, string objectUniqueId = null, string objectUniqueIdType = null) {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("level", level);
             dict.Add("objectId", objectId);
@@ -339,6 +398,22 @@ namespace SpilGames.Unity.Base.Implementations{
                 dict.Add("skillId", skillId);
             }
 
+            if (sourceId != null) {
+                dict.Add("sourceId", sourceId);
+            }
+            
+            if (sourceUniqueId != null) {
+                dict.Add("sourceUniqueId", sourceUniqueId);
+            }
+            
+            if (objectUniqueId != null) {
+                dict.Add("objectUniqueId", objectUniqueId);
+            }
+            
+            if (objectUniqueIdType != null) {
+                dict.Add("objectUniqueIdType", objectUniqueIdType);
+            }
+            
             SendCustomEvent("levelUp", dict);
         }
 
@@ -349,10 +424,13 @@ namespace SpilGames.Unity.Base.Implementations{
         /// <param name="equippedItem">Equipped item.</param>
         /// <param name="equippedTo">Equipped to.</param>
         /// <param name="unequippedFrom">The character/object which unequipped the item.</param>
-        public void TrackEquipEvent(string equippedItem, string equippedTo, string unequippedFrom = null) {
+        public void TrackEquipEvent(string equippedItem, string equippedTo = null, string unequippedFrom = null) {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("equippedItem", equippedItem);
-            dict.Add("equippedTo", equippedTo);
+
+            if (equippedTo != null) {
+                dict.Add("equippedTo", equippedTo);
+            }
 
             if (unequippedFrom != null) {
                 dict.Add("unequippedFrom", unequippedFrom);
@@ -391,9 +469,10 @@ namespace SpilGames.Unity.Base.Implementations{
         /// </summary>
         /// <param name="levelId">Level identifier.</param>
         /// <param name="creatorId">Creator identifier.</param>
-        public void TrackLevelCreateEvent(string levelId, string creatorId) {
+        public void TrackLevelCreateEvent(string levelId, string level, string creatorId) {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("levelId", levelId);
+            dict.Add("level", level);
             dict.Add("creatorId", creatorId);
 
             SendCustomEvent("levelCreate", dict);
@@ -553,19 +632,18 @@ namespace SpilGames.Unity.Base.Implementations{
         /// <param name="skuId">The product identifier of the item that was purchased</param>
         /// <param name="originalTransactionId ">For a transaction that restores a previous transaction, the transaction identifier of the original transaction. Otherwise, identical to the transaction identifier</param>
         /// <param name="originalPurchaseDate">For a transaction that restores a previous transaction, the date of the original transaction. Please use a proper DateTime format (RFC3339), for instance: "2016-08-30T11:54:48.5247936+02:00". If you have a DateTime object you can use: DateTimeObject.ToString("yyyy-MM-ddTHH\\:mm\\:ss.fffffffzzz")</param>                
-        public void TrackIAPRestoredEvent(string skuId, string originalTransactionId, string originalPurchaseDate) {
-            SendCustomEvent("iapRestored", new Dictionary<string, object>() {
-                {
-                    "skuId",
-                    skuId
-                }, {
-                    "originalTransactionId",
-                    originalTransactionId
-                }, {
-                    "originalPurchaseDate",
-                    originalPurchaseDate
-                }
-            });
+        public void TrackIAPRestoredEvent(string skuId, string originalTransactionId, string originalPurchaseDate, string reason = null) {
+            Dictionary<string, object> dictionary = new Dictionary<string, object>();
+            
+            dictionary.Add("skuId", skuId);
+            dictionary.Add("originalTransactionId", originalTransactionId);
+            dictionary.Add("originalPurchaseDate", originalPurchaseDate);
+            
+            if (reason != null) {
+                dictionary.Add("reason", reason);
+            }
+            
+            SendCustomEvent("iapRestored", dictionary);
         }
 
         /// <summary>
@@ -574,16 +652,22 @@ namespace SpilGames.Unity.Base.Implementations{
         /// </summary>
         /// <param name="error">Error description or error code</param>
         /// <param name="skuId">The product identifier of the item that was purchased</param>
-        public void TrackIAPFailedEvent(string error, string skuId) {
-            SendCustomEvent("iapFailed", new Dictionary<string, object>() {
-                {
-                    "error",
-                    error
-                }, {
-                    "skuId",
-                    skuId
-                }
-            });
+        public void TrackIAPFailedEvent(string error, string skuId, string location = null, string reason = null) {
+            Dictionary<string, object> dictionary = new Dictionary<string, object>();
+            
+            dictionary.Add("errorDescription", error);
+            dictionary.Add("skuId", skuId);
+            dictionary.Add("purchaseDate", DateTime.Now.ToString("yyyy-MM-ddTHH\\:mm\\:ss.fffffffzzz"));
+
+            if (location != null) {
+                dictionary.Add("location", location);
+            }
+            
+            if (reason != null) {
+                dictionary.Add("reason", reason);
+            }
+            
+            SendCustomEvent("iapFailed", dictionary);
         }
 
         /// <summary>
@@ -638,13 +722,15 @@ namespace SpilGames.Unity.Base.Implementations{
         /// See https://github.com/spilgames/spil_event_unity_plugin for more information on events.
         /// </summary>
         /// <param name="platform">A string like ‘facebook’ or ’email’</param>
-        public void TrackInviteEvent(string platform) {
-            SendCustomEvent("invite", new Dictionary<string, object>() {
-                {
-                    "platform",
-                    platform
-                }
-            });
+        public void TrackInviteEvent(string platform, string location = null) {
+            Dictionary<string, object> dictionary = new Dictionary<string, object>();
+            dictionary.Add("platform", platform);
+
+            if (location != null) {
+                dictionary.Add("location", location);
+            }
+            
+            SendCustomEvent("invite", dictionary);
         }
 
         /// <summary>
@@ -751,16 +837,332 @@ namespace SpilGames.Unity.Base.Implementations{
             SendCustomEvent("objectStateChanged", dict);
         }
 
-        #endregion
+        public void TrackUIElementClicked(string element, string type = null, string screenName = null, string location = null, int grade = 0) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("element", element);
 
-        /// <summary>
-        /// Sends an event to the native Spil SDK which will send a request to the back-end.
-        /// See https://github.com/spilgames/spil_event_unity_plugin for more information on events.
-        /// This method was previously called "TrackEvent"
-        /// </summary>
-        public void SendCustomEvent(string eventName) {
-            SendCustomEvent(eventName, null);
+            if (type != null) {
+                dict.Add("type", type);
+            }
+
+            if (screenName != null) {
+                dict.Add("screenName", screenName);
+            }
+            
+            if (location != null) {
+                dict.Add("location", location);
+            }
+            
+            if (grade != 0) {
+                dict.Add("grade", grade);
+            }
+
+            SendCustomEvent("uiElementClicked", dict);
         }
+
+        public void TrackSendGift(string platform, string location = null) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("platform", platform);
+           
+            if (location != null) {
+                dict.Add("location", location);
+            }
+
+            SendCustomEvent("sendGift", dict);
+        }
+
+        public void TrackLevelTimeOut() {
+            SendCustomEvent("levelTimeOut");
+        }
+
+        public void TrackDialogChosen(string name, bool hasToken, bool isPremiumChoice, bool isQuizz, bool isForced, bool isTimed, int time = 0) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("name", name);
+            dict.Add("hasToken", hasToken);
+            dict.Add("isPremiumChoice", isPremiumChoice);
+            dict.Add("isQuizz", isQuizz);
+            dict.Add("isForced", isForced);
+            dict.Add("isTimed", isTimed);
+           
+            if (time != 0) {
+                dict.Add("time", time);
+            }
+
+            SendCustomEvent("dialogueChosen", dict);
+        }
+
+        public void TrackFriendAdded(string friend, string platform = null) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("friend", friend);
+           
+            if (platform != null) {
+                dict.Add("platform", platform);
+            }
+
+            SendCustomEvent("friendAdded", dict);
+        }
+
+        public void TrackGameObjectInteraction() {
+            SendCustomEvent("gameObjectInteraction");
+        }
+
+        public void TrackGameResult(string itemId = null, string itemType = null, string label = null, string matchId = null) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+           
+            if (itemId != null) {
+                dict.Add("itemId", itemId);
+            }
+
+            if (itemType != null) {
+                dict.Add("itemType", itemType);
+            }
+            
+            if (label != null) {
+                dict.Add("label", label);
+            }
+            
+            if (matchId != null) {
+                dict.Add("matchId", matchId);
+            }
+            
+            SendCustomEvent("gameResult", dict);
+        }
+
+        public void TrackItemCrafted(string itemId, string itemType = null) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("itemId", itemId);
+           
+            if (itemType != null) {
+                dict.Add("itemType", itemType);
+            }
+
+            SendCustomEvent("itemCrafted", dict);
+        }
+        
+        public void TrackItemCreated(string itemId, string itemType = null) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("itemId", itemId);
+           
+            if (itemType != null) {
+                dict.Add("itemType", itemType);
+            }
+
+            SendCustomEvent("itemCreated", dict);
+        }
+        
+        public void TrackItemUpdated(string content, string itemId, string itemType = null) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("content", content);
+            dict.Add("itemId", itemId);
+           
+            if (itemType != null) {
+                dict.Add("itemType", itemType);
+            }
+
+            SendCustomEvent("itemUpdated", dict);
+        }
+
+        public void TrackDeckUpdated(string content, string itemId, string itemType = null, string label = null) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("content", content);
+            dict.Add("itemId", itemId);
+           
+            if (itemType != null) {
+                dict.Add("itemType", itemType);
+            }
+
+            if (label != null) {
+                dict.Add("label", label);
+            }
+            
+            SendCustomEvent("deckUpdated", dict);
+        }
+        
+        public void TrackIAPPayingUser() {
+            SendCustomEvent("iapPayingUser");
+        }
+
+        public void TrackMatchComplete(string matchId = null, string itemId = null, string itemType = null, string label = null) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+
+            if (matchId != null) {
+                dict.Add("matchId", matchId);
+            }
+
+            if (itemId != null) {
+                dict.Add("itemId", itemId);
+            }
+           
+            if (itemType != null) {
+                dict.Add("itemType", itemType);
+            }
+
+            if (label != null) {
+                dict.Add("label", label);
+            }
+            
+            SendCustomEvent("matchComplete", dict);
+        }
+        
+        public void TrackMatchLost(string matchId = null, string itemId = null, string itemType = null, string label = null) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+
+            if (matchId != null) {
+                dict.Add("matchId", matchId);
+            }
+
+            if (itemId != null) {
+                dict.Add("itemId", itemId);
+            }
+           
+            if (itemType != null) {
+                dict.Add("itemType", itemType);
+            }
+
+            if (label != null) {
+                dict.Add("label", label);
+            }
+            
+            SendCustomEvent("matchLost", dict);
+        }
+        
+        public void TrackMatchTie(string matchId = null, string itemId = null, string itemType = null, string label = null) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+
+            if (matchId != null) {
+                dict.Add("matchId", matchId);
+            }
+
+            if (itemId != null) {
+                dict.Add("itemId", itemId);
+            }
+           
+            if (itemType != null) {
+                dict.Add("itemType", itemType);
+            }
+
+            if (label != null) {
+                dict.Add("label", label);
+            }
+            
+            SendCustomEvent("matchTie", dict);
+        }
+        
+        public void TrackMatchWon(string matchId = null, string itemId = null, string itemType = null, string label = null) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+
+            if (matchId != null) {
+                dict.Add("matchId", matchId);
+            }
+
+            if (itemId != null) {
+                dict.Add("itemId", itemId);
+            }
+           
+            if (itemType != null) {
+                dict.Add("itemType", itemType);
+            }
+
+            if (label != null) {
+                dict.Add("label", label);
+            }
+            
+            SendCustomEvent("matchWon", dict);
+        }
+
+        public void TrackPawnMoved(string name, string reason = null, string label = null, string delta = null, string energy = null, string kind = null, string location = null, string rarity = null) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("name", name);
+            
+            if (reason != null) {
+                dict.Add("reason", reason);
+            }
+
+            if (label != null) {
+                dict.Add("label", label);
+            }
+           
+            if (delta != null) {
+                dict.Add("delta", delta);
+            }
+
+            if (energy != null) {
+                dict.Add("energy", energy);
+            }
+            
+            if (kind != null) {
+                dict.Add("kind", kind);
+            }
+           
+            if (location != null) {
+                dict.Add("location", location);
+            }
+
+            if (rarity != null) {
+                dict.Add("rarity", rarity);
+            }
+            
+            SendCustomEvent("pawnMoved", dict);
+        }
+        
+        public void TrackPlayerLeagueChanged() {
+            SendCustomEvent("playerLeagueChanged");
+        }
+
+        public void TrackPrepareWebPayments() {
+            SendCustomEvent("prepareWebPayments");
+        }
+        
+        public void TrackSignUpWithFacebook() {
+            SendCustomEvent("signUpWithFacebook");
+        }
+
+        public void TrackSpinnedFortune(string spinResult, string objectId = null) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("spinResult", spinResult);
+            
+            if (objectId != null) {
+                dict.Add("objectId", objectId);
+            }
+            
+            SendCustomEvent("spinnedFortune", dict);
+        }
+
+        public void TrackTimedAction(string timedAction, string label = null, string timedObject = null, int timeToFinish = 0, float effectMultiplier = 0) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("timedAction", timedAction);
+            
+            if (label != null) {
+                dict.Add("label", label);
+            }
+            
+            if (timedObject != null) {
+                dict.Add("timedObject", timedObject);
+            }
+            
+            if (timeToFinish != 0) {
+                dict.Add("timeToFinish", timeToFinish);
+            }
+            
+            if (effectMultiplier != 0) {
+                dict.Add("effectMultiplier", effectMultiplier);
+            }
+            
+            SendCustomEvent("timedAction", dict);
+        }
+
+        public void TrackTransitionToGame(string type) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("type", type);
+            
+            SendCustomEvent("transitionToGame", dict);
+        }
+        
+        public void TrackTransitionToMenu() {
+            SendCustomEvent("transitionToMenu");
+        }
+        
+        #endregion
 
         #region Advertisement events
 
@@ -2058,7 +2460,7 @@ namespace SpilGames.Unity.Base.Implementations{
         /// </summary>
         /// <param name="eventName"></param>
         /// <param name="eventParams"></param>
-        public abstract void SendCustomEvent(string eventName, Dictionary<string, object> eventParams);
+        protected abstract void SendCustomEvent(string eventName, Dictionary<string, object> eventParams = null);
 
         #region Init
 
