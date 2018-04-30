@@ -137,7 +137,7 @@ namespace SpilGames.Unity.Base.Implementations
         /// </summary>
         /// <param name="eventName"></param>
         /// <param name="dict"></param>
-        public override void SendCustomEvent(string eventName, Dictionary<string, object> dict)
+        protected override void SendCustomEvent(string eventName, Dictionary<string, object> dict)
         {
             Debug.Log("SpilSDK-Unity SendCustomEvent \"" + eventName + "\"" + (dict == null ? "" : " params: " + JsonHelper.DictToJSONObject(dict).ToString()));
 
@@ -203,13 +203,13 @@ namespace SpilGames.Unity.Base.Implementations
         /// This is disabled by default to allow the developer to create a reward notification for the user.
         /// Developers can call SetShowToastOnVideoReward(true) to enable Fyber's automatic toast message.
         /// </summary>
-        public override void SetShowToastOnVideoReward(bool value)
+        /*public override void SetShowToastOnVideoReward(bool value)
         {
             showToastOnVideoReward(value);
         }
 
         [DllImport("__Internal")]
-        private static extern void showToastOnVideoReward(bool show);
+        private static extern void showToastOnVideoReward(bool show);*/
 
         /// <summary>
         /// Call to inform the SDK that the parental gate was (not) passes
@@ -626,33 +626,37 @@ namespace SpilGames.Unity.Base.Implementations
 
         public override void RequestTieredEvents()
         {
-            requestTieredEventsNative();
+            //requestTieredEventsNative();
         }
 
-        [DllImport("__Internal")]
-        private static extern string requestTieredEventsNative();
+        //[DllImport("__Internal")]
+        //private static extern string requestTieredEventsNative();
 
         public override List<TieredEvent> GetAllTieredEvents()
         {
-            string tieredEventsJson = getAllTieredEventsNative();
+            /*string tieredEventsJson = getAllTieredEventsNative();
             if (tieredEventsJson != null)
             {
                 // TODO: Test this, probably wont work because the list is inside a root node.
                 return JsonHelper.getObjectFromJson<List<TieredEvent>>(tieredEventsJson);
-            }
+            }*/
             return null;
         }
+        
+        public override TieredEventProgress GetTieredEventProgress(int tieredEventId) {
+            return new TieredEventProgress();
+        }
 
-        [DllImport("__Internal")]
-        private static extern string getAllTieredEventsNative();
+        //[DllImport("__Internal")]
+        //private static extern string getAllTieredEventsNative();
 
         public override void ShowTieredEventProgress(int tieredEventId)
         {
-            showTieredEventProgressNative(tieredEventId);
+            //showTieredEventProgressNative(tieredEventId);
         }
 
-        [DllImport("__Internal")]
-        private static extern void showTieredEventProgressNative(int tieredEventId);
+        //[DllImport("__Internal")]
+        //private static extern void showTieredEventProgressNative(int tieredEventId);
 
     #endregion
 

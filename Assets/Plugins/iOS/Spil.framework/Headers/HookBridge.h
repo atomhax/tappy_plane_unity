@@ -237,6 +237,16 @@ extern "C" {
     
     char* getLiveEventConfigNative();
     
+    // --- Tiered events ---
+    
+    void requestTieredEventsNative();
+    
+    char* getAllTieredEventsNative();
+    
+    char* getTieredEventProgressNative(int tieredEventId);
+    
+    void showTieredEventProgressNative(int tieredEventId);
+    
     // --- Login ---
     
     void loginNative(char* externalUserId, char* externalProviderId, char* externalToken);

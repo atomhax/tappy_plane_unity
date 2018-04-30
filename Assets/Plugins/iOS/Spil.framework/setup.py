@@ -125,7 +125,7 @@ for library in requiredSystemLibraries:
 
 # add custom frameworks
 print('Adding custom frameworks')
-requiredCustomFrameworks = ['AdjustSdk', 'Chartboost', 'Fyber_AdColony', 'Fyber_UnityAds', 'Fyber_Vungle', 'Fyber_FacebookAudienceNetwork', 'Fyber_AdMob', 'GoogleMobileAds', 'MMAdSDK', 'UnityAds', 'FirebaseCore', 'FirebaseCoreDiagnostics', 'FirebaseInstanceID', 'FirebaseAnalytics', 'FirebaseDynamicLinks', 'GoogleToolboxForMac', 'FirebaseNanoPB', 'nanopb']
+requiredCustomFrameworks = ['AdjustSdk', 'AdColony', 'AdColonyAdapter', 'Chartboost', 'FacebookAdapter', 'FBAudienceNetwork', 'FirebaseCore', 'FirebaseCoreDiagnostics', 'FirebaseInstanceID', 'FirebaseAnalytics', 'FirebaseDynamicLinks', 'GoogleToolboxForMac', 'FirebaseNanoPB', 'GoogleMobileAds', 'nanopb', 'UnityAdapter', 'UnityAds', 'VungleAdapter', 'VungleSDK']
 project.add_file_if_doesnt_exist('Spil.framework', parent=frameworks, weak=False)
 for framework in requiredCustomFrameworks:
 	project.add_file_if_doesnt_exist('Spil.framework/Frameworks/' + framework + '.framework', parent=frameworks, weak=False)
@@ -137,7 +137,7 @@ for framework in requiredCustomFrameworks:
 print('Copying resources and adding them to the XCode project')
 bundles = project.get_or_create_group('')
 addBundleResource(os.getcwd() + '/Spil.framework/Settings.bundle', os.getcwd() + '/Settings.bundle', bundles)
-addBundleResource(os.getcwd() + '/Spil.framework/Frameworks/Fyber_UnityAds.framework/Resources/UnityAds.bundle', os.getcwd() + '/UnityAds.bundle', bundles)
+#addBundleResource(os.getcwd() + '/Spil.framework/Frameworks/Fyber_UnityAds.framework/Resources/UnityAds.bundle', os.getcwd() + '/UnityAds.bundle', bundles)
 addBundleResource(os.getcwd() + '/Spil.framework/MRAID.bundle', os.getcwd() + '/MRAID.bundle', bundles)
 addBundleResource(os.getcwd() + '/Data/Raw/defaultGameConfig.json', os.getcwd() + '/defaultGameConfig.json', bundles)
 addBundleResource(os.getcwd() + '/Data/Raw/defaultGameData.json', os.getcwd() + '/defaultGameData.json', bundles)
