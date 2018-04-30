@@ -22,6 +22,7 @@
 @class Inventory;
 @class Package;
 @class ShopEntry;
+@class TieredEventProgress;
 
 @protocol SpilDelegate
 
@@ -31,8 +32,8 @@
  * Ad events, params:
  * type = rewardVideo|interstitial|moreApps
  * reason = error|dismiss|reward
- * network = ChartBoost|Fyber|DFP
- * reward = rewardData(Fyber:Integer,Chartboost:Json{reward:"",currencyName:"",currencyId:""})|nil
+ * network = ChartBoost|admob
+ * reward = rewardData(Admob:Integer,Chartboost:Json{reward:"",currencyName:"",currencyId:""})|nil
  */
 -(void)adAvailable:(nonnull NSString*)type; // An ad is available
 -(void)adNotAvailable:(nonnull NSString*)type; // An ad is unavailable or did fail to load
@@ -82,7 +83,6 @@
 -(void)playerDataEmptyGacha;
 
 // User data events
--(void)gameStateUpdated:(nonnull NSString*)access; // Access: private|public
 -(void)otherUsersGameStateLoaded:(nonnull NSDictionary*)data forProvider:(nonnull NSString*)provider; // Data: <NSString* userId, NSString* data>
 
 // Image cache
@@ -134,6 +134,15 @@
 
 // GDPR
 -(void)privacyPolicyStatus:(BOOL)accepted;
+
+// Tiered events
+-(void)tieredEventsAvailable;
+-(void)tieredEventsNotAvailable;
+-(void)tieredEventUpdated:(nonnull TieredEventProgress*)tieredEventProgress;
+-(void)tieredEventRewardsClaimed:(nonnull NSArray*)rewardsGivenPerTier progress:(nonnull TieredEventProgress*)progress;
+-(void)tieredEventProgressOpen;
+-(void)tieredEventProgressClosed;
+-(void)tieredEventsError:(nonnull NSString*)error;
 
 @end
 
@@ -950,6 +959,38 @@
  */
 +(nonnull NSDictionary*)getLiveEventConfig;
 
+#pragma tiered events
+
+/**
+ * Request the current tiered events
+ */
++(void)requestTieredEvents;
+
+/**
+ * Get all the loaded tiered events
+ */
++(nonnull NSArray*)getAllTieredEvents;
+
+/**
+ * Get all the loaded tiered events, as objects
+ */
++(nonnull NSArray*)getAllTieredEventsData;
+
+/**
+ * Get the progress of the requested tiered event
+ */
++(nonnull NSDictionary*)getTieredEventProgress:(int)tieredEventId;
+
+/**
+ * Get the progress of the requested tiered event, as objects
+ */
++(nonnull TieredEventProgress*)getTieredEventProgressData:(int)tieredEventId;
+
+/**
+ * Show the progress of the requested tiered event
+ */
++(void)showTieredEventProgress:(int)tieredEventId;
+
 #pragma user login
 
 /**
@@ -1022,7 +1063,7 @@
 
 /**
  * NOTE: Those methods are exposed just for ad testing, they should not be referenced in the final implementation, params:
- * adProvider: DFP|Fyber|ChartBoost
+ * adProvider: Chartboost|admob
  * adType: interstitial|rewardVideo|moreApps
  * parentalGate: not implemented yet (always false)
  */
