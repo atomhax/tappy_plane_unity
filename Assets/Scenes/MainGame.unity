@@ -6493,7 +6493,7 @@ MonoBehaviour:
   initializeOnAwake: 1
   checkPrivacyPolicyAndroid: 1
   checkPrivacyPolicyIOS: 1
-  useUnityPrefab: 1
+  useUnityPrefab: 0
   PrefabOrientation: 0
   ProjectId: 492493592102
   CustomBundleId: 
