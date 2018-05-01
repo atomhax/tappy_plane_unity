@@ -2135,33 +2135,33 @@ namespace SpilGames.Unity.Base.Implementations{
             }
         }
 
-        public delegate void TieredEventStageOpen();
+        public delegate void TieredEventProgressOpen();
 
         /// <summary>
-        /// This event indicates that the Tiered Event Stage has been opened.
+        /// This event indicates that the Tiered Event progress has been opened.
         /// </summary>
-        public event TieredEventStageOpen OnTieredEventStageOpen;
+        public event TieredEventProgressOpen OnTieredEventProgressOpen;
 
-        public static void fireTieredEventStageOpen() {
+        public static void fireTieredEventProgressOpen() {
             Debug.Log("SpilSDK-Unity fireTieredEventStageOpen");
 
-            if (Spil.Instance.OnTieredEventStageOpen != null) {
-                Spil.Instance.OnTieredEventStageOpen();
+            if (Spil.Instance.OnTieredEventProgressOpen != null) {
+                Spil.Instance.OnTieredEventProgressOpen();
             }
         }
 
-        public delegate void TieredEventStageClosed();
+        public delegate void TieredEventProgressClosed();
 
         /// <summary>
-        /// This event indicates that the Tiered Event Stage has been closed.
+        /// This event indicates that the Tiered Event progress has been closed.
         /// </summary>
-        public event LiveEventStageClosed OnTieredEventStageClosed;
+        public event TieredEventProgressClosed OnTieredEventProgressClosed;
 
-        public static void fireTieredEventStageClosed() {
+        public static void fireTieredEventProgressClosed() {
             Debug.Log("SpilSDK-Unity fireTieredEventStageClosed");
 
-            if (Spil.Instance.OnTieredEventStageClosed != null) {
-                Spil.Instance.OnTieredEventStageClosed();
+            if (Spil.Instance.OnTieredEventProgressClosed != null) {
+                Spil.Instance.OnTieredEventProgressClosed();
             }
         }
 

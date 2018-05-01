@@ -624,39 +624,43 @@ namespace SpilGames.Unity.Base.Implementations
 
     #region Tiered Events
 
-        public override void RequestTieredEvents()
-        {
-            //requestTieredEventsNative();
+        public override void RequestTieredEvents() {
+            requestTieredEventsNative();
         }
 
-        //[DllImport("__Internal")]
-        //private static extern string requestTieredEventsNative();
+        [DllImport("__Internal")]
+        private static extern void requestTieredEventsNative();
 
-        public override List<TieredEvent> GetAllTieredEvents()
-        {
-            /*string tieredEventsJson = getAllTieredEventsNative();
-            if (tieredEventsJson != null)
-            {
-                // TODO: Test this, probably wont work because the list is inside a root node.
+        public override List<TieredEvent> GetAllTieredEvents() {
+            string tieredEventsJson = getAllTieredEventsNative();
+            if (tieredEventsJson != null) {
+                Debug.Log(tieredEventsJson);
                 return JsonHelper.getObjectFromJson<List<TieredEvent>>(tieredEventsJson);
-            }*/
+            }
             return null;
         }
         
+        [DllImport("__Internal")]
+        private static extern string getAllTieredEventsNative();
+        
         public override TieredEventProgress GetTieredEventProgress(int tieredEventId) {
-            return new TieredEventProgress();
+            string tieredEventProgressJson = getTieredEventProgressNative(tieredEventId);
+            if (tieredEventProgressJson == null) {
+                return null;
+            }
+            Debug.Log(tieredEventProgressJson);
+            return JsonHelper.getObjectFromJson<TieredEventProgress>(tieredEventProgressJson);
         }
 
-        //[DllImport("__Internal")]
-        //private static extern string getAllTieredEventsNative();
+        [DllImport("__Internal")]
+        private static extern string getTieredEventProgressNative(int tieredEventId);
 
-        public override void ShowTieredEventProgress(int tieredEventId)
-        {
-            //showTieredEventProgressNative(tieredEventId);
+        public override void ShowTieredEventProgress(int tieredEventId) {
+            showTieredEventProgressNative(tieredEventId);
         }
 
-        //[DllImport("__Internal")]
-        //private static extern void showTieredEventProgressNative(int tieredEventId);
+        [DllImport("__Internal")]
+        private static extern void showTieredEventProgressNative(int tieredEventId);
 
     #endregion
 
