@@ -2525,7 +2525,6 @@ namespace SpilGames.Unity.Base.Implementations{
             Debug.Log("SpilSDK-Unity PrivacyPolicyAsked");
             
             if(Spil.MonoInstance.sendPrivacyPolicyTrackingEvents) {
-                
                 // Only do this on the first app start.
                 if (Spil.CheckPrivacyPolicy && !PlayerPrefs.HasKey("PrivacyPolicyAskedUnityAnalytics")) {
                 
