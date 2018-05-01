@@ -719,7 +719,7 @@ public class GameController : MonoBehaviour
 
 //		Spil.Instance.TrackWalletInventoryEvent("Test1", "GameStart", currencies);
 //		Spil.Instance.TrackWalletInventoryEvent("Test2", "GameStart", null, items);
-		Spil.Instance.TrackWalletInventoryEvent("Test3", "GameStart", currencies, items, "Main Menu", "GPA.1234-5678-9123-45678");
+//		Spil.Instance.TrackWalletInventoryEvent("Test3", "GameStart", currencies, items, "Main Menu", "GPA.1234-5678-9123-45678");
     }
 
     void RewardHandler(PushNotificationRewardResponse rewardResponse) {

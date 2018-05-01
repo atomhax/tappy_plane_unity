@@ -53,7 +53,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Plugins\Editor\JetBrains\Unity3DRider.cs" />
     <Compile Include="Assets\Plugins\UnityChannel\XiaomiSupport\Editor\AppStoreModel.cs" />
     <Compile Include="Assets\Plugins\UnityChannel\XiaomiSupport\Editor\AppStoreOnboardApi.cs" />
     <Compile Include="Assets\Plugins\UnityChannel\XiaomiSupport\Editor\AppStoreSettingsEditor.cs" />
