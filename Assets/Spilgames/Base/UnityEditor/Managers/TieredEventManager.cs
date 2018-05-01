@@ -174,7 +174,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             labelText.text = JsonHelper.getJSONFromObject(showProgressResponse);
             TieredEventProgress.SetActive(true);
 
-            SpilUnityImplementationBase.fireTieredEventStageOpen();
+            SpilUnityImplementationBase.fireTieredEventProgressOpen();
         }
 
         public void ClosePrefab() {
@@ -183,7 +183,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
         public static void CloseStageView() {
             Destroy(TieredEventProgress);
-            SpilUnityImplementationBase.fireTieredEventStageClosed();
+            SpilUnityImplementationBase.fireTieredEventProgressClosed();
         }
 
         public static TieredEventsOverview GetTieredEventsOverview() {

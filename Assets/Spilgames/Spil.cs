@@ -798,6 +798,18 @@ namespace SpilGames.Unity {
             SpilUnityImplementationBase.fireTieredEventUpdated(data);
         }
         
+        public void TieredEventProgressOpen() {
+            SpilUnityImplementationBase.fireTieredEventProgressOpen();
+        }
+
+        public void TieredEventProgressClosed() {
+            SpilUnityImplementationBase.fireTieredEventProgressClosed();
+        }
+        
+        public void TieredEventsError(string data) {
+            SpilUnityImplementationBase.fireTieredEventsError(data);
+        }
+        
 #if UNITY_ANDROID
         /// <summary>
         /// This event indicates the status of the permission request.
