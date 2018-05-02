@@ -51,18 +51,6 @@ namespace SpilGames.Unity {
 
         public PrivacyPolicyPrefabOrientationEnum PrefabOrientation;
         
-        // Privacy policy dropoff tracking settings, don't include these in the SpilSDK
-        // inspector so that developers can't "accidentally" enable dropoff tracking.
-        public bool sendPrivacyPolicyTrackingEvents
-        {
-            get { return false; }
-        }
-
-        bool clearHistoryOnEditorModeStart
-        {
-            get { return true; }
-        }  
-        
         [Header("Android Settings")]
 #if UNITY_ANDROID || UNITY_EDITOR
         [SerializeField]
@@ -202,7 +190,7 @@ namespace SpilGames.Unity {
 
 #endif
 
-        void Awake() {
+        void Awake() {            
             if ((monoInstance != null) && (this != monoInstance)) {
                 if (Application.isPlaying) {
                     Destroy (gameObject);
@@ -215,15 +203,6 @@ namespace SpilGames.Unity {
             if (Application.isPlaying) {
                 DontDestroyOnLoad (gameObject);
             }
-            
-#if UNITY_EDITOR
-            if (clearHistoryOnEditorModeStart) {
-                PlayerPrefs.DeleteKey("PrivacyPolicyAskedUnityAnalytics");
-                PlayerPrefs.DeleteKey("PrivacyPolicyAcceptedUnityAnalytics");
-            }
-#endif
-            
-            Spil.Instance.TrackPrivacyPolicyAskedUnityAnalytics();
             
             if (initializeOnAwake) {
                 Initialize();
