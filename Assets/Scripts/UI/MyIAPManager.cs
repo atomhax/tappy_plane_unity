@@ -214,7 +214,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 					Promotion packagePromotion = Spil.Instance.GetPromotions().GetPackagePromotion(helper.Packages[i].PackageId);
 					packageValue = packageValue + packagePromotion.ExtraEntities[0].Amount;
 				}
-				Spil.PlayerData.Wallet.Add (int.Parse (helper.Packages [i].Items [0].Id), packageValue, PlayerDataUpdateReasons.IAP, "Shop", transactionId);
+				Spil.PlayerData.Wallet.Add (int.Parse (helper.Packages [i].Items [0].Id), packageValue, PlayerDataUpdateReasons.IAP, "Shop", "Shop Purchase", transactionId);
 			}
 		}
 
