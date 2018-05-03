@@ -251,8 +251,8 @@ public class PrivacyPolicyHelper : MonoBehaviour {
         #if UNITY_EDITOR
         PlayerPrefs.SetInt(Spil.Instance.GetSpilUserId() + "-unityPrivacyPolicyStatus", 1);
         #else
-            PlayerPrefs.SetInt("unityPrivacyPolicyStatus", 1);
-            #endif
+        PlayerPrefs.SetInt("unityPrivacyPolicyStatus", 1);
+        #endif
             
         Destroy(PrivacyPolicyObject);
         Instance = null;

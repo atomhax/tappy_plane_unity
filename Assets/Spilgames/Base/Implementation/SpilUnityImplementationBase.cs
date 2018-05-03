@@ -837,6 +837,14 @@ namespace SpilGames.Unity.Base.Implementations{
             SendCustomEvent("objectStateChanged", dict);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="type"></param>
+        /// <param name="screenName"></param>
+        /// <param name="location"></param>
+        /// <param name="grade"></param>
         public void TrackUIElementClicked(string element, string type = null, string screenName = null, string location = null, int grade = 0) {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("element", element);
@@ -860,6 +868,11 @@ namespace SpilGames.Unity.Base.Implementations{
             SendCustomEvent("uiElementClicked", dict);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="platform"></param>
+        /// <param name="location"></param>
         public void TrackSendGift(string platform, string location = null) {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("platform", platform);
@@ -871,10 +884,23 @@ namespace SpilGames.Unity.Base.Implementations{
             SendCustomEvent("sendGift", dict);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void TrackLevelTimeOut() {
             SendCustomEvent("levelTimeOut");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="hasToken"></param>
+        /// <param name="isPremiumChoice"></param>
+        /// <param name="isQuizz"></param>
+        /// <param name="isForced"></param>
+        /// <param name="isTimed"></param>
+        /// <param name="time"></param>
         public void TrackDialogChosen(string name, bool hasToken, bool isPremiumChoice, bool isQuizz, bool isForced, bool isTimed, int time = 0) {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("name", name);
@@ -891,6 +917,11 @@ namespace SpilGames.Unity.Base.Implementations{
             SendCustomEvent("dialogueChosen", dict);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="friend"></param>
+        /// <param name="platform"></param>
         public void TrackFriendAdded(string friend, string platform = null) {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("friend", friend);
@@ -902,10 +933,20 @@ namespace SpilGames.Unity.Base.Implementations{
             SendCustomEvent("friendAdded", dict);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void TrackGameObjectInteraction() {
             SendCustomEvent("gameObjectInteraction");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="itemId"></param>
+        /// <param name="itemType"></param>
+        /// <param name="label"></param>
+        /// <param name="matchId"></param>
         public void TrackGameResult(string itemId = null, string itemType = null, string label = null, string matchId = null) {
             Dictionary<string, object> dict = new Dictionary<string, object>();
            
@@ -928,6 +969,11 @@ namespace SpilGames.Unity.Base.Implementations{
             SendCustomEvent("gameResult", dict);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="itemId"></param>
+        /// <param name="itemType"></param>
         public void TrackItemCrafted(string itemId, string itemType = null) {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("itemId", itemId);
@@ -939,6 +985,11 @@ namespace SpilGames.Unity.Base.Implementations{
             SendCustomEvent("itemCrafted", dict);
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="itemId"></param>
+        /// <param name="itemType"></param>
         public void TrackItemCreated(string itemId, string itemType = null) {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("itemId", itemId);
@@ -950,6 +1001,12 @@ namespace SpilGames.Unity.Base.Implementations{
             SendCustomEvent("itemCreated", dict);
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="content"></param>
+        /// <param name="itemId"></param>
+        /// <param name="itemType"></param>
         public void TrackItemUpdated(string content, string itemId, string itemType = null) {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("content", content);
@@ -962,6 +1019,13 @@ namespace SpilGames.Unity.Base.Implementations{
             SendCustomEvent("itemUpdated", dict);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="content"></param>
+        /// <param name="itemId"></param>
+        /// <param name="itemType"></param>
+        /// <param name="label"></param>
         public void TrackDeckUpdated(string content, string itemId, string itemType = null, string label = null) {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("content", content);
@@ -978,10 +1042,20 @@ namespace SpilGames.Unity.Base.Implementations{
             SendCustomEvent("deckUpdated", dict);
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
         public void TrackIAPPayingUser() {
             SendCustomEvent("iapPayingUser");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="matchId"></param>
+        /// <param name="itemId"></param>
+        /// <param name="itemType"></param>
+        /// <param name="label"></param>
         public void TrackMatchComplete(string matchId = null, string itemId = null, string itemType = null, string label = null) {
             Dictionary<string, object> dict = new Dictionary<string, object>();
 
@@ -1004,6 +1078,13 @@ namespace SpilGames.Unity.Base.Implementations{
             SendCustomEvent("matchComplete", dict);
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="matchId"></param>
+        /// <param name="itemId"></param>
+        /// <param name="itemType"></param>
+        /// <param name="label"></param>
         public void TrackMatchLost(string matchId = null, string itemId = null, string itemType = null, string label = null) {
             Dictionary<string, object> dict = new Dictionary<string, object>();
 
@@ -1026,6 +1107,13 @@ namespace SpilGames.Unity.Base.Implementations{
             SendCustomEvent("matchLost", dict);
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="matchId"></param>
+        /// <param name="itemId"></param>
+        /// <param name="itemType"></param>
+        /// <param name="label"></param>
         public void TrackMatchTie(string matchId = null, string itemId = null, string itemType = null, string label = null) {
             Dictionary<string, object> dict = new Dictionary<string, object>();
 
@@ -1048,6 +1136,13 @@ namespace SpilGames.Unity.Base.Implementations{
             SendCustomEvent("matchTie", dict);
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="matchId"></param>
+        /// <param name="itemId"></param>
+        /// <param name="itemType"></param>
+        /// <param name="label"></param>
         public void TrackMatchWon(string matchId = null, string itemId = null, string itemType = null, string label = null) {
             Dictionary<string, object> dict = new Dictionary<string, object>();
 
@@ -1070,6 +1165,17 @@ namespace SpilGames.Unity.Base.Implementations{
             SendCustomEvent("matchWon", dict);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="reason"></param>
+        /// <param name="label"></param>
+        /// <param name="delta"></param>
+        /// <param name="energy"></param>
+        /// <param name="kind"></param>
+        /// <param name="location"></param>
+        /// <param name="rarity"></param>
         public void TrackPawnMoved(string name, string reason = null, string label = null, string delta = null, string energy = null, string kind = null, string location = null, string rarity = null) {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("name", name);
@@ -1105,14 +1211,23 @@ namespace SpilGames.Unity.Base.Implementations{
             SendCustomEvent("pawnMoved", dict);
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
         public void TrackPlayerLeagueChanged() {
             SendCustomEvent("playerLeagueChanged");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void TrackPrepareWebPayments() {
             SendCustomEvent("prepareWebPayments");
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
         public void TrackSignUpWithFacebook() {
             SendCustomEvent("signUpWithFacebook");
         }
