@@ -109,6 +109,7 @@
     <Compile Include="Assets\Spilgames\Base\Implementation\SpilUnityEditorImplementation.cs" />
     <Compile Include="Assets\Spilgames\Base\Implementation\SpilUnityImplementationBase.cs" />
     <Compile Include="Assets\Spilgames\Base\SDK\Responses\AdvertisementResponse.cs" />
+    <Compile Include="Assets\Spilgames\Base\SDK\Responses\AssetBundlesResponse.cs" />
     <Compile Include="Assets\Spilgames\Base\SDK\Responses\GameDataResponse.cs" />
     <Compile Include="Assets\Spilgames\Base\SDK\Responses\GameStateResponse.cs" />
     <Compile Include="Assets\Spilgames\Base\SDK\Responses\IAPPackagesResponse.cs" />
@@ -118,7 +119,11 @@
     <Compile Include="Assets\Spilgames\Base\SDK\Responses\RewardResponse.cs" />
     <Compile Include="Assets\Spilgames\Base\SDK\Responses\TieredEventsResponse.cs" />
     <Compile Include="Assets\Spilgames\Base\SDK\SpilResponse.cs" />
+    <Compile Include="Assets\Spilgames\Base\Tracking\EventParams.cs" />
+    <Compile Include="Assets\Spilgames\Base\Tracking\OperateNowTracking.cs" />
+    <Compile Include="Assets\Spilgames\Base\Tracking\SpilTracking.cs" />
     <Compile Include="Assets\Spilgames\Base\UnityEditor\Managers\AdvertisementManager.cs" />
+    <Compile Include="Assets\Spilgames\Base\UnityEditor\Managers\AssetBundlesManager.cs" />
     <Compile Include="Assets\Spilgames\Base\UnityEditor\Managers\ConfigManager.cs" />
     <Compile Include="Assets\Spilgames\Base\UnityEditor\Managers\GameDataManager.cs" />
     <Compile Include="Assets\Spilgames\Base\UnityEditor\Managers\GameStateManager.cs" />
@@ -134,7 +139,8 @@
     <Compile Include="Assets\Spilgames\Base\UnityEditor\Managers\UserDataManager.cs" />
     <Compile Include="Assets\Spilgames\Base\UnityEditor\ResponseEvent.cs" />
     <Compile Include="Assets\Spilgames\Base\UnityEditor\SpilEvent.cs" />
-    <Compile Include="Assets\Spilgames\Helpers\EventTracking\EventParams.cs" />
+    <Compile Include="Assets\Spilgames\Helpers\AssetBundles\AssetBundle.cs" />
+    <Compile Include="Assets\Spilgames\Helpers\AssetBundles\AssetBundlesHelper.cs" />
     <Compile Include="Assets\Spilgames\Helpers\GameData\Bundle.cs" />
     <Compile Include="Assets\Spilgames\Helpers\GameData\Currency.cs" />
     <Compile Include="Assets\Spilgames\Helpers\GameData\GachaContent.cs" />

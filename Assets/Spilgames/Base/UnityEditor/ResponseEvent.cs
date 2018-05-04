@@ -70,6 +70,9 @@ namespace SpilGames.Unity.Base.UnityEditor {
                     case "tieredevent":
                         TieredEventResponse.ProcessTieredEventResponse(responseEvent);
                         break;
+                    case "assetbundles":
+                        AssetBundlesResponse.ProcessAssetBundlesResponse(responseEvent);
+                        break;
                 }
             }
             GameObject.Destroy(responseEvent);

@@ -193,7 +193,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// </summary>
         /// <param name="eventName"></param>
         /// <param name="dict"></param>
-        protected override void SendCustomEvent(string eventName, Dictionary<string, object> dict) {
+        public override void SendCustomEvent(string eventName, Dictionary<string, object> dict) {
             Debug.Log("SpilSDK-Unity SendCustomEvent " + eventName);
 
             if (eventName.Equals("updatePlayerData") && dict.ContainsKey("inventory") &&
@@ -329,6 +329,14 @@ namespace SpilGames.Unity.Base.Implementations {
 
         #endregion
 
+        #region AssetBundles
+
+        public override string GetAllAssetBundles() {
+            return CallNativeMethod("getAssetBundles");
+        }
+
+        #endregion
+        
         #region Player Data
 
         public override void UpdatePlayerData() {

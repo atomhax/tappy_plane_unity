@@ -3,8 +3,10 @@ using System;
 using UnityEngine;
 using SpilGames.Unity.Helpers.GameData;
 using System.Collections;
+using Spilgames.Base.Tracking;
 using SpilGames.Unity.Json;
 using SpilGames.Unity.Base.SDK;
+using SpilGames.Unity.Helpers.AssetBundles;
 using SpilGames.Unity.Helpers.IAPPackages;
 using SpilGames.Unity.Helpers.Promotions;
 using UnityEngine.Analytics;
@@ -30,7 +32,9 @@ namespace SpilGames.Unity.Base.Implementations{
         /// <typeparam name="T">The user-defined class that mirrors the shape of the data in the JSON</typeparam>
         /// <returns></returns>
         public T GetConfig<T>() where T : new() {
-            return JsonHelper.getObjectFromJson<T>(GetConfigAll());
+            
+            return JsonHelper.getObjectFromJson<T>(GetConfigAll());           
+            
         }
 
         #endregion
@@ -152,6 +156,51 @@ namespace SpilGames.Unity.Base.Implementations{
             }
         }
         
+        #endregion
+
+        #region AssetBundles
+
+        public AssetBundlesHelper GetAssetBundles() {
+            string assetBundlesString = GetAllAssetBundles();
+
+            if (assetBundlesString == null)
+                return null;
+
+            List<SpilAssetBundle> assetBundlesList = JsonHelper.getObjectFromJson<List<SpilAssetBundle>>(assetBundlesString);
+            AssetBundlesHelper helper = new AssetBundlesHelper(assetBundlesList);
+            return helper;
+        }
+
+        public delegate void AssetBundlesAvailable();
+
+        /// <summary>
+        /// This event indicates that the asset bundles configurations can be retrieved.
+        /// </summary>
+        public event AssetBundlesAvailable OnAssetBundlesAvailable;
+
+        public static void fireAssetBundlesAvailable() {
+            Debug.Log("SpilSDK-Unity fireAssetBundlesAvailable");
+            
+            if (Spil.Instance.OnAssetBundlesAvailable != null) {
+                Spil.Instance.OnAssetBundlesAvailable();
+            }
+        }
+        
+        public delegate void AssetBundlesNotAvailable();
+
+        /// <summary>
+        /// This event indicates that asset bundles configuration are not available in the SDK.
+        /// </summary>
+        public event AssetBundlesNotAvailable OnAssetBundlesNotAvailable;
+
+        public static void fireAssetBundlesNotAvailable() {
+            Debug.Log("SpilSDK-Unity fireAssetBundlesNotAvailable");
+
+            if (Spil.Instance.OnAssetBundlesNotAvailable != null) {
+                Spil.Instance.OnAssetBundlesNotAvailable();
+            }
+        }
+
         #endregion
         
         #region Events
@@ -838,7 +887,7 @@ namespace SpilGames.Unity.Base.Implementations{
         }
 
         /// <summary>
-        /// 
+        /// Triggered when the user clicks a specific ui element (WARNING: not used for all possible ui elements in a game)
         /// </summary>
         /// <param name="element"></param>
         /// <param name="type"></param>
@@ -869,7 +918,7 @@ namespace SpilGames.Unity.Base.Implementations{
         }
 
         /// <summary>
-        /// 
+        /// Triggered when a user sends a gift to another user.
         /// </summary>
         /// <param name="platform"></param>
         /// <param name="location"></param>
@@ -885,14 +934,14 @@ namespace SpilGames.Unity.Base.Implementations{
         }
 
         /// <summary>
-        /// 
+        /// Event triggered when the level timer finishes
         /// </summary>
         public void TrackLevelTimeOut() {
             SendCustomEvent("levelTimeOut");
         }
 
         /// <summary>
-        /// 
+        /// Triggered whenever user selects a choice for a dialog or runs out of time and default answer is selected
         /// </summary>
         /// <param name="name"></param>
         /// <param name="hasToken"></param>
@@ -918,7 +967,7 @@ namespace SpilGames.Unity.Base.Implementations{
         }
 
         /// <summary>
-        /// 
+        /// Triggered when the user is adding a friend in the game.
         /// </summary>
         /// <param name="friend"></param>
         /// <param name="platform"></param>
@@ -934,14 +983,14 @@ namespace SpilGames.Unity.Base.Implementations{
         }
 
         /// <summary>
-        /// 
+        /// Triggered when a game object is used in certain conditions
         /// </summary>
         public void TrackGameObjectInteraction() {
             SendCustomEvent("gameObjectInteraction");
         }
 
         /// <summary>
-        /// 
+        /// Triggered at the end of a match and indicates the result of it
         /// </summary>
         /// <param name="itemId"></param>
         /// <param name="itemType"></param>
@@ -970,7 +1019,7 @@ namespace SpilGames.Unity.Base.Implementations{
         }
 
         /// <summary>
-        /// 
+        /// Triggered when a user crafted an item.
         /// </summary>
         /// <param name="itemId"></param>
         /// <param name="itemType"></param>
@@ -986,7 +1035,7 @@ namespace SpilGames.Unity.Base.Implementations{
         }
         
         /// <summary>
-        /// 
+        /// Triggered when a user created an item.
         /// </summary>
         /// <param name="itemId"></param>
         /// <param name="itemType"></param>
@@ -1002,7 +1051,7 @@ namespace SpilGames.Unity.Base.Implementations{
         }
         
         /// <summary>
-        /// 
+        /// Triggered when the user is updating an item (e.g. equipping a character with an item).
         /// </summary>
         /// <param name="content"></param>
         /// <param name="itemId"></param>
@@ -1020,7 +1069,7 @@ namespace SpilGames.Unity.Base.Implementations{
         }
 
         /// <summary>
-        /// 
+        /// Triggered when the user is updating his deck, e.g. by adding and removing cards from it.
         /// </summary>
         /// <param name="content"></param>
         /// <param name="itemId"></param>
@@ -1041,16 +1090,9 @@ namespace SpilGames.Unity.Base.Implementations{
             
             SendCustomEvent("deckUpdated", dict);
         }
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        public void TrackIAPPayingUser() {
-            SendCustomEvent("iapPayingUser");
-        }
 
         /// <summary>
-        /// 
+        /// Triggered when a player-vs-player match ends
         /// </summary>
         /// <param name="matchId"></param>
         /// <param name="itemId"></param>
@@ -1079,7 +1121,7 @@ namespace SpilGames.Unity.Base.Implementations{
         }
         
         /// <summary>
-        /// 
+        /// Triggered when a user loses a player-vs-player match
         /// </summary>
         /// <param name="matchId"></param>
         /// <param name="itemId"></param>
@@ -1108,7 +1150,7 @@ namespace SpilGames.Unity.Base.Implementations{
         }
         
         /// <summary>
-        /// 
+        /// Triggered when a player-vs-player match ends with a tie
         /// </summary>
         /// <param name="matchId"></param>
         /// <param name="itemId"></param>
@@ -1137,7 +1179,7 @@ namespace SpilGames.Unity.Base.Implementations{
         }
         
         /// <summary>
-        /// 
+        /// Triggered when a user wins player-vs-player match
         /// </summary>
         /// <param name="matchId"></param>
         /// <param name="itemId"></param>
@@ -1166,7 +1208,7 @@ namespace SpilGames.Unity.Base.Implementations{
         }
 
         /// <summary>
-        /// 
+        /// Triggered when the user either moves or changes the state of an in-game object
         /// </summary>
         /// <param name="name"></param>
         /// <param name="reason"></param>
@@ -1212,37 +1254,20 @@ namespace SpilGames.Unity.Base.Implementations{
         }
         
         /// <summary>
-        /// 
+        /// Triggered when the user interacts with the leaderboard/league
         /// </summary>
         public void TrackPlayerLeagueChanged() {
             SendCustomEvent("playerLeagueChanged");
-        }
+        } 
 
         /// <summary>
-        /// 
+        /// Event used for tracking the state of a timed action in game, e.g. in Operate Now when the user assigns a staff member to the break room to regenerate energy,the event is fired at start and end of the regeneration 
         /// </summary>
-        public void TrackPrepareWebPayments() {
-            SendCustomEvent("prepareWebPayments");
-        }
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        public void TrackSignUpWithFacebook() {
-            SendCustomEvent("signUpWithFacebook");
-        }
-
-        public void TrackSpinnedFortune(string spinResult, string objectId = null) {
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-            dict.Add("spinResult", spinResult);
-            
-            if (objectId != null) {
-                dict.Add("objectId", objectId);
-            }
-            
-            SendCustomEvent("spinnedFortune", dict);
-        }
-
+        /// <param name="timedAction"></param>
+        /// <param name="label"></param>
+        /// <param name="timedObject"></param>
+        /// <param name="timeToFinish"></param>
+        /// <param name="effectMultiplier"></param>
         public void TrackTimedAction(string timedAction, string label = null, string timedObject = null, int timeToFinish = 0, float effectMultiplier = 0) {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("timedAction", timedAction);
@@ -1266,6 +1291,10 @@ namespace SpilGames.Unity.Base.Implementations{
             SendCustomEvent("timedAction", dict);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
         public void TrackTransitionToGame(string type) {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("type", type);
@@ -1273,6 +1302,9 @@ namespace SpilGames.Unity.Base.Implementations{
             SendCustomEvent("transitionToGame", dict);
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
         public void TrackTransitionToMenu() {
             SendCustomEvent("transitionToMenu");
         }
@@ -2575,7 +2607,7 @@ namespace SpilGames.Unity.Base.Implementations{
         /// </summary>
         /// <param name="eventName"></param>
         /// <param name="eventParams"></param>
-        protected abstract void SendCustomEvent(string eventName, Dictionary<string, object> eventParams = null);
+        public abstract void SendCustomEvent(string eventName, Dictionary<string, object> eventParams = null);
 
         #region Init
 
@@ -2911,6 +2943,12 @@ namespace SpilGames.Unity.Base.Implementations{
         public abstract void ResetData();
 
         public abstract void ShowNativeDialog(string title, string message, string buttonText);
+
+        #region AssetBundles
+
+        public abstract string GetAllAssetBundles();
+
+        #endregion
 
         #endregion
     }

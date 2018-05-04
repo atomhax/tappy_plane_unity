@@ -788,6 +788,14 @@ namespace SpilGames.Unity {
         public void TieredEventsError(string data) {
             SpilUnityImplementationBase.fireTieredEventsError(data);
         }
+
+        public void AssetBundlesAvailable() {
+            
+        }
+
+        public void AssetBundlesNotAvailabl() {
+            
+        }
         
 #if UNITY_ANDROID
         /// <summary>
