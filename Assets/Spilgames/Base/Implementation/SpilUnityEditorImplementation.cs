@@ -678,11 +678,10 @@ namespace SpilGames.Unity.Base.Implementations {
         #region Server Time
 
         public override void RequestServerTime() {
-            long currentTime =
-                (long) (TimeZoneInfo.ConvertTimeToUtc(DateTime.Now) -
-                        new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc)).TotalMilliseconds;
-            string time = currentTime.ToString();
-            fireServerTimeRequestSuccess(time);
+            SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
+            spilEvent.eventName = "requestServerTime";
+
+            spilEvent.Send();
         }
 
         #endregion

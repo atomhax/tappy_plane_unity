@@ -129,6 +129,7 @@
     <Compile Include="Assets\Spilgames\Base\UnityEditor\Managers\PrivacyPolicyManager.cs" />
     <Compile Include="Assets\Spilgames\Base\UnityEditor\Managers\PromotionsManager.cs" />
     <Compile Include="Assets\Spilgames\Base\UnityEditor\Managers\RewardManager.cs" />
+    <Compile Include="Assets\Spilgames\Base\UnityEditor\Managers\ServerDataManager.cs" />
     <Compile Include="Assets\Spilgames\Base\UnityEditor\Managers\SocialLoginManager.cs" />
     <Compile Include="Assets\Spilgames\Base\UnityEditor\Managers\TieredEventManager.cs" />
     <Compile Include="Assets\Spilgames\Base\UnityEditor\Managers\UserDataManager.cs" />
