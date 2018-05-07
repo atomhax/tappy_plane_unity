@@ -1,4 +1,5 @@
-﻿using SpilGames.Unity.Base.Implementations;
+﻿#if UNITY_EDITOR
+using SpilGames.Unity.Base.Implementations;
 using SpilGames.Unity.Base.SDK;
 using UnityEngine;
 
@@ -27,3 +28,4 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         }
     }
 }
+#endif
