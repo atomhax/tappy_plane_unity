@@ -209,14 +209,6 @@ namespace SpilGames.Unity {
             }
         }
 
-        void OnValidate() {
-#if UNITY_EDITOR
-            if (FindObjectOfType<Spil>() != null) {
-                UnityEditor.EditorPrefs.SetBool("gdprEnabled", CheckPrivacyPolicy); 
-            }
-#endif
-        }
-
         public void Initialize() {
             Debug.Log("SpilSDK-Unity Init");
 
