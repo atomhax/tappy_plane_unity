@@ -240,7 +240,7 @@ namespace SpilGames.Unity {
                     Instance.CheckPrivacyPolicy();
                 }
             } else {
-                Instance.SpilInit(false);
+                Instance.SpilInit(false);                
             }
             
             gameObject.name = "SpilSDK";
@@ -263,7 +263,7 @@ namespace SpilGames.Unity {
 
             SpilUserIdEditor = spilUserIdEditor;
             Debug.Log("SpilSDK-Unity Using SpilUserIdEditor: " + SpilUserIdEditor);
-
+            
             BundleIdEditor = bundleIdEditor;
             if (string.IsNullOrEmpty(bundleIdEditor)) {
                 Debug.Assert(!string.IsNullOrEmpty(bundleIdEditor), "SpilSDK-Unity No BundleIdEditor set!");

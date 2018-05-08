@@ -40,7 +40,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 if (SpilUnityEditorImplementation.gData == null) {
                     throw new NotImplementedException("GameData must be initialised before calling this method.");
                 }
-
+                
                 foreach(PlayerCurrencyData currency in temp.wallet.currencies) {
                     SpilCurrencyData gameDataCurrency = SpilUnityEditorImplementation.gData.currencies.FirstOrDefault(a => a.id == currency.id);
                     if (gameDataCurrency != null) {
@@ -519,10 +519,14 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     
                     bundlePrices.Add(bundlePriceData);
                 }
-            } else {
+            } 
+
+            if (bundlePrices.Count == 0) {
                 bundlePrices = bundle.prices;
             }
 
+            bundle.prices = bundlePrices;
+            
             foreach (SpilBundlePriceData bundlePrice in bundlePrices) {
                 PlayerCurrencyData currency = GetCurrencyFromWallet(bundlePrice.currencyId);
 
