@@ -139,9 +139,9 @@ public class BundleDisplayPanelController : MonoBehaviour {
                 listOfItemsInBundle.text += "\n" + "• " + "Max: " + bundlePromotion.MaxPurchase;
             }
 
-            if (bundlePromotion.GameAsset.Count > 0) {
+            if (bundlePromotion.GameAssets.Count > 0) {
                 promoImage.gameObject.SetActive(true);
-                promoImageUrl = bundlePromotion.GameAsset[0].Value;
+                promoImageUrl = bundlePromotion.GameAssets[0].Value;
             
                 if (promoImageUrl != null) {
                     Debug.Log("Image already preloaded with path: " + promoImageUrl);
