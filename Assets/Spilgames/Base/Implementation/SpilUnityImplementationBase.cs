@@ -938,9 +938,10 @@ namespace SpilGames.Unity.Base.Implementations{
         /// <param name="isForced"></param>
         /// <param name="isTimed"></param>
         /// <param name="time"></param>
-        public void TrackDialogChosen(string name, bool hasToken, bool isPremiumChoice, bool isQuizz, bool isForced, bool isTimed, int time = 0) {
+        public void TrackDialogChosen(string name, string choice, bool hasToken, bool isPremiumChoice, bool isQuizz, bool isForced, bool isTimed, int time = 0) {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("name", name);
+            dict.Add("choice", choice);
             dict.Add("hasToken", hasToken);
             dict.Add("isPremiumChoice", isPremiumChoice);
             dict.Add("isQuizz", isQuizz);

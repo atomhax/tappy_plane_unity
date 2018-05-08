@@ -179,7 +179,6 @@ namespace SpilGames.Unity {
         }
 
 #if UNITY_EDITOR
-
         public static SpilUnityEditorImplementation Instance = new SpilUnityEditorImplementation();
 
 #elif UNITY_ANDROID
