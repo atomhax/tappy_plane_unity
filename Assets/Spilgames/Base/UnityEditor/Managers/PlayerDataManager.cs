@@ -357,7 +357,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
                 SendUpdatePlayerDataEvent(null, reason, reasonDetails, location, transactionId);
                 
-                UpdateTieredEvent(currency.id, amount, "CURRENCY");
+                //UpdateTieredEvent(currency.id, amount, "CURRENCY");
             }
             else if (Wallet.logic.Equals("SERVER")) {
             }
@@ -441,7 +441,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
             SendUpdatePlayerDataEvent(null, reason, reasonDetails, location, transactionId);
             
-            UpdateTieredEvent(item.id, amount, item.isGacha ? "GACHA" : "ITEM");
+            //UpdateTieredEvent(item.id, amount, item.isGacha ? "GACHA" : "ITEM");
         }
 
         private SpilItemData GetItemFromObjects(int itemId) {
@@ -711,9 +711,9 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             
             SendUpdatePlayerDataEvent(bundle, reason, reasonDetails, location, transactionId);
 
-            foreach (SpilBundlePriceData bundlePrice in bundlePrices) {
-                UpdateTieredEvent(bundlePrice.currencyId, -bundlePrice.value, "CURRENCY");
-            }
+//            foreach (SpilBundlePriceData bundlePrice in bundlePrices) {
+//                UpdateTieredEvent(bundlePrice.currencyId, -bundlePrice.value, "CURRENCY");
+//            }
         }
 
         private void OpenBundle(int bundleId, int amount, string reason, string reasonDetails, string location) {
