@@ -3,11 +3,12 @@ using System;
 using UnityEngine;
 using SpilGames.Unity.Helpers.GameData;
 using System.Collections;
+using SpilGames.Unity.Base.Implementations.Tracking;
 using SpilGames.Unity.Json;
 using SpilGames.Unity.Base.SDK;
+using SpilGames.Unity.Helpers.AssetBundles;
 using SpilGames.Unity.Helpers.IAPPackages;
 using SpilGames.Unity.Helpers.Promotions;
-using UnityEngine.Analytics;
 using SpilGames.Unity.Helpers.EventParams;
 
 namespace SpilGames.Unity.Base.Implementations{
@@ -30,6 +31,10 @@ namespace SpilGames.Unity.Base.Implementations{
         /// <typeparam name="T">The user-defined class that mirrors the shape of the data in the JSON</typeparam>
         /// <returns></returns>
         public T GetConfig<T>() where T : new() {
+            SpilTracking.LevelComplete("level").AddDifficulty("1").Track();
+            SpilTracking.CustomEvent("test").Track();
+            OperateNowTracking.LevelStart("level", "bla").Track();
+            
             return JsonHelper.getObjectFromJson<T>(GetConfigAll());
         }
 
@@ -153,11 +158,57 @@ namespace SpilGames.Unity.Base.Implementations{
         }
         
         #endregion
+
+        #region AssetBundles
+
+        public AssetBundlesHelper GetAssetBundles() {
+            string assetBundlesString = GetAllAssetBundles();
+
+            if (assetBundlesString == null)
+                return null;
+
+            List<SpilAssetBundle> assetBundlesList = JsonHelper.getObjectFromJson<List<SpilAssetBundle>>(assetBundlesString);
+            AssetBundlesHelper helper = new AssetBundlesHelper(assetBundlesList);
+            return helper;
+        }
+
+        public delegate void AssetBundlesAvailable();
+
+        /// <summary>
+        /// This event indicates that the asset bundles configurations can be retrieved.
+        /// </summary>
+        public event AssetBundlesAvailable OnAssetBundlesAvailable;
+
+        public static void fireAssetBundlesAvailable() {
+            Debug.Log("SpilSDK-Unity fireAssetBundlesAvailable");
+            
+            if (Spil.Instance.OnAssetBundlesAvailable != null) {
+                Spil.Instance.OnAssetBundlesAvailable();
+            }
+        }
+        
+        public delegate void AssetBundlesNotAvailable();
+
+        /// <summary>
+        /// This event indicates that asset bundles configuration are not available in the SDK.
+        /// </summary>
+        public event AssetBundlesNotAvailable OnAssetBundlesNotAvailable;
+
+        public static void fireAssetBundlesNotAvailable() {
+            Debug.Log("SpilSDK-Unity fireAssetBundlesNotAvailable");
+
+            if (Spil.Instance.OnAssetBundlesNotAvailable != null) {
+                Spil.Instance.OnAssetBundlesNotAvailable();
+            }
+        }
+
+        #endregion
         
         #region Events
 
         #region Standard Spil events
 
+        
         /// <summary>
         /// Sends the "milestoneAchieved" event to the native Spil SDK which will send a request to the back-end.
         /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
@@ -184,7 +235,7 @@ namespace SpilGames.Unity.Base.Implementations{
                 dict.Add("iteration", iteration);
             }
             
-            SendCustomEvent("milestoneAchieved", dict);
+            SendCustomEventInternal("milestoneAchieved", dict);
         }
 
         /// <summary>
@@ -220,7 +271,7 @@ namespace SpilGames.Unity.Base.Implementations{
                 dict.Add("activeBooster", new JSONObject(JsonHelper.getJSONFromObject(activeBooster)));
             }
 
-            SendCustomEvent("levelStart", dict);
+            SendCustomEventInternal("levelStart", dict);
         }
 
         /// <summary>
@@ -303,7 +354,7 @@ namespace SpilGames.Unity.Base.Implementations{
                 dict.Add("timeLeft", timeLeft);
             }
             
-            SendCustomEvent("levelComplete", dict);
+            SendCustomEventInternal("levelComplete", dict);
         }
 
         /// <summary>
@@ -383,7 +434,7 @@ namespace SpilGames.Unity.Base.Implementations{
                 dict.Add("movesLeft", movesLeft);
             }
             
-            SendCustomEvent("levelFailed", dict);
+            SendCustomEventInternal("levelFailed", dict);
         }
 
         /// <summary>
@@ -418,7 +469,7 @@ namespace SpilGames.Unity.Base.Implementations{
                 dict.Add("objectUniqueIdType", objectUniqueIdType);
             }
             
-            SendCustomEvent("levelUp", dict);
+            SendCustomEventInternal("levelUp", dict);
         }
 
         /// <summary>
@@ -440,7 +491,7 @@ namespace SpilGames.Unity.Base.Implementations{
                 dict.Add("unequippedFrom", unequippedFrom);
             }
 
-            SendCustomEvent("equip", dict);
+            SendCustomEventInternal("equip", dict);
         }
 
         /// <summary>
@@ -472,7 +523,7 @@ namespace SpilGames.Unity.Base.Implementations{
                 dict.Add("key", key);
             }
 
-            SendCustomEvent("upgrade", dict);
+            SendCustomEventInternal("upgrade", dict);
         }
 
         /// <summary>
@@ -487,7 +538,7 @@ namespace SpilGames.Unity.Base.Implementations{
             dict.Add("level", level);
             dict.Add("creatorId", creatorId);
 
-            SendCustomEvent("levelCreate", dict);
+            SendCustomEventInternal("levelCreate", dict);
         }
 
         /// <summary>
@@ -497,9 +548,8 @@ namespace SpilGames.Unity.Base.Implementations{
         /// <param name="levelId">Level identifier.</param>
         /// <param name="creatorId">Creator identifier.</param>
         /// <param name="rating">Rating.</param>
-        public void TrackLevelDownloadEvent(string levelId, string creatorId, string level, double rating = 0) {
+        public void TrackLevelDownloadEvent(string levelId, string creatorId, double rating = 0) {
             Dictionary<string, object> dict = new Dictionary<string, object>();
-            dict.Add("level", level);
             dict.Add("levelId", levelId);
             dict.Add("creatorId", creatorId);
 
@@ -507,7 +557,7 @@ namespace SpilGames.Unity.Base.Implementations{
                 dict.Add("rating", rating);
             }
 
-            SendCustomEvent("levelDownload", dict);
+            SendCustomEventInternal("levelDownload", dict);
         }
 
         /// <summary>
@@ -517,9 +567,8 @@ namespace SpilGames.Unity.Base.Implementations{
         /// <param name="levelId">Level identifier.</param>
         /// <param name="creatorId">Creator identifier.</param>
         /// <param name="rating">Rating.</param>
-        public void TrackLevelRateEvent(string levelId, string creatorId, string level, double rating = 0) {
+        public void TrackLevelRateEvent(string levelId, string creatorId, double rating = 0) {
             Dictionary<string, object> dict = new Dictionary<string, object>();
-            dict.Add("level", level);
             dict.Add("levelId", levelId);
             dict.Add("creatorId", creatorId);
 
@@ -527,7 +576,7 @@ namespace SpilGames.Unity.Base.Implementations{
                 dict.Add("rating", rating);
             }
 
-            SendCustomEvent("levelRate", dict);
+            SendCustomEventInternal("levelRate", dict);
         }
 
         /// <summary>
@@ -535,7 +584,7 @@ namespace SpilGames.Unity.Base.Implementations{
         /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
         public void TrackEndlessModeStartEvent() {
-            SendCustomEvent("endlessModeStart");
+            SendCustomEventInternal("endlessModeStart");
         }
 
         /// <summary>
@@ -544,7 +593,7 @@ namespace SpilGames.Unity.Base.Implementations{
         /// </summary>
         /// <param name="distance">Distance.</param>
         public void TrackEndlessModeEndEvent(int distance) {
-            SendCustomEvent("endlessModeEnd", new Dictionary<string, object>() {
+            SendCustomEventInternal("endlessModeEnd", new Dictionary<string, object>() {
                 {
                     "distance",
                     distance
@@ -558,7 +607,7 @@ namespace SpilGames.Unity.Base.Implementations{
         /// </summary>
         /// <param name="levelName"></param>
         public void TrackPlayerDiesEvent(string levelName) {
-            SendCustomEvent("playerDies", new Dictionary<string, object>() {
+            SendCustomEventInternal("playerDies", new Dictionary<string, object>() {
                 {
                     "level",
                     levelName
@@ -607,7 +656,7 @@ namespace SpilGames.Unity.Base.Implementations{
                 dictionary.Add("transactionId", transactionId);
             }
 
-            SendCustomEvent("updatePlayerData", dictionary);
+            SendCustomEventInternal("updatePlayerData", dictionary);
         }
 
         /// <summary>
@@ -636,7 +685,7 @@ namespace SpilGames.Unity.Base.Implementations{
                 dictionary.Add("location", location);
             }
 
-            SendCustomEvent("iapPurchased", dictionary);
+            SendCustomEventInternal("iapPurchased", dictionary);
         }
 
         /// <summary>
@@ -657,7 +706,7 @@ namespace SpilGames.Unity.Base.Implementations{
                 dictionary.Add("reason", reason);
             }
             
-            SendCustomEvent("iapRestored", dictionary);
+            SendCustomEventInternal("iapRestored", dictionary);
         }
 
         /// <summary>
@@ -681,7 +730,7 @@ namespace SpilGames.Unity.Base.Implementations{
                 dictionary.Add("reason", reason);
             }
             
-            SendCustomEvent("iapFailed", dictionary);
+            SendCustomEventInternal("iapFailed", dictionary);
         }
 
         /// <summary>
@@ -689,7 +738,7 @@ namespace SpilGames.Unity.Base.Implementations{
         /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
         public void TrackTutorialCompleteEvent() {
-            SendCustomEvent("tutorialComplete");
+            SendCustomEventInternal("tutorialComplete");
         }
 
         /// <summary>
@@ -697,7 +746,7 @@ namespace SpilGames.Unity.Base.Implementations{
         /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
         public void TrackTutorialSkippedEvent() {
-            SendCustomEvent("tutorialSkipped");
+            SendCustomEventInternal("tutorialSkipped");
         }
 
         /// <summary>
@@ -707,7 +756,7 @@ namespace SpilGames.Unity.Base.Implementations{
         /// </summary>
         /// <param name="platform">A string like ‘facebook’ or ’email’</param>
         public void TrackRegisterEvent(string platform) {
-            SendCustomEvent("register", new Dictionary<string, object>() {
+            SendCustomEventInternal("register", new Dictionary<string, object>() {
                 {
                     "platform",
                     platform
@@ -733,7 +782,7 @@ namespace SpilGames.Unity.Base.Implementations{
                 dictionary.Add("reason", reason);
             }
             
-            SendCustomEvent("share", dictionary);
+            SendCustomEventInternal("share", dictionary);
         }
 
         /// <summary>
@@ -750,7 +799,7 @@ namespace SpilGames.Unity.Base.Implementations{
                 dictionary.Add("location", location);
             }
             
-            SendCustomEvent("invite", dictionary);
+            SendCustomEventInternal("invite", dictionary);
         }
 
         /// <summary>
@@ -767,7 +816,7 @@ namespace SpilGames.Unity.Base.Implementations{
                 dict.Add("difficulty", difficulty);
             }
 
-            SendCustomEvent("levelAppeared", dict);
+            SendCustomEventInternal("levelAppeared", dict);
         }
 
         /// <summary>
@@ -784,7 +833,7 @@ namespace SpilGames.Unity.Base.Implementations{
                 dict.Add("difficulty", difficulty);
             }
 
-            SendCustomEvent("levelDiscarded", dict);
+            SendCustomEventInternal("levelDiscarded", dict);
         }
 
         /// <summary>
@@ -796,7 +845,7 @@ namespace SpilGames.Unity.Base.Implementations{
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("reason", reason);
 
-            SendCustomEvent("errorShown", dict);
+            SendCustomEventInternal("errorShown", dict);
         }
 
         /// <summary>
@@ -815,7 +864,7 @@ namespace SpilGames.Unity.Base.Implementations{
                 dict.Add("startPoint", startPoint);
             }
 
-            SendCustomEvent("timeElapLoad", dict);
+            SendCustomEventInternal("timeElapLoad", dict);
         }
 
         /// <summary>
@@ -829,7 +878,7 @@ namespace SpilGames.Unity.Base.Implementations{
             dict.Add("timeElap", timeElap);
             dict.Add("pointInGame", pointInGame);
 
-            SendCustomEvent("timeoutDetected", dict);
+            SendCustomEventInternal("timeoutDetected", dict);
         }
 
         /// <summary>
@@ -871,7 +920,7 @@ namespace SpilGames.Unity.Base.Implementations{
                 dict.Add("involvedParties", involvedParties);
             }
 
-            SendCustomEvent("objectStateChanged", dict);
+            SendCustomEventInternal("objectStateChanged", dict);
         }
 
         /// <summary>
@@ -902,7 +951,7 @@ namespace SpilGames.Unity.Base.Implementations{
                 dict.Add("grade", grade);
             }
 
-            SendCustomEvent("uiElementClicked", dict);
+            SendCustomEventInternal("uiElementClicked", dict);
         }
 
         /// <summary>
@@ -918,14 +967,14 @@ namespace SpilGames.Unity.Base.Implementations{
                 dict.Add("location", location);
             }
 
-            SendCustomEvent("sendGift", dict);
+            SendCustomEventInternal("sendGift", dict);
         }
 
         /// <summary>
         /// Triggered when the level timer finishes
         /// </summary>
         public void TrackLevelTimeOut() {
-            SendCustomEvent("levelTimeOut");
+            SendCustomEventInternal("levelTimeOut");
         }
 
         /// <summary>
@@ -952,7 +1001,7 @@ namespace SpilGames.Unity.Base.Implementations{
                 dict.Add("time", time);
             }
 
-            SendCustomEvent("dialogueChosen", dict);
+            SendCustomEventInternal("dialogueChosen", dict);
         }
 
         /// <summary>
@@ -968,14 +1017,14 @@ namespace SpilGames.Unity.Base.Implementations{
                 dict.Add("platform", platform);
             }
 
-            SendCustomEvent("friendAdded", dict);
+            SendCustomEventInternal("friendAdded", dict);
         }
 
         /// <summary>
         /// Triggered for special game object interactions
         /// </summary>
         public void TrackGameObjectInteraction() {
-            SendCustomEvent("gameObjectInteraction");
+            SendCustomEventInternal("gameObjectInteraction");
         }
 
         /// <summary>
@@ -1004,7 +1053,7 @@ namespace SpilGames.Unity.Base.Implementations{
                 dict.Add("matchId", matchId);
             }
             
-            SendCustomEvent("gameResult", dict);
+            SendCustomEventInternal("gameResult", dict);
         }
 
         /// <summary>
@@ -1020,7 +1069,7 @@ namespace SpilGames.Unity.Base.Implementations{
                 dict.Add("itemType", itemType);
             }
 
-            SendCustomEvent("itemCrafted", dict);
+            SendCustomEventInternal("itemCrafted", dict);
         }
         
         /// <summary>
@@ -1036,7 +1085,7 @@ namespace SpilGames.Unity.Base.Implementations{
                 dict.Add("itemType", itemType);
             }
 
-            SendCustomEvent("itemCreated", dict);
+            SendCustomEventInternal("itemCreated", dict);
         }
         
         /// <summary>
@@ -1054,7 +1103,7 @@ namespace SpilGames.Unity.Base.Implementations{
                 dict.Add("itemType", itemType);
             }
 
-            SendCustomEvent("itemUpdated", dict);
+            SendCustomEventInternal("itemUpdated", dict);
         }
 
         /// <summary>
@@ -1077,9 +1126,9 @@ namespace SpilGames.Unity.Base.Implementations{
                 dict.Add("label", label);
             }
             
-            SendCustomEvent("deckUpdated", dict);
+            SendCustomEventInternal("deckUpdated", dict);
         }
-
+        
         /// <summary>
         /// Triggered when a player-vs-player match ends 
         /// </summary>
@@ -1106,7 +1155,7 @@ namespace SpilGames.Unity.Base.Implementations{
                 dict.Add("label", label);
             }
             
-            SendCustomEvent("matchComplete", dict);
+            SendCustomEventInternal("matchComplete", dict);
         }
         
         /// <summary>
@@ -1135,7 +1184,7 @@ namespace SpilGames.Unity.Base.Implementations{
                 dict.Add("label", label);
             }
             
-            SendCustomEvent("matchLost", dict);
+            SendCustomEventInternal("matchLost", dict);
         }
         
         /// <summary>
@@ -1164,7 +1213,7 @@ namespace SpilGames.Unity.Base.Implementations{
                 dict.Add("label", label);
             }
             
-            SendCustomEvent("matchTie", dict);
+            SendCustomEventInternal("matchTie", dict);
         }
         
         /// <summary>
@@ -1193,7 +1242,7 @@ namespace SpilGames.Unity.Base.Implementations{
                 dict.Add("label", label);
             }
             
-            SendCustomEvent("matchWon", dict);
+            SendCustomEventInternal("matchWon", dict);
         }
 
         /// <summary>
@@ -1239,14 +1288,14 @@ namespace SpilGames.Unity.Base.Implementations{
                 dict.Add("rarity", rarity);
             }
             
-            SendCustomEvent("pawnMoved", dict);
+            SendCustomEventInternal("pawnMoved", dict);
         }
         
         /// <summary>
         /// Triggered when the user interacts with the leaderboard/league
         /// </summary>
         public void TrackPlayerLeagueChanged() {
-            SendCustomEvent("playerLeagueChanged");
+            SendCustomEventInternal("playerLeagueChanged");
         }
 
         /// <summary>
@@ -1277,7 +1326,7 @@ namespace SpilGames.Unity.Base.Implementations{
                 dict.Add("effectMultiplier", effectMultiplier);
             }
             
-            SendCustomEvent("timedAction", dict);
+            SendCustomEventInternal("timedAction", dict);
         }
 
         /// <summary>
@@ -1288,14 +1337,14 @@ namespace SpilGames.Unity.Base.Implementations{
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("type", type);
             
-            SendCustomEvent("transitionToGame", dict);
+            SendCustomEventInternal("transitionToGame", dict);
         }
         
         /// <summary>
         /// 
         /// </summary>
         public void TrackTransitionToMenu() {
-            SendCustomEvent("transitionToMenu");
+            SendCustomEventInternal("transitionToMenu");
         }
         
         #endregion
@@ -1862,22 +1911,19 @@ namespace SpilGames.Unity.Base.Implementations{
         /// <summary>
         /// This method is a convenience method for the developers to easily load a locally stored image file into a Texture2d. Loaded images will be passed back to the developer via the OnImageLoaded event.
         /// </summary>
-        public void LoadImage(MonoBehaviour gameObject, string localPath, int width = 4096, int height = 4096,
+        public void LoadImage(MonoBehaviour gameObject, string localPath, int width = 512, int height = 512,
             TextureFormat textureFormat = TextureFormat.RGB24, bool mipMap = false) {
             gameObject.StartCoroutine(getImageFromURL(localPath, width, height, textureFormat, mipMap));
         }
 
-        private IEnumerator getImageFromURL(string localPath, int width = 4096, int height = 4096,
+        private IEnumerator getImageFromURL(string localPath, int width = 512, int height = 512,
             TextureFormat textureFormat = TextureFormat.RGB24, bool mipMap = false) {
             Texture2D tex = new Texture2D(width, height, textureFormat, mipMap);
             //try to load images in this way.it should takes exactly 48MB per texture, 
             Debug.Log("Loading image texture from path: " + localPath);
             WWW www = new WWW(localPath);
             yield return www;
-
-            // calling this function with StartCoroutine solves the problem
-            //Debug.Log("Why on earth is this never called?");
-
+            
             www.LoadImageIntoTexture(tex);
             www.Dispose();
             www = null;
@@ -2591,12 +2637,11 @@ namespace SpilGames.Unity.Base.Implementations{
         #region Abstract Methods
 
         /// <summary>
-        /// Sends an event to the native Spil SDK which will send a request to the back-end.
-        /// Track an event with params 
+        /// DO NOT USE THIS METHOD!
+        /// This event is only used internally by the SDK
+        /// Please use the designated methods or the new SpilTracking API
         /// </summary>
-        /// <param name="eventName"></param>
-        /// <param name="eventParams"></param>
-        protected abstract void SendCustomEvent(string eventName, Dictionary<string, object> eventParams = null);
+        internal abstract void SendCustomEventInternal(string eventName, Dictionary<string, object> eventParams = null);
 
         #region Init
 
@@ -2646,7 +2691,7 @@ namespace SpilGames.Unity.Base.Implementations{
                 dict.Add("acceptGDPR", true);
             }
             
-            SendCustomEvent("privacyChanged", dict);
+            SendCustomEventInternal("privacyChanged", dict);
         }
         
         public abstract void SavePrivValue(int priv);
@@ -2932,6 +2977,14 @@ namespace SpilGames.Unity.Base.Implementations{
         public abstract void ResetData();
 
         public abstract void ShowNativeDialog(string title, string message, string buttonText);
+
+        #region AssetBundles
+
+        public abstract void RequestAssetBundles();
+        
+        public abstract string GetAllAssetBundles();
+
+        #endregion
 
         #endregion
     }

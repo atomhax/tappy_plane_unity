@@ -73,6 +73,9 @@ namespace SpilGames.Unity.Base.UnityEditor {
                     case "serverdata":
                         ServerDataResponse.ProcessServerTimeResponse(responseEvent);
                         break;
+                    case "assetbundles":
+                        AssetBundlesResponse.ProcessAssetBundlesResponse(responseEvent);
+                        break;
                 }
             }
             GameObject.Destroy(responseEvent);

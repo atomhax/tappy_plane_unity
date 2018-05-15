@@ -89,6 +89,7 @@ namespace SpilGames.Unity.Base.Implementations {
             AdvertisementInit();
             RequestPackages();
             RequestPromotions();
+            RequestAssetBundles();
         }
 
         internal override void CheckPrivacyPolicy() {
@@ -188,7 +189,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// </summary>
         /// <param name="eventName"></param>
         /// <param name="dict"></param>
-        protected override void SendCustomEvent(string eventName, Dictionary<string, object> dict) {
+        internal override void SendCustomEventInternal(string eventName, Dictionary<string, object> dict) {
             SpilLogging.Log("SpilSDK-Unity SendCustomEvent " + eventName);
             SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
             spilEvent.eventName = eventName;
@@ -307,6 +308,23 @@ namespace SpilGames.Unity.Base.Implementations {
         }
 
         #endregion
+
+        #region AssetBundles
+
+        public override void RequestAssetBundles() {
+            SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
+            spilEvent.eventName = "requestAssetBundles";
+
+            spilEvent.Send();
+        }
+        
+        public override string GetAllAssetBundles() {
+            return AssetBundlesManager.GetAssetBundles();
+        }
+
+        #endregion
+        
+
 
         #region Image loading
 

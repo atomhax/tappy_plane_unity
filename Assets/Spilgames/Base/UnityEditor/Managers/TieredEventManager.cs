@@ -36,6 +36,33 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
         public static TieredEventsOverview tieredEventsOverview = new TieredEventsOverview();
 
+        public static TieredEvent currentTieredEvent;
+        public static TieredEventTier currentTier;
+        
+        public static GameObject TieredEventOverlay;
+        
+        public Text tieredEventTitle;
+        public Text tieredEventTierTitle;
+        public Text tieredEventInfo;
+
+        public static string tieredEventTitleText = "";
+        public static string tieredEventTierTitleText = "";
+        public static string tiereEventInfoText = "";
+
+        void Update() {
+            if (tieredEventTitle != null && tieredEventTitle.text.Equals("")) {
+                tieredEventTitle.text = tieredEventTitleText;
+            }
+            
+            if (tieredEventTierTitle != null && tieredEventTierTitle.text.Equals("")) {
+                tieredEventTierTitle.text = tieredEventTierTitleText;
+            }
+            
+            if (tieredEventInfo != null && tieredEventInfo.text.Equals("")) {
+                tieredEventInfo.text = tiereEventInfoText;
+            }
+        }
+
         public static void RequestTieredEvents() {
             SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
             spilEvent.eventName = "requestTieredEvents";
@@ -150,7 +177,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             }
 
             SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
-            spilEvent.eventName = EventClaimTierReward;
+            spilEvent.eventName = EventShowTierProgress;
 
             spilEvent.customData.AddField(TieredEventId, tieredEventId);
             spilEvent.customData.AddField(TierEventName, tieredEventsOverview.tieredEvents[tieredEventId].name);
@@ -164,25 +191,51 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             OpenTieredEventProgressView(showProgressResponse);
         }
 
-        public static GameObject TieredEventProgress;
-
         static void OpenTieredEventProgressView(ShowProgressResponse showProgressResponse) {
-            CloseStageView();
+            currentTieredEvent = tieredEventsOverview.tieredEvents[showProgressResponse.tieredEventId];
+            currentTier = currentTieredEvent.tiers.First(a => a.id == showProgressResponse.currentTierId);
+            
+            TieredEventOverlay = (GameObject)Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/TieredEventInfo.prefab"));
+            TieredEventOverlay.SetActive(true);
+            
+            tieredEventTitleText = currentTieredEvent.name;
+            tieredEventTierTitleText = currentTier.name + " (Id: " + currentTier.id + ")";
 
-            TieredEventProgress = (GameObject)Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/TieredEventInfo.prefab"));
-            Text labelText = TieredEventProgress.transform.Find("TieredEventInfoText").gameObject.GetComponent<Text>();
-            labelText.text = JsonHelper.getJSONFromObject(showProgressResponse);
-            TieredEventProgress.SetActive(true);
+            string info = "Tier Start: " + currentTier.entityTierStart + " Tier End: " + currentTier.entityTierEnd + "\n";
+            info = info + "Current amount: " + showProgressResponse.currentAmount + "\n";
+            info = info + "Claimable tiers: " + JsonHelper.getJSONFromObject(showProgressResponse.claimableTiers) + "\n";
+            info = info + "Completed tiers: " + JsonHelper.getJSONFromObject(showProgressResponse.completedTiers) + "\n";
 
+            tiereEventInfoText = info;
+            
             SpilUnityImplementationBase.fireTieredEventProgressOpen();
         }
 
-        public void ClosePrefab() {
-            CloseStageView();
+        public void ClaimTierRewardButton() {
+            ClaimTierReward(currentTieredEvent.id, currentTier.id);
+            
+            currentTieredEvent = null;
+            currentTier = null;
+            tieredEventTitleText = "";
+            tieredEventTierTitleText = "";
+            tiereEventInfoText = "";
+            
+            Destroy(TieredEventOverlay);
+            SpilUnityImplementationBase.fireTieredEventProgressClosed();
+        }
+        
+        public void CloseTieredEventViewButton() {
+            CloseTieredEventView();
         }
 
-        public static void CloseStageView() {
-            Destroy(TieredEventProgress);
+        public static void CloseTieredEventView() {
+            currentTieredEvent = null;
+            currentTier = null;
+            tieredEventTitleText = "";
+            tieredEventTierTitleText = "";
+            tiereEventInfoText = "";
+            
+            Destroy(TieredEventOverlay);
             SpilUnityImplementationBase.fireTieredEventProgressClosed();
         }
 
@@ -209,11 +262,11 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                         break;
                     case "error":
                         SpilErrorMessage errorMessage = new SpilErrorMessage();
-                        if (response.name.Contains("claimTierReward")) {
+                        if (response.eventName.Contains("claimTierReward")) {
                             errorMessage = new SpilErrorMessage(44, "TieredEventClaimTierError", "Unable to claim the tier reward.");
-                        } else if(response.name.Contains("showTieredEventProgress")) {
+                        } else if(response.eventName.Contains("showTieredEventProgress")) {
                             errorMessage = new SpilErrorMessage(42, "TieredEventShowProgressError", "Unable to show tiered event progress.");
-                        } else if (response.name.Contains("updateTIeredEventProgress")) {
+                        } else if (response.eventName.Contains("updateTIeredEventProgress")) {
                             errorMessage = new SpilErrorMessage(43, "TieredEventUpdateProgressError", "Unable to update the tiered event progress.");
                         }
                         

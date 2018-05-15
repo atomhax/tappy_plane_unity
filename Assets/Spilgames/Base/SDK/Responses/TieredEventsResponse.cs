@@ -33,6 +33,11 @@ namespace SpilGames.Unity.Base.SDK {
 
     public class ShowProgressResponse : TieredEventProgress {
         public string url;
+        public int tieredEventId;
+        public int currentAmount;
+        public int currentTierId;
+        public List<int> completedTiers;
+        public List<int> claimableTiers;
     }
 
     public class TieredEventReward {
