@@ -24,6 +24,12 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             if (response.action.Equals("request")) {
                 if (response.data.HasField("assetBundles")) {
                     JSONObject assetBundlesJSON = response.data.GetField("assetBundles");
+
+                    if (assetBundlesJSON.list.Count == 0) {
+                        SpilUnityImplementationBase.fireAssetBundlesNotAvailable();
+                        return;
+                    }
+                    
                     for (int i = 0; i < assetBundlesJSON.Count; i++) {
                         JSONObject assetBundle = assetBundlesJSON.list[i];
                         SpilAssetBundle assetBundleData = new SpilAssetBundle();

@@ -781,11 +781,11 @@ namespace SpilGames.Unity {
         }
 
         public void AssetBundlesAvailable() {
-            
+            SpilUnityImplementationBase.fireAssetBundlesAvailable();
         }
 
         public void AssetBundlesNotAvailabl() {
-            
+            SpilUnityImplementationBase.fireAssetBundlesNotAvailable();
         }
         
 #if UNITY_ANDROID
