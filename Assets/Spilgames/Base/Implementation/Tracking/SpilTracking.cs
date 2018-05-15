@@ -5,20 +5,30 @@ using SpilGames.Unity.Helpers.EventParams;
 using SpilGames.Unity.Helpers.GameData;
 using SpilGames.Unity.Json;
 
-namespace Spilgames.Base.Tracking {
+namespace SpilGames.Unity.Base.Implementations.Tracking {
     public class SpilTracking {
-        public abstract class BaseTracking {
+        public abstract class BaseTracking{
             protected string eventName;
             protected Dictionary<string, object> parameters = new Dictionary<string, object>();
 
+            /// <summary>
+            /// Method that should be used only in extraordinary circumstances.
+            /// </summary>
+            /// <param name="key"></param>
+            /// <param name="value"></param>
+            /// <returns></returns>
             public BaseTracking AddCustomParameter(string key, object value) {
                 parameters.Add(key, value);
                 return this;
             }
             
+            /// <summary>
+            /// Method is used to track the event that has been built.
+            /// Should always be used as the last method in the API chain.
+            /// </summary>
             public void Track() {
-                Spil.Instance.SendCustomEvent(eventName, parameters);
-            }
+                Spil.Instance.SendCustomEventInternal(eventName, parameters);
+            }         
         }
 
         public class BaseCustomEvent : BaseTracking {
@@ -27,6 +37,11 @@ namespace Spilgames.Base.Tracking {
             }
         }
         
+        /// <summary>
+        /// Event that should only be used in extraordinary circumstances.
+        /// </summary>
+        /// <param name="eventName">The name of the event</param>
+        /// <returns></returns>
         public static BaseCustomEvent CustomEvent(string eventName) {
             return new BaseCustomEvent(eventName);
         }
@@ -37,33 +52,34 @@ namespace Spilgames.Base.Tracking {
                 parameters.Add("name", name);
             }
 
-            /// <param name="description"></param>
+            /// <param name="description">Description of the milestone.</param>
             public BaseMilestoneAchieved AddMilestoneDescription(string description) {
                 parameters.Add("description", description);
                 return this;
             }
             
-            /// <param name="score"></param>
+            /// <param name="score">The current score of the user when he achieved the milestone.</param>
             public BaseMilestoneAchieved AddScore(float score) {
                 parameters.Add("score", score);
                 return this;
             }
             
-            /// <param name="location"></param>
+            /// <param name="location">The location where the milestone was achieved.</param>
             public BaseMilestoneAchieved AddLocation(string location) {
                 parameters.Add("location", location);
                 return this;
             }
             
-            /// <param name="iteration"></param>
-            public BaseMilestoneAchieved AddIteration(string iteration) {
+            /// <param name="iteration">The number of times the milestone was achieved.</param>
+            public BaseMilestoneAchieved AddIteration(int iteration) {
                 parameters.Add("iteration", iteration);
                 return this;
             }
         }
         
         /// <summary>
-        /// 
+        /// Sends the "milestoneAchieved" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
         /// <param name="name"></param>
         public static BaseMilestoneAchieved MilestoneAchieved(string name) {
@@ -76,25 +92,30 @@ namespace Spilgames.Base.Tracking {
                 parameters.Add("level", level);
             }
 
-            /// <param name="difficulty"></param>
+            public BaseLevelStart AddLevelId(string levelId) {
+                parameters.Add("levelId", levelId);
+                return this;
+            }
+            
+            /// <param name="difficulty">The difficulty of the started level.</param>
             public BaseLevelStart AddDifficulty(string difficulty) {
                 parameters.Add("difficulty", difficulty);
                 return this;
             }
             
-            /// <param name="customCreated"></param>
+            /// <param name="customCreated">If set to <c>true</c> custom created.</param>
             public BaseLevelStart AddCustomCreated(float customCreated) {
                 parameters.Add("customCreated", customCreated);
                 return this;
             }
             
-            /// <param name="creatorId"></param>
+            /// <param name="creatorId">Creator identifier.</param>
             public BaseLevelStart AddCreatorId(string creatorId) {
                 parameters.Add("creatorId", creatorId);
                 return this;
             }
             
-            /// <param name="activeBooster"></param>
+            /// <param name="activeBooster">List of boosters which the user started the level.</param>
             public BaseLevelStart AddActiveBooster(List<string> activeBooster) {
                 parameters.Add("activeBooster", new JSONObject(JsonHelper.getJSONFromObject(activeBooster)));
                 return this;
@@ -102,9 +123,10 @@ namespace Spilgames.Base.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Sends the "levelStart" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
-        /// <param name="level"></param>
+        /// <param name="level">The level name.</param>
         public static BaseLevelStart LevelStart(string level) {
             return new BaseLevelStart(level);
         }
@@ -120,71 +142,85 @@ namespace Spilgames.Base.Tracking {
                 return this;
             }
 
+            /// <param name="difficulty">The difficulty of the started level.</param>
             public BaseLevelComplete AddDifficulty(string difficulty) {
                 parameters.Add("difficulty", difficulty);
                 return this;
             }
             
+            /// <param name="score">The score achieved a the end of the level.</param>
             public BaseLevelComplete AddScore(double score) {
                 parameters.Add("score", score);
                 return this;
             }
             
+            /// <param name="stars">The number of stars received at the end of the level.</param>
             public BaseLevelComplete AddStars(int stars) {
                 parameters.Add("stars", stars);
                 return this;
             }
             
+            /// <param name="speed">The speed at which the level was completed.</param>
             public BaseLevelComplete AddSpeed(string speed) {
                 parameters.Add("speed", speed);
                 return this;
             }
             
+            /// <param name="moves">The number of moves made to complete the level.</param>
             public BaseLevelComplete AddMoves(int moves) {
                 parameters.Add("moves", moves);
                 return this;
             }
             
+            /// <param name="turns">The number of turns made to complete the level.</param>
             public BaseLevelComplete AddTurns(int turns) {
                 parameters.Add("turns", turns);
                 return this;
             }       
             
+            /// <param name="customCreated">If the completed level was custome created.</param>
             public BaseLevelComplete AddCustomCreated(bool customCreated) {
                 parameters.Add("customCreated", customCreated);
                 return this;
             }
             
+            /// <param name="creatorId">The id of the creator of the level.</param>
             public BaseLevelComplete AddCreatorId(string creatorId) {
                 parameters.Add("creatorId", creatorId);
                 return this;
             }
             
+            /// <param name="objectUsed">A list of objects used for the level.</param>
             public BaseLevelComplete AddObjectUsed(List<LevelCompleteObjectUsed> objectUsed) {
                 parameters.Add("objectUsed", new JSONObject(JsonHelper.getJSONFromObject(objectUsed)));
                 return this;
             }
             
+            /// <param name="achievement">The achievemt received for completing the level.</param>
             public BaseLevelComplete AddAchievement(string achievement) {
                 parameters.Add("achievement", achievement);
                 return this;
             }
             
+            /// <param name="avgCombos">The average number of combos used for completing the level.</param>
             public BaseLevelComplete AddAvgCombos(float avgCombos) {
                 parameters.Add("difficulty", avgCombos);
                 return this;
             }
             
+            /// <param name="movesLeft">The amount of moves left after completing the level.</param>
             public BaseLevelComplete AddMovesLeft(int movesLeft) {
                 parameters.Add("movesLeft", movesLeft);
                 return this;
             }
             
+            /// <param name="rating">The rating gained for completing the level.</param>
             public BaseLevelComplete AddRating(string rating) {
                 parameters.Add("rating", rating);
                 return this;
             }
             
+            /// <param name="timeLeft">The amount of time left after completing the level.</param>
             public BaseLevelComplete AddTimeLeft(int timeLeft) {
                 parameters.Add("timeLeft", timeLeft);
                 return this;
@@ -192,9 +228,10 @@ namespace Spilgames.Base.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Sends the "levelComplete" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
-        /// <param name="level"></param>
+        /// <param name="level">The level name.</param>
         public static BaseLevelComplete LevelComplete(string level) {
             return new BaseLevelComplete(level);
         }
@@ -205,71 +242,90 @@ namespace Spilgames.Base.Tracking {
                 parameters.Add("level", level);
             }
 
+            public BaseLevelFailed AddLevelId(string levelId) {
+                parameters.Add("levelId", levelId);
+                return this;
+            }
+            
+            /// <param name="difficulty">The difficulty of the started level.</param>
             public BaseLevelFailed AddDifficulty(string difficulty) {
                 parameters.Add("difficulty", difficulty);
                 return this;
             }
             
+            /// <param name="score">The score achieved a the end of the level.</param>
             public BaseLevelFailed AddScore(double score) {
                 parameters.Add("score", score);
                 return this;
             }
             
+            /// <param name="stars">The number of stars received at the end of the level.</param>
             public BaseLevelFailed AddStars(int stars) {
                 parameters.Add("stars", stars);
                 return this;
             }
             
+            /// <param name="speed">The speed at which the level was completed.</param>
             public BaseLevelFailed AddSpeed(string speed) {
                 parameters.Add("speed", speed);
                 return this;
             }
             
+            /// <param name="moves">The number of moves made to complete the level.</param>
             public BaseLevelFailed AddMoves(int moves) {
                 parameters.Add("moves", moves);
                 return this;
             }
             
+            /// <param name="turns">The number of turns made to complete the level.</param>
             public BaseLevelFailed AddTurns(int turns) {
                 parameters.Add("turns", turns);
                 return this;
             }       
             
+            /// <param name="customCreated">If the completed level was custome created.</param>
             public BaseLevelFailed AddCustomCreated(bool customCreated) {
                 parameters.Add("customCreated", customCreated);
                 return this;
             }
             
+            /// <param name="creatorId">The id of the creator of the level.</param>
             public BaseLevelFailed AddCreatorId(string creatorId) {
                 parameters.Add("creatorId", creatorId);
                 return this;
             }
             
+            /// <param name="objectUsed">A list of objects used for the level.</param>
             public BaseLevelFailed AddObjectUsed(List<LevelCompleteObjectUsed> objectUsed) {
                 parameters.Add("objectUsed", new JSONObject(JsonHelper.getJSONFromObject(objectUsed)));
                 return this;
             }
             
+            /// <param name="achievement">The achievemt received for completing the level.</param>
             public BaseLevelFailed AddAchievement(string achievement) {
                 parameters.Add("achievement", achievement);
                 return this;
             }
             
+            /// <param name="avgCombos">The average number of combos used for completing the level.</param>
             public BaseLevelFailed AddAvgCombos(float avgCombos) {
                 parameters.Add("difficulty", avgCombos);
                 return this;
             }
             
+            /// <param name="movesLeft">The amount of moves left after completing the level.</param>
             public BaseLevelFailed AddMovesLeft(int movesLeft) {
                 parameters.Add("movesLeft", movesLeft);
                 return this;
             }
             
+            /// <param name="rating">The rating gained for completing the level.</param>
             public BaseLevelFailed AddRating(string rating) {
                 parameters.Add("rating", rating);
                 return this;
             }
             
+            /// <param name="timeLeft">The amount of time left after completing the level.</param>
             public BaseLevelFailed AddTimeLeft(int timeLeft) {
                 parameters.Add("timeLeft", timeLeft);
                 return this;
@@ -277,9 +333,10 @@ namespace Spilgames.Base.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Sends the "levelFailed" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
-        /// <param name="level"></param>
+        /// <param name="level">The level name.</param>
         public static BaseLevelFailed LevelFailed(string level) {
             return new BaseLevelFailed(level);
         }
@@ -291,26 +348,31 @@ namespace Spilgames.Base.Tracking {
                 parameters.Add("objectId", objectId);
             }
             
+            /// <param name="skillId">The identifier of the skill that has leveled up.</param>
             public BaseLevelUp AddSkillId(string skillId) {
                 parameters.Add("skillId", skillId);
                 return this;
             }
             
+            /// <param name="sourceId">ToDo</param>
             public BaseLevelUp AddSourceId(string sourceId) {
                 parameters.Add("sourceId", sourceId);
                 return this;
             }
             
+            /// <param name="sourceUniqueId">ToDo</param>
             public BaseLevelUp AddSourceUniqueId(string sourceUniqueId) {
                 parameters.Add("sourceUniqueId", sourceUniqueId);
                 return this;
             }
             
+            /// <param name="objectUniqueId">ToDo</param>
             public BaseLevelUp AddObjectUniqueId(string objectUniqueId) {
                 parameters.Add("objectUniqueId", objectUniqueId);
                 return this;
             }
             
+            /// <param name="objectUniqueIdType">ToDo</param>
             public BaseLevelUp AddObjectUniqueIdType(string objectUniqueIdType) {
                 parameters.Add("objectUniqueIdType", objectUniqueIdType);
                 return this;
@@ -318,12 +380,13 @@ namespace Spilgames.Base.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Sends the "levelUp" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
-        /// <param name="level"></param>
-        /// <param name="objectId"></param>
+        /// <param name="level">The level that has been reached by the player.</param>
+        /// <param name="objectId">The id of the leveled up object.</param>
         /// <returns></returns>
-        public static BaseLevelUp LevelFailed(string level, string objectId) {
+        public static BaseLevelUp LevelUp(string level, string objectId) {
             return new BaseLevelUp(level, objectId);
         }
 
@@ -333,11 +396,13 @@ namespace Spilgames.Base.Tracking {
                 parameters.Add("equippedItem", equippedItem);
             }
             
+            /// <param name="equippedTo">The position on which the item was equiped to.</param>
             public BaseEquip AddEquippedTo(string equippedTo) {
                 parameters.Add("equippedTo", equippedTo);
                 return this;
             }
             
+            /// <param name="unequippedFrom">The position from which the item was unequipped from.</param>
             public BaseEquip AddUnequippedFrom(string unequippedFrom) {
                 parameters.Add("unequippedFrom", unequippedFrom);
                 return this;
@@ -345,9 +410,10 @@ namespace Spilgames.Base.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Sends the "equip" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
-        /// <param name="equippedItem"></param>
+        /// <param name="equippedItem">The item that was equiped.</param>
         /// <returns></returns>
         public static BaseEquip Equip(string equippedItem) {
             return new BaseEquip(equippedItem);
@@ -360,21 +426,25 @@ namespace Spilgames.Base.Tracking {
                 parameters.Add("level", level);
             }
             
+            /// <param name="reason">The reason for which the item was upgraded.</param>
             public BaseUpgrade AddReason(string reason) {
                 parameters.Add("reason", reason);
                 return this;
             }
             
-            public BaseUpgrade AddIteration(string iteration) {
+            /// <param name="iteration">The number of iterations for the upgraded item.</param>
+            public BaseUpgrade AddIteration(int iteration) {
                 parameters.Add("iteration", iteration);
                 return this;
             }
             
+            /// <param name="achievement">The achievement gained for upgrading the item.</param>
             public BaseUpgrade AddAchievement(string achievement) {
                 parameters.Add("achievement", achievement);
                 return this;
             }
             
+            /// <param name="key">ToDo</param>
             public BaseUpgrade AddKey(string key) {
                 parameters.Add("key", key);
                 return this;
@@ -382,10 +452,11 @@ namespace Spilgames.Base.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Sends the "equip" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
-        /// <param name="upgradeId"></param>
-        /// <param name="level"></param>
+        /// <param name="upgradeId">The id of the item that has been upgraded.</param>
+        /// <param name="level">The level of the item that was upgraded</param>
         /// <returns></returns>
         public static BaseUpgrade Upgrade(string upgradeId, string level) {
             return new BaseUpgrade(upgradeId, level);
@@ -401,11 +472,12 @@ namespace Spilgames.Base.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Sends the "levelCreate" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
-        /// <param name="levelId"></param>
-        /// <param name="level"></param>
-        /// <param name="creatorId"></param>
+        /// <param name="levelId">The id of the created level.</param>
+        /// <param name="level">The name of the level crearted.</param>
+        /// <param name="creatorId">The id of the entity which created the level.</param>
         /// <returns></returns>
         public static BaseLevelCreate LevelCreate(string levelId, string level, string creatorId) {
             return new BaseLevelCreate(levelId, level, creatorId);
@@ -418,6 +490,7 @@ namespace Spilgames.Base.Tracking {
                 parameters.Add("creatorId", creatorId);
             }
             
+            /// <param name="rating">The rating of the downloaded level.</param>
             public BaseLevelDownload AddRating(double rating) {
                 parameters.Add("rating", rating);
                 return this;
@@ -425,10 +498,11 @@ namespace Spilgames.Base.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Sends the "levelDownload" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
-        /// <param name="levelId"></param>
-        /// <param name="creatorId"></param>
+        /// <param name="levelId">The id of the downloaded level.</param>
+        /// <param name="creatorId">The id of the entity which created the level.</param>
         /// <returns></returns>
         public static BaseLevelDownload LevelDownload(string levelId, string creatorId) {
             return new BaseLevelDownload(levelId, creatorId);
@@ -441,6 +515,7 @@ namespace Spilgames.Base.Tracking {
                 parameters.Add("creatorId", creatorId);
             }
             
+            /// <param name="rating">The rating given to the level.</param>
             public BaseLevelRate AddRating(double rating) {
                 parameters.Add("rating", rating);
                 return this;
@@ -448,10 +523,11 @@ namespace Spilgames.Base.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Sends the "levelRate" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
-        /// <param name="levelId"></param>
-        /// <param name="creatorId"></param>
+        /// <param name="levelId">The id of the rated level.</param>
+        /// <param name="creatorId">The id of the entity which created the level.</param>
         /// <returns></returns>
         public static BaseLevelRate LevelRate(string levelId, string creatorId) {
             return new BaseLevelRate(levelId, creatorId);
@@ -464,7 +540,8 @@ namespace Spilgames.Base.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Sends the "endlessModeStart" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
         /// <returns></returns>
         public static BaseEndlessModeStart EndlessModeStart() {
@@ -479,9 +556,10 @@ namespace Spilgames.Base.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Sends the "endlessModeEnd" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
-        /// <param name="distance"></param>
+        /// <param name="distance">The distance that was covered by the user.</param>
         /// <returns></returns>
         public static BaseEndlessModeEnd EndlessModeEnd(int distance) {
             return new BaseEndlessModeEnd(distance);
@@ -495,9 +573,10 @@ namespace Spilgames.Base.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Sends the "playerDies" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
-        /// <param name="level"></param>
+        /// <param name="level">The level in which the player died.</param>
         /// <returns></returns>
         public static BasePlayerDies PlayerDies(string level) {
             return new BasePlayerDies(level);

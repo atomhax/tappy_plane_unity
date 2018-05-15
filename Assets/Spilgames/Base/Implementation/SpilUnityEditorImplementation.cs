@@ -189,7 +189,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// </summary>
         /// <param name="eventName"></param>
         /// <param name="dict"></param>
-        public override void SendCustomEvent(string eventName, Dictionary<string, object> dict) {
+        internal override void SendCustomEventInternal(string eventName, Dictionary<string, object> dict) {
             SpilLogging.Log("SpilSDK-Unity SendCustomEvent " + eventName);
             SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
             spilEvent.eventName = eventName;
@@ -311,7 +311,7 @@ namespace SpilGames.Unity.Base.Implementations {
 
         #region AssetBundles
 
-        private void RequestAssetBundles() {
+        public override void RequestAssetBundles() {
             SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
             spilEvent.eventName = "requestAssetBundles";
 

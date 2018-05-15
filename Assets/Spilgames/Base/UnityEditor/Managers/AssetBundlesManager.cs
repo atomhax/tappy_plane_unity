@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#if UNITY_EDITOR
+using System.Collections.Generic;
 using SpilGames.Unity.Base.Implementations;
 using SpilGames.Unity.Base.SDK;
 using SpilGames.Unity.Helpers.IAPPackages;
@@ -45,9 +46,11 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                         
                         AssetBundlesManager.AssetBundlesData.Add(assetBundleData);
                     }
-                    SpilUnityImplementationBase.fireAssetBundlesAvailable();();
+                    SpilUnityImplementationBase.fireAssetBundlesAvailable();
                 }
             }
         }
     }
 }
+
+#endif

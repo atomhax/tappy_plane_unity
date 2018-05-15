@@ -1,7 +1,7 @@
 ManifestFileVersion: 0
-CRC: 2922431737
+CRC: 3678873649
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: goldplane
+      Name: goldplane.goldplane
       Dependencies: {}

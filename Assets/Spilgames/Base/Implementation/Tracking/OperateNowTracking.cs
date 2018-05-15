@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Spilgames.Base.Tracking {
+namespace SpilGames.Unity.Base.Implementations.Tracking {
     public class OperateNowTracking : SpilTracking {
         public new class BaseLevelStart : SpilTracking.BaseLevelStart {
             public BaseLevelStart(string level) : base(level) {

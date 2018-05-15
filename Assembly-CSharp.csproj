@@ -108,6 +108,9 @@
     <Compile Include="Assets\Spilgames\Base\Implementation\SpiliOSUnityImplementation.cs" />
     <Compile Include="Assets\Spilgames\Base\Implementation\SpilUnityEditorImplementation.cs" />
     <Compile Include="Assets\Spilgames\Base\Implementation\SpilUnityImplementationBase.cs" />
+    <Compile Include="Assets\Spilgames\Base\Implementation\Tracking\EventParams.cs" />
+    <Compile Include="Assets\Spilgames\Base\Implementation\Tracking\OperateNowTracking.cs" />
+    <Compile Include="Assets\Spilgames\Base\Implementation\Tracking\SpilTracking.cs" />
     <Compile Include="Assets\Spilgames\Base\SDK\Responses\AdvertisementResponse.cs" />
     <Compile Include="Assets\Spilgames\Base\SDK\Responses\AssetBundlesResponse.cs" />
     <Compile Include="Assets\Spilgames\Base\SDK\Responses\GameDataResponse.cs" />
@@ -119,9 +122,6 @@
     <Compile Include="Assets\Spilgames\Base\SDK\Responses\RewardResponse.cs" />
     <Compile Include="Assets\Spilgames\Base\SDK\Responses\TieredEventsResponse.cs" />
     <Compile Include="Assets\Spilgames\Base\SDK\SpilResponse.cs" />
-    <Compile Include="Assets\Spilgames\Base\Tracking\EventParams.cs" />
-    <Compile Include="Assets\Spilgames\Base\Tracking\OperateNowTracking.cs" />
-    <Compile Include="Assets\Spilgames\Base\Tracking\SpilTracking.cs" />
     <Compile Include="Assets\Spilgames\Base\UnityEditor\Managers\AdvertisementManager.cs" />
     <Compile Include="Assets\Spilgames\Base\UnityEditor\Managers\AssetBundlesManager.cs" />
     <Compile Include="Assets\Spilgames\Base\UnityEditor\Managers\ConfigManager.cs" />

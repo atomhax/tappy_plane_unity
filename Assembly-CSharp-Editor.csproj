@@ -53,6 +53,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Editor\CreateAssetBundles.cs" />
     <Compile Include="Assets\Editor\RichardsCuts.cs" />
     <Compile Include="Assets\Fabric\Editor\CommonBuild\FabricCommonBuild.cs" />
     <Compile Include="Assets\Fabric\Editor\FabricSetup.cs" />

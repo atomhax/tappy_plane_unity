@@ -23,8 +23,6 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             if (response.action.Equals("serverTime")) {
                 SpilUnityImplementationBase.fireServerTimeRequestSuccess(serverTime.ToString());
             }
-            
-            SpilUnityImplementationBase.fireConfigUpdatedEvent();
         }
     }
 }
