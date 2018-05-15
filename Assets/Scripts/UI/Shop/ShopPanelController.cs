@@ -193,7 +193,7 @@ public class ShopPanelController : MonoBehaviour {
     }
 
     public void ShowHelpCenter() {
-        Spil.Instance.ShowHelpCenterWebview(null);
+        Spil.Instance.ShowHelpCenterWebview("https://support.spilgames.com/hc/en-us");
     }
 
     public void ShowPrivacyPolicySettings() {

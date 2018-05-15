@@ -699,7 +699,7 @@ namespace SpilGames.Unity.Base.Implementations
         [DllImport("__Internal")]
         private static extern void requestDailyBonusNative();
 
-        public override void RequestSplashScreen(string type = null)
+        public override void RequestSplashScreen(string type)
         {
             requestSplashScreenNative(type);
         }

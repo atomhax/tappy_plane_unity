@@ -1,0 +1,7 @@
+ManifestFileVersion: 0
+CRC: 2922431737
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: goldplane
+      Dependencies: {}

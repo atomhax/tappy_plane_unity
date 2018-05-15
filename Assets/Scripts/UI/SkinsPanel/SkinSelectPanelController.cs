@@ -22,7 +22,7 @@ public class SkinSelectPanelController : MonoBehaviour {
 		EventSystem eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
 		eventSystem.firstSelectedGameObject = GameObject.Find("BackButtonSkin");
 		#endif
-		Spil.Instance.RequestSplashScreen ();
+		Spil.Instance.RequestSplashScreen ("shop");
 		
 		Spil.Instance.OnSplashScreenOpenShop -= OnSplashScreenOpenShop;
 		Spil.Instance.OnSplashScreenOpenShop += OnSplashScreenOpenShop;

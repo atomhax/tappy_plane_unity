@@ -355,10 +355,12 @@ public class GameController : MonoBehaviour
     }
 
     public void UpdateSkins() {
-        foreach (SpriteRenderer spriteRenderer in backgroundSpriteRenderes) {
-            spriteRenderer.sprite = backgroundSprites[PlayerPrefs.GetInt("Background", 0)];
+        if (backgroundSpriteRenderes != null) {
+            foreach (SpriteRenderer spriteRenderer in backgroundSpriteRenderes) {
+                spriteRenderer.sprite = backgroundSprites[PlayerPrefs.GetInt("Background", 0)];
+            }
+            player.SetupPlayerSkin();
         }
-        player.SetupPlayerSkin();
     }
 
 

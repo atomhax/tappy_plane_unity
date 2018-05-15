@@ -53,7 +53,7 @@ namespace SpilGames.Unity.Helpers.Promotions {
 
         public List<PriceOverride> PriceOverride;
 
-        public List<GameAsset> GameAsset;
+        public List<GameAsset> GameAssets;
 
         public Promotion(int id, string name, int amountPurchased, int maxPurchase, string label, long startDate, long endDate, List<SpilPromotionAffectedEntity> affectedEntities, List<SpilPromotionExtraEntity> extraEntities, List<SpilPromotionPriceOverride> priceOverrides, List<SpilPromotionGameAsset> gameAssets) {
             this.id = id;
@@ -79,9 +79,9 @@ namespace SpilGames.Unity.Helpers.Promotions {
                 PriceOverride.Add(new PriceOverride(priceOverride.id, priceOverride.type, priceOverride.amount));
             }
             
-            GameAsset = new List<GameAsset>();
+            GameAssets = new List<GameAsset>();
             foreach (SpilPromotionGameAsset gameAsset in gameAssets) {
-                GameAsset.Add(new GameAsset(gameAsset.name, gameAsset.locale, gameAsset.position, gameAsset.type, gameAsset.value));
+                GameAssets.Add(new GameAsset(gameAsset.name, gameAsset.locale, gameAsset.position, gameAsset.type, gameAsset.value));
             }
         }
 

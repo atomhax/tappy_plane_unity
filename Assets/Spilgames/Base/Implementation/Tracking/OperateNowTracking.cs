@@ -1,6 +1,12 @@
-﻿namespace Spilgames.Base.Tracking {
+﻿using System;
+
+namespace Spilgames.Base.Tracking {
     public class OperateNowTracking : SpilTracking {
         public new class BaseLevelStart : SpilTracking.BaseLevelStart {
+            public BaseLevelStart(string level) : base(level) {
+                throw new NotImplementedException("Do not use!");
+            }
+            
             public BaseLevelStart(string level, string hero) : base(level) {
                 parameters.Add("hero", hero);
             }

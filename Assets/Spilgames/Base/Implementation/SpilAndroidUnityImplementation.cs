@@ -814,7 +814,7 @@ namespace SpilGames.Unity.Base.Implementations {
             CallNativeMethod("requestDailyBonus");
         }
 
-        public override void RequestSplashScreen(string type = null) {
+        public override void RequestSplashScreen(string type) {
             CallNativeMethod("requestSplashScreen", new object[] {
                 type,
             }, true);

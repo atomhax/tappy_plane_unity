@@ -3,10 +3,8 @@ using System;
 using UnityEngine;
 using SpilGames.Unity.Helpers.GameData;
 using System.Collections;
-using Spilgames.Base.Tracking;
 using SpilGames.Unity.Json;
 using SpilGames.Unity.Base.SDK;
-using SpilGames.Unity.Helpers.AssetBundles;
 using SpilGames.Unity.Helpers.IAPPackages;
 using SpilGames.Unity.Helpers.Promotions;
 using UnityEngine.Analytics;
@@ -32,9 +30,7 @@ namespace SpilGames.Unity.Base.Implementations{
         /// <typeparam name="T">The user-defined class that mirrors the shape of the data in the JSON</typeparam>
         /// <returns></returns>
         public T GetConfig<T>() where T : new() {
-            
-            return JsonHelper.getObjectFromJson<T>(GetConfigAll());           
-            
+            return JsonHelper.getObjectFromJson<T>(GetConfigAll());
         }
 
         #endregion
@@ -244,7 +240,7 @@ namespace SpilGames.Unity.Base.Implementations{
         /// <param name="difficulty">The difficulty of the started level.</param>
         /// <param name="customCreated">If set to <c>true</c> custom created.</param>
         /// <param name="creatorId">Creator identifier.</param>
-        public void TrackLevelStartEvent(string levelName, string difficulty = null, bool customCreated = false,
+        public void TrackLevelStartEvent(string levelName, string difficulty = null, int score = 0, bool customCreated = false,
             string creatorId = null, List<String> activeBooster = null) {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("level", levelName);
@@ -253,6 +249,10 @@ namespace SpilGames.Unity.Base.Implementations{
                 dict.Add("difficulty", difficulty);
             }
 
+            if (score != 0) {
+                dict.Add("score", score);
+            }
+            
             if (customCreated) {
                 dict.Add("customCreated", customCreated);
             }
@@ -496,7 +496,7 @@ namespace SpilGames.Unity.Base.Implementations{
         /// <param name="level">Level.</param>
         /// <param name="reason">Reason.</param>
         /// <param name="iteration">Iteration.</param>
-        public void TrackUpgradeEvent(string upgradeId, string level, string reason = null, int iteration = 0) {
+        public void TrackUpgradeEvent(string upgradeId, string level, string reason = null, int iteration = 0, string achievement = null, string key = null) {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("upgradeId", upgradeId);
             dict.Add("level", level);
@@ -507,6 +507,14 @@ namespace SpilGames.Unity.Base.Implementations{
 
             if (iteration != 0) {
                 dict.Add("iteration", iteration);
+            }
+            
+            if (achievement != null) {
+                dict.Add("achievement", achievement);
+            }
+
+            if (key != null) {
+                dict.Add("key", key);
             }
 
             SendCustomEvent("upgrade", dict);
@@ -756,13 +764,19 @@ namespace SpilGames.Unity.Base.Implementations{
         /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
         /// <param name="platform">A string like ‘facebook’ or ’email’</param>
-        public void TrackShareEvent(string platform) {
-            SendCustomEvent("share", new Dictionary<string, object>() {
-                {
-                    "platform",
-                    platform
-                }
-            });
+        public void TrackShareEvent(string platform, string location = null, string reason = null) {
+            Dictionary<string, object> dictionary = new Dictionary<string, object>();
+            dictionary.Add("platform", platform);
+
+            if (location != null) {
+                dictionary.Add("location", location);
+            }     
+            
+            if (reason != null) {
+                dictionary.Add("reason", reason);
+            }
+            
+            SendCustomEvent("share", dictionary);
         }
 
         /// <summary>
@@ -869,25 +883,42 @@ namespace SpilGames.Unity.Base.Implementations{
         /// <param name="status">The new status the object is in.</param>
         /// <param name="reason">The reason for the state change.</param>
         /// <param name="changedProperties">The property/properties which have changed.</param>
-        public void TrackObjectStateChanged(string changedObject, string status, string reason = null,
-            string changedProperties = null) {
+        public void TrackObjectStateChanged(string changedObject, string status, string reason,
+            string changedProperties = null, string optionConditions = null, string situation = null, string allChoiceResults = null, string allSelectedChoices = null, string involvedParties = null) {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("changedObject", changedObject);
             dict.Add("status", status);
-
-            if (reason != null) {
-                dict.Add("reason", reason);
-            }
+            dict.Add("reason", reason);
 
             if (changedProperties != null) {
                 dict.Add("changedProperties", changedProperties);
+            }
+            
+            if (optionConditions != null) {
+                dict.Add("optionConditions", optionConditions);
+            }
+            
+            if (situation != null) {
+                dict.Add("situation", situation);
+            }
+            
+            if (allChoiceResults != null) {
+                dict.Add("allChoiceResults", allChoiceResults);
+            }
+            
+            if (allSelectedChoices != null) {
+                dict.Add("allSelectedChoices", allSelectedChoices);
+            }
+            
+            if (involvedParties != null) {
+                dict.Add("involvedParties", involvedParties);
             }
 
             SendCustomEvent("objectStateChanged", dict);
         }
 
         /// <summary>
-        /// Triggered when the user clicks a specific ui element (WARNING: not used for all possible ui elements in a game)
+        /// Triggered when the user clicks a specific ui element
         /// </summary>
         /// <param name="element"></param>
         /// <param name="type"></param>
@@ -918,7 +949,7 @@ namespace SpilGames.Unity.Base.Implementations{
         }
 
         /// <summary>
-        /// Triggered when a user sends a gift to another user.
+        /// Triggered when a user sends a gift
         /// </summary>
         /// <param name="platform"></param>
         /// <param name="location"></param>
@@ -934,14 +965,14 @@ namespace SpilGames.Unity.Base.Implementations{
         }
 
         /// <summary>
-        /// Event triggered when the level timer finishes
+        /// Triggered when the level timer finishes
         /// </summary>
         public void TrackLevelTimeOut() {
             SendCustomEvent("levelTimeOut");
         }
 
         /// <summary>
-        /// Triggered whenever user selects a choice for a dialog or runs out of time and default answer is selected
+        /// Triggered whenever user selects an choice for a dialog,or runs out of time and default answer is selected	
         /// </summary>
         /// <param name="name"></param>
         /// <param name="hasToken"></param>
@@ -950,9 +981,10 @@ namespace SpilGames.Unity.Base.Implementations{
         /// <param name="isForced"></param>
         /// <param name="isTimed"></param>
         /// <param name="time"></param>
-        public void TrackDialogChosen(string name, bool hasToken, bool isPremiumChoice, bool isQuizz, bool isForced, bool isTimed, int time = 0) {
+        public void TrackDialogChosen(string name, string choice, bool hasToken, bool isPremiumChoice, bool isQuizz, bool isForced, bool isTimed, int time = 0) {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("name", name);
+            dict.Add("choice", choice);
             dict.Add("hasToken", hasToken);
             dict.Add("isPremiumChoice", isPremiumChoice);
             dict.Add("isQuizz", isQuizz);
@@ -983,7 +1015,7 @@ namespace SpilGames.Unity.Base.Implementations{
         }
 
         /// <summary>
-        /// Triggered when a game object is used in certain conditions
+        /// Triggered for special game object interactions
         /// </summary>
         public void TrackGameObjectInteraction() {
             SendCustomEvent("gameObjectInteraction");
@@ -1019,7 +1051,7 @@ namespace SpilGames.Unity.Base.Implementations{
         }
 
         /// <summary>
-        /// Triggered when a user crafted an item.
+        /// Triggered when a user is crafting an item.
         /// </summary>
         /// <param name="itemId"></param>
         /// <param name="itemType"></param>
@@ -1035,7 +1067,7 @@ namespace SpilGames.Unity.Base.Implementations{
         }
         
         /// <summary>
-        /// Triggered when a user created an item.
+        /// Triggered when a user creates an item.
         /// </summary>
         /// <param name="itemId"></param>
         /// <param name="itemType"></param>
@@ -1090,9 +1122,9 @@ namespace SpilGames.Unity.Base.Implementations{
             
             SendCustomEvent("deckUpdated", dict);
         }
-
+        
         /// <summary>
-        /// Triggered when a player-vs-player match ends
+        /// Triggered when a player-vs-player match ends 
         /// </summary>
         /// <param name="matchId"></param>
         /// <param name="itemId"></param>
@@ -1179,7 +1211,7 @@ namespace SpilGames.Unity.Base.Implementations{
         }
         
         /// <summary>
-        /// Triggered when a user wins player-vs-player match
+        /// Triggered when a user wins player-vs-player match 
         /// </summary>
         /// <param name="matchId"></param>
         /// <param name="itemId"></param>
@@ -1258,10 +1290,10 @@ namespace SpilGames.Unity.Base.Implementations{
         /// </summary>
         public void TrackPlayerLeagueChanged() {
             SendCustomEvent("playerLeagueChanged");
-        } 
+        }
 
         /// <summary>
-        /// Event used for tracking the state of a timed action in game, e.g. in Operate Now when the user assigns a staff member to the break room to regenerate energy,the event is fired at start and end of the regeneration 
+        /// Event used for tracking the state of a timed action in game, e.g. in Operate Now when the user assigns a staff member to the break room to regenerate energy,the event is fired at start and end of the regeneration
         /// </summary>
         /// <param name="timedAction"></param>
         /// <param name="label"></param>
@@ -2607,7 +2639,7 @@ namespace SpilGames.Unity.Base.Implementations{
         /// </summary>
         /// <param name="eventName"></param>
         /// <param name="eventParams"></param>
-        public abstract void SendCustomEvent(string eventName, Dictionary<string, object> eventParams = null);
+        protected abstract void SendCustomEvent(string eventName, Dictionary<string, object> eventParams = null);
 
         #region Init
 
@@ -2761,7 +2793,7 @@ namespace SpilGames.Unity.Base.Implementations{
         /// <summary>
         /// Requests the splashscreen.
         /// </summary>
-        public abstract void RequestSplashScreen(string type = null);
+        public abstract void RequestSplashScreen(string type);
 
         #endregion
 

@@ -139,7 +139,6 @@
 -(void)tieredEventsAvailable;
 -(void)tieredEventsNotAvailable;
 -(void)tieredEventUpdated:(nonnull TieredEventProgress*)tieredEventProgress;
--(void)tieredEventRewardsClaimed:(nonnull NSArray*)rewardsGivenPerTier progress:(nonnull TieredEventProgress*)progress;
 -(void)tieredEventProgressOpen;
 -(void)tieredEventProgressClosed;
 -(void)tieredEventsError:(nonnull NSString*)error;
