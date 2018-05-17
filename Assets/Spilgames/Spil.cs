@@ -179,7 +179,6 @@ namespace SpilGames.Unity {
         }
 
 #if UNITY_EDITOR
-
         public static SpilUnityEditorImplementation Instance = new SpilUnityEditorImplementation();
 
 #elif UNITY_ANDROID
@@ -207,14 +206,6 @@ namespace SpilGames.Unity {
             if (initializeOnAwake) {
                 Initialize();
             }
-        }
-
-        void OnValidate() {
-#if UNITY_EDITOR
-            if (FindObjectOfType<Spil>() != null) {
-                UnityEditor.EditorPrefs.SetBool("gdprEnabled", CheckPrivacyPolicy); 
-            }
-#endif
         }
 
         public void Initialize() {
@@ -249,7 +240,7 @@ namespace SpilGames.Unity {
                     Instance.CheckPrivacyPolicy();
                 }
             } else {
-                Instance.SpilInit(false);
+                Instance.SpilInit(false);                
             }
             
             gameObject.name = "SpilSDK";
@@ -272,7 +263,7 @@ namespace SpilGames.Unity {
 
             SpilUserIdEditor = spilUserIdEditor;
             Debug.Log("SpilSDK-Unity Using SpilUserIdEditor: " + SpilUserIdEditor);
-
+            
             BundleIdEditor = bundleIdEditor;
             if (string.IsNullOrEmpty(bundleIdEditor)) {
                 Debug.Assert(!string.IsNullOrEmpty(bundleIdEditor), "SpilSDK-Unity No BundleIdEditor set!");
@@ -787,6 +778,14 @@ namespace SpilGames.Unity {
         
         public void TieredEventsError(string data) {
             SpilUnityImplementationBase.fireTieredEventsError(data);
+        }
+
+        public void AssetBundlesAvailable() {
+            SpilUnityImplementationBase.fireAssetBundlesAvailable();
+        }
+
+        public void AssetBundlesNotAvailabl() {
+            SpilUnityImplementationBase.fireAssetBundlesNotAvailable();
         }
         
 #if UNITY_ANDROID

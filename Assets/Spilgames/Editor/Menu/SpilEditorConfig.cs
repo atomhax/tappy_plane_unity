@@ -483,6 +483,8 @@ public class SpilEditorConfig : EditorWindow {
 
         if (type.Equals("requestConfig")) {
             JSONObject combined = new JSONObject();
+            JSONObject tempAndroid = new JSONObject();
+            JSONObject tempIOS = new JSONObject();
 
             WWWForm form = GetFormData("android");
             form.AddField("name", type);
@@ -500,7 +502,7 @@ public class SpilEditorConfig : EditorWindow {
                 retrievalError = true;
             }
             else {
-                combined = new JSONObject(request.text).GetField("data");
+                tempAndroid = new JSONObject(request.text).GetField("data");
             }
 
             WWWForm form2 = GetFormData("ios");
@@ -517,12 +519,27 @@ public class SpilEditorConfig : EditorWindow {
                 retrievalError = true;
             }
             else {
+                tempIOS = new JSONObject(request2.text).GetField("data");
+            }
+
+            if (EditorUserBuildSettings.activeBuildTarget.ToString().Trim().ToLower().Equals("android")) {
+                combined = tempAndroid;
+                
                 if (combined.HasField("iosSdkConfig")) {
                     combined.RemoveField("iosSdkConfig");
                 }
                 combined.AddField("iosSdkConfig",
-                    new JSONObject(request2.text).GetField("data").GetField("iosSdkConfig"));
+                    tempIOS.GetField("iosSdkConfig"));
+            } else if (EditorUserBuildSettings.activeBuildTarget.ToString().Trim().ToLower().Equals("ios")) {
+                combined = tempIOS;
+                
+                if (combined.HasField("androidSdkConfig")) {
+                    combined.RemoveField("androidSdkConfig");
+                }
+                combined.AddField("androidSdkConfig",
+                    tempAndroid.GetField("androidSdkConfig"));
             }
+            
             gameData = combined.Print(false);
         }
         else {

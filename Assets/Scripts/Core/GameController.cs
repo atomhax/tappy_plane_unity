@@ -69,6 +69,7 @@ public class GameController : MonoBehaviour
         moreGamesButton,
         dailyBonusButton,
         liveEventButton,
+        tieredEventButton,
         FBLoginButton,
         FBLogoutButton,
         FBShareButton;
@@ -143,7 +144,25 @@ public class GameController : MonoBehaviour
 
         Spil.Instance.OnLiveEventCompleted -= OnLiveEventCompleted;
         Spil.Instance.OnLiveEventCompleted += OnLiveEventCompleted;
+        
+        Spil.Instance.OnTieredEventsAvailable -= OnTieredEventsAvailable;
+        Spil.Instance.OnTieredEventsAvailable += OnTieredEventsAvailable;
+        
+        Spil.Instance.OnTieredEventsNotAvailable -= OnTieredEventsNotAvailable;
+        Spil.Instance.OnTieredEventsNotAvailable += OnTieredEventsNotAvailable;
 
+        Spil.Instance.OnTieredEventUpdated -= OnTieredEventUpdated;
+        Spil.Instance.OnTieredEventUpdated += OnTieredEventUpdated;
+        
+        Spil.Instance.OnTieredEventProgressOpen -= OnTieredEventProgressOpen;
+        Spil.Instance.OnTieredEventProgressOpen += OnTieredEventProgressOpen;
+        
+        Spil.Instance.OnTieredEventProgressClosed -= OnTieredEventProgressClosed;
+        Spil.Instance.OnTieredEventProgressClosed += OnTieredEventProgressClosed;
+        
+        Spil.Instance.OnTieredEventsError -= OnTieredEventsError;
+        Spil.Instance.OnTieredEventsError += OnTieredEventsError;
+        
 //		Spil.Instance.PreloadItemAndBundleImages();
 
         Spil.Instance.OnRewardTokenReceived -= OnRewardTokenReceived;
@@ -225,8 +244,8 @@ public class GameController : MonoBehaviour
             InitComponents();
         }
     }
-
-#if UNITY_TVOS
+    
+    #if UNITY_TVOS
 	void FixedUpdate ()
 	{
 		if (player.idleMode) 
@@ -267,6 +286,7 @@ public class GameController : MonoBehaviour
        
         Spil.Instance.RequestServerTime();
         Spil.Instance.RequestLiveEvent();
+        Spil.Instance.RequestTieredEvents();
         SavePrivateGameState();
         RequestMoreApps();
         
@@ -355,10 +375,12 @@ public class GameController : MonoBehaviour
     }
 
     public void UpdateSkins() {
-        foreach (SpriteRenderer spriteRenderer in backgroundSpriteRenderes) {
-            spriteRenderer.sprite = backgroundSprites[PlayerPrefs.GetInt("Background", 0)];
+        if (backgroundSpriteRenderes != null) {
+            foreach (SpriteRenderer spriteRenderer in backgroundSpriteRenderes) {
+                spriteRenderer.sprite = backgroundSprites[PlayerPrefs.GetInt("Background", 0)];
+            }
+            player.SetupPlayerSkin();
         }
-        player.SetupPlayerSkin();
     }
 
 
@@ -831,6 +853,37 @@ public class GameController : MonoBehaviour
         overlayEnabled = false;
     }
 
+    private void OnTieredEventsAvailable() {
+        Debug.Log("Tiered Event Available");
+        tieredEventButton.GetComponentInChildren<Text>().text = Spil.Instance.GetAllTieredEvents()[0].name;
+        tieredEventButton.SetActive(true);
+    }
+    
+    private void OnTieredEventsNotAvailable() {
+        Debug.Log("Tiered Event Not Available");
+        tieredEventButton.SetActive(false);
+    }
+    
+    private void OnTieredEventProgressOpen() {
+        overlayEnabled = true;
+    }
+    
+    private void OnTieredEventProgressClosed() {
+        overlayEnabled = false;
+    }
+    
+    private void OnTieredEventUpdated(TieredEventProgress tieredprogress) {
+        Debug.Log("Update for Tiered Event: " + JsonHelper.getJSONFromObject(tieredprogress));
+    }
+
+    private void OnTieredEventsError(SpilErrorMessage error) {
+        Debug.Log("Error for Tiered Event: " + JsonHelper.getJSONFromObject(error));
+    }
+
+    public void OpenTieredEvent() {
+        Spil.Instance.ShowTieredEventProgress(Spil.Instance.GetAllTieredEvents()[0].id);
+    }
+    
     private void OnLoginSuccessful(bool resetData, string socialProvider, string s, bool isGuest) {
         Debug.Log("Login Successful!");
 
@@ -842,6 +895,7 @@ public class GameController : MonoBehaviour
         if (resetData) {
             Spil.Instance.ResetData();
             Spil.Instance.RequestLiveEvent();
+            Spil.Instance.RequestTieredEvents();
             
             PlayerPrefs.SetInt("Background", 0);
             PlayerPrefs.SetInt("Skin", 0);
@@ -866,6 +920,7 @@ public class GameController : MonoBehaviour
 
         Spil.Instance.ResetData();
         Spil.Instance.RequestLiveEvent();
+        Spil.Instance.RequestTieredEvents();
             
         PlayerPrefs.SetInt("Background", 0);
         PlayerPrefs.SetInt("Skin", 0);

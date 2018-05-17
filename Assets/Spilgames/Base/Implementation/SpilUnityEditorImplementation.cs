@@ -15,6 +15,8 @@ namespace SpilGames.Unity.Base.Implementations {
         public static PlayerDataManager pData;
         public static GameDataManager gData;
 
+        private static bool trackedInstall = false;
+        
         public static bool unauthorized = false;
         public static string spilToken;
 
@@ -78,7 +80,7 @@ namespace SpilGames.Unity.Base.Implementations {
         internal override void SpilInit(bool withPrivacyPolicy){
             gData = new GameDataManager();
             pData = new PlayerDataManager();
-
+            
             TrackEditorInstall();
             
             RequestConfig();
@@ -87,10 +89,11 @@ namespace SpilGames.Unity.Base.Implementations {
             AdvertisementInit();
             RequestPackages();
             RequestPromotions();
+            RequestAssetBundles();
         }
 
         internal override void CheckPrivacyPolicy() {
-            PrivacyPolicyManager.ShowPrivacyPolicy();
+            PrivacyPolicyManager.ShowPrivacyPolicy(false);
         }
 
         public override void ShowPrivacyPolicySettings() {
@@ -105,7 +108,7 @@ namespace SpilGames.Unity.Base.Implementations {
             
                 PrivacyPolicyHelper.Instance.ShowSettingsScreen(1);
             } else {
-                PrivacyPolicyManager.ShowPrivacyPolicy();
+                PrivacyPolicyManager.ShowPrivacyPolicy(true);
             }
             
         }
@@ -136,10 +139,16 @@ namespace SpilGames.Unity.Base.Implementations {
         }
 
         private void TrackEditorInstall() {
+            if (trackedInstall) {
+                return;
+            }
+            
             SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
             spilEvent.eventName = "install";
 
             spilEvent.Send();
+
+            trackedInstall = true;
         }
         
         private void RequestConfig() {
@@ -180,7 +189,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// </summary>
         /// <param name="eventName"></param>
         /// <param name="dict"></param>
-        protected override void SendCustomEvent(string eventName, Dictionary<string, object> dict) {
+        internal override void SendCustomEventInternal(string eventName, Dictionary<string, object> dict) {
             SpilLogging.Log("SpilSDK-Unity SendCustomEvent " + eventName);
             SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
             spilEvent.eventName = eventName;
@@ -299,6 +308,23 @@ namespace SpilGames.Unity.Base.Implementations {
         }
 
         #endregion
+
+        #region AssetBundles
+
+        public override void RequestAssetBundles() {
+            SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
+            spilEvent.eventName = "requestAssetBundles";
+
+            spilEvent.Send();
+        }
+        
+        public override string GetAllAssetBundles() {
+            return AssetBundlesManager.GetAssetBundles();
+        }
+
+        #endregion
+        
+
 
         #region Image loading
 
@@ -624,7 +650,7 @@ namespace SpilGames.Unity.Base.Implementations {
             spilEvent.Send();
         }
 
-        public override void RequestSplashScreen(string type = null) {
+        public override void RequestSplashScreen(string type) {
             SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
             spilEvent.eventName = "requestSplashscreen";
 
@@ -678,11 +704,10 @@ namespace SpilGames.Unity.Base.Implementations {
         #region Server Time
 
         public override void RequestServerTime() {
-            long currentTime =
-                (long) (TimeZoneInfo.ConvertTimeToUtc(DateTime.Now) -
-                        new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc)).TotalMilliseconds;
-            string time = currentTime.ToString();
-            fireServerTimeRequestSuccess(time);
+            SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
+            spilEvent.eventName = "requestServerTime";
+
+            spilEvent.Send();
         }
 
         #endregion

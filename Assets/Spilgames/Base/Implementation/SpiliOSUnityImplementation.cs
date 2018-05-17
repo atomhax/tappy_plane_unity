@@ -109,7 +109,18 @@ namespace SpilGames.Unity.Base.Implementations
         private static extern void showPromotionScreenNative(int promotionId);
         
     #endregion
-
+    
+    #region AssetBundles
+     
+        public override void GetAllAssetBundles() {
+            getAssetBundles();
+        }
+    
+        [DllImport("__Internal")]
+        private static extern void getAssetBundles();
+    
+    #endregion
+    
         /// <summary>
         /// This method is marked as internal and should not be exposed to developers.
         /// The Spil Unity SDK is not packaged as a seperate assembly yet so this method is currently visible, this will be fixed in the future.
@@ -688,7 +699,7 @@ namespace SpilGames.Unity.Base.Implementations
         [DllImport("__Internal")]
         private static extern void requestDailyBonusNative();
 
-        public override void RequestSplashScreen(string type = null)
+        public override void RequestSplashScreen(string type)
         {
             requestSplashScreenNative(type);
         }

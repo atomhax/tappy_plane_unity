@@ -40,7 +40,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 if (SpilUnityEditorImplementation.gData == null) {
                     throw new NotImplementedException("GameData must be initialised before calling this method.");
                 }
-
+                
                 foreach(PlayerCurrencyData currency in temp.wallet.currencies) {
                     SpilCurrencyData gameDataCurrency = SpilUnityEditorImplementation.gData.currencies.FirstOrDefault(a => a.id == currency.id);
                     if (gameDataCurrency != null) {
@@ -519,10 +519,14 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     
                     bundlePrices.Add(bundlePriceData);
                 }
-            } else {
+            } 
+
+            if (bundlePrices.Count == 0) {
                 bundlePrices = bundle.prices;
             }
 
+            bundle.prices = bundlePrices;
+            
             foreach (SpilBundlePriceData bundlePrice in bundlePrices) {
                 PlayerCurrencyData currency = GetCurrencyFromWallet(bundlePrice.currencyId);
 
@@ -1006,7 +1010,6 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             TieredEvent selectedTieredEvent = null;
     
             if(TieredEventManager.tieredEventsOverview.tieredEvents.Count == 0) {
-                SpilUnityImplementationBase.fireTieredEventsNotAvailable();
                 return;
             }
 
@@ -1024,14 +1027,11 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             }
     
             if (selectedTieredEvent == null) {
-                SpilUnityImplementationBase.fireTieredEventsNotAvailable();
                 return;
             }
     
             if ((selectedTieredEvent.type.Equals("spend") && amount > 0)) {
                 SpilLogging.Log("Entity operation not meeting Tiered Event requirements. Tiered Event progress will not be updated.");
-                SpilErrorMessage error = new SpilErrorMessage(42, "TieredEventShowProgressError", "Unable to show tiered event progress.");
-                SpilUnityImplementationBase.fireTieredEventsError(JsonHelper.getJSONFromObject(error));
                 return;
             }
     
@@ -1047,7 +1047,6 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             }
     
             if (currentTier == null) {
-                SpilUnityImplementationBase.fireTieredEventsNotAvailable();
                 return;
             }
     

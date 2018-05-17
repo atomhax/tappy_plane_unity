@@ -193,7 +193,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// </summary>
         /// <param name="eventName"></param>
         /// <param name="dict"></param>
-        protected override void SendCustomEvent(string eventName, Dictionary<string, object> dict) {
+        internal override void SendCustomEventInternal(string eventName, Dictionary<string, object> dict) {
             Debug.Log("SpilSDK-Unity SendCustomEvent " + eventName);
 
             if (eventName.Equals("updatePlayerData") && dict.ContainsKey("inventory") &&
@@ -329,6 +329,18 @@ namespace SpilGames.Unity.Base.Implementations {
 
         #endregion
 
+        #region AssetBundles
+
+        public override void RequestAssetBundles() {
+            CallNativeMethod("requestAssetBundles");
+        }
+
+        public override string GetAllAssetBundles() {
+            return CallNativeMethod("getAssetBundles");
+        }
+
+        #endregion
+        
         #region Player Data
 
         public override void UpdatePlayerData() {
@@ -806,7 +818,7 @@ namespace SpilGames.Unity.Base.Implementations {
             CallNativeMethod("requestDailyBonus");
         }
 
-        public override void RequestSplashScreen(string type = null) {
+        public override void RequestSplashScreen(string type) {
             CallNativeMethod("requestSplashScreen", new object[] {
                 type,
             }, true);
