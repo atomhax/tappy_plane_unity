@@ -92,6 +92,14 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 		return;
 		#endif
 
+		if (productId.Equals("com.spilgames.tappyplane.goldplane")) {
+			foreach (PlayerItem playerItem in Spil.PlayerData.Inventory.Items) {
+				if (playerItem.Id == 100291) {
+					return;
+				}
+			}
+		}
+		
 		iapPanelController.PurchaseStarted ();
 		lastProductSKU = productId;
 		// If the stores throw an unexpected exception, use try..catch to protect my logic here.
@@ -186,7 +194,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 			transactionID = token;
 		}
 
-		Spil.Instance.TrackIAPPurchasedEvent (skuId, transactionID, token, "diamondPurchase", "store");
+		Spil.Instance.TrackIAPPurchasedEvent (skuId, transactionID, token, "purchase", "store");
 
 		#elif UNITY_IOS
 
@@ -194,7 +202,11 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 
 		#endif
 
-		RewardPlayer (args.purchasedProduct.transactionID);
+		if (skuId.Equals("com.spilgames.tappyplane.goldplane")) {
+			Spil.Instance.AddItemToInventory(100291, 1, PlayerDataUpdateReasons.IAP, "Splash Screen", null, transactionID);
+		} else {
+			RewardPlayer (args.purchasedProduct.transactionID);
+		}		
 
 		iapPanelController.PurchaseSuccess (args.purchasedProduct.metadata.localizedTitle);
 		return PurchaseProcessingResult.Complete;

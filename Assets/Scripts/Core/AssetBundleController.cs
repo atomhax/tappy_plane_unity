@@ -14,6 +14,7 @@ public class AssetBundleController : MonoBehaviour{
             bundle.LoadAllAssets<Sprite>();
             RuntimeAnimatorController goldPlaneController = bundle.LoadAsset<RuntimeAnimatorController>("PlayerGold");
             gameController.goldPlaneController = goldPlaneController;
+            gameController.player.playerSkinAnimators[3] = goldPlaneController;
             
             gameController.UpdateSkins();
         }

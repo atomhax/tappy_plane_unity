@@ -14624,7 +14624,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 11425282, guid: 5bdb987fe238145a6935779ca218e6ae, type: 2}
       propertyPath: playerSkinAnimators.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 489178, guid: 5bdb987fe238145a6935779ca218e6ae, type: 2}
       propertyPath: m_LocalPosition.x
