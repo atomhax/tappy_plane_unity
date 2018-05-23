@@ -11,7 +11,7 @@ namespace Editor {
                 Directory.CreateDirectory(assetBundleDirectory);
             }
 
-            BuildPipeline.BuildAssetBundles(assetBundleDirectory, BuildAssetBundleOptions.None, EditorUserBuildSettings.activeBuildTarget);
+            BuildPipeline.BuildAssetBundles(assetBundleDirectory, BuildAssetBundleOptions.ForceRebuildAssetBundle, EditorUserBuildSettings.activeBuildTarget);
         }
     }
 }

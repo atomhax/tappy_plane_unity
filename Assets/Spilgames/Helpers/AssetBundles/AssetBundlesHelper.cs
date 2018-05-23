@@ -11,7 +11,7 @@ namespace SpilGames.Unity.Helpers.AssetBundles {
 
             if (assetBundlesData != null) {
                 foreach (SpilAssetBundle assetBundle in assetBundlesData) {
-                    AssetBundles.Add(new AssetBundle(assetBundle.name, assetBundle.type, assetBundle.endDate, assetBundle.url));
+                    AssetBundles.Add(new AssetBundle(assetBundle.name, assetBundle.type, assetBundle.endDate, assetBundle.url, assetBundle.hash, assetBundle.version));
                 }
             }
         }

@@ -4,11 +4,14 @@ using System.Xml;
 using SpilGames.Unity;
 using SpilGames.Unity.Base.Implementations;
 using SpilGames.Unity.Base.SDK;
+using SpilGames.Unity.Helpers.AssetBundles;
 using SpilGames.Unity.Helpers.GameData;
 using SpilGames.Unity.Helpers.PlayerData;
 using SpilGames.Unity.Json;
 using UnityEngine;
+using UnityEngine.Analytics;
 using UnityEngine.UI;
+using AssetBundle = SpilGames.Unity.Helpers.AssetBundles.AssetBundle;
 using Random = UnityEngine.Random;
 #if !UNITY_TVOS
 using Facebook.Unity;
@@ -74,6 +77,10 @@ public class GameController : MonoBehaviour
         FBLogoutButton,
         FBShareButton;
 
+    public RuntimeAnimatorController goldPlaneController;
+    public Sprite backgroundRuin;
+    public Sprite backgroundTown;
+    
     // Facebook
     public static List<string> userIds = new List<string>();
 
@@ -89,8 +96,10 @@ public class GameController : MonoBehaviour
     private Vector3 initialPosition;
     private Quaternion initialRotation;
 
-    void Awake()
-    {
+    void Awake() {
+        Analytics.enabled = false;
+        Analytics.deviceStatsEnabled = false;
+        
         Spil.Instance.OnPrivacyPolicyStatus -= OnPrivacyPolicyStatus;
         Spil.Instance.OnPrivacyPolicyStatus += OnPrivacyPolicyStatus;
         
@@ -162,6 +171,12 @@ public class GameController : MonoBehaviour
         
         Spil.Instance.OnTieredEventsError -= OnTieredEventsError;
         Spil.Instance.OnTieredEventsError += OnTieredEventsError;
+        
+        Spil.Instance.OnAssetBundlesAvailable -= OnAssetBundlesAvailable;
+        Spil.Instance.OnAssetBundlesAvailable += OnAssetBundlesAvailable;
+        
+        Spil.Instance.OnAssetBundlesNotAvailable -= OnAssetBundlesNotAvailable;
+        Spil.Instance.OnAssetBundlesNotAvailable += OnAssetBundlesNotAvailable;
         
 //		Spil.Instance.PreloadItemAndBundleImages();
 
@@ -244,7 +259,7 @@ public class GameController : MonoBehaviour
             InitComponents();
         }
     }
-    
+
     #if UNITY_TVOS
 	void FixedUpdate ()
 	{
@@ -377,7 +392,12 @@ public class GameController : MonoBehaviour
     public void UpdateSkins() {
         if (backgroundSpriteRenderes != null) {
             foreach (SpriteRenderer spriteRenderer in backgroundSpriteRenderes) {
-                spriteRenderer.sprite = backgroundSprites[PlayerPrefs.GetInt("Background", 0)];
+                Sprite sprite = backgroundSprites[PlayerPrefs.GetInt("Background", 0)];
+                if (sprite != null) {
+                    spriteRenderer.sprite = sprite;
+                } else {
+                    spriteRenderer.sprite = backgroundSprites[0];
+                }
             }
             player.SetupPlayerSkin();
         }
@@ -882,6 +902,32 @@ public class GameController : MonoBehaviour
 
     public void OpenTieredEvent() {
         Spil.Instance.ShowTieredEventProgress(Spil.Instance.GetAllTieredEvents()[0].id);
+    }
+    
+    private void OnAssetBundlesAvailable() {
+        AssetBundlesHelper assetBundlesHelper = Spil.Instance.GetAssetBundles();
+        StartCoroutine(AssetBundleController.DownloadGoldenPlaneBundle(this, assetBundlesHelper.GetAssetBundle("goldplane")));
+
+        List<AssetBundle> assetBundles = Spil.Instance.GetAssetBundles().GetAssetBundlesOfType("background");
+        foreach (AssetBundle assetBundle in assetBundles) {
+            StartCoroutine(AssetBundleController.DownloadBackgroundBundle(this, assetBundle));
+        }
+    }
+
+    private void OnAssetBundlesNotAvailable() {
+        Debug.Log("Asset bundles not available!");
+    }
+
+    public void SetRuinBackground() {
+        foreach (SpriteRenderer spriteRenderer in backgroundSpriteRenderes) {
+            spriteRenderer.sprite = backgroundRuin;
+        }
+    }
+
+    public void SetTownBackground() {
+        foreach (SpriteRenderer spriteRenderer in backgroundSpriteRenderes) {
+            spriteRenderer.sprite = backgroundTown;
+        }
     }
     
     private void OnLoginSuccessful(bool resetData, string socialProvider, string s, bool isGuest) {

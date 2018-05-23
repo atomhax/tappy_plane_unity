@@ -27,6 +27,7 @@ namespace SpilGames.Unity.Base.SDK {
         public int currentTierId;
         public int previousAmount;
         public int currentAmount;
+        public bool completed;
         public List<int> completedTiers;
         public List<int> claimableTiers;
     }

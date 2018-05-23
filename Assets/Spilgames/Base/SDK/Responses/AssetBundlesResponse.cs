@@ -4,5 +4,7 @@
         public string type;
         public long endDate;
         public string url;
+        public string hash;
+        public int version;
     }
 }

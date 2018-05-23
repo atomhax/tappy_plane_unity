@@ -1,19 +1,18 @@
 ManifestFileVersion: 0
-CRC: 2638823928
+CRC: 1583572843
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: a241f4ec80d3bbac46f0a34607e88cda
+    Hash: cdb10f1b6bd5615075531ddc97855563
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 0a4381b8d24d7546af2f9b5d2b1de238
+    Hash: 460b4f5d62b6facbccf7c01637df8f00
 HashAppended: 0
 ClassTypes:
-- Class: 74
+- Class: 28
   Script: {instanceID: 0}
-- Class: 91
+- Class: 213
   Script: {instanceID: 0}
 Assets:
-- Assets/Animations/Player/PlayerGold.controller
-- Assets/Animations/Player/PlayerGold.anim
+- Assets/Sprites/Backgrounds/colored_ruins.png
 Dependencies: []

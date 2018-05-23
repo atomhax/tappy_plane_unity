@@ -103,7 +103,7 @@ public class ShopPanelController : MonoBehaviour {
     void CreateTab(Tab tab) {
         GameObject newTab = (GameObject) Instantiate(tabPrefab);
         newTab.transform.SetParent(tabsPanel);
-        newTab.GetComponent<TabController>().SetupTab(tab);
+        newTab.GetComponent<TabController>().SetupTab(this, tab);
         newTab.SetActive(false);
         shopTabs.Add(newTab);
     }

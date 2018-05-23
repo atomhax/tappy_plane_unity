@@ -1,7 +1,13 @@
 ManifestFileVersion: 0
-CRC: 3678873649
+CRC: 3014268208
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: goldplane.goldplane
+      Name: goldplane.asset
+      Dependencies: {}
+    Info_1:
+      Name: ruins.asset
+      Dependencies: {}
+    Info_2:
+      Name: town.asset
       Dependencies: {}

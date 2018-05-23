@@ -354,25 +354,25 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
                 return this;
             }
             
-            /// <param name="sourceId">ToDo</param>
+            /// <param name="sourceId"></param>
             public BaseLevelUp AddSourceId(string sourceId) {
                 parameters.Add("sourceId", sourceId);
                 return this;
             }
             
-            /// <param name="sourceUniqueId">ToDo</param>
+            /// <param name="sourceUniqueId"></param>
             public BaseLevelUp AddSourceUniqueId(string sourceUniqueId) {
                 parameters.Add("sourceUniqueId", sourceUniqueId);
                 return this;
             }
             
-            /// <param name="objectUniqueId">ToDo</param>
+            /// <param name="objectUniqueId"></param>
             public BaseLevelUp AddObjectUniqueId(string objectUniqueId) {
                 parameters.Add("objectUniqueId", objectUniqueId);
                 return this;
             }
             
-            /// <param name="objectUniqueIdType">ToDo</param>
+            /// <param name="objectUniqueIdType"></param>
             public BaseLevelUp AddObjectUniqueIdType(string objectUniqueIdType) {
                 parameters.Add("objectUniqueIdType", objectUniqueIdType);
                 return this;
@@ -444,7 +444,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
                 return this;
             }
             
-            /// <param name="key">ToDo</param>
+            /// <param name="key"></param>
             public BaseUpgrade AddKey(string key) {
                 parameters.Add("key", key);
                 return this;
@@ -590,6 +590,8 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
                 parameters.Add("trackingOnly", true);
             }
 
+
+            /// <param name="currencyList">A list of TrackingCurrency objects that defines all the currencies that have been changed with this event. This parameter can also be omited if no currencies have been updated</param>
             public BaseWalletInventoryEvent AddWallet(List<TrackingCurrency> currencyList) {
                 Dictionary<string, object> wallet = new Dictionary<string, object>();
                 wallet.Add("currencies", new JSONObject(JsonHelper.getJSONFromObject(currencyList)));
@@ -598,6 +600,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
                 return this;
             }
 
+            /// <param name="itemsList">A list of TrackingItems objects that defines all the items that have been changed with this event. This parameter can also be omited if no items have been updated</param>
             public BaseWalletInventoryEvent AddInventory(List<TrackingItem> itemsList) {
                 Dictionary<string, object> inventory = new Dictionary<string, object>();
                 inventory.Add("items", new JSONObject(JsonHelper.getJSONFromObject(itemsList)));
@@ -606,11 +609,13 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
                 return this;
             }
             
+            /// <param name="reasonDetails">Additional parameter used to describe the details of why the event happened</param>
             public BaseWalletInventoryEvent AddReasonDetails(string reasonDetails) {
                 parameters.Add("reasonDetails", reasonDetails);
                 return this;
             }
             
+            /// <param name="transactionId">The transactionId if the update was due to an IAP</param>
             public BaseWalletInventoryEvent AddTransactionId(string transactionId) {
                 parameters.Add("transactionId", transactionId);
                 return this;
@@ -618,10 +623,12 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Sends the "updatePlayerData" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// DO NOT USE THIS EVENT IF YOU IMPLEMENTED WALLET AND INVENTORY FEATURES!
         /// </summary>
-        /// <param name="reason"></param>
-        /// <param name="location"></param>
+        /// <param name="reason">The reason for which the event occured. You can also use the PlayerDataUpdateReasons class to pass one of the default reasons</param>
+        /// <param name="location">The location where the event occured (ex.: Shop Screen, End of the level)</param>
         /// <returns></returns>
         public static BaseWalletInventoryEvent WalletInventoryEvent(string reason, string location) {
             return new BaseWalletInventoryEvent(reason, location);
@@ -635,6 +642,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
                 parameters.Add("purchaseDate", DateTime.Now.ToString("yyyy-MM-ddTHH\\:mm\\:ss.fffffffzzz"));
             }
             
+            /// <param name="token">The transaction token returned from the purchase. Only use this for ANDROID!</param>
             public BaseIAPPurchased AddToken(string token) {
                 if (!token.Equals("")) {
                     parameters.Add("token", token); 
@@ -643,11 +651,13 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
                 return this;
             }
             
+            /// <param name="reason">The reason for which the IAP purchase was done.</param>
             public BaseIAPPurchased AddReason(string reason) {
                 parameters.Add("reason", reason);
                 return this;
             }
             
+            /// <param name="location">The location where the IAP was done.</param>
             public BaseIAPPurchased AddLocation(string location) {
                 parameters.Add("location", location);
                 return this;
@@ -655,10 +665,11 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Sends the "iapPurchased" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
-        /// <param name="skuId"></param>
-        /// <param name="transactionId"></param>
+        /// <param name="skuId">The product identifier of the item that was purchased</param>
+        /// <param name="transactionId">The transaction identifier of the item that was purchased (also called orderId)</param>
         /// <returns></returns>
         public static BaseIAPPurchased IAPPurchased(string skuId, string transactionId) {
             return new BaseIAPPurchased(skuId, transactionId);
@@ -672,6 +683,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
                 parameters.Add("originalPurchaseDate", originalPurchaseDate);
             }
             
+            /// <param name="reason">The reason for which the IAP restore was done.</param>
             public BaseIAPRestored AddReason(string reason) {
                 parameters.Add("reason", reason);
                 return this;
@@ -679,11 +691,12 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Sends the "iapRestored" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
-        /// <param name="skuId"></param>
-        /// <param name="originalTransactionId"></param>
-        /// <param name="originalPurchaseDate"></param>
+        /// <param name="skuId">The product identifier of the item that was purchased</param>
+        /// <param name="originalTransactionId">For a transaction that restores a previous transaction, the transaction identifier of the original transaction. Otherwise, identical to the transaction identifier</param>
+        /// <param name="originalPurchaseDate">For a transaction that restores a previous transaction, the date of the original transaction. Please use a proper DateTime format (RFC3339), for instance: "2016-08-30T11:54:48.5247936+02:00". If you have a DateTime object you can use: DateTimeObject.ToString("yyyy-MM-ddTHH\\:mm\\:ss.fffffffzzz")</param>
         /// <returns></returns>
         public static BaseIAPRestored IAPRestored(string skuId, string originalTransactionId, string originalPurchaseDate) {
             return new BaseIAPRestored(skuId, originalTransactionId, originalPurchaseDate);
@@ -697,11 +710,13 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
                 parameters.Add("purchaseDate", DateTime.Now.ToString("yyyy-MM-ddTHH\\:mm\\:ss.fffffffzzz"));
             }
             
+            /// <param name="reason">The reason for which the IAP failed.</param>
             public BaseIAPFailed AddReason(string reason) {
                 parameters.Add("reason", reason);
                 return this;
             }
             
+            /// <param name="location">The location where the IAP failed.</param>
             public BaseIAPFailed AddLocation(string location) {
                 parameters.Add("location", location);
                 return this;
@@ -709,10 +724,11 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Sends the "iapFailed" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
-        /// <param name="skuId"></param>
-        /// <param name="errorDescription"></param>
+        /// <param name="skuId">The product identifier of the item that was purchased</param>
+        /// <param name="errorDescription">Error description or error code</param>
         /// <returns></returns>
         public static BaseIAPFailed IAPFailed(string skuId, string errorDescription) {
             return new BaseIAPFailed(skuId, errorDescription);
@@ -725,7 +741,8 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Sends the "tutorialComplete" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
         /// <returns></returns>
         public static BaseTutorialComplete TutorialComplete() {
@@ -739,7 +756,8 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Sends the "tutorialSkipped" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
         /// <returns></returns>
         public static BaseTutorialSkipped TutorialSkipped() {
@@ -754,9 +772,11 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Sends the "tutorialSkipped" event to the native Spil SDK which will send a request to the back-end.
+        /// Should be called after the user completes registration via email, Facebook, Google Plus or other available option. Registration option is assumed.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
-        /// <param name="platform"></param>
+        /// <param name="platform">A string like ‘facebook’ or ’email’</param>
         /// <returns></returns>
         public static BaseRegister Register(string platform) {
             return new BaseRegister(platform);
@@ -768,11 +788,13 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
                 parameters.Add("platform", platform);
             }
             
+            /// <param name="reason">The reason for which share was done.</param>
             public BaseShare AddReason(string reason) {
                 parameters.Add("reason", reason);
                 return this;
             }
             
+            /// <param name="location">The location where the share action occured.</param>
             public BaseShare AddLocation(string location) {
                 parameters.Add("location", location);
                 return this;
@@ -780,9 +802,11 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Sends the "share" event to the native Spil SDK which will send a request to the back-end.
+        /// Should be called every time the user shares content on their social media accounts. Social media integration is assumed.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
-        /// <param name="platform"></param>
+        /// <param name="platform">A string like ‘facebook’ or ’email’</param>
         /// <returns></returns>
         public static BaseShare Share(string platform) {
             return new BaseShare(platform);
@@ -794,6 +818,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
                 parameters.Add("platform", platform);
             }        
             
+            /// <param name="location">The location where the invite action occured.</param>
             public BaseInvite AddLocation(string location) {
                 parameters.Add("location", location);
                 return this;
@@ -801,9 +826,11 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Sends the "invite" event to the native Spil SDK which will send a request to the back-end.
+        /// Should be called every time the user invites another user. Respective function in-game is assumed.
+        /// See https://github.com/spilgames/spil_event_unity_plugin for more information on events.
         /// </summary>
-        /// <param name="platform"></param>
+        /// <param name="platform">A string like ‘facebook’ or ’email’</param>
         /// <returns></returns>
         public static BaseInvite Invite(string platform) {
             return new BaseInvite(platform);
@@ -815,6 +842,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
                 parameters.Add("level", level);
             }        
             
+            /// <param name="difficulty">The difficulty of the level that appeared.</param>
             public BaseLevelAppeared AddDifficulty(string difficulty) {
                 parameters.Add("difficulty", difficulty);
                 return this;
@@ -822,9 +850,10 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Sends the "levelAppeared" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
-        /// <param name="level"></param>
+        /// <param name="level">The name/id of the level that appeared.</param>
         /// <returns></returns>
         public static BaseLevelAppeared LevelAppeared(string level) {
             return new BaseLevelAppeared(level);
@@ -836,6 +865,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
                 parameters.Add("level", level);
             }        
             
+            /// <param name="difficulty">The difficulty of the level that was discarded.</param>
             public BaseLevelDiscarded AddDifficulty(string difficulty) {
                 parameters.Add("difficulty", difficulty);
                 return this;
@@ -843,9 +873,10 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Sends the "levelDiscarded" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
-        /// <param name="level"></param>
+        /// <param name="level">The name/id of the level that appeared.</param>
         /// <returns></returns>
         public static BaseLevelDiscarded LevelDiscarded(string level) {
             return new BaseLevelDiscarded(level);
@@ -859,9 +890,10 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Sends the "errorShown" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
-        /// <param name="reason"></param>
+        /// <param name="reason">The reason for the error to be shown.</param>
         /// <returns></returns>
         public static BaseErrorShown ErrorShown(string reason) {
             return new BaseErrorShown(reason);
@@ -874,6 +906,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
                 parameters.Add("pointInGame", pointInGame);
             }
             
+            /// <param name="startPoint">The point in game which we start to measure time.</param>
             public BaseTimeElapLoad AddStartPoint(double startPoint) {
                 parameters.Add("startPoint", startPoint);
                 return this;
@@ -881,10 +914,11 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Sends the "timeElapLoad" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
-        /// <param name="timeElap"></param>
-        /// <param name="pointInGame"></param>
+        /// <param name="timeElap">The time elapsed between the starting point and the pointInGame in seconds.</param>
+        /// <param name="pointInGame">The point in game which is reached.</param>
         /// <returns></returns>
         public static BaseTimeElapLoad TimeElapLoad(int timeElap, string pointInGame) {
             return new BaseTimeElapLoad(timeElap, pointInGame);
@@ -899,10 +933,11 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Sends the "timeoutDetected" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
-        /// <param name="timeElap"></param>
-        /// <param name="pointInGame"></param>
+        /// <param name="timeElap">The time elapsed between the starting point and the pointInGame in seconds.</param>
+        /// <param name="pointInGame">The point in game which is reached.</param>
         /// <returns></returns>
         public static BaseTimeoutDetected TimeoutDetected(int timeElap, string pointInGame) {
             return new BaseTimeoutDetected(timeElap, pointInGame);
@@ -916,31 +951,37 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
                 parameters.Add("reason", reason);
             }
             
+            /// <param name="changedProperties">The properties that were changed when the object changed</param>
             public BaseObjectStateChanged AddChangedProperties(string changedProperties) {
                 parameters.Add("changedProperties", changedProperties);
                 return this;
             }
             
+            /// <param name="optionConditions"></param>
             public BaseObjectStateChanged AddOptionConditions(string optionConditions) {
                 parameters.Add("optionConditions", optionConditions);
                 return this;
             }
             
+            /// <param name="situation"></param>
             public BaseObjectStateChanged AddSituation(string situation) {
                 parameters.Add("situation", situation);
                 return this;
             }
             
+            /// <param name="allChoiceResults"></param>
             public BaseObjectStateChanged AddAllChoiceResults(string allChoiceResults) {
                 parameters.Add("allChoiceResults", allChoiceResults);
                 return this;
             }
             
+            /// <param name="allSelectedChoices"></param>
             public BaseObjectStateChanged AddAllSelectedChoices(string allSelectedChoices) {
                 parameters.Add("allSelectedChoices", allSelectedChoices);
                 return this;
             }
             
+            /// <param name="involvedParties"></param>
             public BaseObjectStateChanged AddInvolvedParties(string involvedParties) {
                 parameters.Add("involvedParties", involvedParties);
                 return this;
@@ -948,11 +989,12 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Sends the "objectStateChanged" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
-        /// <param name="changedObject"></param>
-        /// <param name="status"></param>
-        /// <param name="reason"></param>
+        /// <param name="changedObject">The object which changed it's state.</param>
+        /// <param name="status">The new status the object is in.</param>
+        /// <param name="reason">The reason for the state change.</param>
         /// <returns></returns>
         public static BaseObjectStateChanged ObjectStateChanged(string changedObject, string status, string reason) {
             return new BaseObjectStateChanged(changedObject, changedObject, reason);
@@ -964,21 +1006,25 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
                 parameters.Add("element", element);
             }        
             
+            /// <param name="type">The type of element that was clicked (eg.: Button, Icon, etc.)</param>
             public BaseUIElementClicked AddType(string type) {
                 parameters.Add("type", type);
                 return this;
             }
             
+            /// <param name="screenName">The screen name where the click occurred.</param>
             public BaseUIElementClicked AddScreenName(string screenName) {
                 parameters.Add("screenName", screenName);
                 return this;
             }
             
+            /// <param name="location">The location within the screen where the click occurred.</param>
             public BaseUIElementClicked AddLocation(string location) {
                 parameters.Add("location", location);
                 return this;
             }
             
+            /// <param name="grade"></param>
             public BaseUIElementClicked AddGrade(int grade) {
                 parameters.Add("grade", grade);
                 return this;
@@ -986,9 +1032,9 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Triggered when the user clicks a specific ui element
         /// </summary>
-        /// <param name="element"></param>
+        /// <param name="element">The name of the element that was clicked in the game</param>
         /// <returns></returns>
         public static BaseUIElementClicked UIElementClicked(string element) {
             return new BaseUIElementClicked(element);
@@ -1000,6 +1046,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
                 parameters.Add("platform", platform);
             }        
             
+            /// <param name="location">The location where the gift action occured.</param>
             public BaseSendGift AddLocation(string location) {
                 parameters.Add("location", location);
                 return this;
@@ -1007,9 +1054,9 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Triggered when a user sends a gift
         /// </summary>
-        /// <param name="platform"></param>
+        /// <param name="platform">A string like ‘facebook’ or ’email’</param>
         /// <returns></returns>
         public static BaseSendGift SendGift(string platform) {
             return new BaseSendGift(platform);
@@ -1022,7 +1069,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Triggered when the level timer finishes
         /// </summary>
         /// <returns></returns>
         public static BaseLevelTimeOut LevelTimeOut() {
@@ -1041,6 +1088,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
                 parameters.Add("isTimed", isTimed);
             }  
             
+            /// <param name="time">The time it took for the choice to be made.</param>
             public BaseDialogueChosen AddTime(int time) {
                 parameters.Add("time", time);
                 return this;
@@ -1048,15 +1096,15 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Triggered whenever user selects an choice for a dialog,or runs out of time and default answer is selected	
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="choice"></param>
-        /// <param name="hasToken"></param>
-        /// <param name="isPremiumChoice"></param>
+        /// <param name="name">The name of the dialogue.</param>
+        /// <param name="choice">The choice that the play has made for this dialogue.</param>
+        /// <param name="hasToken">Specifies if the dialogue choice had a token.</param>
+        /// <param name="isPremiumChoice">Defines if the choice was a premium one.</param>
         /// <param name="isQuizz"></param>
         /// <param name="isForced"></param>
-        /// <param name="isTimed"></param>
+        /// <param name="isTimed">Specifices if the dialogue choice was timed.</param>
         /// <returns></returns>
         public static BaseDialogueChosen DialogueChosen(string name, string choice, bool hasToken, bool isPremiumChoice, bool isQuizz, bool isForced, bool isTimed) {
             return new BaseDialogueChosen(name, choice, hasToken, isPremiumChoice, isQuizz, isForced, isTimed);
@@ -1068,6 +1116,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
                 parameters.Add("friend", friend);
             }        
             
+            /// <param name="platform">A string like ‘facebook’ or ’email’</param>
             public BaseFriendAdded AddPlatform(string platform) {
                 parameters.Add("platform", platform);
                 return this;
@@ -1075,9 +1124,9 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Triggered when the user is adding a friend in the game.
         /// </summary>
-        /// <param name="friend"></param>
+        /// <param name="friend">The id of the friend that was added.</param>
         /// <returns></returns>
         public static BaseSendGift FriendAdded(string friend) {
             return new BaseSendGift(friend);
@@ -1090,7 +1139,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Triggered for special game object interactions
         /// </summary>
         /// <returns></returns>
         public static BaseGameObjectInteraction GameObjectInteraction() {
@@ -1102,21 +1151,25 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
                 eventName = "gameResult";
             }
             
+            /// <param name="itemId"></param>
             public BaseGameResult AddItemId(string itemId) {
                 parameters.Add("itemId", itemId);
                 return this;
             }
             
+            /// <param name="itemType"></param>
             public BaseGameResult AddItemType(string itemType) {
                 parameters.Add("itemType", itemType);
                 return this;
             }
             
+            /// <param name="label"></param>
             public BaseGameResult AddLabel(string label) {
                 parameters.Add("label", label);
                 return this;
             }
             
+            /// <param name="matchId"></param>
             public BaseGameResult AddMatchId(string matchId) {
                 parameters.Add("matchId", matchId);
                 return this;
@@ -1124,7 +1177,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Triggered at the end of a match and indicates the result of it
         /// </summary>
         /// <returns></returns>
         public static BaseGameResult GameResult() {
@@ -1137,6 +1190,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
                 parameters.Add("itemId", itemId);
             }        
             
+            /// <param name="itemType">The type of item that was crafted.</param>
             public BaseItemCrafted AddItemType(string itemType) {
                 parameters.Add("itemType", itemType);
                 return this;
@@ -1144,9 +1198,9 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Triggered when a user is crafting an item.
         /// </summary>
-        /// <param name="itemId"></param>
+        /// <param name="itemId">The id of the item that was crafted.</param>
         /// <returns></returns>
         public static BaseItemCrafted ItemCrafted(string itemId) {
             return new BaseItemCrafted(itemId);
@@ -1158,6 +1212,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
                 parameters.Add("itemId", itemId);
             }        
             
+            /// <param name="itemType">The type of item that was created.</param>
             public BaseItemCreated AddItemType(string itemType) {
                 parameters.Add("itemType", itemType);
                 return this;
@@ -1165,9 +1220,9 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Triggered when a user creates an item.
         /// </summary>
-        /// <param name="itemId"></param>
+        /// <param name="itemId">The id of the item that was created.</param>
         /// <returns></returns>
         public static BaseItemCreated ItemCreated(string itemId) {
             return new BaseItemCreated(itemId);
@@ -1180,6 +1235,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
                 parameters.Add("itemId", itemId);
             }
             
+            /// <param name="itemType">The type of item that was updated.</param>
             public BaseItemUpdated AddItemType(string itemType) {
                 parameters.Add("itemType", itemType);
                 return this;
@@ -1187,10 +1243,10 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Triggered when the user is updating an item (e.g. equipping a character with an item).
         /// </summary>
-        /// <param name="content"></param>
-        /// <param name="itemId"></param>
+        /// <param name="content">The content in which the item was updated.</param>
+        /// <param name="itemId">The id of the item that was updated.</param>
         /// <returns></returns>
         public static BaseItemUpdated ItemUpdated(string content, string itemId) {
             return new BaseItemUpdated(content, itemId);
@@ -1203,11 +1259,13 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
                 parameters.Add("itemId", itemId);
             }
             
+            /// <param name="itemType">The type of deck that was updated.</param>
             public BaseDeckUpdated AddItemType(string itemType) {
                 parameters.Add("itemType", itemType);
                 return this;
             }
             
+            /// <param name="label">The label given to the updated deck.</param>
             public BaseDeckUpdated AddLabel(string label) {
                 parameters.Add("label", label);
                 return this;
@@ -1215,10 +1273,10 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Triggered when the user is updating his deck, e.g. by adding and removing cards from it.
         /// </summary>
-        /// <param name="content"></param>
-        /// <param name="itemId"></param>
+        /// <param name="content">The content in which the deck was updated.</param>
+        /// <param name="itemId">The id of the deck that was updated.</param>
         /// <returns></returns>
         public static BaseDeckUpdated DeckUpdated(string content, string itemId) {
             return new BaseDeckUpdated(content, itemId);
@@ -1229,21 +1287,25 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
                 eventName = "matchComplete";
             }
             
+            /// <param name="matchId">The id of the match completed.</param>
             public BaseMatchComplete AddMatchId(string matchId) {
                 parameters.Add("matchId", matchId);
                 return this;
             }
             
+            /// <param name="itemId"></param>
             public BaseMatchComplete AddItemId(string itemId) {
                 parameters.Add("itemId", itemId);
                 return this;
             }
             
+            /// <param name="itemType"></param>
             public BaseMatchComplete AddItemType(string itemType) {
                 parameters.Add("itemType", itemType);
                 return this;
             }
             
+            /// <param name="label"></param>
             public BaseMatchComplete AddLabel(string label) {
                 parameters.Add("label", label);
                 return this;
@@ -1251,7 +1313,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Triggered when a player-vs-player match ends 
         /// </summary>
         /// <returns></returns>
         public static BaseMatchComplete MatchComplete() {
@@ -1263,21 +1325,25 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
                 eventName = "matchLost";
             }
             
+            /// <param name="matchId">The id of the match lost.</param>
             public BaseMatchLost AddMatchId(string matchId) {
                 parameters.Add("matchId", matchId);
                 return this;
             }
             
+            /// <param name="itemId"></param>
             public BaseMatchLost AddItemId(string itemId) {
                 parameters.Add("itemId", itemId);
                 return this;
             }
             
+            /// <param name="itemType"></param>
             public BaseMatchLost AddItemType(string itemType) {
                 parameters.Add("itemType", itemType);
                 return this;
             }
             
+            /// <param name="label"></param>
             public BaseMatchLost AddLabel(string label) {
                 parameters.Add("label", label);
                 return this;
@@ -1285,7 +1351,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Triggered when a user loses a player-vs-player match
         /// </summary>
         /// <returns></returns>
         public static BaseMatchLost MatchLost() {
@@ -1297,21 +1363,25 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
                 eventName = "matchTie";
             }
             
+            /// <param name="matchId">The id of the match tied.</param>
             public BaseMatchTie AddMatchId(string matchId) {
                 parameters.Add("matchId", matchId);
                 return this;
             }
             
+            /// <param name="itemId"></param>
             public BaseMatchTie AddItemId(string itemId) {
                 parameters.Add("itemId", itemId);
                 return this;
             }
             
+            /// <param name="itemType"></param>
             public BaseMatchTie AddItemType(string itemType) {
                 parameters.Add("itemType", itemType);
                 return this;
             }
             
+            /// <param name="label"></param>
             public BaseMatchTie AddLabel(string label) {
                 parameters.Add("label", label);
                 return this;
@@ -1319,7 +1389,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Triggered when a player-vs-player match ends with a tie
         /// </summary>
         /// <returns></returns>
         public static BaseMatchTie MatchTie() {
@@ -1331,21 +1401,25 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
                 eventName = "matchWon";
             }
             
+            /// <param name="matchId">The id of the match won.</param>
             public BaseMatchWon AddMatchId(string matchId) {
                 parameters.Add("matchId", matchId);
                 return this;
             }
             
+            /// <param name="itemId"></param>
             public BaseMatchWon AddItemId(string itemId) {
                 parameters.Add("itemId", itemId);
                 return this;
             }
             
+            /// <param name="itemType"></param>
             public BaseMatchWon AddItemType(string itemType) {
                 parameters.Add("itemType", itemType);
                 return this;
             }
             
+            /// <param name="label"></param>
             public BaseMatchWon AddLabel(string label) {
                 parameters.Add("label", label);
                 return this;
@@ -1353,7 +1427,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Triggered when a user wins player-vs-player match 
         /// </summary>
         /// <returns></returns>
         public static BaseMatchWon MatchWon() {
@@ -1366,36 +1440,43 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
                 parameters.Add("name", name);
             }
             
+            /// <param name="reason">The reason why the pawn/object was moved.</param>
             public BasePawnMoved AddReason(string reason) {
                 parameters.Add("reason", reason);
                 return this;
             }
             
+            /// <param name="delta">The differance caused by the movement.</param>
             public BasePawnMoved AddDelta(string delta) {
                 parameters.Add("delta", delta);
                 return this;
             }
             
+            /// <param name="energy">The amount of energy required for the movement.</param>
             public BasePawnMoved AddEnergy(string energy) {
                 parameters.Add("energy", energy);
                 return this;
             }
             
+            /// <param name="kind">The type of pawn that was moved.</param>
             public BasePawnMoved AddKind(string kind) {
                 parameters.Add("kind", kind);
                 return this;
             }
             
+            /// <param name="location">The location where the pawn was moved.</param>
             public BasePawnMoved AddLocation(string location) {
                 parameters.Add("location", location);
                 return this;
             }
             
+            /// <param name="rarity">The rarity of the moved pawn.</param>
             public BasePawnMoved AddRarity(string rarity) {
                 parameters.Add("rarity", rarity);
                 return this;
             }
             
+            /// <param name="label">The label attached to the pawn.</param>
             public BasePawnMoved AddLabel(string label) {
                 parameters.Add("label", label);
                 return this;
@@ -1403,9 +1484,9 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Triggered when the user either moves or changes the state of an in-game object
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name">The name of the object moved.</param>
         /// <returns></returns>
         public static BasePawnMoved PawnMoved(string name) {
             return new BasePawnMoved(name);
@@ -1418,7 +1499,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Triggered when the user interacts with the leaderboard/league
         /// </summary>
         /// <returns></returns>
         public static BasePlayerLeagueChanged PlayerLeagueChanged() {
@@ -1431,21 +1512,25 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
                 parameters.Add("timedAction", timedAction);
             }
             
+            /// <param name="label">The label attached to the action.</param>
             public BaseTimedAction AddLabel(string label) {
                 parameters.Add("label", label);
                 return this;
             }
             
+            /// <param name="timedObject">The object associated with the action.</param>
             public BaseTimedAction AddTimedObject(string timedObject) {
                 parameters.Add("timedObject", timedObject);
                 return this;
             }
             
+            /// <param name="timeToFinish">The amount of time required to finish the action.</param>
             public BaseTimedAction AddTimeToFinish(int timeToFinish) {
                 parameters.Add("timeToFinish", timeToFinish);
                 return this;
             }
             
+            /// <param name="effectMultiplier">The multiplier influencing the action.</param>
             public BaseTimedAction AddEffectMultiplier(float effectMultiplier) {
                 parameters.Add("effectMultiplier", effectMultiplier);
                 return this;
@@ -1453,9 +1538,9 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         } 
         
         /// <summary>
-        /// 
+        /// Event used for tracking the state of a timed action in game, e.g. in Operate Now when the user assigns a staff member to the break room to regenerate energy,the event is fired at start and end of the regeneration
         /// </summary>
-        /// <param name="timedAction"></param>
+        /// <param name="timedAction">The name of the action.</param>
         /// <returns></returns>
         public static BasePawnMoved TimedAction(string timedAction) {
             return new BasePawnMoved(timedAction);
@@ -1468,7 +1553,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Triggered when the player moved to the main menu.
         /// </summary>
         /// <returns></returns>
         public static BaseTransitionToMenu TransitionToMenu() {
@@ -1483,7 +1568,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         }
         
         /// <summary>
-        /// 
+        /// Triggered when the player entered game mode.
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>

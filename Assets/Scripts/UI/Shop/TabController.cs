@@ -13,9 +13,13 @@ public class TabController : MonoBehaviour {
 
 	public BundleDisplayPanelController bundleDisplayPanel;
 
-	public void SetupTab(Tab tab){
+	public void SetupTab(ShopPanelController shopPanelController, Tab tab){
 		tabTitle.text = tab.Name;
 		foreach(Entry entry in tab.Entries){
+			if (entry.Id == 100405) {
+				
+			}
+			
 			bool hasItem = false;
 			if (entry.Type.Equals("BUNDLE")) {
 				Bundle bundle = Spil.GameData.GetBundle (entry.Id);
@@ -33,12 +37,24 @@ public class TabController : MonoBehaviour {
 			}
 
 			if (!hasItem) {
-				CreateBundleButton (entry);
+				CreateBundleButton (shopPanelController, entry);
 			}
 		}
 	}
 		
-	void CreateBundleButton(Entry entry){
+	void CreateBundleButton(ShopPanelController shopPanelController, Entry entry){
+		if (entry.Id == 100405) {
+			if (shopPanelController.gameController.backgroundRuin == null) {
+				return;
+			}
+		}
+
+		if (entry.Id == 100406) {
+			if (shopPanelController.gameController.backgroundTown == null) {
+				return;
+			}
+		}
+		
 		GameObject newButton = (GameObject)Instantiate (entryButtonPrefab);
 		newButton.transform.SetParent (listOfEntryButtonsParent);
 		newButton.GetComponent<EntryButtonController> ().SetupButton (entry,this);

@@ -7,9 +7,9 @@ using SpilGames.Unity.Base.Implementations.Tracking;
 using SpilGames.Unity.Json;
 using SpilGames.Unity.Base.SDK;
 using SpilGames.Unity.Helpers.AssetBundles;
+using SpilGames.Unity.Helpers.EventParams;
 using SpilGames.Unity.Helpers.IAPPackages;
 using SpilGames.Unity.Helpers.Promotions;
-using SpilGames.Unity.Helpers.EventParams;
 
 namespace SpilGames.Unity.Base.Implementations{
     public abstract class SpilUnityImplementationBase{
@@ -31,10 +31,6 @@ namespace SpilGames.Unity.Base.Implementations{
         /// <typeparam name="T">The user-defined class that mirrors the shape of the data in the JSON</typeparam>
         /// <returns></returns>
         public T GetConfig<T>() where T : new() {
-            SpilTracking.LevelComplete("level").AddDifficulty("1").Track();
-            SpilTracking.CustomEvent("test").Track();
-            OperateNowTracking.LevelStart("level", "bla").Track();
-            
             return JsonHelper.getObjectFromJson<T>(GetConfigAll());
         }
 

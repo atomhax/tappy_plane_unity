@@ -1036,7 +1036,11 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             }
     
             TieredEventProgress tieredProgress = TieredEventManager.tieredEventsOverview.progress[selectedTieredEvent.id];
-    
+
+            if (tieredProgress == null || tieredProgress.completed) {
+                return;
+            }
+            
             TieredEventTier currentTier = null;
 
             foreach (TieredEventTier tier in selectedTieredEvent.tiers) {

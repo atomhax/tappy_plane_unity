@@ -9,6 +9,7 @@ using SpilGames.Unity.Base.Implementations;
 using System.Xml;
 using SpilGames.Unity.Base.UnityEditor;
 using SpilGames.Unity.Json;
+using UnityEngine.Analytics;
 
 
 public class SpilAndroidBuildPostProcess : MonoBehaviour {
@@ -36,6 +37,9 @@ public class SpilAndroidBuildPostProcess : MonoBehaviour {
 
             //Check if the Spil SDK is up-to-date
             CheckLatestPluginVersion();
+            
+            Analytics.enabled = false;
+            Analytics.deviceStatsEnabled = false;
         }
     }
 

@@ -9,7 +9,7 @@ public class EntryButtonController : MonoBehaviour {
 	Entry entry;
 	
 	Bundle bundle;
-
+	
 	public Text buttonLabel;
 
 	public GameObject saleImage;

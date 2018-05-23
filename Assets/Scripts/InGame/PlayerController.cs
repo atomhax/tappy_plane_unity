@@ -80,7 +80,13 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 		
-	public void SetupPlayerSkin(){
-		GetComponent<Animator>().runtimeAnimatorController = playerSkinAnimators[PlayerPrefs.GetInt("Skin",0)];
+	public void SetupPlayerSkin() {
+		RuntimeAnimatorController animatorController = playerSkinAnimators[PlayerPrefs.GetInt("Skin", 0)];
+
+		if (animatorController != null) {
+			GetComponent<Animator>().runtimeAnimatorController = animatorController;
+		} else {
+			GetComponent<Animator>().runtimeAnimatorController = playerSkinAnimators[0];
+		}
 	}
 }

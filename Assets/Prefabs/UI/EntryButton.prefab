@@ -134,6 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d26798d419284c1cb12e5e90d805540, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shopPanelController: {fileID: 0}
   buttonLabel: {fileID: 11464754}
   saleImage: {fileID: 1993681721017152}
 --- !u!114 &11464754
