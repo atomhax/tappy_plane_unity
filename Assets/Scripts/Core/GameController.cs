@@ -901,7 +901,10 @@ public class GameController : MonoBehaviour
     }
 
     public void OpenTieredEvent() {
-        Spil.Instance.ShowTieredEventProgress(Spil.Instance.GetAllTieredEvents()[0].id);
+        if (!overlayEnabled) {
+            overlayEnabled = true;
+            Spil.Instance.ShowTieredEventProgress(Spil.Instance.GetAllTieredEvents()[0].id); 
+        } 
     }
     
     private void OnAssetBundlesAvailable() {

@@ -193,15 +193,21 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
         static void OpenTieredEventProgressView(ShowProgressResponse showProgressResponse) {
             currentTieredEvent = tieredEventsOverview.tieredEvents[showProgressResponse.tieredEventId];
-            currentTier = currentTieredEvent.tiers.First(a => a.id == showProgressResponse.currentTierId);
+
+            string info = "";
+            
+            if (showProgressResponse.currentTierId != 0) {
+                currentTier = currentTieredEvent.tiers.First(a => a.id == showProgressResponse.currentTierId);
+                tieredEventTierTitleText = currentTier.name + " (Id: " + currentTier.id + ")";
+                
+                info = info + "Tier Start: " + currentTier.entityTierStart + " Tier End: " + currentTier.entityTierEnd + "\n";
+            }  
             
             TieredEventOverlay = (GameObject)Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/TieredEventInfo.prefab"));
             TieredEventOverlay.SetActive(true);
             
             tieredEventTitleText = currentTieredEvent.name;
-            tieredEventTierTitleText = currentTier.name + " (Id: " + currentTier.id + ")";
-
-            string info = "Tier Start: " + currentTier.entityTierStart + " Tier End: " + currentTier.entityTierEnd + "\n";
+            
             info = info + "Current amount: " + showProgressResponse.currentAmount + "\n";
             info = info + "Claimable tiers: " + JsonHelper.getJSONFromObject(showProgressResponse.claimableTiers) + "\n";
             info = info + "Completed tiers: " + JsonHelper.getJSONFromObject(showProgressResponse.completedTiers) + "\n";
@@ -212,7 +218,9 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         }
 
         public void ClaimTierRewardButton() {
-            ClaimTierReward(currentTieredEvent.id, currentTier.id);
+            if (currentTier != null) {
+                ClaimTierReward(currentTieredEvent.id, currentTier.id);  
+            }   
             
             currentTieredEvent = null;
             currentTier = null;
