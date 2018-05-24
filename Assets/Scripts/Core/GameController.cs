@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Xml;
+using System.Text.RegularExpressions;
+using System.Linq;
 using SpilGames.Unity;
 using SpilGames.Unity.Base.Implementations;
 using SpilGames.Unity.Base.SDK;
@@ -244,8 +246,7 @@ public class GameController : MonoBehaviour
 #if UNITY_EDITOR
         if (Spil.RewardToken != null && !Spil.RewardToken.Equals(""))
         {
-            Spil.TokenRewardTypeEnum rewardType = Spil.MonoInstance.TokenRewardType;
-            Spil.Instance.ClaimToken(Spil.RewardToken, rewardType.ToString());
+			Spil.Instance.ClaimToken(Spil.RewardToken, "deeplink");
         }
 #endif
 
@@ -588,7 +589,7 @@ public class GameController : MonoBehaviour
     }
 
     private void OnFBInitComplete() {
-        Debug.Log("Facebook Inistialised");
+        Debug.Log("Facebook Initialised");
         
         if (Spil.Instance.IsLoggedIn()) {
 #if UNITY_IOS
@@ -616,6 +617,9 @@ public class GameController : MonoBehaviour
             FacebookLogin();
 #endif
         }
+
+		FB.GetAppLink(DeepLinkCallback);
+		FB.Mobile.FetchDeferredAppLinkData(DeepLinkCallback);
     }
 
     public void FacebookLogin() {
@@ -701,6 +705,38 @@ public class GameController : MonoBehaviour
         }
     }
 #endif
+
+	void DeepLinkCallback(IAppLinkResult result) {
+
+		// Tested with FB dev console deeplink helper: tappyplane://token=DCWC0P78&reward=%5B%7B%22type%22%3A+%22CURRENCY%22%2C+%22amount%22%3A+1000%2C+%22id%22%3A+28%7D%5D
+		// Tested with add links on custom made web page: http://splashscreens.cdn.spilcloud.com/4/FBDeeplinkTest4.html
+
+		Debug.Log("FB DeeplinkCallback: " + result);
+		if(!String.IsNullOrEmpty(result.Url)) {
+			Debug.Log("FB Deeplink detected: " + result.Url);
+
+			Dictionary<string, string> urlParams = GetParams (result.Url.Replace("://", "://&")); // Hack fix: Make sure the token parameter is detected.
+
+			string rewardToken = urlParams["token"];
+			if(!String.IsNullOrEmpty(rewardToken)) {
+
+				Debug.Log("RewardToken: " + rewardToken);
+
+				string rewardData = urlParams["reward"];
+				if (!String.IsNullOrEmpty (rewardData)) {
+					Spil.Instance.ClaimToken(rewardToken, "deeplink");
+				}
+			}
+		}
+	}
+
+	static Dictionary<string, string> GetParams(string uri) {
+		MatchCollection matches = Regex.Matches(uri, @"[\?&](([^&=]+)=([^&=#]*))", RegexOptions.None);
+		return matches.Cast<Match>().ToDictionary(
+			m => Uri.UnescapeDataString(m.Groups[2].Value),
+			m => Uri.UnescapeDataString(m.Groups[3].Value)
+		);
+	}
 
     public void RequestDailyBonus() {
         Spil.Instance.RequestDailyBonus();
@@ -811,7 +847,8 @@ public class GameController : MonoBehaviour
 
     void OnRewardTokenClaimed(List<RewardObject> reward, string rewardType) {
         Debug.Log("Claimed reward for: " + rewardType + "-- And reward: " + JsonHelper.getJSONFromObject(reward));
-    }
+    	
+	}
 
     void OnRewardTokenClaimFailed(string rewardType, SpilErrorMessage error) {
         Debug.Log("Error claiming reward for: " + rewardType + "-- With message: " + error.message);
