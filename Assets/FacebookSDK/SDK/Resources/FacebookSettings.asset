@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedAppIndex: 0
   clientTokens:
-  - 
+  - 4301e61dd560374f00a123f9ff664989
   appIds:
   - 1210711722283789
   appLabels:
@@ -25,4 +25,6 @@ MonoBehaviour:
   frictionlessRequests: 1
   iosURLSuffix: 
   appLinkSchemes:
-  - list: []
+  - list:
+    - tappyplane
+  uploadAccessToken: 
