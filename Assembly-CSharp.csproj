@@ -314,13 +314,13 @@
       <Project>{12C0FBD5-B090-A94D-1AF8-3A80511B45DB}</Project>
       <Name>Assembly-CSharp-firstpass</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Analytics.DataPrivacy.csproj">
-      <Project>{ABFCD062-638F-7C06-7CF0-CB586B98A3F9}</Project>
-      <Name>Unity.Analytics.DataPrivacy</Name>
-    </ProjectReference>
     <ProjectReference Include="Unity.Analytics.DataPrivacy.Editor.csproj">
       <Project>{C741B4A6-2A88-B34B-BF30-2BDD70526047}</Project>
       <Name>Unity.Analytics.DataPrivacy.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Analytics.DataPrivacy.csproj">
+      <Project>{ABFCD062-638F-7C06-7CF0-CB586B98A3F9}</Project>
+      <Name>Unity.Analytics.DataPrivacy</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
