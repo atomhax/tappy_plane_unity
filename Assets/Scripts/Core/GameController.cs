@@ -710,8 +710,7 @@ public class GameController : MonoBehaviour
 		}
 	}
 
-	static Dictionary<string, string> GetParams(string uri)
-	{
+	static Dictionary<string, string> GetParams(string uri) {
 		MatchCollection matches = Regex.Matches(uri, @"[\?&](([^&=]+)=([^&=#]*))", RegexOptions.None);
 		return matches.Cast<Match>().ToDictionary(
 			m => Uri.UnescapeDataString(m.Groups[2].Value),
