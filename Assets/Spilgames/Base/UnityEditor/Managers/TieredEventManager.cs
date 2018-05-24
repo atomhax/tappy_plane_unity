@@ -22,7 +22,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         // Event params
         const string TieredEventId = "tieredEventId";
         const string TieredEvents = "tieredEvents";
-        const string TierEventName = "tierEventName";
+        const string TierEventName = "tieredEventName";
         const string EntityId = "entityId";
         const string EntityType = "entityType";
         const string EntityAmount = "entityAmount";
