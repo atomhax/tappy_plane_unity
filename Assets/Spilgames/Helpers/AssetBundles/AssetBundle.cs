@@ -44,8 +44,13 @@ namespace SpilGames.Unity.Helpers.AssetBundles {
             this.type = type;
             this.endDate = endDate;
             this.url = url;
-            this.hash = Hash128.Parse(hash);
-            this.version = Convert.ToUInt32(version);
+            if (hash != null) {
+                this.hash = Hash128.Parse(hash);  
+            }
+
+            if (version > 0) {
+                this.version = Convert.ToUInt32(version);
+            }  
         }
         
         public bool IsValid() {

@@ -717,16 +717,18 @@ public class GameController : MonoBehaviour
 
 			Dictionary<string, string> urlParams = GetParams (result.Url.Replace("://", "://&")); // Hack fix: Make sure the token parameter is detected.
 
-			string rewardToken = urlParams["token"];
-			if(!String.IsNullOrEmpty(rewardToken)) {
+		    if (urlParams.ContainsKey("token")) {
+		        string rewardToken = urlParams["token"];
+		        if(!String.IsNullOrEmpty(rewardToken)) {
 
-				Debug.Log("RewardToken: " + rewardToken);
+		            Debug.Log("RewardToken: " + rewardToken);
 
-				string rewardData = urlParams["reward"];
-				if (!String.IsNullOrEmpty (rewardData)) {
-					Spil.Instance.ClaimToken(rewardToken, "deeplink");
-				}
-			}
+		            string rewardData = urlParams["reward"];
+		            if (!String.IsNullOrEmpty (rewardData)) {
+		                Spil.Instance.ClaimToken(rewardToken, "deeplink");
+		            }
+		        }
+		    }
 		}
 	}
 
