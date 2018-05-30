@@ -25,6 +25,10 @@ public class BackgroundButtonController : MonoBehaviour {
 	}
 
 	public void SetupButton(){
+		owned = false;
+		lockImage.enabled = true;
+		backgroundImage.color = unselectedColor;
+		
 		if (position == 3) {
 			if (skinSelectPanelController.gameController.backgroundRuin == null) {
 				gameObject.SetActive(false);

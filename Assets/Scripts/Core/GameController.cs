@@ -67,6 +67,7 @@ public class GameController : MonoBehaviour
         shopPanel,
         skinSelectPanel,
         tabsPanel,
+        quitGamePanel,
         inGamePurchaseSuccessPanel,
         inGamePurchaseFailPanel,
         highScorePanel,
@@ -79,6 +80,8 @@ public class GameController : MonoBehaviour
         FBLogoutButton,
         FBShareButton;
 
+    public AudioSource backgroundMusic;
+    
     public RuntimeAnimatorController goldPlaneController;
     public Sprite backgroundRuin;
     public Sprite backgroundTown;
@@ -259,6 +262,20 @@ public class GameController : MonoBehaviour
         if (!Spil.CheckPrivacyPolicy) {
             InitComponents();
         }
+        
+        backgroundMusic.Play();
+    }
+
+    void Update() {
+        #if UNITY_ANDROID
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            if (quitGamePanel.activeSelf) {
+                quitGamePanel.SetActive(false);
+            } else {
+                quitGamePanel.SetActive(true);
+            }
+        }
+        #endif
     }
 
     #if UNITY_TVOS
@@ -1171,6 +1188,14 @@ public class GameController : MonoBehaviour
     }
 #endif
 
+    public void QuitGame() {
+        Application.Quit();
+    }
+
+    public void CloseQuitGamePanel() {
+        quitGamePanel.SetActive(false);
+    }
+    
     /*public void FBShareScore ()
     {
         System.Uri url = new System.Uri ("http://files.cdn.spilcloud.com/10/1479133368_tappy_logo.png");

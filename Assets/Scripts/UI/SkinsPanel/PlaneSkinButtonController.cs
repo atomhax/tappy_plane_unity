@@ -25,7 +25,11 @@ public class PlaneSkinButtonController : MonoBehaviour {
 		SetupButton ();
 	}
 
-	public void SetupButton(){
+	public void SetupButton() {
+		owned = false;
+		lockImage.enabled = true;
+		backgroundImage.color = unselectedColor;
+		
 		if (position == 3) {
 			if (skinSelectPanelController.gameController.goldPlaneController == null) {
 				gameObject.SetActive(false);
