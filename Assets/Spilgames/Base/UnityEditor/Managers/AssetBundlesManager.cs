@@ -49,6 +49,14 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                         if (assetBundle.HasField("url")) {
                             assetBundleData.url = assetBundle.GetField("url").str;
                         }
+
+                        if (assetBundle.HasField("hash")) {
+                            assetBundleData.hash = assetBundle.GetField("hash").str;
+                        }
+
+                        if (assetBundle.HasField("version")) {
+                            assetBundleData.version = (int) assetBundle.GetField("version").i;
+                        }
                         
                         AssetBundlesManager.AssetBundlesData.Add(assetBundleData);
                     }

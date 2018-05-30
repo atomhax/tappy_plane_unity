@@ -44,7 +44,7 @@ namespace SpilGames.Unity.Helpers.AssetBundles {
             this.type = type;
             this.endDate = endDate;
             this.url = url;
-            if (hash != null) {
+            if (hash != null && !hash.Equals("")) {
                 this.hash = Hash128.Parse(hash);  
             }
 
