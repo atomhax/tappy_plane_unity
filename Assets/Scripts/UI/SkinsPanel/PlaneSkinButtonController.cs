@@ -26,17 +26,6 @@ public class PlaneSkinButtonController : MonoBehaviour {
 	}
 
 	public void SetupButton() {
-		owned = false;
-		lockImage.enabled = true;
-		backgroundImage.color = unselectedColor;
-		
-		if (position == 3) {
-			if (skinSelectPanelController.gameController.goldPlaneController == null) {
-				gameObject.SetActive(false);
-				return;
-			}
-		}
-		
 		if (PlayerPrefs.GetInt ("Skin", 0) == position) {
 			backgroundImage.color = selectedColor;
 		} else {
@@ -51,6 +40,13 @@ public class PlaneSkinButtonController : MonoBehaviour {
 		if(Spil.PlayerData.InventoryHasItem(itemID)){
 			lockImage.enabled = false;
 			owned = true;
+		}
+		
+		if (position == 3) {
+			if (skinSelectPanelController.gameController.goldPlaneController == null) {
+				gameObject.SetActive(false);
+				return;
+			}
 		}
 	}
 		

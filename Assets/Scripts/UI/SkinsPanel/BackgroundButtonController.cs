@@ -25,19 +25,6 @@ public class BackgroundButtonController : MonoBehaviour {
 	}
 
 	public void SetupButton(){
-		owned = false;
-		lockImage.enabled = true;
-		backgroundImage.color = unselectedColor;
-		
-		if (position == 3) {
-			if (skinSelectPanelController.gameController.backgroundRuin == null) {
-				gameObject.SetActive(false);
-				return;
-			}
-
-			playerImage.sprite = skinSelectPanelController.gameController.backgroundRuin;
-		}
-		
 		if (position == 4) {
 			if (skinSelectPanelController.gameController.backgroundTown == null) {
 				gameObject.SetActive(false);
@@ -62,6 +49,14 @@ public class BackgroundButtonController : MonoBehaviour {
 			owned = true;
 		}
 			
+		if (position == 3) {
+			if (skinSelectPanelController.gameController.backgroundRuin == null) {
+				gameObject.SetActive(false);
+				return;
+			}
+
+			playerImage.sprite = skinSelectPanelController.gameController.backgroundRuin;
+		}
 	}
 
 	public void ButtonClicked(){
