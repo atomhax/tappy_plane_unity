@@ -22,10 +22,14 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 
 	IStoreController m_StoreController;
 	IExtensionProvider m_StoreExtensionProvider;
+	IAppleExtensions m_AppleExtensions;
 
 	public Dictionary<string, string> packageCosts = new Dictionary<string,string> ();
 
+	public bool restore = false;
+
 	public IAPPanelController iapPanelController;
+	public SkinSelectPanelController skinSelectPanelController;
 
 
 	void Start ()
@@ -101,6 +105,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 		}
 		
 		iapPanelController.PurchaseStarted ();
+		skinSelectPanelController.PurchaseStarted ();
 		lastProductSKU = productId;
 		// If the stores throw an unexpected exception, use try..catch to protect my logic here.
 		try {
@@ -131,6 +136,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 			// ... by reporting any unexpected exception for later diagnosis.
 			Debug.Log ("BuyProductID: FAIL. Exception during purchase. " + e);
 			iapPanelController.pleaseWaitPanel.SetActive(false);
+			skinSelectPanelController.pleaseWaitPanel.SetActive(false);
 		}
 	}
 
@@ -142,6 +148,10 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 
 		packageCosts.Clear ();
 		m_StoreController = controller;
+		
+		m_AppleExtensions = extensions.GetExtension<IAppleExtensions>();
+		m_AppleExtensions.RegisterPurchaseDeferredListener(OnDeferred);
+		
 		m_StoreExtensionProvider = extensions;
 		StoreProductPrices ();
 	}
@@ -197,9 +207,17 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 		Spil.Instance.TrackIAPPurchasedEvent (skuId, transactionID, token, "purchase", "store");
 
 		#elif UNITY_IOS
+		
+		string skuId = args.purchasedProduct.definition.id;
+		string transactionID = args.purchasedProduct.transactionID;
 
-		Spil.Instance.TrackIAPPurchasedEvent(args.purchasedProduct.definition.storeSpecificId, args.purchasedProduct.transactionID, null, "diamondPurchase", "store");
-
+		if (!restore) {
+			Spil.Instance.TrackIAPPurchasedEvent(skuId, transactionID, null, "diamondPurchase", "store");
+		}
+		else {
+			Spil.Instance.TrackIAPRestoredEvent(skuId, transactionID, "2018-04-30T11:54:48.5247936+02:00", "IAP Restore"); // TODO: How to get the original purchase date?
+		}
+		
 		#endif
 
 		if (skuId.Equals("com.spilgames.tappyplane.goldplane")) {
@@ -209,6 +227,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 		}		
 
 		iapPanelController.PurchaseSuccess (args.purchasedProduct.metadata.localizedTitle);
+		skinSelectPanelController.PurchaseSuccess (args.purchasedProduct.metadata.localizedTitle);
 		return PurchaseProcessingResult.Complete;
 	}
 
@@ -239,7 +258,29 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 		#endif
 
 		iapPanelController.PurchaseFailed ();
+		skinSelectPanelController.PurchaseFailed ();
 		Spil.Instance.TrackIAPFailedEvent (failureReason.ToString (), product.definition.storeSpecificId);
 	}
-
+	
+	public void RestoreIAPs()
+	{
+		restore = true;
+		m_AppleExtensions.RestoreTransactions(OnTransactionsRestored);
+	}
+	
+	private void OnTransactionsRestored(bool success)
+	{
+		Debug.Log("Transactions restored.");
+		restore = false;
+	}
+	
+	private void OnDeferred(Product item)
+	{
+		Debug.Log("Purchase deferred: " + item.definition.id);
+		/*if (item.definition.id.Equals("com.spilgames.tappyplane.goldplane"))
+		{
+			Spil.Instance.AddItemToInventory(100291, 1, PlayerDataUpdateReasons.IAP, "IAP Restore", null, null);
+			Spil.Instance.TrackIAPRestoredEvent(item.definition.id, item.transactionID, item, "IAP Restore");
+		}*/
+	}
 }

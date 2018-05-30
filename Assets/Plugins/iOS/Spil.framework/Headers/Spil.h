@@ -143,6 +143,10 @@
 -(void)tieredEventProgressClosed;
 -(void)tieredEventsError:(nonnull NSString*)error;
 
+// Asset bundles
+-(void)assetBundlesAvailable;
+-(void)assetBundlesNotAvailable;
+
 @end
 
 @interface Spil : NSObject {
@@ -1057,6 +1061,18 @@
  * Show the default user data merge failed dialog
  */
 +(void)showUserDataMergeFailedDialog:(nonnull NSString*)title withMessage:(nonnull NSString*)message retryButtonText:(nonnull NSString*)retryButton mergeData:(nonnull NSString*)mergeData mergeType:(nonnull NSString*)mergeType;
+
+#pragma mark Asset bundles
+
+/**
+ * Show the default user data merge failed dialog
+ */
++(void)requestAssetBundles;
+
+/**
+ * Get the loaded asset bundles as json list
+ */
++(nonnull NSArray*)getAssetBundles;
 
 #pragma test methods (dev)
 
