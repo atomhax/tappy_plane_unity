@@ -111,13 +111,20 @@ namespace SpilGames.Unity.Base.Implementations
     #endregion
     
     #region AssetBundles
+
+        public override void RequestAssetBundles() {
+            requestAssetBundlesNative();
+        }
+        
+        [DllImport("__Internal")]
+        private static extern void requestAssetBundlesNative();
      
-        public override void GetAllAssetBundles() {
-            getAssetBundles();
+        public override string GetAllAssetBundles() {
+            return getAssetBundlesNative();
         }
     
         [DllImport("__Internal")]
-        private static extern void getAssetBundles();
+        private static extern string getAssetBundlesNative();
     
     #endregion
     
@@ -148,7 +155,7 @@ namespace SpilGames.Unity.Base.Implementations
         /// </summary>
         /// <param name="eventName"></param>
         /// <param name="dict"></param>
-        protected override void SendCustomEvent(string eventName, Dictionary<string, object> dict)
+        internal override void SendCustomEventInternal(string eventName, Dictionary<string, object> dict)
         {
             Debug.Log("SpilSDK-Unity SendCustomEvent \"" + eventName + "\"" + (dict == null ? "" : " params: " + JsonHelper.DictToJSONObject(dict).ToString()));
 

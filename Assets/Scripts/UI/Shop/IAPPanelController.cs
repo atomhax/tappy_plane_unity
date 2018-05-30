@@ -31,14 +31,23 @@ public class IAPPanelController : MonoBehaviour {
 	}
 
 	public void PurchaseStarted(){
+		if (!isActiveAndEnabled) {
+			return;
+		}
 		pleaseWaitPanel.SetActive (true);
 	}
 	public void PurchaseSuccess(string purchase){
+		if (!isActiveAndEnabled) {
+			return;
+		}
 		pleaseWaitPanel.SetActive (false);
 		successPanelText.text = "Purchase successful\n" + purchase;
 		purchaseSuccessPanel.SetActive (true);
 	}
 	public void PurchaseFailed(){
+		if (!isActiveAndEnabled) {
+			return;
+		}
 		pleaseWaitPanel.SetActive (false);
 		purchaseFailedPanel.SetActive (true);
 	}

@@ -6,6 +6,7 @@ using SpilGames.Unity;
 using SpilGames.Unity.Helpers;
 using UnityEngine.EventSystems;
 using SpilGames.Unity.Json;
+using UnityEngine.UI;
 
 public class SkinSelectPanelController : MonoBehaviour {
 
@@ -16,6 +17,10 @@ public class SkinSelectPanelController : MonoBehaviour {
 	public GameController gameController;
 
 	public MyIAPManager iapManager;
+	
+	public GameObject pleaseWaitPanel, purchaseSuccessPanel, purchaseFailedPanel;
+	
+	public Text successPanelText;
 
 	public void OnEnable() {
 		#if UNITY_TVOS
@@ -66,5 +71,29 @@ public class SkinSelectPanelController : MonoBehaviour {
 		string gameStateJson = JsonHelper.getJSONFromObject(gameState);
 		Spil.Instance.SetPrivateGameState(gameStateJson);
 	}
-
+	
+	public void PurchaseStarted(){
+		if (!isActiveAndEnabled) {
+			return;
+		}
+		pleaseWaitPanel.SetActive (true);
+	}
+	
+	public void PurchaseSuccess(string purchase){
+		if (!isActiveAndEnabled) {
+			return;
+		}
+		pleaseWaitPanel.SetActive (false);
+		successPanelText.text = "Purchase successful\n" + purchase;
+		purchaseSuccessPanel.SetActive (true);
+		Invoke("UpdateButtons", 1);
+	}
+	
+	public void PurchaseFailed(){
+		if (!isActiveAndEnabled) {
+			return;
+		}
+		pleaseWaitPanel.SetActive (false);
+		purchaseFailedPanel.SetActive (true);
+	}
 }

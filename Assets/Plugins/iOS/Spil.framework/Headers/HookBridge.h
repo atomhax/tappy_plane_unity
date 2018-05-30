@@ -274,6 +274,12 @@ extern "C" {
     void showSyncErrorDialogNative(char* title, char* message, char* mergeButtonText);
     
     void showMergeFailedDialogNative(char* title, char* message, char* retryButtonText, char* mergeData, char* mergeType);
+    
+    // --- Asset bundles ---
+    
+    void requestAssetBundlesNative();
+    
+    char* getAssetBundlesNative();
 }
 
 #endif
