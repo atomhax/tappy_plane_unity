@@ -25,9 +25,9 @@ public class SpilEditorConfig : EditorWindow {
     public static string androidPackageName;
 
     public static string GetAndroidPackageName() {
-#if UNITY_5_6_OR_NEWER
+        #if UNITY_5_6_OR_NEWER
         return PlayerSettings.applicationIdentifier;
-#elif UNITY_5_3_OR_NEWER
+        #elif UNITY_5_3_OR_NEWER
 		    return PlayerSettings.bundleIdentifier;
 #endif
     }
@@ -35,16 +35,16 @@ public class SpilEditorConfig : EditorWindow {
     public static string iosBundelId;
 
     public static string GetIOSBundleId() {
-#if UNITY_5_6_OR_NEWER
+        #if UNITY_5_6_OR_NEWER
         return PlayerSettings.applicationIdentifier;
-#elif UNITY_5_3_OR_NEWER
+        #elif UNITY_5_3_OR_NEWER
 		        return PlayerSettings.bundleIdentifier;
 #endif
     }
 
     public static bool retrievalError;
 
-    [MenuItem("Spil SDK/Configuration", false, 0)]
+    [MenuItem("Spil SDK/Configuration", false, 1)]
     static void Init() {
         spil = GameObject.FindObjectOfType<Spil>();
         SpilEditorConfig window = (SpilEditorConfig) EditorWindow.GetWindow(typeof(SpilEditorConfig));
@@ -60,40 +60,39 @@ public class SpilEditorConfig : EditorWindow {
 
     void OnGUI() {
         GUILayout.BeginVertical();
-        scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(position.width),
-            GUILayout.Height(position.height));
-        {
-            GUILayout.BeginHorizontal();
-            {
-                if (GUILayout.Toggle(tabSelected == 0, "General", EditorStyles.toolbarButton)) {
-                    tabSelected = 0;
-                }
-                if (GUILayout.Toggle(tabSelected == 1, "iOS", EditorStyles.toolbarButton)) {
-                    tabSelected = 1;
-                }
-                if (GUILayout.Toggle(tabSelected == 2, "Android", EditorStyles.toolbarButton)) {
-                    tabSelected = 2;
-                }
-                if (GUILayout.Toggle(tabSelected == 3, "Editor", EditorStyles.toolbarButton)) {
-                    tabSelected = 3;
-                }
-            }
-            GUILayout.EndHorizontal();
+        scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(position.width), GUILayout.Height(position.height));
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Toggle(tabSelected == 0, "General", EditorStyles.toolbarButton)) {
+            tabSelected = 0;
+        }
 
-            switch (tabSelected) {
-                case 0:
-                    DrawGeneral();
-                    break;
-                case 1:
-                    DrawIOS();
-                    break;
-                case 2:
-                    DrawAndroid();
-                    break;
-                case 3:
-                    DrawEditor();
-                    break;
-            }
+        if (GUILayout.Toggle(tabSelected == 1, "iOS", EditorStyles.toolbarButton)) {
+            tabSelected = 1;
+        }
+
+        if (GUILayout.Toggle(tabSelected == 2, "Android", EditorStyles.toolbarButton)) {
+            tabSelected = 2;
+        }
+
+        if (GUILayout.Toggle(tabSelected == 3, "Editor", EditorStyles.toolbarButton)) {
+            tabSelected = 3;
+        }
+
+        GUILayout.EndHorizontal();
+
+        switch (tabSelected) {
+            case 0:
+                DrawGeneral();
+                break;
+            case 1:
+                DrawIOS();
+                break;
+            case 2:
+                DrawAndroid();
+                break;
+            case 3:
+                DrawEditor();
+                break;
         }
 
         EditorGUILayout.EndScrollView();
@@ -101,7 +100,6 @@ public class SpilEditorConfig : EditorWindow {
     }
 
     private void DrawGeneral() {
-       
         GUILayout.Label("");
         GUILayout.Label(
             "WARNING: Please make sure to set your bundle ID in your player settings before getting your game data.\nPlease also note that this tool will only work if your build target is set to iOS or Android",
@@ -155,11 +153,12 @@ public class SpilEditorConfig : EditorWindow {
                     string message = "The displayed configuration has been truncated. If you want to view the full configuration please check SLOT!\n\n";
                     string androidConfigPartial = androidConfig.Substring(0, 15000);
                     GUILayout.Label(message + androidConfigPartial, EditorStyles.wordWrappedLabel);
-                } else {
+                }
+                else {
                     GUILayout.Label(androidConfig, EditorStyles.wordWrappedLabel);
                 }
-                
             }
+
             GUILayout.Label("");
             if (configJSON.HasField("iosSdkConfig")) {
                 if (ios == null) {
@@ -171,8 +170,9 @@ public class SpilEditorConfig : EditorWindow {
                 if (iosConfig.Length > 15000) {
                     string message = "The displayed configuration has been truncated. If you want to view the full configuration please check SLOT!\n\n";
                     string androidConfigPartial = iosConfig.Substring(0, 15000);
-                    GUILayout.Label(message + androidConfigPartial, EditorStyles.wordWrappedLabel); 
-                } else {
+                    GUILayout.Label(message + androidConfigPartial, EditorStyles.wordWrappedLabel);
+                }
+                else {
                     GUILayout.Label(iosConfig, EditorStyles.wordWrappedLabel);
                 }
             }
@@ -218,9 +218,7 @@ public class SpilEditorConfig : EditorWindow {
         string spilSDK = "spilsdk-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
         string spilSDKAdjust = "spilsdk-adjust-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
         string spilSDKChartboost = "spilsdk-chartboost-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
-        string spilSDKDFP = "spilsdk-dfp-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
-        string spilSDKFyber = "spilsdk-fyber-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
-        string spilSDKZendesk = "spilsdk-zendesk-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
+        string spilSDKAdMob = "spilsdk-admob-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
 
         var styleGreen = new GUIStyle(EditorStyles.label);
         Color green = new Color();
@@ -233,9 +231,7 @@ public class SpilEditorConfig : EditorWindow {
         string spilSDKCheck = "";
         string spilSDKAdjustCheck = "";
         string spilSDKChartboostCheck = "";
-        string spilSDKDFPCheck = "";
-        string spilSDKFyberCheck = "";
-        string spilSDKZendeskCheck = "";
+        string spilSDKAdMobCheck = "";
 
         if (!File.Exists(androidFolder + spilSDK)) {
             spilSDKCheck = " - False";
@@ -264,33 +260,14 @@ public class SpilEditorConfig : EditorWindow {
             GUILayout.Label(" • Chartboost (Advertising):" + spilSDKChartboostCheck, styleGreen);
         }
 
-        if (!File.Exists(androidFolder + spilSDKDFP)) {
-            spilSDKDFPCheck = " - False";
-            GUILayout.Label(" • DFP (Advertising):" + spilSDKDFPCheck, styleRed);
+        if (!File.Exists(androidFolder + spilSDKAdMob)) {
+            spilSDKAdMobCheck = " - False";
+            GUILayout.Label(" • AdMob (Advertising):" + spilSDKAdMobCheck, styleRed);
         }
         else {
-            spilSDKDFPCheck = " - True";
-            GUILayout.Label(" • DFP (Advertising):" + spilSDKDFPCheck, styleGreen);
+            spilSDKAdMobCheck = " - True";
+            GUILayout.Label(" • AdMob (Advertising):" + spilSDKAdMobCheck, styleGreen);
         }
-
-        if (!File.Exists(androidFolder + spilSDKFyber)) {
-            spilSDKFyberCheck = " - False";
-            GUILayout.Label(" • Fyber (Advertising):" + spilSDKFyberCheck, styleRed);
-        }
-        else {
-            spilSDKFyberCheck = " - True";
-            GUILayout.Label(" • Fyber (Advertising):" + spilSDKFyberCheck, styleGreen);
-        }
-
-        if (!File.Exists(androidFolder + spilSDKZendesk)) {
-            spilSDKZendeskCheck = " - False";
-            GUILayout.Label(" • Zendesk (Customer Support):" + spilSDKZendeskCheck, styleRed);
-        }
-        else {
-            spilSDKZendeskCheck = " - True";
-            GUILayout.Label(" • Zendesk (Customer Support):" + spilSDKZendeskCheck, styleGreen);
-        }
-
 
         GUILayout.Label("");
 
@@ -338,6 +315,7 @@ public class SpilEditorConfig : EditorWindow {
         if (spil != null) {
             enableLogging = spil.EditorLogging;
         }
+
         var styleRed = new GUIStyle(EditorStyles.label);
         styleRed.normal.textColor = Color.red;
 
@@ -393,11 +371,13 @@ public class SpilEditorConfig : EditorWindow {
         if (androidPackageName == "" || iosBundelId == "") {
             throw new UnityException("Bundle ID is Blank");
         }
+
         SpilLogging.Log("Getting Default Files for Android: " + androidPackageName + ", And iOS: " + iosBundelId);
         string streamingAssetsPath = Application.dataPath + "/StreamingAssets";
         if (!File.Exists(streamingAssetsPath)) {
             Directory.CreateDirectory(streamingAssetsPath);
         }
+
         if (!File.Exists(streamingAssetsPath + "/defaultGameData.json")) {
             File.WriteAllText(streamingAssetsPath + "/defaultGameData.json", GetData("requestGameData"));
         }
@@ -475,6 +455,7 @@ public class SpilEditorConfig : EditorWindow {
         else {
             SpilLogging.Log("Default files succesfully retrieved!");
         }
+
         retrievalError = false;
     }
 
@@ -524,22 +505,25 @@ public class SpilEditorConfig : EditorWindow {
 
             if (EditorUserBuildSettings.activeBuildTarget.ToString().Trim().ToLower().Equals("android")) {
                 combined = tempAndroid;
-                
+
                 if (combined.HasField("iosSdkConfig")) {
                     combined.RemoveField("iosSdkConfig");
                 }
+
                 combined.AddField("iosSdkConfig",
                     tempIOS.GetField("iosSdkConfig"));
-            } else if (EditorUserBuildSettings.activeBuildTarget.ToString().Trim().ToLower().Equals("ios")) {
+            }
+            else if (EditorUserBuildSettings.activeBuildTarget.ToString().Trim().ToLower().Equals("ios")) {
                 combined = tempIOS;
-                
+
                 if (combined.HasField("androidSdkConfig")) {
                     combined.RemoveField("androidSdkConfig");
                 }
+
                 combined.AddField("androidSdkConfig",
                     tempAndroid.GetField("androidSdkConfig"));
             }
-            
+
             gameData = combined.Print(false);
         }
         else {
@@ -547,9 +531,9 @@ public class SpilEditorConfig : EditorWindow {
             form.AddField("name", type);
 
             string bundleIdentifier = null;
-#if UNITY_ANDROID
+            #if UNITY_ANDROID
             bundleIdentifier = androidPackageName;
-#elif UNITY_IPHONE || UNITY_TVOS
+            #elif UNITY_IPHONE || UNITY_TVOS
             bundleIdentifier = iosBundelId;
 #endif
 
@@ -618,6 +602,7 @@ public class SpilEditorConfig : EditorWindow {
         if (spil != null && spil.EditorDebugMode) {
             form.AddField("debugMode", Convert.ToString(spil.EditorDebugMode).ToLower());
         }
+
         return form;
     }
 
@@ -656,13 +641,15 @@ public class SpilEditorConfig : EditorWindow {
             return;
         }
 
-        if (!applicationNode.Attributes["android:name"].Value.Equals("com.spilgames.spilsdk.activities.SpilSDKApplication")){
-            SpilLogging.Error("The application name from your \"AndroidManifest.xml\" file is set incorrectly. Please set it to either \"com.spilgames.spilsdk.activities.SpilSDKApplication\" if you want for the Spil SDK to function correctly");
+        if (!applicationNode.Attributes["android:name"].Value.Equals("com.spilgames.spilsdk.activities.SpilSDKApplication")) {
+            SpilLogging.Error(
+                "The application name from your \"AndroidManifest.xml\" file is set incorrectly. Please set it to either \"com.spilgames.spilsdk.activities.SpilSDKApplication\" if you want for the Spil SDK to function correctly");
             isEverythingCorrect = false;
         }
 
         if (applicationNode.Attributes["android:name"].Value.Equals("com.spilgames.spilsdk.activities.SpilSDKApplicationWithFabric")) {
-            SpilLogging.Error("The application name found in your \"AndroidManifest.xml\" file is set incorrectly. The application name \"com.spilgames.spilsdk.activities.SpilSDKApplicationWithFabric\" has been removed from the Spil SDK. Please use the standard \"com.spilgames.spilsdk.activities.SpilSDKApplication\". The Fabric (Crashlytics functionality has been moved to this application name.");
+            SpilLogging.Error(
+                "The application name found in your \"AndroidManifest.xml\" file is set incorrectly. The application name \"com.spilgames.spilsdk.activities.SpilSDKApplicationWithFabric\" has been removed from the Spil SDK. Please use the standard \"com.spilgames.spilsdk.activities.SpilSDKApplication\". The Fabric (Crashlytics functionality has been moved to this application name.");
             isEverythingCorrect = false;
         }
 

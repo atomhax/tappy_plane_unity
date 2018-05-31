@@ -9,7 +9,7 @@ public class SpilEditorReleases : EditorWindow {
 	private static string releaseNotes;
 	Vector2 scrollPos;
 
-	[MenuItem ("Spil SDK/Release notes", false, 2)]
+	[MenuItem ("Spil SDK/Release notes", false, 3)]
 	static void Init () {
 		SpilEditorReleases window = (SpilEditorReleases)EditorWindow.GetWindow (typeof(SpilEditorReleases));
 		window.autoRepaintOnSceneChange = true;

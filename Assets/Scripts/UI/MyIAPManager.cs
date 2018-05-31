@@ -9,6 +9,7 @@ using SpilGames.Unity.Json;
 using SpilGames.Unity.Helpers.IAPPackages;
 using SpilGames.Unity.Helpers.PlayerData;
 using SpilGames.Unity.Helpers.Promotions;
+using UnityEngine.UI;
 
 
 public class MyIAPManager : MonoBehaviour, IStoreListener
@@ -31,6 +32,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 	public IAPPanelController iapPanelController;
 	public SkinSelectPanelController skinSelectPanelController;
 
+	public Button RestoreIAPButton;
 
 	void Start ()
 	{
@@ -47,6 +49,10 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 		
 		Spil.Instance.OnPromotionsAvailable -= OnPromotionsAvailable;
 		Spil.Instance.OnPromotionsAvailable += OnPromotionsAvailable;
+		
+		#if !UNITY_IOS
+		RestoreIAPButton.gameObject.SetActive(false);
+		#endif
 	}
 
 	public void OnPackagesAvailable() {
