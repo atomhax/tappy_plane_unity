@@ -313,7 +313,7 @@ public class SpilEditorConfig : EditorWindow {
 
         bool enableLogging = false;
         if (spil != null) {
-            enableLogging = spil.EditorLogging;
+            enableLogging = spil.SpilLoggingEnabled;
         }
 
         var styleRed = new GUIStyle(EditorStyles.label);

@@ -138,11 +138,11 @@
     <Compile Include="Assets\Spilgames\Editor\PostBuild\SpilAndroidBuildPostProcess.cs" />
     <Compile Include="Assets\Spilgames\Editor\PostBuild\SpilIOSBuildPostProcess.cs" />
     <Compile Include="Assets\Spilgames\Editor\PostBuild\TVOSBuildPostProcess.cs" />
-    <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>/Users/Sebastian/Work/Unity/tappy_plane_unity/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>/Users/Sebastian/Work/Unity/tappy_plane_unity/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.PackageManagerUI.Editor">
+      <HintPath>/Users/Sebastian/Work/Unity/tappy_plane_unity/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>/Applications/Unity/Unity.app/Contents/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -434,9 +434,6 @@
     </Reference>
     <Reference Include="winrt">
       <HintPath>/Users/Sebastian/Work/Unity/tappy_plane_unity/Assets/Plugins/UnityPurchasing/winrt/winrt.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Advertisements">
-      <HintPath>/Users/Sebastian/Library/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.7/UnityEngine.Advertisements.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.Advertisements">
       <HintPath>/Users/Sebastian/Library/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.7/Editor/UnityEditor.Advertisements.dll</HintPath>

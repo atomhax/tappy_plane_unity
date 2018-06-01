@@ -98,7 +98,7 @@ namespace SpilGames.Unity.Base.Implementations {
 
         public override void ShowPrivacyPolicySettings() {
             if (!Spil.CheckPrivacyPolicy) {
-                Debug.Log("Privacy Policy not enabled. Will not show privacy policy settings screen");
+                SpilLogging.Log("Privacy Policy not enabled. Will not show privacy policy settings screen");
                 return;
             }
             
@@ -190,7 +190,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// <param name="eventName"></param>
         /// <param name="dict"></param>
         internal override void SendCustomEventInternal(string eventName, Dictionary<string, object> dict) {
-            SpilLogging.Log("SpilSDK-Unity SendCustomEvent " + eventName);
+            SpilLogging.Log("SendCustomEvent " + eventName);
             SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
             spilEvent.eventName = eventName;
 

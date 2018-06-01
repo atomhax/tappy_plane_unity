@@ -132,21 +132,5 @@ namespace SpilGames.Unity.Base.UnityEditor {
             data.AddField("externalUserId", externalUserIdJson);
         }
     }
-
-    public class SpilLogging {
-        public static void Log(string message) {
-            Spil spil = GameObject.FindObjectOfType<Spil>();
-            if (spil != null && spil.EditorLogging) {
-                Debug.Log(message);
-            }
-        }
-
-        public static void Error(string message) {
-            Spil spil = GameObject.FindObjectOfType<Spil>();
-            if (spil != null && spil.EditorLogging) {
-                Debug.LogError(message);
-            }
-        }
-    }
 }
 #endif

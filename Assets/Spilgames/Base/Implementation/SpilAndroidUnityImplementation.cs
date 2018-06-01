@@ -54,13 +54,13 @@ namespace SpilGames.Unity.Base.Implementations {
 
         // Method that returns the all packages
         protected override string GetAllPackages() {
-            Debug.Log("Get All Packages: " + CallNativeMethod("getAllPackages"));
+            SpilLogging.Log("Get All Packages: " + CallNativeMethod("getAllPackages"));
             return CallNativeMethod("getAllPackages");
         }
 
         // Method that returns a package based on key
         protected override string GetPackage(string key) {
-            Debug.Log("GetPackage: " + CallNativeMethod("getPackage", key, true));
+            SpilLogging.Log("GetPackage: " + CallNativeMethod("getPackage", key, true));
             return CallNativeMethod("getPackage", key, true);
         }
 
@@ -86,7 +86,7 @@ namespace SpilGames.Unity.Base.Implementations {
 
         public override void ShowPrivacyPolicySettings() {
             if (!Spil.CheckPrivacyPolicy) {
-                Debug.Log("Privacy Policy not enabled. Will not show privacy policy settings screen");
+                SpilLogging.Log("Privacy Policy not enabled. Will not show privacy policy settings screen");
                 return;
             }
             
@@ -194,7 +194,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// <param name="eventName"></param>
         /// <param name="dict"></param>
         internal override void SendCustomEventInternal(string eventName, Dictionary<string, object> dict) {
-            Debug.Log("SpilSDK-Unity SendCustomEvent " + eventName);
+            SpilLogging.Log("SendCustomEvent " + eventName);
 
             if (eventName.Equals("updatePlayerData") && dict.ContainsKey("inventory") &&
                 dict["inventory"] is Dictionary<string, object>) {
@@ -575,7 +575,7 @@ namespace SpilGames.Unity.Base.Implementations {
         public override List<TieredEvent> GetAllTieredEvents() {
             string tieredEventsJson = CallNativeMethod("getAllTieredEvents");
             if (tieredEventsJson != null) {
-                Debug.Log(tieredEventsJson);
+                SpilLogging.Log(tieredEventsJson);
                 return JsonHelper.getObjectFromJson<List<TieredEvent>>(tieredEventsJson);
             }
             return null;
@@ -590,7 +590,7 @@ namespace SpilGames.Unity.Base.Implementations {
                 return null;
             }
             
-            Debug.Log(tieredEventProgressJson);
+            SpilLogging.Log(tieredEventProgressJson);
             return JsonHelper.getObjectFromJson<TieredEventProgress>(tieredEventProgressJson);
         }
 
@@ -750,7 +750,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// <param name="useParam1"></param>
         /// <returns></returns>
         private string CallNativeMethod<T>(string methodName, T param1 = null, bool useParam1 = false) where T : class {
-            Debug.Log("SpilSDK-Unity CallNativeMethod " + methodName +
+            SpilLogging.Log("CallNativeMethod " + methodName +
                       (param1 != null ? " param: " + param1.ToString() : ""));
 
             string value = null;
