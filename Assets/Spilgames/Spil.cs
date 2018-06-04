@@ -23,7 +23,9 @@ namespace SpilGames.Unity {
         public static PlayerDataHelper PlayerData;
 
         [SerializeField] public bool initializeOnAwake = true;
-
+        
+        [SerializeField] public bool SpilLoggingEnabled = true;
+        
         [Header("Privacy Policy Settings")]
         
         [SerializeField] private bool checkPrivacyPolicyAndroid = true;
@@ -60,11 +62,11 @@ namespace SpilGames.Unity {
         [Header("iOS Settings")] [SerializeField]
         public string CustomBundleId;
 
-        [Header("Editor Settings")] [SerializeField]
-        public bool EditorLogging = true;
+        [Header("Editor Settings")]
+        [SerializeField] public bool editorDebugMode = false;
 
-        [SerializeField] public bool EditorDebugMode = true;
-
+        public bool EditorDebugMode { get; set; }
+        
         [SerializeField] public string spilUserIdEditor;
 
         public static string SpilUserIdEditor { get; set; }
@@ -209,7 +211,7 @@ namespace SpilGames.Unity {
         }
 
         public void Initialize() {
-            Debug.Log("SpilSDK-Unity Init");
+            SpilLogging.Log("Inititialized");
 
             Instance.SetPluginInformation(SpilUnityImplementationBase.PluginName, SpilUnityImplementationBase.PluginVersion);
 
@@ -258,15 +260,18 @@ namespace SpilGames.Unity {
             if (string.IsNullOrEmpty(spilUserIdEditor)) {
                 spilUserIdEditor = Guid.NewGuid().ToString();
             } else {
-                Debug.Log("Using a manually set user id. Social Login feature may not work properly!");
+                SpilLogging.Log("Using a manually set user id. Social Login feature may not work properly!");
             }
 
             SpilUserIdEditor = spilUserIdEditor;
-            Debug.Log("SpilSDK-Unity Using SpilUserIdEditor: " + SpilUserIdEditor);
+            SpilLogging.Log("Using SpilUserIdEditor: " + SpilUserIdEditor);
+
+            EditorDebugMode = editorDebugMode;
+            SpilLogging.Log("Using SDK Debug mode: " + EditorDebugMode);
             
             BundleIdEditor = bundleIdEditor;
             if (string.IsNullOrEmpty(bundleIdEditor)) {
-                Debug.Assert(!string.IsNullOrEmpty(bundleIdEditor), "SpilSDK-Unity No BundleIdEditor set!");
+                SpilLogging.Assert(!string.IsNullOrEmpty(bundleIdEditor), "No BundleIdEditor set!");
             }
 
             IapPurchaseRequest = iapPurchaseRequestValue;

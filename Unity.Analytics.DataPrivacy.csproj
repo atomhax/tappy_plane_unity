@@ -340,9 +340,6 @@
     <Reference Include="winrt">
       <HintPath>/Users/Sebastian/Work/Unity/tappy_plane_unity/Assets/Plugins/UnityPurchasing/winrt/winrt.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Advertisements">
-      <HintPath>/Users/Sebastian/Library/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.7/UnityEngine.Advertisements.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor.Advertisements">
       <HintPath>/Users/Sebastian/Library/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.7/Editor/UnityEditor.Advertisements.dll</HintPath>
     </Reference>

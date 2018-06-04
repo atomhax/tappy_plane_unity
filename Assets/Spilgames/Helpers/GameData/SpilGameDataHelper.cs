@@ -22,9 +22,9 @@ namespace SpilGames.Unity.Helpers.GameData {
                 SpilGameData spilGameData = JsonHelper.getObjectFromJson<SpilGameData>(spilGameDataString);
                 if (spilGameData != null) {
                     AddDataToHelper(spilGameData.currencies, spilGameData.items, spilGameData.bundles, spilGameData.shop);
-                    Debug.Log("Spil GameData created");
+                    SpilLogging.Log("Spil GameData created");
                 } else {
-                    Debug.Log("Spil GameData not created, Instance.GetSpilGameDataFromsdk() did not return any data.");
+                    SpilLogging.Log("Spil GameData not created, Instance.GetSpilGameDataFromsdk() did not return any data.");
                 }
             }
         }
@@ -35,9 +35,9 @@ namespace SpilGames.Unity.Helpers.GameData {
                 SpilGameData spilGameData = JsonHelper.getObjectFromJson<SpilGameData>(spilGameDataString);
                 if (spilGameData != null) {
                     AddDataToHelper(spilGameData.currencies, spilGameData.items, spilGameData.bundles, spilGameData.shop);
-                    Debug.Log("Spil GameData Refreshed");
+                    SpilLogging.Log("Spil GameData Refreshed");
                 } else {
-                    Debug.Log("Spil GameData not created, Instance.GetSpilGameDataFromsdk() did not return any data.");
+                    SpilLogging.Log("Spil GameData not created, Instance.GetSpilGameDataFromsdk() did not return any data.");
                 }
             }
         }
@@ -231,7 +231,7 @@ namespace SpilGames.Unity.Helpers.GameData {
             if (spilGameDataString != null) {
                 SpilGameData spilGameData = JsonHelper.getObjectFromJson<SpilGameData>(spilGameDataString);
                 AddDataToHelper(spilGameData.currencies, spilGameData.items, spilGameData.bundles, spilGameData.shop);
-                Debug.Log("Spil Game Data Updated");
+                SpilLogging.Log("Spil Game Data Updated");
             }
         }
     }

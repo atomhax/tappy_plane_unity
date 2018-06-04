@@ -102,7 +102,7 @@ public class PrivacyPolicyHelper : MonoBehaviour {
         
         PrivacyPolicyConfiguration privacyPolicyConfiguration = GetPrivacyPolicyConfiguration();
         if (privacyPolicyConfiguration == null) {
-            Debug.Log("Privacy Policy Configuration could not be retrieved. Please make sure you have configured properly the text for the privacy policy in the defaultGameConfig.json file.");
+            SpilLogging.Log("Privacy Policy Configuration could not be retrieved. Please make sure you have configured properly the text for the privacy policy in the defaultGameConfig.json file.");
             return;
         }    
 
@@ -153,7 +153,7 @@ public class PrivacyPolicyHelper : MonoBehaviour {
     public void ShowSettingsScreen() {
         PrivacyPolicyConfiguration privacyPolicyConfiguration = GetPrivacyPolicyConfiguration();
         if (privacyPolicyConfiguration == null) {
-            Debug.Log("Privacy Policy Configuration could not be retrieved. Please make sure you have configured properly the text for the privacy policy in the defaultGameConfig.json file.");
+            SpilLogging.Log("Privacy Policy Configuration could not be retrieved. Please make sure you have configured properly the text for the privacy policy in the defaultGameConfig.json file.");
             return;
         }    
 
@@ -298,7 +298,7 @@ public class PrivacyPolicyHelper : MonoBehaviour {
     public void ShowInfoScreen() {
         PrivacyPolicyConfiguration privacyPolicyConfiguration = GetPrivacyPolicyConfiguration();
         if (privacyPolicyConfiguration == null) {
-            Debug.Log("Privacy Policy Configuration could not be retrieved. Please make sure you have configured properly the text for the privacy policy in the defaultGameConfig.json file.");
+            SpilLogging.Log("Privacy Policy Configuration could not be retrieved. Please make sure you have configured properly the text for the privacy policy in the defaultGameConfig.json file.");
             return;
         }    
 
@@ -377,7 +377,7 @@ public class PrivacyPolicyHelper : MonoBehaviour {
             gameConfig = File.ReadAllText(Application.streamingAssetsPath + "/defaultGameConfig.json");
         }
         catch (FileNotFoundException e) {
-            Debug.Log("defaultGameConfig.json not found!\n" + e);
+            SpilLogging.Log("defaultGameConfig.json not found!\n" + e);
             return null;
         }
         #else

@@ -157,7 +157,7 @@ namespace SpilGames.Unity.Base.Implementations
         /// <param name="dict"></param>
         internal override void SendCustomEventInternal(string eventName, Dictionary<string, object> dict)
         {
-            Debug.Log("SpilSDK-Unity SendCustomEvent \"" + eventName + "\"" + (dict == null ? "" : " params: " + JsonHelper.DictToJSONObject(dict).ToString()));
+            SpilLogging.Log("SendCustomEvent \"" + eventName + "\"" + (dict == null ? "" : " params: " + JsonHelper.DictToJSONObject(dict).ToString()));
 
             string parameters = null;
 
@@ -645,7 +645,7 @@ namespace SpilGames.Unity.Base.Implementations
         public override List<TieredEvent> GetAllTieredEvents() {
             string tieredEventsJson = getAllTieredEventsNative();
             if (tieredEventsJson != null) {
-                Debug.Log(tieredEventsJson);
+                SpilLogging.Log(tieredEventsJson);
                 return JsonHelper.getObjectFromJson<List<TieredEvent>>(tieredEventsJson);
             }
             return null;
@@ -659,7 +659,7 @@ namespace SpilGames.Unity.Base.Implementations
             if (tieredEventProgressJson == null) {
                 return null;
             }
-            Debug.Log(tieredEventProgressJson);
+            SpilLogging.Log(tieredEventProgressJson);
             return JsonHelper.getObjectFromJson<TieredEventProgress>(tieredEventProgressJson);
         }
 
@@ -719,7 +719,7 @@ namespace SpilGames.Unity.Base.Implementations
         /// </summary>
         public void DisableAutomaticRegisterForPushNotifications()
         {
-            Debug.Log("UNITY: DisableAutomaticRegisterForPushNotifications");
+            SpilLogging.Log("UNITY: DisableAutomaticRegisterForPushNotifications");
 
             disableAutomaticRegisterForPushNotificationsNative();
         }
@@ -733,7 +733,7 @@ namespace SpilGames.Unity.Base.Implementations
         /// </summary>
         public void RegisterForPushNotifications()
         {
-            Debug.Log("UNITY: RegisterForPushNotifications");
+            SpilLogging.Log("UNITY: RegisterForPushNotifications");
 
             registerForPushNotifications();
         }
@@ -874,7 +874,7 @@ namespace SpilGames.Unity.Base.Implementations
         public override void ShowPrivacyPolicySettings()
         {
             if (!Spil.CheckPrivacyPolicy) {
-                Debug.Log("Privacy Policy not enabled. Will not show privacy policy settings screen");
+                SpilLogging.Log("Privacy Policy not enabled. Will not show privacy policy settings screen");
                 return;
             }
     

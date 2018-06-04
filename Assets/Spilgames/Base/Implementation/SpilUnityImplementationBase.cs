@@ -3,6 +3,7 @@ using System;
 using UnityEngine;
 using SpilGames.Unity.Helpers.GameData;
 using System.Collections;
+using SpilGames.Unity;
 using SpilGames.Unity.Base.Implementations.Tracking;
 using SpilGames.Unity.Json;
 using SpilGames.Unity.Base.SDK;
@@ -61,7 +62,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event PackagesAvailable OnPackagesAvailable;
 
         public static void firePackagesAvailable() {
-            Debug.Log("SpilSDK-Unity firePackagesAvailable");
+            SpilLogging.Log("firePackagesAvailable");
 
             if (Spil.Instance.OnPackagesAvailable != null) {
                 Spil.Instance.OnPackagesAvailable();
@@ -76,7 +77,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event PackagesNotAvailable OnPackagesNotAvailable;
 
         public static void firePackagesNotAvailable() {
-            Debug.Log("SpilSDK-Unity firePackagesNotAvailable");
+            SpilLogging.Log("firePackagesNotAvailable");
 
             if (Spil.Instance.OnPackagesNotAvailable != null) {
                 Spil.Instance.OnPackagesNotAvailable();
@@ -106,7 +107,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event PromotionsAvailable OnPromotionsAvailable;
 
         public static void firePromotionsAvailable() {
-            Debug.Log("SpilSDK-Unity firePromotionsAvailable");
+            SpilLogging.Log("firePromotionsAvailable");
 
             if (Spil.GameData != null) {
                 Spil.GameData.SpilGameDataHandler();
@@ -125,7 +126,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event PromotionsNotAvailable OnPromotionsNotAvailable;
 
         public static void firePromotionsNotAvailable() {
-            Debug.Log("SpilSDK-Unity firePromotionsNotAvailable");
+            SpilLogging.Log("firePromotionsNotAvailable");
 
             if (Spil.Instance.OnPromotionsNotAvailable != null) {
                 Spil.Instance.OnPromotionsNotAvailable();
@@ -141,7 +142,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event PromotionAmountBought OnPromotionAmountBought;
         
         public static void firePromotionAmountBought(string data) {
-            Debug.Log("SpilSDK-Unity firePromotionAmountBought with data: " + data);
+            SpilLogging.Log("firePromotionAmountBought with data: " + data);
 
             JSONObject promotionInfo = new JSONObject(data);
             int promotionId = (int) promotionInfo.GetField("promotionId").i;
@@ -176,7 +177,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event AssetBundlesAvailable OnAssetBundlesAvailable;
 
         public static void fireAssetBundlesAvailable() {
-            Debug.Log("SpilSDK-Unity fireAssetBundlesAvailable");
+            SpilLogging.Log("fireAssetBundlesAvailable");
             
             if (Spil.Instance.OnAssetBundlesAvailable != null) {
                 Spil.Instance.OnAssetBundlesAvailable();
@@ -191,7 +192,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event AssetBundlesNotAvailable OnAssetBundlesNotAvailable;
 
         public static void fireAssetBundlesNotAvailable() {
-            Debug.Log("SpilSDK-Unity fireAssetBundlesNotAvailable");
+            SpilLogging.Log("fireAssetBundlesNotAvailable");
 
             if (Spil.Instance.OnAssetBundlesNotAvailable != null) {
                 Spil.Instance.OnAssetBundlesNotAvailable();
@@ -1353,7 +1354,7 @@ namespace SpilGames.Unity.Base.Implementations{
         /// </summary>
         /// <param name="response"></param>
         public static void OnResponseReceived(string response) {
-            Debug.Log("SpilSDK-Unity OnResponseReceived " + response);
+            SpilLogging.Log("OnResponseReceived " + response);
 
             SpilResponse spilResponse = JsonHelper.getObjectFromJson<SpilResponse>(response);
 
@@ -1396,7 +1397,7 @@ namespace SpilGames.Unity.Base.Implementations{
         /// </summary>
         /// <param name="type"></param>
         public static void fireAdAvailableEvent(string type) {
-            Debug.Log("SpilSDK-Unity Ad " + type + " ready!");
+            SpilLogging.Log("Ad " + type + " ready!");
 
             enumAdType adType = enumAdType.Unknown;
             if (type.ToLower().Trim().Equals("rewardvideo")) {
@@ -1407,7 +1408,7 @@ namespace SpilGames.Unity.Base.Implementations{
                 adType = enumAdType.MoreApps;
             }
             if (adType == enumAdType.Unknown) {
-                Debug.Log("SpilSDK-Unity AdAvailable event fired but type is unknown. Type: " + type);
+                SpilLogging.Log("AdAvailable event fired but type is unknown. Type: " + type);
             }
             if (Spil.Instance.OnAdAvailable != null) {
                 Spil.Instance.OnAdAvailable(adType);
@@ -1430,7 +1431,7 @@ namespace SpilGames.Unity.Base.Implementations{
         /// </summary>
         /// <param name="type"></param>
         public static void fireAdNotAvailableEvent(string type) {
-            Debug.Log("SpilSDK-Unity Ad " + type + " is not available");
+            SpilLogging.Log("Ad " + type + " is not available");
 
             enumAdType adType = enumAdType.Unknown;
             if (type.ToLower().Trim().Equals("rewardvideo")) {
@@ -1441,7 +1442,7 @@ namespace SpilGames.Unity.Base.Implementations{
                 adType = enumAdType.MoreApps;
             }
             if (adType == enumAdType.Unknown) {
-                Debug.Log("SpilSDK-Unity AdNotAvailable event fired but type is unknown. Type: " + type);
+                SpilLogging.Log("AdNotAvailable event fired but type is unknown. Type: " + type);
             }
             if (Spil.Instance.OnAdNotAvailable != null) {
                 Spil.Instance.OnAdNotAvailable(adType);
@@ -1464,7 +1465,7 @@ namespace SpilGames.Unity.Base.Implementations{
         /// </summary>
         /// <param name="type"></param>
         public static void fireOpenParentalGateEvent() {
-            Debug.Log("SpilSDK-Unity OpenParentalGate");
+            SpilLogging.Log("OpenParentalGate");
 
             if (Spil.Instance.OnOpenParentalGate != null) {
                 Spil.Instance.OnOpenParentalGate();
@@ -1485,7 +1486,7 @@ namespace SpilGames.Unity.Base.Implementations{
         /// This method is exposed only for use by the native Spil SDK and should not be used by the developer!
         /// </summary>
         public static void fireAdStartedEvent() {
-            Debug.Log("SpilSDK-Unity Ad started");
+            SpilLogging.Log("Ad started");
             if (Spil.Instance.OnAdStarted != null) {
                 Spil.Instance.OnAdStarted();
             }
@@ -1505,7 +1506,7 @@ namespace SpilGames.Unity.Base.Implementations{
         /// This method is exposed only for use by the native Spil SDK and should not be used by the developer!
         /// </summary>
         public static void fireAdFinishedEvent(string response) {
-            Debug.Log("SpilSDK-Unity Ad finished! Response = " + response);
+            SpilLogging.Log("Ad finished! Response = " + response);
             SpilAdFinishedResponse responseObject = JsonHelper.getObjectFromJson<SpilAdFinishedResponse>(response);
             if (Spil.Instance.OnAdFinished != null) {
                 Spil.Instance.OnAdFinished(responseObject);
@@ -1527,7 +1528,7 @@ namespace SpilGames.Unity.Base.Implementations{
         /// can subscribe, it will only be called when the config values are different from the previous loaded config.
         /// </summary>
         public static void fireConfigUpdatedEvent() {
-            Debug.Log("SpilSDK-Unity Config updated!");
+            SpilLogging.Log("Config updated!");
             if (Spil.Instance.OnConfigUpdated != null) {
                 Spil.Instance.OnConfigUpdated();
             }
@@ -1546,7 +1547,7 @@ namespace SpilGames.Unity.Base.Implementations{
         /// can subscribe, it will only be called when the config values are different from the previous loaded config.
         /// </summary>
         public static void fireConfigError(string error) {
-            Debug.Log("SpilSDK-Unity Config Error with message: " + error);
+            SpilLogging.Log("Config Error with message: " + error);
 
             SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
             if (Spil.Instance.OnConfigError != null) {
@@ -1571,7 +1572,7 @@ namespace SpilGames.Unity.Base.Implementations{
                 Spil.GameData.SpilGameDataHandler();
             }
 
-            Debug.Log("SpilSDK-Unity Spil Game Data is available");
+            SpilLogging.Log("Spil Game Data is available");
 
             if (Spil.Instance.OnSpilGameDataAvailable != null) {
                 Spil.Instance.OnSpilGameDataAvailable();
@@ -1587,7 +1588,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event SpilGameDataError OnSpilGameDataError;
 
         public static void fireSpilGameDataError(string reason) {
-            Debug.Log("SpilSDK-Unity Spil Game Data error with reason = " + reason);
+            SpilLogging.Log("Spil Game Data error with reason = " + reason);
 
             SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(reason);
             if (Spil.Instance.OnSpilGameDataError != null) {
@@ -1608,7 +1609,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event PlayerDataUpdated OnPlayerDataUpdated;
 
         public static void firePlayerDataUpdated(string data) {
-            Debug.Log("SpilSDK-Unity Player Data has been updated with data: " + data);
+            SpilLogging.Log("Player Data has been updated with data: " + data);
 
             PlayerDataUpdatedData playerDataUpdatedData = JsonHelper.getObjectFromJson<PlayerDataUpdatedData>(data);
 
@@ -1631,7 +1632,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event PlayerDataEmptyGacha OnPlayerDataEmptyGacha;
 
         public static void firePlayerDataEmptyGacha() {
-            Debug.Log("SpilSDK-Unity Received nothing from gacha box!");
+            SpilLogging.Log("Received nothing from gacha box!");
 
             if (Spil.Instance.OnPlayerDataEmptyGacha != null) {
                 Spil.Instance.OnPlayerDataEmptyGacha();
@@ -1647,7 +1648,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event GameStateUpdated OnGameStateUpdated;
 
         public static void fireGameStateUpdated(string access) {
-            Debug.Log("SpilSDK-Unity Game State Data updated, access = " + access);
+            SpilLogging.Log("Game State Data updated, access = " + access);
 
             if (Spil.Instance.OnGameStateUpdated != null) {
                 Spil.Instance.OnGameStateUpdated(access);
@@ -1663,7 +1664,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event OtherUsersGameStateDataLoaded OnOtherUsersGameStateDataLoaded;
 
         public static void fireOtherUsersGameStateLoaded(string message) {
-            Debug.Log("SpilSDK-Unity Other users game state data loaded, message = " + message);
+            SpilLogging.Log("Other users game state data loaded, message = " + message);
 
             OtherUsersGameStateData data = JsonHelper.getObjectFromJson<OtherUsersGameStateData>(message);
 
@@ -1680,7 +1681,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event SplashScreenOpen OnSplashScreenOpen;
 
         public static void fireSplashScreenOpen() {
-            Debug.Log("SpilSDK-Unity Web open");
+            SpilLogging.Log("Web open");
 
             if (Spil.Instance.OnSplashScreenOpen != null) {
                 Spil.Instance.OnSplashScreenOpen();
@@ -1695,7 +1696,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event SplashScreenNotAvailable OnSplashScreenNotAvailable;
 
         public static void fireSplashScreenNotAvailable() {
-            Debug.Log("SpilSDK-Unity splash screen not available");
+            SpilLogging.Log("splash screen not available");
 
             if (Spil.Instance.OnSplashScreenNotAvailable != null) {
                 Spil.Instance.OnSplashScreenNotAvailable();
@@ -1710,7 +1711,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event SplashScreenClosed OnSplashScreenClosed;
 
         public static void fireSplashScreenClosed() {
-            Debug.Log("SpilSDK-Unity Web closed");
+            SpilLogging.Log("Web closed");
 
             if (Spil.Instance.OnSplashScreenClosed != null) {
                 Spil.Instance.OnSplashScreenClosed();
@@ -1726,7 +1727,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event SplashScreenOpenShop OnSplashScreenOpenShop;
 
         public static void fireSplashScreenOpenShop() {
-            Debug.Log("SpilSDK-Unity Open Game Shop");
+            SpilLogging.Log("Open Game Shop");
 
             if (Spil.Instance.OnSplashScreenOpenShop != null) {
                 Spil.Instance.OnSplashScreenOpenShop();
@@ -1742,7 +1743,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event SplashScreenData OnSplashScreenData;
 
         public static void fireSplashScreenData(string payload) {
-            Debug.Log("SpilSDK-Unity Splash Screen Data: " + payload);
+            SpilLogging.Log("Splash Screen Data: " + payload);
 
             if (Spil.Instance.OnSplashScreenData != null) {
                 Spil.Instance.OnSplashScreenData(payload);
@@ -1758,7 +1759,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event SplashScreenError OnSplashScreenError;
 
         public static void fireSplashScreenError(string reason) {
-            Debug.Log("SpilSDK-Unity Web Error with reason = " + reason);
+            SpilLogging.Log("Web Error with reason = " + reason);
 
             SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(reason);
 
@@ -1775,7 +1776,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event DailyBonusOpen OnDailyBonusOpen;
 
         public static void fireDailyBonusOpen() {
-            Debug.Log("SpilSDK-Unity Web open");
+            SpilLogging.Log("Web open");
 
             if (Spil.Instance.OnDailyBonusOpen != null) {
                 Spil.Instance.OnDailyBonusOpen();
@@ -1790,7 +1791,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event DailyBonusNotAvailable OnDailyBonusNotAvailable;
 
         public static void fireDailyBonusNotAvailable() {
-            Debug.Log("SpilSDK-Unity Daily bonus not available");
+            SpilLogging.Log("Daily bonus not available");
 
             if (Spil.Instance.OnDailyBonusNotAvailable != null) {
                 Spil.Instance.OnDailyBonusNotAvailable();
@@ -1805,7 +1806,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event DailyBonusClosed OnDailyBonusClosed;
 
         public static void fireDailyBonusClosed() {
-            Debug.Log("SpilSDK-Unity Web closed");
+            SpilLogging.Log("Web closed");
 
             if (Spil.Instance.OnDailyBonusClosed != null) {
                 Spil.Instance.OnDailyBonusClosed();
@@ -1821,7 +1822,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event DailyBonusError OnDailyBonusError;
 
         public static void fireDailyBonusError(string reason) {
-            Debug.Log("SpilSDK-Unity Web Error with reason = " + reason);
+            SpilLogging.Log("Web Error with reason = " + reason);
 
             SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(reason);
 
@@ -1839,7 +1840,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event DailyBonusReward OnDailyBonusReward;
 
         public static void fireDailyBonusReward(string reward) {
-            Debug.Log("SpilSDK-Unity Received reward = " + reward);
+            SpilLogging.Log("Received reward = " + reward);
 
             if (Spil.Instance.OnDailyBonusReward != null) {
                 Spil.Instance.OnDailyBonusReward(reward);
@@ -1855,7 +1856,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event RewardTokenReceived OnRewardTokenReceived;
 
         public static void fireRewardTokenReceived(string response) {
-            Debug.Log("SpilSDK-Unity Received reward = " + response);
+            SpilLogging.Log("Received reward = " + response);
 
             RewardResponse rewardResponse = JsonHelper.getObjectFromJson<RewardResponse>(response);
 
@@ -1874,7 +1875,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event RewardTokenClaimed OnRewardTokenClaimed;
 
         public static void fireRewardTokenClaimed(string response) {
-            Debug.Log("SpilSDK-Unity Claimed reward = " + response);
+            SpilLogging.Log("Claimed reward = " + response);
 
             RewardResponse rewardResponse = JsonHelper.getObjectFromJson<RewardResponse>(response);
 
@@ -1892,7 +1893,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event RewardTokenClaimFailed OnRewardTokenClaimFailed;
 
         public static void fireRewardTokenClaimFailed(string response) {
-            Debug.Log("SpilSDK-Unity Claim failed for = " + response);
+            SpilLogging.Log("Claim failed for = " + response);
 
             RewardResponse rewardResponse = JsonHelper.getObjectFromJson<RewardResponse>(response);
 
@@ -1916,7 +1917,7 @@ namespace SpilGames.Unity.Base.Implementations{
             TextureFormat textureFormat = TextureFormat.RGB24, bool mipMap = false) {
             Texture2D tex = new Texture2D(width, height, textureFormat, mipMap);
             //try to load images in this way.it should takes exactly 48MB per texture, 
-            Debug.Log("Loading image texture from path: " + localPath);
+            SpilLogging.Log("Loading image texture from path: " + localPath);
             WWW www = new WWW(localPath);
             yield return www;
             
@@ -1935,7 +1936,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event ImageLoaded OnImageLoaded;
 
         public static void fireImageLoaded(Texture2D image, string localPath) {
-            Debug.Log("SpilSDK-Unity fireImageLoaded");
+            SpilLogging.Log("fireImageLoaded");
 
             if (Spil.Instance.OnImageLoaded != null) {
                 Spil.Instance.OnImageLoaded(image, localPath);
@@ -1950,7 +1951,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event ImageLoadSuccess OnImageLoadSuccess;
 
         public static void fireImageLoadSuccess(string response) {
-            Debug.Log("SpilSDK-Unity fireImageLoadSuccess " + response);
+            SpilLogging.Log("fireImageLoadSuccess " + response);
 
             JSONObject responseJSON = new JSONObject(response);
 
@@ -1972,7 +1973,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event ImageLoadFailed OnImageLoadFailed;
 
         public static void fireImageLoadFailed(string response) {
-            Debug.Log("SpilSDK-Unity fireImageLoadFailed error: " + response);
+            SpilLogging.Log("fireImageLoadFailed error: " + response);
 
             JSONObject responseJSON = new JSONObject(response);
 
@@ -1994,7 +1995,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event ImagePreloadingCompleted OnImagePreloadingCompleted;
 
         public static void fireImagePreloadingCompleted() {
-            Debug.Log("SpilSDK-Unity fireImagePreloadingCompleted");
+            SpilLogging.Log("fireImagePreloadingCompleted");
 
             if (Spil.Instance.OnImagePreloadingCompleted != null) {
                 Spil.Instance.OnImagePreloadingCompleted();
@@ -2013,7 +2014,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event IAPValid OnIAPValid;
 
         public static void fireIAPValid(string data) {
-            Debug.Log("SpilSDK-Unity fireIAPValid with data: " + data);
+            SpilLogging.Log("fireIAPValid with data: " + data);
 
             if (Spil.Instance.OnIAPValid != null) {
                 Spil.Instance.OnIAPValid(data);
@@ -2028,7 +2029,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event IAPInvalid OnIAPInvalid;
 
         public static void fireIAPInvalid(string message) {
-            Debug.Log("SpilSDK-Unity fireIAPInvalid with data: " + message);
+            SpilLogging.Log("fireIAPInvalid with data: " + message);
 
             if (Spil.Instance.OnIAPInvalid != null) {
                 Spil.Instance.OnIAPInvalid(message);
@@ -2043,7 +2044,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event IAPRequestPurchase OnIAPRequestPurchase;
 
         public static void fireIAPRequestPurchase(string skuId) {
-            Debug.Log("SpilSDK-Unity fireIAPRequestPurchase with sku: " + skuId);
+            SpilLogging.Log("fireIAPRequestPurchase with sku: " + skuId);
 
             if (Spil.Instance.OnIAPRequestPurchase != null) {
                 Spil.Instance.OnIAPRequestPurchase(skuId);
@@ -2058,7 +2059,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event IAPServerError OnIAPServerError;
 
         public static void fireIAPServerError(string error) {
-            Debug.Log("SpilSDK-Unity fireIAPServerError with data: " + error);
+            SpilLogging.Log("fireIAPServerError with data: " + error);
 
             SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
             if (Spil.Instance.OnIAPInvalid != null) {
@@ -2078,7 +2079,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event ServerTimeRequestSuccess OnServerTimeRequestSuccess;
 
         public static void fireServerTimeRequestSuccess(string timeString) {
-            Debug.Log("SpilSDK-Unity fireServerTimeRequestSuccess with data: " + timeString);
+            SpilLogging.Log("fireServerTimeRequestSuccess with data: " + timeString);
 
             long time = long.Parse(timeString);
 
@@ -2095,7 +2096,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event ServerTimeRequestFailed OnServerTimeRequestFailed;
 
         public static void fireServerTimeRequestFailed(string error) {
-            Debug.Log("SpilSDK-Unity fireServerTimeRequestFailed with data: " + error);
+            SpilLogging.Log("fireServerTimeRequestFailed with data: " + error);
 
             SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
             if (Spil.Instance.OnServerTimeRequestFailed != null) {
@@ -2115,7 +2116,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event LiveEventAvailable OnLiveEventAvailable;
 
         public static void fireLiveEventAvailable() {
-            Debug.Log("SpilSDK-Unity fireLiveEventAvailable");
+            SpilLogging.Log("fireLiveEventAvailable");
 
             if (Spil.Instance.OnLiveEventAvailable != null) {
                 Spil.Instance.OnLiveEventAvailable();
@@ -2130,7 +2131,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event LiveEventStageOpen OnLiveEventStageOpen;
 
         public static void fireLiveEventStageOpen() {
-            Debug.Log("SpilSDK-Unity fireLiveEventStageOpen");
+            SpilLogging.Log("fireLiveEventStageOpen");
 
             if (Spil.Instance.OnLiveEventStageOpen != null) {
                 Spil.Instance.OnLiveEventStageOpen();
@@ -2145,7 +2146,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event LiveEventStageClosed OnLiveEventStageClosed;
 
         public static void fireLiveEventStageClosed() {
-            Debug.Log("SpilSDK-Unity fireLiveEventStageClosed");
+            SpilLogging.Log("fireLiveEventStageClosed");
 
             if (Spil.Instance.OnLiveEventStageClosed != null) {
                 Spil.Instance.OnLiveEventStageClosed();
@@ -2160,7 +2161,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event LiveEventNotAvailable OnLiveEventNotAvailable;
 
         public static void fireLiveEventNotAvailable() {
-            Debug.Log("SpilSDK-Unity fireLiveEventNotAvailable");
+            SpilLogging.Log("fireLiveEventNotAvailable");
 
             if (Spil.Instance.OnLiveEventNotAvailable != null) {
                 Spil.Instance.OnLiveEventNotAvailable();
@@ -2175,7 +2176,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event LiveEventError OnLiveEventError;
 
         public static void fireLiveEventError(string error) {
-            Debug.Log("SpilSDK-Unity fireLiveEventError with data: " + error);
+            SpilLogging.Log("fireLiveEventError with data: " + error);
 
             SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
             if (Spil.Instance.OnLiveEventError != null) {
@@ -2192,7 +2193,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event LiveEventUsedExternalItems OnLiveEventUsedExternalItems;
 
         public static void fireLiveEventUsedExternalItems(string items) {
-            Debug.Log("SpilSDK-Unity Used items = " + items);
+            SpilLogging.Log("Used items = " + items);
 
             if (Spil.Instance.OnLiveEventUsedExternalItems != null) {
                 Spil.Instance.OnLiveEventUsedExternalItems(items);
@@ -2208,7 +2209,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event LiveEventReward OnLiveEventReward;
 
         public static void fireLiveEventReward(string reward) {
-            Debug.Log("SpilSDK-Unity Received reward = " + reward);
+            SpilLogging.Log("Received reward = " + reward);
 
             if (Spil.Instance.OnLiveEventReward != null) {
                 Spil.Instance.OnLiveEventReward(reward);
@@ -2223,7 +2224,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event LiveEventMetRequirements OnLiveEventMetRequirements;
 
         public static void fireLiveEventMetRequirements(bool metRequirements) {
-            Debug.Log("SpilSDK-Unity LiveEventMetRequirements with data = " + metRequirements);
+            SpilLogging.Log("LiveEventMetRequirements with data = " + metRequirements);
 
             if (Spil.Instance.OnLiveEventMetRequirements != null) {
                 Spil.Instance.OnLiveEventMetRequirements(metRequirements);
@@ -2238,7 +2239,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event LiveEventCompleted OnLiveEventCompleted;
 
         public static void fireLiveEventCompleted() {
-            Debug.Log("SpilSDK-Unity fireLiveEventCompleted");
+            SpilLogging.Log("fireLiveEventCompleted");
 
             if (Spil.Instance.OnLiveEventCompleted != null) {
                 Spil.Instance.OnLiveEventCompleted();
@@ -2257,7 +2258,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event TieredEventsAvailable OnTieredEventsAvailable;
 
         public static void fireTieredEventsAvailable() {
-            Debug.Log("SpilSDK-Unity fireTieredEventsAvailable");
+            SpilLogging.Log("fireTieredEventsAvailable");
 
             if (Spil.Instance.OnTieredEventsAvailable != null) {
                 Spil.Instance.OnTieredEventsAvailable();
@@ -2272,7 +2273,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event TieredEventNotAvailable OnTieredEventsNotAvailable;
 
         public static void fireTieredEventsNotAvailable() {
-            Debug.Log("SpilSDK-Unity fireTieredEventsNotAvailable");
+            SpilLogging.Log("fireTieredEventsNotAvailable");
 
             if (Spil.Instance.OnTieredEventsNotAvailable != null) {
                 Spil.Instance.OnTieredEventsNotAvailable();
@@ -2287,7 +2288,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event TieredEventUpdated OnTieredEventUpdated;
 
         public static void fireTieredEventUpdated(string data) {
-            Debug.Log("SpilSDK-Unity fireTieredEventUpdated with data = " + data);
+            SpilLogging.Log("fireTieredEventUpdated with data = " + data);
 
             TieredEventProgress tieredProgress = JsonHelper.getObjectFromJson<TieredEventProgress>(data);
             
@@ -2304,7 +2305,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event TieredEventsError OnTieredEventsError;
 
         public static void fireTieredEventsError(string reason) {
-            Debug.Log("SpilSDK-Unity Tiered Events Error with reason = " + reason);
+            SpilLogging.Log("Tiered Events Error with reason = " + reason);
 
             SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(reason);
 
@@ -2321,7 +2322,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event TieredEventProgressOpen OnTieredEventProgressOpen;
 
         public static void fireTieredEventProgressOpen() {
-            Debug.Log("SpilSDK-Unity fireTieredEventStageOpen");
+            SpilLogging.Log("fireTieredEventStageOpen");
 
             if (Spil.Instance.OnTieredEventProgressOpen != null) {
                 Spil.Instance.OnTieredEventProgressOpen();
@@ -2336,7 +2337,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event TieredEventProgressClosed OnTieredEventProgressClosed;
 
         public static void fireTieredEventProgressClosed() {
-            Debug.Log("SpilSDK-Unity fireTieredEventStageClosed");
+            SpilLogging.Log("fireTieredEventStageClosed");
 
             if (Spil.Instance.OnTieredEventProgressClosed != null) {
                 Spil.Instance.OnTieredEventProgressClosed();
@@ -2355,7 +2356,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event LoginSuccessful OnLoginSuccessful;
 
         public static void fireLoginSuccessful(string message) {
-            Debug.Log("SpilSDK-Unity fireLoginSuccessful with message: " + message);
+            SpilLogging.Log("fireLoginSuccessful with message: " + message);
 
             JSONObject loginJSON = new JSONObject(message);
             bool resetData = loginJSON.GetField("resetData").b;
@@ -2375,7 +2376,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event LoginFailed OnLoginFailed;
 
         public static void fireLoginFailed(string error) {
-            Debug.Log("SpilSDK-Unity fireLoginFailed with data: " + error);
+            SpilLogging.Log("fireLoginFailed with data: " + error);
 
             SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
             if (Spil.Instance.OnLoginFailed != null) {
@@ -2391,7 +2392,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event RequestLogin OnRequestLogin;
 
         public static void fireRequestLogin() {
-            Debug.Log("SpilSDK-Unity fireRequestLogin");
+            SpilLogging.Log("fireRequestLogin");
 
             if (Spil.Instance.OnRequestLogin != null) {
                 Spil.Instance.OnRequestLogin();
@@ -2406,7 +2407,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event LogoutSuccessful OnLogoutSuccessful;
 
         public static void fireLogoutSuccessful() {
-            Debug.Log("SpilSDK-Unity fireLogoutSuccessful");
+            SpilLogging.Log("fireLogoutSuccessful");
 
             if (Spil.Instance.OnLogoutSuccessful != null) {
                 Spil.Instance.OnLogoutSuccessful();
@@ -2421,7 +2422,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event LogoutFailed OnLogoutFailed;
 
         public static void fireLogoutFailed(string error) {
-            Debug.Log("SpilSDK-Unity fireLogoutFailed with data: " + error);
+            SpilLogging.Log("fireLogoutFailed with data: " + error);
 
             SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
             if (Spil.Instance.OnLogoutFailed != null) {
@@ -2437,7 +2438,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event AuthenticationError OnAuthenticationError;
 
         public static void fireAuthenticationError(string error) {
-            Debug.Log("SpilSDK-Unity fireAuthenticationError with data: " + error);
+            SpilLogging.Log("fireAuthenticationError with data: " + error);
 
             SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
             if (Spil.Instance.OnAuthenticationError != null) {
@@ -2453,7 +2454,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		public event UserDataMergeConflict OnUserDataMergeConflict;
 
 		public static void fireUserDataMergeConflict(string data) {
-			Debug.Log("SpilSDK-Unity fireUserDataMergeConflict");
+			SpilLogging.Log("fireUserDataMergeConflict");
 
 			MergeConflict mergeConflict = JsonHelper.getObjectFromJson<MergeConflict>(data);
 
@@ -2470,7 +2471,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		public event UserDataMergeSuccessful OnUserDataMergeSuccessful;
 
 		public static void fireUserDataMergeSuccessful() {
-			Debug.Log("SpilSDK-Unity fireUserDataMergeSuccessful");
+			SpilLogging.Log("fireUserDataMergeSuccessful");
 
 		    if (Spil.PlayerData != null) {
 		        Spil.PlayerData.UpdatePlayerData();
@@ -2490,7 +2491,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		public event UserDataMergeFailed OnUserDataMergeFailed;
 
 		public static void fireUserDataMergeFailed(string data) {
-			Debug.Log("SpilSDK-Unity fireUserDataMergeFailed");
+			SpilLogging.Log("fireUserDataMergeFailed");
 
 		    JSONObject jsonData = new JSONObject(data);
 		    string mergeData = jsonData.HasField ("mergeData") ? jsonData.GetField ("mergeData").str : null;
@@ -2509,7 +2510,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		public event UserDataHandleMerge OnUserDataHandleMerge;
 
 		public static void fireUserDataHandleMerge(string mergeType) {
-			Debug.Log("SpilSDK-Unity fireUserDataHandleMerge");
+			SpilLogging.Log("fireUserDataHandleMerge");
 
 			if (Spil.Instance.OnUserDataHandleMerge != null) {
 				Spil.Instance.OnUserDataHandleMerge(mergeType);
@@ -2524,7 +2525,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		public event UserDataSyncError OnUserDataSyncError;
 
 		public static void fireUserDataSyncError() {
-			Debug.Log("SpilSDK-Unity fireUserDataSyncError");
+			SpilLogging.Log("fireUserDataSyncError");
 
 			if (Spil.Instance.OnUserDataSyncError != null) {
 				Spil.Instance.OnUserDataSyncError();
@@ -2539,7 +2540,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		public event UserDataLockError OnUserDataLockError;
 
 		public static void fireUserDataLockError() {
-			Debug.Log("SpilSDK-Unity fireUserDataLockError");
+			SpilLogging.Log("fireUserDataLockError");
 
 			if (Spil.Instance.OnUserDataLockError != null) {
 				Spil.Instance.OnUserDataLockError();
@@ -2554,7 +2555,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		public event UserDataError OnUserDataError;
 
 		public static void fireUserDataError(string error) {
-			Debug.Log("SpilSDK-Unity fireUserDataError with data: " + error);
+			SpilLogging.Log("fireUserDataError with data: " + error);
 
 			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
 			if (Spil.Instance.OnUserDataError != null) {
@@ -2570,7 +2571,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		public event UserDataAvailable OnUserDataAvailable;
 
 		public static void fireUserDataAvailable() {
-			Debug.Log("SpilSDK-Unity fireUserDataAvailable");
+			SpilLogging.Log("fireUserDataAvailable");
 
 		    Spil.PlayerData.UpdatePlayerData();
 		    
@@ -2588,7 +2589,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event PrivacyPolicyStatus OnPrivacyPolicyStatus;
 
         public static void firePrivacyPolicyStatus(bool accepted) {
-            Debug.Log("SpilSDK-Unity firePrivacyPolicyStatus");
+            SpilLogging.Log("firePrivacyPolicyStatus");
 
             if (accepted) {
                 if (Spil.UseUnityPrefab) {
@@ -2615,7 +2616,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public event PermissionResponse OnPermissionResponse;
 
         public static void firePermissionResponse(string message) {
-            Debug.Log("SpilSDK-Unity Permission response with message: " + message);
+            SpilLogging.Log("Permission response with message: " + message);
 
             SpilAndroidUnityImplementation.PermissionResponseObject permissionResponse =
                 JsonHelper.getObjectFromJson<SpilAndroidUnityImplementation.PermissionResponseObject>(message);
@@ -2976,5 +2977,28 @@ namespace SpilGames.Unity.Base.Implementations{
         #endregion
 
         #endregion
+    }
+}
+
+public class SpilLogging {
+    public static void Log(string message) {
+        Spil spil = GameObject.FindObjectOfType<Spil>();
+        if (spil != null && spil.SpilLoggingEnabled) {
+            Debug.Log("SpilSDK: " + message);
+        }
+    }
+
+    public static void Error(string message) {
+        Spil spil = GameObject.FindObjectOfType<Spil>();
+        if (spil != null && spil.SpilLoggingEnabled) {
+            Debug.LogError("SpilSDK: " + message);
+        }
+    }
+
+    public static void Assert(bool condition, string message) {
+        Spil spil = GameObject.FindObjectOfType<Spil>();
+        if (spil != null && spil.SpilLoggingEnabled) {
+            Debug.Assert(condition, "SpilSDK: " + message);
+        }
     }
 }
