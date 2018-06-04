@@ -227,13 +227,6 @@ namespace SpilGames.Unity.Base.Implementations {
         /// If no video is available then nothing will happen.
         /// </summary>
         public override void PlayVideo(string location = null, string rewardType = null) {
-            int priv = Spil.Instance.GetPrivValue();
-
-            if (priv < 2 && priv > -1 && Spil.UseUnityPrefab) {
-                ShowAdsScreen();
-                return;
-            }
-            
             CallNativeMethod("playVideo", new object[] {
                 location,
                 rewardType
@@ -266,13 +259,6 @@ namespace SpilGames.Unity.Base.Implementations {
         /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
         public override void RequestRewardVideo(string location = null, string rewardType = null) {
-            int priv = Spil.Instance.GetPrivValue();
-
-            if (priv < 2 && priv > -1 && Spil.UseUnityPrefab) {
-                fireAdAvailableEvent("rewardVideo");
-                return;
-            }
-            
             CallNativeMethod("requestRewardVideo", new object[] {
                 location,
                 rewardType

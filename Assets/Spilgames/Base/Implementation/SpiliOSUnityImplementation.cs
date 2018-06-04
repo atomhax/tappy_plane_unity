@@ -201,14 +201,7 @@ namespace SpilGames.Unity.Base.Implementations
         /// If no video is available then nothing will happen.
         /// </summary>
         public override void PlayVideo(string location = null, string rewardType = null)
-        {
-            int priv = Spil.Instance.GetPrivValue();
-
-            if (priv < 2 && priv > -1 && Spil.UseUnityPrefab) {
-                ShowAdsScreen();
-                return;
-            }
-            
+        {            
             playRewardVideoNative(location, rewardType);
         }
 

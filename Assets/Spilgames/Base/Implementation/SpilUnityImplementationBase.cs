@@ -2671,13 +2671,6 @@ namespace SpilGames.Unity.Base.Implementations{
 
         public abstract void ShowPrivacyPolicySettings();
 
-        internal void ShowAdsScreen() {
-            PrivacyPolicyHelper.PrivacyPolicyObject = (GameObject) GameObject.Instantiate(Resources.Load("Spilgames/PrivacyPolicy/PrivacyPolicyUnity" + Spil.MonoInstance.PrefabOrientation));
-            PrivacyPolicyHelper.PrivacyPolicyObject.SetActive(true);
-            
-            PrivacyPolicyHelper.Instance.ShowAdsScreen(2);
-        }
-
         public void TrackPrivacyPolicyChanged(bool withPersonalisedAds, bool withPersonalisedContent, string location, bool fromStartScreen) {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("personalizedAds", withPersonalisedAds);
