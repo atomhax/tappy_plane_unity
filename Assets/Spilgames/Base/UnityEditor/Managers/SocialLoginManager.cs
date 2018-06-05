@@ -35,7 +35,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 error.id = 37;
                 error.name = "SocialLoginServerError";
                 error.message = "Error communicating with the server!";
-                SpilUnityImplementationBase.fireLoginFailed(JsonUtility.ToJson(error));
+				Spil.Instance.fireLoginFailed(JsonUtility.ToJson(error));
 
                 return;
             }
@@ -58,14 +58,14 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 loginMessage.AddField("socialId", socialId);
                 loginMessage.AddField("isGuest", false);
 
-                SpilUnityImplementationBase.fireLoginSuccessful(loginMessage.Print());
+				Spil.Instance.fireLoginSuccessful(loginMessage.Print());
             }
             else {
                 SpilErrorMessage error = new SpilErrorMessage();
                 error.id = 37;
                 error.name = "SocialLoginServerError";
                 error.message = "Error communicating with the server!";
-                SpilUnityImplementationBase.fireLoginFailed(JsonUtility.ToJson(error));
+				Spil.Instance.fireLoginFailed(JsonUtility.ToJson(error));
             }
         }
 
@@ -75,7 +75,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 error.id = 37;
                 error.name = "SocialLoginServerError";
                 error.message = "Error communicating with the server!";
-                SpilUnityImplementationBase.fireLoginFailed(JsonUtility.ToJson(error));
+				Spil.Instance.fireLoginFailed(JsonUtility.ToJson(error));
 
                 return;
             }
@@ -105,14 +105,14 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 loginMessage.AddField("socialId", socialId);
                 loginMessage.AddField("isGuest", false);
 
-                SpilUnityImplementationBase.fireLoginSuccessful(loginMessage.Print());
+				Spil.Instance.fireLoginSuccessful(loginMessage.Print());
             }
             else {
                 SpilErrorMessage error = new SpilErrorMessage();
                 error.id = 37;
                 error.name = "SocialLoginServerError";
                 error.message = "Error communicating with the server!";
-                SpilUnityImplementationBase.fireLoginFailed(JsonUtility.ToJson(error));
+				Spil.Instance.fireLoginFailed(JsonUtility.ToJson(error));
             }
         }
 
@@ -150,7 +150,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                         break;
                 }
 
-                SpilUnityImplementationBase.fireLoginFailed(JsonUtility.ToJson(error));
+				Spil.Instance.fireLoginFailed(JsonUtility.ToJson(error));
             }
             else {
                 SpilErrorMessage error = new SpilErrorMessage();
@@ -158,7 +158,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 error.name = "SocialLoginServerError";
                 error.message = "Error communicating with the server!";
 
-                SpilUnityImplementationBase.fireLoginFailed(JsonUtility.ToJson(error));
+				Spil.Instance.fireLoginFailed(JsonUtility.ToJson(error));
             }
         }
 
@@ -166,7 +166,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             Spil.Instance.SetUserId(null, null);
             Spil.SpilUserIdEditor = Guid.NewGuid().ToString();
             SpilUnityEditorImplementation.spilToken = null;
-            SpilUnityImplementationBase.fireLogoutSuccessful();
+			Spil.Instance.fireLogoutSuccessful();
         }
 
         public static void ProcessUnauthorizedResponse(string errorJSONString) {
@@ -201,7 +201,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                         break;
                 }
 
-                SpilUnityImplementationBase.fireAuthenticationError(JsonUtility.ToJson(error));
+				Spil.Instance.fireAuthenticationError(JsonUtility.ToJson(error));
             }
             else {
                 SpilErrorMessage error = new SpilErrorMessage();
@@ -209,7 +209,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 error.name = "SocialLoginServerError";
                 error.message = "Error communicating with the server!";
 
-                SpilUnityImplementationBase.fireAuthenticationError(JsonUtility.ToJson(error));
+				Spil.Instance.fireAuthenticationError(JsonUtility.ToJson(error));
             }
         }
 
@@ -234,7 +234,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         }
 
         public void RequestLogin() {
-            SpilUnityImplementationBase.fireRequestLogin();
+			Spil.Instance.fireRequestLogin();
             title = null;
             message = null;
             loginText = null;

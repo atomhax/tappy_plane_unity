@@ -35,12 +35,6 @@ public class PrivacyPolicyHelper : MonoBehaviour {
     public Text InfoDescription;
     public Button InfoOkButton;
 
-    public GameObject AdsScreen;
-    public Text AdsTitle;
-    public Toggle AdsPeronalised;
-    public Text AdsDescription;
-    public Button AdsSaveButton;
-
     string mainDescription = "";
     string mainAccept = "";
     string mainSettings = "";
@@ -60,11 +54,6 @@ public class PrivacyPolicyHelper : MonoBehaviour {
 
     string infoDescription = "";
     string infoOk = "";
-
-    string adsTitle = "";
-    string adsPersonalisedAds = "";
-    string adsDescription = "";
-    string adsSave = "";  
     
     private int openId;
 
@@ -153,7 +142,6 @@ public class PrivacyPolicyHelper : MonoBehaviour {
         MainScreen.SetActive(true);
         SettingsScreen.SetActive(false);
         InfoScreen.SetActive(false);
-        AdsScreen.SetActive(false);
     }
     
     public void ShowSettingsScreen(int openId) {
@@ -242,7 +230,6 @@ public class PrivacyPolicyHelper : MonoBehaviour {
         MainScreen.SetActive(false);
         SettingsScreen.SetActive(true);
         InfoScreen.SetActive(false);
-        AdsScreen.SetActive(false);
     }
 
     public void PrivacyPolicyAccepted() {
@@ -257,7 +244,7 @@ public class PrivacyPolicyHelper : MonoBehaviour {
         Destroy(PrivacyPolicyObject);
         Instance = null;
             
-        SpilUnityImplementationBase.firePrivacyPolicyStatus(true);
+		Spil.Instance.firePrivacyPolicyStatus("true");
             
         Spil.Instance.TrackPrivacyPolicyChanged(withPersonalisedAds, withPersonalisedContent, "StartScreen", true);
     }
@@ -278,7 +265,6 @@ public class PrivacyPolicyHelper : MonoBehaviour {
                 MainScreen.SetActive(true);
                 SettingsScreen.SetActive(false);
                 InfoScreen.SetActive(false);
-                AdsScreen.SetActive(false);
                 break;
             case 1:
                 oldPriv = Spil.Instance.GetPrivValue();
@@ -348,67 +334,14 @@ public class PrivacyPolicyHelper : MonoBehaviour {
         MainScreen.SetActive(false);
         SettingsScreen.SetActive(false);
         InfoScreen.SetActive(true);
-        AdsScreen.SetActive(false);
     }
 
     public void InfoAccepted() {
         if (openId == 2) {
-            SpilUnityImplementationBase.fireAdNotAvailableEvent("rewardVideo");
+			Spil.Instance.fireAdNotAvailable("rewardVideo");
         }
         
         Destroy(PrivacyPolicyObject);
-    }
-
-    public void ShowAdsScreen(int openId) {
-        this.openId = openId;
-        
-        PrivacyPolicyConfiguration privacyPolicyConfiguration = GetPrivacyPolicyConfiguration();
-        if (privacyPolicyConfiguration == null) {
-            SpilLogging.Log("Privacy Policy Configuration could not be retrieved. Please make sure you have configured properly the text for the privacy policy in the defaultGameConfig.json file.");
-            return;
-        }    
-
-        string deviceLocale = GetLocaleFromSystemLanguage();
-        
-        bool privacyPolicyTextSet = false;
-
-        foreach (PrivacyPolicy privacyPolicy in privacyPolicyConfiguration.privacyPolicies) {
-            if (privacyPolicy.locale.Equals(deviceLocale)) {
-                adsTitle = privacyPolicy.ads.title;
-                adsPersonalisedAds = privacyPolicy.ads.personalisedAds;
-                adsDescription = privacyPolicy.ads.description;
-                adsSave = privacyPolicy.ads.save;
-                
-                privacyPolicyTextSet = true;
-                break;
-            }
-        }
-
-        if (!privacyPolicyTextSet) {
-            PrivacyPolicy englishPrivacyPolicy = getDefaultEnglishPrivacyPolicy(privacyPolicyConfiguration);
-
-            if (englishPrivacyPolicy != null) {
-                adsTitle = englishPrivacyPolicy.ads.title;
-                adsPersonalisedAds = englishPrivacyPolicy.ads.personalisedAds;
-                adsDescription = englishPrivacyPolicy.ads.description;
-                adsSave = englishPrivacyPolicy.ads.save;
-            } else {
-                adsTitle = "";
-                adsPersonalisedAds = "";
-                adsDescription = "";
-                adsSave = "";
-            }
-        }
-        AdsTitle.text = adsTitle;
-        AdsPeronalised.isOn = withPersonalisedAds;
-        AdsPeronalised.GetComponentInChildren<Text>().text = adsPersonalisedAds;
-        AdsDescription.text = adsDescription;
-        AdsSaveButton.GetComponentInChildren<Text>().text = adsSave;
-        
-        MainScreen.SetActive(false);
-        SettingsScreen.SetActive(false);
-        InfoScreen.SetActive(false);
-        AdsScreen.SetActive(true);
     }
 
     private int SavePrivValue() {
@@ -434,10 +367,6 @@ public class PrivacyPolicyHelper : MonoBehaviour {
 
     public void OnSettingsPersonalisedAdsToggle() {
         withPersonalisedAds = SettingsAdsToggle.isOn;
-    }
-
-    public void OnAdsPersonalisedAdsToggle() {
-        withPersonalisedAds = AdsPeronalised.isOn;
     }
     
     public PrivacyPolicyConfiguration GetPrivacyPolicyConfiguration() {

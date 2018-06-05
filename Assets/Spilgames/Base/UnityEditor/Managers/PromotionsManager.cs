@@ -33,7 +33,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             data.AddField("amountPurchased", boughtPromotion.amountPurchased);
             data.AddField("maxAmountReached", maxReached);
             
-            SpilUnityImplementationBase.firePromotionAmountBought(data.Print());
+			Spil.Instance.firePromotionAmountBought(data.Print());
         }
         
         public static void ShowPromotionScreen(int promotionId) {
@@ -126,7 +126,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
     public class PromotionsResponse : Response {
         public static void ProcessPromotionResponse(ResponseEvent response) {
             if (response.data == null) {
-                SpilUnityImplementationBase.firePromotionsNotAvailable();
+				Spil.Instance.firePromotionsNotAvailable();
                 return;
             }
 
@@ -228,7 +228,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                         
                         PromotionsManager.PromotionData.Add(promotionData);
                     }
-                    SpilUnityImplementationBase.firePromotionsAvailable();
+					Spil.Instance.firePromotionsAvailable();
                 }
             } else if (response.action.Equals("update")) {
                

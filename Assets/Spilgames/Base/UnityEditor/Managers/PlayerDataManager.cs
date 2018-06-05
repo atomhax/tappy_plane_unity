@@ -294,11 +294,11 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 UserDataManager.UpdateUserDataVersions();
                 updatedData.reason = PlayerDataUpdateReasons.ServerUpdate;
 
-                SpilUnityImplementationBase.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
+				Spil.Instance.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
             }
 
             if (!fromInit) {
-                SpilUnityImplementationBase.fireUserDataAvailable();
+				Spil.Instance.fireUserDataAvailable();
             }
         }
 
@@ -353,7 +353,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 updatedData.currencies.Add(currency);
                 updatedData.reason = reason;
 
-                SpilUnityImplementationBase.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
+				Spil.Instance.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
 
                 SendUpdatePlayerDataEvent(null, reason, reasonDetails, location, transactionId);
                 
@@ -437,7 +437,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             updatedData.items.Add(item);
             updatedData.reason = reason;
 
-            SpilUnityImplementationBase.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
+			Spil.Instance.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
 
             SendUpdatePlayerDataEvent(null, reason, reasonDetails, location, transactionId);
             
@@ -705,7 +705,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             
             updatedData.reason = reason;
 
-            SpilUnityImplementationBase.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
+			Spil.Instance.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
 
             if (isPromotionValid) {
                 PromotionsManager.PromotionData.First(a => a.id == promotion.Id).amountPurchased++;
@@ -808,8 +808,8 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                             updatedData.items.Add(gachaPlayerItem);
                             updatedData.reason = reason;
 
-                            SpilUnityImplementationBase.firePlayerDataEmptyGacha();
-                            SpilUnityImplementationBase.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
+							Spil.Instance.firePlayerDataEmptyGacha();
+							Spil.Instance.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
                             break;
                         default:
                             SpilLogging.Error("Error opening gacha!");

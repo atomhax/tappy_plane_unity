@@ -29,7 +29,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         public static void ProcessConfigResponse(ResponseEvent response) {
             if (response.data == null) return;
             ConfigManager.GameConfigData = response.data.Print();
-            SpilUnityImplementationBase.fireConfigUpdatedEvent();
+			Spil.Instance.fireConfigUpdated();
         }
 
     }

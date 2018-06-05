@@ -213,13 +213,6 @@ namespace SpilGames.Unity.Base.Implementations {
         /// If no video is available then nothing will happen.
         /// </summary>
         public override void PlayVideo(string location = null, string rewardType = null) {
-            int priv = Spil.Instance.GetPrivValue();
-
-            if (priv < 2 && priv > -1 && Spil.UseUnityPrefab) {
-                ShowAdsScreen();
-                return;
-            }
-            
             AdvertisementManager.PlayVideo();
         }
 
@@ -239,7 +232,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// event to which the developer can subscribe and for instance call PlayVideo(); or PlayMoreApps();
         /// </summary>
         public override void RequestMoreApps() {
-            SpilUnityImplementationBase.fireAdAvailableEvent("moreApps");
+			Spil.Instance.fireAdAvailable("moreApps");
         }
 
         /// <summary>
@@ -249,13 +242,6 @@ namespace SpilGames.Unity.Base.Implementations {
         /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
         /// </summary>
         public override void RequestRewardVideo(string location = null, string rewardType = null) {
-            int priv = Spil.Instance.GetPrivValue();
-
-            if (priv < 2 && priv > -1 && Spil.UseUnityPrefab) {
-                fireAdAvailableEvent("rewardVideo");
-                return;
-            }
-            
             SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
             spilEvent.eventName = "requestRewardVideo";
 
@@ -349,7 +335,7 @@ namespace SpilGames.Unity.Base.Implementations {
 
             jsonObject.AddField("imageContext", imageContextJSON);
 
-            SpilUnityImplementationBase.fireImageLoadSuccess(jsonObject.Print());
+			Spil.Instance.fireImageLoadSuccess(jsonObject.Print());
         }
 
         /// <summary>
@@ -362,7 +348,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// This method loops through all the items and bundles and adds urls to images (if any) to a download queue if those images have not yet been download and saved to local storage.
         /// </summary>
         public override void PreloadItemAndBundleImages() {
-            SpilUnityImplementationBase.fireImagePreloadingCompleted();
+			Spil.Instance.fireImagePreloadingCompleted();
         }
 
         #endregion
@@ -789,7 +775,7 @@ namespace SpilGames.Unity.Base.Implementations {
                 SetUserId(null, null);
                 Spil.SpilUserIdEditor = Guid.NewGuid().ToString();
                 spilToken = null;
-                SpilUnityImplementationBase.fireLogoutSuccessful();
+				Spil.Instance.fireLogoutSuccessful();
             }
         }
 
@@ -812,7 +798,7 @@ namespace SpilGames.Unity.Base.Implementations {
             loginResponse.AddField("socialId", (string) null);
             loginResponse.AddField("isGuest", true);
 
-            SpilUnityImplementationBase.fireLoginSuccessful(loginResponse.Print());
+			Spil.Instance.fireLoginSuccessful(loginResponse.Print());
         }
 
         public override void ShowUnauthorizedDialog(string title, string message, string loginText,

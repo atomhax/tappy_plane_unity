@@ -117,7 +117,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             GameDataManager.updatedFromServer = true;
 
             Spil.GameData.RefreshData(Spil.Instance);
-            SpilUnityImplementationBase.fireSpilGameDataAvailable();
+			Spil.Instance.fireSpilGameDataAvailable();
         }
 
     }

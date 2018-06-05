@@ -59,7 +59,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 json.AddField("data", gameStates);
             }
 
-            SpilUnityImplementationBase.fireOtherUsersGameStateLoaded(json.Print(false));
+			Spil.Instance.fireOtherUsersGameStateLoaded(json.Print(false));
         }
 
         public static void SetPrivateGameState(String gameState) {
@@ -119,7 +119,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 error.name = "UserIdMissing";
                 error.message =
                     "Error adding public game state data! A custom user id must be set in order to save public game state data";
-                SpilUnityImplementationBase.fireUserDataError(JsonUtility.ToJson(error));
+				Spil.Instance.fireUserDataError(JsonUtility.ToJson(error));
             }
         }
     }
