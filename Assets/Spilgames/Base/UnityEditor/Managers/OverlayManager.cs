@@ -21,7 +21,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         public static void ShowSplashScreen(JSONObject data, string url) {
             SpilLogging.Log("Opening URL: " + url + " With data: " + data.Print(false));
 
-            SpilUnityImplementationBase.fireSplashScreenOpen();
+			Spil.Instance.fireSplashScreenOpen();
 
             SplashScreen = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/SplashScreen.prefab"));
             SplashScreen.SetActive(true);
@@ -30,20 +30,20 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         public static void ShowDailyBonus(JSONObject data, string url) {
             SpilLogging.Log("Opening URL: " + url + " With data: " + data.Print(false));
 
-            SpilUnityImplementationBase.fireDailyBonusOpen();
+			Spil.Instance.fireDailyBonusOpen();
 
             DailyBonus = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/DailyBonus.prefab"));
             DailyBonus.SetActive(true);
         }
 
         public void CloseSplashScreen() {
-            SpilUnityImplementationBase.fireSplashScreenClosed();
+			Spil.Instance.fireSplashScreenClosed();
 
             Destroy(SplashScreen);
         }
 
         public void OpenShop() {
-            SpilUnityImplementationBase.fireSplashScreenOpenShop();
+			Spil.Instance.fireSplashScreenOpenShop();
 
             Destroy(SplashScreen);
         }
@@ -52,14 +52,14 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             if (Spil.IapPurchaseRequest == null || Spil.IapPurchaseRequest.Equals("")) {
                 SpilLogging.Error("Iap Purchase Request SKU Id not set! Please configure value in the Spil SDK object!");
             } else {
-                SpilUnityImplementationBase.fireIAPRequestPurchase(Spil.IapPurchaseRequest);
+				Spil.Instance.fireIAPRequestPurchase(Spil.IapPurchaseRequest);
             }
 
             Destroy(SplashScreen);
         }
 
         public void CloseDailyBonus() {
-            SpilUnityImplementationBase.fireDailyBonusClosed();
+			Spil.Instance.fireDailyBonusClosed();
 
             Destroy(DailyBonus);
         }
@@ -79,7 +79,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 JSONObject json = new JSONObject();
                 json.AddField("data", rewardsJSON);
 
-                SpilUnityImplementationBase.fireDailyBonusReward(json.Print(false));
+				Spil.Instance.fireDailyBonusReward(json.Print(false));
             } else {
                 int id = Spil.DailyBonusId;
                 int amount = Spil.DailyBonusAmount;
@@ -95,7 +95,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 }
             }
 
-            SpilUnityImplementationBase.fireDailyBonusClosed();
+			Spil.Instance.fireDailyBonusClosed();
             
             Destroy(DailyBonus);
         }
@@ -126,10 +126,10 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             }
             else if (response.action.ToLower().Trim().Equals("notavailable")) {
                 if (response.eventName.ToLower().Equals("splashscreen")) {
-                    SpilUnityImplementationBase.fireSplashScreenNotAvailable();
+					Spil.Instance.fireSplashScreenNotAvailable();
                 }
                 else if (response.eventName.ToLower().Equals("dailybonus")) {
-                    SpilUnityImplementationBase.fireDailyBonusNotAvailable();
+					Spil.Instance.fireDailyBonusNotAvailable();
                 }
             }
         }

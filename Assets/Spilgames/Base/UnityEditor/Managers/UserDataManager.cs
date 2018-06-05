@@ -79,7 +79,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 userDataMeta.serverTime = receivedUserDataMeta.serverTime;
             }
 
-            SpilUnityImplementationBase.fireUserDataAvailable();
+			Spil.Instance.fireUserDataAvailable();
         }
 
         public static void ProcessMergeConflict(WalletData receivedWallet, InventoryData receivedInventory, string receivedGameState, List<UserDataVersion> receivedUserDataVersions, UserDataMeta receivedMetaData) {
@@ -174,15 +174,15 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             mergeData.AddField("localData", localData);
             mergeData.AddField("remoteData", remoteData);
 
-            SpilUnityImplementationBase.fireUserDataMergeConflict(mergeData.Print());
+			Spil.Instance.fireUserDataMergeConflict(mergeData.Print());
         }
 
         public static void ProcessSyncError() {
-            SpilUnityImplementationBase.fireUserDataSyncError();
+			Spil.Instance.fireUserDataSyncError();
         }
 
         public static void ProcessLockError() {
-            SpilUnityImplementationBase.fireUserDataLockError();
+			Spil.Instance.fireUserDataLockError();
         }
 
         public static void ProcessDroppedResponse(string message) {
@@ -285,7 +285,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             remoteUserDataVersions = null;
             
             Spil.Instance.RequestLiveEvent();
-            SpilUnityImplementationBase.fireUserDataMergeSuccessful();
+			Spil.Instance.fireUserDataMergeSuccessful();
         }
 
         public static void UpdateUserDataMeta() {
@@ -397,19 +397,19 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         }
 
         public void MergeConflictPozitive() {
-            SpilUnityImplementationBase.fireUserDataHandleMerge("local");
+			Spil.Instance.fireUserDataHandleMerge("local");
             Destroy(MergeConflict);
             ClearValues();
         }
 
         public void MergeConflictNegative() {
-            SpilUnityImplementationBase.fireUserDataHandleMerge("remote");
+			Spil.Instance.fireUserDataHandleMerge("remote");
             Destroy(MergeConflict);
             ClearValues();
         }
 
         public void MergeConflictNeutral() {
-            SpilUnityImplementationBase.fireUserDataHandleMerge("merge");
+			Spil.Instance.fireUserDataHandleMerge("merge");
             Destroy(MergeConflict);
             ClearValues();
         }

@@ -17,7 +17,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
     public class AssetBundlesResponse : Response {
         public static void ProcessAssetBundlesResponse(ResponseEvent response) {
             if (response.data == null) {
-                SpilUnityImplementationBase.fireAssetBundlesNotAvailable();
+				Spil.Instance.fireAssetBundlesNotAvailable();
                 return;
             }
 
@@ -26,7 +26,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     JSONObject assetBundlesJSON = response.data.GetField("assetBundles");
 
                     if (assetBundlesJSON.list.Count == 0) {
-                        SpilUnityImplementationBase.fireAssetBundlesNotAvailable();
+						Spil.Instance.fireAssetBundlesNotAvailable();
                         return;
                     }
                     
@@ -60,7 +60,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                         
                         AssetBundlesManager.AssetBundlesData.Add(assetBundleData);
                     }
-                    SpilUnityImplementationBase.fireAssetBundlesAvailable();
+					Spil.Instance.fireAssetBundlesAvailable();
                 }
             }
         }

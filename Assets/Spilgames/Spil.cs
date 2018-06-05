@@ -8,30 +8,54 @@
 */
 
 using UnityEngine;
+using System;
 using SpilGames.Unity.Base.Implementations;
 using SpilGames.Unity.Helpers.GameData;
-using System;
 using SpilGames.Unity.Helpers.PlayerData;
+using SpilGames.Unity.Base.SDK;
+using SpilGames.Unity.Json;
 
 namespace SpilGames.Unity {
     [HelpURL("http://www.spilgames.com/developers/integration/unity/unity-get-started/")]
     public class Spil : MonoBehaviour {
+
         private SpilGameDataHelper GameDataObject;
+        /// <summary>
+        /// Contains the game data: items, currencies, bundles (collections of items/currencies for softcurrency/hardcurrency transactions and gifting), Shop and Gacha boxes.
+        /// For player-specific data such as owned items or currencies use the PlayerData object.
+        /// </summary>
         public static SpilGameDataHelper GameData;
 
         private PlayerDataHelper PlayerDataObject;
+        /// <summary>
+        /// Contains data specific to the user: Owned items, Currencies and Gacha boxes.
+        /// Provides methods for adding/deleting/buying items and currencies and opening gacha boxes.
+        /// For saving/loading player data such as game progress, use the "Gamestate" related methods and events in Spil.Instance. 
+        /// </summary>
         public static PlayerDataHelper PlayerData;
 
+        /// <summary>
+        /// Not intended for use by developers.
+        /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
+        /// </summary>
         [SerializeField] public bool initializeOnAwake = true;
-        
-        [SerializeField] public bool SpilLoggingEnabled = true;
-        
+
+		/// <summary>
+		/// Not intended for use by developers.
+		/// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
+		/// </summary>
+		[SerializeField] public bool SpilLoggingEnabled = true;
+
         [Header("Privacy Policy Settings")]
         
         [SerializeField] private bool checkPrivacyPolicyAndroid = true;
 
         [SerializeField] private bool checkPrivacyPolicyIOS = true;
-        
+
+        /// <summary>
+        /// Not intended for use by developers.
+        /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
+        /// </summary>
         public static bool CheckPrivacyPolicy {
             get {
 #if UNITY_ANDROID
@@ -44,6 +68,10 @@ namespace SpilGames.Unity {
 
         [SerializeField] private bool useUnityPrefab;
 
+        /// <summary>
+        /// Not intended for use by developers.
+        /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
+        /// </summary>
         public static bool UseUnityPrefab;
 
         public enum PrivacyPolicyPrefabOrientationEnum {
@@ -51,58 +79,127 @@ namespace SpilGames.Unity {
             Portrait
         }
 
+        /// <summary>
+        /// Not intended for use by developers.
+        /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
+        /// </summary>
         public PrivacyPolicyPrefabOrientationEnum PrefabOrientation;
         
         [Header("Android Settings")]
 #if UNITY_ANDROID || UNITY_EDITOR
-        [SerializeField]
-        public string ProjectId = "";
+        /// <summary>
+        /// Not intended for use by developers.
+        /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
+        /// </summary>
+        [SerializeField] public string ProjectId = "";
 #endif
 
         [Header("iOS Settings")] [SerializeField]
+
+        /// <summary>
+        /// Not intended for use by developers.
+        /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
+        /// </summary>
         public string CustomBundleId;
 
-        [Header("Editor Settings")]
-        [SerializeField] public bool editorDebugMode = false;
+        [Header("Editor Settings")] [SerializeField]
 
-        public bool EditorDebugMode { get; set; }
-        
+        /// <summary>
+        /// Not intended for use by developers.
+        /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
+        /// </summary>
+        public bool EditorLogging = true;
+
+        /// <summary>
+        /// Not intended for use by developers.
+        /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
+        /// </summary>
+        [SerializeField] public bool EditorDebugMode = true;
+
+        /// <summary>
+        /// Not intended for use by developers.
+        /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
+        /// </summary>
         [SerializeField] public string spilUserIdEditor;
 
+        /// <summary>
+        /// Not intended for use by developers.
+        /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
+        /// </summary>
         public static string SpilUserIdEditor { get; set; }
 
+        /// <summary>
+        /// Not intended for use by developers.
+        /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
+        /// </summary>
         [SerializeField] public string bundleIdEditor;
 
+        /// <summary>
+        /// Not intended for use by developers.
+        /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
+        /// </summary>
         public static string BundleIdEditor { get; private set; }
 
+        /// <summary>
+        /// Not intended for use by developers.
+        /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
+        /// </summary>
         [SerializeField] public string iapPurchaseRequestValue;
 
+        /// <summary>
+        /// Not intended for use by developers.
+        /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
+        /// </summary>
         public static string IapPurchaseRequest { get; private set; }
 
         [Header("Reward Settings")] [Header("Ads")] [SerializeField]
         private string currencyName;
 
+        /// <summary>
+        /// Not intended for use by developers.
+        /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
+        /// </summary>
         public static string CurrencyName { get; private set; }
 
         [SerializeField] private string currencyId;
 
+        /// <summary>
+        /// Not intended for use by developers.
+        /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
+        /// </summary>
         public static string CurrencyId { get; private set; }
 
         [SerializeField] private int reward = 0;
 
+        /// <summary>
+        /// Not intended for use by developers.
+        /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
+        /// </summary>
         public static int Reward { get; private set; }
 
         [Space(10)] [Header("Daily Bonus")] [SerializeField]
         private int dailyBonusId;
 
+        /// <summary>
+        /// Not intended for use by developers.
+        /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
+        /// </summary>
         public static int DailyBonusId { get; private set; }
 
         [SerializeField] private string dailyBonusExternalId;
 
+        /// <summary>
+        /// Not intended for use by developers.
+        /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
+        /// </summary>
         public static string DailyBonusExternalId { get; private set; }
 
         [SerializeField] private int dailyBonusAmount;
 
+        /// <summary>
+        /// Not intended for use by developers.
+        /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
+        /// </summary>
         public static int DailyBonusAmount { get; private set; }
 
         public enum DailyBonusRewardTypeEnum {
@@ -111,19 +208,35 @@ namespace SpilGames.Unity {
             EXTERNAL
         };
 
+        /// <summary>
+        /// Not intended for use by developers.
+        /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
+        /// </summary>
         public DailyBonusRewardTypeEnum DailyBonusRewardType;
 
         [Space(10)] [Header("Live Event")] [SerializeField]
         private int liveEventRewardId;
 
+        /// <summary>
+        /// Not intended for use by developers.
+        /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
+        /// </summary>
         public static int LiveEventRewardId { get; private set; }
 
         [SerializeField] private string liveEventExternalRewardId;
 
+        /// <summary>
+        /// Not intended for use by developers.
+        /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
+        /// </summary>
         public static string LiveEventExternalRewardId { get; private set; }
 
         [SerializeField] private int liveEventRewardAmount;
 
+        /// <summary>
+        /// Not intended for use by developers.
+        /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
+        /// </summary>
         public static int LiveEventRewardAmount { get; private set; }
 
         public enum LiveEventRewardTypeEnum {
@@ -132,29 +245,53 @@ namespace SpilGames.Unity {
             EXTERNAL
         };
 
+        /// <summary>
+        /// Not intended for use by developers.
+        /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
+        /// </summary>
         public LiveEventRewardTypeEnum LiveEventRewardType;
 
         [Space(10)] [Header("Token System")] [SerializeField]
         private string rewardToken;
 
+        /// <summary>
+        /// Not intended for use by developers.
+        /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
+        /// </summary>
         public static string RewardToken { get; private set; }
 
         public enum RewardFeatureTypeEnum {
             DEEPLINK,
         };
 
+        /// <summary>
+        /// Not intended for use by developers.
+        /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
+        /// </summary>
         public RewardFeatureTypeEnum RewardFeatureType;
 
         [SerializeField] private int tokenRewardId;
 
+        /// <summary>
+        /// Not intended for use by developers.
+        /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
+        /// </summary>
         public static int TokenRewardId { get; private set; }
 
         [SerializeField] private string tokenExternalRewardId;
 
+        /// <summary>
+        /// Not intended for use by developers.
+        /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
+        /// </summary>
         public static string TokenExternalRewardId { get; private set; }
 
         [SerializeField] private int tokenRewardAmount;
 
+        /// <summary>
+        /// Not intended for use by developers.
+        /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
+        /// </summary>
         public static int TokenRewardAmount { get; private set; }
 
         public enum TokenRewardTypeEnum {
@@ -163,10 +300,18 @@ namespace SpilGames.Unity {
             EXTERNAL
         };
 
+        /// <summary>
+        /// Not intended for use by developers.
+        /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
+        /// </summary>
         public TokenRewardTypeEnum TokenRewardType;
 
         private static Spil monoInstance;
 
+        /// <summary>
+        /// Not intended for use by developers.
+        /// Use Spil.Instance instead.
+        /// </summary>
         public static Spil MonoInstance {
             get {
                 if (monoInstance == null) {
@@ -181,12 +326,21 @@ namespace SpilGames.Unity {
         }
 
 #if UNITY_EDITOR
+        /// <summary>
+        /// Main entry-point for developers, exposes all SpilSDK methods and events (except Spil.Initialize).
+        /// </summary>
         public static SpilUnityEditorImplementation Instance = new SpilUnityEditorImplementation();
 
 #elif UNITY_ANDROID
+        /// <summary>
+        /// Main entry-point for developers, exposes all SpilSDK methods and events (except Spil.Initialize).
+        /// </summary>
 		public static SpilAndroidUnityImplementation Instance = new SpilAndroidUnityImplementation();
 
 #elif UNITY_IPHONE || UNITY_TVOS
+        /// <summary>
+        /// Main entry-point for developers, exposes all SpilSDK methods and events (except Spil.Initialize).
+        /// </summary>
 		public static SpiliOSUnityImplementation Instance = new SpiliOSUnityImplementation();
 
 #endif
@@ -210,8 +364,12 @@ namespace SpilGames.Unity {
             }
         }
 
+        /// <summary>
+        /// Called automatically on awake when the "initialize on awake" checkbox is checked in the SpilSDK object's inspector view.
+        /// If the checkbox is not checked this method needs to be called by the developer to initialise the SDK and make it ready for use.
+        /// </summary>
         public void Initialize() {
-            SpilLogging.Log("Inititialized");
+            SpilLogging.Log("SpilSDK-Unity Init");
 
             Instance.SetPluginInformation(SpilUnityImplementationBase.PluginName, SpilUnityImplementationBase.PluginVersion);
 
@@ -256,7 +414,7 @@ namespace SpilGames.Unity {
 #endif
         }
 
-        public void InitEditor() {
+        void InitEditor() {
             if (string.IsNullOrEmpty(spilUserIdEditor)) {
                 spilUserIdEditor = Guid.NewGuid().ToString();
             } else {
@@ -264,14 +422,11 @@ namespace SpilGames.Unity {
             }
 
             SpilUserIdEditor = spilUserIdEditor;
-            SpilLogging.Log("Using SpilUserIdEditor: " + SpilUserIdEditor);
-
-            EditorDebugMode = editorDebugMode;
-            SpilLogging.Log("Using SDK Debug mode: " + EditorDebugMode);
+            SpilLogging.Log("SpilSDK-Unity Using SpilUserIdEditor: " + SpilUserIdEditor);
             
             BundleIdEditor = bundleIdEditor;
             if (string.IsNullOrEmpty(bundleIdEditor)) {
-                SpilLogging.Assert(!string.IsNullOrEmpty(bundleIdEditor), "No BundleIdEditor set!");
+                SpilLogging.Assert(!string.IsNullOrEmpty(bundleIdEditor), "SpilSDK-Unity No BundleIdEditor set!");
             }
 
             IapPurchaseRequest = iapPurchaseRequestValue;
@@ -296,510 +451,619 @@ namespace SpilGames.Unity {
         }
 
         /// <summary>
-        /// This method is called by the native Spil SDK, it should not be used by developers.
-        /// Developers can subscribe to the Spil.Instance.AdStarted event.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void AdStart() {
-            SpilUnityImplementationBase.fireAdStartedEvent();
+			Spil.Instance.fireAdStart();
         }
 
         /// <summary>
-        /// This method is called by the native Spil SDK, it should not be used by developers.
-        /// Developers can subscribe to the Spil.Instance.AdFinished event.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void AdFinished(string response) {
-            SpilUnityImplementationBase.fireAdFinishedEvent(response);
+			Spil.Instance.fireAdFinished(response);
         }
 
         /// <summary>
-        /// This method is called by the native Spil SDK, it should not be used by developers.
-        /// Developers can subscribe to the Spil.Instance.AdAvailable event.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void AdAvailable(string type) {
-            SpilUnityImplementationBase.fireAdAvailableEvent(type);
+			Spil.Instance.fireAdAvailable(type);
         }
-
+		
         /// <summary>
-        /// This method is called by the native Spil SDK, it should not be used by developers.
-        /// Developers can subscribe to the Spil.Instance.AdNotAvailable event.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void AdNotAvailable(string type) {
-            SpilUnityImplementationBase.fireAdNotAvailableEvent(type);
+			Spil.Instance.fireAdNotAvailable(type);
         }
 
         /// <summary>
-        /// This method is called by the native Spil SDK, it should not be used by developers.
-        /// Developers can subscribe to the Spil.Instance.OpenParentalGate event.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void OpenParentalGate() {
-            SpilUnityImplementationBase.fireOpenParentalGateEvent();
+			Spil.Instance.fireOpenParentalGate();
         }
 
         /// <summary>
-        /// This method is called by the native Spil SDK, it should not be used by developers.
-        /// Developers can subscribe to the Spil.Instance.ConfigUpdated event.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void ConfigUpdated() {
-            SpilUnityImplementationBase.fireConfigUpdatedEvent();
+			Spil.Instance.fireConfigUpdated();
         }
 
         /// <summary>
-        /// This method is called by the native Spil SDK, it should not be used by developers.
-        /// Developers can subscribe to the Spil.Instance.ConfigUpdated event.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void ConfigError(string error) {
-            SpilUnityImplementationBase.fireConfigError(error);
+			Spil.Instance.fireConfigError(error);
         }
 
         /// <summary>
-        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void OnResponseReceived(string response) {
-            SpilUnityImplementationBase.OnResponseReceived(response);
+            SpilLogging.Log("SpilSDK-Unity OnResponseReceived " + response);
+
+            SpilResponse spilResponse = JsonHelper.getObjectFromJson<SpilResponse>(response);
+
+            if (!spilResponse.type.ToLower().Trim().Equals("notificationreward")) return;
+            PushNotificationRewardResponse rewardResponseData =
+                JsonHelper.getObjectFromJson<PushNotificationRewardResponse>(response);
+            fireOnRewardEvent(rewardResponseData);
         }
 
         /// <summary>
-        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
+        /// </summary>
+        private void fireOnRewardEvent(PushNotificationRewardResponse rewardResponse) {
+			Spil.Instance.fireOnRewardEvent(rewardResponse);
+        }
+
+        /// <summary>
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void SpilGameDataAvailable() {
-            SpilUnityImplementationBase.fireSpilGameDataAvailable();
+			Spil.Instance.fireSpilGameDataAvailable();
         }
 
         /// <summary>
-        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void SpilGameDataError(string reason) {
-            SpilUnityImplementationBase.fireSpilGameDataError(reason);
+			Spil.Instance.fireSpilGameDataError(reason);
         }
 
         /// <summary>
-        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void PlayerDataUpdated(string data) {
-            SpilUnityImplementationBase.firePlayerDataUpdated(data);
+			Spil.Instance.firePlayerDataUpdated(data);
         }
 
         /// <summary>
-        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void PlayerDataEmptyGacha() {
-            SpilUnityImplementationBase.firePlayerDataEmptyGacha();
+			Spil.Instance.firePlayerDataEmptyGacha();
         }
 
         /// <summary>
-        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void GameStateUpdated(string access) {
-            SpilUnityImplementationBase.fireGameStateUpdated(access);
+            Spil.Instance.fireGameStateUpdated(access);
         }
 
         /// <summary>
-        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void OtherUsersGameStateLoaded(string message) {
-            SpilUnityImplementationBase.fireOtherUsersGameStateLoaded(message);
+			Spil.Instance.fireOtherUsersGameStateLoaded(message);
         }
 
         /// <summary>
-        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void SplashScreenOpen() {
-            SpilUnityImplementationBase.fireSplashScreenOpen();
+            Spil.Instance.fireSplashScreenOpen();
         }
 
         /// <summary>
-        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void SplashScreenNotAvailable() {
-            SpilUnityImplementationBase.fireSplashScreenNotAvailable();
+	        Spil.Instance.fireSplashScreenNotAvailable();
         }
 
         /// <summary>
-        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void SplashScreenClosed() {
-            SpilUnityImplementationBase.fireSplashScreenClosed();
+            Spil.Instance.fireSplashScreenClosed();
         }
 
         /// <summary>
-        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void SplashScreenOpenShop() {
-            SpilUnityImplementationBase.fireSplashScreenOpenShop();
+            Spil.Instance.fireSplashScreenOpenShop();
         }
 
         /// <summary>
-        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void SplashScreenData(string payload) {
-            SpilUnityImplementationBase.fireSplashScreenData(payload);
+            Spil.Instance.fireSplashScreenData(payload);
         }
 
         /// <summary>
-        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void SplashScreenError(string error) {
-            SpilUnityImplementationBase.fireSplashScreenError(error);
+			Spil.Instance.fireSplashScreenError(error);
         }
 
         /// <summary>
-        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void DailyBonusOpen() {
-            SpilUnityImplementationBase.fireDailyBonusOpen();
+            Spil.Instance.fireDailyBonusOpen();
         }
 
         /// <summary>
-        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void DailyBonusNotAvailable() {
-            SpilUnityImplementationBase.fireDailyBonusNotAvailable();
+			Spil.Instance.fireDailyBonusNotAvailable();
         }
 
         /// <summary>
-        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void DailyBonusClosed() {
-            SpilUnityImplementationBase.fireDailyBonusClosed();
+            Spil.Instance.fireDailyBonusClosed();
         }
 
         /// <summary>
-        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void DailyBonusReward(string receivedReward) {
-            SpilUnityImplementationBase.fireDailyBonusReward(receivedReward);
+			Spil.Instance.fireDailyBonusReward(receivedReward);
         }
 
         /// <summary>
-        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void DailyBonusError(string error) {
-            SpilUnityImplementationBase.fireDailyBonusError(error);
+			Spil.Instance.fireDailyBonusError(error);
         }
 
         /// <summary>
-        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void RewardTokenReceived(string response) {
-            SpilUnityImplementationBase.fireRewardTokenReceived(response);
+            Spil.Instance.fireRewardTokenReceived(response);
         }
 
         /// <summary>
-        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void RewardTokenClaimed(string response) {
-            SpilUnityImplementationBase.fireRewardTokenClaimed(response);
+			Spil.Instance.fireRewardTokenClaimed(response);
         }
 
         /// <summary>
-        /// This method is called by the native Spil SDK, it should not be used by developers.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void RewardTokenClaimFailed(string response) {
-            SpilUnityImplementationBase.fireRewardTokenClaimFailed(response);
+            Spil.Instance.fireRewardTokenClaimFailed(response);
         }
 
         /// <summary>
-        /// This event will be called when an image has been downloaded.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void ImageLoadSuccess(string response) {
-            SpilUnityImplementationBase.fireImageLoadSuccess(response);
+			Spil.Instance.fireImageLoadSuccess(response);
         }
 
         /// <summary>
-        /// This event will be called when an image has failed downloadibg.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void ImageLoadFailed(string response) {
-            SpilUnityImplementationBase.fireImageLoadFailed(response);
+            Spil.Instance.fireImageLoadFailed(response);
         }
 
         /// <summary>
-        /// This event indicates that the operation for preloading item and bundle images has been completed.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void ImagePreloadingCompleted() {
-            SpilUnityImplementationBase.fireImagePreloadingCompleted();
+            Spil.Instance.fireImagePreloadingCompleted();
         }
 
         /// <summary>
-        /// This event indicates that the IAP has been validated with the SLOT backend.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void IAPValid(string data) {
-            SpilUnityImplementationBase.fireIAPValid(data);
+            Spil.Instance.fireIAPValid(data);
         }
 
         /// <summary>
-        /// This event indicates that the IAP was invalid when checked with the SLOT backend.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void IAPInvalid(string message) {
-            SpilUnityImplementationBase.fireIAPInvalid(message);
+            Spil.Instance.fireIAPInvalid(message);
         }
 
         /// <summary>
-        /// This event indicates that an IAP request was fired from the SDK.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void IAPRequestPurchase(string skuId) {
-            SpilUnityImplementationBase.fireIAPRequestPurchase(skuId);
+            Spil.Instance.fireIAPRequestPurchase(skuId);
         }
 
         /// <summary>
-        /// This event indicates that the IAP was invalid when checked with the SLOT backend.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void IAPServerError(string error) {
-            SpilUnityImplementationBase.fireIAPServerError(error);
+			Spil.Instance.fireIAPServerError(error);
         }
 
         /// <summary>
-        /// This event indicates that the IAP was invalid when checked with the SLOT backend.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void ServerTimeRequestSuccess(string time) {
-            SpilUnityImplementationBase.fireServerTimeRequestSuccess(time);
+			Spil.Instance.fireServerTimeRequestSuccess(time);
         }
 
         /// <summary>
-        /// This event indicates that the IAP was invalid when checked with the SLOT backend.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void ServerTimeRequestFailed(string error) {
-            SpilUnityImplementationBase.fireServerTimeRequestFailed(error);
+			Spil.Instance.fireServerTimeRequestFailed(error);
         }
 
         /// <summary>
-        /// This event indicates that the Live Event Stage has been opened.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void LiveEventAvailable() {
-            SpilUnityImplementationBase.fireLiveEventAvailable();
+            Spil.Instance.fireLiveEventAvailable();
         }
 
         /// <summary>
-        /// This event indicates that the Live Event Stage has been opened.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void LiveEventStageOpen() {
-            SpilUnityImplementationBase.fireLiveEventStageOpen();
+            Spil.Instance.fireLiveEventStageOpen();
         }
 
         /// <summary>
-        /// This event indicates that the Live Event Stage has been closed.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void LiveEventStageClosed() {
-            SpilUnityImplementationBase.fireLiveEventStageClosed();
+            Spil.Instance.fireLiveEventStageClosed();
         }
 
         /// <summary>
-        /// This event indicates that the Live Event is not available.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void LiveEventNotAvailable() {
-            SpilUnityImplementationBase.fireLiveEventNotAvailable();
+            Spil.Instance.fireLiveEventNotAvailable();
         }
 
         /// <summary>
-        /// This event indicates that an error occured for the Live Event.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void LiveEventError(string error) {
-            SpilUnityImplementationBase.fireLiveEventError(error);
+			Spil.Instance.fireLiveEventError(error);
         }
 
         /// <summary>
-        /// This event indicates the reward given for the Live Event.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void LiveEventReward(string receivedReward) {
-            SpilUnityImplementationBase.fireLiveEventReward(receivedReward);
+			Spil.Instance.fireLiveEventReward(receivedReward);
         }
 
         /// <summary>
-        /// This event indicates the reward given for the Live Event.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void LiveEventUsedExternalItems(string items) {
-            SpilUnityImplementationBase.fireLiveEventReward(items);
+            Spil.Instance.fireLiveEventUsedExternalItems(items);
         }
 
         /// <summary>
-        /// This event indicates if the user met the requirements to receive the reward.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
-        public void LiveEventMetRequirements(string metRequirements) {
-            SpilUnityImplementationBase.fireLiveEventMetRequirements(Convert.ToBoolean(metRequirements));
+        public void LiveEventMetRequirements(string sMetRequirements) {
+			Spil.Instance.fireLiveEventMetRequirements(sMetRequirements);
         }
 
         /// <summary>
-        /// This event indicates if the Live Event was completed by the user.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void LiveEventCompleted() {
-            SpilUnityImplementationBase.fireLiveEventCompleted();
+            Spil.Instance.fireLiveEventCompleted();
         }
 
         /// <summary>
-        /// This event indicates if the Social Login was completed by the user.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void LoginSuccessful(string message) {
-            SpilUnityImplementationBase.fireLoginSuccessful(message);
+			Spil.Instance.fireLoginSuccessful(message);
         }
 
         /// <summary>
-        /// This event indicates if the Social Login failed.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void LoginFailed(string error) {
-            SpilUnityImplementationBase.fireLoginFailed(error);
+			Spil.Instance.fireLoginFailed(error);
         }
 
         /// <summary>
-        /// This event indicates if Social Login should be initiated.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void RequestLogin() {
-            SpilUnityImplementationBase.fireRequestLogin();
+            Spil.Instance.fireRequestLogin();
         }
 
         /// <summary>
-        /// This event indicates if the Social Logout was completed by the user.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void LogoutSuccessful() {
-            SpilUnityImplementationBase.fireLogoutSuccessful();
+            Spil.Instance.fireLogoutSuccessful();
         }
 
         /// <summary>
-        /// This event indicates if the Social Logout failed.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void LogoutFailed(string error) {
-            SpilUnityImplementationBase.fireLogoutFailed(error);
+			Spil.Instance.fireLogoutFailed(error);
         }
 
         /// <summary>
-        /// This event indicates if an authentication error has occured on any event after the Social Login.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void AuthenticationError(string error) {
-            SpilUnityImplementationBase.fireAuthenticationError(error);
+			Spil.Instance.fireAuthenticationError(error);
         }
 
         /// <summary>
-        /// This event indicates if a merge conflict occured
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void UserDataMergeConflict(string data) {
-            SpilUnityImplementationBase.fireUserDataMergeConflict(data);
+			Spil.Instance.fireUserDataMergeConflict(data);
         }
 
         /// <summary>
-        /// This event indicates if a merge conflict was successfully resolved.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void UserDataMergeSuccessful() {
-            SpilUnityImplementationBase.fireUserDataMergeSuccessful();
+            Spil.Instance.fireUserDataMergeSuccessful();
         }
 
         /// <summary>
-        /// This event indicates if a merge conflict failed.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void UserDataMergeFailed(string data) {
-            SpilUnityImplementationBase.fireUserDataMergeFailed(data);
+            Spil.Instance.fireUserDataMergeFailed(data);
         }
 
         /// <summary>
-        /// This event indicates if a merge conflict needs to be handled for a certain type.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void UserDataHandleMerge(string mergeType) {
-            SpilUnityImplementationBase.fireUserDataHandleMerge(mergeType);
+            Spil.Instance.fireUserDataHandleMerge(mergeType);
         }
 
         /// <summary>
-        /// This event indicates if a userdata sync error occured.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void UserDataSyncError() {
-            SpilUnityImplementationBase.fireUserDataSyncError();
+            Spil.Instance.fireUserDataSyncError();
         }
 
         /// <summary>
-        /// This event indicates if a userdata lock occured.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void UserDatalockError() {
-            SpilUnityImplementationBase.fireUserDataLockError();
+            Spil.Instance.fireUserDataLockError();
         }
 
         /// <summary>
-        /// This event indicates if a general userdata error occured.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
-        public void UserDataError(string errorMessage) {
-            SpilUnityImplementationBase.fireUserDataError(errorMessage);
+        public void UserDataError(string sErrorMessage) {
+			Spil.Instance.fireUserDataError(sErrorMessage);
         }
 
         /// <summary>
-        /// This event indicates if an authentication error has occured on any event after the Social Login.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void UserDataAvailable() {
-            SpilUnityImplementationBase.fireUserDataAvailable();
+            Spil.Instance.fireUserDataAvailable();
         }
 
         /// <summary>
-        /// This event indicates if the Privacy Policy was accepted by the user.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
-        public void PrivacyPolicyStatus(string accepted) {
-            SpilUnityImplementationBase.firePrivacyPolicyStatus(Convert.ToBoolean(accepted));
+        public void PrivacyPolicyStatus(string sAccepted) {
+			Spil.Instance.firePrivacyPolicyStatus(sAccepted);
         }
 
         /// <summary>
-        /// This event indicates if the Packages are available to be used by the game.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void PackagesAvailable() {
-            SpilUnityImplementationBase.firePackagesAvailable();
+            Spil.Instance.firePackagesAvailable();
         }
-        
+
         /// <summary>
-        /// This event indicates if the Packages are not available to be used by the game.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void PackagesNotAvailable() {
-            SpilUnityImplementationBase.firePackagesNotAvailable();
+            Spil.Instance.firePackagesNotAvailable();
         }
-        
+
         /// <summary>
-        /// This event indicates if the Promotions are available to be used by the game.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void PromotionsAvailable() {
-            SpilUnityImplementationBase.firePromotionsAvailable();
+            Spil.Instance.firePromotionsAvailable();
         }
-        
+
         /// <summary>
-        /// This event indicates if the Promotions are not available to be used by the game.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void PromotionsNotAvailable() {
-            SpilUnityImplementationBase.firePromotionsNotAvailable();
+            Spil.Instance.firePromotionsNotAvailable();
         }
 
+        /// <summary>
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
+        /// </summary>
         public void PromotionAmountBought(string data) {
-            SpilUnityImplementationBase.firePromotionAmountBought(data);
-        }
+            Spil.Instance.firePromotionAmountBought(data);
+		}
 
+        /// <summary>
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
+        /// </summary>
         public void TieredEventsAvailable() {
-            SpilUnityImplementationBase.fireTieredEventsAvailable();
+			Spil.Instance.fireTieredEventsAvailable();
         }
 
+        /// <summary>
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
+        /// </summary>
         public void TieredEventsNotAvailable() {
-            SpilUnityImplementationBase.fireTieredEventsNotAvailable();
+            Spil.Instance.fireTieredEventsNotAvailable();
         }
 
+        /// <summary>
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
+        /// </summary>
         public void TieredEventUpdated(string data) {
-            SpilUnityImplementationBase.fireTieredEventUpdated(data);
+			Spil.Instance.fireTieredEventUpdated(data);
         }
-        
+
+        /// <summary>
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
+        /// </summary>
         public void TieredEventProgressOpen() {
-            SpilUnityImplementationBase.fireTieredEventProgressOpen();
+            Spil.Instance.fireTieredEventProgressOpen();
         }
 
+        /// <summary>
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
+        /// </summary>
         public void TieredEventProgressClosed() {
-            SpilUnityImplementationBase.fireTieredEventProgressClosed();
+            Spil.Instance.fireTieredEventProgressClosed();
         }
-        
+
+        /// <summary>
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
+        /// </summary>
         public void TieredEventsError(string data) {
-            SpilUnityImplementationBase.fireTieredEventsError(data);
+			Spil.Instance.fireTieredEventsError(data);
         }
 
+        /// <summary>
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
+        /// </summary>
         public void AssetBundlesAvailable() {
-            SpilUnityImplementationBase.fireAssetBundlesAvailable();
+            Spil.Instance.fireAssetBundlesAvailable();
         }
 
+        /// <summary>
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
+        /// </summary>
         public void AssetBundlesNotAvailabl() {
-            SpilUnityImplementationBase.fireAssetBundlesNotAvailable();
+            Spil.Instance.fireAssetBundlesNotAvailable();
         }
-        
+
 #if UNITY_ANDROID
         /// <summary>
-        /// This event indicates the status of the permission request.
-        /// Only Android.
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
         public void PermissionResponse(string message) {
-            SpilUnityImplementationBase.firePermissionResponse(message);
+			Spil.Instance.firePermissionResponse(message);
         }
 #endif
     }

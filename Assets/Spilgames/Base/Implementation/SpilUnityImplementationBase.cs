@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
-using UnityEngine;
-using SpilGames.Unity.Helpers.GameData;
 using System.Collections;
+using UnityEngine;
 using SpilGames.Unity;
 using SpilGames.Unity.Base.Implementations.Tracking;
 using SpilGames.Unity.Json;
@@ -11,6 +10,8 @@ using SpilGames.Unity.Helpers.AssetBundles;
 using SpilGames.Unity.Helpers.EventParams;
 using SpilGames.Unity.Helpers.IAPPackages;
 using SpilGames.Unity.Helpers.Promotions;
+using SpilGames.Unity.Helpers.GameData;
+using SpilGames.Unity.Helpers.PlayerData;
 
 namespace SpilGames.Unity.Base.Implementations{
     public abstract class SpilUnityImplementationBase{
@@ -20,14 +21,29 @@ namespace SpilGames.Unity.Base.Implementations{
         public static string AndroidVersion = "2.10.0";
         public static string iOSVersion = "2.10.0";
 
+        /// <summary>
+        /// Contains the game data: items, currencies, bundles (collections of items/currencies for softcurrency/hardcurrency transactions and gifting), Shop and Gacha boxes.
+        /// For player-specific data such as owned items or currencies use the PlayerData object.
+		/// Same as Spil.GameData
+        /// </summary>
+        public SpilGameDataHelper GameData { get { return Spil.GameData; } }
+
+        /// <summary>
+        /// Contains data specific to the user: Owned items, Currencies and Gacha boxes.
+        /// Provides methods for adding/deleting/buying items and currencies and opening gacha boxes.
+        /// For saving/loading player data such as game progress, use the "Gamestate" related methods and events in Spil.Instance. 
+		/// Same as Spil.PlayerData
+        /// </summary>
+        public PlayerDataHelper PlayerData { get { return Spil.PlayerData; } }
+        
         #region Game config
 
         /// <summary>
         /// Method that returns the SLOT Config as a (user-defined) object. See the example in JSONHelper.cs for
         /// more information on how to turn JSON strings (such as the SLOT game config) into classes.
         /// This method currently does not catch and handle any exceptions and will not present the developer with
-        /// handy tips for fixing his/her JSON or class. Developers will have to make due with the standard
-        /// exceptions for now for debugging their JSON and classes. This may be improved in the future.
+        /// tips for fixing his/her JSON or class. Developers will have to make due with the standard
+        /// exceptions for debugging their JSON and classes.
         /// </summary>
         /// <typeparam name="T">The user-defined class that mirrors the shape of the data in the JSON</typeparam>
         /// <returns></returns>
@@ -42,7 +58,7 @@ namespace SpilGames.Unity.Base.Implementations{
         /// <summary>
         /// Fetch packages locally. Packages are requested from the server when the app starts and are cached.
         /// </summary>
-        /// <returns>A packageshelper object filled with packages, will be empty if there are none. Returns null if no packages are present, which should only happen if the server has never been successfully queried for packages.</returns>
+        /// <returns>A packageshelper object containing packages, or empty if there are none. Returns null if no packages are present, which should only happen if the server has never been successfully queried for packages.</returns>
         public PackagesHelper GetPackages() {
             string packagesString = GetAllPackages();
 
@@ -57,33 +73,39 @@ namespace SpilGames.Unity.Base.Implementations{
         public delegate void PackagesAvailable();
 
         /// <summary>
-        /// This event indicates that the IAP packages can be retrieved.
+        /// This event indicates that the IAP packages data is available and can be used.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/sdk-iap-packages-promotions/
         /// </summary>
-        public event PackagesAvailable OnPackagesAvailable;
-
-        public static void firePackagesAvailable() {
-            SpilLogging.Log("firePackagesAvailable");
-
-            if (Spil.Instance.OnPackagesAvailable != null) {
-                Spil.Instance.OnPackagesAvailable();
-            }
-        }
+		public event PackagesAvailable OnPackagesAvailable;
         
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void firePackagesAvailable() {
+			SpilLogging.Log("SpilSDK-Unity firePackagesAvailable");
+			if(OnPackagesAvailable != null) {
+				OnPackagesAvailable();
+			}
+		}
+
         public delegate void PackagesNotAvailable();
 
         /// <summary>
-        /// This event indicates that the IAP packages are not available in the SDK.
+        /// This event indicates that the IAP packages data is not available and cannot be used.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/sdk-iap-packages-promotions/
         /// </summary>
-        public event PackagesNotAvailable OnPackagesNotAvailable;
-
-        public static void firePackagesNotAvailable() {
-            SpilLogging.Log("firePackagesNotAvailable");
-
-            if (Spil.Instance.OnPackagesNotAvailable != null) {
-                Spil.Instance.OnPackagesNotAvailable();
-            }
-        }
+		public event PackagesNotAvailable OnPackagesNotAvailable;
         
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void firePackagesNotAvailable() {
+			SpilLogging.Log("SpilSDK-Unity firePackagesNotAvailable");
+			if(OnPackagesNotAvailable != null) {
+				OnPackagesNotAvailable();
+			}
+		}
+
         #endregion
 
         #region Promotions
@@ -102,58 +124,71 @@ namespace SpilGames.Unity.Base.Implementations{
         public delegate void PromotionsAvailable();
 
         /// <summary>
-        /// This event indicates that the promotions for IAP and In-Game items can be retrieved.
+        /// This event indicates that the data for promotions for IAP and in-game items is available and can be used.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/promotions/
         /// </summary>
-        public event PromotionsAvailable OnPromotionsAvailable;
+		public event PromotionsAvailable OnPromotionsAvailable;
 
-        public static void firePromotionsAvailable() {
-            SpilLogging.Log("firePromotionsAvailable");
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void firePromotionsAvailable() {
+			SpilLogging.Log("SpilSDK-Unity firePromotionsAvailable");
 
-            if (Spil.GameData != null) {
-                Spil.GameData.SpilGameDataHandler();
-            }
-            
-            if (Spil.Instance.OnPromotionsAvailable != null) {
-                Spil.Instance.OnPromotionsAvailable();
-            }
-        }
-        
+			if (Spil.GameData != null) {
+				Spil.GameData.SpilGameDataHandler();
+			}
+
+			if(OnPromotionsAvailable != null) {
+				OnPromotionsAvailable();
+			}
+		}
+
         public delegate void PromotionsNotAvailable();
 
         /// <summary>
-        /// This event indicates that the promotions for IAP and In-Game items are not available in the SDK.
+        /// This event indicates that the data for promotions for IAP and in-game items is not available and cannot be used.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/promotions/
         /// </summary>
-        public event PromotionsNotAvailable OnPromotionsNotAvailable;
+		public event PromotionsNotAvailable OnPromotionsNotAvailable;
 
-        public static void firePromotionsNotAvailable() {
-            SpilLogging.Log("firePromotionsNotAvailable");
-
-            if (Spil.Instance.OnPromotionsNotAvailable != null) {
-                Spil.Instance.OnPromotionsNotAvailable();
-            }
-        }
-
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void firePromotionsNotAvailable() {
+			SpilLogging.Log("SpilSDK-Unity firePromotionsNotAvailable");
+			if(OnPromotionsAvailable != null) {
+				OnPromotionsNotAvailable();
+			}
+		}
 
         public delegate void PromotionAmountBought(int promotionId, int currentAmount, bool maxAmountReached);
-        
-        /// <summary>
-        /// This event informs the updated status of a promotion when something is bought.
-        /// </summary>
-        public event PromotionAmountBought OnPromotionAmountBought;
-        
-        public static void firePromotionAmountBought(string data) {
-            SpilLogging.Log("firePromotionAmountBought with data: " + data);
 
-            JSONObject promotionInfo = new JSONObject(data);
-            int promotionId = (int) promotionInfo.GetField("promotionId").i;
-            int currentAmount = (int) promotionInfo.GetField("amountPurchased").i;
-            bool maxAmountReached = promotionInfo.GetField("maxAmountReached").b;
-            
-            if (Spil.Instance.OnPromotionAmountBought != null) {
-                Spil.Instance.OnPromotionAmountBought(promotionId, currentAmount, maxAmountReached);
-            }
-        }
+        /// <summary>
+        /// This event indicates that a bundle/package was bought with a promotion attached to it.
+        /// Returns the promotion id, the current amount bought for the promotion by the user and if the maximum amount has been reached.
+        /// The promotion visuals should be removed if maxAmountReached is true.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/promotions/
+        /// </summary>
+		public event PromotionAmountBought OnPromotionAmountBought;
         
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// Developers can subscribe to events defined in Spil.Instance.
+		/// </summary>
+		public void firePromotionAmountBought(string data) {
+			SpilLogging.Log("SpilSDK-Unity firePromotionAmountBought with data: " + data);
+
+			JSONObject promotionInfo = new JSONObject(data);
+			int promotionId = (int)promotionInfo.GetField("promotionId").i;
+			int currentAmount = (int)promotionInfo.GetField("amountPurchased").i;
+			bool maxAmountReached = promotionInfo.GetField("maxAmountReached").b;
+
+			if(OnPromotionAmountBought != null) {
+				OnPromotionAmountBought(promotionId, currentAmount, maxAmountReached);
+			}
+		}
+
         #endregion
 
         #region AssetBundles
@@ -172,32 +207,38 @@ namespace SpilGames.Unity.Base.Implementations{
         public delegate void AssetBundlesAvailable();
 
         /// <summary>
-        /// This event indicates that the asset bundles configurations can be retrieved.
+        /// This event indicates that the asset bundles configuration data is available and can be used.
+        /// TODO: Add documentation for asset bundles on spilgames.com.
         /// </summary>
-        public event AssetBundlesAvailable OnAssetBundlesAvailable;
-
-        public static void fireAssetBundlesAvailable() {
-            SpilLogging.Log("fireAssetBundlesAvailable");
-            
-            if (Spil.Instance.OnAssetBundlesAvailable != null) {
-                Spil.Instance.OnAssetBundlesAvailable();
-            }
-        }
+		public event AssetBundlesAvailable OnAssetBundlesAvailable;
         
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireAssetBundlesAvailable() {
+			SpilLogging.Log("SpilSDK-Unity fireAssetBundlesAvailable");
+			if(OnAssetBundlesAvailable != null) {
+				OnAssetBundlesAvailable();
+			}
+		}
+
         public delegate void AssetBundlesNotAvailable();
 
         /// <summary>
-        /// This event indicates that asset bundles configuration are not available in the SDK.
+        /// This event indicates that the asset bundles configuration data is not available and cannot be used.
+        /// TODO: Add documentation for asset bundles on spilgames.com.
         /// </summary>
-        public event AssetBundlesNotAvailable OnAssetBundlesNotAvailable;
+		public event AssetBundlesNotAvailable OnAssetBundlesNotAvailable;
 
-        public static void fireAssetBundlesNotAvailable() {
-            SpilLogging.Log("fireAssetBundlesNotAvailable");
-
-            if (Spil.Instance.OnAssetBundlesNotAvailable != null) {
-                Spil.Instance.OnAssetBundlesNotAvailable();
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireAssetBundlesNotAvailable() {
+			SpilLogging.Log("SpilSDK-Unity fireAssetBundlesNotAvailable");
+			if(OnAssetBundlesNotAvailable != null) {
+				OnAssetBundlesNotAvailable();
+			}
+		}
 
         #endregion
         
@@ -1348,212 +1389,186 @@ namespace SpilGames.Unity.Base.Implementations{
 
         #region Advertisement events
 
-        /// <summary>
-        /// This is fired by the native Spil SDK after it receives a response from the back-end.
-        /// This method is exposed only for use by the native Spil SDK and should not be used by the developer!
-        /// </summary>
-        /// <param name="response"></param>
-        public static void OnResponseReceived(string response) {
-            SpilLogging.Log("OnResponseReceived " + response);
-
-            SpilResponse spilResponse = JsonHelper.getObjectFromJson<SpilResponse>(response);
-
-            if (!spilResponse.type.ToLower().Trim().Equals("notificationreward")) return;
-            PushNotificationRewardResponse rewardResponseData =
-                JsonHelper.getObjectFromJson<PushNotificationRewardResponse>(response);
-            fireOnRewardEvent(rewardResponseData);
-        }
-
         public delegate void RewardEvent(PushNotificationRewardResponse rewardResponse);
 
         /// <summary>
-        /// This is fired by the Unity Spil SDK after it receives a "Reward" response from the back-end.
-        /// The developer can subscribe to this event to assign the reward and update the UI.
-        /// This event should no longer be used, reward data is now passed as a parameter of the AdFinished event so please use that instead.
+        /// This is fired by the Unity Spil SDK after it receives a push notification with reward data.
+        /// The developer can subscribe to this event, assign the reward and update the UI.
+        /// This event should only be used for push notification rewards. For ads reward data is passed as a parameter of the AdFinished event.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-push-notifications/
         /// </summary>
-        public event RewardEvent OnReward;
+		public event RewardEvent OnReward;
 
-        /// <summary>
-        /// This is fired by the Unity Spil SDK after it receives a "Reward" response from the back-end.
-        /// </summary>
-        private static void fireOnRewardEvent(PushNotificationRewardResponse rewardResponse) {
-            if (Spil.Instance.OnReward != null) {
-                Spil.Instance.OnReward(rewardResponse);
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// Developers can subscribe to events defined in Spil.Instance.
+		/// </summary>
+		public void fireOnRewardEvent(PushNotificationRewardResponse rewardResponse) {
+			if(OnReward != null) {
+				OnReward(rewardResponse);
+			}
+		}
 
         public delegate void AdAvailableEvent(enumAdType adType);
 
         /// <summary>
-        /// This is fired by the native Spil SDK after it receives an "AdAvailable" response from the back-end.
-        /// The developer can subscribe to this event and for instance call "Spil.Instance.PlayVideo();" or "Spil.Instance.PlayMoreApps()"
+        /// This event indicates that an ad is available and ready to be shown.
+        /// The developer can subscribe to this event and call "Spil.Instance.PlayVideo();" or "Spil.Instance.PlayMoreApps()"
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-advertisement-2/
         /// </summary>
-        public event AdAvailableEvent OnAdAvailable;
+		public event AdAvailableEvent OnAdAvailable;
 
-        /// <summary>
-        /// This is called by the native Spil SDK and will fire an OnAdAvailable event to which the developer 
-        /// can subscribe and for instance call "Spil.Instance.PlayVideo();" or "Spil.Instance.PlayMoreApps()"
-        /// This method is exposed only for use by the native Spil SDK and should not be used by the developer!
-        /// </summary>
-        /// <param name="type"></param>
-        public static void fireAdAvailableEvent(string type) {
-            SpilLogging.Log("Ad " + type + " ready!");
-
-            enumAdType adType = enumAdType.Unknown;
-            if (type.ToLower().Trim().Equals("rewardvideo")) {
-                adType = enumAdType.RewardVideo;
-            } else if (type.ToLower().Trim().Equals("interstitial")) {
-                adType = enumAdType.Interstitial;
-            } else if (type.ToLower().Trim().Equals("moreapps")) {
-                adType = enumAdType.MoreApps;
-            }
-            if (adType == enumAdType.Unknown) {
-                SpilLogging.Log("AdAvailable event fired but type is unknown. Type: " + type);
-            }
-            if (Spil.Instance.OnAdAvailable != null) {
-                Spil.Instance.OnAdAvailable(adType);
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireAdAvailable(string type) {
+			SpilLogging.Log("SpilSDK-Unity Ad " + type + " ready!");
+			enumAdType adType = enumAdType.Unknown;
+			if (type.ToLower().Trim().Equals("rewardvideo")) {
+				adType = enumAdType.RewardVideo;
+			}
+			else if (type.ToLower().Trim().Equals("interstitial")) {
+				adType = enumAdType.Interstitial;
+			}
+			else if (type.ToLower().Trim().Equals("moreapps")) {
+				adType = enumAdType.MoreApps;
+			}
+			if (adType == enumAdType.Unknown) {
+				SpilLogging.Log("SpilSDK-Unity AdAvailable event fired but type is unknown. Type: " + type);
+			}
+			if(OnAdAvailable != null) {
+				OnAdAvailable(adType);
+			}
+		}
 
         public delegate void AdNotAvailableEvent(enumAdType adType);
 
         /// <summary>
-        /// This is fired by the native Spil SDK after it receives an "AdNotAvailable" response from the back-end.
-        /// The developer can subscribe to this event and for instance NOT call "Spil.Instance.PlayVideo();" or "Spil.Instance.PlayMoreApps()"
-        /// but do something else instead.
+        /// This event indicates that an ad was requested but no ad is available, most likely due to a lack of add-fill by the ad networks or because there is no internet connection.
+        /// The developer can subscribe to this event and hide any UI elements related to showing ads.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-advertisement-2/
         /// </summary>
-        public event AdNotAvailableEvent OnAdNotAvailable;
+		public event AdNotAvailableEvent OnAdNotAvailable;
 
-        /// <summary>
-        /// This is called by the native Spil SDK and will fire an OnAdNotAvailable event to which the developer 
-        /// can subscribe and for instance NOT call "Spil.Instance.PlayVideo();" or "Spil.Instance.PlayMoreApps()" but do something else instead.
-        /// This method is exposed only for use by the native Spil SDK and should not be used by the developer!
-        /// </summary>
-        /// <param name="type"></param>
-        public static void fireAdNotAvailableEvent(string type) {
-            SpilLogging.Log("Ad " + type + " is not available");
-
-            enumAdType adType = enumAdType.Unknown;
-            if (type.ToLower().Trim().Equals("rewardvideo")) {
-                adType = enumAdType.RewardVideo;
-            } else if (type.ToLower().Trim().Equals("interstitial")) {
-                adType = enumAdType.Interstitial;
-            } else if (type.ToLower().Trim().Equals("moreapps")) {
-                adType = enumAdType.MoreApps;
-            }
-            if (adType == enumAdType.Unknown) {
-                SpilLogging.Log("AdNotAvailable event fired but type is unknown. Type: " + type);
-            }
-            if (Spil.Instance.OnAdNotAvailable != null) {
-                Spil.Instance.OnAdNotAvailable(adType);
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireAdNotAvailable(string type) {
+			SpilLogging.Log("SpilSDK-Unity Ad " + type + " is not available");
+			enumAdType adType = enumAdType.Unknown;
+			if (type.ToLower().Trim().Equals("rewardvideo")) {
+				adType = enumAdType.RewardVideo;
+			}
+			else if (type.ToLower().Trim().Equals("interstitial")) {
+				adType = enumAdType.Interstitial;
+			}
+			else if (type.ToLower().Trim().Equals("moreapps")) {
+				adType = enumAdType.MoreApps;
+			}
+			if (adType == enumAdType.Unknown) {
+				SpilLogging.Log("SpilSDK-Unity AdNotAvailable event fired but type is unknown. Type: " + type);
+			}
+			if(OnAdNotAvailable != null) {
+				OnAdNotAvailable(adType);
+			}
+		}
 
         public delegate void OpenParentalGateEvent();
 
         /// <summary>
-        /// This is fired by the native Spil SDK after it receives an "OpenParentalGate" response from the back-end.
-        /// The developer can subscribe to this event and for instance NOT call "Spil.Instance.PlayVideo();" or "Spil.Instance.PlayMoreApps()"
-        /// but do something else instead.
+        /// TODO: Document this.
         /// </summary>
-        public event OpenParentalGateEvent OnOpenParentalGate;
+		public event OpenParentalGateEvent OnOpenParentalGate;
 
-        /// <summary>
-        /// This is called by the native Spil SDK and will fire an OpenParentalGate event to which the developer 
-        /// can subscribe and for instance NOT call "Spil.Instance.PlayVideo();" or "Spil.Instance.PlayMoreApps()" but do something else instead.
-        /// This method is exposed only for use by the native Spil SDK and should not be used by the developer!
-        /// </summary>
-        /// <param name="type"></param>
-        public static void fireOpenParentalGateEvent() {
-            SpilLogging.Log("OpenParentalGate");
-
-            if (Spil.Instance.OnOpenParentalGate != null) {
-                Spil.Instance.OnOpenParentalGate();
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireOpenParentalGate() {
+			SpilLogging.Log("SpilSDK-Unity OpenParentalGate");
+			if(OnOpenParentalGate != null) {
+				OnOpenParentalGate();
+			}
+		}
 
         public delegate void AdStartedEvent();
 
         /// <summary>
-        /// This is fired by the native Spil SDK after a video is started.
+        /// This event indicates that an ad has started playing.
         /// The developer can subscribe to this event and for instance disable the in-game sound.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-advertisement-2/
         /// </summary>
-        public event AdStartedEvent OnAdStarted;
+		public event AdStartedEvent OnAdStarted;
 
-        /// <summary>
-        /// This is called by the native Spil SDK and will fire an OnAdStarted event to which the developer 
-        /// can subscribe and for instance disable the in-game sound.
-        /// This method is exposed only for use by the native Spil SDK and should not be used by the developer!
-        /// </summary>
-        public static void fireAdStartedEvent() {
-            SpilLogging.Log("Ad started");
-            if (Spil.Instance.OnAdStarted != null) {
-                Spil.Instance.OnAdStarted();
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireAdStart() {
+			SpilLogging.Log("SpilSDK-Unity Ad started");
+			if(OnAdStarted != null) {
+				OnAdStarted();
+			}
+		}
 
         public delegate void AdFinishedEvent(SpilAdFinishedResponse response);
 
         /// <summary>
-        /// This is fired by the native Spil SDK after a video has finished playing.
+        /// This event indicates that an ad has finished playing.
         /// The developer can subscribe to this event and for instance re-enable the in-game sound.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-advertisement-2/
         /// </summary>
-        public event AdFinishedEvent OnAdFinished;
+		public event AdFinishedEvent OnAdFinished;
 
-        /// <summary>
-        /// This is called by the native Spil SDK and will fire an OnAdFinished event to which the developer 
-        /// can subscribe and for instance re-enable the in-game sound.
-        /// This method is exposed only for use by the native Spil SDK and should not be used by the developer!
-        /// </summary>
-        public static void fireAdFinishedEvent(string response) {
-            SpilLogging.Log("Ad finished! Response = " + response);
-            SpilAdFinishedResponse responseObject = JsonHelper.getObjectFromJson<SpilAdFinishedResponse>(response);
-            if (Spil.Instance.OnAdFinished != null) {
-                Spil.Instance.OnAdFinished(responseObject);
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireAdFinished(string response) {
+			SpilLogging.Log("SpilSDK-Unity Ad finished! Response = " + response);
+			SpilAdFinishedResponse responseObject = JsonHelper.getObjectFromJson<SpilAdFinishedResponse>(response);
+			if(OnAdFinished != null) {
+				OnAdFinished(responseObject);
+			}
+		}
 
-        #endregion
+		#endregion
 
         public delegate void ConfigUpdatedEvent();
 
         /// <summary>
-        /// This is fired by the native Spil SDK when the config was updated.
-        /// The developer can subscribe to this event and for instance re-enable the in-game sound.
+        /// This event indicates that the game config has been updated and can be used.
+        /// Returns the data from the defaultGameConfig.json if there is no internet connection, returns the game config from the SLOT back-end if there is an internet connection.
+        /// Any game config data retrieved from the server is cached and is returned instead of the defaultGameConfig.json if there is no internet connection.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-game-config/
         /// </summary>
-        public event ConfigUpdatedEvent OnConfigUpdated;
+		public event ConfigUpdatedEvent OnConfigUpdated;
 
-        /// <summary>
-        /// This is called by the native Spil SDK and will fire an ConfigUpdated event to which the developer 
-        /// can subscribe, it will only be called when the config values are different from the previous loaded config.
-        /// </summary>
-        public static void fireConfigUpdatedEvent() {
-            SpilLogging.Log("Config updated!");
-            if (Spil.Instance.OnConfigUpdated != null) {
-                Spil.Instance.OnConfigUpdated();
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireConfigUpdated() {
+			SpilLogging.Log("SpilSDK-Unity Config updated!");
+			if(OnConfigUpdated != null){
+				OnConfigUpdated();
+			}
+		}
 
         public delegate void ConfigError(SpilErrorMessage errorMessage);
 
         /// <summary>
-        /// This is fired by the native Spil SDK when the config was updated.
-        /// The developer can subscribe to this event and for instance re-enable the in-game sound.
+        /// This event indicates that the game config could not be loaded, this could be because there is an error in the json or because there is an internet connection and the server returned an error.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-game-config/
         /// </summary>
-        public event ConfigError OnConfigError;
+		public event ConfigError OnConfigError;
 
-        /// <summary>
-        /// This is called by the native Spil SDK and will fire an ConfigUpdated event to which the developer 
-        /// can subscribe, it will only be called when the config values are different from the previous loaded config.
-        /// </summary>
-        public static void fireConfigError(string error) {
-            SpilLogging.Log("Config Error with message: " + error);
-
-            SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
-            if (Spil.Instance.OnConfigError != null) {
-                Spil.Instance.OnConfigError(errorMessage);
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireConfigError(string error) {
+			SpilLogging.Log("SpilSDK-Unity Config Error with message: " + error);
+			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
+			if(OnConfigError != null){
+				OnConfigError(errorMessage);
+			}
+		}
 
         #endregion
 
@@ -1562,39 +1577,45 @@ namespace SpilGames.Unity.Base.Implementations{
         public delegate void SpilGameDataAvailable();
 
         /// <summary>
-        /// This is fired by the native Spil SDK after game data has been received from the server.
-        /// The developer can subscribe to this event and then request the Spil Game Data.
+        /// This event indicates that the game data has been loaded and can be used.
+        /// Returns the data from the defaultGameData.json if there is no internet connection, returns the game data from the SLOT back-end if there is an internet connection.
+        /// Any game data retrieved from the server is cached and is returned instead of the defaultGameData.json if there is no internet connection.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-wallet-shop-inventory/
         /// </summary>
-        public event SpilGameDataAvailable OnSpilGameDataAvailable;
+		public event SpilGameDataAvailable OnSpilGameDataAvailable;
 
-        public static void fireSpilGameDataAvailable() {
-            if (Spil.GameData != null) {
-                Spil.GameData.SpilGameDataHandler();
-            }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireSpilGameDataAvailable() {
+			if (Spil.GameData != null) {
+				Spil.GameData.SpilGameDataHandler();
+			}
 
-            SpilLogging.Log("Spil Game Data is available");
-
-            if (Spil.Instance.OnSpilGameDataAvailable != null) {
-                Spil.Instance.OnSpilGameDataAvailable();
-            }
-        }
+			SpilLogging.Log("SpilSDK-Unity Spil Game Data is available");
+			if(OnSpilGameDataAvailable != null){
+				OnSpilGameDataAvailable();
+			}
+		}
 
         public delegate void SpilGameDataError(SpilErrorMessage errorMessage);
 
         /// <summary>
-        /// This is fired by the native Spil SDK after game data has failed to be retrieved.
-        /// The developer can subscribe to this event and check the reason.
+        /// This event indicates that the game data could not be loaded, this could be because there is an error in the data or because there is an internet connection and the server returned an error.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-wallet-shop-inventory/
         /// </summary>
-        public event SpilGameDataError OnSpilGameDataError;
+		public event SpilGameDataError OnSpilGameDataError;
 
-        public static void fireSpilGameDataError(string reason) {
-            SpilLogging.Log("Spil Game Data error with reason = " + reason);
-
-            SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(reason);
-            if (Spil.Instance.OnSpilGameDataError != null) {
-                Spil.Instance.OnSpilGameDataError(errorMessage);
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireSpilGameDataError(string reason) {
+			SpilLogging.Log("SpilSDK-Unity Spil Game Data error with reason = " + reason);
+			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(reason);
+			if(OnSpilGameDataError != null){
+				OnSpilGameDataError(errorMessage);
+			}
+		}
 
         #endregion
 
@@ -1603,304 +1624,345 @@ namespace SpilGames.Unity.Base.Implementations{
         public delegate void PlayerDataUpdated(string reason, PlayerDataUpdatedData updatedData);
 
         /// <summary>
-        /// This is fired by the native Spil SDK after player data has been updated.
-        /// The developer can subscribe to this event and then request the Player Data (Wallet & Inventory).
+        /// This event indicates that the player data has been updated and can be used.
+        /// Returns the data from the defaultPlayerData.json if there is no internet connection, returns the player data from the SLOT back-end if there is an internet connection.
+        /// Any player data retrieved from the server is cached and is returned instead of the defaultPlayerData.json if there is no internet connection.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-wallet-shop-inventory/
         /// </summary>
-        public event PlayerDataUpdated OnPlayerDataUpdated;
+		public event PlayerDataUpdated OnPlayerDataUpdated;
 
-        public static void firePlayerDataUpdated(string data) {
-            SpilLogging.Log("Player Data has been updated with data: " + data);
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void firePlayerDataUpdated(string data) {
+			SpilLogging.Log("SpilSDK-Unity Player Data has been updated with data: " + data);
 
-            PlayerDataUpdatedData playerDataUpdatedData = JsonHelper.getObjectFromJson<PlayerDataUpdatedData>(data);
+			PlayerDataUpdatedData playerDataUpdatedData = JsonHelper.getObjectFromJson<PlayerDataUpdatedData>(data);
 
-            if (Spil.PlayerData != null) {
-                Spil.PlayerData.PlayerDataUpdatedHandler();
-            }
+			if (Spil.PlayerData != null) {
+				Spil.PlayerData.PlayerDataUpdatedHandler();
+			}
 
-
-            if (Spil.Instance.OnPlayerDataUpdated != null) {
-                Spil.Instance.OnPlayerDataUpdated(playerDataUpdatedData.reason, playerDataUpdatedData);
-            }
-        }
+			if(OnPlayerDataUpdated != null){
+				OnPlayerDataUpdated(playerDataUpdatedData.reason, playerDataUpdatedData);
+			}
+		}
 
         public delegate void PlayerDataEmptyGacha();
 
         /// <summary>
-        /// This is fired by the native Spil SDK after player data has been received from the server.
-        /// The developer can subscribe to this event and then request the Player Data (Wallet & Inventory).
+        /// This event indicates that a user received nothing from a gacha box.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-wallet-shop-inventory/
         /// </summary>
-        public event PlayerDataEmptyGacha OnPlayerDataEmptyGacha;
+		public event PlayerDataEmptyGacha OnPlayerDataEmptyGacha;
 
-        public static void firePlayerDataEmptyGacha() {
-            SpilLogging.Log("Received nothing from gacha box!");
-
-            if (Spil.Instance.OnPlayerDataEmptyGacha != null) {
-                Spil.Instance.OnPlayerDataEmptyGacha();
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void firePlayerDataEmptyGacha() {
+			SpilLogging.Log("SpilSDK-Unity Received nothing from gacha box!");
+			if(OnPlayerDataEmptyGacha != null) {
+				OnPlayerDataEmptyGacha();
+			}
+		}
 
         public delegate void GameStateUpdated(string access);
 
         /// <summary>
-        /// This is fired by the native Spil SDK after game state was updated.
-        /// The developer can subscribe to this event and check the reason.
+        /// This event indicates that the game state has been updated and can be used.
+        /// Returns the locally cached data if there is no internet connection, returns the gamestate data from the SLOT back-end if there is an internet connection.
+        /// Any gamestate data retrieved from the server is cached locally.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-game-state/
         /// </summary>
-        public event GameStateUpdated OnGameStateUpdated;
+		public event GameStateUpdated OnGameStateUpdated;
 
-        public static void fireGameStateUpdated(string access) {
-            SpilLogging.Log("Game State Data updated, access = " + access);
-
-            if (Spil.Instance.OnGameStateUpdated != null) {
-                Spil.Instance.OnGameStateUpdated(access);
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireGameStateUpdated(string access) {
+			SpilLogging.Log("SpilSDK-Unity Game State Data updated, access = " + access);
+			if(OnGameStateUpdated != null) {
+				OnGameStateUpdated(access);
+			}
+		}
 
         public delegate void OtherUsersGameStateDataLoaded(OtherUsersGameStateData data);
 
         /// <summary>
-        /// This is fired by the native Spil SDK after the game state data of other users was loaded.
-        /// The developer can subscribe to this event and check the reason.
+        /// This event indicates that the other user's game state that was requested has been retrieved and can be used.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-game-state/
         /// </summary>
-        public event OtherUsersGameStateDataLoaded OnOtherUsersGameStateDataLoaded;
+		public event OtherUsersGameStateDataLoaded OnOtherUsersGameStateDataLoaded;
 
-        public static void fireOtherUsersGameStateLoaded(string message) {
-            SpilLogging.Log("Other users game state data loaded, message = " + message);
-
-            OtherUsersGameStateData data = JsonHelper.getObjectFromJson<OtherUsersGameStateData>(message);
-
-            if (Spil.Instance.OnOtherUsersGameStateDataLoaded != null) {
-                Spil.Instance.OnOtherUsersGameStateDataLoaded(data);
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireOtherUsersGameStateLoaded(string message) {
+			SpilLogging.Log("SpilSDK-Unity Other users game state data loaded, message = " + message);
+			OtherUsersGameStateData data = JsonHelper.getObjectFromJson<OtherUsersGameStateData>(message);
+			if(OnOtherUsersGameStateDataLoaded != null) {
+				OnOtherUsersGameStateDataLoaded(data);
+			}
+		}
 
         public delegate void SplashScreenOpen();
 
         /// <summary>
-        /// This is fired by the native Spil SDK when the web view opened.
+        /// This event indicates that a web-view containing a splash-screen was opened.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-splash-daily-bonus-screen/
         /// </summary>
-        public event SplashScreenOpen OnSplashScreenOpen;
+		public event SplashScreenOpen OnSplashScreenOpen;
 
-        public static void fireSplashScreenOpen() {
-            SpilLogging.Log("Web open");
-
-            if (Spil.Instance.OnSplashScreenOpen != null) {
-                Spil.Instance.OnSplashScreenOpen();
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireSplashScreenOpen() {
+			SpilLogging.Log("SpilSDK-Unity Web open");
+			if(OnSplashScreenOpen != null) {
+				OnSplashScreenOpen();
+			}
+		}
 
         public delegate void SplashScreenNotAvailable();
 
         /// <summary>
-        /// This is fired by the native Spil SDK when the splash screen is not available.
+        /// This event indicates that a splash screen was not available and cannot be shown.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-splash-daily-bonus-screen/
         /// </summary>
-        public event SplashScreenNotAvailable OnSplashScreenNotAvailable;
+		public event SplashScreenNotAvailable OnSplashScreenNotAvailable;
 
-        public static void fireSplashScreenNotAvailable() {
-            SpilLogging.Log("splash screen not available");
-
-            if (Spil.Instance.OnSplashScreenNotAvailable != null) {
-                Spil.Instance.OnSplashScreenNotAvailable();
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireSplashScreenNotAvailable() {
+			SpilLogging.Log("SpilSDK-Unity splash screen not available");
+			if(OnSplashScreenNotAvailable != null) {
+				OnSplashScreenNotAvailable();
+			}
+		}
 
         public delegate void SplashScreenClosed();
 
         /// <summary>
-        /// This is fired by the native Spil SDK when the web view closes.
+        /// This event indicates that a web-view containing a splash-screen has closed.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-splash-daily-bonus-screen/
         /// </summary>
-        public event SplashScreenClosed OnSplashScreenClosed;
+		public event SplashScreenClosed OnSplashScreenClosed;
 
-        public static void fireSplashScreenClosed() {
-            SpilLogging.Log("Web closed");
-
-            if (Spil.Instance.OnSplashScreenClosed != null) {
-                Spil.Instance.OnSplashScreenClosed();
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireSplashScreenClosed() {
+			SpilLogging.Log("SpilSDK-Unity Web closed");
+			if(OnSplashScreenClosed != null) {
+				OnSplashScreenClosed();
+			}
+		}
 
         public delegate void SplashScreenOpenShop();
 
         /// <summary>
-        /// This is fired by the native Spil SDK when the game shop should be opened.
-        /// The developer can subscribe to this event and open there own shop implementation.
+        /// This event indicates that a web-view containing a splash-screen has sent a callback indicating that the user should be redirected to the in-game shop.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-splash-daily-bonus-screen/
         /// </summary>
-        public event SplashScreenOpenShop OnSplashScreenOpenShop;
+		public event SplashScreenOpenShop OnSplashScreenOpenShop;
 
-        public static void fireSplashScreenOpenShop() {
-            SpilLogging.Log("Open Game Shop");
-
-            if (Spil.Instance.OnSplashScreenOpenShop != null) {
-                Spil.Instance.OnSplashScreenOpenShop();
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireSplashScreenOpenShop() {
+			SpilLogging.Log("SpilSDK-Unity Open Game Shop");
+			if(OnSplashScreenOpenShop != null) {
+				OnSplashScreenOpenShop();
+			}
+		}
 
         public delegate void SplashScreenData(string payload);
 
         /// <summary>
-        /// This is fired by the native Spil SDK in order to pass relevant information from the Splash Screen.
-        /// The developer can subscribe to this event and process the JSON string.
+        /// This event indicates that a web-view containing a splash-screen has sent a callback containing data that should be read and acted on by the developer.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-splash-daily-bonus-screen/
         /// </summary>
-        public event SplashScreenData OnSplashScreenData;
+		public event SplashScreenData OnSplashScreenData;
 
-        public static void fireSplashScreenData(string payload) {
-            SpilLogging.Log("Splash Screen Data: " + payload);
-
-            if (Spil.Instance.OnSplashScreenData != null) {
-                Spil.Instance.OnSplashScreenData(payload);
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireSplashScreenData(string payload) {
+			SpilLogging.Log("SpilSDK-Unity Splash Screen Data: " + payload);
+			if(OnSplashScreenData != null) {
+				OnSplashScreenData(payload);
+			}
+		}
 
         public delegate void SplashScreenError(SpilErrorMessage errorMessage);
 
         /// <summary>
-        /// This is fired by the native Spil SDK when the web view encounters an error.
-        /// The developer can subscribe to this event and inspect the error.
+        /// This event indicates that a web-view containing a splash-screen has thrown an error.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-splash-daily-bonus-screen/
         /// </summary>
-        public event SplashScreenError OnSplashScreenError;
+		public event SplashScreenError OnSplashScreenError;
 
-        public static void fireSplashScreenError(string reason) {
-            SpilLogging.Log("Web Error with reason = " + reason);
-
-            SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(reason);
-
-            if (Spil.Instance.OnSplashScreenError != null) {
-                Spil.Instance.OnSplashScreenError(errorMessage);
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireSplashScreenError(string error) {
+			SpilLogging.Log("SpilSDK-Unity Web Error with reason = " + error);
+			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
+			if(OnSplashScreenError != null){
+				OnSplashScreenError(errorMessage);
+			}
+		}
 
         public delegate void DailyBonusOpen();
 
         /// <summary>
-        /// This is fired by the native Spil SDK when the web view opened.
+        /// This event indicates that a web-view containing a daily bonus screen was opened.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-splash-daily-bonus-screen/
         /// </summary>
-        public event DailyBonusOpen OnDailyBonusOpen;
+		public event DailyBonusOpen OnDailyBonusOpen;
 
-        public static void fireDailyBonusOpen() {
-            SpilLogging.Log("Web open");
-
-            if (Spil.Instance.OnDailyBonusOpen != null) {
-                Spil.Instance.OnDailyBonusOpen();
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireDailyBonusOpen() {
+			SpilLogging.Log("SpilSDK-Unity Web open");
+			if(OnDailyBonusOpen != null){
+				OnDailyBonusOpen();
+			}
+		}
 
         public delegate void DailyBonusNotAvailable();
 
         /// <summary>
-        /// This is fired by the native Spil SDK when the dailybonus screen is not available.
+        /// This event indicates that a daily bonus screen was not available and cannot be shown.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-splash-daily-bonus-screen/
         /// </summary>
-        public event DailyBonusNotAvailable OnDailyBonusNotAvailable;
+		public event DailyBonusNotAvailable OnDailyBonusNotAvailable;
 
-        public static void fireDailyBonusNotAvailable() {
-            SpilLogging.Log("Daily bonus not available");
-
-            if (Spil.Instance.OnDailyBonusNotAvailable != null) {
-                Spil.Instance.OnDailyBonusNotAvailable();
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireDailyBonusNotAvailable() {
+			SpilLogging.Log("SpilSDK-Unity Daily bonus not available");
+			if(OnDailyBonusNotAvailable != null) {
+				OnDailyBonusNotAvailable();
+			}
+		}
 
         public delegate void DailyBonusClosed();
 
         /// <summary>
-        /// This is fired by the native Spil SDK when the web view closes.
+        /// This event indicates that a web-view containing a daily bonus screen has closed.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-splash-daily-bonus-screen/
         /// </summary>
-        public event DailyBonusClosed OnDailyBonusClosed;
+		public event DailyBonusClosed OnDailyBonusClosed;
 
-        public static void fireDailyBonusClosed() {
-            SpilLogging.Log("Web closed");
-
-            if (Spil.Instance.OnDailyBonusClosed != null) {
-                Spil.Instance.OnDailyBonusClosed();
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireDailyBonusClosed() {
+			SpilLogging.Log("SpilSDK-Unity Web closed");
+			if(OnDailyBonusClosed != null) {
+				OnDailyBonusClosed();
+			}
+		}
 
         public delegate void DailyBonusError(SpilErrorMessage errorMessage);
 
         /// <summary>
-        /// This is fired by the native Spil SDK when the web view encounters an error.
-        /// The developer can subscribe to this event and inspect the error.
+        /// This event indicates that a web-view containing a daily bonus screen has thrown an error.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-splash-daily-bonus-screen/
         /// </summary>
-        public event DailyBonusError OnDailyBonusError;
+		public event DailyBonusError OnDailyBonusError;
 
-        public static void fireDailyBonusError(string reason) {
-            SpilLogging.Log("Web Error with reason = " + reason);
-
-            SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(reason);
-
-            if (Spil.Instance.OnDailyBonusError != null) {
-                Spil.Instance.OnDailyBonusError(errorMessage);
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireDailyBonusError(string error) {
+			SpilLogging.Log("SpilSDK-Unity Web Error with reason = " + error);
+			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
+			if(OnDailyBonusError != null) {
+				OnDailyBonusError(errorMessage);
+			}
+		}
 
         public delegate void DailyBonusReward(string rewardList);
 
         /// <summary>
-        /// This is fired by the native Spil SDK when the reward is received from the web view.
-        /// The developer can subscribe to this event and provide the reward to the user.
+        /// This event indicates that a web-view containing a daily bonus screen has sent a callback containing reward data, the developer can read the data and give the reward.
+        /// This is only necessary when using external rewards (items/currencies not managed via the SpilSDK wallet/inventory).
+        /// For items and currencies managed via the SpilSDK wallet/inventory the reward is given automatically so this event is not needed.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-splash-daily-bonus-screen/
         /// </summary>
-        public event DailyBonusReward OnDailyBonusReward;
+		public event DailyBonusReward OnDailyBonusReward;
 
-        public static void fireDailyBonusReward(string reward) {
-            SpilLogging.Log("Received reward = " + reward);
-
-            if (Spil.Instance.OnDailyBonusReward != null) {
-                Spil.Instance.OnDailyBonusReward(reward);
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireDailyBonusReward(string receivedReward) {
+			SpilLogging.Log("SpilSDK-Unity Received reward = " + receivedReward);
+			if(OnDailyBonusReward != null){
+				OnDailyBonusReward(receivedReward);
+			}
+		}
 
         public delegate void RewardTokenReceived(string token, List<RewardObject> reward, string rewardType);
 
         /// <summary>
-        /// This is fired by the native Spil SDK when the reward is received.
-        /// The developer can subscribe to this event and provide the reward to the user.
+        /// This event indicates that a reward token was received from the back-end. The developer can subscribe to this event and use the token to claim the reward.
+        /// TODO: Document this on spilgames.com
         /// </summary>
-        public event RewardTokenReceived OnRewardTokenReceived;
+		public event RewardTokenReceived OnRewardTokenReceived;
 
-        public static void fireRewardTokenReceived(string response) {
-            SpilLogging.Log("Received reward = " + response);
-
-            RewardResponse rewardResponse = JsonHelper.getObjectFromJson<RewardResponse>(response);
-
-            if (Spil.Instance.OnRewardTokenReceived != null) {
-                Spil.Instance.OnRewardTokenReceived(rewardResponse.token, rewardResponse.reward,
-                    rewardResponse.rewardType);
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireRewardTokenReceived(string response) {
+			SpilLogging.Log("SpilSDK-Unity Received reward = " + response);
+			RewardResponse rewardResponse = JsonHelper.getObjectFromJson<RewardResponse>(response);
+			if(OnRewardTokenReceived != null) {
+				OnRewardTokenReceived(rewardResponse.token, rewardResponse.reward,
+				rewardResponse.rewardType);
+			}
+		}
 
         public delegate void RewardTokenClaimed(List<RewardObject> reward, string rewardType);
 
         /// <summary>
-        /// This is fired by the native Spil SDK when the reward has been claimed successfully from SLOT.
-        /// The developer can subscribe to this event and provide the reward to the user.
+        /// This event indicates that a reward token was successfully claimed via the SLOT back-end. Each token can only be claimed once per user.
+        /// TODO: Document this on spilgames.com
         /// </summary>
-        public event RewardTokenClaimed OnRewardTokenClaimed;
+		public event RewardTokenClaimed OnRewardTokenClaimed;
 
-        public static void fireRewardTokenClaimed(string response) {
-            SpilLogging.Log("Claimed reward = " + response);
-
-            RewardResponse rewardResponse = JsonHelper.getObjectFromJson<RewardResponse>(response);
-
-            if (Spil.Instance.OnRewardTokenClaimed != null) {
-                Spil.Instance.OnRewardTokenClaimed(rewardResponse.reward, rewardResponse.rewardType);
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireRewardTokenClaimed(string response) {
+			SpilLogging.Log("SpilSDK-Unity Claimed reward = " + response);
+			RewardResponse rewardResponse = JsonHelper.getObjectFromJson<RewardResponse>(response);
+			if(OnRewardTokenClaimed != null) {
+				OnRewardTokenClaimed(rewardResponse.reward, rewardResponse.rewardType);
+			}
+		}
 
         public delegate void RewardTokenClaimFailed(string rewardType, SpilErrorMessage error);
 
         /// <summary>
-        /// This is fired by the native Spil SDK when the reward claiming has failed in SLOT.
-        /// The developer can subscribe to this event and provide the reward to the user.
+        /// This event indicates that a reward token could not be claimed via the SLOT back-end. This can happen when the server returned an error or if the token was already claimed.
+        /// TODO: Document this on spilgames.com
         /// </summary>
-        public event RewardTokenClaimFailed OnRewardTokenClaimFailed;
+		public event RewardTokenClaimFailed OnRewardTokenClaimFailed;
 
-        public static void fireRewardTokenClaimFailed(string response) {
-            SpilLogging.Log("Claim failed for = " + response);
-
-            RewardResponse rewardResponse = JsonHelper.getObjectFromJson<RewardResponse>(response);
-
-            if (Spil.Instance.OnRewardTokenClaimFailed != null) {
-                Spil.Instance.OnRewardTokenClaimFailed(rewardResponse.rewardType, rewardResponse.error);
-            }
-        }
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireRewardTokenClaimFailed(string response) {
+			SpilLogging.Log("SpilSDK-Unity Claim failed for = " + response);
+			RewardResponse rewardResponse = JsonHelper.getObjectFromJson<RewardResponse>(response);
+			if(OnRewardTokenClaimFailed !=  null) {
+				OnRewardTokenClaimFailed(rewardResponse.rewardType, rewardResponse.error);
+			}
+		}
 
         #region Image loading
 
@@ -1931,12 +1993,16 @@ namespace SpilGames.Unity.Base.Implementations{
         public delegate void ImageLoaded(Texture2D image, string localPath);
 
         /// <summary>
-        /// This event is called when an image has been loaded from Disk and contains the Texture2D object for the image.
+        /// This event indicates that an image has been loaded from local storage, it contains the Texture2D object for the image.
+        /// TODO: Document this on spilgames.com
         /// </summary>
-        public event ImageLoaded OnImageLoaded;
+		public event ImageLoaded OnImageLoaded;
 
-        public static void fireImageLoaded(Texture2D image, string localPath) {
-            SpilLogging.Log("fireImageLoaded");
+        /// <summary>
+        /// Not intended for use by developers.
+        /// </summary>
+        private static void fireImageLoaded(Texture2D image, string localPath) {
+			SpilLogging.Log("SpilSDK-Unity fireImageLoaded");
 
             if (Spil.Instance.OnImageLoaded != null) {
                 Spil.Instance.OnImageLoaded(image, localPath);
@@ -1946,61 +2012,70 @@ namespace SpilGames.Unity.Base.Implementations{
         public delegate void ImageLoadSuccess(string localPath, ImageContext imageContext);
 
         /// <summary>
-        /// This event is called when an image has been loaded.
+        /// This event indicates that an image has been downloaded and saved to local storage and can be used.
+        /// TODO: Document this on spilgames.com
         /// </summary>
-        public event ImageLoadSuccess OnImageLoadSuccess;
+		public event ImageLoadSuccess OnImageLoadSuccess;
 
-        public static void fireImageLoadSuccess(string response) {
-            SpilLogging.Log("fireImageLoadSuccess " + response);
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireImageLoadSuccess(string response) {
+			SpilLogging.Log("SpilSDK-Unity fireImageLoadSuccess " + response);
 
-            JSONObject responseJSON = new JSONObject(response);
+			JSONObject responseJSON = new JSONObject(response);
 
-            string localPath = responseJSON.GetField("localPath").str;
+			string localPath = responseJSON.GetField("localPath").str;
 
-            ImageContext imageContextObj =
-                JsonHelper.getObjectFromJson<ImageContext>(responseJSON.GetField("imageContext").Print(false));
-
-            if (Spil.Instance.OnImageLoadSuccess != null) {
-                Spil.Instance.OnImageLoadSuccess(localPath, imageContextObj);
-            }
-        }
+			ImageContext imageContextObj =
+				JsonHelper.getObjectFromJson<ImageContext>(responseJSON.GetField("imageContext").Print(false));
+			if(OnImageLoadSuccess != null) {
+				OnImageLoadSuccess(localPath, imageContextObj);
+			}
+		}
 
         public delegate void ImageLoadFailed(ImageContext imageContext, SpilErrorMessage errorMessage);
 
         /// <summary>
-        /// This event is called when an image has failed to load.
+        /// This event indicates that an image failed to download or could not be saved to local storage.
+        /// TODO: Document this on spilgames.com
         /// </summary>
-        public event ImageLoadFailed OnImageLoadFailed;
+		public event ImageLoadFailed OnImageLoadFailed;
 
-        public static void fireImageLoadFailed(string response) {
-            SpilLogging.Log("fireImageLoadFailed error: " + response);
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireImageLoadFailed(string response) {
+			SpilLogging.Log("SpilSDK-Unity fireImageLoadFailed error: " + response);
 
-            JSONObject responseJSON = new JSONObject(response);
+			JSONObject responseJSON = new JSONObject(response);
 
-            ImageContext imageContextObj =
-                JsonHelper.getObjectFromJson<ImageContext>(responseJSON.GetField("imageContext").Print(false));
-            SpilErrorMessage errorMessage =
-                JsonHelper.getObjectFromJson<SpilErrorMessage>(responseJSON.GetField("errorCode").Print(false));
-
-            if (Spil.Instance.OnImageLoadFailed != null) {
-                Spil.Instance.OnImageLoadFailed(imageContextObj, errorMessage);
-            }
-        }
+			ImageContext imageContextObj =
+				JsonHelper.getObjectFromJson<ImageContext>(responseJSON.GetField("imageContext").Print(false));
+			SpilErrorMessage errorMessage =
+				JsonHelper.getObjectFromJson<SpilErrorMessage>(responseJSON.GetField("errorCode").Print(false));
+			if(OnImageLoadFailed != null) {
+				OnImageLoadFailed(imageContextObj, errorMessage);
+			}
+		}
 
         public delegate void ImagePreloadingCompleted();
 
         /// <summary>
-        /// This event indicates that the operation for preloading item and bundle images has been completed.
+        /// This event indicates that pre-loading of item- and bundle-images has finished.
+        /// TODO: Document this on spilgames.com
         /// </summary>
-        public event ImagePreloadingCompleted OnImagePreloadingCompleted;
+		public event ImagePreloadingCompleted OnImagePreloadingCompleted;
 
-        public static void fireImagePreloadingCompleted() {
-            SpilLogging.Log("fireImagePreloadingCompleted");
-
-            if (Spil.Instance.OnImagePreloadingCompleted != null) {
-                Spil.Instance.OnImagePreloadingCompleted();
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireImagePreloadingCompleted() {
+			SpilLogging.Log("SpilSDK-Unity fireImagePreloadingCompleted");
+			if(OnImagePreloadingCompleted != null) {
+				OnImagePreloadingCompleted();
+			}
+		}
 
         #endregion
 
@@ -2009,63 +2084,75 @@ namespace SpilGames.Unity.Base.Implementations{
         public delegate void IAPValid(string data);
 
         /// <summary>
-        /// This event indicates that the IAP has been validated with the SLOT backend.
+        /// This event indicates that the IAP was successfully validated by the SLOT back-end.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/sdk-iap-packages-promotions/
         /// </summary>
-        public event IAPValid OnIAPValid;
+		public event IAPValid OnIAPValid;
 
-        public static void fireIAPValid(string data) {
-            SpilLogging.Log("fireIAPValid with data: " + data);
-
-            if (Spil.Instance.OnIAPValid != null) {
-                Spil.Instance.OnIAPValid(data);
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireIAPValid(string data) {
+			SpilLogging.Log("SpilSDK-Unity fireIAPValid with data: " + data);
+			if(OnIAPValid != null) {
+				OnIAPValid(data);
+			}
+		}
 
         public delegate void IAPInvalid(string message);
 
         /// <summary>
-        /// This event indicates that the IAP has been validated with the SLOT backend.
+        /// This event indicates that IAP validation for the IAP by the SLOT back-end failed.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/sdk-iap-packages-promotions/
         /// </summary>
-        public event IAPInvalid OnIAPInvalid;
+		public event IAPInvalid OnIAPInvalid;
 
-        public static void fireIAPInvalid(string message) {
-            SpilLogging.Log("fireIAPInvalid with data: " + message);
-
-            if (Spil.Instance.OnIAPInvalid != null) {
-                Spil.Instance.OnIAPInvalid(message);
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireIAPInvalid(string message) {
+			SpilLogging.Log("SpilSDK-Unity fireIAPInvalid with data: " + message);
+			if(OnIAPValid != null) {
+				OnIAPInvalid(message);
+			}
+		}
 
         public delegate void IAPRequestPurchase(string skuId);
 
         /// <summary>
-        /// This event indicates that an IAP request was fired from the SDK.
+        /// This event indicates that an IAP request was fired from the SDK. The developer should take care of the purchase via their chosen IAP library.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/sdk-iap-packages-promotions/
         /// </summary>
-        public event IAPRequestPurchase OnIAPRequestPurchase;
+		public event IAPRequestPurchase OnIAPRequestPurchase;
 
-        public static void fireIAPRequestPurchase(string skuId) {
-            SpilLogging.Log("fireIAPRequestPurchase with sku: " + skuId);
-
-            if (Spil.Instance.OnIAPRequestPurchase != null) {
-                Spil.Instance.OnIAPRequestPurchase(skuId);
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireIAPRequestPurchase(string skuId) {
+			SpilLogging.Log("SpilSDK-Unity fireIAPRequestPurchase with sku: " + skuId);
+			if(OnIAPRequestPurchase != null) {
+				OnIAPRequestPurchase(skuId);
+			}
+		}
 
         public delegate void IAPServerError(SpilErrorMessage errorMessage);
 
         /// <summary>
-        /// This event indicates that the IAP has been validated with the SLOT backend.
+        /// This event indicates that the SLOT back-end could not validate the IAP due to a server error.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/sdk-iap-packages-promotions/
         /// </summary>
-        public event IAPServerError OnIAPServerError;
+		public event IAPServerError OnIAPServerError;
 
-        public static void fireIAPServerError(string error) {
-            SpilLogging.Log("fireIAPServerError with data: " + error);
-
-            SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
-            if (Spil.Instance.OnIAPInvalid != null) {
-                Spil.Instance.OnIAPServerError(errorMessage);
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireIAPServerError(string error) {
+			SpilLogging.Log("SpilSDK-Unity fireIAPServerError with data: " + error);
+			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
+			if(OnIAPServerError != null) {
+				OnIAPServerError(errorMessage);
+			}
+		}
 
         #endregion
 
@@ -2074,35 +2161,40 @@ namespace SpilGames.Unity.Base.Implementations{
         public delegate void ServerTimeRequestSuccess(long time);
 
         /// <summary>
-        /// This event indicates that the IAP has been validated with the SLOT backend.
+        /// This event indicates that the server time request was successfull, it returns the server time as a timestamp.
+        /// Todo: Document this on spilgames.com
         /// </summary>
-        public event ServerTimeRequestSuccess OnServerTimeRequestSuccess;
+		public event ServerTimeRequestSuccess OnServerTimeRequestSuccess;
 
-        public static void fireServerTimeRequestSuccess(string timeString) {
-            SpilLogging.Log("fireServerTimeRequestSuccess with data: " + timeString);
-
-            long time = long.Parse(timeString);
-
-            if (Spil.Instance.OnServerTimeRequestSuccess != null) {
-                Spil.Instance.OnServerTimeRequestSuccess(time);
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireServerTimeRequestSuccess(string time) {
+			SpilLogging.Log("SpilSDK-Unity fireServerTimeRequestSuccess with data: " + time);
+			long longTime = long.Parse(time);
+			if(OnServerTimeRequestSuccess != null) {
+				OnServerTimeRequestSuccess(longTime);
+			}
+		}
 
         public delegate void ServerTimeRequestFailed(SpilErrorMessage errorMessage);
 
         /// <summary>
-        /// This event indicates that the IAP has been validated with the SLOT backend.
+        /// This event indicates that the server time request has failed and the server time could not be retrieved.
+        /// Todo: Document this on spilgames.com
         /// </summary>
-        public event ServerTimeRequestFailed OnServerTimeRequestFailed;
+		public event ServerTimeRequestFailed OnServerTimeRequestFailed;
 
-        public static void fireServerTimeRequestFailed(string error) {
-            SpilLogging.Log("fireServerTimeRequestFailed with data: " + error);
-
-            SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
-            if (Spil.Instance.OnServerTimeRequestFailed != null) {
-                Spil.Instance.OnServerTimeRequestFailed(errorMessage);
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireServerTimeRequestFailed(string error) {
+			SpilLogging.Log("SpilSDK-Unity fireServerTimeRequestFailed with data: " + error);
+			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
+			if(OnServerTimeRequestFailed != null) {
+				OnServerTimeRequestFailed(errorMessage);
+			}
+		}
 
         #endregion
 
@@ -2111,140 +2203,174 @@ namespace SpilGames.Unity.Base.Implementations{
         public delegate void LiveEventAvailable();
 
         /// <summary>
-        /// This event indicates that the Live Event Stage has been opened.
+        /// This event indicates that live event data is available and can be used.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-live-events/
         /// </summary>
-        public event LiveEventAvailable OnLiveEventAvailable;
+		public event LiveEventAvailable OnLiveEventAvailable;
 
-        public static void fireLiveEventAvailable() {
-            SpilLogging.Log("fireLiveEventAvailable");
-
-            if (Spil.Instance.OnLiveEventAvailable != null) {
-                Spil.Instance.OnLiveEventAvailable();
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireLiveEventAvailable() {
+			SpilLogging.Log("SpilSDK-Unity fireLiveEventAvailable");
+			if(OnLiveEventAvailable != null) {
+				OnLiveEventAvailable();
+			}
+		}
 
         public delegate void LiveEventStageOpen();
 
         /// <summary>
-        /// This event indicates that the Live Event Stage has been opened.
+        /// This event indicates that a web-view containing a live event stage has been opened.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-live-events/
         /// </summary>
-        public event LiveEventStageOpen OnLiveEventStageOpen;
+		public event LiveEventStageOpen OnLiveEventStageOpen;
 
-        public static void fireLiveEventStageOpen() {
-            SpilLogging.Log("fireLiveEventStageOpen");
-
-            if (Spil.Instance.OnLiveEventStageOpen != null) {
-                Spil.Instance.OnLiveEventStageOpen();
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireLiveEventStageOpen() {
+			SpilLogging.Log("SpilSDK-Unity fireLiveEventStageOpen");
+			if(OnLiveEventStageOpen != null) {
+				OnLiveEventStageOpen();
+			}
+		}
 
         public delegate void LiveEventStageClosed();
 
         /// <summary>
-        /// This event indicates that the Live Event Stage has been closed.
+        /// This event indicates that a web-view containing a live-event stage has been closed.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-live-events/
         /// </summary>
-        public event LiveEventStageClosed OnLiveEventStageClosed;
+		public event LiveEventStageClosed OnLiveEventStageClosed;
 
-        public static void fireLiveEventStageClosed() {
-            SpilLogging.Log("fireLiveEventStageClosed");
-
-            if (Spil.Instance.OnLiveEventStageClosed != null) {
-                Spil.Instance.OnLiveEventStageClosed();
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireLiveEventStageClosed() {
+			SpilLogging.Log("SpilSDK-Unity fireLiveEventStageClosed");
+			if(OnLiveEventStageClosed != null) {
+				OnLiveEventStageClosed();
+			}
+		}
 
         public delegate void LiveEventNotAvailable();
 
         /// <summary>
-        /// This event indicates that the Live Event is not available.
+        /// This event indicates that live event data is not available and cannot be used.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-live-events/
         /// </summary>
-        public event LiveEventNotAvailable OnLiveEventNotAvailable;
+		public event LiveEventNotAvailable OnLiveEventNotAvailable;
 
-        public static void fireLiveEventNotAvailable() {
-            SpilLogging.Log("fireLiveEventNotAvailable");
-
-            if (Spil.Instance.OnLiveEventNotAvailable != null) {
-                Spil.Instance.OnLiveEventNotAvailable();
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireLiveEventNotAvailable() {
+			SpilLogging.Log("SpilSDK-Unity fireLiveEventNotAvailable");
+			if(OnLiveEventNotAvailable != null) {
+				OnLiveEventNotAvailable();
+			}
+		}
 
         public delegate void LiveEventError(SpilErrorMessage errorMessage);
 
         /// <summary>
-        /// This event indicates that the Live Event encountered an error.
+        /// This event indicates that a web-view containing a live event screen threw an error.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-live-events/
         /// </summary>
-        public event LiveEventError OnLiveEventError;
+		public event LiveEventError OnLiveEventError;
 
-        public static void fireLiveEventError(string error) {
-            SpilLogging.Log("fireLiveEventError with data: " + error);
-
-            SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
-            if (Spil.Instance.OnLiveEventError != null) {
-                Spil.Instance.OnLiveEventError(errorMessage);
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireLiveEventError(string error) {
+			SpilLogging.Log("SpilSDK-Unity fireLiveEventError with data: " + error);
+			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
+			if(OnLiveEventError != null) {
+				OnLiveEventError(errorMessage);
+			}
+		}
 
         public delegate void LiveEventUsedExternalItems(string items);
 
         /// <summary>
-        /// This event indicates the items used in the live event.
-        /// The developer can subscribe to this event and provide the reward to the user.
+        /// This event indicates which items/currencies were used (consumed) while a web-view containg a live event was being shown.
+        /// The developer can remove the items/currencies from the player's possessions.
+        /// This is only required for external items/currencies (items/currencies not managed via the SpilSDK wallet/inventory).
+        /// For items and currencies managed via the SpilSDK wallet/inventory the used items/currencies are subtracted automatically so this event is not needed.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-live-events/
         /// </summary>
-        public event LiveEventUsedExternalItems OnLiveEventUsedExternalItems;
+		public event LiveEventUsedExternalItems OnLiveEventUsedExternalItems;
 
-        public static void fireLiveEventUsedExternalItems(string items) {
-            SpilLogging.Log("Used items = " + items);
-
-            if (Spil.Instance.OnLiveEventUsedExternalItems != null) {
-                Spil.Instance.OnLiveEventUsedExternalItems(items);
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireLiveEventUsedExternalItems(string items) {
+			SpilLogging.Log("SpilSDK-Unity Used items = " + items);
+			if(OnLiveEventUsedExternalItems != null) {
+				OnLiveEventUsedExternalItems(items);
+			}
+		}
 
         public delegate void LiveEventReward(string rewardList);
 
         /// <summary>
-        /// This event indicates the reward given for the Live Event.
+        /// This event indicates that a web-view containing a live-event gave a reward to the user, this event contains the reward data.
         /// The developer can subscribe to this event and provide the reward to the user.
+        /// This is only required for external items/currencies (items/currencies not managed via the SpilSDK wallet/inventory).
+        /// For items and currencies managed via the SpilSDK wallet/inventory the reward is given automatically so this event is not needed.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-live-events/
         /// </summary>
-        public event LiveEventReward OnLiveEventReward;
+		public event LiveEventReward OnLiveEventReward;
 
-        public static void fireLiveEventReward(string reward) {
-            SpilLogging.Log("Received reward = " + reward);
-
-            if (Spil.Instance.OnLiveEventReward != null) {
-                Spil.Instance.OnLiveEventReward(reward);
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireLiveEventReward(string receivedReward) {
+			SpilLogging.Log("SpilSDK-Unity Received reward = " + receivedReward);
+			if(OnLiveEventReward != null) {
+				OnLiveEventReward(receivedReward);
+			}
+		}
 
         public delegate void LiveEventMetRequirements(bool metRequirements);
 
         /// <summary>
-        /// This event indicates if the user met the requirements to receive the reward.
+        /// This event indicates that the user met the requirements for a live event and will receive the live event reward.
+        /// TODO: Document what is this for, developer can update the UI?
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-live-events/
         /// </summary>
-        public event LiveEventMetRequirements OnLiveEventMetRequirements;
+		public event LiveEventMetRequirements OnLiveEventMetRequirements;
 
-        public static void fireLiveEventMetRequirements(bool metRequirements) {
-            SpilLogging.Log("LiveEventMetRequirements with data = " + metRequirements);
-
-            if (Spil.Instance.OnLiveEventMetRequirements != null) {
-                Spil.Instance.OnLiveEventMetRequirements(metRequirements);
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireLiveEventMetRequirements(string sMetRequirements) {
+			SpilLogging.Log("SpilSDK-Unity LiveEventMetRequirements with data = " + sMetRequirements);
+			bool metRequirements = Convert.ToBoolean(sMetRequirements);
+			if(OnLiveEventMetRequirements != null) {
+				OnLiveEventMetRequirements(metRequirements);
+			}
+		}
 
         public delegate void LiveEventCompleted();
 
         /// <summary>
-        /// This event indicates that the Live Event is not available.
+        /// This event indicates that a Live Event was completed by the user.
+        /// The developer can subscribe to this event and hide any live-event related UI.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-live-events/
         /// </summary>
-        public event LiveEventCompleted OnLiveEventCompleted;
+		public event LiveEventCompleted OnLiveEventCompleted;
 
-        public static void fireLiveEventCompleted() {
-            SpilLogging.Log("fireLiveEventCompleted");
-
-            if (Spil.Instance.OnLiveEventCompleted != null) {
-                Spil.Instance.OnLiveEventCompleted();
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireLiveEventCompleted() {
+			SpilLogging.Log("SpilSDK-Unity fireLiveEventCompleted");
+			if(OnLiveEventCompleted != null) {
+				OnLiveEventCompleted();
+			}
+		}
 
         #endregion
 
@@ -2253,96 +2379,112 @@ namespace SpilGames.Unity.Base.Implementations{
         public delegate void TieredEventsAvailable();
 
         /// <summary>
-        /// This event indicates that tiered events are available.
+        /// This event indicates that tiered events data is available and can be used.
+        /// TODO: Document this on spilgames.com
         /// </summary>
-        public event TieredEventsAvailable OnTieredEventsAvailable;
+		public event TieredEventsAvailable OnTieredEventsAvailable;
 
-        public static void fireTieredEventsAvailable() {
-            SpilLogging.Log("fireTieredEventsAvailable");
-
-            if (Spil.Instance.OnTieredEventsAvailable != null) {
-                Spil.Instance.OnTieredEventsAvailable();
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireTieredEventsAvailable() {
+			SpilLogging.Log("SpilSDK-Unity fireTieredEventsAvailable");
+			if(OnTieredEventsAvailable != null) {
+				OnTieredEventsAvailable();
+			}
+		}
 
         public delegate void TieredEventNotAvailable();
 
         /// <summary>
-        /// This event indicates that tiered events are not available.
+        /// This event indicates that tiered events data is not available and cannot be used.
+        /// TODO: Document this on spilgames.com
         /// </summary>
-        public event TieredEventNotAvailable OnTieredEventsNotAvailable;
+		public event TieredEventNotAvailable OnTieredEventsNotAvailable;
 
-        public static void fireTieredEventsNotAvailable() {
-            SpilLogging.Log("fireTieredEventsNotAvailable");
-
-            if (Spil.Instance.OnTieredEventsNotAvailable != null) {
-                Spil.Instance.OnTieredEventsNotAvailable();
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireTieredEventsNotAvailable() {
+			SpilLogging.Log("SpilSDK-Unity fireTieredEventsNotAvailable");
+			if(OnTieredEventsNotAvailable != null) {
+				OnTieredEventsNotAvailable();
+			}
+		}
 
         public delegate void TieredEventUpdated(TieredEventProgress tieredProgress);
 
         /// <summary>
         /// This event indicates that tiered event progress has been updated.
+        /// TODO: Document this on spilgames.com
         /// </summary>
-        public event TieredEventUpdated OnTieredEventUpdated;
+		public event TieredEventUpdated OnTieredEventUpdated;
 
-        public static void fireTieredEventUpdated(string data) {
-            SpilLogging.Log("fireTieredEventUpdated with data = " + data);
-
-            TieredEventProgress tieredProgress = JsonHelper.getObjectFromJson<TieredEventProgress>(data);
-            
-            if (Spil.Instance.OnTieredEventUpdated != null) {
-                Spil.Instance.OnTieredEventUpdated(tieredProgress);
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireTieredEventUpdated(string data) {
+			SpilLogging.Log("SpilSDK-Unity fireTieredEventUpdated with data = " + data);
+			TieredEventProgress tieredProgress = JsonHelper.getObjectFromJson<TieredEventProgress>(data);
+			if(OnTieredEventUpdated != null) {
+				OnTieredEventUpdated(tieredProgress);
+			}
+		}
 
         public delegate void TieredEventsError(SpilErrorMessage error);
 
         /// <summary>
-        /// This event indicates that something went wrong with the TieredEventsError request.
+        /// This event indicates that an error occurred while updating tiered event progress or trying to claim a tier reward. Most likely there is an error in the tiered event's SLOT configuration or the SLOT back-end returned an error.
+        /// TODO: Document this on spilgames.com
         /// </summary>
-        public event TieredEventsError OnTieredEventsError;
+		public event TieredEventsError OnTieredEventsError;
 
-        public static void fireTieredEventsError(string reason) {
-            SpilLogging.Log("Tiered Events Error with reason = " + reason);
-
-            SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(reason);
-
-            if (Spil.Instance.OnTieredEventsError != null) {
-                Spil.Instance.OnTieredEventsError(errorMessage);
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireTieredEventsError(string data) {
+			SpilLogging.Log("SpilSDK-Unity Tiered Events Error with reason = " + data);
+			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(data);
+			if(OnTieredEventsError != null) {
+				OnTieredEventsError(errorMessage);
+			}
+		}
 
         public delegate void TieredEventProgressOpen();
 
         /// <summary>
-        /// This event indicates that the Tiered Event progress has been opened.
+        /// This event indicates that a web-view containing the tiered event progress screen has opened.
+        /// TODO: Document this on spilgames.com
         /// </summary>
-        public event TieredEventProgressOpen OnTieredEventProgressOpen;
+		public event TieredEventProgressOpen OnTieredEventProgressOpen;
 
-        public static void fireTieredEventProgressOpen() {
-            SpilLogging.Log("fireTieredEventStageOpen");
-
-            if (Spil.Instance.OnTieredEventProgressOpen != null) {
-                Spil.Instance.OnTieredEventProgressOpen();
-            }
-        }
-
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireTieredEventProgressOpen() {
+			SpilLogging.Log("SpilSDK-Unity fireTieredEventStageOpen");
+			if(OnTieredEventProgressOpen != null) {
+				OnTieredEventProgressOpen();
+			}
+		}
+			
         public delegate void TieredEventProgressClosed();
 
         /// <summary>
-        /// This event indicates that the Tiered Event progress has been closed.
+        /// This event indicates that the web-view containing the tiered event progress screen has closed.
+        /// TODO: Document this on spilgames.com
         /// </summary>
-        public event TieredEventProgressClosed OnTieredEventProgressClosed;
+		public event TieredEventProgressClosed OnTieredEventProgressClosed;
 
-        public static void fireTieredEventProgressClosed() {
-            SpilLogging.Log("fireTieredEventStageClosed");
-
-            if (Spil.Instance.OnTieredEventProgressClosed != null) {
-                Spil.Instance.OnTieredEventProgressClosed();
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireTieredEventProgressClosed() {
+			SpilLogging.Log("SpilSDK-Unity fireTieredEventStageClosed");
+			if(OnTieredEventProgressClosed != null) {
+				OnTieredEventProgressClosed();
+			}
+		}
 
         #endregion
 
@@ -2351,232 +2493,276 @@ namespace SpilGames.Unity.Base.Implementations{
         public delegate void LoginSuccessful(bool resetData, string socialProvider, string socialId, bool isGuest);
 
         /// <summary>
-        /// This event indicates that the Social Login was successful.
+        /// This event indicates that the social login was successful.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/working-social-login-feature/
         /// </summary>
-        public event LoginSuccessful OnLoginSuccessful;
+		public event LoginSuccessful OnLoginSuccessful;
 
-        public static void fireLoginSuccessful(string message) {
-            SpilLogging.Log("fireLoginSuccessful with message: " + message);
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireLoginSuccessful(string message) {
+			SpilLogging.Log("SpilSDK-Unity fireLoginSuccessful with message: " + message);
 
-            JSONObject loginJSON = new JSONObject(message);
-            bool resetData = loginJSON.GetField("resetData").b;
+			JSONObject loginJSON = new JSONObject(message);
+			bool resetData = loginJSON.GetField("resetData").b;
 			string socialProvider = loginJSON.HasField("socialProvider") ? loginJSON.GetField("socialProvider").str : null;
-			string socialId = loginJSON.HasField ("socialId") ? loginJSON.GetField ("socialId").str : null;
-            bool isGuest = loginJSON.GetField("isGuest").b;
-            if (Spil.Instance.OnLoginSuccessful != null) {
-                Spil.Instance.OnLoginSuccessful(resetData, socialProvider, socialId, isGuest);
-            }
-        }
+			string socialId = loginJSON.HasField("socialId") ? loginJSON.GetField("socialId").str : null;
+			bool isGuest = loginJSON.GetField("isGuest").b;
+			if(OnLoginSuccessful != null) {
+				OnLoginSuccessful(resetData, socialProvider, socialId, isGuest);
+			}
+		}
 
         public delegate void LoginFailed(SpilErrorMessage errorMessage);
 
         /// <summary>
-        /// This event indicates that the Social Login failed.
+        /// This event indicates that the social login failed.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/working-social-login-feature/
         /// </summary>
-        public event LoginFailed OnLoginFailed;
+		public event LoginFailed OnLoginFailed;
 
-        public static void fireLoginFailed(string error) {
-            SpilLogging.Log("fireLoginFailed with data: " + error);
-
-            SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
-            if (Spil.Instance.OnLoginFailed != null) {
-                Spil.Instance.OnLoginFailed(errorMessage);
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireLoginFailed(string error) {
+			SpilLogging.Log("SpilSDK-Unity fireLoginFailed with data: " + error);
+			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
+			if(OnLoginFailed != null) {
+				OnLoginFailed(errorMessage);
+			}
+		}
 
         public delegate void RequestLogin();
 
         /// <summary>
-        /// This event indicates that the Social login should be requested again.
+        /// This event indicates that social login has to be requested in order to log in.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/working-social-login-feature/
         /// </summary>
-        public event RequestLogin OnRequestLogin;
+		public event RequestLogin OnRequestLogin;
 
-        public static void fireRequestLogin() {
-            SpilLogging.Log("fireRequestLogin");
-
-            if (Spil.Instance.OnRequestLogin != null) {
-                Spil.Instance.OnRequestLogin();
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireRequestLogin() {
+			SpilLogging.Log("SpilSDK-Unity fireRequestLogin");
+			if(OnRequestLogin != null) {
+				OnRequestLogin();
+			}
+		}
 
         public delegate void LogoutSuccessful();
 
         /// <summary>
-        /// This event indicates that the Social Logout was successful.
+        /// This event indicates that social logout was successful.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/working-social-login-feature/
         /// </summary>
-        public event LogoutSuccessful OnLogoutSuccessful;
+		public event LogoutSuccessful OnLogoutSuccessful;
 
-        public static void fireLogoutSuccessful() {
-            SpilLogging.Log("fireLogoutSuccessful");
-
-            if (Spil.Instance.OnLogoutSuccessful != null) {
-                Spil.Instance.OnLogoutSuccessful();
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireLogoutSuccessful() {
+			SpilLogging.Log("SpilSDK-Unity fireLogoutSuccessful");
+			if(OnLogoutSuccessful != null) {
+				OnLogoutSuccessful();
+			}
+		}
 
         public delegate void LogoutFailed(SpilErrorMessage errorMessage);
 
         /// <summary>
-        /// This event indicates that the Social Logout failed.
+        /// This event indicates that social logout failed.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/working-social-login-feature/
         /// </summary>
-        public event LogoutFailed OnLogoutFailed;
+		public event LogoutFailed OnLogoutFailed;
 
-        public static void fireLogoutFailed(string error) {
-            SpilLogging.Log("fireLogoutFailed with data: " + error);
-
-            SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
-            if (Spil.Instance.OnLogoutFailed != null) {
-                Spil.Instance.OnLogoutFailed(errorMessage);
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// Developers can subscribe to events defined in Spil.Instance.
+		/// </summary>
+		public void fireLogoutFailed(string error) {
+			SpilLogging.Log("SpilSDK-Unity fireLogoutFailed with data: " + error);
+			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
+			if(OnLogoutFailed != null) {
+				OnLogoutFailed(errorMessage);
+			}
+		}
 
         public delegate void AuthenticationError(SpilErrorMessage errorMessage);
 
         /// <summary>
-        /// This event indicates that the Social Logout failed.
+        /// This event indicates that an authentication error occured. This can happen if the session of a logged in user is no longer valid, either because the session token has expired or due to a global logout on a different device.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/working-social-login-feature/
         /// </summary>
-        public event AuthenticationError OnAuthenticationError;
+		public event AuthenticationError OnAuthenticationError;
 
-        public static void fireAuthenticationError(string error) {
-            SpilLogging.Log("fireAuthenticationError with data: " + error);
-
-            SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
-            if (Spil.Instance.OnAuthenticationError != null) {
-                Spil.Instance.OnAuthenticationError(errorMessage);
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireAuthenticationError(string error) {
+			SpilLogging.Log("SpilSDK-Unity fireAuthenticationError with data: " + error);
+			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
+			if(OnAuthenticationError != null) {
+				OnAuthenticationError(errorMessage);
+			}
+		}
 
 		public delegate void UserDataMergeConflict(MergeConflictData localDataMergeData, MergeConflictData remoteDataMergeData);
 
-		/// <summary>
-		/// This event indicates there was a merge conflict, the current local data and the conflicted remote data are passed.
-		/// </summary>
+        /// <summary>
+        /// This event indicates there was a merge conflict, local data and conflicted remote data are supplied so that the developer can choose how to resolve the merge conflict.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/working-social-login-feature/
+        /// </summary>
 		public event UserDataMergeConflict OnUserDataMergeConflict;
 
-		public static void fireUserDataMergeConflict(string data) {
-			SpilLogging.Log("fireUserDataMergeConflict");
-
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// Developers can subscribe to events defined in Spil.Instance.
+		/// </summary>
+		public void fireUserDataMergeConflict(string data) {
+			SpilLogging.Log("SpilSDK-Unity fireUserDataMergeConflict");
 			MergeConflict mergeConflict = JsonHelper.getObjectFromJson<MergeConflict>(data);
-
-			if (Spil.Instance.OnUserDataMergeConflict != null) {
-				Spil.Instance.OnUserDataMergeConflict(mergeConflict.localData, mergeConflict.remoteData);
+			if(OnUserDataMergeConflict != null) {
+				OnUserDataMergeConflict(mergeConflict.localData, mergeConflict.remoteData);
 			}
 		}
 
 		public delegate void UserDataMergeSuccessful();
 
-		/// <summary>
-		/// This event indicates that the data was merged successfully.
-		/// </summary>
+        /// <summary>
+        /// This event indicates that the user data merge was successfull and the merge conflict has been resolved.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/working-social-login-feature/
+        /// </summary>
 		public event UserDataMergeSuccessful OnUserDataMergeSuccessful;
 
-		public static void fireUserDataMergeSuccessful() {
-			SpilLogging.Log("fireUserDataMergeSuccessful");
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireUserDataMergeSuccessful() {
+			SpilLogging.Log("SpilSDK-Unity fireUserDataMergeSuccessful");
 
-		    if (Spil.PlayerData != null) {
-		        Spil.PlayerData.UpdatePlayerData();
-		    }
-		    
-			if (Spil.Instance.OnUserDataMergeSuccessful != null) {
-				Spil.Instance.OnUserDataMergeSuccessful();
+			if (Spil.PlayerData != null) {
+				Spil.PlayerData.UpdatePlayerData();
+			}
+			if(OnUserDataMergeSuccessful != null) {
+				OnUserDataMergeSuccessful();
 			}
 		}
 
 		public delegate void UserDataMergeFailed(string mergeData, string mergeType);
 
-		/// <summary>
-		/// This event indicates that the user data merge failed, 
-		/// the mergeData and mergeType params can be used to retry.
-		/// </summary>
+        /// <summary>
+        /// This event indicates that the user data merge has failed, the mergeData and mergeType parameters can be used to retry.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/working-social-login-feature/
+        /// </summary>
 		public event UserDataMergeFailed OnUserDataMergeFailed;
 
-		public static void fireUserDataMergeFailed(string data) {
-			SpilLogging.Log("fireUserDataMergeFailed");
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireUserDataMergeFailed(string data) {
+			SpilLogging.Log("SpilSDK-Unity fireUserDataMergeFailed");
 
-		    JSONObject jsonData = new JSONObject(data);
-		    string mergeData = jsonData.HasField ("mergeData") ? jsonData.GetField ("mergeData").str : null;
-		    string mergeType = jsonData.HasField ("mergeType") ? jsonData.GetField ("mergeType").str : null;
-		    
-			if (Spil.Instance.OnUserDataMergeFailed != null) {
-				Spil.Instance.OnUserDataMergeFailed(mergeData, mergeType);
+			JSONObject jsonData = new JSONObject(data);
+			string mergeData = jsonData.HasField("mergeData") ? jsonData.GetField("mergeData").str : null;
+			string mergeType = jsonData.HasField("mergeType") ? jsonData.GetField("mergeType").str : null;
+			if(OnUserDataMergeFailed != null){
+				OnUserDataMergeFailed(mergeData, mergeType);
 			}
 		}
 
 		public delegate void UserDataHandleMerge(string mergeType);
 
-		/// <summary>
-		/// This event indicates that the user data merge has to be handled for the specified merge type.
-		/// </summary>
+        /// <summary>
+        /// This event indicates that the user data merge has to be handled for a specific merge type: “remote”, “local”, or “merge.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/working-social-login-feature/
+        /// </summary>
 		public event UserDataHandleMerge OnUserDataHandleMerge;
 
-		public static void fireUserDataHandleMerge(string mergeType) {
-			SpilLogging.Log("fireUserDataHandleMerge");
-
-			if (Spil.Instance.OnUserDataHandleMerge != null) {
-				Spil.Instance.OnUserDataHandleMerge(mergeType);
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireUserDataHandleMerge(string mergeType) {
+			SpilLogging.Log("SpilSDK-Unity fireUserDataHandleMerge");
+			if(OnUserDataHandleMerge != null) {
+				OnUserDataHandleMerge(mergeType);
 			}
 		}
 
 		public delegate void UserDataSyncError();
 
-		/// <summary>
-		/// This event indicates that there was a sync error.
-		/// </summary>
+        /// <summary>
+        /// This event indicates that there was a userdata synchronisation error. This can happen when a second device is being used to play the same game using the same Facebook ID.
+        /// Call the RequestUserData() method to re-synchronize the locally stored user data. It is recommended that game play is suspended at this point, and does not resume until the user data has been successfully synchronized again.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/working-social-login-feature/
+        /// </summary>
 		public event UserDataSyncError OnUserDataSyncError;
 
-		public static void fireUserDataSyncError() {
-			SpilLogging.Log("fireUserDataSyncError");
-
-			if (Spil.Instance.OnUserDataSyncError != null) {
-				Spil.Instance.OnUserDataSyncError();
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireUserDataSyncError() {
+			SpilLogging.Log("SpilSDK-Unity fireUserDataSyncError");
+			if(OnUserDataSyncError != null) {
+				OnUserDataSyncError();
 			}
 		}
 
 		public delegate void UserDataLockError();
 
-		/// <summary>
-		/// This event indicates that there was a lock error.
-		/// </summary>
+        /// <summary>
+        /// This event indicates that there was a userdata lock error. This happens when a user plays on two devices at the same time. The first device applies a lock to prevent other devices from sending data while an update is in progress.
+        /// It is recommended that the game waits and tries to resend the changes later.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/working-social-login-feature/
+        /// </summary>
 		public event UserDataLockError OnUserDataLockError;
 
-		public static void fireUserDataLockError() {
-			SpilLogging.Log("fireUserDataLockError");
-
-			if (Spil.Instance.OnUserDataLockError != null) {
-				Spil.Instance.OnUserDataLockError();
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireUserDataLockError() {
+			SpilLogging.Log("SpilSDK-Unity fireUserDataLockError");
+			if(OnUserDataLockError != null) {
+				OnUserDataLockError();
 			}
 		}
 
 		public delegate void UserDataError(SpilErrorMessage errorMessage);
 
-		/// <summary>
-		/// This event indicates that there was a general user data error.
-		/// </summary>
+        /// <summary>
+        /// This event indicates that there was a general user data error and provides information about the error.
+        /// A synchronization error can occur when user data is edited via SLOT. This indicates that the data on the SLOT back-end differs from the local data.
+        /// Just as with a UserDataSyncError, solve the merge conflict by calling RequestUserData() to re-synchronize the locally stored user data. It is recommended that game play is suspended at this point, and does not resume until the user data has been successfully synchronized again.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/working-social-login-feature/
+        /// </summary>
 		public event UserDataError OnUserDataError;
 
-		public static void fireUserDataError(string error) {
-			SpilLogging.Log("fireUserDataError with data: " + error);
-
-			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
-			if (Spil.Instance.OnUserDataError != null) {
-				Spil.Instance.OnUserDataError(errorMessage);
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireUserDataError(string sErrorMessage) {
+			SpilLogging.Log("SpilSDK-Unity fireUserDataError with data: " + sErrorMessage);
+			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(sErrorMessage);
+			if(OnUserDataError != null){
+				OnUserDataError(errorMessage);
 			}
 		}
 
 		public delegate void UserDataAvailable();
 
-		/// <summary>
-		/// This event indicates that the user data is available.
-		/// </summary>
+        /// <summary>
+        /// This event indicates that the user data is available and can be used.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/working-social-login-feature/
+        /// </summary>
 		public event UserDataAvailable OnUserDataAvailable;
 
-		public static void fireUserDataAvailable() {
-			SpilLogging.Log("fireUserDataAvailable");
-
-		    Spil.PlayerData.UpdatePlayerData();
-		    
-			if (Spil.Instance.OnUserDataAvailable != null) {
-				Spil.Instance.OnUserDataAvailable();
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void fireUserDataAvailable() {
+			SpilLogging.Log("SpilSDK-Unity fireUserDataAvailable");
+			Spil.PlayerData.UpdatePlayerData();
+			if(OnUserDataAvailable != null) {
+				OnUserDataAvailable();
 			}
 		}
 
@@ -2586,26 +2772,34 @@ namespace SpilGames.Unity.Base.Implementations{
 
         public delegate void PrivacyPolicyStatus(bool accepted);
 
-        public event PrivacyPolicyStatus OnPrivacyPolicyStatus;
+        /// <summary>
+        /// This event indicates whether the Privacy Policy was accepted by the user and is fired on each app start and/or after the privacy policy popup has been accepted.
+        /// See also: http://www.spilgames.com/integration/unity/getting-started/gdpr-privacy-policy/
+        /// </summary>
+		public event PrivacyPolicyStatus OnPrivacyPolicyStatus;
 
-        public static void firePrivacyPolicyStatus(bool accepted) {
-            SpilLogging.Log("firePrivacyPolicyStatus");
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void firePrivacyPolicyStatus(string sAccepted) {
+			SpilLogging.Log("SpilSDK-Unity firePrivacyPolicyStatus");
 
-            if (accepted) {
-                if (Spil.UseUnityPrefab) {
-                    Spil.Instance.SpilInit(false);
-                } else {
-                    Spil.Instance.SpilInit(true);
-                }
-            }
+			bool accepted =Convert.ToBoolean(sAccepted);
 
-            if (Spil.Instance.OnPrivacyPolicyStatus != null) {
-                Spil.Instance.OnPrivacyPolicyStatus(accepted);
-            }
-        }
+			if (accepted) {
+				if (Spil.UseUnityPrefab) {
+					Spil.Instance.SpilInit(false);
+				} else {
+					Spil.Instance.SpilInit(true);
+				}
+			}
+			if(OnPrivacyPolicyStatus != null){
+				OnPrivacyPolicyStatus(accepted);
+			}
+		}
 
         #endregion
-        
+
 #if UNITY_ANDROID
 
         #region Permission
@@ -2613,17 +2807,23 @@ namespace SpilGames.Unity.Base.Implementations{
         public delegate void PermissionResponse(
             SpilAndroidUnityImplementation.PermissionResponseObject permissionResponse);
 
-        public event PermissionResponse OnPermissionResponse;
+        /// <summary>
+        /// This event indicates the status of the Android permission request.
+        /// Android only.
+        /// </summary>
+		public event PermissionResponse OnPermissionResponse;
 
-        public static void firePermissionResponse(string message) {
-            SpilLogging.Log("Permission response with message: " + message);
-
-            SpilAndroidUnityImplementation.PermissionResponseObject permissionResponse =
-                JsonHelper.getObjectFromJson<SpilAndroidUnityImplementation.PermissionResponseObject>(message);
-            if (Spil.Instance.OnPermissionResponse != null) {
-                Spil.Instance.OnPermissionResponse(permissionResponse);
-            }
-        }
+		/// <summary>
+		/// This method is meant for internal use only, it should not be used by developers.
+		/// </summary>
+		public void firePermissionResponse(string message) {
+			SpilLogging.Log("SpilSDK-Unity Permission response with message: " + message);
+			SpilAndroidUnityImplementation.PermissionResponseObject permissionResponse =
+				JsonHelper.getObjectFromJson<SpilAndroidUnityImplementation.PermissionResponseObject>(message);
+			if(OnPermissionResponse != null) {
+				OnPermissionResponse(permissionResponse);
+			}
+		}
 
         #endregion
 
@@ -2664,9 +2864,8 @@ namespace SpilGames.Unity.Base.Implementations{
                 
                 PrivacyPolicyHelper.Instance.ShowMainScreen(0);
             } else {
-                firePrivacyPolicyStatus(true);
-            }
-             
+                Spil.Instance.firePrivacyPolicyStatus("true");
+            }  
         }
 
         public abstract void ShowPrivacyPolicySettings();
@@ -2957,7 +3156,7 @@ namespace SpilGames.Unity.Base.Implementations{
 
         public abstract void UserPlayAsGuest();
 
-        public abstract void ShowUnauthorizedDialog(string title, string message, string loginText,
+        public abstract void ShowUnauthorizedDialog(string title, string message, string loginText, 
             string playAsGuestText);
 
         public abstract bool IsLoggedIn();
@@ -2981,24 +3180,24 @@ namespace SpilGames.Unity.Base.Implementations{
 }
 
 public class SpilLogging {
-    public static void Log(string message) {
-        Spil spil = GameObject.FindObjectOfType<Spil>();
-        if (spil != null && spil.SpilLoggingEnabled) {
-            Debug.Log("SpilSDK: " + message);
-        }
-    }
+	public static void Log(string message) {
+		Spil spil = GameObject.FindObjectOfType<Spil>();
+		if (spil != null && spil.SpilLoggingEnabled) {
+			Debug.Log("SpilSDK: " + message);
+		}
+	}
 
-    public static void Error(string message) {
-        Spil spil = GameObject.FindObjectOfType<Spil>();
-        if (spil != null && spil.SpilLoggingEnabled) {
-            Debug.LogError("SpilSDK: " + message);
-        }
-    }
+	public static void Error(string message) {
+		Spil spil = GameObject.FindObjectOfType<Spil>();
+		if (spil != null && spil.SpilLoggingEnabled) {
+			Debug.LogError("SpilSDK: " + message);
+		}
+	}
 
-    public static void Assert(bool condition, string message) {
-        Spil spil = GameObject.FindObjectOfType<Spil>();
-        if (spil != null && spil.SpilLoggingEnabled) {
-            Debug.Assert(condition, "SpilSDK: " + message);
-        }
-    }
+	public static void Assert(bool condition, string message) {
+		Spil spil = GameObject.FindObjectOfType<Spil>();
+		if (spil != null && spil.SpilLoggingEnabled) {
+			Debug.Assert(condition, "SpilSDK: " + message);
+		}
+	}
 }

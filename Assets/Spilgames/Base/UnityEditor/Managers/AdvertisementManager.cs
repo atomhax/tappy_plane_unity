@@ -31,7 +31,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             provider = "Fyber";
             adType = "rewardVideo";
             adInfoText = provider + " " + adType + " is playing!";
-            SpilUnityImplementationBase.fireAdStartedEvent();
+			Spil.Instance.fireAdStart();
         }
 
         public static void PlayInterstitial(string selectedProvider) {
@@ -40,7 +40,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             provider = selectedProvider;
             adType = "interstitial";
             adInfoText = provider + " " + adType + " is playing!";
-            SpilUnityImplementationBase.fireAdStartedEvent();
+			Spil.Instance.fireAdStart();
         }
 
         public static void PlayMoreApps() {
@@ -49,7 +49,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             provider = "Spil";
             adType = "moreApps";
             adInfoText = provider + " " + adType + " is playing!";
-            SpilUnityImplementationBase.fireAdStartedEvent();
+			Spil.Instance.fireAdStart();
         }
 
         public void CloseAd() {
@@ -75,7 +75,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 }
             }
 
-            SpilUnityImplementationBase.fireAdFinishedEvent(JsonHelper.getJSONFromObject(adFinished));
+			Spil.Instance.fireAdFinished(JsonHelper.getJSONFromObject(adFinished));
             provider = null;
             adType = null;
             Destroy(AdOverlay);
@@ -88,7 +88,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             adFinished.type = adType;
             adFinished.reason = "dismiss";
 
-            SpilUnityImplementationBase.fireAdFinishedEvent(JsonHelper.getJSONFromObject(adFinished));
+			Spil.Instance.fireAdFinished(JsonHelper.getJSONFromObject(adFinished));
             provider = null;
             adType = null;
             Destroy(AdOverlay);
@@ -139,7 +139,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 if (provider.ToLower().Trim().Equals("admob")) {
                     if (available) {
                         SpilLogging.Log("AdMob Show");
-                        SpilUnityImplementationBase.fireAdAvailableEvent(adType);
+                        Spil.Instance.fireAdAvailable(adType);
 
                         if (adType.Equals("interstitial")) {
                             AdvertisementManager.PlayInterstitial("AdMob"); 
@@ -147,17 +147,17 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     }
                     else {
                         SpilLogging.Log("AdMob Not Available");
-                        SpilUnityImplementationBase.fireAdNotAvailableEvent(adType);
+						Spil.Instance.fireAdNotAvailable(adType);
                     }
                 } else if (provider.ToLower().Trim().Equals("chartboost")) {
                     if (available) {
                         SpilLogging.Log("Chartboost Show");
-                        SpilUnityImplementationBase.fireAdAvailableEvent(adType);
+						Spil.Instance.fireAdAvailable(adType);
                         AdvertisementManager.PlayInterstitial("Chartboost");
                     }
                     else {
                         SpilLogging.Log("Chartboost Not Available");
-                        SpilUnityImplementationBase.fireAdNotAvailableEvent(adType);
+						Spil.Instance.fireAdNotAvailable(adType);
                     }
                 }
             }

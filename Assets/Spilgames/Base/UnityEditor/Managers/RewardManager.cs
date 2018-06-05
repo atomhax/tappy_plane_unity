@@ -35,7 +35,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 json.AddField("reward", rewards);
                 json.AddField("rewardType", RewardManager.rewardFeatureType.ToString());
 
-                SpilUnityImplementationBase.fireRewardTokenClaimed(json.Print());
+				Spil.Instance.fireRewardTokenClaimed(json.Print());
             } else {
                 int id = Spil.TokenRewardId;
                 int amount = Spil.TokenRewardAmount;

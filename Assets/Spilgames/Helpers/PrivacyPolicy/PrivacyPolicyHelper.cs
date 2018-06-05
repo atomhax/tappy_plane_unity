@@ -244,7 +244,7 @@ public class PrivacyPolicyHelper : MonoBehaviour {
         Destroy(PrivacyPolicyObject);
         Instance = null;
             
-        SpilUnityImplementationBase.firePrivacyPolicyStatus(true);
+		Spil.Instance.firePrivacyPolicyStatus("true");
             
         Spil.Instance.TrackPrivacyPolicyChanged(withPersonalisedAds, withPersonalisedContent, "StartScreen", true);
     }
@@ -338,7 +338,7 @@ public class PrivacyPolicyHelper : MonoBehaviour {
 
     public void InfoAccepted() {
         if (openId == 2) {
-            SpilUnityImplementationBase.fireAdNotAvailableEvent("rewardVideo");
+			Spil.Instance.fireAdNotAvailable("rewardVideo");
         }
         
         Destroy(PrivacyPolicyObject);

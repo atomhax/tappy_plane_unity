@@ -17,11 +17,11 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             if (response.data.HasField("serverTime")) {
                 serverTime = response.data.GetField("serverTime").i;
             } else {
-                SpilUnityImplementationBase.fireServerTimeRequestFailed(JsonUtility.ToJson(new SpilErrorMessage(24, "ServerTimeRequestError", "Error retrieving server time")));
+				Spil.Instance.fireServerTimeRequestFailed(JsonUtility.ToJson(new SpilErrorMessage(24, "ServerTimeRequestError", "Error retrieving server time")));
             }
 
             if (response.action.Equals("serverTime")) {
-                SpilUnityImplementationBase.fireServerTimeRequestSuccess(serverTime.ToString());
+				Spil.Instance.fireServerTimeRequestSuccess(serverTime.ToString());
             }
         }
     }

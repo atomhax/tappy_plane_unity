@@ -136,7 +136,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
                     liveEventOverview.startStage = startStage;
 
-                    SpilUnityImplementationBase.fireLiveEventAvailable();
+					Spil.Instance.fireLiveEventAvailable();
                 }
             }
             else {
@@ -162,7 +162,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 liveEventOverview.currentStage.AddField("rewards", rewards);
             }
             else if (response.HasField("noMoreStages")) {
-                SpilUnityImplementationBase.fireLiveEventCompleted();
+				Spil.Instance.fireLiveEventCompleted();
                 CloseStageView();
                 return;
             }
@@ -187,7 +187,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             bool metRequirements = response.GetField("metRequirements").b;
 
             if (!metRequirements) {
-                SpilUnityImplementationBase.fireLiveEventMetRequirements(false);
+				Spil.Instance.fireLiveEventMetRequirements("false");
                 if (response.HasField("progress")) {
                     liveEventOverview.currentStage.RemoveField("progress");
                     liveEventOverview.currentStage.AddField("progress", response.GetField("progress"));
@@ -195,7 +195,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 CloseStageView();
                 return;
             }
-            SpilUnityImplementationBase.fireLiveEventMetRequirements(true);
+			Spil.Instance.fireLiveEventMetRequirements("true");
 
             if (rewardType == Spil.LiveEventRewardTypeEnum.EXTERNAL) {
                 List<Reward> rewards = new List<Reward>();
@@ -211,7 +211,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 JSONObject json = new JSONObject();
                 json.AddField("data", rewardsJSON);
 
-                SpilUnityImplementationBase.fireLiveEventReward(json.Print());
+				Spil.Instance.fireLiveEventReward(json.Print());
             }
             else {
                 int id = Spil.LiveEventRewardId;
@@ -246,7 +246,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     OpenStageView(StageType.START, liveEventOverview.startStage);
                 }
                 else {
-                    SpilUnityImplementationBase.fireLiveEventNotAvailable();
+					Spil.Instance.fireLiveEventNotAvailable();
                 }
             }
             else {
@@ -257,7 +257,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     OpenStageView(StageType.START, liveEventOverview.startStage);
                 }
                 else {
-                    SpilUnityImplementationBase.fireLiveEventNotAvailable();
+					Spil.Instance.fireLiveEventNotAvailable();
                 }
             }
         }
@@ -288,7 +288,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     break;
             }
             
-            SpilUnityImplementationBase.fireLiveEventStageOpen();
+			Spil.Instance.fireLiveEventStageOpen();
         }
 
         private static void CloseStageView() {
@@ -310,7 +310,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     break;
             }
             
-            SpilUnityImplementationBase.fireLiveEventStageClosed();
+			Spil.Instance.fireLiveEventStageClosed();
         }
 
         public static long GetLiveEventStartDate() {
@@ -392,7 +392,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 } else if (response.action.ToLower().Trim().Equals("applyitems")) {
                     LiveEventManager.ProcessApplyItems(response.data);
                 } else if (response.action.ToLower().Trim().Equals("notavailable")) {
-                    SpilUnityImplementationBase.fireLiveEventNotAvailable();
+					Spil.Instance.fireLiveEventNotAvailable();
                 }
             }
         }

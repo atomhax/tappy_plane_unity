@@ -25,7 +25,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
     public class PackagesResponse : Response {
         public static void ProcessPackagesResponse(ResponseEvent response) {
             if (response.data == null) {
-                SpilUnityImplementationBase.firePackagesNotAvailable();
+				Spil.Instance.firePackagesNotAvailable();
                 return;
             }
             
