@@ -12,6 +12,7 @@
 
 @property (assign, nonatomic) int id;
 @property (strong, nonatomic) NSString *name;
+@property (strong, nonatomic) NSString *properties;
 @property (assign, nonatomic) int type;
 @property (assign, nonatomic) int initialValue;
 @property (strong, nonatomic) NSString *imageUrl;

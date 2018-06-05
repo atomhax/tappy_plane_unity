@@ -181,13 +181,6 @@ namespace SpilGames.Unity.Base.Implementations
 
         public override void RequestRewardVideo(string location = null, string rewardType = null)
         {
-            int priv = Spil.Instance.GetPrivValue();
-
-            if (priv < 2 && priv > -1) {
-                fireAdAvailableEvent("rewardVideo");
-                return;
-            }
-            
             requestRewardVideoNative(location, rewardType);
         }
 
