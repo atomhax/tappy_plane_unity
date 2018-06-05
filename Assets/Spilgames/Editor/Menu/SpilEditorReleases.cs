@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.IO;
 using UnityEditor;
 using SpilGames.Unity.Base.Implementations;
 using SpilGames.Unity.Json;
@@ -8,6 +9,8 @@ public class SpilEditorReleases : EditorWindow {
 
 	private static string releaseNotes;
 	Vector2 scrollPos;
+	private Texture2D logo = null;
+	private static GUIStyle centeredStyle;
 
 	[MenuItem ("Spil SDK/Release notes", false, 3)]
 	static void Init () {
@@ -17,18 +20,32 @@ public class SpilEditorReleases : EditorWindow {
 		window.Show ();
 	}
 
+	void OnEnable() {
+		Vector2 size = new Vector2(position.width, 256);
+        
+		logo = new Texture2D((int) size.x, (int) size.y, TextureFormat.RGB24,false);
+		logo.LoadImage(File.ReadAllBytes(Application.dataPath + "/Resources/Spilgames/PrivacyPolicy/Images/spillogo.png"));
+	}
+	
 	void OnGUI(){
 		EditorGUILayout.BeginVertical();
 
 		scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width (position.width), GUILayout.Height (position.height));
 
+		if (centeredStyle == null) {
+			centeredStyle = new GUIStyle(GUI.skin.label) {alignment = TextAnchor.MiddleCenter, wordWrap = true, fontStyle = FontStyle.Bold};
+		}
+        
+		GUILayout.Label("");
+		GUILayout.Label(logo, centeredStyle);
+		
 		GUILayout.Label("");
 
-		if (GUILayout.Button("Check latest version", GUILayout.Width (400))){
+		if (GUILayout.Button("Check latest version", GUILayout.Width(position.width - 20))){
 			CheckLatestPluginVersion();
 		}
 
-		GUILayout.Label("Current Spil SDK version: " + SpilUnityImplementationBase.PluginVersion,  EditorStyles.boldLabel);
+		GUILayout.Label("Current Spil SDK version: " + SpilUnityImplementationBase.PluginVersion,  centeredStyle);
 
 		GUILayout.Label("");
 

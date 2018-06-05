@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Linq;
 using SpilGames.Unity;
 using SpilGames.Unity.Base.Implementations;
+using SpilGames.Unity.Base.Implementations.Tracking;
 using SpilGames.Unity.Base.SDK;
 using SpilGames.Unity.Helpers.AssetBundles;
 using SpilGames.Unity.Helpers.GameData;

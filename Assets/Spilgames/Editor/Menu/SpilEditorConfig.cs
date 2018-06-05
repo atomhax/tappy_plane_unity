@@ -15,6 +15,9 @@ public class SpilEditorConfig : EditorWindow {
     private static Spil spil;
     private Vector2 scrollPos;
 
+    private Texture2D logo = null;
+    private static GUIStyle centeredStyle;
+    
     private static JSONObject configJSON;
     private static JSONObject android;
     private static JSONObject ios;
@@ -58,9 +61,25 @@ public class SpilEditorConfig : EditorWindow {
         iosBundelId = GetIOSBundleId();
     }
 
+    void OnEnable() {
+        Vector2 size = new Vector2(position.width, 256);
+
+        logo = new Texture2D((int) size.x, (int) size.y, TextureFormat.RGB24, false);
+        logo.LoadImage(File.ReadAllBytes(Application.dataPath + "/Resources/Spilgames/PrivacyPolicy/Images/spillogo.png"));
+    }
+    
     void OnGUI() {
         GUILayout.BeginVertical();
         scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(position.width), GUILayout.Height(position.height));
+        
+        if (centeredStyle == null) {
+            centeredStyle = new GUIStyle(GUI.skin.label) {alignment = TextAnchor.MiddleCenter, wordWrap = true, fontStyle = FontStyle.Bold};
+        }
+        
+        GUILayout.Label("");
+        GUILayout.Label(logo, centeredStyle);
+        GUILayout.Label("");
+        
         GUILayout.BeginHorizontal();
         if (GUILayout.Toggle(tabSelected == 0, "General", EditorStyles.toolbarButton)) {
             tabSelected = 0;

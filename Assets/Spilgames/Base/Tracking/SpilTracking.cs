@@ -149,7 +149,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
             }
             
             /// <param name="score">The score achieved a the end of the level.</param>
-            public BaseLevelComplete AddScore(double score) {
+            public BaseLevelComplete AddScore(float score) {
                 parameters.Add("score", score);
                 return this;
             }
@@ -254,7 +254,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
             }
             
             /// <param name="score">The score achieved a the end of the level.</param>
-            public BaseLevelFailed AddScore(double score) {
+            public BaseLevelFailed AddScore(float score) {
                 parameters.Add("score", score);
                 return this;
             }
@@ -491,7 +491,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
             }
             
             /// <param name="rating">The rating of the downloaded level.</param>
-            public BaseLevelDownload AddRating(double rating) {
+            public BaseLevelDownload AddRating(float rating) {
                 parameters.Add("rating", rating);
                 return this;
             }
@@ -516,7 +516,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
             }
             
             /// <param name="rating">The rating given to the level.</param>
-            public BaseLevelRate AddRating(double rating) {
+            public BaseLevelRate AddRating(float rating) {
                 parameters.Add("rating", rating);
                 return this;
             }

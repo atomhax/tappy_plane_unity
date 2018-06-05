@@ -70,7 +70,7 @@ namespace SpilGames.Unity.Base.Implementations{
         }
         
         public delegate void PackagesNotAvailable();
-
+ 
         /// <summary>
         /// This event indicates that the IAP packages are not available in the SDK.
         /// </summary>

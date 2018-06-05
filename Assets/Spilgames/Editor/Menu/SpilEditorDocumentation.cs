@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.IO;
 using UnityEditor;
 
 public class SpilEditorDocumentation : EditorWindow {
     private int tabSelected = 0;
+    private Texture2D logo = null;
+    private static GUIStyle centeredStyle;
 
     [MenuItem("Spil SDK/Documentation", false, 2)]
     static void Init() {
@@ -13,142 +16,156 @@ public class SpilEditorDocumentation : EditorWindow {
         window.Show();
     }
 
+    void OnEnable() {
+        Vector2 size = new Vector2(position.width, 256);
+
+        logo = new Texture2D((int) size.x, (int) size.y, TextureFormat.RGB24, false);
+        logo.LoadImage(File.ReadAllBytes(Application.dataPath + "/Resources/Spilgames/PrivacyPolicy/Images/spillogo.png"));
+    }
+
     void OnGUI() {
-        GUILayout.BeginArea(new Rect(0, 10, 200, position.height));
-        GUILayout.BeginVertical();
-        {
-            {
-                if (GUILayout.Toggle(tabSelected == 0, "General", EditorStyles.toolbarButton)) {
-                    tabSelected = 0;
-                }
-
-                if (GUILayout.Toggle(tabSelected == 1, "Event Tracking", EditorStyles.toolbarButton)) {
-                    tabSelected = 1;
-                }
-
-                if (GUILayout.Toggle(tabSelected == 2, "Game Balancing", EditorStyles.toolbarButton)) {
-                    tabSelected = 2;
-                }
-
-                if (GUILayout.Toggle(tabSelected == 3, "Smart Advertisements", EditorStyles.toolbarButton)) {
-                    tabSelected = 3;
-                }
-
-                if (GUILayout.Toggle(tabSelected == 4, "Push Notifications", EditorStyles.toolbarButton)) {
-                    tabSelected = 4;
-                }
-
-                if (GUILayout.Toggle(tabSelected == 5, "User Identification", EditorStyles.toolbarButton)) {
-                    tabSelected = 5;
-                }
-
-                if (GUILayout.Toggle(tabSelected == 6, "Shop, Wallet & Inventory Control", EditorStyles.toolbarButton)) {
-                    tabSelected = 6;
-                }
-
-                if (GUILayout.Toggle(tabSelected == 7, "Working with the Social Login Feature", EditorStyles.toolbarButton)) {
-                    tabSelected = 7;
-                }
-
-                if (GUILayout.Toggle(tabSelected == 8, "Managing In-Game Purchases", EditorStyles.toolbarButton)) {
-                    tabSelected = 8;
-                }
-
-                if (GUILayout.Toggle(tabSelected == 9, "Promotions", EditorStyles.toolbarButton)) {
-                    tabSelected = 9;
-                }
-
-                if (GUILayout.Toggle(tabSelected == 10, "Implementing Customer Support", EditorStyles.toolbarButton)) {
-                    tabSelected = 10;
-                }
-
-                if (GUILayout.Toggle(tabSelected == 11, "Working with Game States", EditorStyles.toolbarButton)) {
-                    tabSelected = 11;
-                }
-
-                if (GUILayout.Toggle(tabSelected == 12, "Splash and Daily Bonus Screens", EditorStyles.toolbarButton)) {
-                    tabSelected = 12;
-                }
-
-                if (GUILayout.Toggle(tabSelected == 13, "Live Events", EditorStyles.toolbarButton)) {
-                    tabSelected = 13;
-                }
-
-                if (GUILayout.Toggle(tabSelected == 14, "Deep Linking", EditorStyles.toolbarButton)) {
-                    tabSelected = 14;
-                }
-
-                if (GUILayout.Toggle(tabSelected == 15, "Handling Errors", EditorStyles.toolbarButton)) {
-                    tabSelected = 15;
-                }
-
-                if (GUILayout.Toggle(tabSelected == 16, "Anti-Cheating", EditorStyles.toolbarButton)) {
-                    tabSelected = 16;
-                }
-            }
-            GUILayout.EndVertical();
-            GUILayout.EndArea();
-
-            GUILayout.BeginArea(new Rect(250, 10, position.width - 250, position.height));
-            GUILayout.BeginVertical();
-            EditorStyles.label.wordWrap = true;
-            switch (tabSelected) {
-                case 0:
-                    DrawGeneral();
-                    break;
-                case 1:
-                    DrawEventTracking();
-                    break;
-                case 2:
-                    DrawGameConfig();
-                    break;
-                case 3:
-                    DrawAdvertisement();
-                    break;
-                case 4:
-                    DrawPushNotifications();
-                    break;
-                case 5:
-                    DrawUserId();
-                    break;
-                case 6:
-                    DrawWalletShopInventory();
-                    break;
-                case 7:
-                    DrawSocialLogin();
-                    break;
-                case 8:
-                    DrawIAPPackages();
-                    break;
-                case 9:
-                    DrawPromotions();
-                    break;
-                case 10:
-                    DrawCustomerSupport();
-                    break;
-                case 11:
-                    DrawGameState();
-                    break;
-                case 12:
-                    DrawSplashScreenDailyBonus();
-                    break;
-                case 13:
-                    DrawLiveEvents();
-                    break;
-                case 14:
-                    DrawDeepLinking();
-                    break;
-                case 15:
-                    DrawHandlingErrors();
-                    break;
-                case 16:
-                    DrawAntiCheating();
-                    break;
-            }
-
-            GUILayout.EndVertical();
-            GUILayout.EndArea();
+        EditorGUILayout.BeginVertical();
+        if (centeredStyle == null) {
+            centeredStyle = new GUIStyle(GUI.skin.label) {alignment = TextAnchor.MiddleCenter, wordWrap = true, fontStyle = FontStyle.Bold};
         }
+        
+        GUILayout.Label("");
+        GUILayout.Label(logo, centeredStyle);
+        
+        EditorGUILayout.EndVertical();
+        
+        GUILayout.BeginArea(new Rect(10, 100, 200, position.height));
+        GUILayout.BeginVertical();
+        if (GUILayout.Toggle(tabSelected == 0, "General", EditorStyles.toolbarButton)) {
+            tabSelected = 0;
+        }
+
+        if (GUILayout.Toggle(tabSelected == 1, "Event Tracking", EditorStyles.toolbarButton)) {
+            tabSelected = 1;
+        }
+
+        if (GUILayout.Toggle(tabSelected == 2, "Game Balancing", EditorStyles.toolbarButton)) {
+            tabSelected = 2;
+        }
+
+        if (GUILayout.Toggle(tabSelected == 3, "Smart Advertisements", EditorStyles.toolbarButton)) {
+            tabSelected = 3;
+        }
+
+        if (GUILayout.Toggle(tabSelected == 4, "Push Notifications", EditorStyles.toolbarButton)) {
+            tabSelected = 4;
+        }
+
+        if (GUILayout.Toggle(tabSelected == 5, "User Identification", EditorStyles.toolbarButton)) {
+            tabSelected = 5;
+        }
+
+        if (GUILayout.Toggle(tabSelected == 6, "Shop, Wallet & Inventory Control", EditorStyles.toolbarButton)) {
+            tabSelected = 6;
+        }
+
+        if (GUILayout.Toggle(tabSelected == 7, "Working with the Social Login Feature", EditorStyles.toolbarButton)) {
+            tabSelected = 7;
+        }
+
+        if (GUILayout.Toggle(tabSelected == 8, "Managing In-Game Purchases", EditorStyles.toolbarButton)) {
+            tabSelected = 8;
+        }
+
+        if (GUILayout.Toggle(tabSelected == 9, "Promotions", EditorStyles.toolbarButton)) {
+            tabSelected = 9;
+        }
+
+        if (GUILayout.Toggle(tabSelected == 10, "Implementing Customer Support", EditorStyles.toolbarButton)) {
+            tabSelected = 10;
+        }
+
+        if (GUILayout.Toggle(tabSelected == 11, "Working with Game States", EditorStyles.toolbarButton)) {
+            tabSelected = 11;
+        }
+
+        if (GUILayout.Toggle(tabSelected == 12, "Splash and Daily Bonus Screens", EditorStyles.toolbarButton)) {
+            tabSelected = 12;
+        }
+
+        if (GUILayout.Toggle(tabSelected == 13, "Live Events", EditorStyles.toolbarButton)) {
+            tabSelected = 13;
+        }
+
+        if (GUILayout.Toggle(tabSelected == 14, "Deep Linking", EditorStyles.toolbarButton)) {
+            tabSelected = 14;
+        }
+
+        if (GUILayout.Toggle(tabSelected == 15, "Handling Errors", EditorStyles.toolbarButton)) {
+            tabSelected = 15;
+        }
+
+        if (GUILayout.Toggle(tabSelected == 16, "Anti-Cheating", EditorStyles.toolbarButton)) {
+            tabSelected = 16;
+        }
+
+        GUILayout.EndVertical();
+        GUILayout.EndArea();
+
+        GUILayout.BeginArea(new Rect(225, 100, position.width - 250, position.height));
+        GUILayout.BeginVertical();
+        EditorStyles.label.wordWrap = true;
+        switch (tabSelected) {
+            case 0:
+                DrawGeneral();
+                break;
+            case 1:
+                DrawEventTracking();
+                break;
+            case 2:
+                DrawGameConfig();
+                break;
+            case 3:
+                DrawAdvertisement();
+                break;
+            case 4:
+                DrawPushNotifications();
+                break;
+            case 5:
+                DrawUserId();
+                break;
+            case 6:
+                DrawWalletShopInventory();
+                break;
+            case 7:
+                DrawSocialLogin();
+                break;
+            case 8:
+                DrawIAPPackages();
+                break;
+            case 9:
+                DrawPromotions();
+                break;
+            case 10:
+                DrawCustomerSupport();
+                break;
+            case 11:
+                DrawGameState();
+                break;
+            case 12:
+                DrawSplashScreenDailyBonus();
+                break;
+            case 13:
+                DrawLiveEvents();
+                break;
+            case 14:
+                DrawDeepLinking();
+                break;
+            case 15:
+                DrawHandlingErrors();
+                break;
+            case 16:
+                DrawAntiCheating();
+                break;
+        }
+
+        GUILayout.EndVertical();
+        GUILayout.EndArea();
     }
 
     private void DrawGeneral() {
