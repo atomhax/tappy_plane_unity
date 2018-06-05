@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Purchasing;
 using SpilGames.Unity;
+using SpilGames.Unity.Base.Implementations.Tracking;
 using SpilGames.Unity.Helpers;
 using SpilGames.Unity.Json;
 using SpilGames.Unity.Helpers.IAPPackages;
@@ -210,7 +211,11 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 			transactionID = token;
 		}
 
-		Spil.Instance.TrackIAPPurchasedEvent (skuId, transactionID, token, "purchase", "store");
+		SpilTracking.IAPPurchased(skuId, transactionID)
+			.AddToken(token)
+			.AddReason("purchase")
+			.AddLocation("store")
+			.Track();
 
 		#elif UNITY_IOS
 		
@@ -265,7 +270,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 
 		iapPanelController.PurchaseFailed ();
 		skinSelectPanelController.PurchaseFailed ();
-		Spil.Instance.TrackIAPFailedEvent (failureReason.ToString (), product.definition.storeSpecificId);
+		SpilTracking.IAPFailed(product.definition.storeSpecificId, failureReason.ToString()).Track();
 	}
 	
 	public void RestoreIAPs()

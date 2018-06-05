@@ -20,7 +20,7 @@ namespace SpilGames.Unity.Base.Implementations{
 
         public static string AndroidVersion = "2.10.0";
         public static string iOSVersion = "2.10.0";
-
+	    
         /// <summary>
         /// Contains the game data: items, currencies, bundles (collections of items/currencies for softcurrency/hardcurrency transactions and gifting), Shop and Gacha boxes.
         /// For player-specific data such as owned items or currencies use the PlayerData object.
@@ -36,6 +36,1199 @@ namespace SpilGames.Unity.Base.Implementations{
         /// </summary>
         public PlayerDataHelper PlayerData { get { return Spil.PlayerData; } }
         
+        #region Events
+
+        #region Standard Spil events
+        
+        /// <summary>
+        /// Sends the "milestoneAchieved" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        /// <param name="name"></param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.MilestoneAchieved(...).AddX().Track() instead.")]
+        public void TrackMilestoneAchievedEvent(string name, string milestoneDescription = null, float score = -1, string location = null, int iteration = 0) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            
+            dict.Add("name", name);
+            
+            if (milestoneDescription != null) {
+                dict.Add("milestoneDescription", milestoneDescription);
+            }
+            
+            if (score != -1) {
+                dict.Add("score", score);
+            }
+            
+            if (location != null) {
+                dict.Add("location", location);
+            }
+            
+            if (iteration != 0) {
+                dict.Add("iteration", iteration);
+            }
+            
+            SendCustomEventInternal("milestoneAchieved", dict);
+        }
+
+        /// <summary>
+        /// Sends the "levelStart" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        /// <param name="levelName">Level name.</param>
+        /// <param name="difficulty">The difficulty of the started level.</param>
+        /// <param name="customCreated">If set to <c>true</c> custom created.</param>
+        /// <param name="creatorId">Creator identifier.</param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.LevelStart(...).AddX().Track() instead.")]
+        public void TrackLevelStartEvent(string levelName, string difficulty = null, int score = 0, bool customCreated = false,
+            string creatorId = null, List<String> activeBooster = null) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("level", levelName);
+
+            if (difficulty != null) {
+                dict.Add("difficulty", difficulty);
+            }
+
+            if (score != 0) {
+                dict.Add("score", score);
+            }
+            
+            if (customCreated) {
+                dict.Add("customCreated", customCreated);
+            }
+
+            if (creatorId != null) {
+                dict.Add("creatorId", creatorId);
+            }
+
+            if (activeBooster != null) {
+                dict.Add("activeBooster", new JSONObject(JsonHelper.getJSONFromObject(activeBooster)));
+            }
+
+            SendCustomEventInternal("levelStart", dict);
+        }
+
+        /// <summary>
+        /// Sends the "levelComplete" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        /// <param name="levelName">Level name.</param>
+        /// <param name="difficulty">The difficulty of the started level.</param>
+        /// <param name="score">Score.</param>
+        /// <param name="stars">Stars.</param>
+        /// <param name="speed">The speed in which the level was completed.</param>
+        /// <param name="moves">The number of moves which it took the user to complete the level.</param>
+        /// <param name="turns">Turns.</param>
+        /// <param name="customCreated">If set to <c>true</c> custom created.</param>
+        /// <param name="creatorId">Creator identifier.</param>
+        /// <param name="objectUsed">A list of objects used.</param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.LevelComplete(...).AddX().Track() instead.")]
+        public void TrackLevelCompleteEvent(string levelName, string difficulty = null, float score = 0, int stars = 0,
+            string speed = null, int moves = 0, int turns = 0, bool customCreated = false, string creatorId = null, List<LevelCompleteObjectUsed> objectUsed = null, string levelId = null,
+            string achievement = null, float avgCombos = 0, int movesLeft = -1, string rating = null, int timeLeft = -1) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("level", levelName);
+
+            if (levelId != null) {
+                dict.Add("levelId", levelId);
+            }
+            
+            if (difficulty != null) {
+                dict.Add("difficulty", difficulty);
+            }
+
+            if (score != 0) {
+                dict.Add("score", score);
+            }
+
+            if (stars != 0) {
+                dict.Add("stars", stars);
+            }
+
+            if (speed != null) {
+                dict.Add("speed", speed);
+            }
+
+            if (moves != 0) {
+                dict.Add("moves", moves);
+            }
+
+            if (turns != 0) {
+                dict.Add("turns", turns);
+            }
+
+            if (customCreated) {
+                dict.Add("customCreated", customCreated);
+            }
+
+            if (creatorId != null) {
+                dict.Add("creatorId", creatorId);
+            }
+
+            if (objectUsed != null) {
+                dict.Add("objectUsed", new JSONObject(JsonHelper.getJSONFromObject(objectUsed)));
+            }
+
+            if (achievement != null) {
+                dict.Add("achievement", achievement);
+            }
+
+            if (avgCombos != 0) {
+                dict.Add("avgCombos", avgCombos);
+            }
+
+            if (movesLeft != -1) {
+                dict.Add("movesLeft", movesLeft);
+            }
+            
+            if (rating != null) {
+                dict.Add("rating", rating);
+            }
+            
+            if (timeLeft != -1) {
+                dict.Add("timeLeft", timeLeft);
+            }
+            
+            SendCustomEventInternal("levelComplete", dict);
+        }
+
+        /// <summary>
+        /// Sends the "levelFailed" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        /// <param name="levelName">Level name.</param>
+        /// <param name="difficulty"></param>
+        /// <param name="score">Score.</param>
+        /// <param name="speed">The speed in which the level was failed.</param>
+        /// <param name="moves">he number of moves which it took the user before he failed.</param>
+        /// <param name="stars">Stars.</param>
+        /// <param name="turns">Turns.</param>
+        /// <param name="reason">The reason of failure</param>
+        /// <param name="customCreated">If set to <c>true</c> custom created.</param>
+        /// <param name="creatorId">Creator identifier.</param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.LevelFailed(...).AddX().Track() instead.")]
+        public void TrackLevelFailedEvent(string levelName, string difficulty = null, float score = 0,
+            string speed = null, int moves = 0, int stars = 0, int turns = 0, string reason = null,
+            bool customCreated = false, string creatorId = null, List<LevelCompleteObjectUsed> objectUsed = null,
+            string achievement = null, float avgCombos = 0, int movesLeft = -1, int timeLeft = -1) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("level", levelName);
+
+            if (difficulty != null) {
+                dict.Add("difficulty", difficulty);
+            }
+
+            if (score != 0) {
+                dict.Add("score", score);
+            }
+
+            if (stars != 0) {
+                dict.Add("stars", stars);
+            }
+
+            if (speed != null) {
+                dict.Add("speed", speed);
+            }
+
+            if (moves != 0) {
+                dict.Add("moves", moves);
+            }
+
+            if (turns != 0) {
+                dict.Add("turns", turns);
+            }
+
+            if (reason != null) {
+                dict.Add("reason", reason);
+            }
+
+            if (customCreated) {
+                dict.Add("customCreated", customCreated);
+            }
+
+            if (creatorId != null) {
+                dict.Add("creatorId", creatorId);
+            }
+
+            if (objectUsed != null) {
+                dict.Add("objectUsed", new JSONObject(JsonHelper.getJSONFromObject(objectUsed)));
+            }
+
+            if (achievement != null) {
+                dict.Add("achievement", achievement);
+            }
+            
+            if (avgCombos != 0) {
+                dict.Add("avgCombos", avgCombos);
+            }
+            
+            if (timeLeft != -1) {
+                dict.Add("timeLeft", timeLeft);
+            }
+            
+            if (movesLeft != -1) {
+                dict.Add("movesLeft", movesLeft);
+            }
+            
+            SendCustomEventInternal("levelFailed", dict);
+        }
+
+        /// <summary>
+        /// Sends the "levelUp" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        /// <param name="level">Level.</param>
+        /// <param name="objectId">Object identifier.</param>
+        /// <param name="skillId">Skill identifier.</param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.LevelUp(...).AddX().Track() instead.")]
+        public void TrackLevelUpEvent(string level, string objectId, string skillId = null, string sourceId = null, string sourceUniqueId = null, string objectUniqueId = null, string objectUniqueIdType = null) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("level", level);
+            dict.Add("objectId", objectId);
+
+            if (skillId != null) {
+                dict.Add("skillId", skillId);
+            }
+
+            if (sourceId != null) {
+                dict.Add("sourceId", sourceId);
+            }
+            
+            if (sourceUniqueId != null) {
+                dict.Add("sourceUniqueId", sourceUniqueId);
+            }
+            
+            if (objectUniqueId != null) {
+                dict.Add("objectUniqueId", objectUniqueId);
+            }
+            
+            if (objectUniqueIdType != null) {
+                dict.Add("objectUniqueIdType", objectUniqueIdType);
+            }
+            
+            SendCustomEventInternal("levelUp", dict);
+        }
+
+        /// <summary>
+        /// Sends the "equip" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        /// <param name="equippedItem">Equipped item.</param>
+        /// <param name="equippedTo">Equipped to.</param>
+        /// <param name="unequippedFrom">The character/object which unequipped the item.</param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.Equip(...).AddX().Track() instead.")]
+        public void TrackEquipEvent(string equippedItem, string equippedTo = null, string unequippedFrom = null) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("equippedItem", equippedItem);
+
+            if (equippedTo != null) {
+                dict.Add("equippedTo", equippedTo);
+            }
+
+            if (unequippedFrom != null) {
+                dict.Add("unequippedFrom", unequippedFrom);
+            }
+
+            SendCustomEventInternal("equip", dict);
+        }
+
+        /// <summary>
+        /// Sends the "equip" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        /// <param name="upgradeId">Upgrade identifier.</param>
+        /// <param name="level">Level.</param>
+        /// <param name="reason">Reason.</param>
+        /// <param name="iteration">Iteration.</param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.Upgrade(...).AddX().Track() instead.")]
+        public void TrackUpgradeEvent(string upgradeId, string level, string reason = null, int iteration = 0, string achievement = null, string key = null) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("upgradeId", upgradeId);
+            dict.Add("level", level);
+
+            if (reason != null) {
+                dict.Add("reason", reason);
+            }
+
+            if (iteration != 0) {
+                dict.Add("iteration", iteration);
+            }
+            
+            if (achievement != null) {
+                dict.Add("achievement", achievement);
+            }
+
+            if (key != null) {
+                dict.Add("key", key);
+            }
+
+            SendCustomEventInternal("upgrade", dict);
+        }
+
+        /// <summary>
+        /// Sends the "levelCreate" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        /// <param name="levelId">Level identifier.</param>
+        /// <param name="creatorId">Creator identifier.</param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.LevelCreate(...).AddX().Track() instead.")]
+        public void TrackLevelCreateEvent(string levelId, string level, string creatorId) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("levelId", levelId);
+            dict.Add("level", level);
+            dict.Add("creatorId", creatorId);
+
+            SendCustomEventInternal("levelCreate", dict);
+        }
+
+        /// <summary>
+        /// Sends the "levelDownload" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        /// <param name="levelId">Level identifier.</param>
+        /// <param name="creatorId">Creator identifier.</param>
+        /// <param name="rating">Rating.</param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.LevelDownload(...).AddX().Track() instead.")]
+        public void TrackLevelDownloadEvent(string levelId, string creatorId, float rating = 0) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("levelId", levelId);
+            dict.Add("creatorId", creatorId);
+
+            if (rating != 0) {
+                dict.Add("rating", rating);
+            }
+
+            SendCustomEventInternal("levelDownload", dict);
+        }
+
+        /// <summary>
+        /// Sends the "levelRate" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        /// <param name="levelId">Level identifier.</param>
+        /// <param name="creatorId">Creator identifier.</param>
+        /// <param name="rating">Rating.</param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.LevelRate(...).AddX().Track() instead.")]
+        public void TrackLevelRateEvent(string levelId, string creatorId, float rating = 0) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("levelId", levelId);
+            dict.Add("creatorId", creatorId);
+
+            if (rating != 0) {
+                dict.Add("rating", rating);
+            }
+
+            SendCustomEventInternal("levelRate", dict);
+        }
+
+        /// <summary>
+        /// Sends the "endlessModeStart" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.EndlessModeStart(...).AddX().Track() instead.")]
+        public void TrackEndlessModeStartEvent() {
+            SendCustomEventInternal("endlessModeStart");
+        }
+
+        /// <summary>
+        /// Sends the "endlessModeEnd" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        /// <param name="distance">Distance.</param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.EndlessModeEnd(...).AddX().Track() instead.")]
+        public void TrackEndlessModeEndEvent(int distance) {
+            SendCustomEventInternal("endlessModeEnd", new Dictionary<string, object>() {
+                {
+                    "distance",
+                    distance
+                }
+            });
+        }
+
+        /// <summary>
+        /// Sends the "playerDies" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        /// <param name="levelName"></param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.PlayerDies(...).AddX().Track() instead.")]
+        public void TrackPlayerDiesEvent(string levelName) {
+            SendCustomEventInternal("playerDies", new Dictionary<string, object>() {
+                {
+                    "level",
+                    levelName
+                }
+            });
+        }
+
+        /// <summary>
+        /// Sends the "updatePlayerData" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        /// <param name="reason">The reason for which the event occured. You can also use the PlayerDataUpdateReasons class to pass one of the default reasons</param>
+        /// <param name="location">The location where the event occured (ex.: Shop Screen, End of the level)</param>
+        /// <param name="reasonDetails">Additional parameter used to describe the details of why the event happened</param>
+        /// <param name="transactionId">The transactionId if the update was due to an IAP</param>
+        /// <param name="currencyList">A list of TrackingCurrency objects that defines all the currencies that have been changed with this event. This parameter can also be omited if no currencies have been updated</param>
+        /// <param name="itemsList">A list of TrackingItems objects that defines all the items that have been changed with this event. This parameter can also be omited if no items have been updated</param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.WalletInventoryEvent(...).AddX().Track() instead.")]
+        public void TrackWalletInventoryEvent(string reason, string location,
+            List<TrackingCurrency> currencyList = null, List<TrackingItem> itemsList = null,
+            string reasonDetails = null, string transactionId = null) {
+            Dictionary<string, object> dictionary = new Dictionary<string, object>();
+
+            if (currencyList != null) {
+                Dictionary<string, object> wallet = new Dictionary<string, object>();
+                wallet.Add("currencies", new JSONObject(JsonHelper.getJSONFromObject(currencyList)));
+                wallet.Add("offset", 0);
+                dictionary.Add("wallet", wallet);
+            }
+
+            if (itemsList != null) {
+                Dictionary<string, object> inventory = new Dictionary<string, object>();
+                inventory.Add("items", new JSONObject(JsonHelper.getJSONFromObject(itemsList)));
+                inventory.Add("offset", 0);
+                dictionary.Add("inventory", inventory);
+            }
+
+            dictionary.Add("reason", reason);
+            dictionary.Add("location", location);
+            dictionary.Add("trackingOnly", true);
+
+            if (reasonDetails != null) {
+                dictionary.Add("reasonDetails", reasonDetails);
+            }
+
+            if (transactionId != null) {
+                dictionary.Add("transactionId", transactionId);
+            }
+
+            SendCustomEventInternal("updatePlayerData", dictionary);
+        }
+
+        /// <summary>
+        /// Sends the "iapPurchased" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        /// <param name="skuId">The product identifier of the item that was purchased</param>
+        /// <param name="transactionId ">The transaction identifier of the item that was purchased (also called orderId)</param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.IAPPurchased(...).AddX().Track() instead.")]
+        public void TrackIAPPurchasedEvent(string skuId, string transactionId, string token = "", string reason = null, string location = null) {
+            Dictionary<string, object> dictionary = new Dictionary<string, object>();
+            dictionary.Add("skuId", skuId);
+            dictionary.Add("transactionId", transactionId);
+            dictionary.Add("purchaseDate", DateTime.Now.ToString("yyyy-MM-ddTHH\\:mm\\:ss.fffffffzzz"));
+
+#if UNITY_ANDROID
+            if (token != null && !token.Equals("")) {
+                dictionary.Add("token", token);
+            }
+#endif
+
+            if (reason != null) {
+                dictionary.Add("reason", reason);
+            }
+
+            if (location != null) {
+                dictionary.Add("location", location);
+            }
+
+            SendCustomEventInternal("iapPurchased", dictionary);
+        }
+
+        /// <summary>
+        /// Sends the "iapRestored" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        /// <param name="skuId">The product identifier of the item that was purchased</param>
+        /// <param name="originalTransactionId ">For a transaction that restores a previous transaction, the transaction identifier of the original transaction. Otherwise, identical to the transaction identifier</param>
+        /// <param name="originalPurchaseDate">For a transaction that restores a previous transaction, the date of the original transaction. Please use a proper DateTime format (RFC3339), for instance: "2016-08-30T11:54:48.5247936+02:00". If you have a DateTime object you can use: DateTimeObject.ToString("yyyy-MM-ddTHH\\:mm\\:ss.fffffffzzz")</param>                
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.IAPRestored(...).AddX().Track() instead.")]
+        public void TrackIAPRestoredEvent(string skuId, string originalTransactionId, string originalPurchaseDate, string reason = null) {
+            Dictionary<string, object> dictionary = new Dictionary<string, object>();
+            
+            dictionary.Add("skuId", skuId);
+            dictionary.Add("originalTransactionId", originalTransactionId);
+            dictionary.Add("originalPurchaseDate", originalPurchaseDate);
+            
+            if (reason != null) {
+                dictionary.Add("reason", reason);
+            }
+            
+            SendCustomEventInternal("iapRestored", dictionary);
+        }
+
+        /// <summary>
+        /// Sends the "iapFailed" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        /// <param name="error">Error description or error code</param>
+        /// <param name="skuId">The product identifier of the item that was purchased</param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.IAPFailed(...).AddX().Track() instead.")]
+        public void TrackIAPFailedEvent(string error, string skuId, string location = null, string reason = null) {
+            Dictionary<string, object> dictionary = new Dictionary<string, object>();
+            
+            dictionary.Add("errorDescription", error);
+            dictionary.Add("skuId", skuId);
+            dictionary.Add("purchaseDate", DateTime.Now.ToString("yyyy-MM-ddTHH\\:mm\\:ss.fffffffzzz"));
+
+            if (location != null) {
+                dictionary.Add("location", location);
+            }
+            
+            if (reason != null) {
+                dictionary.Add("reason", reason);
+            }
+            
+            SendCustomEventInternal("iapFailed", dictionary);
+        }
+
+        /// <summary>
+        /// Sends the "tutorialComplete" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.TutorialComplete(...).AddX().Track() instead.")]
+        public void TrackTutorialCompleteEvent() {
+            SendCustomEventInternal("tutorialComplete");
+        }
+
+        /// <summary>
+        /// Sends the "tutorialSkipped" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.TutorialSkipped(...).AddX().Track() instead.")]
+        public void TrackTutorialSkippedEvent() {
+            SendCustomEventInternal("tutorialSkipped");
+        }
+
+        /// <summary>
+        /// Sends the "tutorialSkipped" event to the native Spil SDK which will send a request to the back-end.
+        /// Should be called after the user completes registration via email, Facebook, Google Plus or other available option. Registration option is assumed.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        /// <param name="platform">A string like ‘facebook’ or ’email’</param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.Register(...).AddX().Track() instead.")]
+        public void TrackRegisterEvent(string platform) {
+            SendCustomEventInternal("register", new Dictionary<string, object>() {
+                {
+                    "platform",
+                    platform
+                }
+            });
+        }
+
+        /// <summary>
+        /// Sends the "share" event to the native Spil SDK which will send a request to the back-end.
+        /// Should be called every time the user shares content on their social media accounts. Social media integration is assumed.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        /// <param name="platform">A string like ‘facebook’ or ’email’</param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.Share(...).AddX().Track() instead.")]
+        public void TrackShareEvent(string platform, string location = null, string reason = null) {
+            Dictionary<string, object> dictionary = new Dictionary<string, object>();
+            dictionary.Add("platform", platform);
+
+            if (location != null) {
+                dictionary.Add("location", location);
+            }     
+            
+            if (reason != null) {
+                dictionary.Add("reason", reason);
+            }
+            
+            SendCustomEventInternal("share", dictionary);
+        }
+
+        /// <summary>
+        /// Sends the "invite" event to the native Spil SDK which will send a request to the back-end.
+        /// Should be called every time the user invites another user. Respective function in-game is assumed.
+        /// See https://github.com/spilgames/spil_event_unity_plugin for more information on events.
+        /// </summary>
+        /// <param name="platform">A string like ‘facebook’ or ’email’</param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.Invite(...).AddX().Track() instead.")]
+        public void TrackInviteEvent(string platform, string location = null) {
+            Dictionary<string, object> dictionary = new Dictionary<string, object>();
+            dictionary.Add("platform", platform);
+
+            if (location != null) {
+                dictionary.Add("location", location);
+            }
+            
+            SendCustomEventInternal("invite", dictionary);
+        }
+
+        /// <summary>
+        /// Sends the "levelAppeared" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        /// <param name="level">The name/id of the level that appeared.</param>
+        /// <param name="difficulty">The difficulty of the level that appeared</param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.LevelAppeared(...).AddX().Track() instead.")]
+        public void TrackLevelAppeared(string level, string difficulty = null) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("level", level);
+
+            if (difficulty != null) {
+                dict.Add("difficulty", difficulty);
+            }
+
+            SendCustomEventInternal("levelAppeared", dict);
+        }
+
+        /// <summary>
+        /// Sends the "levelDiscarded" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        /// <param name="level">The name/id of the level that appeared.</param>
+        /// <param name="difficulty">The difficulty of the level that appeared</param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.LevelDiscarded(...).AddX().Track() instead.")]
+        public void TrackLevelDiscarded(string level, string difficulty = null) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("level", level);
+
+            if (difficulty != null) {
+                dict.Add("difficulty", difficulty);
+            }
+
+            SendCustomEventInternal("levelDiscarded", dict);
+        }
+
+        /// <summary>
+        /// Sends the "errorShown" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        /// <param name="reason">The reason for the error to be shown.</param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.ErrorShown(...).AddX().Track() instead.")]
+        public void TrackErrorShown(string reason) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("reason", reason);
+
+            SendCustomEventInternal("errorShown", dict);
+        }
+
+        /// <summary>
+        /// Sends the "timeElapLoad" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        /// <param name="timeElap">The time elapsed between the starting point and the pointInGame in seconds.</param>
+        /// <param name="pointInGame">The point in game which is reached.</param>
+        /// <param name="startPoint">The point in game which we start to measure time.</param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.TimeElapLoad(...).AddX().Track() instead.")]
+        public void TrackTimeElapLoad(int timeElap, string pointInGame, string startPoint = null) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("timeElap", timeElap);
+            dict.Add("pointInGame", pointInGame);
+
+            if (startPoint != null) {
+                dict.Add("startPoint", startPoint);
+            }
+
+            SendCustomEventInternal("timeElapLoad", dict);
+        }
+
+        /// <summary>
+        /// Sends the "timeoutDetected" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        /// <param name="timeElap">The time elapsed between the starting point and the pointInGame in seconds.</param>
+        /// <param name="pointInGame">The point in game which is reached.</param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.TimeoutDetected(...).AddX().Track() instead.")]
+        public void TrackTimeoutDetected(int timeElap, string pointInGame) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("timeElap", timeElap);
+            dict.Add("pointInGame", pointInGame);
+
+            SendCustomEventInternal("timeoutDetected", dict);
+        }
+
+        /// <summary>
+        /// Sends the "objectStateChanged" event to the native Spil SDK which will send a request to the back-end.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        /// <param name="changedObject">The object which changed it's state.</param>
+        /// <param name="status">The new status the object is in.</param>
+        /// <param name="reason">The reason for the state change.</param>
+        /// <param name="changedProperties">The property/properties which have changed.</param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.ObjectStateChanged(...).AddX().Track() instead.")]
+        public void TrackObjectStateChanged(string changedObject, string status, string reason,
+            string changedProperties = null, string optionConditions = null, string situation = null, string allChoiceResults = null, string allSelectedChoices = null, string involvedParties = null) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("changedObject", changedObject);
+            dict.Add("status", status);
+            dict.Add("reason", reason);
+
+            if (changedProperties != null) {
+                dict.Add("changedProperties", changedProperties);
+            }
+            
+            if (optionConditions != null) {
+                dict.Add("optionConditions", optionConditions);
+            }
+            
+            if (situation != null) {
+                dict.Add("situation", situation);
+            }
+            
+            if (allChoiceResults != null) {
+                dict.Add("allChoiceResults", allChoiceResults);
+            }
+            
+            if (allSelectedChoices != null) {
+                dict.Add("allSelectedChoices", allSelectedChoices);
+            }
+            
+            if (involvedParties != null) {
+                dict.Add("involvedParties", involvedParties);
+            }
+
+            SendCustomEventInternal("objectStateChanged", dict);
+        }
+
+        /// <summary>
+        /// Triggered when the user clicks a specific ui element
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="type"></param>
+        /// <param name="screenName"></param>
+        /// <param name="location"></param>
+        /// <param name="grade"></param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.UIElementClicked(...).AddX().Track() instead.")]
+        public void TrackUIElementClicked(string element, string type = null, string screenName = null, string location = null, int grade = 0) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("element", element);
+
+            if (type != null) {
+                dict.Add("type", type);
+            }
+
+            if (screenName != null) {
+                dict.Add("screenName", screenName);
+            }
+            
+            if (location != null) {
+                dict.Add("location", location);
+            }
+            
+            if (grade != 0) {
+                dict.Add("grade", grade);
+            }
+
+            SendCustomEventInternal("uiElementClicked", dict);
+        }
+
+        /// <summary>
+        /// Triggered when a user sends a gift
+        /// </summary>
+        /// <param name="platform"></param>
+        /// <param name="location"></param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.SendGift(...).AddX().Track() instead.")]
+        public void TrackSendGift(string platform, string location = null) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("platform", platform);
+           
+            if (location != null) {
+                dict.Add("location", location);
+            }
+
+            SendCustomEventInternal("sendGift", dict);
+        }
+
+        /// <summary>
+        /// Triggered when the level timer finishes
+        /// </summary>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.LevelTimeOut(...).AddX().Track() instead.")]
+        public void TrackLevelTimeOut() {
+            SendCustomEventInternal("levelTimeOut");
+        }
+
+        /// <summary>
+        /// Triggered whenever user selects an choice for a dialog,or runs out of time and default answer is selected	
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="hasToken"></param>
+        /// <param name="isPremiumChoice"></param>
+        /// <param name="isQuizz"></param>
+        /// <param name="isForced"></param>
+        /// <param name="isTimed"></param>
+        /// <param name="time"></param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.DialogueChosen(...).AddX().Track() instead.")]
+        public void TrackDialogChosen(string name, string choice, bool hasToken, bool isPremiumChoice, bool isQuizz, bool isForced, bool isTimed, int time = 0) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("name", name);
+            dict.Add("choice", choice);
+            dict.Add("hasToken", hasToken);
+            dict.Add("isPremiumChoice", isPremiumChoice);
+            dict.Add("isQuizz", isQuizz);
+            dict.Add("isForced", isForced);
+            dict.Add("isTimed", isTimed);
+           
+            if (time != 0) {
+                dict.Add("time", time);
+            }
+
+            SendCustomEventInternal("dialogueChosen", dict);
+        }
+
+        /// <summary>
+        /// Triggered when the user is adding a friend in the game.
+        /// </summary>
+        /// <param name="friend"></param>
+        /// <param name="platform"></param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.FriendAdded(...).AddX().Track() instead.")]
+        public void TrackFriendAdded(string friend, string platform = null) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("friend", friend);
+           
+            if (platform != null) {
+                dict.Add("platform", platform);
+            }
+
+            SendCustomEventInternal("friendAdded", dict);
+        }
+
+        /// <summary>
+        /// Triggered for special game object interactions
+        /// </summary>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.GameObjectInteraction(...).AddX().Track() instead.")]
+        public void TrackGameObjectInteraction() {
+            SendCustomEventInternal("gameObjectInteraction");
+        }
+
+        /// <summary>
+        /// Triggered at the end of a match and indicates the result of it
+        /// </summary>
+        /// <param name="itemId"></param>
+        /// <param name="itemType"></param>
+        /// <param name="label"></param>
+        /// <param name="matchId"></param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.GameResult(...).AddX().Track() instead.")]
+        public void TrackGameResult(string itemId = null, string itemType = null, string label = null, string matchId = null) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+           
+            if (itemId != null) {
+                dict.Add("itemId", itemId);
+            }
+
+            if (itemType != null) {
+                dict.Add("itemType", itemType);
+            }
+            
+            if (label != null) {
+                dict.Add("label", label);
+            }
+            
+            if (matchId != null) {
+                dict.Add("matchId", matchId);
+            }
+            
+            SendCustomEventInternal("gameResult", dict);
+        }
+
+        /// <summary>
+        /// Triggered when a user is crafting an item.
+        /// </summary>
+        /// <param name="itemId"></param>
+        /// <param name="itemType"></param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.ItemCrafted(...).AddX().Track() instead.")]
+        public void TrackItemCrafted(string itemId, string itemType = null) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("itemId", itemId);
+           
+            if (itemType != null) {
+                dict.Add("itemType", itemType);
+            }
+
+            SendCustomEventInternal("itemCrafted", dict);
+        }
+        
+        /// <summary>
+        /// Triggered when a user creates an item.
+        /// </summary>
+        /// <param name="itemId"></param>
+        /// <param name="itemType"></param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.ItemCreated(...).AddX().Track() instead.")]
+        public void TrackItemCreated(string itemId, string itemType = null) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("itemId", itemId);
+           
+            if (itemType != null) {
+                dict.Add("itemType", itemType);
+            }
+
+            SendCustomEventInternal("itemCreated", dict);
+        }
+        
+        /// <summary>
+        /// Triggered when the user is updating an item (e.g. equipping a character with an item).
+        /// </summary>
+        /// <param name="content"></param>
+        /// <param name="itemId"></param>
+        /// <param name="itemType"></param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.ItemUpdated(...).AddX().Track() instead.")]
+        public void TrackItemUpdated(string content, string itemId, string itemType = null) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("content", content);
+            dict.Add("itemId", itemId);
+           
+            if (itemType != null) {
+                dict.Add("itemType", itemType);
+            }
+
+            SendCustomEventInternal("itemUpdated", dict);
+        }
+
+        /// <summary>
+        /// Triggered when the user is updating his deck, e.g. by adding and removing cards from it.
+        /// </summary>
+        /// <param name="content"></param>
+        /// <param name="itemId"></param>
+        /// <param name="itemType"></param>
+        /// <param name="label"></param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.DeckUpdated(...).AddX().Track() instead.")]
+        public void TrackDeckUpdated(string content, string itemId, string itemType = null, string label = null) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("content", content);
+            dict.Add("itemId", itemId);
+           
+            if (itemType != null) {
+                dict.Add("itemType", itemType);
+            }
+
+            if (label != null) {
+                dict.Add("label", label);
+            }
+            
+            SendCustomEventInternal("deckUpdated", dict);
+        }
+        
+        /// <summary>
+        /// Triggered when a player-vs-player match ends 
+        /// </summary>
+        /// <param name="matchId"></param>
+        /// <param name="itemId"></param>
+        /// <param name="itemType"></param>
+        /// <param name="label"></param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.MatchComplete(...).AddX().Track() instead.")]
+        public void TrackMatchComplete(string matchId = null, string itemId = null, string itemType = null, string label = null) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+
+            if (matchId != null) {
+                dict.Add("matchId", matchId);
+            }
+
+            if (itemId != null) {
+                dict.Add("itemId", itemId);
+            }
+           
+            if (itemType != null) {
+                dict.Add("itemType", itemType);
+            }
+
+            if (label != null) {
+                dict.Add("label", label);
+            }
+            
+            SendCustomEventInternal("matchComplete", dict);
+        }
+        
+        /// <summary>
+        /// Triggered when a user loses a player-vs-player match
+        /// </summary>
+        /// <param name="matchId"></param>
+        /// <param name="itemId"></param>
+        /// <param name="itemType"></param>
+        /// <param name="label"></param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.MatchLost(...).AddX().Track() instead.")]
+        public void TrackMatchLost(string matchId = null, string itemId = null, string itemType = null, string label = null) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+
+            if (matchId != null) {
+                dict.Add("matchId", matchId);
+            }
+
+            if (itemId != null) {
+                dict.Add("itemId", itemId);
+            }
+           
+            if (itemType != null) {
+                dict.Add("itemType", itemType);
+            }
+
+            if (label != null) {
+                dict.Add("label", label);
+            }
+            
+            SendCustomEventInternal("matchLost", dict);
+        }
+        
+        /// <summary>
+        /// Triggered when a player-vs-player match ends with a tie
+        /// </summary>
+        /// <param name="matchId"></param>
+        /// <param name="itemId"></param>
+        /// <param name="itemType"></param>
+        /// <param name="label"></param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.MatchTie(...).AddX().Track() instead.")]
+        public void TrackMatchTie(string matchId = null, string itemId = null, string itemType = null, string label = null) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+
+            if (matchId != null) {
+                dict.Add("matchId", matchId);
+            }
+
+            if (itemId != null) {
+                dict.Add("itemId", itemId);
+            }
+           
+            if (itemType != null) {
+                dict.Add("itemType", itemType);
+            }
+
+            if (label != null) {
+                dict.Add("label", label);
+            }
+            
+            SendCustomEventInternal("matchTie", dict);
+        }
+        
+        /// <summary>
+        /// Triggered when a user wins player-vs-player match 
+        /// </summary>
+        /// <param name="matchId"></param>
+        /// <param name="itemId"></param>
+        /// <param name="itemType"></param>
+        /// <param name="label"></param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.MatchWon(...).AddX().Track() instead.")]
+        public void TrackMatchWon(string matchId = null, string itemId = null, string itemType = null, string label = null) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+
+            if (matchId != null) {
+                dict.Add("matchId", matchId);
+            }
+
+            if (itemId != null) {
+                dict.Add("itemId", itemId);
+            }
+           
+            if (itemType != null) {
+                dict.Add("itemType", itemType);
+            }
+
+            if (label != null) {
+                dict.Add("label", label);
+            }
+            
+            SendCustomEventInternal("matchWon", dict);
+        }
+
+        /// <summary>
+        /// Triggered when the user either moves or changes the state of an in-game object
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="reason"></param>
+        /// <param name="label"></param>
+        /// <param name="delta"></param>
+        /// <param name="energy"></param>
+        /// <param name="kind"></param>
+        /// <param name="location"></param>
+        /// <param name="rarity"></param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.PawnMoved(...).AddX().Track() instead.")]
+        public void TrackPawnMoved(string name, string reason = null, string label = null, string delta = null, string energy = null, string kind = null, string location = null, string rarity = null) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("name", name);
+            
+            if (reason != null) {
+                dict.Add("reason", reason);
+            }
+
+            if (label != null) {
+                dict.Add("label", label);
+            }
+           
+            if (delta != null) {
+                dict.Add("delta", delta);
+            }
+
+            if (energy != null) {
+                dict.Add("energy", energy);
+            }
+            
+            if (kind != null) {
+                dict.Add("kind", kind);
+            }
+           
+            if (location != null) {
+                dict.Add("location", location);
+            }
+
+            if (rarity != null) {
+                dict.Add("rarity", rarity);
+            }
+            
+            SendCustomEventInternal("pawnMoved", dict);
+        }
+        
+        /// <summary>
+        /// Triggered when the user interacts with the leaderboard/league
+        /// </summary>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.PlayerLeagueChanged(...).AddX().Track() instead.")]
+        public void TrackPlayerLeagueChanged() {
+            SendCustomEventInternal("playerLeagueChanged");
+        }
+
+        /// <summary>
+        /// Event used for tracking the state of a timed action in game, e.g. in Operate Now when the user assigns a staff member to the break room to regenerate energy,the event is fired at start and end of the regeneration
+        /// </summary>
+        /// <param name="timedAction"></param>
+        /// <param name="label"></param>
+        /// <param name="timedObject"></param>
+        /// <param name="timeToFinish"></param>
+        /// <param name="effectMultiplier"></param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.TimedAction(...).AddX().Track() instead.")]
+        public void TrackTimedAction(string timedAction, string label = null, string timedObject = null, int timeToFinish = 0, float effectMultiplier = 0) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("timedAction", timedAction);
+            
+            if (label != null) {
+                dict.Add("label", label);
+            }
+            
+            if (timedObject != null) {
+                dict.Add("timedObject", timedObject);
+            }
+            
+            if (timeToFinish != 0) {
+                dict.Add("timeToFinish", timeToFinish);
+            }
+            
+            if (effectMultiplier != 0) {
+                dict.Add("effectMultiplier", effectMultiplier);
+            }
+            
+            SendCustomEventInternal("timedAction", dict);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.TransitionToGame(...).AddX().Track() instead.")]
+        public void TrackTransitionToGame(string type) {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("type", type);
+            
+            SendCustomEventInternal("transitionToGame", dict);
+        }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        [Obsolete("This tracking method has been deprecated and will be removed in a future version. Please use SpilTracking.TransitionToMenu(...).AddX().Track() instead.")]
+        public void TrackTransitionToMenu() {
+            SendCustomEventInternal("transitionToMenu");
+        }
+        
+        #endregion
+
+	            
         #region Game config
 
         /// <summary>
@@ -241,1152 +1434,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		}
 
         #endregion
-        
-        #region Events
-
-        #region Standard Spil events
-
-        
-        /// <summary>
-        /// Sends the "milestoneAchieved" event to the native Spil SDK which will send a request to the back-end.
-        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
-        /// </summary>
-        /// <param name="name"></param>
-        public void TrackMilestoneAchievedEvent(string name, string milestoneDescription = null, float score = -1, string location = null, int iteration = 0) {
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-            
-            dict.Add("name", name);
-            
-            if (milestoneDescription != null) {
-                dict.Add("milestoneDescription", milestoneDescription);
-            }
-            
-            if (score != -1) {
-                dict.Add("score", score);
-            }
-            
-            if (location != null) {
-                dict.Add("location", location);
-            }
-            
-            if (iteration != 0) {
-                dict.Add("iteration", iteration);
-            }
-            
-            SendCustomEventInternal("milestoneAchieved", dict);
-        }
-
-        /// <summary>
-        /// Sends the "levelStart" event to the native Spil SDK which will send a request to the back-end.
-        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
-        /// </summary>
-        /// <param name="levelName">Level name.</param>
-        /// <param name="difficulty">The difficulty of the started level.</param>
-        /// <param name="customCreated">If set to <c>true</c> custom created.</param>
-        /// <param name="creatorId">Creator identifier.</param>
-        public void TrackLevelStartEvent(string levelName, string difficulty = null, int score = 0, bool customCreated = false,
-            string creatorId = null, List<String> activeBooster = null) {
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-            dict.Add("level", levelName);
-
-            if (difficulty != null) {
-                dict.Add("difficulty", difficulty);
-            }
-
-            if (score != 0) {
-                dict.Add("score", score);
-            }
-            
-            if (customCreated) {
-                dict.Add("customCreated", customCreated);
-            }
-
-            if (creatorId != null) {
-                dict.Add("creatorId", creatorId);
-            }
-
-            if (activeBooster != null) {
-                dict.Add("activeBooster", new JSONObject(JsonHelper.getJSONFromObject(activeBooster)));
-            }
-
-            SendCustomEventInternal("levelStart", dict);
-        }
-
-        /// <summary>
-        /// Sends the "levelComplete" event to the native Spil SDK which will send a request to the back-end.
-        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
-        /// </summary>
-        /// <param name="levelName">Level name.</param>
-        /// <param name="difficulty">The difficulty of the started level.</param>
-        /// <param name="score">Score.</param>
-        /// <param name="stars">Stars.</param>
-        /// <param name="speed">The speed in which the level was completed.</param>
-        /// <param name="moves">The number of moves which it took the user to complete the level.</param>
-        /// <param name="turns">Turns.</param>
-        /// <param name="customCreated">If set to <c>true</c> custom created.</param>
-        /// <param name="creatorId">Creator identifier.</param>
-        /// <param name="objectUsed">A list of objects used.</param>
-        public void TrackLevelCompleteEvent(string levelName, string difficulty = null, double score = 0, int stars = 0,
-            string speed = null, int moves = 0, int turns = 0, bool customCreated = false, string creatorId = null, List<LevelCompleteObjectUsed> objectUsed = null, string levelId = null,
-            string achievement = null, float avgCombos = 0, int movesLeft = -1, string rating = null, int timeLeft = -1) {
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-            dict.Add("level", levelName);
-
-            if (levelId != null) {
-                dict.Add("levelId", levelId);
-            }
-            
-            if (difficulty != null) {
-                dict.Add("difficulty", difficulty);
-            }
-
-            if (score != 0) {
-                dict.Add("score", score);
-            }
-
-            if (stars != 0) {
-                dict.Add("stars", stars);
-            }
-
-            if (speed != null) {
-                dict.Add("speed", speed);
-            }
-
-            if (moves != 0) {
-                dict.Add("moves", moves);
-            }
-
-            if (turns != 0) {
-                dict.Add("turns", turns);
-            }
-
-            if (customCreated) {
-                dict.Add("customCreated", customCreated);
-            }
-
-            if (creatorId != null) {
-                dict.Add("creatorId", creatorId);
-            }
-
-            if (objectUsed != null) {
-                dict.Add("objectUsed", new JSONObject(JsonHelper.getJSONFromObject(objectUsed)));
-            }
-
-            if (achievement != null) {
-                dict.Add("achievement", achievement);
-            }
-
-            if (avgCombos != 0) {
-                dict.Add("avgCombos", avgCombos);
-            }
-
-            if (movesLeft != -1) {
-                dict.Add("movesLeft", movesLeft);
-            }
-            
-            if (rating != null) {
-                dict.Add("rating", rating);
-            }
-            
-            if (timeLeft != -1) {
-                dict.Add("timeLeft", timeLeft);
-            }
-            
-            SendCustomEventInternal("levelComplete", dict);
-        }
-
-        /// <summary>
-        /// Sends the "levelFailed" event to the native Spil SDK which will send a request to the back-end.
-        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
-        /// </summary>
-        /// <param name="levelName">Level name.</param>
-        /// <param name="difficulty"></param>
-        /// <param name="score">Score.</param>
-        /// <param name="speed">The speed in which the level was failed.</param>
-        /// <param name="moves">he number of moves which it took the user before he failed.</param>
-        /// <param name="stars">Stars.</param>
-        /// <param name="turns">Turns.</param>
-        /// <param name="reason">The reason of failure</param>
-        /// <param name="customCreated">If set to <c>true</c> custom created.</param>
-        /// <param name="creatorId">Creator identifier.</param>
-        public void TrackLevelFailedEvent(string levelName, string difficulty = null, double score = 0,
-            string speed = null, int moves = 0, int stars = 0, int turns = 0, string reason = null,
-            bool customCreated = false, string creatorId = null, List<LevelCompleteObjectUsed> objectUsed = null,
-            string achievement = null, float avgCombos = 0, int movesLeft = -1, int timeLeft = -1) {
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-            dict.Add("level", levelName);
-
-            if (difficulty != null) {
-                dict.Add("difficulty", difficulty);
-            }
-
-            if (score != 0) {
-                dict.Add("score", score);
-            }
-
-            if (stars != 0) {
-                dict.Add("stars", stars);
-            }
-
-            if (speed != null) {
-                dict.Add("speed", speed);
-            }
-
-            if (moves != 0) {
-                dict.Add("moves", moves);
-            }
-
-            if (turns != 0) {
-                dict.Add("turns", turns);
-            }
-
-            if (reason != null) {
-                dict.Add("reason", reason);
-            }
-
-            if (customCreated) {
-                dict.Add("customCreated", customCreated);
-            }
-
-            if (creatorId != null) {
-                dict.Add("creatorId", creatorId);
-            }
-
-            if (objectUsed != null) {
-                dict.Add("objectUsed", new JSONObject(JsonHelper.getJSONFromObject(objectUsed)));
-            }
-
-            if (achievement != null) {
-                dict.Add("achievement", achievement);
-            }
-            
-            if (avgCombos != 0) {
-                dict.Add("avgCombos", avgCombos);
-            }
-            
-            if (timeLeft != -1) {
-                dict.Add("timeLeft", timeLeft);
-            }
-            
-            if (movesLeft != -1) {
-                dict.Add("movesLeft", movesLeft);
-            }
-            
-            SendCustomEventInternal("levelFailed", dict);
-        }
-
-        /// <summary>
-        /// Sends the "levelUp" event to the native Spil SDK which will send a request to the back-end.
-        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
-        /// </summary>
-        /// <param name="level">Level.</param>
-        /// <param name="objectId">Object identifier.</param>
-        /// <param name="skillId">Skill identifier.</param>
-        public void TrackLevelUpEvent(string level, string objectId, string skillId = null, string sourceId = null, string sourceUniqueId = null, string objectUniqueId = null, string objectUniqueIdType = null) {
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-            dict.Add("level", level);
-            dict.Add("objectId", objectId);
-
-            if (skillId != null) {
-                dict.Add("skillId", skillId);
-            }
-
-            if (sourceId != null) {
-                dict.Add("sourceId", sourceId);
-            }
-            
-            if (sourceUniqueId != null) {
-                dict.Add("sourceUniqueId", sourceUniqueId);
-            }
-            
-            if (objectUniqueId != null) {
-                dict.Add("objectUniqueId", objectUniqueId);
-            }
-            
-            if (objectUniqueIdType != null) {
-                dict.Add("objectUniqueIdType", objectUniqueIdType);
-            }
-            
-            SendCustomEventInternal("levelUp", dict);
-        }
-
-        /// <summary>
-        /// Sends the "equip" event to the native Spil SDK which will send a request to the back-end.
-        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
-        /// </summary>
-        /// <param name="equippedItem">Equipped item.</param>
-        /// <param name="equippedTo">Equipped to.</param>
-        /// <param name="unequippedFrom">The character/object which unequipped the item.</param>
-        public void TrackEquipEvent(string equippedItem, string equippedTo = null, string unequippedFrom = null) {
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-            dict.Add("equippedItem", equippedItem);
-
-            if (equippedTo != null) {
-                dict.Add("equippedTo", equippedTo);
-            }
-
-            if (unequippedFrom != null) {
-                dict.Add("unequippedFrom", unequippedFrom);
-            }
-
-            SendCustomEventInternal("equip", dict);
-        }
-
-        /// <summary>
-        /// Sends the "equip" event to the native Spil SDK which will send a request to the back-end.
-        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
-        /// </summary>
-        /// <param name="upgradeId">Upgrade identifier.</param>
-        /// <param name="level">Level.</param>
-        /// <param name="reason">Reason.</param>
-        /// <param name="iteration">Iteration.</param>
-        public void TrackUpgradeEvent(string upgradeId, string level, string reason = null, int iteration = 0, string achievement = null, string key = null) {
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-            dict.Add("upgradeId", upgradeId);
-            dict.Add("level", level);
-
-            if (reason != null) {
-                dict.Add("reason", reason);
-            }
-
-            if (iteration != 0) {
-                dict.Add("iteration", iteration);
-            }
-            
-            if (achievement != null) {
-                dict.Add("achievement", achievement);
-            }
-
-            if (key != null) {
-                dict.Add("key", key);
-            }
-
-            SendCustomEventInternal("upgrade", dict);
-        }
-
-        /// <summary>
-        /// Sends the "levelCreate" event to the native Spil SDK which will send a request to the back-end.
-        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
-        /// </summary>
-        /// <param name="levelId">Level identifier.</param>
-        /// <param name="creatorId">Creator identifier.</param>
-        public void TrackLevelCreateEvent(string levelId, string level, string creatorId) {
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-            dict.Add("levelId", levelId);
-            dict.Add("level", level);
-            dict.Add("creatorId", creatorId);
-
-            SendCustomEventInternal("levelCreate", dict);
-        }
-
-        /// <summary>
-        /// Sends the "levelDownload" event to the native Spil SDK which will send a request to the back-end.
-        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
-        /// </summary>
-        /// <param name="levelId">Level identifier.</param>
-        /// <param name="creatorId">Creator identifier.</param>
-        /// <param name="rating">Rating.</param>
-        public void TrackLevelDownloadEvent(string levelId, string creatorId, double rating = 0) {
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-            dict.Add("levelId", levelId);
-            dict.Add("creatorId", creatorId);
-
-            if (rating != 0) {
-                dict.Add("rating", rating);
-            }
-
-            SendCustomEventInternal("levelDownload", dict);
-        }
-
-        /// <summary>
-        /// Sends the "levelRate" event to the native Spil SDK which will send a request to the back-end.
-        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
-        /// </summary>
-        /// <param name="levelId">Level identifier.</param>
-        /// <param name="creatorId">Creator identifier.</param>
-        /// <param name="rating">Rating.</param>
-        public void TrackLevelRateEvent(string levelId, string creatorId, double rating = 0) {
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-            dict.Add("levelId", levelId);
-            dict.Add("creatorId", creatorId);
-
-            if (rating != 0) {
-                dict.Add("rating", rating);
-            }
-
-            SendCustomEventInternal("levelRate", dict);
-        }
-
-        /// <summary>
-        /// Sends the "endlessModeStart" event to the native Spil SDK which will send a request to the back-end.
-        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
-        /// </summary>
-        public void TrackEndlessModeStartEvent() {
-            SendCustomEventInternal("endlessModeStart");
-        }
-
-        /// <summary>
-        /// Sends the "endlessModeEnd" event to the native Spil SDK which will send a request to the back-end.
-        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
-        /// </summary>
-        /// <param name="distance">Distance.</param>
-        public void TrackEndlessModeEndEvent(int distance) {
-            SendCustomEventInternal("endlessModeEnd", new Dictionary<string, object>() {
-                {
-                    "distance",
-                    distance
-                }
-            });
-        }
-
-        /// <summary>
-        /// Sends the "playerDies" event to the native Spil SDK which will send a request to the back-end.
-        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
-        /// </summary>
-        /// <param name="levelName"></param>
-        public void TrackPlayerDiesEvent(string levelName) {
-            SendCustomEventInternal("playerDies", new Dictionary<string, object>() {
-                {
-                    "level",
-                    levelName
-                }
-            });
-        }
-
-        /// <summary>
-        /// Sends the "updatePlayerData" event to the native Spil SDK which will send a request to the back-end.
-        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
-        /// </summary>
-        /// <param name="reason">The reason for which the event occured. You can also use the PlayerDataUpdateReasons class to pass one of the default reasons</param>
-        /// <param name="location">The location where the event occured (ex.: Shop Screen, End of the level)</param>
-        /// <param name="reasonDetails">Additional parameter used to describe the details of why the event happened</param>
-        /// <param name="transactionId">The transactionId if the update was due to an IAP</param>
-        /// <param name="currencyList">A list of TrackingCurrency objects that defines all the currencies that have been changed with this event. This parameter can also be omited if no currencies have been updated</param>
-        /// <param name="itemsList">A list of TrackingItems objects that defines all the items that have been changed with this event. This parameter can also be omited if no items have been updated</param>
-        public void TrackWalletInventoryEvent(string reason, string location,
-            List<TrackingCurrency> currencyList = null, List<TrackingItem> itemsList = null,
-            string reasonDetails = null, string transactionId = null) {
-            Dictionary<string, object> dictionary = new Dictionary<string, object>();
-
-            if (currencyList != null) {
-                Dictionary<string, object> wallet = new Dictionary<string, object>();
-                wallet.Add("currencies", new JSONObject(JsonHelper.getJSONFromObject(currencyList)));
-                wallet.Add("offset", 0);
-                dictionary.Add("wallet", wallet);
-            }
-
-            if (itemsList != null) {
-                Dictionary<string, object> inventory = new Dictionary<string, object>();
-                inventory.Add("items", new JSONObject(JsonHelper.getJSONFromObject(itemsList)));
-                inventory.Add("offset", 0);
-                dictionary.Add("inventory", inventory);
-            }
-
-            dictionary.Add("reason", reason);
-            dictionary.Add("location", location);
-            dictionary.Add("trackingOnly", true);
-
-            if (reasonDetails != null) {
-                dictionary.Add("reasonDetails", reasonDetails);
-            }
-
-            if (transactionId != null) {
-                dictionary.Add("transactionId", transactionId);
-            }
-
-            SendCustomEventInternal("updatePlayerData", dictionary);
-        }
-
-        /// <summary>
-        /// Sends the "iapPurchased" event to the native Spil SDK which will send a request to the back-end.
-        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
-        /// </summary>
-        /// <param name="skuId">The product identifier of the item that was purchased</param>
-        /// <param name="transactionId ">The transaction identifier of the item that was purchased (also called orderId)</param>
-        public void TrackIAPPurchasedEvent(string skuId, string transactionId, string token = "", string reason = null, string location = null) {
-            Dictionary<string, object> dictionary = new Dictionary<string, object>();
-            dictionary.Add("skuId", skuId);
-            dictionary.Add("transactionId", transactionId);
-            dictionary.Add("purchaseDate", DateTime.Now.ToString("yyyy-MM-ddTHH\\:mm\\:ss.fffffffzzz"));
-
-#if UNITY_ANDROID
-            if (token != null && !token.Equals("")) {
-                dictionary.Add("token", token);
-            }
-#endif
-
-            if (reason != null) {
-                dictionary.Add("reason", reason);
-            }
-
-            if (location != null) {
-                dictionary.Add("location", location);
-            }
-
-            SendCustomEventInternal("iapPurchased", dictionary);
-        }
-
-        /// <summary>
-        /// Sends the "iapRestored" event to the native Spil SDK which will send a request to the back-end.
-        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
-        /// </summary>
-        /// <param name="skuId">The product identifier of the item that was purchased</param>
-        /// <param name="originalTransactionId ">For a transaction that restores a previous transaction, the transaction identifier of the original transaction. Otherwise, identical to the transaction identifier</param>
-        /// <param name="originalPurchaseDate">For a transaction that restores a previous transaction, the date of the original transaction. Please use a proper DateTime format (RFC3339), for instance: "2016-08-30T11:54:48.5247936+02:00". If you have a DateTime object you can use: DateTimeObject.ToString("yyyy-MM-ddTHH\\:mm\\:ss.fffffffzzz")</param>                
-        public void TrackIAPRestoredEvent(string skuId, string originalTransactionId, string originalPurchaseDate, string reason = null) {
-            Dictionary<string, object> dictionary = new Dictionary<string, object>();
-            
-            dictionary.Add("skuId", skuId);
-            dictionary.Add("originalTransactionId", originalTransactionId);
-            dictionary.Add("originalPurchaseDate", originalPurchaseDate);
-            
-            if (reason != null) {
-                dictionary.Add("reason", reason);
-            }
-            
-            SendCustomEventInternal("iapRestored", dictionary);
-        }
-
-        /// <summary>
-        /// Sends the "iapFailed" event to the native Spil SDK which will send a request to the back-end.
-        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
-        /// </summary>
-        /// <param name="error">Error description or error code</param>
-        /// <param name="skuId">The product identifier of the item that was purchased</param>
-        public void TrackIAPFailedEvent(string error, string skuId, string location = null, string reason = null) {
-            Dictionary<string, object> dictionary = new Dictionary<string, object>();
-            
-            dictionary.Add("errorDescription", error);
-            dictionary.Add("skuId", skuId);
-            dictionary.Add("purchaseDate", DateTime.Now.ToString("yyyy-MM-ddTHH\\:mm\\:ss.fffffffzzz"));
-
-            if (location != null) {
-                dictionary.Add("location", location);
-            }
-            
-            if (reason != null) {
-                dictionary.Add("reason", reason);
-            }
-            
-            SendCustomEventInternal("iapFailed", dictionary);
-        }
-
-        /// <summary>
-        /// Sends the "tutorialComplete" event to the native Spil SDK which will send a request to the back-end.
-        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
-        /// </summary>
-        public void TrackTutorialCompleteEvent() {
-            SendCustomEventInternal("tutorialComplete");
-        }
-
-        /// <summary>
-        /// Sends the "tutorialSkipped" event to the native Spil SDK which will send a request to the back-end.
-        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
-        /// </summary>
-        public void TrackTutorialSkippedEvent() {
-            SendCustomEventInternal("tutorialSkipped");
-        }
-
-        /// <summary>
-        /// Sends the "tutorialSkipped" event to the native Spil SDK which will send a request to the back-end.
-        /// Should be called after the user completes registration via email, Facebook, Google Plus or other available option. Registration option is assumed.
-        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
-        /// </summary>
-        /// <param name="platform">A string like ‘facebook’ or ’email’</param>
-        public void TrackRegisterEvent(string platform) {
-            SendCustomEventInternal("register", new Dictionary<string, object>() {
-                {
-                    "platform",
-                    platform
-                }
-            });
-        }
-
-        /// <summary>
-        /// Sends the "share" event to the native Spil SDK which will send a request to the back-end.
-        /// Should be called every time the user shares content on their social media accounts. Social media integration is assumed.
-        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
-        /// </summary>
-        /// <param name="platform">A string like ‘facebook’ or ’email’</param>
-        public void TrackShareEvent(string platform, string location = null, string reason = null) {
-            Dictionary<string, object> dictionary = new Dictionary<string, object>();
-            dictionary.Add("platform", platform);
-
-            if (location != null) {
-                dictionary.Add("location", location);
-            }     
-            
-            if (reason != null) {
-                dictionary.Add("reason", reason);
-            }
-            
-            SendCustomEventInternal("share", dictionary);
-        }
-
-        /// <summary>
-        /// Sends the "invite" event to the native Spil SDK which will send a request to the back-end.
-        /// Should be called every time the user invites another user. Respective function in-game is assumed.
-        /// See https://github.com/spilgames/spil_event_unity_plugin for more information on events.
-        /// </summary>
-        /// <param name="platform">A string like ‘facebook’ or ’email’</param>
-        public void TrackInviteEvent(string platform, string location = null) {
-            Dictionary<string, object> dictionary = new Dictionary<string, object>();
-            dictionary.Add("platform", platform);
-
-            if (location != null) {
-                dictionary.Add("location", location);
-            }
-            
-            SendCustomEventInternal("invite", dictionary);
-        }
-
-        /// <summary>
-        /// Sends the "levelAppeared" event to the native Spil SDK which will send a request to the back-end.
-        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
-        /// </summary>
-        /// <param name="level">The name/id of the level that appeared.</param>
-        /// <param name="difficulty">The difficulty of the level that appeared</param>
-        public void TrackLevelAppeared(string level, string difficulty = null) {
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-            dict.Add("level", level);
-
-            if (difficulty != null) {
-                dict.Add("difficulty", difficulty);
-            }
-
-            SendCustomEventInternal("levelAppeared", dict);
-        }
-
-        /// <summary>
-        /// Sends the "levelDiscarded" event to the native Spil SDK which will send a request to the back-end.
-        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
-        /// </summary>
-        /// <param name="level">The name/id of the level that appeared.</param>
-        /// <param name="difficulty">The difficulty of the level that appeared</param>
-        public void TrackLevelDiscarded(string level, string difficulty = null) {
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-            dict.Add("level", level);
-
-            if (difficulty != null) {
-                dict.Add("difficulty", difficulty);
-            }
-
-            SendCustomEventInternal("levelDiscarded", dict);
-        }
-
-        /// <summary>
-        /// Sends the "errorShown" event to the native Spil SDK which will send a request to the back-end.
-        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
-        /// </summary>
-        /// <param name="reason">The reason for the error to be shown.</param>
-        public void TrackErrorShown(string reason) {
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-            dict.Add("reason", reason);
-
-            SendCustomEventInternal("errorShown", dict);
-        }
-
-        /// <summary>
-        /// Sends the "timeElapLoad" event to the native Spil SDK which will send a request to the back-end.
-        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
-        /// </summary>
-        /// <param name="timeElap">The time elapsed between the starting point and the pointInGame in seconds.</param>
-        /// <param name="pointInGame">The point in game which is reached.</param>
-        /// <param name="startPoint">The point in game which we start to measure time.</param>
-        public void TrackTimeElapLoad(int timeElap, string pointInGame, string startPoint = null) {
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-            dict.Add("timeElap", timeElap);
-            dict.Add("pointInGame", pointInGame);
-
-            if (startPoint != null) {
-                dict.Add("startPoint", startPoint);
-            }
-
-            SendCustomEventInternal("timeElapLoad", dict);
-        }
-
-        /// <summary>
-        /// Sends the "timeoutDetected" event to the native Spil SDK which will send a request to the back-end.
-        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
-        /// </summary>
-        /// <param name="timeElap">The time elapsed between the starting point and the pointInGame in seconds.</param>
-        /// <param name="pointInGame">The point in game which is reached.</param>
-        public void TrackTimeoutDetected(int timeElap, string pointInGame) {
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-            dict.Add("timeElap", timeElap);
-            dict.Add("pointInGame", pointInGame);
-
-            SendCustomEventInternal("timeoutDetected", dict);
-        }
-
-        /// <summary>
-        /// Sends the "objectStateChanged" event to the native Spil SDK which will send a request to the back-end.
-        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
-        /// </summary>
-        /// <param name="changedObject">The object which changed it's state.</param>
-        /// <param name="status">The new status the object is in.</param>
-        /// <param name="reason">The reason for the state change.</param>
-        /// <param name="changedProperties">The property/properties which have changed.</param>
-        public void TrackObjectStateChanged(string changedObject, string status, string reason,
-            string changedProperties = null, string optionConditions = null, string situation = null, string allChoiceResults = null, string allSelectedChoices = null, string involvedParties = null) {
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-            dict.Add("changedObject", changedObject);
-            dict.Add("status", status);
-            dict.Add("reason", reason);
-
-            if (changedProperties != null) {
-                dict.Add("changedProperties", changedProperties);
-            }
-            
-            if (optionConditions != null) {
-                dict.Add("optionConditions", optionConditions);
-            }
-            
-            if (situation != null) {
-                dict.Add("situation", situation);
-            }
-            
-            if (allChoiceResults != null) {
-                dict.Add("allChoiceResults", allChoiceResults);
-            }
-            
-            if (allSelectedChoices != null) {
-                dict.Add("allSelectedChoices", allSelectedChoices);
-            }
-            
-            if (involvedParties != null) {
-                dict.Add("involvedParties", involvedParties);
-            }
-
-            SendCustomEventInternal("objectStateChanged", dict);
-        }
-
-        /// <summary>
-        /// Triggered when the user clicks a specific ui element
-        /// </summary>
-        /// <param name="element"></param>
-        /// <param name="type"></param>
-        /// <param name="screenName"></param>
-        /// <param name="location"></param>
-        /// <param name="grade"></param>
-        public void TrackUIElementClicked(string element, string type = null, string screenName = null, string location = null, int grade = 0) {
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-            dict.Add("element", element);
-
-            if (type != null) {
-                dict.Add("type", type);
-            }
-
-            if (screenName != null) {
-                dict.Add("screenName", screenName);
-            }
-            
-            if (location != null) {
-                dict.Add("location", location);
-            }
-            
-            if (grade != 0) {
-                dict.Add("grade", grade);
-            }
-
-            SendCustomEventInternal("uiElementClicked", dict);
-        }
-
-        /// <summary>
-        /// Triggered when a user sends a gift
-        /// </summary>
-        /// <param name="platform"></param>
-        /// <param name="location"></param>
-        public void TrackSendGift(string platform, string location = null) {
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-            dict.Add("platform", platform);
-           
-            if (location != null) {
-                dict.Add("location", location);
-            }
-
-            SendCustomEventInternal("sendGift", dict);
-        }
-
-        /// <summary>
-        /// Triggered when the level timer finishes
-        /// </summary>
-        public void TrackLevelTimeOut() {
-            SendCustomEventInternal("levelTimeOut");
-        }
-
-        /// <summary>
-        /// Triggered whenever user selects an choice for a dialog,or runs out of time and default answer is selected	
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="hasToken"></param>
-        /// <param name="isPremiumChoice"></param>
-        /// <param name="isQuizz"></param>
-        /// <param name="isForced"></param>
-        /// <param name="isTimed"></param>
-        /// <param name="time"></param>
-        public void TrackDialogChosen(string name, string choice, bool hasToken, bool isPremiumChoice, bool isQuizz, bool isForced, bool isTimed, int time = 0) {
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-            dict.Add("name", name);
-            dict.Add("choice", choice);
-            dict.Add("hasToken", hasToken);
-            dict.Add("isPremiumChoice", isPremiumChoice);
-            dict.Add("isQuizz", isQuizz);
-            dict.Add("isForced", isForced);
-            dict.Add("isTimed", isTimed);
-           
-            if (time != 0) {
-                dict.Add("time", time);
-            }
-
-            SendCustomEventInternal("dialogueChosen", dict);
-        }
-
-        /// <summary>
-        /// Triggered when the user is adding a friend in the game.
-        /// </summary>
-        /// <param name="friend"></param>
-        /// <param name="platform"></param>
-        public void TrackFriendAdded(string friend, string platform = null) {
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-            dict.Add("friend", friend);
-           
-            if (platform != null) {
-                dict.Add("platform", platform);
-            }
-
-            SendCustomEventInternal("friendAdded", dict);
-        }
-
-        /// <summary>
-        /// Triggered for special game object interactions
-        /// </summary>
-        public void TrackGameObjectInteraction() {
-            SendCustomEventInternal("gameObjectInteraction");
-        }
-
-        /// <summary>
-        /// Triggered at the end of a match and indicates the result of it
-        /// </summary>
-        /// <param name="itemId"></param>
-        /// <param name="itemType"></param>
-        /// <param name="label"></param>
-        /// <param name="matchId"></param>
-        public void TrackGameResult(string itemId = null, string itemType = null, string label = null, string matchId = null) {
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-           
-            if (itemId != null) {
-                dict.Add("itemId", itemId);
-            }
-
-            if (itemType != null) {
-                dict.Add("itemType", itemType);
-            }
-            
-            if (label != null) {
-                dict.Add("label", label);
-            }
-            
-            if (matchId != null) {
-                dict.Add("matchId", matchId);
-            }
-            
-            SendCustomEventInternal("gameResult", dict);
-        }
-
-        /// <summary>
-        /// Triggered when a user is crafting an item.
-        /// </summary>
-        /// <param name="itemId"></param>
-        /// <param name="itemType"></param>
-        public void TrackItemCrafted(string itemId, string itemType = null) {
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-            dict.Add("itemId", itemId);
-           
-            if (itemType != null) {
-                dict.Add("itemType", itemType);
-            }
-
-            SendCustomEventInternal("itemCrafted", dict);
-        }
-        
-        /// <summary>
-        /// Triggered when a user creates an item.
-        /// </summary>
-        /// <param name="itemId"></param>
-        /// <param name="itemType"></param>
-        public void TrackItemCreated(string itemId, string itemType = null) {
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-            dict.Add("itemId", itemId);
-           
-            if (itemType != null) {
-                dict.Add("itemType", itemType);
-            }
-
-            SendCustomEventInternal("itemCreated", dict);
-        }
-        
-        /// <summary>
-        /// Triggered when the user is updating an item (e.g. equipping a character with an item).
-        /// </summary>
-        /// <param name="content"></param>
-        /// <param name="itemId"></param>
-        /// <param name="itemType"></param>
-        public void TrackItemUpdated(string content, string itemId, string itemType = null) {
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-            dict.Add("content", content);
-            dict.Add("itemId", itemId);
-           
-            if (itemType != null) {
-                dict.Add("itemType", itemType);
-            }
-
-            SendCustomEventInternal("itemUpdated", dict);
-        }
-
-        /// <summary>
-        /// Triggered when the user is updating his deck, e.g. by adding and removing cards from it.
-        /// </summary>
-        /// <param name="content"></param>
-        /// <param name="itemId"></param>
-        /// <param name="itemType"></param>
-        /// <param name="label"></param>
-        public void TrackDeckUpdated(string content, string itemId, string itemType = null, string label = null) {
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-            dict.Add("content", content);
-            dict.Add("itemId", itemId);
-           
-            if (itemType != null) {
-                dict.Add("itemType", itemType);
-            }
-
-            if (label != null) {
-                dict.Add("label", label);
-            }
-            
-            SendCustomEventInternal("deckUpdated", dict);
-        }
-        
-        /// <summary>
-        /// Triggered when a player-vs-player match ends 
-        /// </summary>
-        /// <param name="matchId"></param>
-        /// <param name="itemId"></param>
-        /// <param name="itemType"></param>
-        /// <param name="label"></param>
-        public void TrackMatchComplete(string matchId = null, string itemId = null, string itemType = null, string label = null) {
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-
-            if (matchId != null) {
-                dict.Add("matchId", matchId);
-            }
-
-            if (itemId != null) {
-                dict.Add("itemId", itemId);
-            }
-           
-            if (itemType != null) {
-                dict.Add("itemType", itemType);
-            }
-
-            if (label != null) {
-                dict.Add("label", label);
-            }
-            
-            SendCustomEventInternal("matchComplete", dict);
-        }
-        
-        /// <summary>
-        /// Triggered when a user loses a player-vs-player match
-        /// </summary>
-        /// <param name="matchId"></param>
-        /// <param name="itemId"></param>
-        /// <param name="itemType"></param>
-        /// <param name="label"></param>
-        public void TrackMatchLost(string matchId = null, string itemId = null, string itemType = null, string label = null) {
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-
-            if (matchId != null) {
-                dict.Add("matchId", matchId);
-            }
-
-            if (itemId != null) {
-                dict.Add("itemId", itemId);
-            }
-           
-            if (itemType != null) {
-                dict.Add("itemType", itemType);
-            }
-
-            if (label != null) {
-                dict.Add("label", label);
-            }
-            
-            SendCustomEventInternal("matchLost", dict);
-        }
-        
-        /// <summary>
-        /// Triggered when a player-vs-player match ends with a tie
-        /// </summary>
-        /// <param name="matchId"></param>
-        /// <param name="itemId"></param>
-        /// <param name="itemType"></param>
-        /// <param name="label"></param>
-        public void TrackMatchTie(string matchId = null, string itemId = null, string itemType = null, string label = null) {
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-
-            if (matchId != null) {
-                dict.Add("matchId", matchId);
-            }
-
-            if (itemId != null) {
-                dict.Add("itemId", itemId);
-            }
-           
-            if (itemType != null) {
-                dict.Add("itemType", itemType);
-            }
-
-            if (label != null) {
-                dict.Add("label", label);
-            }
-            
-            SendCustomEventInternal("matchTie", dict);
-        }
-        
-        /// <summary>
-        /// Triggered when a user wins player-vs-player match 
-        /// </summary>
-        /// <param name="matchId"></param>
-        /// <param name="itemId"></param>
-        /// <param name="itemType"></param>
-        /// <param name="label"></param>
-        public void TrackMatchWon(string matchId = null, string itemId = null, string itemType = null, string label = null) {
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-
-            if (matchId != null) {
-                dict.Add("matchId", matchId);
-            }
-
-            if (itemId != null) {
-                dict.Add("itemId", itemId);
-            }
-           
-            if (itemType != null) {
-                dict.Add("itemType", itemType);
-            }
-
-            if (label != null) {
-                dict.Add("label", label);
-            }
-            
-            SendCustomEventInternal("matchWon", dict);
-        }
-
-        /// <summary>
-        /// Triggered when the user either moves or changes the state of an in-game object
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="reason"></param>
-        /// <param name="label"></param>
-        /// <param name="delta"></param>
-        /// <param name="energy"></param>
-        /// <param name="kind"></param>
-        /// <param name="location"></param>
-        /// <param name="rarity"></param>
-        public void TrackPawnMoved(string name, string reason = null, string label = null, string delta = null, string energy = null, string kind = null, string location = null, string rarity = null) {
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-            dict.Add("name", name);
-            
-            if (reason != null) {
-                dict.Add("reason", reason);
-            }
-
-            if (label != null) {
-                dict.Add("label", label);
-            }
-           
-            if (delta != null) {
-                dict.Add("delta", delta);
-            }
-
-            if (energy != null) {
-                dict.Add("energy", energy);
-            }
-            
-            if (kind != null) {
-                dict.Add("kind", kind);
-            }
-           
-            if (location != null) {
-                dict.Add("location", location);
-            }
-
-            if (rarity != null) {
-                dict.Add("rarity", rarity);
-            }
-            
-            SendCustomEventInternal("pawnMoved", dict);
-        }
-        
-        /// <summary>
-        /// Triggered when the user interacts with the leaderboard/league
-        /// </summary>
-        public void TrackPlayerLeagueChanged() {
-            SendCustomEventInternal("playerLeagueChanged");
-        }
-
-        /// <summary>
-        /// Event used for tracking the state of a timed action in game, e.g. in Operate Now when the user assigns a staff member to the break room to regenerate energy,the event is fired at start and end of the regeneration
-        /// </summary>
-        /// <param name="timedAction"></param>
-        /// <param name="label"></param>
-        /// <param name="timedObject"></param>
-        /// <param name="timeToFinish"></param>
-        /// <param name="effectMultiplier"></param>
-        public void TrackTimedAction(string timedAction, string label = null, string timedObject = null, int timeToFinish = 0, float effectMultiplier = 0) {
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-            dict.Add("timedAction", timedAction);
-            
-            if (label != null) {
-                dict.Add("label", label);
-            }
-            
-            if (timedObject != null) {
-                dict.Add("timedObject", timedObject);
-            }
-            
-            if (timeToFinish != 0) {
-                dict.Add("timeToFinish", timeToFinish);
-            }
-            
-            if (effectMultiplier != 0) {
-                dict.Add("effectMultiplier", effectMultiplier);
-            }
-            
-            SendCustomEventInternal("timedAction", dict);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="type"></param>
-        public void TrackTransitionToGame(string type) {
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-            dict.Add("type", type);
-            
-            SendCustomEventInternal("transitionToGame", dict);
-        }
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        public void TrackTransitionToMenu() {
-            SendCustomEventInternal("transitionToMenu");
-        }
-        
-        #endregion
-
+	    
         #region Advertisement events
 
         public delegate void RewardEvent(PushNotificationRewardResponse rewardResponse);
