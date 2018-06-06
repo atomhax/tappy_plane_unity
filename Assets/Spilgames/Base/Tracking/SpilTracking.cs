@@ -27,7 +27,11 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
             /// Should always be used as the last method in the API chain.
             /// </summary>
             public void Track() {
-                Spil.Instance.SendCustomEventInternal(eventName, parameters);
+                if (Spil.Instance != null) {
+                    Spil.Instance.SendCustomEventInternal(eventName, parameters); 
+                } else {
+                    SpilLogging.Error("Spil Instance not initialized! You first need to initialize the SpilSDK object before you can do any tracking!");
+                }
             }         
         }
 

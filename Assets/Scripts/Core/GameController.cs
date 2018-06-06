@@ -430,7 +430,7 @@ public class GameController : MonoBehaviour
         player.dead = false;
         InvokeRepeating("SpawnObsticle", 0, obsitcleSpawnFrequency);
         UpdateUI(GameStates.InGame);
-        SpilTracking.LevelStart("MainGame");
+        SpilTracking.LevelStart("MainGame").Track();
     }
 
     public void GameOver() {
@@ -438,7 +438,7 @@ public class GameController : MonoBehaviour
         Spil.PlayerData.Inventory.Add(100077, tapperScore, PlayerDataUpdateReasons.LevelComplete, "Game Over Screen");
         CancelInvoke("SpawnObsticle");
         UpdateUI(GameStates.GameOver);
-        SpilTracking.PlayerDies("MainGame");
+        SpilTracking.PlayerDies("MainGame").Track();
     }
 
     void SpawnObsticle() {

@@ -53,8 +53,7 @@ public class SpilAndroidBuildPostProcess : MonoBehaviour {
         string spilSDK = "spilsdk-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
         string spilSDKAdjust = "spilsdk-adjust-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
         string spilSDKChartboost = "spilsdk-chartboost-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
-        string spilSDKDFP = "spilsdk-dfp-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
-        string spilSDKFyber = "spilsdk-fyber-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
+        string spilSDKAdMob = "spilsdk-admob-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
 
         if (!File.Exists(androidFolder + spilSDK)) {
             Debug.LogError("The Spil SDK aar file is missing from your 'Assets/Plugins/Android/'. If you want to use the Spil SDK please make sure to include the file to that location");
@@ -68,12 +67,8 @@ public class SpilAndroidBuildPostProcess : MonoBehaviour {
             Debug.Log("The Spil SDK Chartboost aar file is missing from your 'Assets/Plugins/Android/'. If you want to use the Spil SDK Chartboost please make sure to included to that location");
         }
 
-        if (!File.Exists(androidFolder + spilSDKDFP)) {
-            Debug.Log("The Spil SDK DFP aar file is missing from your 'Assets/Plugins/Android/'. If you want to use the Spil SDK DFP please make sure to included the file to that location");
-        }
-
-        if (!File.Exists(androidFolder + spilSDKFyber)) {
-            Debug.Log("The Spil SDK Fyber aar file is missing from your 'Assets/Plugins/Android/'. If you want to use the Spil SDK Fyber please make sure to included to that location");
+        if (!File.Exists(androidFolder + spilSDKAdMob)) {
+            Debug.Log("The Spil SDK AdMob aar file is missing from your 'Assets/Plugins/Android/'. If you want to use the Spil SDK DFP please make sure to included the file to that location");
         }
         
         CheckSlotGameConifg();

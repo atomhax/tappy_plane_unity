@@ -1,6 +1,6 @@
 /*
  * Spil Games Unity SDK 2018
- * Version 2.10.0
+ * Version 3.0.0
  *
  * If you have any questions, don't hesitate to e-mail us at info@spilgames.com
  * Be sure to check the github page for documentation and the latest updates
@@ -94,21 +94,15 @@ namespace SpilGames.Unity {
         [SerializeField] public string ProjectId = "";
 #endif
 
-        [Header("iOS Settings")] [SerializeField]
+        [Header("iOS Settings")]
 
         /// <summary>
         /// Not intended for use by developers.
         /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
         /// </summary>
-        public string CustomBundleId;
+        [SerializeField] public string CustomBundleId;
 
-        [Header("Editor Settings")] [SerializeField]
-
-        /// <summary>
-        /// Not intended for use by developers.
-        /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
-        /// </summary>
-        public bool EditorLogging = true;
+        [Header("Editor Settings")]
 
         /// <summary>
         /// Not intended for use by developers.

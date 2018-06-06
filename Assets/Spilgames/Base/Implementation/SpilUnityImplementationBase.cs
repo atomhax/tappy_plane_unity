@@ -16,10 +16,10 @@ using SpilGames.Unity.Helpers.PlayerData;
 namespace SpilGames.Unity.Base.Implementations{
     public abstract class SpilUnityImplementationBase{
         public static string PluginName = "Unity";
-        public static string PluginVersion = "2.10.0";
+        public static string PluginVersion = "3.0.0";
 
-        public static string AndroidVersion = "2.10.0";
-        public static string iOSVersion = "2.10.0";
+        public static string AndroidVersion = "3.0.0";
+        public static string iOSVersion = "3.0.0";
 	    
         /// <summary>
         /// Contains the game data: items, currencies, bundles (collections of items/currencies for softcurrency/hardcurrency transactions and gifting), Shop and Gacha boxes.
@@ -1275,7 +1275,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void firePackagesAvailable() {
-			SpilLogging.Log("SpilSDK-Unity firePackagesAvailable");
+			SpilLogging.Log("firePackagesAvailable");
 			if(OnPackagesAvailable != null) {
 				OnPackagesAvailable();
 			}
@@ -1293,7 +1293,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void firePackagesNotAvailable() {
-			SpilLogging.Log("SpilSDK-Unity firePackagesNotAvailable");
+			SpilLogging.Log("firePackagesNotAvailable");
 			if(OnPackagesNotAvailable != null) {
 				OnPackagesNotAvailable();
 			}
@@ -1326,7 +1326,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void firePromotionsAvailable() {
-			SpilLogging.Log("SpilSDK-Unity firePromotionsAvailable");
+			SpilLogging.Log("firePromotionsAvailable");
 
 			if (Spil.GameData != null) {
 				Spil.GameData.SpilGameDataHandler();
@@ -1349,7 +1349,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void firePromotionsNotAvailable() {
-			SpilLogging.Log("SpilSDK-Unity firePromotionsNotAvailable");
+			SpilLogging.Log("firePromotionsNotAvailable");
 			if(OnPromotionsAvailable != null) {
 				OnPromotionsNotAvailable();
 			}
@@ -1370,7 +1370,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// Developers can subscribe to events defined in Spil.Instance.
 		/// </summary>
 		public void firePromotionAmountBought(string data) {
-			SpilLogging.Log("SpilSDK-Unity firePromotionAmountBought with data: " + data);
+			SpilLogging.Log("firePromotionAmountBought with data: " + data);
 
 			JSONObject promotionInfo = new JSONObject(data);
 			int promotionId = (int)promotionInfo.GetField("promotionId").i;
@@ -1409,7 +1409,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireAssetBundlesAvailable() {
-			SpilLogging.Log("SpilSDK-Unity fireAssetBundlesAvailable");
+			SpilLogging.Log("fireAssetBundlesAvailable");
 			if(OnAssetBundlesAvailable != null) {
 				OnAssetBundlesAvailable();
 			}
@@ -1427,7 +1427,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireAssetBundlesNotAvailable() {
-			SpilLogging.Log("SpilSDK-Unity fireAssetBundlesNotAvailable");
+			SpilLogging.Log("fireAssetBundlesNotAvailable");
 			if(OnAssetBundlesNotAvailable != null) {
 				OnAssetBundlesNotAvailable();
 			}
@@ -1470,7 +1470,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireAdAvailable(string type) {
-			SpilLogging.Log("SpilSDK-Unity Ad " + type + " ready!");
+			SpilLogging.Log("Ad " + type + " ready!");
 			enumAdType adType = enumAdType.Unknown;
 			if (type.ToLower().Trim().Equals("rewardvideo")) {
 				adType = enumAdType.RewardVideo;
@@ -1482,7 +1482,7 @@ namespace SpilGames.Unity.Base.Implementations{
 				adType = enumAdType.MoreApps;
 			}
 			if (adType == enumAdType.Unknown) {
-				SpilLogging.Log("SpilSDK-Unity AdAvailable event fired but type is unknown. Type: " + type);
+				SpilLogging.Log("AdAvailable event fired but type is unknown. Type: " + type);
 			}
 			if(OnAdAvailable != null) {
 				OnAdAvailable(adType);
@@ -1502,7 +1502,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireAdNotAvailable(string type) {
-			SpilLogging.Log("SpilSDK-Unity Ad " + type + " is not available");
+			SpilLogging.Log("Ad " + type + " is not available");
 			enumAdType adType = enumAdType.Unknown;
 			if (type.ToLower().Trim().Equals("rewardvideo")) {
 				adType = enumAdType.RewardVideo;
@@ -1514,7 +1514,7 @@ namespace SpilGames.Unity.Base.Implementations{
 				adType = enumAdType.MoreApps;
 			}
 			if (adType == enumAdType.Unknown) {
-				SpilLogging.Log("SpilSDK-Unity AdNotAvailable event fired but type is unknown. Type: " + type);
+				SpilLogging.Log("AdNotAvailable event fired but type is unknown. Type: " + type);
 			}
 			if(OnAdNotAvailable != null) {
 				OnAdNotAvailable(adType);
@@ -1532,7 +1532,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireOpenParentalGate() {
-			SpilLogging.Log("SpilSDK-Unity OpenParentalGate");
+			SpilLogging.Log("OpenParentalGate");
 			if(OnOpenParentalGate != null) {
 				OnOpenParentalGate();
 			}
@@ -1551,7 +1551,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireAdStart() {
-			SpilLogging.Log("SpilSDK-Unity Ad started");
+			SpilLogging.Log("Ad started");
 			if(OnAdStarted != null) {
 				OnAdStarted();
 			}
@@ -1570,7 +1570,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireAdFinished(string response) {
-			SpilLogging.Log("SpilSDK-Unity Ad finished! Response = " + response);
+			SpilLogging.Log("Ad finished! Response = " + response);
 			SpilAdFinishedResponse responseObject = JsonHelper.getObjectFromJson<SpilAdFinishedResponse>(response);
 			if(OnAdFinished != null) {
 				OnAdFinished(responseObject);
@@ -1593,7 +1593,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireConfigUpdated() {
-			SpilLogging.Log("SpilSDK-Unity Config updated!");
+			SpilLogging.Log("Config updated!");
 			if(OnConfigUpdated != null){
 				OnConfigUpdated();
 			}
@@ -1611,7 +1611,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireConfigError(string error) {
-			SpilLogging.Log("SpilSDK-Unity Config Error with message: " + error);
+			SpilLogging.Log("Config Error with message: " + error);
 			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
 			if(OnConfigError != null){
 				OnConfigError(errorMessage);
@@ -1640,7 +1640,7 @@ namespace SpilGames.Unity.Base.Implementations{
 				Spil.GameData.SpilGameDataHandler();
 			}
 
-			SpilLogging.Log("SpilSDK-Unity Spil Game Data is available");
+			SpilLogging.Log("Spil Game Data is available");
 			if(OnSpilGameDataAvailable != null){
 				OnSpilGameDataAvailable();
 			}
@@ -1658,7 +1658,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireSpilGameDataError(string reason) {
-			SpilLogging.Log("SpilSDK-Unity Spil Game Data error with reason = " + reason);
+			SpilLogging.Log("Spil Game Data error with reason = " + reason);
 			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(reason);
 			if(OnSpilGameDataError != null){
 				OnSpilGameDataError(errorMessage);
@@ -1683,7 +1683,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void firePlayerDataUpdated(string data) {
-			SpilLogging.Log("SpilSDK-Unity Player Data has been updated with data: " + data);
+			SpilLogging.Log("Player Data has been updated with data: " + data);
 
 			PlayerDataUpdatedData playerDataUpdatedData = JsonHelper.getObjectFromJson<PlayerDataUpdatedData>(data);
 
@@ -1708,7 +1708,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void firePlayerDataEmptyGacha() {
-			SpilLogging.Log("SpilSDK-Unity Received nothing from gacha box!");
+			SpilLogging.Log("Received nothing from gacha box!");
 			if(OnPlayerDataEmptyGacha != null) {
 				OnPlayerDataEmptyGacha();
 			}
@@ -1728,7 +1728,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireGameStateUpdated(string access) {
-			SpilLogging.Log("SpilSDK-Unity Game State Data updated, access = " + access);
+			SpilLogging.Log("Game State Data updated, access = " + access);
 			if(OnGameStateUpdated != null) {
 				OnGameStateUpdated(access);
 			}
@@ -1746,7 +1746,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireOtherUsersGameStateLoaded(string message) {
-			SpilLogging.Log("SpilSDK-Unity Other users game state data loaded, message = " + message);
+			SpilLogging.Log("Other users game state data loaded, message = " + message);
 			OtherUsersGameStateData data = JsonHelper.getObjectFromJson<OtherUsersGameStateData>(message);
 			if(OnOtherUsersGameStateDataLoaded != null) {
 				OnOtherUsersGameStateDataLoaded(data);
@@ -1765,7 +1765,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireSplashScreenOpen() {
-			SpilLogging.Log("SpilSDK-Unity Web open");
+			SpilLogging.Log("Web open");
 			if(OnSplashScreenOpen != null) {
 				OnSplashScreenOpen();
 			}
@@ -1783,7 +1783,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireSplashScreenNotAvailable() {
-			SpilLogging.Log("SpilSDK-Unity splash screen not available");
+			SpilLogging.Log("splash screen not available");
 			if(OnSplashScreenNotAvailable != null) {
 				OnSplashScreenNotAvailable();
 			}
@@ -1801,7 +1801,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireSplashScreenClosed() {
-			SpilLogging.Log("SpilSDK-Unity Web closed");
+			SpilLogging.Log("Web closed");
 			if(OnSplashScreenClosed != null) {
 				OnSplashScreenClosed();
 			}
@@ -1819,7 +1819,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireSplashScreenOpenShop() {
-			SpilLogging.Log("SpilSDK-Unity Open Game Shop");
+			SpilLogging.Log("Open Game Shop");
 			if(OnSplashScreenOpenShop != null) {
 				OnSplashScreenOpenShop();
 			}
@@ -1837,7 +1837,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireSplashScreenData(string payload) {
-			SpilLogging.Log("SpilSDK-Unity Splash Screen Data: " + payload);
+			SpilLogging.Log("Splash Screen Data: " + payload);
 			if(OnSplashScreenData != null) {
 				OnSplashScreenData(payload);
 			}
@@ -1855,7 +1855,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireSplashScreenError(string error) {
-			SpilLogging.Log("SpilSDK-Unity Web Error with reason = " + error);
+			SpilLogging.Log("Web Error with reason = " + error);
 			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
 			if(OnSplashScreenError != null){
 				OnSplashScreenError(errorMessage);
@@ -1874,7 +1874,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireDailyBonusOpen() {
-			SpilLogging.Log("SpilSDK-Unity Web open");
+			SpilLogging.Log("Web open");
 			if(OnDailyBonusOpen != null){
 				OnDailyBonusOpen();
 			}
@@ -1892,7 +1892,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireDailyBonusNotAvailable() {
-			SpilLogging.Log("SpilSDK-Unity Daily bonus not available");
+			SpilLogging.Log("Daily bonus not available");
 			if(OnDailyBonusNotAvailable != null) {
 				OnDailyBonusNotAvailable();
 			}
@@ -1910,7 +1910,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireDailyBonusClosed() {
-			SpilLogging.Log("SpilSDK-Unity Web closed");
+			SpilLogging.Log("Web closed");
 			if(OnDailyBonusClosed != null) {
 				OnDailyBonusClosed();
 			}
@@ -1928,7 +1928,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireDailyBonusError(string error) {
-			SpilLogging.Log("SpilSDK-Unity Web Error with reason = " + error);
+			SpilLogging.Log("Web Error with reason = " + error);
 			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
 			if(OnDailyBonusError != null) {
 				OnDailyBonusError(errorMessage);
@@ -1949,7 +1949,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireDailyBonusReward(string receivedReward) {
-			SpilLogging.Log("SpilSDK-Unity Received reward = " + receivedReward);
+			SpilLogging.Log("Received reward = " + receivedReward);
 			if(OnDailyBonusReward != null){
 				OnDailyBonusReward(receivedReward);
 			}
@@ -1967,7 +1967,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireRewardTokenReceived(string response) {
-			SpilLogging.Log("SpilSDK-Unity Received reward = " + response);
+			SpilLogging.Log("Received reward = " + response);
 			RewardResponse rewardResponse = JsonHelper.getObjectFromJson<RewardResponse>(response);
 			if(OnRewardTokenReceived != null) {
 				OnRewardTokenReceived(rewardResponse.token, rewardResponse.reward,
@@ -1987,7 +1987,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireRewardTokenClaimed(string response) {
-			SpilLogging.Log("SpilSDK-Unity Claimed reward = " + response);
+			SpilLogging.Log("Claimed reward = " + response);
 			RewardResponse rewardResponse = JsonHelper.getObjectFromJson<RewardResponse>(response);
 			if(OnRewardTokenClaimed != null) {
 				OnRewardTokenClaimed(rewardResponse.reward, rewardResponse.rewardType);
@@ -2005,7 +2005,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireRewardTokenClaimFailed(string response) {
-			SpilLogging.Log("SpilSDK-Unity Claim failed for = " + response);
+			SpilLogging.Log("Claim failed for = " + response);
 			RewardResponse rewardResponse = JsonHelper.getObjectFromJson<RewardResponse>(response);
 			if(OnRewardTokenClaimFailed !=  null) {
 				OnRewardTokenClaimFailed(rewardResponse.rewardType, rewardResponse.error);
@@ -2050,7 +2050,7 @@ namespace SpilGames.Unity.Base.Implementations{
         /// Not intended for use by developers.
         /// </summary>
         private static void fireImageLoaded(Texture2D image, string localPath) {
-			SpilLogging.Log("SpilSDK-Unity fireImageLoaded");
+			SpilLogging.Log("fireImageLoaded");
 
             if (Spil.Instance.OnImageLoaded != null) {
                 Spil.Instance.OnImageLoaded(image, localPath);
@@ -2069,7 +2069,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireImageLoadSuccess(string response) {
-			SpilLogging.Log("SpilSDK-Unity fireImageLoadSuccess " + response);
+			SpilLogging.Log("fireImageLoadSuccess " + response);
 
 			JSONObject responseJSON = new JSONObject(response);
 
@@ -2094,7 +2094,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireImageLoadFailed(string response) {
-			SpilLogging.Log("SpilSDK-Unity fireImageLoadFailed error: " + response);
+			SpilLogging.Log("fireImageLoadFailed error: " + response);
 
 			JSONObject responseJSON = new JSONObject(response);
 
@@ -2119,7 +2119,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireImagePreloadingCompleted() {
-			SpilLogging.Log("SpilSDK-Unity fireImagePreloadingCompleted");
+			SpilLogging.Log("fireImagePreloadingCompleted");
 			if(OnImagePreloadingCompleted != null) {
 				OnImagePreloadingCompleted();
 			}
@@ -2141,7 +2141,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireIAPValid(string data) {
-			SpilLogging.Log("SpilSDK-Unity fireIAPValid with data: " + data);
+			SpilLogging.Log("fireIAPValid with data: " + data);
 			if(OnIAPValid != null) {
 				OnIAPValid(data);
 			}
@@ -2159,7 +2159,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireIAPInvalid(string message) {
-			SpilLogging.Log("SpilSDK-Unity fireIAPInvalid with data: " + message);
+			SpilLogging.Log("fireIAPInvalid with data: " + message);
 			if(OnIAPValid != null) {
 				OnIAPInvalid(message);
 			}
@@ -2177,7 +2177,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireIAPRequestPurchase(string skuId) {
-			SpilLogging.Log("SpilSDK-Unity fireIAPRequestPurchase with sku: " + skuId);
+			SpilLogging.Log("fireIAPRequestPurchase with sku: " + skuId);
 			if(OnIAPRequestPurchase != null) {
 				OnIAPRequestPurchase(skuId);
 			}
@@ -2195,7 +2195,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireIAPServerError(string error) {
-			SpilLogging.Log("SpilSDK-Unity fireIAPServerError with data: " + error);
+			SpilLogging.Log("fireIAPServerError with data: " + error);
 			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
 			if(OnIAPServerError != null) {
 				OnIAPServerError(errorMessage);
@@ -2218,7 +2218,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireServerTimeRequestSuccess(string time) {
-			SpilLogging.Log("SpilSDK-Unity fireServerTimeRequestSuccess with data: " + time);
+			SpilLogging.Log("fireServerTimeRequestSuccess with data: " + time);
 			long longTime = long.Parse(time);
 			if(OnServerTimeRequestSuccess != null) {
 				OnServerTimeRequestSuccess(longTime);
@@ -2237,7 +2237,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireServerTimeRequestFailed(string error) {
-			SpilLogging.Log("SpilSDK-Unity fireServerTimeRequestFailed with data: " + error);
+			SpilLogging.Log("fireServerTimeRequestFailed with data: " + error);
 			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
 			if(OnServerTimeRequestFailed != null) {
 				OnServerTimeRequestFailed(errorMessage);
@@ -2260,7 +2260,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireLiveEventAvailable() {
-			SpilLogging.Log("SpilSDK-Unity fireLiveEventAvailable");
+			SpilLogging.Log("fireLiveEventAvailable");
 			if(OnLiveEventAvailable != null) {
 				OnLiveEventAvailable();
 			}
@@ -2278,7 +2278,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireLiveEventStageOpen() {
-			SpilLogging.Log("SpilSDK-Unity fireLiveEventStageOpen");
+			SpilLogging.Log("fireLiveEventStageOpen");
 			if(OnLiveEventStageOpen != null) {
 				OnLiveEventStageOpen();
 			}
@@ -2296,7 +2296,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireLiveEventStageClosed() {
-			SpilLogging.Log("SpilSDK-Unity fireLiveEventStageClosed");
+			SpilLogging.Log("fireLiveEventStageClosed");
 			if(OnLiveEventStageClosed != null) {
 				OnLiveEventStageClosed();
 			}
@@ -2314,7 +2314,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireLiveEventNotAvailable() {
-			SpilLogging.Log("SpilSDK-Unity fireLiveEventNotAvailable");
+			SpilLogging.Log("fireLiveEventNotAvailable");
 			if(OnLiveEventNotAvailable != null) {
 				OnLiveEventNotAvailable();
 			}
@@ -2332,7 +2332,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireLiveEventError(string error) {
-			SpilLogging.Log("SpilSDK-Unity fireLiveEventError with data: " + error);
+			SpilLogging.Log("fireLiveEventError with data: " + error);
 			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
 			if(OnLiveEventError != null) {
 				OnLiveEventError(errorMessage);
@@ -2354,7 +2354,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireLiveEventUsedExternalItems(string items) {
-			SpilLogging.Log("SpilSDK-Unity Used items = " + items);
+			SpilLogging.Log("Used items = " + items);
 			if(OnLiveEventUsedExternalItems != null) {
 				OnLiveEventUsedExternalItems(items);
 			}
@@ -2375,7 +2375,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireLiveEventReward(string receivedReward) {
-			SpilLogging.Log("SpilSDK-Unity Received reward = " + receivedReward);
+			SpilLogging.Log("Received reward = " + receivedReward);
 			if(OnLiveEventReward != null) {
 				OnLiveEventReward(receivedReward);
 			}
@@ -2394,7 +2394,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireLiveEventMetRequirements(string sMetRequirements) {
-			SpilLogging.Log("SpilSDK-Unity LiveEventMetRequirements with data = " + sMetRequirements);
+			SpilLogging.Log("LiveEventMetRequirements with data = " + sMetRequirements);
 			bool metRequirements = Convert.ToBoolean(sMetRequirements);
 			if(OnLiveEventMetRequirements != null) {
 				OnLiveEventMetRequirements(metRequirements);
@@ -2414,7 +2414,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireLiveEventCompleted() {
-			SpilLogging.Log("SpilSDK-Unity fireLiveEventCompleted");
+			SpilLogging.Log("fireLiveEventCompleted");
 			if(OnLiveEventCompleted != null) {
 				OnLiveEventCompleted();
 			}
@@ -2436,7 +2436,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireTieredEventsAvailable() {
-			SpilLogging.Log("SpilSDK-Unity fireTieredEventsAvailable");
+			SpilLogging.Log("fireTieredEventsAvailable");
 			if(OnTieredEventsAvailable != null) {
 				OnTieredEventsAvailable();
 			}
@@ -2454,7 +2454,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireTieredEventsNotAvailable() {
-			SpilLogging.Log("SpilSDK-Unity fireTieredEventsNotAvailable");
+			SpilLogging.Log("fireTieredEventsNotAvailable");
 			if(OnTieredEventsNotAvailable != null) {
 				OnTieredEventsNotAvailable();
 			}
@@ -2472,7 +2472,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireTieredEventUpdated(string data) {
-			SpilLogging.Log("SpilSDK-Unity fireTieredEventUpdated with data = " + data);
+			SpilLogging.Log("fireTieredEventUpdated with data = " + data);
 			TieredEventProgress tieredProgress = JsonHelper.getObjectFromJson<TieredEventProgress>(data);
 			if(OnTieredEventUpdated != null) {
 				OnTieredEventUpdated(tieredProgress);
@@ -2491,7 +2491,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireTieredEventsError(string data) {
-			SpilLogging.Log("SpilSDK-Unity Tiered Events Error with reason = " + data);
+			SpilLogging.Log("Tiered Events Error with reason = " + data);
 			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(data);
 			if(OnTieredEventsError != null) {
 				OnTieredEventsError(errorMessage);
@@ -2510,7 +2510,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireTieredEventProgressOpen() {
-			SpilLogging.Log("SpilSDK-Unity fireTieredEventStageOpen");
+			SpilLogging.Log("fireTieredEventStageOpen");
 			if(OnTieredEventProgressOpen != null) {
 				OnTieredEventProgressOpen();
 			}
@@ -2528,7 +2528,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireTieredEventProgressClosed() {
-			SpilLogging.Log("SpilSDK-Unity fireTieredEventStageClosed");
+			SpilLogging.Log("fireTieredEventStageClosed");
 			if(OnTieredEventProgressClosed != null) {
 				OnTieredEventProgressClosed();
 			}
@@ -2550,7 +2550,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireLoginSuccessful(string message) {
-			SpilLogging.Log("SpilSDK-Unity fireLoginSuccessful with message: " + message);
+			SpilLogging.Log("fireLoginSuccessful with message: " + message);
 
 			JSONObject loginJSON = new JSONObject(message);
 			bool resetData = loginJSON.GetField("resetData").b;
@@ -2574,7 +2574,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireLoginFailed(string error) {
-			SpilLogging.Log("SpilSDK-Unity fireLoginFailed with data: " + error);
+			SpilLogging.Log("fireLoginFailed with data: " + error);
 			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
 			if(OnLoginFailed != null) {
 				OnLoginFailed(errorMessage);
@@ -2593,7 +2593,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireRequestLogin() {
-			SpilLogging.Log("SpilSDK-Unity fireRequestLogin");
+			SpilLogging.Log("fireRequestLogin");
 			if(OnRequestLogin != null) {
 				OnRequestLogin();
 			}
@@ -2611,7 +2611,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireLogoutSuccessful() {
-			SpilLogging.Log("SpilSDK-Unity fireLogoutSuccessful");
+			SpilLogging.Log("fireLogoutSuccessful");
 			if(OnLogoutSuccessful != null) {
 				OnLogoutSuccessful();
 			}
@@ -2630,7 +2630,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// Developers can subscribe to events defined in Spil.Instance.
 		/// </summary>
 		public void fireLogoutFailed(string error) {
-			SpilLogging.Log("SpilSDK-Unity fireLogoutFailed with data: " + error);
+			SpilLogging.Log("fireLogoutFailed with data: " + error);
 			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
 			if(OnLogoutFailed != null) {
 				OnLogoutFailed(errorMessage);
@@ -2649,7 +2649,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireAuthenticationError(string error) {
-			SpilLogging.Log("SpilSDK-Unity fireAuthenticationError with data: " + error);
+			SpilLogging.Log("fireAuthenticationError with data: " + error);
 			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(error);
 			if(OnAuthenticationError != null) {
 				OnAuthenticationError(errorMessage);
@@ -2668,7 +2668,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// Developers can subscribe to events defined in Spil.Instance.
 		/// </summary>
 		public void fireUserDataMergeConflict(string data) {
-			SpilLogging.Log("SpilSDK-Unity fireUserDataMergeConflict");
+			SpilLogging.Log("fireUserDataMergeConflict");
 			MergeConflict mergeConflict = JsonHelper.getObjectFromJson<MergeConflict>(data);
 			if(OnUserDataMergeConflict != null) {
 				OnUserDataMergeConflict(mergeConflict.localData, mergeConflict.remoteData);
@@ -2686,7 +2686,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireUserDataMergeSuccessful() {
-			SpilLogging.Log("SpilSDK-Unity fireUserDataMergeSuccessful");
+			SpilLogging.Log("fireUserDataMergeSuccessful");
 
 			if (Spil.PlayerData != null) {
 				Spil.PlayerData.UpdatePlayerData();
@@ -2708,7 +2708,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireUserDataMergeFailed(string data) {
-			SpilLogging.Log("SpilSDK-Unity fireUserDataMergeFailed");
+			SpilLogging.Log("fireUserDataMergeFailed");
 
 			JSONObject jsonData = new JSONObject(data);
 			string mergeData = jsonData.HasField("mergeData") ? jsonData.GetField("mergeData").str : null;
@@ -2730,7 +2730,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireUserDataHandleMerge(string mergeType) {
-			SpilLogging.Log("SpilSDK-Unity fireUserDataHandleMerge");
+			SpilLogging.Log("fireUserDataHandleMerge");
 			if(OnUserDataHandleMerge != null) {
 				OnUserDataHandleMerge(mergeType);
 			}
@@ -2749,7 +2749,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireUserDataSyncError() {
-			SpilLogging.Log("SpilSDK-Unity fireUserDataSyncError");
+			SpilLogging.Log("fireUserDataSyncError");
 			if(OnUserDataSyncError != null) {
 				OnUserDataSyncError();
 			}
@@ -2768,7 +2768,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireUserDataLockError() {
-			SpilLogging.Log("SpilSDK-Unity fireUserDataLockError");
+			SpilLogging.Log("fireUserDataLockError");
 			if(OnUserDataLockError != null) {
 				OnUserDataLockError();
 			}
@@ -2788,7 +2788,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireUserDataError(string sErrorMessage) {
-			SpilLogging.Log("SpilSDK-Unity fireUserDataError with data: " + sErrorMessage);
+			SpilLogging.Log("fireUserDataError with data: " + sErrorMessage);
 			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(sErrorMessage);
 			if(OnUserDataError != null){
 				OnUserDataError(errorMessage);
@@ -2807,7 +2807,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void fireUserDataAvailable() {
-			SpilLogging.Log("SpilSDK-Unity fireUserDataAvailable");
+			SpilLogging.Log("fireUserDataAvailable");
 			Spil.PlayerData.UpdatePlayerData();
 			if(OnUserDataAvailable != null) {
 				OnUserDataAvailable();
@@ -2830,7 +2830,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void firePrivacyPolicyStatus(string sAccepted) {
-			SpilLogging.Log("SpilSDK-Unity firePrivacyPolicyStatus");
+			SpilLogging.Log("firePrivacyPolicyStatus");
 
 			bool accepted =Convert.ToBoolean(sAccepted);
 
@@ -2865,7 +2865,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// This method is meant for internal use only, it should not be used by developers.
 		/// </summary>
 		public void firePermissionResponse(string message) {
-			SpilLogging.Log("SpilSDK-Unity Permission response with message: " + message);
+			SpilLogging.Log("Permission response with message: " + message);
 			SpilAndroidUnityImplementation.PermissionResponseObject permissionResponse =
 				JsonHelper.getObjectFromJson<SpilAndroidUnityImplementation.PermissionResponseObject>(message);
 			if(OnPermissionResponse != null) {
