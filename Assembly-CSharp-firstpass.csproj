@@ -71,7 +71,9 @@
     <None Include="Assets\Plugins\Android\answers\AndroidManifest.xml" />
     <None Include="Assets\Plugins\Android\fabric\NOTICE.txt" />
     <None Include="Assets\Plugins\UnityPurchasing\script\link.xml" />
+    <None Include="Assets\Plugins\iOS\Spil.framework\Frameworks\CHAMoatMobileAppKit.framework\LICENSE.txt" />
     <None Include="Assets\Plugins\Android\fabric\Template-AndroidManifest.xml" />
+    <None Include="Assets\Plugins\iOS\Spil.framework\Frameworks\CHAMoatMobileAppKit.framework\VERSION.txt" />
     <None Include="Assets\Plugins\Android\fabric\res\values\strings.xml" />
     <None Include="Assets\Plugins\Android\beta\AndroidManifest.xml" />
     <None Include="Assets\Plugins\Android\crashlytics\AndroidManifest.xml" />

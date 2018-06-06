@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 
 [InitializeOnLoad]
-public class SpilIntro : EditorWindow {
+public class SpilEditorIntro : EditorWindow {
     private int tabSelected = 0;
     
     private Vector2 scrollPos;
@@ -12,7 +12,7 @@ public class SpilIntro : EditorWindow {
     
     private static GUIStyle centeredStyle;
     
-    static SpilIntro() {
+    static SpilEditorIntro() {
         string spilIntroductionShown = PlayerPrefs.GetString("spilIntroduction", "0");
         if (spilIntroductionShown.Equals("0") || !spilIntroductionShown.Equals(SpilUnityImplementationBase.PluginVersion)) {
             PlayerPrefs.SetString("spilIntroduction", SpilUnityImplementationBase.PluginVersion);
@@ -29,7 +29,7 @@ public class SpilIntro : EditorWindow {
 
     [MenuItem("Spil SDK/Introduction", false, 0)]
     static void Init() {
-        SpilIntro window = (SpilIntro) EditorWindow.GetWindow(typeof(SpilIntro));
+        SpilEditorIntro window = (SpilEditorIntro) EditorWindow.GetWindow(typeof(SpilEditorIntro));
         window.autoRepaintOnSceneChange = true;
         window.titleContent.text = "Introduction";
         window.Show();
@@ -79,7 +79,7 @@ public class SpilIntro : EditorWindow {
         GUILayout.Label("    1. Make sure to configure the game bundle id, that it matches the one that has been provided by the Spil representative and that it matches the value defined in SLOT.", EditorStyles.wordWrappedLabel);
         GUILayout.Label("    2. Create a GameObject in the first scene of your game, name that GameObject SpilSDK and assign the Spil (Script) component to it.", EditorStyles.wordWrappedLabel);
         GUILayout.Label("    3. Input the Android Project Id (which you received from the Spil representative) into your SpilSDK GameObject. This can be done either by accessing the Android Configuration menu (Top Bar->Spil SDK->Configuration->Android Tab) and pasting the id there or selecting the GameObject, inspecting it and pasting the id in the Android Settings/Project Id section. An example of a Project Id: 492493592102.", EditorStyles.wordWrappedLabel);
-        GUILayout.Label("    4. Create the default configuration files by going to the Spil SDK menu (Top Bar), selecting the Configuration menu, going into the General tab and clicking Create Default Configuration Files button. Make sure that the version code is set correctly and matches the version codes defines in SLOT.", EditorStyles.wordWrappedLabel);
+        GUILayout.Label("    4. Create the default configuration files by going to the Spil SDK menu (Top Bar), selecting the Configuration menu, going into the General tab and clicking Create Default Configuration Files button. Make sure that the version code is set correctly and matches the version codes defined in SLOT.", EditorStyles.wordWrappedLabel);
         GUILayout.Label("    5. By default the Spil SDK will have debug mode turned off when using it in the editor. This setting will also influence what default configuration will be created (debug/testing(SLOT) or production). If you want to enable debug mode, you can do so by enabling it in the Spil SDK GameObject, in the Editor Settings section.", EditorStyles.wordWrappedLabel);
         GUILayout.Label("    6. Pay attention to the Unity console as the Spil SDK provides useful information. You can also turn off Spil Logging by disabling the setting in the Spil SDK GameObject.", EditorStyles.wordWrappedLabel);
         GUILayout.Label("    7. Start using the Spil SDK by calling 'Spil.Instance.' or 'Spil.PlayerData.' depending on your needs. Links to all the features of the SDK can be found in the Spil SDK menu (Top Bar), selecting the Documentation menu.", EditorStyles.wordWrappedLabel);
@@ -87,10 +87,11 @@ public class SpilIntro : EditorWindow {
         GUILayout.Label("When setting up your game to create an Android build, make sure you have done the following steps:", centeredStyle);
         GUILayout.Label("");
         GUILayout.Label("    1. Used the correct AndroidManifest.xml definition. This means that the Android application is the SpilSDKApplication (com.spilgames.spilsdk.activities.SpilSDKApplication) and the main Android activity is the SpilUnityActivity (com.spilgames.spilsdk.activities.SpilUnityActivity). We advise that you pay attention to the supplied AndroidManifest.xml contained in the Plugin package..", EditorStyles.wordWrappedLabel);
-        GUILayout.Label("    2. Make sure to copy the Google Play Services libraries in the correct folder and that there are no multiple version of the Google Play Services.", EditorStyles.wordWrappedLabel);
+        GUILayout.Label("    2. Make sure to copy the Google Play Services libraries in the correct folder (Plugins/Android) and that there are no multiple version of the Google Play Services. No subdirectories should be used.", EditorStyles.wordWrappedLabel);
         GUILayout.Label("    3. Before building for Android, go to the Spil SDK menu (Top Bar), select the Configuration menu, go into the Android tab and click the Verify Android Setup button. Pay attention to the console for any potential issues.", EditorStyles.wordWrappedLabel);
         GUILayout.Label("");
         GUILayout.Label("If you have any other question feel free to contact the Spil SDK developers in the Slack channel assigned to your game.", centeredStyle);
+        GUILayout.Label("You can always open this screen from the Spil SDK menu (Top Bar).", centeredStyle);
         GUILayout.Label("");
         GUILayout.Label("Have fun and create great games!", centeredStyle);
         GUILayout.Label("");

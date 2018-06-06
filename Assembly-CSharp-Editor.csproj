@@ -132,9 +132,9 @@
     <Compile Include="Assets\Fabric\Kits\Crashlytics\Editor\Postbuild\CrashlyticsPostBuildiOS.cs" />
     <Compile Include="Assets\Spilgames\Editor\Menu\SpilEditorConfig.cs" />
     <Compile Include="Assets\Spilgames\Editor\Menu\SpilEditorDocumentation.cs" />
+    <Compile Include="Assets\Spilgames\Editor\Menu\SpilEditorIntro.cs" />
     <Compile Include="Assets\Spilgames\Editor\Menu\SpilEditorReleases.cs" />
     <Compile Include="Assets\Spilgames\Editor\Menu\SpilEditorReportIssue.cs" />
-    <Compile Include="Assets\Spilgames\Editor\Menu\SpilIntro.cs" />
     <Compile Include="Assets\Spilgames\Editor\PostBuild\SpilAndroidBuildPostProcess.cs" />
     <Compile Include="Assets\Spilgames\Editor\PostBuild\SpilIOSBuildPostProcess.cs" />
     <Compile Include="Assets\Spilgames\Editor\PostBuild\TVOSBuildPostProcess.cs" />
