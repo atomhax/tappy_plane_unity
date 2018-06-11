@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 
 public class AssetBundleController : MonoBehaviour{
     public static IEnumerator DownloadGoldenPlaneBundle(GameController gameController, SpilGames.Unity.Helpers.AssetBundles.AssetBundle assetBundleConfig) {
-		UnityWebRequest request = null;//UnityWebRequestAssetBundle.GetAssetBundle(assetBundleConfig.Url, assetBundleConfig.Hash, 0);
+		UnityWebRequest request = UnityWebRequestAssetBundle.GetAssetBundle(assetBundleConfig.Url, assetBundleConfig.Hash, 0);
         yield return request.SendWebRequest();
 
         AssetBundle bundle = DownloadHandlerAssetBundle.GetContent(request);
@@ -25,9 +25,9 @@ public class AssetBundleController : MonoBehaviour{
     public static IEnumerator DownloadBackgroundBundle(GameController gameController, SpilGames.Unity.Helpers.AssetBundles.AssetBundle assetBundleConfig) {
         UnityWebRequest request;
         if (assetBundleConfig.Version > 0) {
-			request = null;//UnityWebRequestAssetBundle.GetAssetBundle(assetBundleConfig.Url, assetBundleConfig.Version, 0);
+			request = UnityWebRequestAssetBundle.GetAssetBundle(assetBundleConfig.Url, assetBundleConfig.Version, 0);
         } else {
-			request = null;//UnityWebRequestAssetBundle.GetAssetBundle(assetBundleConfig.Url);
+			request = UnityWebRequestAssetBundle.GetAssetBundle(assetBundleConfig.Url);
         }
         
         yield return request.SendWebRequest();

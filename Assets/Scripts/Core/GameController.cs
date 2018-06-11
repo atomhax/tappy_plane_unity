@@ -411,6 +411,9 @@ public class GameController : MonoBehaviour
     public void UpdateSkins() {
         if (backgroundSpriteRenderes != null) {
             foreach (SpriteRenderer spriteRenderer in backgroundSpriteRenderes) {
+                if (spriteRenderer == null) {
+                    continue;
+                }
                 Sprite sprite = backgroundSprites[PlayerPrefs.GetInt("Background", 0)];
                 if (sprite != null) {
                     spriteRenderer.sprite = sprite;
