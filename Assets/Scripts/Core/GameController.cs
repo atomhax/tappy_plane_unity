@@ -730,10 +730,10 @@ public class GameController : MonoBehaviour
 		// Tested with add links on custom made web page: http://splashscreens.cdn.spilcloud.com/4/FBDeeplinkTest4.html
 
 		Debug.Log("FB DeeplinkCallback: " + result);
-		if(!String.IsNullOrEmpty(result.Url)) {
-			Debug.Log("FB Deeplink detected: " + result.Url);
+		if(!String.IsNullOrEmpty(result.Url) || !String.IsNullOrEmpty(result.TargetUrl)) {
+			Debug.Log("FB Deeplink detected: " + (result.Url ?? result.TargetUrl));
 
-			Dictionary<string, string> urlParams = GetParams (result.Url.Replace("://", "://&")); // Hack fix: Make sure the token parameter is detected.
+			Dictionary<string, string> urlParams = GetParams (result.Url != null && !result.Url.Contains("?") ? result.Url.Replace("://", "://&") : !result.TargetUrl.Contains("?") ? result.TargetUrl.Replace("://", "://&") : result.TargetUrl); // Hack fix: Make sure the token parameter is detected.
 
 		    if (urlParams.ContainsKey("token")) {
 		        string rewardToken = urlParams["token"];
