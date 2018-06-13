@@ -13,6 +13,7 @@ public class SpilEditorDocumentation : EditorWindow {
         SpilEditorDocumentation window = (SpilEditorDocumentation) EditorWindow.GetWindow(typeof(SpilEditorDocumentation));
         window.autoRepaintOnSceneChange = true;
         window.titleContent.text = "Documentation";
+        window.minSize = new Vector2(1000, 600);
         window.Show();
     }
 
@@ -84,24 +85,32 @@ public class SpilEditorDocumentation : EditorWindow {
             tabSelected = 11;
         }
 
-        if (GUILayout.Toggle(tabSelected == 12, "Splash and Daily Bonus Screens", EditorStyles.toolbarButton)) {
+        if (GUILayout.Toggle(tabSelected == 12, "Asset Bundles", EditorStyles.toolbarButton)) {
             tabSelected = 12;
         }
-
-        if (GUILayout.Toggle(tabSelected == 13, "Live Events", EditorStyles.toolbarButton)) {
+        
+        if (GUILayout.Toggle(tabSelected == 13, "Splash and Daily Bonus Screens", EditorStyles.toolbarButton)) {
             tabSelected = 13;
         }
 
-        if (GUILayout.Toggle(tabSelected == 14, "Deep Linking", EditorStyles.toolbarButton)) {
+        if (GUILayout.Toggle(tabSelected == 14, "Tiered Events", EditorStyles.toolbarButton)) {
             tabSelected = 14;
         }
-
-        if (GUILayout.Toggle(tabSelected == 15, "Handling Errors", EditorStyles.toolbarButton)) {
+        
+        if (GUILayout.Toggle(tabSelected == 15, "Live Events", EditorStyles.toolbarButton)) {
             tabSelected = 15;
         }
 
-        if (GUILayout.Toggle(tabSelected == 16, "Anti-Cheating", EditorStyles.toolbarButton)) {
+        if (GUILayout.Toggle(tabSelected == 16, "Deep Linking", EditorStyles.toolbarButton)) {
             tabSelected = 16;
+        }
+
+        if (GUILayout.Toggle(tabSelected == 17, "Handling Errors", EditorStyles.toolbarButton)) {
+            tabSelected = 17;
+        }
+
+        if (GUILayout.Toggle(tabSelected == 18, "Anti-Cheating", EditorStyles.toolbarButton)) {
+            tabSelected = 18;
         }
 
         GUILayout.EndVertical();
@@ -148,18 +157,24 @@ public class SpilEditorDocumentation : EditorWindow {
                 DrawGameState();
                 break;
             case 12:
-                DrawSplashScreenDailyBonus();
+                DrawAssetBundles();
                 break;
             case 13:
-                DrawLiveEvents();
+                DrawSplashScreenDailyBonus();
                 break;
             case 14:
-                DrawDeepLinking();
+                DrawTieredEvents();
                 break;
             case 15:
-                DrawHandlingErrors();
+                DrawLiveEvents();
                 break;
             case 16:
+                DrawDeepLinking();
+                break;
+            case 17:
+                DrawHandlingErrors();
+                break;
+            case 18:
                 DrawAntiCheating();
                 break;
         }
@@ -302,6 +317,17 @@ public class SpilEditorDocumentation : EditorWindow {
         }
     }
 
+    private void DrawAssetBundles() {
+        GUILayout.Label(
+            "The Spil Games framework offers the possibility to have SLOT configuration for Asset Bundles. Asset Bundles configurations can be done through SLOT, and as so please ask your Product Manager to configure this before starting the implementation of this feature.",
+            EditorStyles.wordWrappedLabel);
+        GUILayout.Label("");
+        GUILayout.Label("You can find more Asset Bundles information here:", EditorStyles.wordWrappedLabel);
+        if (GUILayout.Button("Spil SDK Asset Bundles", GUILayout.Width(400))) {
+            Application.OpenURL("http://www.spilgames.com/integration/unity/implementing-spil-sdk/implementing-asset-bundles-configurations/");
+        }
+    }
+    
     private void DrawSplashScreenDailyBonus() {
         GUILayout.Label(
             "The Spil Games framework offers the possibility of supporting both splash and bonus screens. Splash screens appear while a game is loading. They are a very useful means of engaging with the user community, and can be used for a variety of reasons, including as an additional form of advertising, to restrict access to content such as pornography or gambling, and to grab the user’s attention through special offers. Typically, daily bonus screens are used to reward users each time they return to the game. Within the Spil Games framework, both screen types are implemented as HTML5 webpages that appear as pop-ups within the game. This has the advantage that changes can be made to them without the need to update the game itself.",
@@ -313,6 +339,17 @@ public class SpilEditorDocumentation : EditorWindow {
         }
     }
 
+    private void DrawTieredEvents() {
+        GUILayout.Label(
+            "The Spil Games framework offers the possibility to provide predefined tiered events. A tiered event is a unique event(not to be confused with tracking events) which allows the user to get special rewards by spending currencies or items within the game. A tiered event consists of multiple tiers, each individual tier has a certain goal. The goal is always to spend a certain amount of currency or items and the player will get a reward after completing a tier and then progresses to the next tier. The tiered event is finished when all the tiers are completed or when the end date of the event has been reached. ",
+            EditorStyles.wordWrappedLabel);
+        GUILayout.Label("");
+        GUILayout.Label("You can find more Tiered Events information here:", EditorStyles.wordWrappedLabel);
+        if (GUILayout.Button("Spil SDK Tiered Events", GUILayout.Width(400))) {
+            Application.OpenURL("http://www.spilgames.com/integration/unity/implementing-spil-sdk/tiered-events/");
+        }
+    }
+    
     private void DrawLiveEvents() {
         GUILayout.Label(
             "The Spil Games framework offers the possibility to provide predefined live events. Such events allows the user to receive certain rewards by collecting and applying special in-game items which are only available during the duration of the event. Live events are usually combined with push notifications, splash screens and daily bonuses to motivate users to progress faster within the live event. ",

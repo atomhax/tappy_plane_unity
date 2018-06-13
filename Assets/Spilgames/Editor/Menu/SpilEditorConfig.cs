@@ -53,6 +53,7 @@ public class SpilEditorConfig : EditorWindow {
         SpilEditorConfig window = (SpilEditorConfig) EditorWindow.GetWindow(typeof(SpilEditorConfig));
         window.autoRepaintOnSceneChange = true;
         window.titleContent.text = "Configuration";
+        window.minSize = new Vector2(1000, 600);
         window.Show();
 
         androidGameVersion = PlayerSettings.bundleVersion;

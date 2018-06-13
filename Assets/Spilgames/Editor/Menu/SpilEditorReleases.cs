@@ -17,6 +17,7 @@ public class SpilEditorReleases : EditorWindow {
 		SpilEditorReleases window = (SpilEditorReleases)EditorWindow.GetWindow (typeof(SpilEditorReleases));
 		window.autoRepaintOnSceneChange = true;
 		window.titleContent.text = "Release notes";
+		window.minSize = new Vector2(1000, 600);
 		window.Show ();
 	}
 
