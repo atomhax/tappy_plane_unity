@@ -49,6 +49,85 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         public static BaseCustomEvent CustomEvent(string eventName) {
             return new BaseCustomEvent(eventName);
         }
+
+        public class BaseNotificationSent : BaseTracking {
+            public BaseNotificationSent(string uniqueNotificationId) {
+                eventName = "notificationSent";
+                parameters.Add("uniqueNotificationId", uniqueNotificationId);
+                parameters.Add("type", "local");
+            }
+        }
+        
+        /// <summary>
+        /// Sends the "notificationSent" event to the native Spil SDK which will send a request to the back-end.
+        /// Only use this event if you are using local push notifications outside the Spil SDK.
+        /// To be fired when scheduling a notification.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        /// <param name="uniqueNotificationId">A unique idetifier for the push notification</param>
+        public static BaseNotificationSent NotificationSent(string uniqueNotificationId) {
+            return new BaseNotificationSent(uniqueNotificationId);
+        }
+        
+        public class BaseNotificationReceived : BaseTracking {
+            public BaseNotificationReceived(string uniqueNotificationId) {
+                eventName = "notificationReceived";
+                parameters.Add("uniqueNotificationId", uniqueNotificationId);
+                parameters.Add("type", "local");
+            }
+        }
+        
+        /// <summary>
+        /// Sends the "notificationSent" event to the native Spil SDK which will send a request to the back-end.
+        /// Only use this event if you are using local push notifications outside the Spil SDK.
+        /// To be used when the system displays the notification to the user.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        /// <param name="uniqueNotificationId">A unique idetifier for the push notification</param>
+        public static BaseNotificationReceived NotificationReceived(string uniqueNotificationId) {
+            return new BaseNotificationReceived(uniqueNotificationId);
+        }
+        
+        public class BaseNotificationOpened : BaseTracking {
+            public BaseNotificationOpened(string uniqueNotificationId, bool didLaunchApp) {
+                eventName = "notificationOpened";
+                parameters.Add("uniqueNotificationId", uniqueNotificationId);
+                parameters.Add("didLaunchApp", didLaunchApp);
+                parameters.Add("type", "local");
+            }
+        }
+        
+        /// <summary>
+        /// Sends the "notificationSent" event to the native Spil SDK which will send a request to the back-end.
+        /// Only use this event if you are using local push notifications outside the Spil SDK.
+        /// To be used when the user clicks on the notification.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        /// <param name="uniqueNotificationId">A unique idetifier for the push notification</param>
+        /// <param name="didLaunchApp">Value that tells if the notification opened the application or the application was already opened when the user clicked it</param>
+        public static BaseNotificationOpened NotificationOpened(string uniqueNotificationId, bool didLaunchApp) {
+            return new BaseNotificationOpened(uniqueNotificationId, didLaunchApp);
+        }
+        
+        public class BaseNotificationDismissed : BaseTracking {
+            public BaseNotificationDismissed(string uniqueNotificationId) {
+                eventName = "notificationDismissed";
+                
+                parameters.Add("uniqueNotificationId", uniqueNotificationId);
+                parameters.Add("type", "local");
+            }
+        }
+        
+        /// <summary>
+        /// Sends the "notificationSent" event to the native Spil SDK which will send a request to the back-end.
+        /// Only use this event if you are using local push notifications outside the Spil SDK.
+        /// To be used when the user dismisses the notification.
+        /// See http://www.spilgames.com/developers/integration/unity/implementing-spil-sdk/spil-sdk-event-tracking/ for more information on events.
+        /// </summary>
+        /// <param name="uniqueNotificationId">A unique idetifier for the push notification</param>
+        public static BaseNotificationDismissed NotificationDismissed(string uniqueNotificationId) {
+            return new BaseNotificationDismissed(uniqueNotificationId);
+        }
         
         public class BaseMilestoneAchieved : BaseTracking {
             public BaseMilestoneAchieved(string name) {
