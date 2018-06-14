@@ -8569,7 +8569,7 @@ MonoBehaviour:
   EditorDebugMode: 0
   spilUserIdEditor: 
   bundleIdEditor: com.spilgames.tappyplane
-  iapPurchaseRequestValue: com.spilgames.tappyplane.diamondpack01
+  iapPurchaseRequestValue: com.spilgames.tappyplane.goldplane
   currencyName: Reward
   currencyId: reward
   reward: 50
