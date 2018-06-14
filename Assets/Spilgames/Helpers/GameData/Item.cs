@@ -95,7 +95,13 @@ namespace SpilGames.Unity.Helpers.GameData {
 
         private List<GachaContent> content;
 
-        public Item(int id, string name, int type, string imageUrl, string displayName, string displayDescription, bool isGacha, List<SpilGachaContent> content) {
+        public Dictionary<string, object> Properties {
+            get { return properties; }
+        }
+
+        private Dictionary<string, object> properties;
+        
+        public Item(int id, string name, int type, string imageUrl, string displayName, string displayDescription, bool isGacha, List<SpilGachaContent> content, Dictionary<string, object> properties) {
             this.id = id;
             this.name = name;
             this.type = type;
@@ -110,6 +116,8 @@ namespace SpilGames.Unity.Helpers.GameData {
                     this.content.Add(new GachaContent(gachaContent.id, gachaContent.type, gachaContent.amount, gachaContent.weight, gachaContent.position, gachaContent.imageUrl));
                 }
             }
+
+            this.properties = properties;
         }
     }
 }

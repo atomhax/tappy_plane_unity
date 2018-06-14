@@ -178,18 +178,6 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                             promotionData.affectedEntities = affectedEntities;
                         }
                         
-                        promotionData.affectedEntities = new List<SpilPromotionAffectedEntity>();
-                        if (promotion.HasField("affectedEntities")) {
-                            List<SpilPromotionAffectedEntity> affectedEntities = new List<SpilPromotionAffectedEntity>();
-                            JSONObject affectedEntitiesJSON = promotion.GetField("affectedEntities");
-                            for (int j = 0; j < affectedEntitiesJSON.Count; j++) {
-                                SpilPromotionAffectedEntity affectedEntity = JsonHelper.getObjectFromJson<SpilPromotionAffectedEntity>(affectedEntitiesJSON.list[j].Print());
-                                affectedEntities.Add(affectedEntity);
-                            }
-
-                            promotionData.affectedEntities = affectedEntities;
-                        }
-                        
                         promotionData.extraEntities = new List<SpilPromotionExtraEntity>();
                         if (promotion.HasField("extraEntities")) {
                             List<SpilPromotionExtraEntity> extraEntities = new List<SpilPromotionExtraEntity>();

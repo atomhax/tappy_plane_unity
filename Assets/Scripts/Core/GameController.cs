@@ -453,10 +453,12 @@ public class GameController : MonoBehaviour
     }
 
     public void ToggleShop() {
+        Debug.Log(Spil.GameData.GetItem(49).Properties["speed"]);
         shopPanel.SetActive(!shopPanel.activeInHierarchy);
     }
 
     public void OpenShop() {
+        Debug.Log(Spil.GameData.GetItem(49).Properties.ToString());
         shopPanel.SetActive(true);
     }
 

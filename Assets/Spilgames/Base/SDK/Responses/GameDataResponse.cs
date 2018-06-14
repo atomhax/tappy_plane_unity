@@ -26,6 +26,7 @@ namespace SpilGames.Unity.Base.SDK {
         public string displayDescription;
         public bool isGacha;
         public List<SpilGachaContent> content;
+        public Dictionary<string, object> properties = new Dictionary<string, object>();
     }
 
     public class SpilGachaContent {

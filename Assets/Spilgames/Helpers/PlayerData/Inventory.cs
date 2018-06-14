@@ -21,7 +21,7 @@ namespace SpilGames.Unity.Helpers.PlayerData {
             //Adding currencies of the player
             if (itemData != null) {
                 foreach (PlayerItemData playerItemData in itemData) {
-                    items.Add(new PlayerItem(playerItemData.id, playerItemData.name, playerItemData.type, playerItemData.amount, playerItemData.value, playerItemData.imageUrl, playerItemData.displayName, playerItemData.displayDescription, playerItemData.isGacha, playerItemData.content));
+                    items.Add(new PlayerItem(playerItemData.id, playerItemData.name, playerItemData.type, playerItemData.amount, playerItemData.value, playerItemData.imageUrl, playerItemData.displayName, playerItemData.displayDescription, playerItemData.isGacha, playerItemData.content, playerItemData.properties));
                 }
             }
         }
@@ -51,7 +51,7 @@ namespace SpilGames.Unity.Helpers.PlayerData {
 
         private int value;
 
-        public PlayerItem(int id, string name, int type, int amount, int value, string imageURL, string displayName, string displayDescription, bool isGacha, List<SpilGachaContent> content) : base(id, name, type, imageURL, displayName, displayDescription, isGacha, content) {
+        public PlayerItem(int id, string name, int type, int amount, int value, string imageURL, string displayName, string displayDescription, bool isGacha, List<SpilGachaContent> content, Dictionary<string, object> properties) : base(id, name, type, imageURL, displayName, displayDescription, isGacha, content, properties) {
             this.amount = amount;
             this.value = value;
         }

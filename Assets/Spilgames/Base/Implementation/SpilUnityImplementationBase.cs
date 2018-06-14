@@ -1401,7 +1401,7 @@ namespace SpilGames.Unity.Base.Implementations{
 
         /// <summary>
         /// This event indicates that the asset bundles configuration data is available and can be used.
-        /// TODO: Add documentation for asset bundles on spilgames.com.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/implementing-asset-bundles-configurations/
         /// </summary>
 		public event AssetBundlesAvailable OnAssetBundlesAvailable;
         
@@ -1419,7 +1419,7 @@ namespace SpilGames.Unity.Base.Implementations{
 
         /// <summary>
         /// This event indicates that the asset bundles configuration data is not available and cannot be used.
-        /// TODO: Add documentation for asset bundles on spilgames.com.
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/implementing-asset-bundles-configurations/
         /// </summary>
 		public event AssetBundlesNotAvailable OnAssetBundlesNotAvailable;
 
@@ -1524,7 +1524,7 @@ namespace SpilGames.Unity.Base.Implementations{
         public delegate void OpenParentalGateEvent();
 
         /// <summary>
-        /// TODO: Document this.
+        /// 
         /// </summary>
 		public event OpenParentalGateEvent OnOpenParentalGate;
 
@@ -1959,7 +1959,7 @@ namespace SpilGames.Unity.Base.Implementations{
 
         /// <summary>
         /// This event indicates that a reward token was received from the back-end. The developer can subscribe to this event and use the token to claim the reward.
-        /// TODO: Document this on spilgames.com
+        /// 
         /// </summary>
 		public event RewardTokenReceived OnRewardTokenReceived;
 
@@ -1979,7 +1979,6 @@ namespace SpilGames.Unity.Base.Implementations{
 
         /// <summary>
         /// This event indicates that a reward token was successfully claimed via the SLOT back-end. Each token can only be claimed once per user.
-        /// TODO: Document this on spilgames.com
         /// </summary>
 		public event RewardTokenClaimed OnRewardTokenClaimed;
 
@@ -1998,7 +1997,6 @@ namespace SpilGames.Unity.Base.Implementations{
 
         /// <summary>
         /// This event indicates that a reward token could not be claimed via the SLOT back-end. This can happen when the server returned an error or if the token was already claimed.
-        /// TODO: Document this on spilgames.com
         /// </summary>
 		public event RewardTokenClaimFailed OnRewardTokenClaimFailed;
 
@@ -2042,7 +2040,6 @@ namespace SpilGames.Unity.Base.Implementations{
 
         /// <summary>
         /// This event indicates that an image has been loaded from local storage, it contains the Texture2D object for the image.
-        /// TODO: Document this on spilgames.com
         /// </summary>
 		public event ImageLoaded OnImageLoaded;
 
@@ -2061,7 +2058,6 @@ namespace SpilGames.Unity.Base.Implementations{
 
         /// <summary>
         /// This event indicates that an image has been downloaded and saved to local storage and can be used.
-        /// TODO: Document this on spilgames.com
         /// </summary>
 		public event ImageLoadSuccess OnImageLoadSuccess;
 
@@ -2086,7 +2082,6 @@ namespace SpilGames.Unity.Base.Implementations{
 
         /// <summary>
         /// This event indicates that an image failed to download or could not be saved to local storage.
-        /// TODO: Document this on spilgames.com
         /// </summary>
 		public event ImageLoadFailed OnImageLoadFailed;
 
@@ -2111,7 +2106,6 @@ namespace SpilGames.Unity.Base.Implementations{
 
         /// <summary>
         /// This event indicates that pre-loading of item- and bundle-images has finished.
-        /// TODO: Document this on spilgames.com
         /// </summary>
 		public event ImagePreloadingCompleted OnImagePreloadingCompleted;
 
@@ -2210,7 +2204,7 @@ namespace SpilGames.Unity.Base.Implementations{
 
         /// <summary>
         /// This event indicates that the server time request was successfull, it returns the server time as a timestamp.
-        /// Todo: Document this on spilgames.com
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-anti-cheating/
         /// </summary>
 		public event ServerTimeRequestSuccess OnServerTimeRequestSuccess;
 
@@ -2229,7 +2223,7 @@ namespace SpilGames.Unity.Base.Implementations{
 
         /// <summary>
         /// This event indicates that the server time request has failed and the server time could not be retrieved.
-        /// Todo: Document this on spilgames.com
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-anti-cheating/
         /// </summary>
 		public event ServerTimeRequestFailed OnServerTimeRequestFailed;
 
@@ -2385,7 +2379,6 @@ namespace SpilGames.Unity.Base.Implementations{
 
         /// <summary>
         /// This event indicates that the user met the requirements for a live event and will receive the live event reward.
-        /// TODO: Document what is this for, developer can update the UI?
         /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-live-events/
         /// </summary>
 		public event LiveEventMetRequirements OnLiveEventMetRequirements;
@@ -2428,7 +2421,7 @@ namespace SpilGames.Unity.Base.Implementations{
 
         /// <summary>
         /// This event indicates that tiered events data is available and can be used.
-        /// TODO: Document this on spilgames.com
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/tiered-events/
         /// </summary>
 		public event TieredEventsAvailable OnTieredEventsAvailable;
 
@@ -2446,7 +2439,7 @@ namespace SpilGames.Unity.Base.Implementations{
 
         /// <summary>
         /// This event indicates that tiered events data is not available and cannot be used.
-        /// TODO: Document this on spilgames.com
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/tiered-events/
         /// </summary>
 		public event TieredEventNotAvailable OnTieredEventsNotAvailable;
 
@@ -2464,7 +2457,7 @@ namespace SpilGames.Unity.Base.Implementations{
 
         /// <summary>
         /// This event indicates that tiered event progress has been updated.
-        /// TODO: Document this on spilgames.com
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/tiered-events/
         /// </summary>
 		public event TieredEventUpdated OnTieredEventUpdated;
 
@@ -2483,7 +2476,7 @@ namespace SpilGames.Unity.Base.Implementations{
 
         /// <summary>
         /// This event indicates that an error occurred while updating tiered event progress or trying to claim a tier reward. Most likely there is an error in the tiered event's SLOT configuration or the SLOT back-end returned an error.
-        /// TODO: Document this on spilgames.com
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/tiered-events/
         /// </summary>
 		public event TieredEventsError OnTieredEventsError;
 
@@ -2502,7 +2495,7 @@ namespace SpilGames.Unity.Base.Implementations{
 
         /// <summary>
         /// This event indicates that a web-view containing the tiered event progress screen has opened.
-        /// TODO: Document this on spilgames.com
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/tiered-events/
         /// </summary>
 		public event TieredEventProgressOpen OnTieredEventProgressOpen;
 
@@ -2520,7 +2513,7 @@ namespace SpilGames.Unity.Base.Implementations{
 
         /// <summary>
         /// This event indicates that the web-view containing the tiered event progress screen has closed.
-        /// TODO: Document this on spilgames.com
+        /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/tiered-events/
         /// </summary>
 		public event TieredEventProgressClosed OnTieredEventProgressClosed;
 

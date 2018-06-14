@@ -206,7 +206,7 @@ namespace SpilGames.Unity.Helpers.GameData {
 
             if (items != null) {
                 foreach (SpilItemData spilItemsData in items) {
-                    Items.Add(new Item(spilItemsData.id, spilItemsData.name, spilItemsData.type, spilItemsData.imageUrl, spilItemsData.displayName, spilItemsData.displayDescription, spilItemsData.isGacha, spilItemsData.content));
+                    Items.Add(new Item(spilItemsData.id, spilItemsData.name, spilItemsData.type, spilItemsData.imageUrl, spilItemsData.displayName, spilItemsData.displayDescription, spilItemsData.isGacha, spilItemsData.content, spilItemsData.properties));
                 }
             }
 
