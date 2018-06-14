@@ -86,6 +86,7 @@ public class BundleDisplayPanelController : MonoBehaviour {
         diamondCostText.color = Color.white;
         
         listOfItemsInBundle.text = "Contains:";
+        string speed = null;
         for (int i = 0; i < bundle.Items.Count; i++) {
             string itemText = "";
             if (bundle.Items[i].Type.Equals("CURRENCY")) {
@@ -93,6 +94,10 @@ public class BundleDisplayPanelController : MonoBehaviour {
                 itemText = currency.Name;
             } else {
                Item item = Spil.GameData.GetItem(bundle.Items[i].Id);
+                if (item.Properties != null && item.Properties.ContainsKey("speed"))
+                {
+                    speed = (string)item.Properties["speed"];
+                }
                 itemText = item.Name;
             }
 
@@ -116,6 +121,10 @@ public class BundleDisplayPanelController : MonoBehaviour {
                     }
                 }
             }
+        }
+
+        if (speed != null) {
+            listOfItemsInBundle.text += "\n speed: " + speed;
         }
 
         if (bundlePromotion != null) {

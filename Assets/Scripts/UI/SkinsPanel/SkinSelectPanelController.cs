@@ -63,10 +63,12 @@ public class SkinSelectPanelController : MonoBehaviour {
 	public void SavePrivateGameState(){
 		int backgroundId = PlayerPrefs.GetInt("Background",0);
 		int skinId = PlayerPrefs.GetInt("Skin",0);
+		float speed = PlayerPrefs.GetFloat("Speed",1f);
 
 		PrivateGameState gameState = new PrivateGameState();
 		gameState.setBackground(backgroundId);
 		gameState.setSkin(skinId);
+		gameState.setSpeed(speed);
 
 		string gameStateJson = JsonHelper.getJSONFromObject(gameState);
 		Spil.Instance.SetPrivateGameState(gameStateJson);
