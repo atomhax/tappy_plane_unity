@@ -3,6 +3,8 @@ using System.Collections;
 using UnityEngine.UI;
 using SpilGames.Unity;
 using SpilGames.Unity.Helpers;
+using SpilGames.Unity.Helpers.GameData;
+using UnityEngine.Assertions.Comparers;
 
 
 public class PlaneSkinButtonController : MonoBehaviour {
@@ -52,7 +54,14 @@ public class PlaneSkinButtonController : MonoBehaviour {
 		
 	public void ButtonClicked(){
 		if (owned) {
-			PlayerPrefs.SetInt ("Skin", position);
+			Item item = Spil.GameData.GetItem(itemID);
+			if (item != null && item.Properties != null && item.Properties.ContainsKey("speed")) {
+				PlayerPrefs.SetFloat("Speed", float.Parse((string)item.Properties["speed"]));
+			} else {
+				PlayerPrefs.SetFloat("Speed", 1f);
+			}
+
+			PlayerPrefs.SetInt("Skin", position);
 			skinSelectPanelController.UpdateButtons ();
 		}
 	}

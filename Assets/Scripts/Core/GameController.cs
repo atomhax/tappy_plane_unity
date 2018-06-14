@@ -539,7 +539,8 @@ public class GameController : MonoBehaviour
                 if (privateGameState != null) {
                     PlayerPrefs.SetInt("Background", privateGameState.Background);
                     PlayerPrefs.SetInt("Skin", privateGameState.Skin);
-            
+                    PlayerPrefs.SetFloat("Speed", privateGameState.Speed);
+                    
                     player.SetupPlayerSkin();
                     foreach (SpriteRenderer spriteRenderer in backgroundSpriteRenderes) {
                         spriteRenderer.sprite = backgroundSprites[PlayerPrefs.GetInt("Background", 0)];
@@ -1007,6 +1008,7 @@ public class GameController : MonoBehaviour
             
             PlayerPrefs.SetInt("Background", 0);
             PlayerPrefs.SetInt("Skin", 0);
+            PlayerPrefs.SetFloat("Speed", 1);
         
             player.SetupPlayerSkin();
             foreach (SpriteRenderer spriteRenderer in backgroundSpriteRenderes) {
@@ -1073,6 +1075,7 @@ public class GameController : MonoBehaviour
 			if (privateGameState != null) {
 				PlayerPrefs.SetInt("Background", privateGameState.Background);
 				PlayerPrefs.SetInt("Skin", privateGameState.Skin);
+			    PlayerPrefs.SetFloat("Speed", privateGameState.Speed);
 
 				player.SetupPlayerSkin();
 				foreach (SpriteRenderer spriteRenderer in backgroundSpriteRenderes) {
@@ -1122,6 +1125,7 @@ public class GameController : MonoBehaviour
 			if (privateGameState != null) {
 				PlayerPrefs.SetInt("Background", privateGameState.Background);
 				PlayerPrefs.SetInt("Skin", privateGameState.Skin);
+			    PlayerPrefs.SetFloat("Speed", privateGameState.Speed);
 
 				player.SetupPlayerSkin();
 				foreach (SpriteRenderer spriteRenderer in backgroundSpriteRenderes) {
