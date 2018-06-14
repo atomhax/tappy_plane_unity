@@ -8,8 +8,8 @@ public class MoveLeft : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-		transform.Translate ((obsticleMoveSpeed * Vector2.left) * Time.deltaTime);
+		float scrollSpeed = PlayerPrefs.GetFloat("Speed", 1f);
+		transform.Translate ((obsticleMoveSpeed * Vector2.left) * Time.deltaTime * scrollSpeed);
 
 	}
 }
