@@ -653,8 +653,6 @@ public class GameController : MonoBehaviour
             overlayEnabled = true;
             
             FB.LogInWithReadPermissions(new List<string>() {
-                "public_profile",
-                "email",
                 "user_friends"
             }, this.HandleResult);
 //        }
