@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using SpilGames.Unity;
 using SpilGames.Unity.Helpers.EventParams;
 using SpilGames.Unity.Helpers.GameData;
 using SpilGames.Unity.Json;
@@ -202,7 +201,19 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
             public BaseLevelStart AddActiveBooster(List<string> activeBooster) {
                 parameters.Add("activeBooster", new JSONObject(JsonHelper.getJSONFromObject(activeBooster)));
                 return this;
-            }            
+            }
+            
+            /// <param name="achievement">The achievemt received for completing the level.</param>
+            public BaseLevelStart AddAchievement(string achievement) {
+                parameters.Add("achievement", achievement);
+                return this;
+            }
+            
+            /// <param name="iteration">The number of times the level was achieved.</param>
+            public BaseLevelStart AddIteration(int iteration) {
+                parameters.Add("iteration", iteration);
+                return this;
+            }
         }
         
         /// <summary>
@@ -308,6 +319,12 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
                 parameters.Add("timeLeft", timeLeft);
                 return this;
             }
+            
+            /// <param name="iteration">The number of times the level was achieved.</param>
+            public BaseLevelComplete AddIteration(int iteration) {
+                parameters.Add("iteration", iteration);
+                return this;
+            }
         }
         
         /// <summary>
@@ -411,6 +428,12 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
             /// <param name="timeLeft">The amount of time left after completing the level.</param>
             public BaseLevelFailed AddTimeLeft(int timeLeft) {
                 parameters.Add("timeLeft", timeLeft);
+                return this;
+            }
+            
+            /// <param name="iteration">The number of times the level was achieved.</param>
+            public BaseLevelFailed AddIteration(int iteration) {
+                parameters.Add("iteration", iteration);
                 return this;
             }
         }
@@ -1160,13 +1183,14 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         }
 
         public class BaseDialogueChosen : BaseTracking {
-            public BaseDialogueChosen(string name, string choice, bool hasToken, bool isPremiumChoice, bool isQuizz, bool isForced, bool isTimed) {
+            public BaseDialogueChosen(string name, string choice, string choiceType, bool hasToken, bool isPremiumChoice, bool isQuiz, bool isForced, bool isTimed) {
                 eventName = "dialogueChosen";
                 parameters.Add("name", name);
                 parameters.Add("choice", choice);
+                parameters.Add("choiceType", choiceType);
                 parameters.Add("hasToken", hasToken);
                 parameters.Add("isPremiumChoice", isPremiumChoice);
-                parameters.Add("isQuizz", isQuizz);
+                parameters.Add("isQuiz", isQuiz);
                 parameters.Add("isForced", isForced);
                 parameters.Add("isTimed", isTimed);
             }  
@@ -1174,6 +1198,19 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
             /// <param name="time">The time it took for the choice to be made.</param>
             public BaseDialogueChosen AddTime(int time) {
                 parameters.Add("time", time);
+                return this;
+            }
+            
+            /// <param name="iteration">The number of times the dialogue was done.</param>
+            public BaseDialogueChosen AddIteration(int iteration) {
+                parameters.Add("iteration", iteration);
+                return this;
+            }
+            
+            /// <param name="iteration">The number of times the dialogue was done.</param>
+            public BaseDialogueChosen AddIterationReason(List<string> iteration) {
+                JSONObject iterationArray = new JSONObject(JsonHelper.getJSONFromObject(iteration));
+                parameters.Add("iterationReason", iterationArray);
                 return this;
             }
         }
@@ -1185,12 +1222,13 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         /// <param name="choice">The choice that the play has made for this dialogue.</param>
         /// <param name="hasToken">Specifies if the dialogue choice had a token.</param>
         /// <param name="isPremiumChoice">Defines if the choice was a premium one.</param>
-        /// <param name="isQuizz"></param>
+        /// <param name="choiceType"></param>
+        /// <param name="isQuiz"></param>
         /// <param name="isForced"></param>
         /// <param name="isTimed">Specifices if the dialogue choice was timed.</param>
         /// <returns></returns>
-        public static BaseDialogueChosen DialogueChosen(string name, string choice, bool hasToken, bool isPremiumChoice, bool isQuizz, bool isForced, bool isTimed) {
-            return new BaseDialogueChosen(name, choice, hasToken, isPremiumChoice, isQuizz, isForced, isTimed);
+        public static BaseDialogueChosen DialogueChosen(string name, string choice, string choiceType, bool hasToken, bool isPremiumChoice, bool isQuiz, bool isForced, bool isTimed) {
+            return new BaseDialogueChosen(name, choice, choiceType, hasToken, isPremiumChoice, isQuiz, isForced, isTimed);
         }
         
         public class BaseFriendAdded : BaseTracking {

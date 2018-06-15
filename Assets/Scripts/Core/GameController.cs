@@ -265,6 +265,14 @@ public class GameController : MonoBehaviour
         }
         
         backgroundMusic.Play();
+
+        List<string> itReason = new List<string>();
+        itReason.Add("bla");
+        itReason.Add("bla2");
+        
+        SpilTracking.DialogueChosen("test", "test1", "test2", true, false, false, false, false)
+            .AddIterationReason(itReason)
+            .Track();
     }
 
     void Update() {
