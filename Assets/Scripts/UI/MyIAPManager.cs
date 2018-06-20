@@ -205,6 +205,9 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 		return PurchaseProcessingResult.Complete;
 		#endif
 
+        string skuId = "";
+        string transactionID = "";
+
 		#if UNITY_ANDROID
 
 		//parse the json
@@ -218,8 +221,8 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 
 		//the info to track
 
-		string skuId = args.purchasedProduct.definition.id;
-		string transactionID = args.purchasedProduct.transactionID;
+		skuId = args.purchasedProduct.definition.id;
+		transactionID = args.purchasedProduct.transactionID;
 		string token = finalJsonObject.GetField ("purchaseToken").str;
 
 		if(transactionID == null || transactionID.Equals("")){
@@ -234,8 +237,8 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 
 		#elif UNITY_IOS
 		
-		string skuId = args.purchasedProduct.definition.id;
-		string transactionID = args.purchasedProduct.transactionID;
+		skuId = args.purchasedProduct.definition.id;
+		transactionID = args.purchasedProduct.transactionID;
 
 		if (!restore) {
 			Spil.Instance.TrackIAPPurchasedEvent(skuId, transactionID, null, "diamondPurchase", "store");
@@ -250,7 +253,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 			Spil.Instance.AddItemToInventory(100291, 1, PlayerDataUpdateReasons.IAP, "Splash Screen", null, transactionID);
 		} else {
 			RewardPlayer (args.purchasedProduct.transactionID);
-		}		
+		}	
 
 		iapPanelController.PurchaseSuccess (args.purchasedProduct.metadata.localizedTitle);
 		skinSelectPanelController.PurchaseSuccess (args.purchasedProduct.metadata.localizedTitle);

@@ -57,10 +57,13 @@ namespace SpilGames.Unity {
         /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
         /// </summary>
         public static bool CheckPrivacyPolicy {
-            get {
-#if UNITY_ANDROID
+            get
+            {
+#if UNITY_WEBGL || UNITY_STANDALONE
+                return false;                
+#elif UNITY_ANDROID
                 return MonoInstance.checkPrivacyPolicyAndroid;
-#else
+#elif UNITY_IPHONE || UNITY_TVOS
 			    return MonoInstance.checkPrivacyPolicyIOS;
 #endif
             }
@@ -319,7 +322,13 @@ namespace SpilGames.Unity {
             }
         }
 
-#if UNITY_EDITOR
+#if UNITY_WEBGL || UNITY_STANDALONE
+        /// <summary>
+        /// Main entry-point for developers, exposes all SpilSDK methods and events (except Spil.Initialize).
+        /// </summary>
+        public static SpilDummyUnityImplementation Instance = new SpilDummyUnityImplementation();
+
+#elif UNITY_EDITOR
         /// <summary>
         /// Main entry-point for developers, exposes all SpilSDK methods and events (except Spil.Initialize).
         /// </summary>
@@ -336,7 +345,6 @@ namespace SpilGames.Unity {
         /// Main entry-point for developers, exposes all SpilSDK methods and events (except Spil.Initialize).
         /// </summary>
 		public static SpiliOSUnityImplementation Instance = new SpiliOSUnityImplementation();
-
 #endif
 
         void Awake() {            
@@ -352,7 +360,7 @@ namespace SpilGames.Unity {
             if (Application.isPlaying) {
                 DontDestroyOnLoad (gameObject);
             }
-            
+
             if (initializeOnAwake) {
                 Initialize();
             }
@@ -362,11 +370,15 @@ namespace SpilGames.Unity {
         /// Called automatically on awake when the "initialize on awake" checkbox is checked in the SpilSDK object's inspector view.
         /// If the checkbox is not checked this method needs to be called by the developer to initialise the SDK and make it ready for use.
         /// </summary>
-        public void Initialize() {
+        public void Initialize()
+        {
             SpilLogging.Log("SpilSDK-Unity Init");
+#if UNITY_WEBGL || UNITY_STANDALONE
+            SpilLogging.Error("Unsupported platform detected, skipping SpilSDK initialisation.");
+            return;
+#endif
 
-            Instance.SetPluginInformation(SpilUnityImplementationBase.PluginName, SpilUnityImplementationBase.PluginVersion);
-
+            Instance.SetPluginInformation(SpilUnityImplementationBase.PluginName, SpilUnityImplementationBase.PluginVersion);       
 #if UNITY_EDITOR
             InitEditor();
 #endif
