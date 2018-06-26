@@ -95,6 +95,18 @@ namespace SpilGames.Unity {
         /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
         /// </summary>
         [SerializeField] public string ProjectId = "";
+
+        public enum enumAndroidStore
+        {
+            GooglePlay,
+            Amazon
+        }
+
+        /// <summary>
+        /// Not intended for use by developers.
+        /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
+        /// </summary>
+        [SerializeField] public enumAndroidStore AndroidStore = enumAndroidStore.GooglePlay;
 #endif
 
         [Header("iOS Settings")]

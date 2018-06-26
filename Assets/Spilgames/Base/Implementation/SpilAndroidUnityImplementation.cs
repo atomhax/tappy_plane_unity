@@ -75,7 +75,7 @@ namespace SpilGames.Unity.Base.Implementations {
 #if UNITY_ANDROID
             Spil spil = GameObject.FindObjectOfType<Spil>();
             CallNativeMethod("init", new object[] {withPrivacyPolicy}, true);
-            RegisterDevice(spil.ProjectId); 
+            RegisterDevice(spil.ProjectId);
             RequestPackages();
 #endif
         }
@@ -700,7 +700,10 @@ namespace SpilGames.Unity.Base.Implementations {
 
         // If Android, register device
         private void RegisterDevice(string projectID) {
-            CallNativeMethod("registerDevice", projectID, true);
+            CallNativeMethod("registerDevice", new object[] {
+                projectID,
+                Spil.MonoInstance.AndroidStore.ToString()
+            }, true);
         }
 
         /// <summary>
