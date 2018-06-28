@@ -748,7 +748,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
                 parameters.Add("purchaseDate", DateTime.Now.ToString("yyyy-MM-ddTHH\\:mm\\:ss.fffffffzzz"));
             }
             
-            /// <param name="token">The transaction token returned from the purchase. Only use this for ANDROID!</param>
+            /// <param name="token">The transaction token returned from the purchase. Only use this for ANDROID! For Amazon it will be the same as the transaction id.</param>
             public BaseIAPPurchased AddToken(string token) {
                 if (!token.Equals("")) {
                     parameters.Add("token", token); 
@@ -766,6 +766,33 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
             /// <param name="location">The location where the IAP was done.</param>
             public BaseIAPPurchased AddLocation(string location) {
                 parameters.Add("location", location);
+                return this;
+            }
+
+            /// <param name="localPrice">The local price value of an IAP. Only to be used for Amazon IAPs!</param>
+            public BaseIAPPurchased AddLocalPrice(string localPrice) {
+                if (!string.IsNullOrEmpty(localPrice)) {
+                    String newLocalPrice = "";
+                    foreach (char c in localPrice) {
+                        if (Char.IsDigit(c) || c.ToString().Equals(".") || c.ToString().Equals(",")) {
+                            newLocalPrice += c;
+                        }
+                    }
+                    localPrice = newLocalPrice;
+                }
+                parameters.Add("localPrice", localPrice);
+                return this;
+            }
+
+            /// <param name="localCurrency">The local currency value of an IAP. Should be ISO 4217 format. For the Unity IAP Plugin this is the ...metadata.isoCurrencyCode. Only to be used for Amazon IAPs!</param>
+            public BaseIAPPurchased AddLocalCurrency(string localCurrency) {
+                parameters.Add("localCurrency", localCurrency);
+                return this;
+            }
+
+            /// <param name="amazonUserId">The Amazon User Id that is provided with the purchase receipt. Only to be used for Amazon IAPs!</param>
+            public BaseIAPPurchased AddAmazonUserId(string amazonUserId) {
+                parameters.Add("amazonUserId", amazonUserId);
                 return this;
             }
         }

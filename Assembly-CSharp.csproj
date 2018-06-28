@@ -86,6 +86,7 @@
     <Compile Include="Assets\Scripts\Core\GameController.cs" />
     <Compile Include="Assets\Scripts\Core\PrivateGameState.cs" />
     <Compile Include="Assets\Scripts\Core\PublicGameState.cs" />
+    <Compile Include="Assets\Scripts\Core\Test.cs" />
     <Compile Include="Assets\Scripts\InGame\BackgroundScroll.cs" />
     <Compile Include="Assets\Scripts\InGame\DestroyObsticles.cs" />
     <Compile Include="Assets\Scripts\InGame\MoveLeft.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="Assets\Scripts\UI\SkinsPanel\PlaneSkinButtonController.cs" />
     <Compile Include="Assets\Scripts\UI\SkinsPanel\SkinSelectPanelController.cs" />
     <Compile Include="Assets\Spilgames\Base\Implementation\SpilAndroidUnityImplementation.cs" />
+    <Compile Include="Assets\Spilgames\Base\Implementation\SpilDummyUnityImplementation.cs" />
     <Compile Include="Assets\Spilgames\Base\Implementation\SpiliOSUnityImplementation.cs" />
     <Compile Include="Assets\Spilgames\Base\Implementation\SpilUnityEditorImplementation.cs" />
     <Compile Include="Assets\Spilgames\Base\Implementation\SpilUnityImplementationBase.cs" />

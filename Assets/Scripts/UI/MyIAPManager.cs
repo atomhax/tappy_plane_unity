@@ -207,33 +207,63 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 
         string skuId = "";
         string transactionID = "";
+		string token = "";
 
 		#if UNITY_ANDROID
 
-		//parse the json
-		
-		Dictionary<String,object> hashOfReceipt = JsonConvert.DeserializeObject<Dictionary<String,object>>(args.purchasedProduct.receipt);
-		string stringOfPayload = hashOfReceipt ["Payload"].ToString ();
-		JSONObject jsonFromObject = new JSONObject (stringOfPayload);
-		string jsonFieldString = jsonFromObject.GetField ("json").str;
-		jsonFieldString = jsonFieldString.Replace (@"\", "");
-		JSONObject finalJsonObject = new JSONObject (jsonFieldString);
+		switch (Spil.MonoInstance.AndroidStore.ToString()) {
+				case "GooglePlay":
+					//parse the json
+					Debug.Log(args.purchasedProduct.receipt);
+					Dictionary<String,object> hashOfReceipt = JsonConvert.DeserializeObject<Dictionary<String,object>>(args.purchasedProduct.receipt);
+					string stringOfPayload = hashOfReceipt ["Payload"].ToString ();
+					JSONObject jsonFromObject = new JSONObject (stringOfPayload);
+					string jsonFieldString = jsonFromObject.GetField ("json").str;
+					jsonFieldString = jsonFieldString.Replace (@"\", "");
+					JSONObject finalJsonObject = new JSONObject (jsonFieldString);
 
-		//the info to track
+					//the info to track
+					skuId = args.purchasedProduct.definition.id;
+					transactionID = args.purchasedProduct.transactionID;
+					token = finalJsonObject.GetField ("purchaseToken").str;
 
-		skuId = args.purchasedProduct.definition.id;
-		transactionID = args.purchasedProduct.transactionID;
-		string token = finalJsonObject.GetField ("purchaseToken").str;
+					if(transactionID == null || transactionID.Equals("")){
+						transactionID = token;
+					}
 
-		if(transactionID == null || transactionID.Equals("")){
-			transactionID = token;
+					SpilTracking.IAPPurchased(skuId, transactionID)
+						.AddToken(token)
+						.AddReason("purchase")
+						.AddLocation("store")
+						.Track();
+					break;
+				case "Amazon":
+					skuId = args.purchasedProduct.definition.id;
+					transactionID = args.purchasedProduct.transactionID;
+					token = transactionID;
+
+					string localPrice = args.purchasedProduct.metadata.localizedPriceString;
+					string localCurrency = args.purchasedProduct.metadata.isoCurrencyCode;
+					
+					Debug.Log(args.purchasedProduct.receipt);
+					Dictionary<String,object> receipt = JsonConvert.DeserializeObject<Dictionary<String,object>>(args.purchasedProduct.receipt);
+					JSONObject payloadJSON = new JSONObject (receipt ["Payload"].ToString ());
+					string amazonUserId = "";
+					if (payloadJSON.HasField("userId")) {
+						amazonUserId = payloadJSON.GetField("userId").str;
+					}
+					
+					SpilTracking.IAPPurchased(skuId, transactionID)
+						.AddToken(token)
+						.AddReason("purchase")
+						.AddLocation("store")
+						.AddLocalPrice(localPrice)
+						.AddLocalCurrency(localCurrency)
+						.AddAmazonUserId(amazonUserId)
+						.Track();
+					break;
 		}
 
-		SpilTracking.IAPPurchased(skuId, transactionID)
-			.AddToken(token)
-			.AddReason("purchase")
-			.AddLocation("store")
-			.Track();
 
 		#elif UNITY_IOS
 		

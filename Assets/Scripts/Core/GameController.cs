@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Xml;
 using System.Text.RegularExpressions;
 using System.Linq;
+using Core;
 using SpilGames.Unity;
 using SpilGames.Unity.Base.Implementations;
 using SpilGames.Unity.Base.Implementations.Tracking;
