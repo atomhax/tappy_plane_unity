@@ -70,7 +70,11 @@ public class IAPPanelController : MonoBehaviour {
 				if (package != null) {
 					string promotionText = "";
 					string gemAmount = package.Items [0].Value;
-					string cost = iapManager.packageCosts[package.PackageId];
+					string cost = "";
+					if(iapManager.packageCosts.ContainsKey(package.PackageId)) {
+						cost = iapManager.packageCosts[package.PackageId];
+					}
+					
 					if(package.HasActivePromotion()) {
 						Promotion packagePromotion = Spil.Instance.GetPromotions().GetPackagePromotion(package.PackageId);
 						promotionText = "PROMOTION!\n" + packagePromotion.Label + packagePromotion.ExtraEntities[0].Amount + " extra gems!";
