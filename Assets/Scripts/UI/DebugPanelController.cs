@@ -71,10 +71,12 @@ public class DebugPanelController : MonoBehaviour
     /// <param name="type">Type of message (error, exception, warning, assert).</param>
     void HandleLog(string message, string stackTrace, LogType type)
     {
-        if (message.StartsWith("SpilSDK: Sending event:"))
+        if (message.StartsWith("SpilSDK: SendCustomEvent"))
         {
             debugConsoleText.text = message;
-        } else {
+        }
+        else if(message.StartsWith("SpilSDK: SpilSDK-Unity OnResponseReceived"))
+        {
             debugConsoleText.text += "\r\n\r\n" + message;
         }
     }
