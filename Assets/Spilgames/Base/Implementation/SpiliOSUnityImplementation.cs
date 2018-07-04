@@ -157,7 +157,7 @@ namespace SpilGames.Unity.Base.Implementations
         /// <param name="dict"></param>
         internal override void SendCustomEventInternal(string eventName, Dictionary<string, object> dict)
         {
-            SpilLogging.Log("SendCustomEvent \"" + eventName + "\"" + (dict == null ? "" : " params: " + JsonHelper.DictToJSONObject(dict).ToString()));
+            SpilLogging.Log("SendCustomEvent: " + eventName + " params: " + JsonHelper.getJSONFromObject(dict));
 
             string parameters = null;
 
