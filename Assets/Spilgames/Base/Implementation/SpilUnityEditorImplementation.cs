@@ -1,4 +1,4 @@
-#if UNITY_EDITOR
+#if UNITY_EDITOR || UNITY_WEBGL
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -114,11 +114,19 @@ namespace SpilGames.Unity.Base.Implementations {
         }
 
         public override void SavePrivValue(int priv) {
+#if UNITY_WEBGL
+            PlayerPrefs.SetInt(GetSpilUserId() + "-gdprStatusUnity", priv);
+#else
             EditorPrefs.SetInt(GetSpilUserId() + "-gdprStatusUnity", priv);
+#endif
         }
 
         public override int GetPrivValue() {
+#if UNITY_WEBGL
+            return PlayerPrefs.GetInt(GetSpilUserId() + "-gdprStatusUnity", -1);
+#else
             return EditorPrefs.GetInt(GetSpilUserId() + "-gdprStatusUnity", -1);
+#endif
         }
 
         public override void ResetData() {            

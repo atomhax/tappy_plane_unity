@@ -2893,7 +2893,7 @@ namespace SpilGames.Unity.Base.Implementations{
         internal abstract void CheckPrivacyPolicy();
 
         public void CheckPrivacyPolicyUnity() {
-            #if UNITY_EDITOR
+            #if UNITY_EDITOR || UNITY_WEBGL
             int isPrivacyPolicyAccepted = PlayerPrefs.GetInt(GetSpilUserId() + "-unityPrivacyPolicyStatus", 0);
             #else
             int isPrivacyPolicyAccepted = PlayerPrefs.GetInt("unityPrivacyPolicyStatus", 0);

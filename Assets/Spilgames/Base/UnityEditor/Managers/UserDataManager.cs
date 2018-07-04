@@ -1,4 +1,4 @@
-﻿#if UNITY_EDITOR
+﻿#if UNITY_EDITOR || UNITY_WEBGL
 using System;
 using System.Collections.Generic;
 using SpilGames.Unity.Base.Implementations;
@@ -351,7 +351,11 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         }
 
         public static void ShowSyncErrorDialog(string selectedTitle, string selectedMessage, string selectedMergeButton) {
-            SyncError = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/SyncError.prefab"));
+#if UNITY_WEBGL
+            SyncError = (GameObject) Instantiate(Resources.Load("Assets/Spilgames/Editor/Prefabs/SyncError.prefab"));
+#else 
+            SyncError = (GameObject)Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/SyncError.prefab"));
+#endif
             SyncError.SetActive(true);
 
             title = selectedTitle;
@@ -361,7 +365,11 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         }
 
         public static void ShowMergeFailedDialog(string selectedTitle, string selectedMessage, string selectedRetryButton, string selectedMergeData, string selectedMergeType) {
-            MergeFailed = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/MergeFailed.prefab"));
+#if UNITY_WEBGL
+            MergeFailed = (GameObject) Instantiate(Resources.Load("Assets/Spilgames/Editor/Prefabs/MergeFailed.prefab"));
+#else 
+            MergeFailed = (GameObject)Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/MergeFailed.prefab"));
+#endif
             MergeFailed.SetActive(true);
 
             title = selectedTitle;
@@ -373,7 +381,11 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         }
 
         public static void ShowMergeConflictDialog(string selectedTitle, string selectedMessage, string selectedLocalButton, string selectedRemoteButton, string selectedMergeButton) {
-            MergeConflict = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/MergeConflict.prefab"));
+#if UNITY_WEBGL
+            MergeConflict = (GameObject) Instantiate(Resources.Load("Assets/Spilgames/Editor/Prefabs/MergeConflict.prefab"));
+#else 
+            MergeConflict = (GameObject)Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/MergeConflict.prefab"));
+#endif
             MergeConflict.SetActive(true);
 
             title = selectedTitle;

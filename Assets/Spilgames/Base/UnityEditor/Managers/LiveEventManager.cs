@@ -9,7 +9,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR || UNITY_WEBGL
 namespace SpilGames.Unity.Base.UnityEditor.Managers {
     public class LiveEventManager : MonoBehaviour{
         public enum StageType {
@@ -268,20 +268,32 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             StageTypeValue = stageType;
             switch (stageType) {
                 case StageType.START:
+#if UNITY_WEBGL
+                    LiveEventStart = (GameObject) Instantiate(Resources.Load("Assets/Spilgames/Editor/Prefabs/LiveEventStart.prefab"));
+#else 
                     LiveEventStart = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/LiveEventStart.prefab"));
+#endif
                     LiveEventStart.SetActive(true);
                    
                     stageData = stage;
                     break;
                 case StageType.PROGRESS:
+#if UNITY_WEBGL
+                    LiveEventProgress = (GameObject) Instantiate(Resources.Load("Assets/Spilgames/Editor/Prefabs/LiveEventProgress.prefab"));
+#else 
                     LiveEventProgress = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/LiveEventProgress.prefab"));
+#endif
                     LiveEventProgress.SetActive(true);
                     
                     applyItems = new JSONObject(JSONObject.Type.ARRAY);
                     currentStage = stage;
                     break;
                 case StageType.INFO:
+#if UNITY_WEBGL
+                    LiveEventInfo = (GameObject) Instantiate(Resources.Load("Assets/Spilgames/Editor/Prefabs/LiveEventInfo.prefab"));
+#else 
                     LiveEventInfo = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/LiveEventInfo.prefab"));
+#endif
                     LiveEventInfo.SetActive(true);
                     
                     currentStage = stage;

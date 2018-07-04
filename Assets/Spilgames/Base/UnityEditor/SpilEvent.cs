@@ -1,4 +1,4 @@
-﻿#if UNITY_EDITOR
+﻿#if UNITY_EDITOR || UNITY_WEBGL
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -32,14 +32,23 @@ namespace SpilGames.Unity.Base.UnityEditor {
 
         public IEnumerator SendCoroutine() {
             Spil spil = GameObject.FindObjectOfType<Spil>();
+#if !UNITY_WEBGL
             platform = EditorUserBuildSettings.activeBuildTarget.ToString().Trim().ToLower();
-
-#if UNITY_5_6_OR_NEWER
+#endif
+            
+#if UNITY_5_6_OR_NEWER && !UNITY_WEBGL
             bundleIdentifier = PlayerSettings.applicationIdentifier;
-#elif UNITY_5_3_OR_NEWER
+#elif UNITY_5_3_OR_NEWER && !UNITY_WEBGL
 			bundleIdentifier = PlayerSettings.bundleIdentifier;
 #endif
-
+            
+#if UNITY_WEBGL
+            bundleIdentifier = "com.spilgames.tappyplane";
+            platform = "android";
+            Spil.BundleIdEditor = bundleIdentifier;
+            uid = "0000-1111-2222-3333";
+#endif
+            
             AddDefaultParameters();
 
             WWWForm requestForm = new WWWForm();
@@ -105,10 +114,18 @@ namespace SpilGames.Unity.Base.UnityEditor {
         }
 
         private void AddDefaultParameters() {
+#if !UNITY_WEBGL
             data.AddField("deviceId", SystemInfo.deviceUniqueIdentifier);
+#else
+            data.AddField("deviceId", "1234-5678-9012-3456");
+#endif
             data.AddField("uid", uid);
             data.AddField("locale", "en");
+#if !UNITY_WEBGL
             data.AddField("appVersion", PlayerSettings.bundleVersion);
+#else
+            data.AddField("appVersion", "1");
+#endif
             data.AddField("apiVersion", SpilUnityImplementationBase.PluginVersion);
             data.AddField("osVersion", "1.0");
             data.AddField("os", platform);

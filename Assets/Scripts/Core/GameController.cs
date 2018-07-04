@@ -16,9 +16,8 @@ using UnityEngine.Analytics;
 using UnityEngine.UI;
 using AssetBundle = SpilGames.Unity.Helpers.AssetBundles.AssetBundle;
 using Random = UnityEngine.Random;
-#if !UNITY_TVOS
+#if !UNITY_TVOS && !UNITY_WEBGL
 using Facebook.Unity;
-
 #endif
 
 public class GameController : MonoBehaviour
@@ -242,12 +241,12 @@ public class GameController : MonoBehaviour
         Spil.Instance.OnPermissionResponse -= OnPermissionResponse;
         Spil.Instance.OnPermissionResponse += OnPermissionResponse;
 #endif
-#if UNITY_EDITOR
+#if UNITY_EDITOR || UNITY_WEBGL
         PlayerPrefs.SetInt("Background", 0);
         PlayerPrefs.SetInt("Skin", 0);
 #endif
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR || UNITY_WEBGL
         if (Spil.RewardToken != null && !Spil.RewardToken.Equals(""))
         {
 			Spil.Instance.ClaimToken(Spil.RewardToken, "deeplink");
@@ -321,7 +320,7 @@ public class GameController : MonoBehaviour
     }
 
     private void InitComponents() {
-#if !UNITY_TVOS
+#if !UNITY_TVOS && !UNITY_WEBGL
         FB.Init(OnFBInitComplete);
         Fabric.Runtime.Fabric.Initialize();
 #endif
@@ -649,33 +648,35 @@ public class GameController : MonoBehaviour
 #endif
         }
 
+#if !UNITY_TVOS && !UNITY_WEBGL
 		FB.GetAppLink(DeepLinkCallback);
 		FB.Mobile.FetchDeferredAppLinkData(DeepLinkCallback);
+#endif
     }
 
     public void FacebookLogin() {
-#if !UNITY_TVOS
-//        if (!FB.IsLoggedIn) {
+#if !UNITY_TVOS && !UNITY_WEBGL
             Debug.Log("Requesting Log In information");
             overlayEnabled = true;
             
             FB.LogInWithReadPermissions(new List<string>() {
                 "user_friends"
             }, this.HandleResult);
-//        }
 #endif
     }
 
     public void FacebookLogout() {
+#if !UNITY_TVOS && !UNITY_WEBGL
         FB.LogOut();
         Spil.Instance.UserLogout(false);
         FBLoginButton.SetActive(true);
         FBLogoutButton.SetActive(false);
         highScoreButton.SetActive(false);
         FBShareButton.SetActive(false);
+#endif
     }
 
-#if !UNITY_TVOS
+#if !UNITY_TVOS && !UNITY_WEBGL
     protected void HandleResult(IResult result) {
         overlayEnabled = false;
         fbLoggedIn = true;
@@ -735,6 +736,7 @@ public class GameController : MonoBehaviour
     }
 #endif
 
+#if !UNITY_TVOS && !UNITY_WEBGL
 	void DeepLinkCallback(IAppLinkResult result) {
 
 		// Tested with FB dev console deeplink helper: tappyplane://token=DCWC0P78&reward=%5B%7B%22type%22%3A+%22CURRENCY%22%2C+%22amount%22%3A+1000%2C+%22id%22%3A+28%7D%5D
@@ -760,6 +762,7 @@ public class GameController : MonoBehaviour
 		    }
 		}
 	}
+#endif
 
 	static Dictionary<string, string> GetParams(string uri) {
 		MatchCollection matches = Regex.Matches(uri, @"[\?&](([^&=]+)=([^&=#]*))", RegexOptions.None);
@@ -846,7 +849,7 @@ public class GameController : MonoBehaviour
 
 
     public void FBShare() {
-#if !UNITY_TVOS
+#if !UNITY_TVOS && !UNITY_WEBGL
         Uri url = new Uri("http://files.cdn.spilcloud.com/10/1479133368_tappy_logo.png");
         FB.ShareLink(url, "Tappy Plane", "Check out Tappy Plane for iOS and Android!", url, null);
 #endif

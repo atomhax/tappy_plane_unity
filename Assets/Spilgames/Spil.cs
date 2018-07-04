@@ -147,7 +147,7 @@ namespace SpilGames.Unity {
         /// Not intended for use by developers.
         /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
         /// </summary>
-        public static string BundleIdEditor { get; private set; }
+        public static string BundleIdEditor { get; set; }
 
         /// <summary>
         /// Not intended for use by developers.
@@ -314,6 +314,12 @@ namespace SpilGames.Unity {
         /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
         /// </summary>
         public TokenRewardTypeEnum TokenRewardType;
+        
+        [Header("WebGL Settings")]
+
+        [SerializeField] public TextAsset defaultPlayerDataAsset;
+        [SerializeField] public TextAsset defaultGameDataAsset;
+        [SerializeField] public TextAsset defaultGameConfigAsset;
 
         private static Spil monoInstance;
 
@@ -334,12 +340,19 @@ namespace SpilGames.Unity {
             }
         }
 
-#if UNITY_WEBGL || UNITY_STANDALONE
+#if UNITY_STANDALONE
         /// <summary>
         /// Main entry-point for developers, exposes all SpilSDK methods and events (except Spil.Initialize).
         /// </summary>
         public static SpilDummyUnityImplementation Instance = new SpilDummyUnityImplementation();
 
+#elif UNITY_WEBGL
+        /// <summary>
+        /// Main entry-point for developers, exposes all SpilSDK methods and events (except Spil.Initialize).
+        /// </summary>
+        //public static SpilWebGLUnityImplementation Instance = new SpilWebGLUnityImplementation();        
+        public static SpilWebGLUnityImplementation Instance = new SpilWebGLUnityImplementation();
+        
 #elif UNITY_EDITOR
         /// <summary>
         /// Main entry-point for developers, exposes all SpilSDK methods and events (except Spil.Initialize).
@@ -385,13 +398,13 @@ namespace SpilGames.Unity {
         public void Initialize()
         {
             SpilLogging.Log("SpilSDK-Unity Init");
-#if UNITY_WEBGL || UNITY_STANDALONE
+#if UNITY_STANDALONE
             SpilLogging.Error("Unsupported platform detected, skipping SpilSDK initialisation.");
             return;
 #endif
 
             Instance.SetPluginInformation(SpilUnityImplementationBase.PluginName, SpilUnityImplementationBase.PluginVersion);       
-#if UNITY_EDITOR
+#if UNITY_EDITOR || UNITY_WEBGL
             InitEditor();
 #endif
 

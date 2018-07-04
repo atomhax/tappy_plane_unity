@@ -1,4 +1,4 @@
-﻿#if UNITY_EDITOR
+﻿#if UNITY_EDITOR || UNITY_WEBGL
 using System.Collections.Generic;
 using SpilGames.Unity.Base.Implementations;
 using SpilGames.Unity.Helpers.PlayerData;
@@ -23,7 +23,11 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
 			Spil.Instance.fireSplashScreenOpen();
 
+#if UNITY_WEBGL
+            SplashScreen = (GameObject) Instantiate(Resources.Load("Assets/Spilgames/Editor/Prefabs/SplashScreen.prefab"));
+#else 
             SplashScreen = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/SplashScreen.prefab"));
+#endif
             SplashScreen.SetActive(true);
         }
 
@@ -32,7 +36,11 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
 			Spil.Instance.fireDailyBonusOpen();
 
+#if UNITY_WEBGL
+            DailyBonus = (GameObject) Instantiate(Resources.Load("Assets/Spilgames/Editor/Prefabs/DailyBonus.prefab"));
+#else 
             DailyBonus = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/DailyBonus.prefab"));
+#endif
             DailyBonus.SetActive(true);
         }
 

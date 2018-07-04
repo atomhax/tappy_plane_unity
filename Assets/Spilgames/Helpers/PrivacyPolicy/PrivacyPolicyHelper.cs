@@ -235,7 +235,7 @@ public class PrivacyPolicyHelper : MonoBehaviour {
     public void PrivacyPolicyAccepted() {
         SavePrivValue();
             
-        #if UNITY_EDITOR
+        #if UNITY_EDITOR || UNITY_WEBGL
         PlayerPrefs.SetInt(Spil.Instance.GetSpilUserId() + "-unityPrivacyPolicyStatus", 1);
         #else
         PlayerPrefs.SetInt("unityPrivacyPolicyStatus", 1);
@@ -372,11 +372,15 @@ public class PrivacyPolicyHelper : MonoBehaviour {
     public PrivacyPolicyConfiguration GetPrivacyPolicyConfiguration() {
         string gameConfig = null;
         
-        #if UNITY_EDITOR
+        #if UNITY_EDITOR || UNITY_WEBGL
         try {
+#if UNITY_WEBGL
+            gameConfig = GameObject.FindObjectOfType<Spil>().defaultGameConfigAsset.text;
+#else
             gameConfig = File.ReadAllText(Application.streamingAssetsPath + "/defaultGameConfig.json");
+#endif
         }
-        catch (FileNotFoundException e) {
+        catch (Exception e) {
             SpilLogging.Log("defaultGameConfig.json not found!\n" + e);
             return null;
         }

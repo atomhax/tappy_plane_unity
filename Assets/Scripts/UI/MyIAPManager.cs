@@ -113,7 +113,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 		
 		lastProductSKU = productId;
 		
-		#if UNITY_EDITOR
+		#if UNITY_EDITOR || UNITY_WEBGL
 		if (productId.Equals("com.spilgames.tappyplane.goldplane")) {
 			Spil.Instance.AddItemToInventory(100291, 1, PlayerDataUpdateReasons.IAP, "Splash Screen", null, "EditorTransaction");
 		} else {

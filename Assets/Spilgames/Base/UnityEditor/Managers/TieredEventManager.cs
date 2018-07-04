@@ -10,7 +10,7 @@ using SpilGames.Unity.Base.Implementations;
 using SpilGames.Unity.Base.SDK;
 using UnityEngine.UI;
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR || UNITY_WEBGL
 namespace SpilGames.Unity.Base.UnityEditor.Managers {
     public class TieredEventManager : MonoBehaviour {
         // Event names
@@ -203,7 +203,11 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 info = info + "Tier Start: " + currentTier.entityTierStart + " Tier End: " + currentTier.entityTierEnd + "\n";
             }  
             
+#if UNITY_WEBGL
+            TieredEventOverlay = (GameObject) Instantiate(Resources.Load("Assets/Spilgames/Editor/Prefabs/TieredEventInfo.prefab"));
+#else 
             TieredEventOverlay = (GameObject)Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/TieredEventInfo.prefab"));
+#endif
             TieredEventOverlay.SetActive(true);
             
             tieredEventTitleText = currentTieredEvent.name;

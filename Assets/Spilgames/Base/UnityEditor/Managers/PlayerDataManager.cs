@@ -1,4 +1,4 @@
-﻿#if UNITY_EDITOR
+﻿#if UNITY_EDITOR || UNITY_WEBGL
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,11 +21,14 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             if (Wallet != null) return Wallet;
             TempUserInfo temp;
             try {
-                string playerData =
-                    File.ReadAllText(Application.streamingAssetsPath + "/defaultPlayerData.json");
+                #if UNITY_WEBGL
+                string playerData = GameObject.FindObjectOfType<Spil>().defaultPlayerDataAsset.text;
+                #else
+                string playerData = File.ReadAllText(Application.streamingAssetsPath + "/defaultPlayerData.json");
+                #endif
                 temp = JsonHelper.getObjectFromJson<TempUserInfo>(playerData);
             }
-            catch (FileNotFoundException e) {
+            catch (Exception e) {
                 SpilLogging.Log("defaultPlayerData.json not found. Creating a placeholder!" + e);
                 string placeholder =
                     "{\"wallet\":{\"currencies\":[],\"offset\": 0,\"logic\": \"CLIENT\"},\"inventory\":{\"items\":[],\"offset\":0,\"logic\": \"\"}}";
@@ -105,11 +108,14 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             if (Inventory != null) return Inventory;
             TempUserInfo temp;
             try {
-                string playerData =
-                    File.ReadAllText(Application.streamingAssetsPath + "/defaultPlayerData.json");
+#if UNITY_WEBGL
+                string playerData = GameObject.FindObjectOfType<Spil>().defaultPlayerDataAsset.text;
+#else
+                string playerData = File.ReadAllText(Application.streamingAssetsPath + "/defaultPlayerData.json");
+#endif
                 temp = JsonHelper.getObjectFromJson<TempUserInfo>(playerData);
             }
-            catch (FileNotFoundException e) {
+            catch (Exception e) {
                 SpilLogging.Log("defaultPlayerData.json not found. Creating a placeholder! " + e);
                 string placeholder =
                     "{\"wallet\":{\"currencies\":[],\"offset\": 0,\"logic\": \"CLIENT\"},\"inventory\":{\"items\":[],\"offset\":0,\"logic\": \"\"}}";
