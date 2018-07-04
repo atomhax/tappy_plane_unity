@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Xml;
 using System.Text.RegularExpressions;
 using System.Linq;
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
 using SpilGames.Unity;
 using SpilGames.Unity.Base.Implementations;
 using SpilGames.Unity.Base.Implementations.Tracking;
@@ -333,6 +335,10 @@ public class GameController : MonoBehaviour
         RequestMoreApps();
         
         FireTrackEventSample();
+        
+        #if UNITY_ANDROID
+        Invoke("InitGooglePlayGames", 10);
+        #endif
     }
     
     public void OnPrivacyPolicyStatus(bool accepted) {
@@ -898,7 +904,8 @@ public class GameController : MonoBehaviour
     }
 
     public void ShowMoreApps() {
-        Spil.Instance.PlayMoreApps();
+//        Spil.Instance.PlayMoreApps();
+        PlayGamesPlatform.Instance.SignOut();
     }
 
     private void OnLiveEventError(SpilErrorMessage errorMessage) {
@@ -1211,6 +1218,36 @@ public class GameController : MonoBehaviour
         quitGamePanel.SetActive(false);
     }
     
+    private void InitGooglePlayGames() {
+        PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
+            // requests a server auth code be generated so it can be passed to an
+            //  associated back end server application and exchanged for an OAuth token.
+            .RequestServerAuthCode(false)
+            .RequestIdToken()
+            .Build();
+
+        PlayGamesPlatform.InitializeInstance(config);
+        // recommended for debugging:
+        PlayGamesPlatform.DebugLogEnabled = true;
+        // Activate the Google Play Games platform
+        PlayGamesPlatform.Activate();
+        
+        Social.localUser.Authenticate((bool success) => {
+            // handle success or failure
+            Debug.Log("GPG Login status success: " + success);
+            Debug.Log("GPG Server Auth: " + PlayGamesPlatform.Instance.GetServerAuthCode());
+            Debug.Log("GPG User Id: " + PlayGamesPlatform.Instance.GetUserId());
+            Debug.Log("GPG Token Id: " + PlayGamesPlatform.Instance.GetIdToken());
+            
+            PlayGamesPlatform.Instance.GetAnotherServerAuthCode(false, Target);
+        });
+    }
+
+    private void Target(string obj) {
+        Debug.Log("GPG Server Another Auth: " + obj);
+    }
+
+
     /*public void FBShareScore ()
     {
         System.Uri url = new System.Uri ("http://files.cdn.spilcloud.com/10/1479133368_tappy_logo.png");

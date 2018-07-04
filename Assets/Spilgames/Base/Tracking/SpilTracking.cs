@@ -1656,7 +1656,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         
         public class BaseTimedAction : BaseTracking {
             public BaseTimedAction(string timedAction) {
-                eventName = "pawnMoved";
+                eventName = "timedAction";
                 parameters.Add("timedAction", timedAction);
             }
             
