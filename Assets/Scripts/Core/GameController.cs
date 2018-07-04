@@ -336,9 +336,7 @@ public class GameController : MonoBehaviour
         
         FireTrackEventSample();
         
-        #if UNITY_ANDROID
         Invoke("InitGooglePlayGames", 10);
-        #endif
     }
     
     public void OnPrivacyPolicyStatus(bool accepted) {
@@ -904,8 +902,7 @@ public class GameController : MonoBehaviour
     }
 
     public void ShowMoreApps() {
-//        Spil.Instance.PlayMoreApps();
-        PlayGamesPlatform.Instance.SignOut();
+        Spil.Instance.PlayMoreApps();
     }
 
     private void OnLiveEventError(SpilErrorMessage errorMessage) {
@@ -1219,6 +1216,7 @@ public class GameController : MonoBehaviour
     }
     
     private void InitGooglePlayGames() {
+        #if UNITY_ANDROID
         PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
             // requests a server auth code be generated so it can be passed to an
             //  associated back end server application and exchanged for an OAuth token.
@@ -1241,6 +1239,7 @@ public class GameController : MonoBehaviour
             
             PlayGamesPlatform.Instance.GetAnotherServerAuthCode(false, Target);
         });
+        #endif
     }
 
     private void Target(string obj) {
