@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using SpilGames.Unity.Base.Implementations.Tracking;
+using SpilGames.Unity.Helpers.EventParams;
 
 public class DebugPanelController : MonoBehaviour 
 {
@@ -63,12 +64,6 @@ public class DebugPanelController : MonoBehaviour
         Application.logMessageReceived -= HandleLog;
     }
 
-    /// <summary>
-    /// Records a log from the log callback.
-    /// </summary>
-    /// <param name="message">Message.</param>
-    /// <param name="stackTrace">Trace of where the message came from.</param>
-    /// <param name="type">Type of message (error, exception, warning, assert).</param>
     void HandleLog(string message, string stackTrace, LogType type)
     {
         if (message.StartsWith("SpilSDK: SendCustomEvent"))
@@ -143,30 +138,84 @@ public class DebugPanelController : MonoBehaviour
                 break;
             case enumEvents.milestoneAchieved:
                 new SpilTracking.BaseMilestoneAchieved("name")
+                .AddScore(0)
+                .AddLocation("location")
+                .AddIteration(0)
+                .AddMilestoneDescription("milestoneDescription")
                 .Track();
                 break;
             case enumEvents.levelStart:
                 new SpilTracking.BaseLevelStart("level")
+                .AddAchievement("achievement")
+                .AddActiveBooster(new List<string> { "activeBooster" })
+                .AddCreatorId("creatorId")
+                .AddCustomCreated(0)
+                .AddDifficulty("difficulty")
+                .AddIteration(0)
+                .AddLevelId("levelId")
                 .Track();
                 break;
             case enumEvents.levelComplete:
                 new SpilTracking.BaseLevelComplete("level")
+                .AddAchievement("achievement")
+                .AddAvgCombos(0)
+                .AddCreatorId("creatorId")
+                .AddCustomCreated(false)
+                .AddDifficulty("difficulty")
+                .AddIteration(0)
+                .AddLevelId("levelId")
+                .AddMoves(0)
+                .AddMovesLeft(0)
+                .AddObjectUsed(new List<LevelCompleteObjectUsed> { new LevelCompleteObjectUsed { objectCount = 0, objectId = "objectId", objectTimings = new[] { 0, 1, 2 }, objectType = "objectType" } })
+                .AddRating("rating")
+                .AddScore(0)
+                .AddSpeed("speed")
+                .AddStars(0)
+                .AddTimeLeft(0)
+                .AddTurns(0)
                 .Track();
                 break;
             case enumEvents.levelFailed:
                 new SpilTracking.BaseLevelFailed("level")
+                .AddAchievement("achievement")
+                .AddAvgCombos(0)
+                .AddCreatorId("creatorId")
+                .AddCustomCreated(false)
+                .AddDifficulty("difficulty")
+                .AddIteration(0)
+                .AddLevelId("levelId")
+                .AddMoves(0)
+                .AddMovesLeft(0)
+                .AddObjectUsed(new List<LevelCompleteObjectUsed> { new LevelCompleteObjectUsed { objectCount = 0, objectId = "objectId", objectTimings = new[] { 0, 1, 2 }, objectType = "objectType" } })
+                .AddRating("rating")
+                .AddScore(0)
+                .AddSpeed("speed")
+                .AddStars(0)
+                .AddTimeLeft(0)
+                .AddTurns(0)
                 .Track();
                 break;
             case enumEvents.levelUp:
                 new SpilTracking.BaseLevelUp("level", "objectId")
+                .AddObjectUniqueId("uniqueId")
+                .AddObjectUniqueIdType("uniqueIdType")
+                .AddSkillId("skillId")
+                .AddSourceId("sourceId")
+                .AddSourceUniqueId("sourceUniqueId")
                 .Track();
                 break;
             case enumEvents.equip:
                 new SpilTracking.BaseEquip("equippedItem")
+                .AddEquippedTo("equippedTo")
+                .AddUnequippedFrom("equippedFrom")
                 .Track();
                 break;
             case enumEvents.upgrade:
                 new SpilTracking.BaseUpgrade("upgradeId", "level")
+                .AddKey("key")
+                .AddReason("reason")
+                .AddIteration(0)
+                .AddAchievement("achievement")
                 .Track();
                 break;
             case enumEvents.levelCreate:
@@ -175,10 +224,12 @@ public class DebugPanelController : MonoBehaviour
                 break;
             case enumEvents.levelDownload:
                 new SpilTracking.BaseLevelDownload("levelId", "creatorId")
+                .AddRating(0)
                 .Track();
                 break;
             case enumEvents.levelRate:
                 new SpilTracking.BaseLevelRate("levelId", "creatorId")
+                .AddRating(0)
                 .Track();
                 break;
             case enumEvents.endlessModeStart:
@@ -195,14 +246,23 @@ public class DebugPanelController : MonoBehaviour
                 break;
             case enumEvents.iapPurchased:
                 new SpilTracking.BaseIAPPurchased("skuId", "transactionId")
+                .AddToken("token")
+                .AddReason("reason")
+                .AddLocation("location")
+                .AddLocalPrice("localPrice")
+                .AddAmazonUserId("amazonUserId")
+                .AddLocalCurrency("localCurrency")
                 .Track();
                 break;
             case enumEvents.iapRestored:
                 new SpilTracking.BaseIAPRestored("skuId", "originalTransactionId", "originalPurchaseDate")
+                .AddReason("reason")
                 .Track();
                 break;
             case enumEvents.iapFailed:
                 new SpilTracking.BaseIAPFailed("skuId", "errorDescription")
+                .AddReason("reason")
+                .AddLocation("location")
                 .Track();
                 break;
             case enumEvents.tutorialComplete:
@@ -219,18 +279,23 @@ public class DebugPanelController : MonoBehaviour
                 break;
             case enumEvents.share:
                 new SpilTracking.BaseShare("platform")
+                .AddReason("reason")
+                .AddLocation("location")
                 .Track();
                 break;
             case enumEvents.invite:
                 new SpilTracking.BaseInvite("platform")
+                .AddLocation("location")
                 .Track();
                 break;
             case enumEvents.levelAppeared:
                 new SpilTracking.BaseLevelAppeared("level")
+                .AddDifficulty("difficulty")
                 .Track();
                 break;
             case enumEvents.levelDiscarded:
                 new SpilTracking.BaseLevelDiscarded("level")
+                .AddDifficulty("difficulty")
                 .Track();
                 break;
             case enumEvents.errorShown:
@@ -239,6 +304,7 @@ public class DebugPanelController : MonoBehaviour
                 break;
             case enumEvents.timeElapLoad:
                 new SpilTracking.BaseTimeElapLoad(0, "pointInGame")
+                .AddStartPoint(0)
                 .Track();
                 break;
             case enumEvents.timeoutDetected:
@@ -247,14 +313,25 @@ public class DebugPanelController : MonoBehaviour
                 break;
             case enumEvents.objectStateChanged:
                 new SpilTracking.BaseObjectStateChanged("changedObject", "status", "reason")
+                .AddSituation("situation")
+                .AddInvolvedParties("involvedParties")
+                .AddAllChoiceResults("choiceResults")
+                .AddOptionConditions("optionConditions")
+                .AddChangedProperties("changedProperties")
+                .AddAllSelectedChoices("allSelectedChoices")
                 .Track();
                 break;
             case enumEvents.uiElementClicked:
                 new SpilTracking.BaseUIElementClicked("element")
+                .AddType("type")
+                .AddGrade(0)
+                .AddLocation("location")
+                .AddScreenName("screenName")
                 .Track();
                 break;
             case enumEvents.sendGift:
                 new SpilTracking.BaseSendGift("platform")
+                .AddLocation("location")
                 .Track();
                 break;
             case enumEvents.levelTimeOut:
@@ -263,10 +340,14 @@ public class DebugPanelController : MonoBehaviour
                 break;
             case enumEvents.dialogueChosen:
                 new SpilTracking.BaseDialogueChosen("name", "choice", "choiceType", false, false, false, false, false)
+                .AddTime(0)
+                .AddIteration(0)
+                .AddIterationReason(new List<string> { "iterationReason" })
                 .Track();
                 break;
             case enumEvents.friendAdded:
                 new SpilTracking.BaseFriendAdded("friend")
+                .AddPlatform("platform")
                 .Track();
                 break;
             case enumEvents.gameObjectInteraction:
@@ -275,42 +356,74 @@ public class DebugPanelController : MonoBehaviour
                 break;
             case enumEvents.gameResult:
                 new SpilTracking.BaseGameResult()
+                .AddLabel("label")
+                .AddItemId("itemId")
+                .AddMatchId("matchId")
+                .AddItemType("itemType")
                 .Track();
                 break;
             case enumEvents.itemCrafted:
                 new SpilTracking.BaseItemCrafted("itemId")
+                .AddItemType("itemType")
                 .Track();
                 break;
             case enumEvents.itemCreated:
                 new SpilTracking.BaseItemCreated("itemId")
+                .AddItemType("itemType")
                 .Track();
                 break;
             case enumEvents.itemUpdated:
                 new SpilTracking.BaseItemUpdated("content", "itemId")
+                .AddItemType("itemType")
                 .Track();
                 break;
             case enumEvents.deckUpdated:
                 new SpilTracking.BaseDeckUpdated("content", "itemId")
+                .AddLabel("label")
+                .AddItemType("itemType")
                 .Track();
                 break;
             case enumEvents.matchComplete:
                 new SpilTracking.BaseMatchComplete()
+                .AddLabel("label")
+                .AddItemId("itemId")
+                .AddMatchId("matchId")
+                .AddItemType("itemType")
                 .Track();
                 break;
             case enumEvents.matchLost:
                 new SpilTracking.BaseMatchLost()
+                .AddLabel("label")
+                .AddItemId("itemId")
+                .AddMatchId("matchId")
+                .AddItemType("itemType")
                 .Track();
                 break;
             case enumEvents.matchTie:
                 new SpilTracking.BaseMatchTie()
+                .AddLabel("label")
+                .AddItemId("itemId")
+                .AddMatchId("matchId")
+                .AddItemType("itemType")
                 .Track();
                 break;
             case enumEvents.matchWon:
                 new SpilTracking.BaseMatchWon()
+                .AddLabel("label")
+                .AddItemId("itemId")
+                .AddMatchId("matchId")
+                .AddItemType("itemType")
                 .Track();
                 break;
             case enumEvents.pawnMoved:
                 new SpilTracking.BasePawnMoved("name")
+                .AddKind("kind")
+                .AddDelta("delta")
+                .AddLabel("label")
+                .AddEnergy("energy")
+                .AddRarity("rarity")
+                .AddReason("reason")
+                .AddLocation("location")
                 .Track();
                 break;
             case enumEvents.playerLeagueChanged:
@@ -319,6 +432,10 @@ public class DebugPanelController : MonoBehaviour
                 break;
             case enumEvents.timedAction:
                 new SpilTracking.BaseTimedAction("timedAction")
+                .AddLabel("label")
+                .AddTimedObject("timeObject")
+                .AddTimeToFinish(0)
+                .AddEffectMultiplier(0f)
                 .Track();
                 break;
             case enumEvents.transitionToMenu:
