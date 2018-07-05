@@ -979,6 +979,15 @@ public class GameController : MonoBehaviour
     }
     
     private void OnAssetBundlesAvailable() {
+#if UNITY_WEBGL
+        AssetBundlesHelper assetBundlesHelper = Spil.Instance.GetAssetBundles();
+        StartCoroutine(AssetBundleController.DownloadGoldenPlaneBundle(this, assetBundlesHelper.GetAssetBundle("goldplane_gl")));
+
+        List<AssetBundle> assetBundles = Spil.Instance.GetAssetBundles().GetAssetBundlesOfType("background_gl");
+        foreach (AssetBundle assetBundle in assetBundles) {
+            StartCoroutine(AssetBundleController.DownloadBackgroundBundle(this, assetBundle));
+        }
+#else
         AssetBundlesHelper assetBundlesHelper = Spil.Instance.GetAssetBundles();
         StartCoroutine(AssetBundleController.DownloadGoldenPlaneBundle(this, assetBundlesHelper.GetAssetBundle("goldplane")));
 
@@ -986,6 +995,7 @@ public class GameController : MonoBehaviour
         foreach (AssetBundle assetBundle in assetBundles) {
             StartCoroutine(AssetBundleController.DownloadBackgroundBundle(this, assetBundle));
         }
+#endif
     }
 
     private void OnAssetBundlesNotAvailable() {

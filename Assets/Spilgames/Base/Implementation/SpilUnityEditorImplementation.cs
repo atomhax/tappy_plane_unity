@@ -147,9 +147,20 @@ namespace SpilGames.Unity.Base.Implementations {
         }
 
         private void TrackEditorInstall() {
+#if UNITY_EDITOR
             if (trackedInstall) {
                 return;
             }
+#elif UNITY_WEBGL
+            if (PlayerPrefs.GetInt("TrackedInstall", 0) > 0)
+            {
+                return;
+            }
+            else
+            {
+                PlayerPrefs.SetInt("TrackedInstall", 1);
+            }
+#endif
             
             SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
             spilEvent.eventName = "install";

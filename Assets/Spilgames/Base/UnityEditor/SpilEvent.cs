@@ -43,10 +43,8 @@ namespace SpilGames.Unity.Base.UnityEditor {
 #endif
             
 #if UNITY_WEBGL
-            bundleIdentifier = "com.spilgames.tappyplane";
+            bundleIdentifier = Spil.BundleIdEditor;
             platform = "android";
-            Spil.BundleIdEditor = bundleIdentifier;
-            uid = "0000-1111-2222-3333";
 #endif
             
             AddDefaultParameters();
@@ -117,7 +115,8 @@ namespace SpilGames.Unity.Base.UnityEditor {
 #if !UNITY_WEBGL
             data.AddField("deviceId", SystemInfo.deviceUniqueIdentifier);
 #else
-            data.AddField("deviceId", "1234-5678-9012-3456");
+            string deviceId = PlayerPrefs.GetString("DeviceId");
+            data.AddField("deviceId", deviceId);
 #endif
             data.AddField("uid", uid);
             data.AddField("locale", "en");
@@ -129,7 +128,11 @@ namespace SpilGames.Unity.Base.UnityEditor {
             data.AddField("apiVersion", SpilUnityImplementationBase.PluginVersion);
             data.AddField("osVersion", "1.0");
             data.AddField("os", platform);
+#if !UNITY_WEBGL
             data.AddField("deviceModel", "Editor");
+#else
+            data.AddField("deviceModel", "WebGL");
+#endif
             data.AddField("timezoneOffset", "0");
             data.AddField("tto", "200");
             if (platform.Equals("android")) {

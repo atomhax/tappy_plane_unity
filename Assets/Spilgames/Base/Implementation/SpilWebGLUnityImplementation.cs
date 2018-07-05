@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SpilGames.Unity.Base.SDK;
-using SpilGames.Unity.Base.UnityEditor;
-using SpilGames.Unity.Base.UnityEditor.Managers;
 using SpilGames.Unity.Helpers.GameData;
 using SpilGames.Unity.Json;
+using UnityEngine;
 
 namespace SpilGames.Unity.Base.Implementations
 {
@@ -74,14 +74,20 @@ namespace SpilGames.Unity.Base.Implementations
         public override string GetConfigValue(string key)
         {
             return null;
-        }
+        }*/
 
         public override string GetDeviceId()
         {
-            return null;
+            string deviceId = PlayerPrefs.GetString("DeviceId");
+            if (string.IsNullOrEmpty(deviceId))
+            {
+                deviceId = Guid.NewGuid().ToString();
+                PlayerPrefs.SetString("DeviceId", deviceId);
+            }
+            return deviceId;
         }
 
-        public override string GetImagePath(string url)
+        /*public override string GetImagePath(string url)
         {
             return null;
         }

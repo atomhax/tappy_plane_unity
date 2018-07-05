@@ -1,8 +1,9 @@
 ﻿#if UNITY_EDITOR || UNITY_WEBGL
+using System.IO;
 using UnityEngine;
-using System.Collections;
-using SpilGames.Unity.Base.Implementations;
-using SpilGames.Unity.Json;
+//using System.Collections;
+//using SpilGames.Unity.Base.Implementations;
+//using SpilGames.Unity.Json;
 
 namespace SpilGames.Unity.Base.UnityEditor.Managers {
     public class ConfigManager {

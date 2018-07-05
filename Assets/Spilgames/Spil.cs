@@ -446,6 +446,7 @@ namespace SpilGames.Unity {
         }
 
         void InitEditor() {
+#if UNITY_EDITOR
             if (string.IsNullOrEmpty(spilUserIdEditor)) {
                 spilUserIdEditor = Guid.NewGuid().ToString();
             } else {
@@ -454,6 +455,17 @@ namespace SpilGames.Unity {
 
             SpilUserIdEditor = spilUserIdEditor;
             SpilLogging.Log("SpilSDK-Unity Using SpilUserIdEditor: " + SpilUserIdEditor);
+#elif UNITY_WEBGL
+            SpilUserIdEditor = PlayerPrefs.GetString("SpilUserId");
+            if (string.IsNullOrEmpty(SpilUserIdEditor)) {
+                SpilUserIdEditor = Guid.NewGuid().ToString();
+                PlayerPrefs.SetString("SpilUserId", SpilUserIdEditor);
+            }
+            SpilLogging.Log("SpilSDK-Unity Using SpilUserIdEditor: " + SpilUserIdEditor);
+    
+            string deviceId = Spil.Instance.GetDeviceId();
+            SpilLogging.Log("SpilSDK-Unity Using DeviceId: " + deviceId);
+#endif
             
             BundleIdEditor = bundleIdEditor;
             if (string.IsNullOrEmpty(bundleIdEditor)) {
@@ -479,6 +491,17 @@ namespace SpilGames.Unity {
             TokenRewardAmount = tokenRewardAmount;
 
             RewardToken = rewardToken;
+            
+#if UNITY_EDITOR || UNITY_WEBGL
+            Spil.Instance.SendCustomEventInternal("sessionStart", null);
+#endif
+        }
+
+        void OnApplicationQuit()
+        {
+#if UNITY_EDITOR || UNITY_WEBGL
+            Spil.Instance.SendCustomEventInternal("sessionStop", null);
+#endif
         }
 
         /// <summary>
