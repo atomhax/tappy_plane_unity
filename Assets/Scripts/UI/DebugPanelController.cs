@@ -169,7 +169,7 @@ public class DebugPanelController : MonoBehaviour
                 .AddObjectUsed(new List<LevelCompleteObjectUsed> { new LevelCompleteObjectUsed { objectCount = 0, objectId = "objectId", objectTimings = new[] { 0, 1, 2 }, objectType = "objectType" } })
                 .AddRating("rating")
                 .AddScore(0)
-                .AddSpeed("speed")
+                .AddSpeed(0)
                 .AddStars(0)
                 .AddTimeLeft(0)
                 .AddTurns(0)
@@ -189,7 +189,7 @@ public class DebugPanelController : MonoBehaviour
                 .AddObjectUsed(new List<LevelCompleteObjectUsed> { new LevelCompleteObjectUsed { objectCount = 0, objectId = "objectId", objectTimings = new[] { 0, 1, 2 }, objectType = "objectType" } })
                 .AddRating("rating")
                 .AddScore(0)
-                .AddSpeed("speed")
+                .AddSpeed(0)
                 .AddStars(0)
                 .AddTimeLeft(0)
                 .AddTurns(0)
@@ -249,9 +249,9 @@ public class DebugPanelController : MonoBehaviour
                 .AddToken("token")
                 .AddReason("reason")
                 .AddLocation("location")
-                .AddLocalPrice("localPrice")
+                .AddLocalPrice("0.0")
                 .AddAmazonUserId("amazonUserId")
-                .AddLocalCurrency("localCurrency")
+                .AddLocalCurrency("EUR")
                 .Track();
                 break;
             case enumEvents.iapRestored:
@@ -412,7 +412,7 @@ public class DebugPanelController : MonoBehaviour
                 .AddLabel("label")
                 .AddItemId("itemId")
                 .AddMatchId("matchId")
-                .AddItemType("itemType")
+                .AddItemType(new List<string>{ "itemType" })
                 .Track();
                 break;
             case enumEvents.pawnMoved:

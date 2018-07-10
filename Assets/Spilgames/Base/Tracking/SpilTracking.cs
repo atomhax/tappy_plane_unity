@@ -253,9 +253,9 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
                 parameters.Add("stars", stars);
                 return this;
             }
-            
+
             /// <param name="speed">The speed at which the level was completed.</param>
-            public BaseLevelComplete AddSpeed(string speed) {
+            public BaseLevelComplete AddSpeed(int speed) {
                 parameters.Add("speed", speed);
                 return this;
             }
@@ -298,7 +298,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
             
             /// <param name="avgCombos">The average number of combos used for completing the level.</param>
             public BaseLevelComplete AddAvgCombos(float avgCombos) {
-                parameters.Add("difficulty", avgCombos);
+                parameters.Add("avgCombos", avgCombos);
                 return this;
             }
             
@@ -366,7 +366,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
             }
             
             /// <param name="speed">The speed at which the level was completed.</param>
-            public BaseLevelFailed AddSpeed(string speed) {
+            public BaseLevelFailed AddSpeed(int speed) {
                 parameters.Add("speed", speed);
                 return this;
             }
@@ -409,7 +409,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
             
             /// <param name="avgCombos">The average number of combos used for completing the level.</param>
             public BaseLevelFailed AddAvgCombos(float avgCombos) {
-                parameters.Add("difficulty", avgCombos);
+                parameters.Add("avgCombos", avgCombos);
                 return this;
             }
             
@@ -769,7 +769,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
                 return this;
             }
 
-            /// <param name="localPrice">The local price value of an IAP. Only to be used for Amazon IAPs!</param>
+            /// <param name="localPrice">The local price value of an IAP. Only to be used for Amazon IAPs! Only numerical values, dots and comma's are allowed.</param>
             public BaseIAPPurchased AddLocalPrice(string localPrice) {
                 if (!string.IsNullOrEmpty(localPrice)) {
                     String newLocalPrice = "";
@@ -1041,7 +1041,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
             
             /// <param name="startPoint">The point in game which we start to measure time.</param>
             public BaseTimeElapLoad AddStartPoint(double startPoint) {
-                parameters.Add("startPoint", startPoint);
+                parameters.Add("startPoint", startPoint.ToString()); // startPoint is defined as a string in SLOT
                 return this;
             }
         }
@@ -1562,8 +1562,8 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
             }
             
             /// <param name="itemType"></param>
-            public BaseMatchWon AddItemType(string itemType) {
-                parameters.Add("itemType", itemType);
+            public BaseMatchWon AddItemType(List<string> itemType) {
+                parameters.Add("itemType", new JSONObject(JsonHelper.getJSONFromObject(itemType)));
                 return this;
             }
             
