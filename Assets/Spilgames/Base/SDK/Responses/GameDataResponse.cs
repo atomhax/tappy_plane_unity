@@ -14,6 +14,7 @@ namespace SpilGames.Unity.Base.SDK {
         public string imageUrl;
         public string displayName;
         public string displayDescription;
+        public int limit;
     }
 
     public class SpilItemData {
@@ -27,6 +28,7 @@ namespace SpilGames.Unity.Base.SDK {
         public bool isGacha;
         public List<SpilGachaContent> content;
         public Dictionary<string, object> properties = new Dictionary<string, object>();
+        public int limit;
     }
 
     public class SpilGachaContent {

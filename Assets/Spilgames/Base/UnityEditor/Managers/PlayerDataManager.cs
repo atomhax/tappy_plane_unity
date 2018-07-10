@@ -220,6 +220,14 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                                         updatedBalance = 0;
                                     }
 
+                                    //Check for currency limit and overflow
+                                    int currencyLimit = currency.limit;
+                                    if(currencyLimit > 0 && updatedBalance > currencyLimit) {
+                                        int newOverflow = (updatedBalance - currencyLimit) + currency.overflow;
+                                        currency.overflow = newOverflow;
+                                        updatedBalance = currencyLimit;
+                                    }
+                                    
                                     currency.currentBalance = updatedBalance;
                                 }
                             }
@@ -248,7 +256,17 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                         if (receivedInventory.logic.Equals("CLIENT")) {
                             PlayerItemData item = Inventory.items.FirstOrDefault(a => a.id == playerItem.id);
                             if (item != null && playerItem.delta != 0) {
-                                item.amount = item.amount + playerItem.delta;
+                                int updatedAmount = item.amount + playerItem.delta;
+                                
+                                //Check for item limit and overflow
+                                int itemLimit = item.limit;
+                                if(itemLimit > 0 && updatedAmount > itemLimit) {
+                                    int newOverflow = (updatedAmount - itemLimit) + item.overflow;
+                                    item.overflow = newOverflow;
+                                    updatedAmount = itemLimit;
+                                }
+
+                                item.amount = updatedAmount;
                             }
                             else {
                                 itemsToBeAdded.Add(playerItem);
@@ -270,7 +288,18 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                             playerItem.id = item.id;
                             playerItem.name = item.name;
                             playerItem.type = item.type;
-                            playerItem.amount = itemToAdd.amount;
+                            
+                            int updatedAmount = itemToAdd.amount;
+                                
+                            //Check for item limit and overflow
+                            int itemLimit = itemToAdd.limit;
+                            if(itemLimit > 0 && updatedAmount > itemLimit) {
+                                int newOverflow = (updatedAmount - itemLimit) + itemToAdd.overflow;
+                                playerItem.overflow = newOverflow;
+                                updatedAmount = itemLimit;
+                            }
+                            
+                            playerItem.amount = updatedAmount;
                             playerItem.value = itemToAdd.value;
                             playerItem.delta = 0;
 
@@ -334,6 +363,14 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 return;
             }
 
+            //Check for currency limit and overflow
+            int currencyLimit = currency.limit;
+            if(currencyLimit > 0 && updatedBalance > currencyLimit) {
+                int newOverflow = (updatedBalance - currencyLimit) + currency.overflow;
+                currency.overflow = newOverflow;
+                updatedBalance = currencyLimit;
+            }
+            
             int updatedDelta = amount + currency.delta;
 
             if (updatedDelta == 0) {
@@ -397,7 +434,18 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             item.displayDescription = gameItem.displayDescription;
             item.isGacha = gameItem.isGacha;
             item.content = gameItem.content;
-            item.amount = amount;
+            
+            int updatedAmount = amount;
+                                
+            //Check for item limit and overflow
+            int itemLimit = gameItem.limit;
+            if(itemLimit > 0 && updatedAmount > itemLimit) {
+                int newOverflow = (updatedAmount - itemLimit) + item.overflow;
+                item.overflow = newOverflow;
+                updatedAmount = itemLimit;
+            }
+            
+            item.amount = updatedAmount;
             item.delta = amount;
 
             PlayerItemData inventoryItem = GetItemFromInventory(itemId);
@@ -418,6 +466,14 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 }
 
                 inventoryItem.delta = amount;
+                
+                //Check for item limit and overflow
+                if(itemLimit > 0 && inventoryItemAmount > itemLimit) {
+                    int newOverflow = (inventoryItemAmount - itemLimit) + item.overflow;
+                    item.overflow = newOverflow;
+                    inventoryItemAmount = itemLimit;
+                }
+                
                 inventoryItem.amount = inventoryItemAmount;
                 UpdateItem(inventoryItem);
             }
@@ -565,7 +621,16 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                         return;
                     }
 
-                    currency.currentBalance = currency.currentBalance + bundleItem.amount;
+                    int updatedBalance = currency.currentBalance + bundleItem.amount;
+                    //Check for currency limit and overflow
+                    int currencyLimit = currency.limit;
+                    if(currencyLimit > 0 && updatedBalance > currencyLimit) {
+                        int newOverflow = (updatedBalance - currencyLimit) + currency.overflow;
+                        currency.overflow = newOverflow;
+                        updatedBalance = currencyLimit;
+                    }
+                    
+                    currency.currentBalance = updatedBalance;
                     currency.delta = currency.delta + bundleItem.amount;
 
                     UpdateCurrency(currency);
@@ -588,12 +653,20 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     PlayerItemData inventoryItem = GetItemFromInventory(bundleItem.id);
 
                     int inventoryItemAmount;
+                    int itemLimit = gameItem.limit;
 
                     if (inventoryItem != null) {
                         inventoryItemAmount = inventoryItem.amount;
 
                         inventoryItemAmount = inventoryItemAmount + bundleItem.amount;
 
+                        //Check for item limit and overflow
+                        if(itemLimit > 0 && inventoryItemAmount > itemLimit) {
+                            int newOverflow = (inventoryItemAmount - itemLimit) + item.overflow;
+                            item.overflow = newOverflow;
+                            inventoryItemAmount = itemLimit;
+                        }
+                        
                         inventoryItem.delta = bundleItem.amount;
                         inventoryItem.amount = inventoryItemAmount;
 
@@ -604,6 +677,13 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     else {
                         inventoryItemAmount = bundleItem.amount;
 
+                        //Check for item limit and overflow
+                        if(itemLimit > 0 && inventoryItemAmount > itemLimit) {
+                            int newOverflow = (inventoryItemAmount - itemLimit) + item.overflow;
+                            item.overflow = newOverflow;
+                            inventoryItemAmount = itemLimit;
+                        }
+                        
                         item.delta = inventoryItemAmount;
                         item.amount = inventoryItemAmount;
 
@@ -624,7 +704,17 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                             return;
                         }
 
-                        currency.currentBalance = currency.currentBalance + extraEntity.Amount;
+                        int updatedBalance = currency.currentBalance + extraEntity.Amount;
+                        //Check for currency limit and overflow
+                        int currencyLimit = currency.limit;
+                        if(currencyLimit > 0 && updatedBalance > currencyLimit) {
+                            int newOverflow = (updatedBalance - currencyLimit) + currency.overflow;
+                            currency.overflow = newOverflow;
+                            updatedBalance = currencyLimit;
+                        }
+                    
+                        currency.currentBalance = updatedBalance;
+                        
                         currency.delta = currency.delta + extraEntity.Amount;
 
                         UpdateCurrency(currency);
@@ -661,12 +751,20 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                         PlayerItemData inventoryItem = GetItemFromInventory(extraEntity.Id);
 
                         int inventoryItemAmount;
+                        int itemLimit = gameItem.limit;
 
                         if (inventoryItem != null) {
                             inventoryItemAmount = inventoryItem.amount;
 
                             inventoryItemAmount = inventoryItemAmount + extraEntity.Amount;
 
+                            //Check for item limit and overflow
+                            if(itemLimit > 0 && inventoryItemAmount > itemLimit) {
+                                int newOverflow = (inventoryItemAmount - itemLimit) + item.overflow;
+                                item.overflow = newOverflow;
+                                inventoryItemAmount = itemLimit;
+                            }
+                            
                             inventoryItem.delta = extraEntity.Amount;
                             inventoryItem.amount = inventoryItemAmount;
 
@@ -689,6 +787,13 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                         else {
                             inventoryItemAmount = extraEntity.Amount;
 
+                            //Check for item limit and overflow
+                            if(itemLimit > 0 && inventoryItemAmount > itemLimit) {
+                                int newOverflow = (inventoryItemAmount - itemLimit) + item.overflow;
+                                item.overflow = newOverflow;
+                                inventoryItemAmount = itemLimit;
+                            }
+                            
                             item.delta = inventoryItemAmount;
                             item.amount = inventoryItemAmount;
 
@@ -841,7 +946,9 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     obj.AddField("id", currencyData.id);
                     obj.AddField("currentBalance", currencyData.currentBalance);
                     obj.AddField("delta", currencyData.delta);
-
+                    obj.AddField("limit", currencyData.limit);
+                    obj.AddField("overflow", currencyData.overflow);
+                    
                     currenciesJSON.Add(obj);
                 }
 
@@ -853,6 +960,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
                 foreach (PlayerCurrencyData currencyData in Wallet.currencies) {
                     currencyData.delta = 0;
+                    currencyData.overflow = 0;
                     UpdateCurrency(currencyData);
                 }
             }
@@ -874,6 +982,8 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     obj.AddField("id", playerItemData.id);
                     obj.AddField("amount", playerItemData.amount);
                     obj.AddField("delta", playerItemData.delta);
+                    obj.AddField("limit", playerItemData.limit);
+                    obj.AddField("overflow", playerItemData.overflow);
 
                     itemsJSON.Add(obj);
                 }
@@ -886,6 +996,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
                 foreach (PlayerItemData playerItemData in Inventory.items) {
                     playerItemData.delta = 0;
+                    playerItemData.overflow = 0;
                     UpdateItem(playerItemData);
                 }
             }

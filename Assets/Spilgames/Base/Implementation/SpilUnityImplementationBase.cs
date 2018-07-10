@@ -3100,7 +3100,11 @@ namespace SpilGames.Unity.Base.Implementations{
             string transactionId = null);
 
         public abstract void OpenGacha(int gachaId, string reason, string location, string reasonDetails = null);
-        
+
+	    public abstract void SetCurrencyLimit(int currencyId, int limit);
+
+	    public abstract void SetItemLimit(int itemId, int limit);
+	    
         /// <summary>
         /// Sets the state of the private game.
         /// </summary>

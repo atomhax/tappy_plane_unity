@@ -3,6 +3,8 @@ using UnityEngine;
 using System.Collections;
 using UnityEditor;
 using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 using SpilGames.Unity;
 using System.Xml;
 using JetBrains.Annotations;
@@ -468,6 +470,8 @@ public class SpilEditorConfig : EditorWindow {
 
             File.WriteAllText(streamingAssetsPath + "/defaultPlayerData.json", playerData.Print(false));
         }
+        
+        GetTrackingFile();
 
         if (retrievalError) {
             SpilLogging.Error("Error retrieving default files! Please check the logs!");
@@ -479,6 +483,38 @@ public class SpilEditorConfig : EditorWindow {
         retrievalError = false;
     }
 
+    void GetTrackingFile() {
+        SpilLogging.Log("Getting Game Specific Tracking File");
+        WWW request = new WWW("https://splashscreens.cdn.spilcloud.com/native_game_tracking/" + androidPackageName + ".cs");
+        while (!request.isDone) ;
+        if (request.error != null && !request.error.Equals("")) {
+            SpilLogging.Log("No Game Specific Tracking File available!");
+        }
+        else {
+            string fileName = "";
+            string version = "";
+            using (StringReader reader = new StringReader(request.text)) {
+                string line;
+                while ((line = reader.ReadLine()) != null) {
+                    if (line.Contains("FileName")) {
+                        fileName = line.Split('"').Where((s, i) => i % 2 == 1).ToList()[0];
+                    }
+                    
+                    if (line.Contains("Version")) {
+                        version = line.Split('"').Where((s, i) => i % 2 == 1).ToList()[0];
+                    }
+                }
+            }
+
+            if (!File.Exists(Application.dataPath + "/Spilgames/Base/Tracking/" + fileName + ".cs")) {
+                File.WriteAllText(Application.dataPath + "/Spilgames/Base/Tracking/" + fileName + ".cs", request.text);
+            } else {
+                File.Delete(Application.dataPath + "/Spilgames/Base/Tracking/" + fileName + ".cs");
+                File.WriteAllText(Application.dataPath + "/Spilgames/Base/Tracking/" + fileName + ".cs", request.text);
+            }
+        }
+    }
+    
     string GetData(string type) {
         string gameData = "";
 

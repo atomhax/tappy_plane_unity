@@ -395,6 +395,14 @@ namespace SpilGames.Unity.Base.Implementations {
             pData.OpenGacha(gachaId, reason, reasonDetails, location);
         }
 
+        public override void SetCurrencyLimit(int currencyId, int limit) {
+            gData.SetCurrencyLimit(currencyId, limit);
+        }
+
+        public override void SetItemLimit(int itemId, int limit) {
+            gData.SetItemLimit(itemId, limit);
+        }
+
         public override void ResetPlayerData() {
             pData.ResetPlayerData();
             pData.SendUpdatePlayerDataEvent(true, true, PlayerDataUpdateReasons.Reset);
