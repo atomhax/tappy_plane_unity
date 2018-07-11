@@ -687,6 +687,14 @@ namespace SpilGames.Unity {
         /// This method is meant for internal use only, it should not be used by developers.
         /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
+        public void DeepLinkReceived(string deepLink) {
+            Spil.Instance.fireDeepLinkReceived(deepLink);
+        }
+
+        /// <summary>
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
+        /// </summary>
         public void RewardTokenReceived(string response) {
             Spil.Instance.fireRewardTokenReceived(response);
         }
