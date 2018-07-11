@@ -267,14 +267,6 @@ public class GameController : MonoBehaviour
         }
         
         backgroundMusic.Play();
-
-        List<string> itReason = new List<string>();
-        itReason.Add("bla");
-        itReason.Add("bla2");
-        
-        SpilTracking.DialogueChosen("test", "test1", "test2", true, false, false, false, false)
-            .AddIterationReason(itReason)
-            .Track();
     }
 
     void Update() {
@@ -333,9 +325,9 @@ public class GameController : MonoBehaviour
         Spil.Instance.RequestTieredEvents();
         SavePrivateGameState();
         RequestMoreApps();
-        
+
         FireTrackEventSample();
-        
+
         Invoke("InitGooglePlayGames", 10);
     }
     
@@ -366,7 +358,6 @@ public class GameController : MonoBehaviour
     }
 
     public void SetupNewGame() {
-
         ClearOutOldObsticles();
         playerScore = 0;
         tapperScore = 0;
@@ -1100,6 +1091,8 @@ public class GameController : MonoBehaviour
 	    
 	    showMergeDialog = true;
 	    showSyncDialog = true;
+	    
+	    Spil.Instance.SetCurrencyLimit(28, 300);
 	}
 
 	void OnUserDataError(SpilErrorMessage errorMessage) {

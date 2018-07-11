@@ -8,7 +8,7 @@ using SpilGames.Unity.Json;
 using SpilGames.Unity.Base.SDK;
 
 namespace SpilGames.Unity.Base.Implementations {
-#if UNITY_ANDROID
+    #if UNITY_ANDROID
     public class SpilAndroidUnityImplementation : SpilUnityImplementationBase {
         #region Inherited members
 
@@ -72,12 +72,12 @@ namespace SpilGames.Unity.Base.Implementations {
         /// Internal method names start with a lower case so you can easily recognise and avoid them.
         /// </summary>
         internal override void SpilInit(bool withPrivacyPolicy) {
-#if UNITY_ANDROID
+            #if UNITY_ANDROID
             Spil spil = GameObject.FindObjectOfType<Spil>();
             CallNativeMethod("init", new object[] {withPrivacyPolicy}, true);
             RegisterDevice(spil.ProjectId);
             RequestPackages();
-#endif
+            #endif
         }
 
         internal override void CheckPrivacyPolicy() {
@@ -89,15 +89,16 @@ namespace SpilGames.Unity.Base.Implementations {
                 SpilLogging.Log("Privacy Policy not enabled. Will not show privacy policy settings screen");
                 return;
             }
-            
+
             if (Spil.UseUnityPrefab) {
                 PrivacyPolicyHelper.PrivacyPolicyObject = (GameObject) GameObject.Instantiate(Resources.Load("Spilgames/PrivacyPolicy/PrivacyPolicyUnity" + Spil.MonoInstance.PrefabOrientation));
                 PrivacyPolicyHelper.PrivacyPolicyObject.SetActive(true);
-            
+
                 PrivacyPolicyHelper.Instance.ShowSettingsScreen(1);
-            } else {
+            }
+            else {
                 CallNativeMethod("showPrivacyPolicySettings");
-            }    
+            }
         }
 
         public override void SavePrivValue(int priv) {
@@ -202,6 +203,7 @@ namespace SpilGames.Unity.Base.Implementations {
                 string inventoryAsString = JsonHelper.DictToJSONObject(inventory).ToString().Replace("\"", "\\\"");
                 dict["inventory"] = inventoryAsString;
             }
+
             if (eventName.Equals("updatePlayerData") && dict.ContainsKey("wallet") &&
                 dict["wallet"] is Dictionary<string, object>) {
                 Dictionary<string, object> wallet = (Dictionary<string, object>) dict["wallet"];
@@ -326,7 +328,7 @@ namespace SpilGames.Unity.Base.Implementations {
         }
 
         #endregion
-        
+
         #region Player Data
 
         public override void UpdatePlayerData() {
@@ -406,6 +408,20 @@ namespace SpilGames.Unity.Base.Implementations {
                 reason,
                 location,
                 reasonDetails
+            }, true);
+        }
+
+        public override void SetCurrencyLimit(int currencyId, int limit) {
+            CallNativeMethod("setCurrencyLimit", new object[] {
+                currencyId,
+                limit,
+            }, true);
+        }
+
+        public override void SetItemLimit(int itemId, int limit) {
+            CallNativeMethod("setItemLimit", new object[] {
+                itemId,
+                limit,
             }, true);
         }
 
@@ -564,6 +580,7 @@ namespace SpilGames.Unity.Base.Implementations {
                 SpilLogging.Log(tieredEventsJson);
                 return JsonHelper.getObjectFromJson<List<TieredEvent>>(tieredEventsJson);
             }
+
             return null;
         }
 
@@ -575,7 +592,7 @@ namespace SpilGames.Unity.Base.Implementations {
             if (tieredEventProgressJson == null) {
                 return null;
             }
-            
+
             SpilLogging.Log(tieredEventProgressJson);
             return JsonHelper.getObjectFromJson<TieredEventProgress>(tieredEventProgressJson);
         }
@@ -618,12 +635,12 @@ namespace SpilGames.Unity.Base.Implementations {
             }, true);
         }
 
-        public override bool IsLoggedIn() {     
+        public override bool IsLoggedIn() {
             return Convert.ToBoolean(CallNativeMethod("isLoggedIn"));
         }
 
         #endregion
-        
+
         #region Userdata syncing
 
         public override void RequestUserData() {
@@ -664,7 +681,7 @@ namespace SpilGames.Unity.Base.Implementations {
                 mergeType
             }, true);
         }
-        
+
         #endregion
 
         public override void ResetData() {
@@ -740,7 +757,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// <returns></returns>
         private string CallNativeMethod<T>(string methodName, T param1 = null, bool useParam1 = false) where T : class {
             SpilLogging.Log("CallNativeMethod " + methodName +
-                      (param1 != null ? " param: " + param1.ToString() : ""));
+                            (param1 != null ? " param: " + param1.ToString() : ""));
 
             string value = null;
             using (AndroidJavaClass pClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer")) {
@@ -753,6 +770,7 @@ namespace SpilGames.Unity.Base.Implementations {
                         if (param1 is object[]) {
                             realParam = (object[]) ((object) param1);
                         }
+
                         if (realParam != null) {
                             try {
                                 value = instance.Call<string>(methodName, realParam);
@@ -786,6 +804,7 @@ namespace SpilGames.Unity.Base.Implementations {
                     }
                 }
             }
+
             return value;
         }
 
@@ -884,5 +903,5 @@ namespace SpilGames.Unity.Base.Implementations {
 
         #endregion
     }
-#endif
+    #endif
 }

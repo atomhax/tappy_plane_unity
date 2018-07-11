@@ -521,6 +521,22 @@ namespace SpilGames.Unity.Base.Implementations
         [DllImport("__Internal")]
         private static extern void openGachaNative(int bundleId, string reason, string reasonDetails, string location);
 
+        public override void SetCurrencyLimit(int currencyId, int limit)
+        {
+            setCurrencyLimitNative(currencyId, limit);    
+        }
+    
+        [DllImport("__Internal")]
+        private static extern void setCurrencyLimitNative(int currencyId, int limit);
+    
+        public override void SetItemLimit(int itemId, int limit)
+        {
+            setItemLimitNative(itemId, limit);    
+        }
+    
+        [DllImport("__Internal")]
+        private static extern void setItemLimitNative(int itemId, int limit);    
+    
         public override void ResetPlayerData()
         {
             resetPlayerDataNative();

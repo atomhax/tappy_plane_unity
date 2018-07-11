@@ -198,7 +198,7 @@ namespace SpilGames.Unity.Helpers.GameData {
 
             if (currencies != null) {
                 foreach (SpilCurrencyData spilCurrencyData in currencies) {
-                    Currencies.Add(new Currency(spilCurrencyData.id, spilCurrencyData.name, spilCurrencyData.type, spilCurrencyData.imageUrl, spilCurrencyData.displayName, spilCurrencyData.displayDescription));
+                    Currencies.Add(new Currency(spilCurrencyData.id, spilCurrencyData.name, spilCurrencyData.type, spilCurrencyData.imageUrl, spilCurrencyData.displayName, spilCurrencyData.displayDescription, spilCurrencyData.limit));
                 }
             }
 
@@ -206,7 +206,7 @@ namespace SpilGames.Unity.Helpers.GameData {
 
             if (items != null) {
                 foreach (SpilItemData spilItemsData in items) {
-                    Items.Add(new Item(spilItemsData.id, spilItemsData.name, spilItemsData.type, spilItemsData.imageUrl, spilItemsData.displayName, spilItemsData.displayDescription, spilItemsData.isGacha, spilItemsData.content, spilItemsData.properties));
+                    Items.Add(new Item(spilItemsData.id, spilItemsData.name, spilItemsData.type, spilItemsData.imageUrl, spilItemsData.displayName, spilItemsData.displayDescription, spilItemsData.isGacha, spilItemsData.content, spilItemsData.properties, spilItemsData.limit));
                 }
             }
 
