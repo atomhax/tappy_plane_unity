@@ -37,7 +37,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 
 	void Start ()
 	{
-		#if UNITY_TVOS
+		#if UNITY_TVOS || UNITY_WEBGL
 		return;
 		#endif
 
@@ -66,7 +66,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 	
 	public void InitializePurchasing ()
 	{
-		#if UNITY_TVOS
+		#if UNITY_TVOS || UNITY_WEBGL
 		return;
 		#endif
 
@@ -89,7 +89,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 
 	private bool IsInitialized ()
 	{
-		#if UNITY_TVOS
+		#if UNITY_TVOS || UNITY_WEBGL
 		return false;
 		#endif
 
@@ -99,7 +99,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 
 	public void BuyProductID (string productId)
 	{
-		#if UNITY_TVOS
+		#if UNITY_TVOS || UNITY_WEBGL
 		return;
 		#endif
 
@@ -164,7 +164,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 
 	public void OnInitialized (IStoreController controller, IExtensionProvider extensions)
 	{
-		#if UNITY_TVOS
+		#if UNITY_TVOS || UNITY_WEBGL
 		return;
 		#endif
 
@@ -180,7 +180,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 
 	void StoreProductPrices ()
 	{
-		#if UNITY_TVOS
+		#if UNITY_TVOS || UNITY_WEBGL
 		return;
 		#endif
 
@@ -192,7 +192,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 
 	public void OnInitializeFailed (InitializationFailureReason error)
 	{
-		#if UNITY_TVOS
+		#if UNITY_TVOS || UNITY_WEBGL
 		return;
 		#endif
 
@@ -201,7 +201,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 
 	public PurchaseProcessingResult ProcessPurchase (PurchaseEventArgs args)
 	{
-		#if UNITY_TVOS
+		#if UNITY_TVOS || UNITY_WEBGL
 		return PurchaseProcessingResult.Complete;
 		#endif
 
@@ -292,7 +292,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 
 	void RewardPlayer (String transactionId)
 	{
-		#if UNITY_TVOS
+		#if UNITY_TVOS || UNITY_WEBGL
 		return;
 		#endif
 
@@ -312,7 +312,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 
 	public void OnPurchaseFailed (Product product, PurchaseFailureReason failureReason)
 	{
-		#if UNITY_TVOS
+		#if UNITY_TVOS || UNITY_WEBGL
 		return;
 		#endif
 
