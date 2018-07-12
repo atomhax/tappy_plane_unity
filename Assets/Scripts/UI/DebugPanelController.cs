@@ -149,7 +149,7 @@ public class DebugPanelController : MonoBehaviour
                 .AddAchievement("achievement")
                 .AddActiveBooster(new List<string> { "activeBooster" })
                 .AddCreatorId("creatorId")
-                .AddCustomCreated(0)
+                .AddCustomCreated(true)
                 .AddDifficulty("difficulty")
                 .AddIteration(0)
                 .AddLevelId("levelId")
@@ -304,7 +304,7 @@ public class DebugPanelController : MonoBehaviour
                 break;
             case enumEvents.timeElapLoad:
                 new SpilTracking.BaseTimeElapLoad(0, "pointInGame")
-                .AddStartPoint(0)
+                .AddStartPoint("Screen")
                 .Track();
                 break;
             case enumEvents.timeoutDetected:

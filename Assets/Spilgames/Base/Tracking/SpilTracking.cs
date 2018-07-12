@@ -186,7 +186,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
             }
             
             /// <param name="customCreated">If set to <c>true</c> custom created.</param>
-            public BaseLevelStart AddCustomCreated(float customCreated) {
+            public BaseLevelStart AddCustomCreated(bool customCreated) {
                 parameters.Add("customCreated", customCreated);
                 return this;
             }
@@ -1040,8 +1040,8 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
             }
             
             /// <param name="startPoint">The point in game which we start to measure time.</param>
-            public BaseTimeElapLoad AddStartPoint(double startPoint) {
-                parameters.Add("startPoint", startPoint.ToString()); // startPoint is defined as a string in SLOT
+            public BaseTimeElapLoad AddStartPoint(string startPoint) {
+                parameters.Add("startPoint", startPoint);
                 return this;
             }
         }
