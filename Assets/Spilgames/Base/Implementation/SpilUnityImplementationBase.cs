@@ -1955,6 +1955,28 @@ namespace SpilGames.Unity.Base.Implementations{
 			}
 		}
 
+        public delegate void DeepLinkReceived(string url, JSONObject payload);
+
+        /// <summary>
+        /// This event indicates that a deeplink was received. The developer can subscribe to this event, read the deeplink url and payload and react to the deeplink.
+        /// </summary>
+		public event DeepLinkReceived OnDeepLinkReceived;
+
+        /// <summary>
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// </summary>
+        public void fireDeepLinkReceived(string deepLink) {
+            SpilLogging.Log("Received deeplink = " + deepLink);
+
+            JSONObject deeplinkJSON = new JSONObject(deepLink);
+            string url = deeplinkJSON.GetField("url").str;
+            JSONObject payload = deeplinkJSON.GetField("payload");
+
+            if (OnDeepLinkReceived != null) {
+                OnDeepLinkReceived(url, payload);
+            }
+        }
+
         public delegate void RewardTokenReceived(string token, List<RewardObject> reward, string rewardType);
 
         /// <summary>
