@@ -1276,8 +1276,8 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         /// </summary>
         /// <param name="friend">The id of the friend that was added.</param>
         /// <returns></returns>
-        public static BaseSendGift FriendAdded(string friend) {
-            return new BaseSendGift(friend);
+        public static BaseFriendAdded FriendAdded(string friend) {
+            return new BaseFriendAdded(friend);
         }
         
         public class BaseGameObjectInteraction : BaseTracking {
@@ -1690,8 +1690,8 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         /// </summary>
         /// <param name="timedAction">The name of the action.</param>
         /// <returns></returns>
-        public static BasePawnMoved TimedAction(string timedAction) {
-            return new BasePawnMoved(timedAction);
+        public static BaseTimedAction TimedAction(string timedAction) {
+            return new BaseTimedAction(timedAction);
         }
         
         public class BaseTransitionToMenu : BaseTracking {
