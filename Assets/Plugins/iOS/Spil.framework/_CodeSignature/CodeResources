@@ -16,6 +16,18 @@
 		<data>
 		+4O13XQ1szA90LjlVTcf90GYbDg=
 		</data>
+		<key>Frameworks/AppLovinAdapter.framework/AppLovinAdapter</key>
+		<data>
+		87HV2AJRJyuHP2WBi3jHb6T3LWs=
+		</data>
+		<key>Frameworks/AppLovinAdapter.framework/Versions/A/AppLovinAdapter</key>
+		<data>
+		87HV2AJRJyuHP2WBi3jHb6T3LWs=
+		</data>
+		<key>Frameworks/AppLovinSDK.framework/AppLovinSDK</key>
+		<data>
+		xLQS94ygZfCv2NCRMdVDd5EEdf4=
+		</data>
 		<key>Frameworks/CHAMoatMobileAppKit.framework/CHAMoatMobileAppKit</key>
 		<data>
 		9McRWmyRi/UgIEq3oCT2j8J7/5k=
@@ -80,6 +92,14 @@
 		<data>
 		JMMxawkaTACsyPatACYJV/SR9+M=
 		</data>
+		<key>Frameworks/MPUBMoatMobileAppKit.framework/MPUBMoatMobileAppKit</key>
+		<data>
+		5O4fTh1yg2yMB1wW+8XP1/O0Gys=
+		</data>
+		<key>Frameworks/MoPubAdapter.framework/MoPubAdapter</key>
+		<data>
+		KZh8NjkhIfL6i+TPTduDa9vIJYA=
+		</data>
 		<key>Frameworks/UnityAdapter.framework/UnityAdapter</key>
 		<data>
 		W0Waez7jXOqraJaFDLkX+0t2zW4=
@@ -108,6 +128,10 @@
 		<data>
 		zKXBTzVMefTuUY4JgEjpooqOXqo=
 		</data>
+		<key>Frameworks/libAvid-mopub-3.6.1.a</key>
+		<data>
+		6LeUJNA64F3AaHIQNw/6UU2h1OA=
+		</data>
 		<key>Frameworks/libGoogleAnalyticsServices.a</key>
 		<data>
 		ZVY7aF/qLtec3CDoH18CzJhrMLU=
@@ -134,7 +158,7 @@
 		</data>
 		<key>Headers/Currency.h</key>
 		<data>
-		ZqrtqcGEG+SlS/VdXHr8mWJcxNw=
+		Wv5Al/2PRBtgjbQ74pjw1StxWfM=
 		</data>
 		<key>Headers/GAI.h</key>
 		<data>
@@ -162,11 +186,11 @@
 		</data>
 		<key>Headers/GameDataController.h</key>
 		<data>
-		qUOe20hi0T1m4IdZ2CKkUE+OH20=
+		GyXulBlaQUocyBMzQn4vLaYf1sw=
 		</data>
 		<key>Headers/HookBridge.h</key>
 		<data>
-		Xigwb9h2EePWoH80lTeBORSHpzs=
+		99CiZUbV6cJXXL5eR5c7ejrem2g=
 		</data>
 		<key>Headers/ImageContext.h</key>
 		<data>
@@ -182,11 +206,15 @@
 		</data>
 		<key>Headers/Item.h</key>
 		<data>
-		0AWSunS5nSb3SIpKYI9uyVLwmps=
+		rqKJHE78Bp76ZnwkLD5Oj9KYjPM=
 		</data>
 		<key>Headers/JsonUtil.h</key>
 		<data>
 		+jol4OCTtA3UgwWog0Pza7kVumw=
+		</data>
+		<key>Headers/NSString+Extensions.h</key>
+		<data>
+		aZ1Oka6UuZGrJ4Uki9GctyaBywk=
 		</data>
 		<key>Headers/NSUserDefaults-AESEncryptor.h</key>
 		<data>
@@ -206,11 +234,11 @@
 		</data>
 		<key>Headers/PlayerCurrency.h</key>
 		<data>
-		jz66VDMKqbwNggd1wouGqpdyjeI=
+		cnkA1MzKa6RRTtOhduXbZnzbwIo=
 		</data>
 		<key>Headers/PlayerItem.h</key>
 		<data>
-		TIg20tiiWKU0msXbkMxxdibmNKU=
+		UNOcIZn80x2oaLGDyUND7ELMM7M=
 		</data>
 		<key>Headers/Promotion.h</key>
 		<data>
@@ -230,7 +258,7 @@
 		</data>
 		<key>Headers/Spil.h</key>
 		<data>
-		WUkyy1vSMtATumyDGk8yxMSyUYk=
+		ZRXuU2lqiPXzO4cyn86HJ0vuBYE=
 		</data>
 		<key>Headers/SpilActionHandler.h</key>
 		<data>
@@ -260,6 +288,94 @@
 		<data>
 		4C+1qg2SLIAvqss1RlPWjeM7YG8=
 		</data>
+		<key>LICENSE</key>
+		<data>
+		+k0zFZ5W2a/QqZkA7YecIph4HVI=
+		</data>
+		<key>MPAdBrowserController.nib</key>
+		<data>
+		IFImVLGdUUud60Lmdc2+Y21/a0s=
+		</data>
+		<key>MPCloseBtn.png</key>
+		<data>
+		n1yE8ymcpvWE3ViYwcTzG3665/M=
+		</data>
+		<key>MPCloseBtn@2x.png</key>
+		<data>
+		YJGWo+hV40wha6GqWRAKRS9/4Uk=
+		</data>
+		<key>MPCloseBtn@3x.png</key>
+		<data>
+		HiJUP6J3ffmKg92ZbHc5AdHXyHc=
+		</data>
+		<key>MPCloseButtonX.png</key>
+		<data>
+		7N6g1MBal3sIsITnaGUARXJMNsk=
+		</data>
+		<key>MPCloseButtonX@2x.png</key>
+		<data>
+		BOfdZuiYZODBJTU6hS2uLfnRXZs=
+		</data>
+		<key>MPCloseButtonX@3x.png</key>
+		<data>
+		dOnlRWSO+m0WzaTKFeaiRsYBv4A=
+		</data>
+		<key>MPCountdownTimer.html</key>
+		<data>
+		AfjuesNM1EMzmyn9FSoJ9syt2Cs=
+		</data>
+		<key>MPDAAIcon.png</key>
+		<data>
+		dN6Rem2Dxi1PX3WO7TIc2kqHzXc=
+		</data>
+		<key>MPDAAIcon@2x.png</key>
+		<data>
+		4Gn4CUUd+oBZgFNGTfIy1Ip+zCE=
+		</data>
+		<key>MPDAAIcon@3x.png</key>
+		<data>
+		IltId5xe9kzHIDF53O0ZyyT+0Wk=
+		</data>
+		<key>MPMutedBtn.png</key>
+		<data>
+		Ila42HB/dLKi40hXgUuhBFAF5eU=
+		</data>
+		<key>MPMutedBtn@2x.png</key>
+		<data>
+		sxAc3GrEA1PpPKiG64JfZv8mgdA=
+		</data>
+		<key>MPMutedBtn@3x.png</key>
+		<data>
+		2RjpsXhoAY5fchW13XvBMN4g/Ys=
+		</data>
+		<key>MPPlayBtn.png</key>
+		<data>
+		aksYIQTY6K3Cs0Vb/7LkejXCFOs=
+		</data>
+		<key>MPPlayBtn@2x.png</key>
+		<data>
+		5WhhD68hv/j64YTwreghnwcQxrM=
+		</data>
+		<key>MPPlayBtn@3x.png</key>
+		<data>
+		Ci28wpzk84b4ZT2DXNU3u1quZT4=
+		</data>
+		<key>MPUnmutedBtn.png</key>
+		<data>
+		BcBAT0oUyhouo7mkjteis+6Xw7o=
+		</data>
+		<key>MPUnmutedBtn@2x.png</key>
+		<data>
+		CIRbX+ZmvjE+hQYLHkeOXvoMfo4=
+		</data>
+		<key>MPUnmutedBtn@3x.png</key>
+		<data>
+		Prqij/pK+QCOu4BjBVRlV+hkpLo=
+		</data>
+		<key>MRAID.bundle/mraid.jss</key>
+		<data>
+		oX1mrmbjet4tPIjvQNiaVb7qTBk=
+		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
 		nBQhbvJw7d7ucK1HDVnzTLNQS4Q=
@@ -270,131 +386,131 @@
 		</data>
 		<key>PrivacyPolicy.storyboardc/Di9-ad-Dnb-view-RSW-wP-VuY~ipad.nib/objects-8.0+.nib</key>
 		<data>
-		jIihT8aVQ1tSr0rZ8uQTZT2dtyM=
+		wdA08hzdOQ8kc6Jj09t4u+fH63g=
 		</data>
 		<key>PrivacyPolicy.storyboardc/Di9-ad-Dnb-view-RSW-wP-VuY~ipad.nib/runtime.nib</key>
 		<data>
-		KXIsRwSpmUXhEOQdDf8U0WIuuz0=
+		BVgKgSo3mVyKD+jJ7DLpc9i0ds4=
 		</data>
 		<key>PrivacyPolicy.storyboardc/Di9-ad-Dnb-view-RSW-wP-VuY~iphone.nib/objects-8.0+.nib</key>
 		<data>
-		SMpP7RvL4Vs7ambqR+KKCOEhsIU=
+		Jy13NJxGAnCeOBDD2oGMWj+I9N8=
 		</data>
 		<key>PrivacyPolicy.storyboardc/Di9-ad-Dnb-view-RSW-wP-VuY~iphone.nib/runtime.nib</key>
 		<data>
-		LJJ4RYVFz3Lopv5/6TnDE86Zf8o=
+		7bITleOcciSj7KbGcv/VALAOL+Q=
 		</data>
 		<key>PrivacyPolicy.storyboardc/PrivacyPolicyAdsVC~ipad.nib/objects-8.0+.nib</key>
 		<data>
-		Xg2+CHj822+lNlcigKYZGsaCNOw=
+		NVB3Nf4/ADKqKgoahISncD2+M+g=
 		</data>
 		<key>PrivacyPolicy.storyboardc/PrivacyPolicyAdsVC~ipad.nib/runtime.nib</key>
 		<data>
-		Rpr+InqN9DoV5Vf55RXFCs63wTE=
+		o0A3LgOjOhkgNHyJxtS3+G/BBjc=
 		</data>
 		<key>PrivacyPolicy.storyboardc/PrivacyPolicyAdsVC~iphone.nib/objects-8.0+.nib</key>
 		<data>
-		FTk0W1Sc9EQ82qY1o+bjzDEMe+g=
+		ybXENZdCGTdfHx2aiqLV6aQEjCI=
 		</data>
 		<key>PrivacyPolicy.storyboardc/PrivacyPolicyAdsVC~iphone.nib/runtime.nib</key>
 		<data>
-		CCBW5vJ65L9jMwZAbPHNyLHnW7s=
+		0ovL/uyQbyBe/oD1PtL05MdeLE4=
 		</data>
 		<key>PrivacyPolicy.storyboardc/PrivacyPolicyInfoVC~ipad.nib/objects-8.0+.nib</key>
 		<data>
-		gqthpIHf9FDk3CRzI9f7PCGJ5hQ=
+		YoLwNC5InSMYzk0t0F2Itr1aJiA=
 		</data>
 		<key>PrivacyPolicy.storyboardc/PrivacyPolicyInfoVC~ipad.nib/runtime.nib</key>
 		<data>
-		PIg+4XGGjZJjWWdbVpyev5IMohQ=
+		0gYty+0Yz6QpWjR8qC4tkZxRKwc=
 		</data>
 		<key>PrivacyPolicy.storyboardc/PrivacyPolicyInfoVC~iphone.nib/objects-8.0+.nib</key>
 		<data>
-		XVEjMt3g3daXQ4rz7VKn0QVzksI=
+		bU5tbE4718izKzueP/kHVA95Myc=
 		</data>
 		<key>PrivacyPolicy.storyboardc/PrivacyPolicyInfoVC~iphone.nib/runtime.nib</key>
 		<data>
-		YKZJDaFE6hDPWfA8wBGU7R5qpAs=
+		Tj5TsBDdmzhTUoIMg/4DXIGPqYw=
 		</data>
 		<key>PrivacyPolicy.storyboardc/PrivacyPolicyMoreVC~ipad.nib/objects-8.0+.nib</key>
 		<data>
-		42JcOHHX2fp6PsVRvQpXJuLmxIM=
+		uPALHDltSMdgHEjD/NU/s7VR6fw=
 		</data>
 		<key>PrivacyPolicy.storyboardc/PrivacyPolicyMoreVC~ipad.nib/runtime.nib</key>
 		<data>
-		g7fPDewxexeXFcHz36Mes5u4lnE=
+		dDHuUU1acxJEIdLM+YrnBWT4mWI=
 		</data>
 		<key>PrivacyPolicy.storyboardc/PrivacyPolicyMoreVC~iphone.nib/objects-8.0+.nib</key>
 		<data>
-		T3k5op7QOjR7+5j0OyFRShoQpBM=
+		s7874wo4XW1taY+FJFW5YRokKk0=
 		</data>
 		<key>PrivacyPolicy.storyboardc/PrivacyPolicyMoreVC~iphone.nib/runtime.nib</key>
 		<data>
-		Y+ZiWfSAyM4FNEr/phHuLhi5vgY=
+		YPz4/x9w+csgGnxgw9szPwTE8YE=
 		</data>
 		<key>PrivacyPolicy.storyboardc/PrivacyPolicyVC~ipad.nib/objects-8.0+.nib</key>
 		<data>
-		DsSMIW7MOuGGDyFGuPTGQnJNzww=
+		GxSolYfYcxdoSFhI0xuyi/m/vf4=
 		</data>
 		<key>PrivacyPolicy.storyboardc/PrivacyPolicyVC~ipad.nib/runtime.nib</key>
 		<data>
-		bISIBwxGal73iVFcRSLAVyN80UM=
+		YhFlsI2fQlxuH1BCLShJ7VujZTQ=
 		</data>
 		<key>PrivacyPolicy.storyboardc/PrivacyPolicyVC~iphone.nib/objects-8.0+.nib</key>
 		<data>
-		nGJfaoExHNgPjSscYXCp/PLRkzY=
+		3jzPIiCaRUnIFpmLLmKwNBgHsLE=
 		</data>
 		<key>PrivacyPolicy.storyboardc/PrivacyPolicyVC~iphone.nib/runtime.nib</key>
 		<data>
-		Oi70a24NkIhpyxNHKJ3uVKs7Nho=
+		aFM/Rw8fExXxVi51W4vzhpqqtSc=
 		</data>
 		<key>PrivacyPolicy.storyboardc/Ukh-Lu-Agu-view-FgC-on-GoN~ipad.nib/objects-8.0+.nib</key>
 		<data>
-		F9rF9Nx1QvwInFxlLjfAgIP8eMs=
+		QE5UaY+2bpxMD0YSm9Sft5xTEmY=
 		</data>
 		<key>PrivacyPolicy.storyboardc/Ukh-Lu-Agu-view-FgC-on-GoN~ipad.nib/runtime.nib</key>
 		<data>
-		xQOGuQOZsOLAeDsWt8Oo8LXiknk=
+		xdRi/06tnND6fbXOAPJF7l/j9hE=
 		</data>
 		<key>PrivacyPolicy.storyboardc/Ukh-Lu-Agu-view-FgC-on-GoN~iphone.nib/objects-8.0+.nib</key>
 		<data>
-		eBD3DWZ8oZYmTVq3HXb0gGpFTSI=
+		zs29B6f8r2G37TKgeMNKHzeroZ8=
 		</data>
 		<key>PrivacyPolicy.storyboardc/Ukh-Lu-Agu-view-FgC-on-GoN~iphone.nib/runtime.nib</key>
 		<data>
-		dZeVfLs0gyFX73gbrLf4MxYiSUk=
+		4oK0Jcm3DG1gpwh/elaqLhibiVc=
 		</data>
 		<key>PrivacyPolicy.storyboardc/WFO-CS-rdq-view-fnR-g2-iKa~ipad.nib/objects-8.0+.nib</key>
 		<data>
-		CL8ExnUVmWvfm2jY5zleRwv/JuI=
+		DMCtu6SIYo0LLGEG+1Uo1aVVmFQ=
 		</data>
 		<key>PrivacyPolicy.storyboardc/WFO-CS-rdq-view-fnR-g2-iKa~ipad.nib/runtime.nib</key>
 		<data>
-		F40hYdbukKsicohow/qmgCCl5MY=
+		XEdrC8MLoe0pWoXAGs2V5ccZWzM=
 		</data>
 		<key>PrivacyPolicy.storyboardc/WFO-CS-rdq-view-fnR-g2-iKa~iphone.nib/objects-8.0+.nib</key>
 		<data>
-		ri1gKQQr42VLpe56QQYhLv1sg5o=
+		woBpR7WeUpL9G3jE7aZislMX3cc=
 		</data>
 		<key>PrivacyPolicy.storyboardc/WFO-CS-rdq-view-fnR-g2-iKa~iphone.nib/runtime.nib</key>
 		<data>
-		T7eEtL+8A5pbmbBrizp3w3mRE34=
+		zY54AdTmqeE0yE4le1NjN1RMZHM=
 		</data>
 		<key>PrivacyPolicy.storyboardc/a57-Hh-kro-view-9Wj-9M-N8e~ipad.nib/objects-8.0+.nib</key>
 		<data>
-		7i/U0ex2+IS3Qz7gM/OR5YEthvo=
+		yZ8LsZgABtGXzQ7YE8M3ufPSkiw=
 		</data>
 		<key>PrivacyPolicy.storyboardc/a57-Hh-kro-view-9Wj-9M-N8e~ipad.nib/runtime.nib</key>
 		<data>
-		j7WiTRx+8oJi74QGsssg3JasbdI=
+		8D5Q3qFmyn7AmckvU2xJoiKPRSo=
 		</data>
 		<key>PrivacyPolicy.storyboardc/a57-Hh-kro-view-9Wj-9M-N8e~iphone.nib/objects-8.0+.nib</key>
 		<data>
-		ZSQ0dLPAHJ7GuvrRBSNZXpcsFqc=
+		OQ9fXicKrjJ6szDuGlSSAC3mZ3U=
 		</data>
 		<key>PrivacyPolicy.storyboardc/a57-Hh-kro-view-9Wj-9M-N8e~iphone.nib/runtime.nib</key>
 		<data>
-		mzynIlplDuwEKiWAgraA/UeY5NU=
+		NHSnkdNAbsaAmX5qgooXSiyvJU0=
 		</data>
 		<key>PrivacyPolicyAccept0.png</key>
 		<data>
@@ -434,11 +550,11 @@
 		</data>
 		<key>PrivacyPolicy~ipad.storyboardc/Info.plist</key>
 		<data>
-		//QS7X6T30BOOX18lYyakOQRh7s=
+		WJe+Syoe5HPdtsiYZ635T1++TeE=
 		</data>
 		<key>PrivacyPolicy~iphone.storyboardc/Info-8.0+.plist</key>
 		<data>
-		//QS7X6T30BOOX18lYyakOQRh7s=
+		WJe+Syoe5HPdtsiYZ635T1++TeE=
 		</data>
 		<key>PrivacyPolicy~iphone.storyboardc/Info.plist</key>
 		<data>
@@ -491,7 +607,7 @@
 		</data>
 		<key>setup.py</key>
 		<data>
-		j9AkYV0p6WRpK9MlOqo5bwCK414=
+		C1P20lyI+S43R5kkCJQvjjAA4Rg=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -527,6 +643,44 @@
 			<key>hash2</key>
 			<data>
 			JKT9C7wCYb9iu1OnmayF4KWe7je49LBzSCXLMMSYNFE=
+			</data>
+		</dict>
+		<key>Frameworks/AppLovinAdapter.framework/AppLovinAdapter</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			87HV2AJRJyuHP2WBi3jHb6T3LWs=
+			</data>
+			<key>hash2</key>
+			<data>
+			1+1UAJ64p5IS3TmKzISJXdupJ+yEsJN1qAn5vRVtzjo=
+			</data>
+		</dict>
+		<key>Frameworks/AppLovinAdapter.framework/Versions/A/AppLovinAdapter</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			87HV2AJRJyuHP2WBi3jHb6T3LWs=
+			</data>
+			<key>hash2</key>
+			<data>
+			1+1UAJ64p5IS3TmKzISJXdupJ+yEsJN1qAn5vRVtzjo=
+			</data>
+		</dict>
+		<key>Frameworks/AppLovinAdapter.framework/Versions/Current</key>
+		<dict>
+			<key>symlink</key>
+			<string>A</string>
+		</dict>
+		<key>Frameworks/AppLovinSDK.framework/AppLovinSDK</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			xLQS94ygZfCv2NCRMdVDd5EEdf4=
+			</data>
+			<key>hash2</key>
+			<data>
+			bsoULM2sVLVOHZkBo27Fhj7qA8tpZZuRkc8lSzOq29Y=
 			</data>
 		</dict>
 		<key>Frameworks/CHAMoatMobileAppKit.framework/CHAMoatMobileAppKit</key>
@@ -705,6 +859,28 @@
 			jOkjZHstJqHwXdkhT8rsBQ01zBkCMEI+HmLrce2gXAM=
 			</data>
 		</dict>
+		<key>Frameworks/MPUBMoatMobileAppKit.framework/MPUBMoatMobileAppKit</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			5O4fTh1yg2yMB1wW+8XP1/O0Gys=
+			</data>
+			<key>hash2</key>
+			<data>
+			VKICI6SGDvKjXoebrlkBiK++Ne/3UOpl9bigBri1g/Y=
+			</data>
+		</dict>
+		<key>Frameworks/MoPubAdapter.framework/MoPubAdapter</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			KZh8NjkhIfL6i+TPTduDa9vIJYA=
+			</data>
+			<key>hash2</key>
+			<data>
+			g4ZXiA2KN9zzumpXMYVZINwSS+wUrGooEX7MLzGk7UU=
+			</data>
+		</dict>
 		<key>Frameworks/UnityAdapter.framework/UnityAdapter</key>
 		<dict>
 			<key>hash</key>
@@ -782,6 +958,17 @@
 			m/GFs7yFpxWexcvn1MQWHM0JH8UPrSipXQ5fZA7s4Ss=
 			</data>
 		</dict>
+		<key>Frameworks/libAvid-mopub-3.6.1.a</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			6LeUJNA64F3AaHIQNw/6UU2h1OA=
+			</data>
+			<key>hash2</key>
+			<data>
+			takXvGurvH+T98w2FbcI0TVY21H84S2z0ZpcJKDCyAQ=
+			</data>
+		</dict>
 		<key>Frameworks/libGoogleAnalyticsServices.a</key>
 		<dict>
 			<key>hash</key>
@@ -852,11 +1039,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			ZqrtqcGEG+SlS/VdXHr8mWJcxNw=
+			Wv5Al/2PRBtgjbQ74pjw1StxWfM=
 			</data>
 			<key>hash2</key>
 			<data>
-			tUX+Fg62p5zrEpTdL5kVv9NobE9Rm6WKFVoWxi0eHhU=
+			RI3pFB1f1zuRyGtA58mVEB35NP0D/uMtdGMWvWuhKuw=
 			</data>
 		</dict>
 		<key>Headers/GAI.h</key>
@@ -929,22 +1116,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			qUOe20hi0T1m4IdZ2CKkUE+OH20=
+			GyXulBlaQUocyBMzQn4vLaYf1sw=
 			</data>
 			<key>hash2</key>
 			<data>
-			ZlGmDXN2EYFfXTmtS2939gqPlIyXcInbrrHiSu0wG/o=
+			82pWK+j7NH334E7bS3KYsrECIcPM68AP5fNoMSg0Rpg=
 			</data>
 		</dict>
 		<key>Headers/HookBridge.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Xigwb9h2EePWoH80lTeBORSHpzs=
+			99CiZUbV6cJXXL5eR5c7ejrem2g=
 			</data>
 			<key>hash2</key>
 			<data>
-			hsee5rUOKgbWkrE/Yh68SJ8rjOX3v8fLtl/cvYvp/gE=
+			3raoeBk+waeGmexp+XqweWNrCfK4tCF6EN6U7/jcrH8=
 			</data>
 		</dict>
 		<key>Headers/ImageContext.h</key>
@@ -984,11 +1171,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			0AWSunS5nSb3SIpKYI9uyVLwmps=
+			rqKJHE78Bp76ZnwkLD5Oj9KYjPM=
 			</data>
 			<key>hash2</key>
 			<data>
-			tCrRkG39lfJraM8SH8NSIl1WW04uOVRTIvjMj+N6DHw=
+			Egy8wge82NoR60RgDUlujqnSYKVriqC1yGGT6pOkXyg=
 			</data>
 		</dict>
 		<key>Headers/JsonUtil.h</key>
@@ -1000,6 +1187,17 @@
 			<key>hash2</key>
 			<data>
 			gkJl4cTVtTdBGLfJmq6BFjf+9df0lRtHgh0/8OE9vDs=
+			</data>
+		</dict>
+		<key>Headers/NSString+Extensions.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			aZ1Oka6UuZGrJ4Uki9GctyaBywk=
+			</data>
+			<key>hash2</key>
+			<data>
+			qLW7Xkr14eIgPCtUo6udZnOh6NO+VMP7KTTQBVcRdys=
 			</data>
 		</dict>
 		<key>Headers/NSUserDefaults-AESEncryptor.h</key>
@@ -1050,22 +1248,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			jz66VDMKqbwNggd1wouGqpdyjeI=
+			cnkA1MzKa6RRTtOhduXbZnzbwIo=
 			</data>
 			<key>hash2</key>
 			<data>
-			2YYUXLJsYIUwNmZBIJpgQpE0O7dXw+ed6gmrc4tXiPI=
+			JdGA9wWs1VYBg15pfqempUlPhdC++5/AmwAsxv2cM0g=
 			</data>
 		</dict>
 		<key>Headers/PlayerItem.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			TIg20tiiWKU0msXbkMxxdibmNKU=
+			UNOcIZn80x2oaLGDyUND7ELMM7M=
 			</data>
 			<key>hash2</key>
 			<data>
-			BppBMpoKFauTRdrdnsxeue8wvlsI+fmWBg4L/Si/TN4=
+			+YyQzlgPFi+KZu0R9OqOUNBbAxdRIcXWxm4xLGsjpyQ=
 			</data>
 		</dict>
 		<key>Headers/Promotion.h</key>
@@ -1116,11 +1314,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			WUkyy1vSMtATumyDGk8yxMSyUYk=
+			ZRXuU2lqiPXzO4cyn86HJ0vuBYE=
 			</data>
 			<key>hash2</key>
 			<data>
-			4EOfEwPYLkXpNBTlqffEEEE2cP1McM8Rfdvu1uraezE=
+			BoCEsqEL1EbtdS6/Vrv6NPvAT9e94sFexp2E4uRLC9o=
 			</data>
 		</dict>
 		<key>Headers/SpilActionHandler.h</key>
@@ -1189,6 +1387,248 @@
 			Oyw22qrEnCKI1riB/0Fqgndt5Zf7qrMP7nomw1WC7xk=
 			</data>
 		</dict>
+		<key>LICENSE</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			+k0zFZ5W2a/QqZkA7YecIph4HVI=
+			</data>
+			<key>hash2</key>
+			<data>
+			D30YlL3ZFtORN9gcy5kWnFrZodu1lqMxL/qCiyXA2Qk=
+			</data>
+		</dict>
+		<key>MPAdBrowserController.nib</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			IFImVLGdUUud60Lmdc2+Y21/a0s=
+			</data>
+			<key>hash2</key>
+			<data>
+			yDrJnUw7HHL6yOhTvibu3lQFuec6YdaGnMvntCYln7g=
+			</data>
+		</dict>
+		<key>MPCloseBtn.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			n1yE8ymcpvWE3ViYwcTzG3665/M=
+			</data>
+			<key>hash2</key>
+			<data>
+			QrBcpN01NXBexKW3Esx6SKQbXHOcNpg8Ngx019iZnNs=
+			</data>
+		</dict>
+		<key>MPCloseBtn@2x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			YJGWo+hV40wha6GqWRAKRS9/4Uk=
+			</data>
+			<key>hash2</key>
+			<data>
+			Ls+Bjn0VMnNrq+Pd+pCUqBgN855cLqyL4t6u91/vUdo=
+			</data>
+		</dict>
+		<key>MPCloseBtn@3x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			HiJUP6J3ffmKg92ZbHc5AdHXyHc=
+			</data>
+			<key>hash2</key>
+			<data>
+			yciNsQR6jm5NRqiz5Mh6OPz3Bhvu7B74U2n2HBwws2M=
+			</data>
+		</dict>
+		<key>MPCloseButtonX.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			7N6g1MBal3sIsITnaGUARXJMNsk=
+			</data>
+			<key>hash2</key>
+			<data>
+			am22x5P+7SVt6F8fWZIcn1rSV/Gz1TjY4yOpnWgn+4c=
+			</data>
+		</dict>
+		<key>MPCloseButtonX@2x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			BOfdZuiYZODBJTU6hS2uLfnRXZs=
+			</data>
+			<key>hash2</key>
+			<data>
+			F+WZ5JeuVassftcDkEZXsiDkWUeHiFglVWmoACH3bdM=
+			</data>
+		</dict>
+		<key>MPCloseButtonX@3x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			dOnlRWSO+m0WzaTKFeaiRsYBv4A=
+			</data>
+			<key>hash2</key>
+			<data>
+			ss0uxZv2ntEpq+dQuViUBuUHCiLqer2LQ7SRUAT3tSY=
+			</data>
+		</dict>
+		<key>MPCountdownTimer.html</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			AfjuesNM1EMzmyn9FSoJ9syt2Cs=
+			</data>
+			<key>hash2</key>
+			<data>
+			V77HMX8p8AuwKuWrQ6wbuB91kjbhUPvJBMmc8yLdjhk=
+			</data>
+		</dict>
+		<key>MPDAAIcon.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			dN6Rem2Dxi1PX3WO7TIc2kqHzXc=
+			</data>
+			<key>hash2</key>
+			<data>
+			OPO8OHGYsRvA8H/PJ7HEtYObHQ9Ew97h0fio7+66iwo=
+			</data>
+		</dict>
+		<key>MPDAAIcon@2x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			4Gn4CUUd+oBZgFNGTfIy1Ip+zCE=
+			</data>
+			<key>hash2</key>
+			<data>
+			CheVc96lok3lVHXTAn1xXMGR2ozqFhOvO7HUNe+c29w=
+			</data>
+		</dict>
+		<key>MPDAAIcon@3x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			IltId5xe9kzHIDF53O0ZyyT+0Wk=
+			</data>
+			<key>hash2</key>
+			<data>
+			0uG1TSu3BwT3rWRQ3H+gH04l42qPKLLeLYnEuwoz6TM=
+			</data>
+		</dict>
+		<key>MPMutedBtn.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			Ila42HB/dLKi40hXgUuhBFAF5eU=
+			</data>
+			<key>hash2</key>
+			<data>
+			zd2JJUVRzkQiox5BNhGr1UNBGAcl7sUqww8fZHBN+lw=
+			</data>
+		</dict>
+		<key>MPMutedBtn@2x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			sxAc3GrEA1PpPKiG64JfZv8mgdA=
+			</data>
+			<key>hash2</key>
+			<data>
+			l43jKZhpqzi6wKz97LUFQsJbY0fJft/09VgLL2LQnRI=
+			</data>
+		</dict>
+		<key>MPMutedBtn@3x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			2RjpsXhoAY5fchW13XvBMN4g/Ys=
+			</data>
+			<key>hash2</key>
+			<data>
+			Gofi0aMN38wweIR97ODZf48KQ5I5cL8T+EuuLr1XcXQ=
+			</data>
+		</dict>
+		<key>MPPlayBtn.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			aksYIQTY6K3Cs0Vb/7LkejXCFOs=
+			</data>
+			<key>hash2</key>
+			<data>
+			tw7HlJmOBGN2BdJ0uJ7sR8R14E++CbqzMDA3vTKc11w=
+			</data>
+		</dict>
+		<key>MPPlayBtn@2x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			5WhhD68hv/j64YTwreghnwcQxrM=
+			</data>
+			<key>hash2</key>
+			<data>
+			x5NMArkpRY0eirIiDUawQX/yTn9JDQRW5DJhTdJLBpY=
+			</data>
+		</dict>
+		<key>MPPlayBtn@3x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			Ci28wpzk84b4ZT2DXNU3u1quZT4=
+			</data>
+			<key>hash2</key>
+			<data>
+			FJAyEhTfiPXoQu13MeX09+cJy7+bsx4AvdZ11GyHrz0=
+			</data>
+		</dict>
+		<key>MPUnmutedBtn.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			BcBAT0oUyhouo7mkjteis+6Xw7o=
+			</data>
+			<key>hash2</key>
+			<data>
+			p5jfaQvL5bKwqhKCihrYKkEf3JakKUK4K2Bn57IbO28=
+			</data>
+		</dict>
+		<key>MPUnmutedBtn@2x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			CIRbX+ZmvjE+hQYLHkeOXvoMfo4=
+			</data>
+			<key>hash2</key>
+			<data>
+			1nnaLqZqRcN3LvMubv82KP3shW3mv5i6UTRGQrVtA/w=
+			</data>
+		</dict>
+		<key>MPUnmutedBtn@3x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			Prqij/pK+QCOu4BjBVRlV+hkpLo=
+			</data>
+			<key>hash2</key>
+			<data>
+			Gs88M7OSMeYipwt+NclYc6wA1x/r26n4ubg4DxCC83A=
+			</data>
+		</dict>
+		<key>MRAID.bundle/mraid.jss</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			oX1mrmbjet4tPIjvQNiaVb7qTBk=
+			</data>
+			<key>hash2</key>
+			<data>
+			Sy2yVNi/H6RkVTf+oDHNlDj5llFYIh2VdMZMZYQz9eQ=
+			</data>
+		</dict>
 		<key>Modules/module.modulemap</key>
 		<dict>
 			<key>hash</key>
@@ -1215,352 +1655,352 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			jIihT8aVQ1tSr0rZ8uQTZT2dtyM=
+			wdA08hzdOQ8kc6Jj09t4u+fH63g=
 			</data>
 			<key>hash2</key>
 			<data>
-			GIK/eQR2k97SgyLSA5L+cPDKaCgxzob8l7HRVWVFdLw=
+			Fq/ljDkpww9wYt/L7n6hhPrqYofLXyok5Kju60cbbVg=
 			</data>
 		</dict>
 		<key>PrivacyPolicy.storyboardc/Di9-ad-Dnb-view-RSW-wP-VuY~ipad.nib/runtime.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			KXIsRwSpmUXhEOQdDf8U0WIuuz0=
+			BVgKgSo3mVyKD+jJ7DLpc9i0ds4=
 			</data>
 			<key>hash2</key>
 			<data>
-			KWPYOOmzhKl8jIHqXFMaftehjtilD5SK7Gtz0iHgtmo=
+			SmXj0zPl+AXPFPfy2it0wMX2q4hT7SzTZUeU9YbnoZI=
 			</data>
 		</dict>
 		<key>PrivacyPolicy.storyboardc/Di9-ad-Dnb-view-RSW-wP-VuY~iphone.nib/objects-8.0+.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			SMpP7RvL4Vs7ambqR+KKCOEhsIU=
+			Jy13NJxGAnCeOBDD2oGMWj+I9N8=
 			</data>
 			<key>hash2</key>
 			<data>
-			C+7pit/yCzYFRY5k0iK62SGh22JzZ5wl17nDytnjQWU=
+			fhxU+A+v2FaJdqkEkxstJJNIo5JpmVmuszgIOX37RwU=
 			</data>
 		</dict>
 		<key>PrivacyPolicy.storyboardc/Di9-ad-Dnb-view-RSW-wP-VuY~iphone.nib/runtime.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			LJJ4RYVFz3Lopv5/6TnDE86Zf8o=
+			7bITleOcciSj7KbGcv/VALAOL+Q=
 			</data>
 			<key>hash2</key>
 			<data>
-			DCtRJy05bm/BJJASFCTmW3md0LONO3pEwnuGmksgwAg=
+			RIyCe4hyLVZLRAMHuoTEk7icRT67qbDCWcAFUJ46yxo=
 			</data>
 		</dict>
 		<key>PrivacyPolicy.storyboardc/PrivacyPolicyAdsVC~ipad.nib/objects-8.0+.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Xg2+CHj822+lNlcigKYZGsaCNOw=
+			NVB3Nf4/ADKqKgoahISncD2+M+g=
 			</data>
 			<key>hash2</key>
 			<data>
-			f5wfP8BbuVi8T+s9JZA8AH48fzBMbF2RxtigbvPldug=
+			hi1/SHDRzla16j/HSnP5tso/oZbklVM+OJ4VHVx+mhY=
 			</data>
 		</dict>
 		<key>PrivacyPolicy.storyboardc/PrivacyPolicyAdsVC~ipad.nib/runtime.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Rpr+InqN9DoV5Vf55RXFCs63wTE=
+			o0A3LgOjOhkgNHyJxtS3+G/BBjc=
 			</data>
 			<key>hash2</key>
 			<data>
-			tF21zGxa8F1O2CbfBlfD5zez/sTgMYcU/uUu9+29M48=
+			0YvnebRl6TROthm63iemi8gqF0ZhaZZKQmLpWm24ZFk=
 			</data>
 		</dict>
 		<key>PrivacyPolicy.storyboardc/PrivacyPolicyAdsVC~iphone.nib/objects-8.0+.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			FTk0W1Sc9EQ82qY1o+bjzDEMe+g=
+			ybXENZdCGTdfHx2aiqLV6aQEjCI=
 			</data>
 			<key>hash2</key>
 			<data>
-			SF1M1xuFxg2g2FiiH5Lx6ta13HHXh9OXGPW40rJBCEc=
+			IUKWPyTiGMRxRTGCj9W+tzCyHQCZ9+6fbQ+3zz1dHeM=
 			</data>
 		</dict>
 		<key>PrivacyPolicy.storyboardc/PrivacyPolicyAdsVC~iphone.nib/runtime.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			CCBW5vJ65L9jMwZAbPHNyLHnW7s=
+			0ovL/uyQbyBe/oD1PtL05MdeLE4=
 			</data>
 			<key>hash2</key>
 			<data>
-			zOid/16YLpH9hGfbNheNUZcDPFgKKLECoFWSNYNXRiY=
+			7yc8Ke7QzsRJkpnj6Et6GbDe9vT7vb3WYjoY1kpR7gs=
 			</data>
 		</dict>
 		<key>PrivacyPolicy.storyboardc/PrivacyPolicyInfoVC~ipad.nib/objects-8.0+.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			gqthpIHf9FDk3CRzI9f7PCGJ5hQ=
+			YoLwNC5InSMYzk0t0F2Itr1aJiA=
 			</data>
 			<key>hash2</key>
 			<data>
-			rP9CqH5u+h8xqc6XyI1rl9k+iLPxF9X/cEsce/LxEYk=
+			KStbRFI0PrwJfN7xfyfsf+u38z+HcmalL13B7P8in08=
 			</data>
 		</dict>
 		<key>PrivacyPolicy.storyboardc/PrivacyPolicyInfoVC~ipad.nib/runtime.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			PIg+4XGGjZJjWWdbVpyev5IMohQ=
+			0gYty+0Yz6QpWjR8qC4tkZxRKwc=
 			</data>
 			<key>hash2</key>
 			<data>
-			dqWWx0XQfs1AYO0AEhzQINSnhk8YMrcnf0X23+n5oy0=
+			QzmHNeMdeoXNpKOIcMXjPat8Pi71lPTiEAw9HKp1d2I=
 			</data>
 		</dict>
 		<key>PrivacyPolicy.storyboardc/PrivacyPolicyInfoVC~iphone.nib/objects-8.0+.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			XVEjMt3g3daXQ4rz7VKn0QVzksI=
+			bU5tbE4718izKzueP/kHVA95Myc=
 			</data>
 			<key>hash2</key>
 			<data>
-			mluYN3FoWak0Dbe8jOJkDfoXzEeIye84ZV4KL7iSmyY=
+			MTBJknMmGQisQ1eXrg6OIbwibF2MBIaOwYiO9ctYOUw=
 			</data>
 		</dict>
 		<key>PrivacyPolicy.storyboardc/PrivacyPolicyInfoVC~iphone.nib/runtime.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			YKZJDaFE6hDPWfA8wBGU7R5qpAs=
+			Tj5TsBDdmzhTUoIMg/4DXIGPqYw=
 			</data>
 			<key>hash2</key>
 			<data>
-			KCD6Hp0w+REqMsu2/mFYH/odxRTdtZxjeOJUBoGMI1E=
+			8N/TJarcFEiAOMOdNfhfgKYSRAYj0S1BuiCdhqsDSSY=
 			</data>
 		</dict>
 		<key>PrivacyPolicy.storyboardc/PrivacyPolicyMoreVC~ipad.nib/objects-8.0+.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			42JcOHHX2fp6PsVRvQpXJuLmxIM=
+			uPALHDltSMdgHEjD/NU/s7VR6fw=
 			</data>
 			<key>hash2</key>
 			<data>
-			6EY+0jHCuPv50Txrh00u1mZ3FUfybaGaRwUtm0HPNiI=
+			6QOLvQ0hCs36fbTonFZFV/LJjuFZZWKrxjXcES8hEWY=
 			</data>
 		</dict>
 		<key>PrivacyPolicy.storyboardc/PrivacyPolicyMoreVC~ipad.nib/runtime.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			g7fPDewxexeXFcHz36Mes5u4lnE=
+			dDHuUU1acxJEIdLM+YrnBWT4mWI=
 			</data>
 			<key>hash2</key>
 			<data>
-			ccg1+h6Qd/9ZFTbKkjpxPbAiExsKaNEkDGmYLxJrHIE=
+			ra9o2uQyt8an6LQPoKLAbnyMSbECOhX6OKHaPQDOUx4=
 			</data>
 		</dict>
 		<key>PrivacyPolicy.storyboardc/PrivacyPolicyMoreVC~iphone.nib/objects-8.0+.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			T3k5op7QOjR7+5j0OyFRShoQpBM=
+			s7874wo4XW1taY+FJFW5YRokKk0=
 			</data>
 			<key>hash2</key>
 			<data>
-			2WUDtj8xU0hMWNNLWAU6ysZ//o+tvnHxdcAJxeTTbw4=
+			WcqD6ZkDM/gp2+6B9Fk4n/464vfWE1ChJWLdCh+uL4o=
 			</data>
 		</dict>
 		<key>PrivacyPolicy.storyboardc/PrivacyPolicyMoreVC~iphone.nib/runtime.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Y+ZiWfSAyM4FNEr/phHuLhi5vgY=
+			YPz4/x9w+csgGnxgw9szPwTE8YE=
 			</data>
 			<key>hash2</key>
 			<data>
-			t9gfvKS2QZKUGS0P+O4fiqaTEEXIvgmpSpE4sJ+vb14=
+			+fJ8Bxf1d/frN+SByZjkqOLHU1hZ0aKszDd51yinI0s=
 			</data>
 		</dict>
 		<key>PrivacyPolicy.storyboardc/PrivacyPolicyVC~ipad.nib/objects-8.0+.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			DsSMIW7MOuGGDyFGuPTGQnJNzww=
+			GxSolYfYcxdoSFhI0xuyi/m/vf4=
 			</data>
 			<key>hash2</key>
 			<data>
-			c3zPMGXAd5tYxcrkfn6A9hy4Z7oRvZVXi2pBRKYmios=
+			SGhC9pHYE3lSSazL7qCkE/EBJj+C94iue44tSd/YkHw=
 			</data>
 		</dict>
 		<key>PrivacyPolicy.storyboardc/PrivacyPolicyVC~ipad.nib/runtime.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			bISIBwxGal73iVFcRSLAVyN80UM=
+			YhFlsI2fQlxuH1BCLShJ7VujZTQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			wKFW/ywumgkEigJugWmYvV1R/iYoakYSZjD81yBIaOM=
+			aR7C/JayfaAh0RBjj+jA1pghHAoU0z2WAm25sqixRZw=
 			</data>
 		</dict>
 		<key>PrivacyPolicy.storyboardc/PrivacyPolicyVC~iphone.nib/objects-8.0+.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			nGJfaoExHNgPjSscYXCp/PLRkzY=
+			3jzPIiCaRUnIFpmLLmKwNBgHsLE=
 			</data>
 			<key>hash2</key>
 			<data>
-			vKvG6Qt11mP1Ytd/ityOslMDqHII9DXg8Z6zzjapsSc=
+			7wu8iirSk62pB4t3ky9EmL8a6TgbNdeNoOlVDmS0ub0=
 			</data>
 		</dict>
 		<key>PrivacyPolicy.storyboardc/PrivacyPolicyVC~iphone.nib/runtime.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Oi70a24NkIhpyxNHKJ3uVKs7Nho=
+			aFM/Rw8fExXxVi51W4vzhpqqtSc=
 			</data>
 			<key>hash2</key>
 			<data>
-			uK8/DvV3mUG+tFCn8Lbd85PZBqgYaJeWenA3E+0Ubuw=
+			rr/ZGEatJrXiJBY0GRSBOdQ05ZHjIWInkI2Ns9GI4LY=
 			</data>
 		</dict>
 		<key>PrivacyPolicy.storyboardc/Ukh-Lu-Agu-view-FgC-on-GoN~ipad.nib/objects-8.0+.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			F9rF9Nx1QvwInFxlLjfAgIP8eMs=
+			QE5UaY+2bpxMD0YSm9Sft5xTEmY=
 			</data>
 			<key>hash2</key>
 			<data>
-			lTCk83wLDG9p9i4PT92pJMhqbSd3NBkVZGhdDPj8smA=
+			HwEJfPmZJ3JHIqNjrnIF8Alq5X6q8/7Fl9f0jHMXFsE=
 			</data>
 		</dict>
 		<key>PrivacyPolicy.storyboardc/Ukh-Lu-Agu-view-FgC-on-GoN~ipad.nib/runtime.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			xQOGuQOZsOLAeDsWt8Oo8LXiknk=
+			xdRi/06tnND6fbXOAPJF7l/j9hE=
 			</data>
 			<key>hash2</key>
 			<data>
-			RKhxVie9rP4sU8RBWVtCnUH8Ud9EOaBD1nvQdWXwLA8=
+			If2SRfIjPb/U81vrTE1GQoFsMlEPrN9rtCH25voLCXc=
 			</data>
 		</dict>
 		<key>PrivacyPolicy.storyboardc/Ukh-Lu-Agu-view-FgC-on-GoN~iphone.nib/objects-8.0+.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			eBD3DWZ8oZYmTVq3HXb0gGpFTSI=
+			zs29B6f8r2G37TKgeMNKHzeroZ8=
 			</data>
 			<key>hash2</key>
 			<data>
-			VGvjWrzSRFZLBtZ9A3D/BJvQp3n7IpSeH3kAsq+1PNY=
+			qw7pK2SsaByHKl6c7JTa2zXjHS8gqxkEFxD7+LAEHcg=
 			</data>
 		</dict>
 		<key>PrivacyPolicy.storyboardc/Ukh-Lu-Agu-view-FgC-on-GoN~iphone.nib/runtime.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			dZeVfLs0gyFX73gbrLf4MxYiSUk=
+			4oK0Jcm3DG1gpwh/elaqLhibiVc=
 			</data>
 			<key>hash2</key>
 			<data>
-			Qm5etxE26h/mJ9D3ky8t7CQzAHZRuU6y7hthvCaNBi0=
+			YXTeBlLM4hbpr9c34/AqhAjAEXkmqFL903MgYRMLySI=
 			</data>
 		</dict>
 		<key>PrivacyPolicy.storyboardc/WFO-CS-rdq-view-fnR-g2-iKa~ipad.nib/objects-8.0+.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			CL8ExnUVmWvfm2jY5zleRwv/JuI=
+			DMCtu6SIYo0LLGEG+1Uo1aVVmFQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			PuYy3K72/kOyHVHDR/WDpGKJ+bxiKx1rTYXCzd7Fu4o=
+			aozzlKfv/m/SHu0n4UfiFok9dSFdzeIBuXrZLnmOjbM=
 			</data>
 		</dict>
 		<key>PrivacyPolicy.storyboardc/WFO-CS-rdq-view-fnR-g2-iKa~ipad.nib/runtime.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			F40hYdbukKsicohow/qmgCCl5MY=
+			XEdrC8MLoe0pWoXAGs2V5ccZWzM=
 			</data>
 			<key>hash2</key>
 			<data>
-			Wl8/kJ7NCDg+nzY+kT7ORF9YO1PS0nTXqZQMv2UiE60=
+			LedWIV0OI4ViNNUKklDmUmzDWZlkfuDKP7rtWrS4M2M=
 			</data>
 		</dict>
 		<key>PrivacyPolicy.storyboardc/WFO-CS-rdq-view-fnR-g2-iKa~iphone.nib/objects-8.0+.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			ri1gKQQr42VLpe56QQYhLv1sg5o=
+			woBpR7WeUpL9G3jE7aZislMX3cc=
 			</data>
 			<key>hash2</key>
 			<data>
-			jsTZ4hGULtKVjjJmDfGFwfX670UvDVf+XaGx0bgBzDw=
+			cWB9DZjt3c3SVoQ/2d5dkm5+q112fwDiWc9wb16TAW8=
 			</data>
 		</dict>
 		<key>PrivacyPolicy.storyboardc/WFO-CS-rdq-view-fnR-g2-iKa~iphone.nib/runtime.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			T7eEtL+8A5pbmbBrizp3w3mRE34=
+			zY54AdTmqeE0yE4le1NjN1RMZHM=
 			</data>
 			<key>hash2</key>
 			<data>
-			Gu7SoBKa+8eIXc0kkcILOU+4sVfxr1/pK9AeFui6ai0=
+			VquWhUbD1ga6zO1TTYDv04tUop/Req47EvtJdiixMAc=
 			</data>
 		</dict>
 		<key>PrivacyPolicy.storyboardc/a57-Hh-kro-view-9Wj-9M-N8e~ipad.nib/objects-8.0+.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			7i/U0ex2+IS3Qz7gM/OR5YEthvo=
+			yZ8LsZgABtGXzQ7YE8M3ufPSkiw=
 			</data>
 			<key>hash2</key>
 			<data>
-			bf98BQebiHdLlJPvOnyFqf2bzT7MLHkkqVuN8iZet+g=
+			8tlrCxMm7JkSVJLEmjcnZf2JZvz0qTA42CYSXpMNYDA=
 			</data>
 		</dict>
 		<key>PrivacyPolicy.storyboardc/a57-Hh-kro-view-9Wj-9M-N8e~ipad.nib/runtime.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			j7WiTRx+8oJi74QGsssg3JasbdI=
+			8D5Q3qFmyn7AmckvU2xJoiKPRSo=
 			</data>
 			<key>hash2</key>
 			<data>
-			ULbc/XLHyXOI3RuobbqpGssYOPDozvyIqG/80TbbD0w=
+			+BuENmERuTUifORyjY6W4rYl++8HzW4ewP5kdaskcNs=
 			</data>
 		</dict>
 		<key>PrivacyPolicy.storyboardc/a57-Hh-kro-view-9Wj-9M-N8e~iphone.nib/objects-8.0+.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			ZSQ0dLPAHJ7GuvrRBSNZXpcsFqc=
+			OQ9fXicKrjJ6szDuGlSSAC3mZ3U=
 			</data>
 			<key>hash2</key>
 			<data>
-			8f9LToJyCdGX43EpakxLSRnw+e15lgvrHrGfkoMeQ/A=
+			u47JPeEpfu6C2IklGJmgr9Dr68x9ubCs+IKdgj0u8Y4=
 			</data>
 		</dict>
 		<key>PrivacyPolicy.storyboardc/a57-Hh-kro-view-9Wj-9M-N8e~iphone.nib/runtime.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			mzynIlplDuwEKiWAgraA/UeY5NU=
+			NHSnkdNAbsaAmX5qgooXSiyvJU0=
 			</data>
 			<key>hash2</key>
 			<data>
-			zxJKeVpINHPhG7U7WViIhNIn+9bLTslqtN6L8FXjxxM=
+			6xLhx36rrp3eivwDNRfqoObg/R/ElZewnTq3+ccdWwY=
 			</data>
 		</dict>
 		<key>PrivacyPolicyAccept0.png</key>
@@ -1666,22 +2106,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			//QS7X6T30BOOX18lYyakOQRh7s=
+			WJe+Syoe5HPdtsiYZ635T1++TeE=
 			</data>
 			<key>hash2</key>
 			<data>
-			Mr9iJFWA5uMBSFslmEK/vXotEjptYEIZw5OFvHUbp5o=
+			iXZSMXDAaDTPvk4NcYdAA9tC9Ge9tIvk289haaL4FDk=
 			</data>
 		</dict>
 		<key>PrivacyPolicy~iphone.storyboardc/Info-8.0+.plist</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			//QS7X6T30BOOX18lYyakOQRh7s=
+			WJe+Syoe5HPdtsiYZ635T1++TeE=
 			</data>
 			<key>hash2</key>
 			<data>
-			Mr9iJFWA5uMBSFslmEK/vXotEjptYEIZw5OFvHUbp5o=
+			iXZSMXDAaDTPvk4NcYdAA9tC9Ge9tIvk289haaL4FDk=
 			</data>
 		</dict>
 		<key>PrivacyPolicy~iphone.storyboardc/Info.plist</key>
@@ -1811,11 +2251,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			j9AkYV0p6WRpK9MlOqo5bwCK414=
+			C1P20lyI+S43R5kkCJQvjjAA4Rg=
 			</data>
 			<key>hash2</key>
 			<data>
-			xzqtrfMb8KuO/PI/gc28jiZzwk6AgXHvadjHFRn/kt8=
+			Vklrjs6QL0kjVtAA3KuAgNcD9TR/WQtFFseHNYkQuTk=
 			</data>
 		</dict>
 	</dict>

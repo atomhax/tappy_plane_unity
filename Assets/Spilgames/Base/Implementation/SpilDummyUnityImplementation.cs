@@ -400,6 +400,16 @@ namespace SpilGames.Unity.Base.Implementations
         {
 
         }
+
+        public override void SetCurrencyLimit(int currencyId, int limit)
+        {
+            
+        }
+
+        public override void SetItemLimit(int itemId, int limit)
+        {
+            
+        }
     }
 #endif
 }

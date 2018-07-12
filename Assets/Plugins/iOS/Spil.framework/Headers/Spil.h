@@ -833,6 +833,16 @@
  */
 +(void)resetWallet;
 
+/**
+ * Limits the max allowed currency amount
+ */
++(void)setCurrencyLimit:(int)currencyId withLimit:(int)limit;
+
+/**
+ * Limits the max allowed item amount
+ */
++(void)setItemLimit:(int)itemId withLimit:(int)limit;
+
 #pragma mark Customer support
 
 /**
@@ -1083,7 +1093,7 @@
  * parentalGate: not implemented yet (always false)
  */
 
-+(void)devRequestAd:(nonnull NSString*)provider withAdType:(nonnull NSString*)adType withParentalGate:(BOOL)parentalGate;
++(void)devRequestAd:(nonnull NSString*)provider withAdType:(nonnull NSString*)adType withParentalGate:(BOOL)parentalGate withLocation:(nonnull NSString*)location;
 +(nullable NSString*)getRawAdProvidersData;
 
 @end

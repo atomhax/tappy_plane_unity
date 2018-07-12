@@ -12,6 +12,7 @@
 
 @property (nonatomic) int currentBalance;
 @property (nonatomic) int delta;
+@property (nonatomic) int overflow;
 
 -(id)init;
 -(id)initWithCurrency:(Currency*)currency;
