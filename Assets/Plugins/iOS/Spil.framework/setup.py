@@ -125,7 +125,7 @@ for library in requiredSystemLibraries:
 
 # add custom frameworks
 print('Adding custom frameworks')
-requiredCustomFrameworks = ['AdjustSdk', 'AdColony', 'AdColonyAdapter', 'Chartboost', 'CHAMoatMobileAppKit', 'FacebookAdapter', 'FBAudienceNetwork', 'FirebaseCore', 'FirebaseCoreDiagnostics', 'FirebaseInstanceID', 'FirebaseAnalytics', 'FirebaseDynamicLinks', 'GoogleToolboxForMac', 'FirebaseNanoPB', 'GoogleMobileAds', 'nanopb', 'UnityAdapter', 'UnityAds', 'VungleAdapter', 'VungleSDK']
+requiredCustomFrameworks = ['AdjustSdk', 'AdColony', 'AdColonyAdapter', 'AppLovinSDK', 'AppLovinAdapter', 'Chartboost', 'CHAMoatMobileAppKit', 'FacebookAdapter', 'FBAudienceNetwork', 'FirebaseCore', 'FirebaseCoreDiagnostics', 'FirebaseInstanceID', 'FirebaseAnalytics', 'FirebaseDynamicLinks', 'GoogleToolboxForMac', 'FirebaseNanoPB', 'GoogleMobileAds', 'MoPubAdapter', 'MPUBMoatMobileAppKit', 'nanopb', 'UnityAdapter', 'UnityAds', 'VungleAdapter', 'VungleSDK']
 project.add_file_if_doesnt_exist('Spil.framework', parent=frameworks, weak=False)
 for framework in requiredCustomFrameworks:
 	project.add_file_if_doesnt_exist('Spil.framework/Frameworks/' + framework + '.framework', parent=frameworks, weak=False)

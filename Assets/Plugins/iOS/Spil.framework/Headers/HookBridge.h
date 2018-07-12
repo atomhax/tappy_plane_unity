@@ -184,6 +184,10 @@ extern "C" {
     
     void resetWalletNative();
     
+    void setCurrencyLimitNative(int currencyId, int limit);
+    
+    void setItemLimitNative(int itemId, int limit);
+    
     // --- Customer support ---
     
     void showHelpCenterWebviewNative(char* url);

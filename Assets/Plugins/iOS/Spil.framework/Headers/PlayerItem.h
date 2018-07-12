@@ -15,6 +15,7 @@
 
 @property (nonatomic) int amount;
 @property (nonatomic) int delta;
+@property (nonatomic) int overflow;
 
 -(id)init;
 -(id)initWithItem:(Item*)item;
