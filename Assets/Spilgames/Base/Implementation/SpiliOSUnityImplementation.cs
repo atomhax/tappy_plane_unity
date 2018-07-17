@@ -708,6 +708,32 @@ namespace SpilGames.Unity.Base.Implementations
         [DllImport("__Internal")]
         private static extern void requestDailyBonusNative();
 
+        protected override void ShowDailyBonusNative()
+        {
+            showDailyBonusNative();
+        }
+
+        [DllImport("__Internal")]
+        private static extern void showDailyBonusNative();
+    
+        public override DailyBonus GetDailyBonusConfig()
+        {
+            SpilDailyBonus spilDailyBonus = JsonHelper.getObjectFromJson<SpilDailyBonus>(getDailyBonusConfigNative());
+            DailyBonus dailyBonus = new DailyBonus(spilDailyBonus.url, spilDailyBonus.days);
+            return dailyBonus;
+        }
+
+        [DllImport("__Internal")]
+        private static extern string getDailyBonusConfigNative();
+    
+        public override void CollectDailyBonus()
+        {
+            requestDailyBonusNative();
+        }
+
+        [DllImport("__Internal")]
+        private static extern void collectDailyBonusNative();
+    
         public override void RequestSplashScreen(string type)
         {
             requestSplashScreenNative(type);

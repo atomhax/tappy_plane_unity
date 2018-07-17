@@ -3,17 +3,15 @@
 namespace SpilGames.Unity.Base.SDK {
     public class SpilDailyBonus {
         public string url;
-        public string cycleType;
-        public int is_consecutive;
-        public string halfBeforeHalfAfter;
-        public List<Day> days = new List<Day>(); 
+        public string type;
+        public List<SpilDayConfig> days = new List<SpilDayConfig>(); 
 
-        public class Day {
+        public class SpilDayConfig {
             public int day;
             public string status;
-            public List<Collectible> collectibles = new List<Collectible>();
+            public List<SpilCollectible> collectibles = new List<SpilCollectible>();
 
-            public class Collectible {
+            public class SpilCollectible {
                 public int id;
                 public string type;
                 public int amount;

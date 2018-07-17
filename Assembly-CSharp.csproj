@@ -327,6 +327,8 @@
     <Compile Include="Assets\Spilgames\Base\UnityEditor\SpilEvent.cs" />
     <Compile Include="Assets\Spilgames\Helpers\AssetBundles\AssetBundle.cs" />
     <Compile Include="Assets\Spilgames\Helpers\AssetBundles\AssetBundlesHelper.cs" />
+    <Compile Include="Assets\Spilgames\Helpers\DailyBonus\DailyBonus.cs" />
+    <Compile Include="Assets\Spilgames\Helpers\DailyBonus\DailyBonusHelper.cs" />
     <Compile Include="Assets\Spilgames\Helpers\GameData\Bundle.cs" />
     <Compile Include="Assets\Spilgames\Helpers\GameData\Currency.cs" />
     <Compile Include="Assets\Spilgames\Helpers\GameData\GachaContent.cs" />

@@ -9,6 +9,7 @@ using SpilGames.Unity.Base.UnityEditor;
 using SpilGames.Unity.Helpers.GameData;
 using SpilGames.Unity.Helpers.PlayerData;
 using SpilGames.Unity.Base.SDK;
+using SpilGames.Unity.Helpers.DailyBonus;
 
 namespace SpilGames.Unity.Base.Implementations {
     public class SpilUnityEditorImplementation : SpilUnityImplementationBase {
@@ -640,6 +641,23 @@ namespace SpilGames.Unity.Base.Implementations {
         public override void RequestDailyBonus() {
             SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
             spilEvent.eventName = "requestDailyBonus";
+
+            spilEvent.Send();
+        }
+
+        protected override void ShowDailyBonusNative() {
+            OverlayManager.ShowDailyBonus();
+        }
+
+        public override DailyBonus GetDailyBonusConfig() {
+            SpilDailyBonus spilDailyBonus = OverlayManager.spilDailyBonusConfig;
+            DailyBonus dailyBonus = new DailyBonus(spilDailyBonus.url, spilDailyBonus.type, spilDailyBonus.days);
+            return dailyBonus;
+        }
+
+        public override void CollectDailyBonus() {
+            SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
+            spilEvent.eventName = "collectDailyBonus";
 
             spilEvent.Send();
         }

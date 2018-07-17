@@ -7,6 +7,7 @@ using SpilGames.Unity.Base.Implementations.Tracking;
 using SpilGames.Unity.Json;
 using SpilGames.Unity.Base.SDK;
 using SpilGames.Unity.Helpers.AssetBundles;
+using SpilGames.Unity.Helpers.DailyBonus;
 using SpilGames.Unity.Helpers.EventParams;
 using SpilGames.Unity.Helpers.IAPPackages;
 using SpilGames.Unity.Helpers.Promotions;
@@ -35,7 +36,9 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// Same as Spil.PlayerData
         /// </summary>
         public PlayerDataHelper PlayerData { get { return Spil.PlayerData; } }
-        
+
+	    private DailyBonusHelper DailyBonusHelper;
+	    
         #region Events
 
         #region Standard Spil events
@@ -1880,6 +1883,32 @@ namespace SpilGames.Unity.Base.Implementations{
 			}
 		}
 
+	    public delegate void DailyBonusAvailable();
+
+	    /// <summary>
+	    /// This event indicates that a daily bonus screen was available.
+	    /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-splash-daily-bonus-screen/
+	    /// </summary>
+	    public event DailyBonusAvailable OnDailyBonusAvailable;
+
+	    /// <summary>
+	    /// This method is meant for internal use only, it should not be used by developers.
+	    /// </summary>
+	    public void fireDailyBonusAvailable(string type) {
+		    SpilLogging.Log("Daily bonus available");
+
+		    DailyBonusHelper = Spil.MonoInstance.gameObject.AddComponent<DailyBonusHelper>();
+		    DailyBonusHelper.DailyBonus = GetDailyBonusConfig();
+		    
+		    if (type != null && type.Trim().ToLower().Equals("assetbundle")) {
+			    Spil.MonoInstance.StartCoroutine(DailyBonusHelper.DownloadDailyBonusAssets());
+		    }
+		    
+		    if(OnDailyBonusAvailable != null) {
+			    OnDailyBonusAvailable();
+		    }
+	    }
+	    
         public delegate void DailyBonusNotAvailable();
 
         /// <summary>
@@ -3044,6 +3073,27 @@ namespace SpilGames.Unity.Base.Implementations{
         /// </summary>
         public abstract void RequestDailyBonus();
 
+	    /// <summary>
+	    /// Requests the daily bonus screen.
+	    /// </summary>
+	    public void ShowDailyBonus() {
+		    if (DailyBonusHelper.DailyBonus.Type != null && DailyBonusHelper.DailyBonus.Type.Equals("assetBundle")) {
+			    DailyBonusHelper.ShowDailyBonus();
+		    } else {
+			    ShowDailyBonusNative();
+		    }
+	    }
+
+	    protected abstract void ShowDailyBonusNative();
+
+	    public DailyBonusHelper GetDailyBonusHelper() {
+		    return DailyBonusHelper;
+	    }
+	    
+	    public abstract DailyBonus GetDailyBonusConfig();
+
+	    public abstract void CollectDailyBonus();
+	    
         /// <summary>
         /// Requests the splashscreen.
         /// </summary>

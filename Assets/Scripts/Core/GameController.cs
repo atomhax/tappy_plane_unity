@@ -120,6 +120,9 @@ public class GameController : MonoBehaviour
         Spil.Instance.OnDailyBonusClosed -= OnDailyBonusClosed;
         Spil.Instance.OnDailyBonusClosed += OnDailyBonusClosed;
 
+        Spil.Instance.OnDailyBonusAvailable -= OnDailyBonusAvailable;
+        Spil.Instance.OnDailyBonusAvailable += OnDailyBonusAvailable;
+        
         Spil.Instance.OnDailyBonusNotAvailable -= OnDailyBonusNotAvailable;
         Spil.Instance.OnDailyBonusNotAvailable += OnDailyBonusNotAvailable;
 
@@ -269,6 +272,8 @@ public class GameController : MonoBehaviour
         backgroundMusic.Play();
     }
 
+
+
     void Update() {
         #if UNITY_ANDROID
         if (Input.GetKeyDown(KeyCode.Escape)) {
@@ -323,6 +328,7 @@ public class GameController : MonoBehaviour
         Spil.Instance.RequestServerTime();
         Spil.Instance.RequestLiveEvent();
         Spil.Instance.RequestTieredEvents();
+        Spil.Instance.RequestDailyBonus();
         SavePrivateGameState();
         RequestMoreApps();
 
@@ -576,8 +582,13 @@ public class GameController : MonoBehaviour
         overlayEnabled = false;
     }
 
+    private void OnDailyBonusAvailable() {
+       dailyBonusButton.SetActive(true);
+    }
+    
     public void OnDailyBonusNotAvailable() {
         Debug.Log("DailyBonusNotAvailable");
+        dailyBonusButton.SetActive(false);
     }
 
     public void OnPlayerDataUpdated(string reason, PlayerDataUpdatedData updatedData) {
@@ -766,6 +777,10 @@ public class GameController : MonoBehaviour
 
     public void RequestDailyBonus() {
         Spil.Instance.RequestDailyBonus();
+    }
+
+    public void ShowDailyBonus() {
+        Spil.Instance.ShowDailyBonus();
     }
 
     public static string GetNameForFbId(string fbId) {
@@ -1008,6 +1023,7 @@ public class GameController : MonoBehaviour
             Spil.Instance.ResetData();
             Spil.Instance.RequestLiveEvent();
             Spil.Instance.RequestTieredEvents();
+            Spil.Instance.RequestDailyBonus();
             
             PlayerPrefs.SetInt("Background", 0);
             PlayerPrefs.SetInt("Skin", 0);
@@ -1034,6 +1050,7 @@ public class GameController : MonoBehaviour
         Spil.Instance.ResetData();
         Spil.Instance.RequestLiveEvent();
         Spil.Instance.RequestTieredEvents();
+        Spil.Instance.RequestDailyBonus();
             
         PlayerPrefs.SetInt("Background", 0);
         PlayerPrefs.SetInt("Skin", 0);
@@ -1092,7 +1109,7 @@ public class GameController : MonoBehaviour
 	    showMergeDialog = true;
 	    showSyncDialog = true;
 	    
-	    Spil.Instance.SetCurrencyLimit(28, 300);
+	    
 	}
 
 	void OnUserDataError(SpilErrorMessage errorMessage) {

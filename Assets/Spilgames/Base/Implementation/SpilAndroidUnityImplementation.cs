@@ -6,6 +6,7 @@ using SpilGames.Unity.Helpers.GameData;
 using SpilGames.Unity.Helpers.PlayerData;
 using SpilGames.Unity.Json;
 using SpilGames.Unity.Base.SDK;
+using SpilGames.Unity.Helpers.DailyBonus;
 
 namespace SpilGames.Unity.Base.Implementations {
     #if UNITY_ANDROID
@@ -824,6 +825,20 @@ namespace SpilGames.Unity.Base.Implementations {
 
         public override void RequestDailyBonus() {
             CallNativeMethod("requestDailyBonus");
+        }
+
+        protected override void ShowDailyBonusNative() {
+            CallNativeMethod("showDailyBonus");
+        }
+
+        public override DailyBonus GetDailyBonusConfig() {
+            SpilDailyBonus spilDailyBonus = JsonHelper.getObjectFromJson<SpilDailyBonus>(CallNativeMethod("getDailyBonusConfig"));
+            DailyBonus dailyBonus = new DailyBonus(spilDailyBonus.url, spilDailyBonus.type, spilDailyBonus.days);
+            return dailyBonus;
+        }
+
+        public override void CollectDailyBonus() {
+            CallNativeMethod("collectDailyBonus");
         }
 
         public override void RequestSplashScreen(string type) {

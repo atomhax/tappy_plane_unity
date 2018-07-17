@@ -1,6 +1,7 @@
 ﻿#if UNITY_EDITOR
 using System.Collections.Generic;
 using SpilGames.Unity.Base.Implementations;
+using SpilGames.Unity.Base.SDK;
 using SpilGames.Unity.Helpers.PlayerData;
 using SpilGames.Unity.Json;
 using UnityEditor;
@@ -11,13 +12,21 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
     public class OverlayManager : MonoBehaviour {
         public static GameObject SplashScreen;
         public static GameObject DailyBonus;
-
+        
+        public static SpilDailyBonus spilDailyBonusConfig;
+        
         private static Spil.DailyBonusRewardTypeEnum rewardType;
 
         void Awake() {
             rewardType = Spil.MonoInstance.DailyBonusRewardType;
         }
 
+        public static void processDailyBonusResponse(string dailyBonusConfig) {
+            spilDailyBonusConfig = JsonHelper.getObjectFromJson<SpilDailyBonus>(dailyBonusConfig);
+            spilDailyBonusConfig.type = "assetBundle";
+            Spil.Instance.fireDailyBonusAvailable(spilDailyBonusConfig.type);
+        }
+        
         public static void ShowSplashScreen(JSONObject data, string url) {
             SpilLogging.Log("Opening URL: " + url + " With data: " + data.Print(false));
 
@@ -27,8 +36,8 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             SplashScreen.SetActive(true);
         }
 
-        public static void ShowDailyBonus(JSONObject data, string url) {
-            SpilLogging.Log("Opening URL: " + url + " With data: " + data.Print(false));
+        public static void ShowDailyBonus() {
+            SpilLogging.Log("Opening URL: " + spilDailyBonusConfig.url + " With data: " + JsonHelper.getJSONFromObject(spilDailyBonusConfig));
 
 			Spil.Instance.fireDailyBonusOpen();
 
@@ -42,6 +51,12 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             Destroy(SplashScreen);
         }
 
+        public void CloseDailyBonus() {
+            Spil.Instance.fireDailyBonusClosed();
+
+            Destroy(DailyBonus);
+        }
+        
         public void OpenShop() {
 			Spil.Instance.fireSplashScreenOpenShop();
 
@@ -57,13 +72,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
             Destroy(SplashScreen);
         }
-
-        public void CloseDailyBonus() {
-			Spil.Instance.fireDailyBonusClosed();
-
-            Destroy(DailyBonus);
-        }
-
+        
         public void CollectReward() {
             if (rewardType == Spil.DailyBonusRewardTypeEnum.EXTERNAL) {
                 List<Reward> rewards = new List<Reward>();
@@ -121,7 +130,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     OverlayManager.ShowSplashScreen(response.data, url);
                 }
                 else if (response.eventName.ToLower().Equals("dailybonus")) {
-                    OverlayManager.ShowDailyBonus(response.data, url);
+                    OverlayManager.processDailyBonusResponse(response.data.Print());
                 }
             }
             else if (response.action.ToLower().Trim().Equals("notavailable")) {
@@ -129,6 +138,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 					Spil.Instance.fireSplashScreenNotAvailable();
                 }
                 else if (response.eventName.ToLower().Equals("dailybonus")) {
+                    OverlayManager.spilDailyBonusConfig = new SpilDailyBonus();
 					Spil.Instance.fireDailyBonusNotAvailable();
                 }
             }

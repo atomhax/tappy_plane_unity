@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 1610605059
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 98a5602ea801d78e429e36cc22ff23e3
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: b474380d27eb4bc856799e9c585c4864
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Sprites/Planes/planeYellow1.png
+Dependencies: []
