@@ -13,6 +13,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace SpilGames.Unity.Base.UnityEditor.Managers {
+    //TODO: A number of UserDataError calls are still missing! (loadfailed etc)
     public class PlayerDataManager {
         public WalletData Wallet;
         public InventoryData Inventory;
@@ -300,17 +301,18 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 UserDataManager.UpdateUserDataVersions();
                 updatedData.reason = PlayerDataUpdateReasons.ServerUpdate;
 
-				Spil.Instance.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
+                Spil.Instance.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
             }
 
             if (!fromInit) {
-				Spil.Instance.fireUserDataAvailable();
+                Spil.Instance.fireUserDataAvailable();
             }
         }
 
         public void WalletOperation(string action, int currencyId, int amount, string reason, string reasonDetails, string location, string transactionId) {
             if (currencyId <= 0 || reason == null) {
                 SpilLogging.Error("Error updating wallet!");
+                Spil.Instance.fireUserDataError(SpilErrorMessage.CurrencyOperation.ToJson());
                 return;
             }
 
@@ -324,6 +326,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
             if (currency == null) {
                 SpilLogging.Error("Currency does not exist!");
+                Spil.Instance.fireUserDataError(SpilErrorMessage.CurrencyNotFound.ToJson());
                 return;
             }
 
@@ -337,6 +340,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
             if (updatedBalance < 0) {
                 SpilLogging.Error("Not enough balance for currency!");
+                Spil.Instance.fireUserDataError(SpilErrorMessage.NotEnoughCurrency.ToJson());
                 return;
             }
 
@@ -359,7 +363,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 updatedData.currencies.Add(currency);
                 updatedData.reason = reason;
 
-				Spil.Instance.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
+                Spil.Instance.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
 
                 SendUpdatePlayerDataEvent(null, reason, reasonDetails, location, transactionId);
                 
@@ -392,6 +396,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
             if (gameItem == null || itemId <= 0 || action == null || reason == null) {
                 SpilLogging.Error("Error updating item to player inventory!");
+                Spil.Instance.fireUserDataError(SpilErrorMessage.ItemOperation.ToJson());
                 return;
             }
 
@@ -419,6 +424,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
                     if (inventoryItemAmount < 0) {
                         SpilLogging.Error("Could not remove item as amount is too low!");
+                        Spil.Instance.fireUserDataError(SpilErrorMessage.ItemAmountToLow.ToJson());
                         return;
                     }
                 }
@@ -433,6 +439,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 }
                 else if (action.Equals("subtract")) {
                     SpilLogging.Error("Could not remove item as amount is too low!");
+                    Spil.Instance.fireUserDataError(SpilErrorMessage.ItemAmountToLow.ToJson());
                 }
             }
 
@@ -443,7 +450,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             updatedData.items.Add(item);
             updatedData.reason = reason;
 
-			Spil.Instance.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
+            Spil.Instance.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
 
             SendUpdatePlayerDataEvent(null, reason, reasonDetails, location, transactionId);
             
@@ -505,6 +512,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
             if (bundle == null || reason == null) {
                 SpilLogging.Error("Error adding bundle to player inventory!");
+                Spil.Instance.fireUserDataError(SpilErrorMessage.BundleOperation.ToJson());
                 return;
             }
 
@@ -522,22 +530,23 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     SpilBundlePriceData bundlePriceData = new SpilBundlePriceData();
                     bundlePriceData.currencyId = priceOverride.Id;
                     bundlePriceData.value = priceOverride.Amount;
-                    
+
                     bundlePrices.Add(bundlePriceData);
                 }
-            } 
+            }
 
             if (bundlePrices.Count == 0) {
                 bundlePrices = bundle.prices;
             }
 
             bundle.prices = bundlePrices;
-            
+
             foreach (SpilBundlePriceData bundlePrice in bundlePrices) {
                 PlayerCurrencyData currency = GetCurrencyFromWallet(bundlePrice.currencyId);
 
                 if (currency == null) {
                     SpilLogging.Error("Currency does not exist!");
+                    Spil.Instance.fireUserDataError(SpilErrorMessage.CurrencyNotFound.ToJson());
                     return;
                 }
 
@@ -546,6 +555,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
                 if (updatedBalance < 0) {
                     SpilLogging.Error("Not enough balance for currency!");
+                    Spil.Instance.fireUserDataError(SpilErrorMessage.NotEnoughCurrency.ToJson());
                     return;
                 }
 
@@ -565,9 +575,10 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             foreach (SpilBundleItemData bundleItem in bundle.items) {
                 if (bundleItem.type.Equals("CURRENCY")) {
                     PlayerCurrencyData currency = GetCurrencyFromWallet(bundleItem.id);
-                        
+
                     if (currency == null) {
                         SpilLogging.Error("Currency does not exist!");
+                        Spil.Instance.fireUserDataError(SpilErrorMessage.CurrencyNotFound.ToJson());
                         return;
                     }
 
@@ -580,6 +591,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
                     if (gameItem == null) {
                         SpilLogging.Error("Item does not exist!");
+                        Spil.Instance.fireUserDataError(SpilErrorMessage.ItemNotFound.ToJson());
                         return;
                     };
                     PlayerItemData item = new PlayerItemData();
@@ -624,9 +636,10 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 foreach (ExtraEntity extraEntity in promotion.ExtraEntities) {
                     if (extraEntity.Type.Equals("CURRENCY")) {
                         PlayerCurrencyData currency = GetCurrencyFromWallet(extraEntity.Id);
-                        
+
                         if (currency == null) {
                             SpilLogging.Error("Currency does not exist!");
+                            Spil.Instance.fireUserDataError(SpilErrorMessage.CurrencyNotFound.ToJson());
                             return;
                         }
 
@@ -653,6 +666,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
                         if (gameItem == null) {
                             SpilLogging.Error("Item does not exist!");
+                            Spil.Instance.fireUserDataError(SpilErrorMessage.ItemNotFound.ToJson());
                             return;
                         };
                         PlayerItemData item = new PlayerItemData();
@@ -711,13 +725,24 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             
             updatedData.reason = reason;
 
-			Spil.Instance.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
+            Spil.Instance.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
 
             if (isPromotionValid) {
                 PromotionsManager.PromotionData.First(a => a.id == promotion.Id).amountPurchased++;
                 
                 PromotionsManager.SendBoughtPromotion(promotion.Id);
             }
+
+            #if UNITY_WEBGL && !UNITY_EDITOR
+            JSONObject webViewData = new JSONObject();
+            webViewData.AddField("success", true);
+
+            JSONObject webViewDataInfo = new JSONObject();
+            webViewDataInfo.AddField("bundleId", bundleId);
+            webViewData.AddField("data", webViewDataInfo);
+
+            WebGLJavaScriptInterface.SendNativeMessage("buyBundle", webViewData);
+            #endif
             
             SendUpdatePlayerDataEvent(bundle, reason, reasonDetails, location, transactionId);
 
@@ -726,7 +751,12 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             }
         }
 
-        private void OpenBundle(int bundleId, int amount, string reason, string reasonDetails, string location) {
+        /// <summary>
+        /// Don't use this for now, still needs to be implemented..
+        /// </summary>
+        public void OpenBundle(int bundleId, int amount, string reason, string reasonDetails, string location) {
+            // TODO: Implement this, used for splash screens?
+            throw new NotImplementedException("Sorry, we still need to implement this method...");
         }
 
         private SpilBundleData GetBundleFromObjects(int bundleId) {
@@ -745,6 +775,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
             if (gachaPlayerItem == null || gachaItem == null || gachaId <= 0 || reason == null || !gachaPlayerItem.isGacha) {
                 SpilLogging.Error("Error opening gacha!");
+                Spil.Instance.fireUserDataError(SpilErrorMessage.GachaOperation.ToJson());
                 return;
             }
 
@@ -754,11 +785,13 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
             if (gachaPlayerItem.amount < 1) {
                 SpilLogging.Error("Not enough gacha boxes in the inventory!");
+                Spil.Instance.fireUserDataError(SpilErrorMessage.NotEnoughGachaBoxes.ToJson());
                 return;
             }
 
             if (gachaPlayerItem.content.Count < 1) {
                 SpilLogging.Error("Error opening gacha! No content present!");
+                Spil.Instance.fireUserDataError(SpilErrorMessage.GachaOperation.ToJson());
                 return;
             }
 
@@ -770,6 +803,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
             if (weightSum == 0) {
                 SpilLogging.Error("Error opening gacha!");
+                Spil.Instance.fireUserDataError(SpilErrorMessage.GachaOperation.ToJson());
                 return;
             }
 
@@ -814,14 +848,28 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                             updatedData.items.Add(gachaPlayerItem);
                             updatedData.reason = reason;
 
-							Spil.Instance.firePlayerDataEmptyGacha();
-							Spil.Instance.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
+                            Spil.Instance.firePlayerDataEmptyGacha();
+                            Spil.Instance.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
                             break;
                         default:
                             SpilLogging.Error("Error opening gacha!");
+                            Spil.Instance.fireUserDataError(SpilErrorMessage.GachaOperation.ToJson());
                             return;
                     }
 
+                    #if UNITY_WEBGL && !UNITY_EDITOR
+                    JSONObject webViewData = new JSONObject();
+                    webViewData.AddField("success", true);
+
+                    JSONObject webViewDataInfo = new JSONObject();
+                    JSONObject gachaItemJSON = new JSONObject(JsonHelper.getJSONFromObject(gachaContent));
+                    webViewDataInfo.AddField("gachaItem", gachaItemJSON);
+
+                    webViewData.AddField("data", webViewDataInfo);
+
+                    WebGLJavaScriptInterface.SendNativeMessage("openGacha", webViewData);
+                    #endif
+                    
                     break;
                 }
             }

@@ -19,44 +19,41 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         }
 
         public static void ShowSplashScreen(JSONObject data, string url) {
-            SpilLogging.Log("Opening URL: " + url + " With data: " + data.Print(false));
-
 			Spil.Instance.fireSplashScreenOpen();
 
-#if UNITY_WEBGL
-            WebGLJavaScriptInterface.OpenUrl(url, data);
-#else 
+            #if UNITY_WEBGL && !UNITY_EDITOR
+            WebGLJavaScriptInterface.OpenUrl(url, data, WebGLJavaScriptInterface.enumSplashScreenType.SPLASH_SCREEN);
+            #else 
             SplashScreen = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/SplashScreen.prefab"));
             SplashScreen.SetActive(true);
-#endif
+            #endif
         }
 
         public static void ShowDailyBonus(JSONObject data, string url) {
-            SpilLogging.Log("Opening URL: " + url + " With data: " + data.Print(false));
-
 			Spil.Instance.fireDailyBonusOpen();
 
-#if UNITY_WEBGL
-            WebGLJavaScriptInterface.OpenUrl(url, data);
-#else 
+            #if UNITY_WEBGL && !UNITY_EDITOR
+            WebGLJavaScriptInterface.OpenUrl(url, data, WebGLJavaScriptInterface.enumSplashScreenType.DAILY_BONUS);
+            #else 
             DailyBonus = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/DailyBonus.prefab"));
-#endif
             DailyBonus.SetActive(true);
+            #endif 
         }
 
-        public void CloseSplashScreen() {
-			Spil.Instance.fireSplashScreenClosed();
-
+        public static void CloseSplashScreen() {
+            Spil.Instance.fireSplashScreenClosed();
             Destroy(SplashScreen);
         }
 
-        public void OpenShop() {
+        public static void OpenShop() {
 			Spil.Instance.fireSplashScreenOpenShop();
-
             Destroy(SplashScreen);
         }
 
-        public void IAPPurchaseRequest() {
+        public static void IAPPurchaseRequest(string skuId = null) {
+            if(skuId != null) {
+                Spil.IapPurchaseRequest = skuId;
+            }
             if (Spil.IapPurchaseRequest == null || Spil.IapPurchaseRequest.Equals("")) {
                 SpilLogging.Error("Iap Purchase Request SKU Id not set! Please configure value in the Spil SDK object!");
             } else {
@@ -66,13 +63,13 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             Destroy(SplashScreen);
         }
 
-        public void CloseDailyBonus() {
+        public static void CloseDailyBonus() {
 			Spil.Instance.fireDailyBonusClosed();
 
             Destroy(DailyBonus);
         }
 
-        public void CollectReward() {
+        public static void CollectReward() {
             if (rewardType == Spil.DailyBonusRewardTypeEnum.EXTERNAL) {
                 List<Reward> rewards = new List<Reward>();
 

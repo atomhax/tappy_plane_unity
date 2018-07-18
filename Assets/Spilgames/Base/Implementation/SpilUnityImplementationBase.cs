@@ -2783,6 +2783,16 @@ namespace SpilGames.Unity.Base.Implementations{
 		public void fireUserDataError(string sErrorMessage) {
 			SpilLogging.Log("fireUserDataError with data: " + sErrorMessage);
 			SpilErrorMessage errorMessage = JsonHelper.getObjectFromJson<SpilErrorMessage>(sErrorMessage);
+
+            #if UNITY_WEBGL && !UNITY_EDITOR
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.AddField("id", errorMessage.id);
+            jsonObject.AddField("name", errorMessage.name);
+            jsonObject.AddField("message", errorMessage.message);
+
+            WebGLJavaScriptInterface.SendNativeMessage("userDataError", jsonObject);
+            #endif
+
 			if(OnUserDataError != null){
 				OnUserDataError(errorMessage);
 			}
