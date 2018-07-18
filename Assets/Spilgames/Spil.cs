@@ -159,7 +159,7 @@ namespace SpilGames.Unity {
         /// Not intended for use by developers.
         /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
         /// </summary>
-        public static string IapPurchaseRequest { get; private set; }
+        public static string IapPurchaseRequest { get; set; }
 
         [Header("Reward Settings")] [Header("Ads")] [SerializeField]
         private string currencyName;
