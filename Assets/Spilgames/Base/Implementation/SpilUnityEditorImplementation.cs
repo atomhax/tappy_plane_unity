@@ -685,7 +685,7 @@ namespace SpilGames.Unity.Base.Implementations {
 
             Spil.RewardFeatureTypeEnum tokenType = Spil.MonoInstance.RewardFeatureType;
             if (tokenType.Equals(Spil.RewardFeatureTypeEnum.DEEPLINK)) {
-                spilEvent.customData.AddField("rewardType", "deepLink");
+                spilEvent.customData.AddField("rewardType", "deeplink");
             }
 
             spilEvent.Send();

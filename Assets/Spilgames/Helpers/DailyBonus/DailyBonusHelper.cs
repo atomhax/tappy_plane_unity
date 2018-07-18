@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -12,17 +11,17 @@ namespace SpilGames.Unity.Helpers.DailyBonus {
         public static GameObject TempSpilDailyBonus;
 
         public IEnumerator DownloadDailyBonusAssets() {
-            UnityWebRequest request = UnityWebRequestAssetBundle.GetAssetBundle(DailyBonus.Url, 0);
-            yield return request.SendWebRequest();
+            if (!Caching.IsVersionCached(DailyBonus.Url, Hash128.Parse(DailyBonus.Url))) {
+                UnityWebRequest request = UnityWebRequestAssetBundle.GetAssetBundle(DailyBonus.Url, Hash128.Parse(DailyBonus.Url), 0);
+                yield return request.SendWebRequest();
 
-            AssetBundle bundle = DownloadHandlerAssetBundle.GetContent(request);
-            bundle.LoadAllAssets();
-            SpilDailyBonus = bundle.LoadAsset<GameObject>("DailyBonus");
-            
+                AssetBundle bundle = DownloadHandlerAssetBundle.GetContent(request);
+                bundle.LoadAllAssets();
+                SpilDailyBonus = bundle.LoadAsset<GameObject>("DailyBonus");
+            }   
         }
 
         public void ShowDailyBonus() {
-            //SpilDailyBonus = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/UI/DailyBonus.prefab"));
             TempSpilDailyBonus = Instantiate(SpilDailyBonus);
             
             for (int i = 0; i < DailyBonus.Days.Count; i++) {

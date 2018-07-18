@@ -15,7 +15,25 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         public static void ProcessRewardResponse(ResponseEvent response) {
             string reason = "";
 
-            if (RewardManager.rewardFeatureType.ToString().ToLower().Trim().Equals(RewardManager.DeepLink)) {
+            if (response.data.HasField("success") && !response.data.GetField("success").b) {
+                string rewardType = response.data.GetField("rewardType").str;
+                
+                JSONObject errorMessage = new JSONObject();
+                errorMessage.AddField("id", 18);
+                errorMessage.AddField("name", "RewardServerError");
+                errorMessage.AddField("message", response.data.GetField("error").str);
+                
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.AddField("rewardType", rewardType);
+                jsonObject.AddField("error", errorMessage);
+                
+                Spil.Instance.fireRewardTokenClaimFailed(jsonObject.Print());
+                return;
+            }
+            
+            if (response.eventName.Equals("dailybonus")) {
+                reason = PlayerDataUpdateReasons.DailyBonus;
+            } else if (RewardManager.rewardFeatureType.ToString().ToLower().Trim().Equals(RewardManager.DeepLink)) {
                 reason = PlayerDataUpdateReasons.Deeplink;
             } else if (RewardManager.rewardFeatureType.ToString().ToLower().Trim().Equals(RewardManager.PushNotification)) {
                 reason = PlayerDataUpdateReasons.PushNotification;
@@ -40,16 +58,16 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 int id = 0;
                 int amount = 0;
                 
-                if (OverlayManager.spilDailyBonusConfig.type.Equals("assetBundle")) {
+                if (response.eventName.Equals("dailybonus") && OverlayManager.spilDailyBonusConfig.type.Equals("assetBundle")) {
                     JSONObject collectibles = response.data.GetField("collectibles");
                     for (int i = 0; i < collectibles.Count; i++) {
                         id = (int) collectibles[i].GetField("id").i;
                         amount = (int) collectibles[i].GetField("amount").i;
                         
                         if (collectibles[i].GetField("type").str == "CURRENCY") {
-                            SpilUnityEditorImplementation.pData.WalletOperation("add", id, amount, reason, null, "DeepLink", null);
+                            SpilUnityEditorImplementation.pData.WalletOperation("add", id, amount, reason, null, reason, null);
                         } else if (collectibles[i].GetField("type").str == "ITEM") {
-                            SpilUnityEditorImplementation.pData.InventoryOperation("add", id, amount, reason, null, "DeepLink", null);
+                            SpilUnityEditorImplementation.pData.InventoryOperation("add", id, amount, reason, null, reason, null);
                         }
                     }
                 } else {
@@ -61,9 +79,9 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     }
                     
                     if (RewardManager.rewardType == Spil.TokenRewardTypeEnum.CURRENCY) {
-                        SpilUnityEditorImplementation.pData.WalletOperation("add", id, amount, reason, null, "DeepLink", null);
+                        SpilUnityEditorImplementation.pData.WalletOperation("add", id, amount, reason, null, reason, null);
                     } else if (RewardManager.rewardType == Spil.TokenRewardTypeEnum.ITEM) {
-                        SpilUnityEditorImplementation.pData.InventoryOperation("add", id, amount, reason, null, "DeepLink", null);
+                        SpilUnityEditorImplementation.pData.InventoryOperation("add", id, amount, reason, null, reason, null);
                     }
                 }
             }
