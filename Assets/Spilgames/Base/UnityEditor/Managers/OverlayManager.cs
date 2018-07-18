@@ -1,4 +1,5 @@
 ﻿#if UNITY_EDITOR
+using System.Collections;
 using System.Collections.Generic;
 using SpilGames.Unity.Base.Implementations;
 using SpilGames.Unity.Base.SDK;
@@ -6,6 +7,7 @@ using SpilGames.Unity.Helpers.PlayerData;
 using SpilGames.Unity.Json;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 namespace SpilGames.Unity.Base.UnityEditor.Managers {
@@ -14,6 +16,8 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         public static GameObject DailyBonus;
         
         public static SpilDailyBonus spilDailyBonusConfig;
+        public static GameObject SpilSplashScreen;
+        public static GameObject TempSpilSplashScreen;
         
         private static Spil.DailyBonusRewardTypeEnum rewardType;
 
@@ -23,7 +27,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
         public static void processDailyBonusResponse(string dailyBonusConfig) {
             spilDailyBonusConfig = JsonHelper.getObjectFromJson<SpilDailyBonus>(dailyBonusConfig);
-            spilDailyBonusConfig.type = "assetBundle";
+            
             Spil.Instance.fireDailyBonusAvailable(spilDailyBonusConfig.type);
         }
         
@@ -34,8 +38,58 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
             SplashScreen = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/SplashScreen.prefab"));
             SplashScreen.SetActive(true);
+
+            //Spil.MonoInstance.StartCoroutine(SetupSplashScreen(data, url));
         }
 
+        public static IEnumerator SetupSplashScreen(JSONObject data, string url) {
+            TempSpilSplashScreen = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/UI/SplashScreen.prefab"));
+            Spil.MonoInstance.StartCoroutine(DownloadSplashScreenAssets(url));
+            
+            TempSpilSplashScreen = Instantiate(SpilSplashScreen);
+
+            Image[] images = TempSpilSplashScreen.GetComponentsInChildren<Image>();
+            foreach (Image image in images) {
+                if (data.HasField(image.name)) {
+                    yield return Spil.MonoInstance.StartCoroutine(DownloadSplashScreenImage(data.GetField(image.name).str, image, !image.name.Contains("background")));
+                }
+            }
+
+            Text[] texts = TempSpilSplashScreen.GetComponentsInChildren<Text>();
+            foreach (Text text in texts) {
+                if (data.HasField(text.name)) {
+                    text.text = data.GetField(text.name).str;
+                }
+            }
+            
+            TempSpilSplashScreen.SetActive(true);
+        }
+        
+        public static IEnumerator DownloadSplashScreenAssets(string url) {
+            if (!Caching.IsVersionCached(url, Hash128.Parse(url))) {
+                UnityWebRequest request = UnityWebRequestAssetBundle.GetAssetBundle(url, Hash128.Parse(url), 0);
+                yield return request.SendWebRequest();
+
+                AssetBundle bundle = DownloadHandlerAssetBundle.GetContent(request);
+                bundle.LoadAllAssets();
+                SpilSplashScreen = bundle.LoadAsset<GameObject>("SplashScreen");
+            }   
+        }
+
+        public static IEnumerator DownloadSplashScreenImage(string url, Image image, bool preserveAspect) {
+            Texture2D tex = new Texture2D((int) image.sprite.rect.width, (int) image.sprite.rect.height);
+            WWW www = new WWW(url);
+            yield return www;
+            www.LoadImageIntoTexture(tex);
+
+            image.type = Image.Type.Simple;
+            image.preserveAspect = preserveAspect;
+
+            image.sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2());
+            
+
+        }
+        
         public static void ShowDailyBonus() {
             SpilLogging.Log("Opening URL: " + spilDailyBonusConfig.url + " With data: " + JsonHelper.getJSONFromObject(spilDailyBonusConfig));
 
@@ -127,7 +181,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
             if (response.action.ToLower().Trim().Equals("show")) {
                 if (response.eventName.ToLower().Equals("splashscreen")) {
-                    OverlayManager.ShowSplashScreen(response.data, url);
+                    OverlayManager.ShowSplashScreen(response.data.GetField("data"), url);
                 }
                 else if (response.eventName.ToLower().Equals("dailybonus")) {
                     OverlayManager.processDailyBonusResponse(response.data.Print());
