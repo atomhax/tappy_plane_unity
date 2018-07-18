@@ -16,7 +16,7 @@ using UnityEngine.Analytics;
 using UnityEngine.UI;
 using AssetBundle = SpilGames.Unity.Helpers.AssetBundles.AssetBundle;
 using Random = UnityEngine.Random;
-#if !UNITY_TVOS && !UNITY_WEBGL
+#if !UNITY_TVOS //&& !UNITY_WEBGL
 using Facebook.Unity;
 #endif
 
@@ -102,6 +102,8 @@ public class GameController : MonoBehaviour
     private Quaternion initialRotation;
 
     void Awake() {
+        Debug.Log("version: v1");
+        
         Analytics.enabled = false;
         Analytics.deviceStatsEnabled = false;
         
@@ -259,7 +261,9 @@ public class GameController : MonoBehaviour
         initialPosition = player.gameObject.transform.position;
         initialRotation = player.gameObject.transform.rotation;
 
+        Debug.Log("Awake facebook");
         if (!Spil.CheckPrivacyPolicy) {
+            Debug.Log("InitComponents facebook");
             InitComponents();
         }
         
@@ -320,7 +324,9 @@ public class GameController : MonoBehaviour
     }
 
     private void InitComponents() {
-#if !UNITY_TVOS && !UNITY_WEBGL
+#if !UNITY_TVOS //&& !UNITY_WEBGL
+
+        Debug.Log("init facebook");
         FB.Init(OnFBInitComplete);
         Fabric.Runtime.Fabric.Initialize();
 #endif
@@ -655,7 +661,7 @@ public class GameController : MonoBehaviour
     }
 
     public void FacebookLogin() {
-#if !UNITY_TVOS && !UNITY_WEBGL
+#if !UNITY_TVOS //&& !UNITY_WEBGL
             Debug.Log("Requesting Log In information");
             overlayEnabled = true;
             
@@ -666,7 +672,7 @@ public class GameController : MonoBehaviour
     }
 
     public void FacebookLogout() {
-#if !UNITY_TVOS && !UNITY_WEBGL
+#if !UNITY_TVOS //&& !UNITY_WEBGL
         FB.LogOut();
         Spil.Instance.UserLogout(false);
         FBLoginButton.SetActive(true);
@@ -676,8 +682,11 @@ public class GameController : MonoBehaviour
 #endif
     }
 
-#if !UNITY_TVOS && !UNITY_WEBGL
+#if !UNITY_TVOS //&& !UNITY_WEBGL
     protected void HandleResult(IResult result) {
+        Debug.Log("HandleResult START");
+        Debug.Log("result:" + result.RawResult.ToString());
+        //Debug.Log("result:" + result..ToString());
         overlayEnabled = false;
         fbLoggedIn = true;
         if (result.ResultDictionary != null) {
@@ -685,7 +694,15 @@ public class GameController : MonoBehaviour
             string token = null;
             foreach (string key in result.ResultDictionary.Keys) {
                 Debug.Log(key + " : " + result.ResultDictionary[key].ToString());
-                if (key.Equals("user_id")) {
+
+                string userIdKey = "user_id";
+                string accessTokenKey = "access_token";
+                #if UNITY_WEBGL
+                userIdKey = "userID";
+                accessTokenKey = "accessToken";
+                #endif
+                
+                if (key.Equals(userIdKey)) {
                     Debug.Log("Saving User Id");
                     socialId = result.ResultDictionary[key].ToString();
 
@@ -693,7 +710,7 @@ public class GameController : MonoBehaviour
                     FB.API("/me/friends?fields=id,name", HttpMethod.GET, HandleFriendsLoaded);
                 }
 
-                if (key.Equals("access_token")) {
+                if (key.Equals(accessTokenKey)) {
                     FBLoginButton.SetActive(false);
                     FBLogoutButton.SetActive(true);
                     highScoreButton.SetActive(true);
@@ -849,7 +866,7 @@ public class GameController : MonoBehaviour
 
 
     public void FBShare() {
-#if !UNITY_TVOS && !UNITY_WEBGL
+#if !UNITY_TVOS //&& !UNITY_WEBGL
         Uri url = new Uri("http://files.cdn.spilcloud.com/10/1479133368_tappy_logo.png");
         FB.ShareLink(url, "Tappy Plane", "Check out Tappy Plane for iOS and Android!", url, null);
 #endif

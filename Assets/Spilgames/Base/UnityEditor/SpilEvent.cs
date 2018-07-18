@@ -123,7 +123,7 @@ namespace SpilGames.Unity.Base.UnityEditor {
 #if !UNITY_WEBGL
             data.AddField("appVersion", PlayerSettings.bundleVersion);
 #else
-            data.AddField("appVersion", "1");
+            data.AddField("appVersion", "30");
 #endif
             data.AddField("apiVersion", SpilUnityImplementationBase.PluginVersion);
             data.AddField("osVersion", "1.0");

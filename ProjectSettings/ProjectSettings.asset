@@ -872,7 +872,7 @@ PlayerSettings:
     Purchasing: 0
     UNet: 1
     Unity_Ads: 0
-  facebookSdkVersion: 7.9.1
+  facebookSdkVersion: plugin
   apiCompatibilityLevel: 2
   cloudProjectId: 29e4d149-be14-49fc-b137-1b51e638340a
   projectName: Tappy Plane
