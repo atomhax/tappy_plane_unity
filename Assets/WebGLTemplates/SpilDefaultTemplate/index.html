@@ -24,9 +24,14 @@
     </style>
     <script src="%UNITY_WEBGL_LOADER_URL%"></script>
     <script>
-        var gameInstance = UnityLoader.instantiate("gameContainer", "%UNITY_WEBGL_BUILD_URL%");
+        
+        var gameInstance = UnityLoader.instantiate(
+            "gameContainer", 
+            "%UNITY_WEBGL_BUILD_URL%"
+        );
 
         gameInstance.Module.splashScreenStyle = "Light";
+
     </script>
     <script>
 
@@ -41,33 +46,16 @@
         }
 
         function createUI() {
+            var gameObjectName = 'WebGLJavascriptInterface';
             // Listen to message from child window
-            bindEvent(window, 'message', function(e) {
+            bindEvent(window, 'message', function(e) {      
                 switch (e.data.action) {
+
                     case "RequestSplashScreenData":
                         SendSplashScreenData();
                         break;
                     case "OpenUrl":
-                        window.open(e.data.url, "_blank");
-                        break;
-                    case "OpenGameShop":
-                        gameInstance.SendMessage('WebGLJavascriptInterface', 'OpenGameShop');
-                        break;
-                    case "CloseOverlay":
-                        removeIframe();
-                        gameInstance.SendMessage('WebGLJavascriptInterface', 'CloseSplashScreen');
-                        break;
-                    case "Collect":
-                        gameInstance.SendMessage('WebGLJavascriptInterface', 'Collect');
-                        break;
-                    case "OpenLiveEventNextStage":
-                        gameInstance.SendMessage('WebGLJavascriptInterface', 'OpenLiveEventNextStage');
-                        break;
-                    case "ApplyLiveEventItems":
-                        gameInstance.SendMessage('WebGLJavascriptInterface', 'ApplyLiveEventItems', JSON.stringify(e.data));
-                        break;
-                    case "ReceiveReward":
-                        gameInstance.SendMessage('WebGLJavascriptInterface', 'ReceiveReward', JSON.stringify(e.data));
+                        window.open(e.data.data.url, "_blank");
                         break;
                     case "ShowLoader":
                         // TODO: Show a loading spinner icon
@@ -75,36 +63,34 @@
                     case "HideLoader":
                         // TODO: Hide the loading spinner icon
                         break;
-                    case "SendDataToGame":
-                        gameInstance.SendMessage('WebGLJavascriptInterface', 'SendDataToGame', JSON.stringify(e.data));
-                        break;
-                    case "SendEvent":
-                        gameInstance.SendMessage('WebGLJavascriptInterface', 'SendEvent', JSON.stringify(e.data));
-                        break;
-                    case "IapPurchaseRequest":
-                        gameInstance.SendMessage('WebGLJavascriptInterface', 'IapPurchaseRequest', JSON.stringify(e.data));
-                        break;
-                    case "BuyBundle":
-                        gameInstance.SendMessage('WebGLJavascriptInterface', 'BuyBundle', JSON.stringify(e.data));
-                        break;
-                    case "OpenBundle":
-                        gameInstance.SendMessage('WebGLJavascriptInterface', 'OpenBundle', JSON.stringify(e.data));
-                        break;
-                    case "OpenGacha":
-                        gameInstance.SendMessage('WebGLJavascriptInterface', 'OpenGacha', JSON.stringify(e.data));
-                        break;
-                    case "AddItem":
-                        gameInstance.SendMessage('WebGLJavascriptInterface', 'AddItem', JSON.stringify(e.data));
-                        break;
-                    case "AddCurrency":
-                        gameInstance.SendMessage('WebGLJavascriptInterface', 'AddCurrency', JSON.stringify(e.data));
-                        break;
-                    case "ClaimTierReward":
-                        gameInstance.SendMessage('WebGLJavascriptInterface', 'ClaimTierReward', JSON.stringify(e.data));
-                        break;
                     case "DisplayMessage":
-                        window.alert(e.data.message);
+                        window.alert(e.data.data.message);
                         break;
+                    case "CloseOverlay":
+                        removeIframe();
+                        gameInstance.SendMessage(gameObjectName, 'CloseSplashScreen');
+                        break;
+    
+                    case "OpenGameShop":
+                    case "Collect":
+                    case "OpenLiveEventNextStage":
+                        gameInstance.SendMessage(gameObjectName, e.data.action);
+                        break;
+    
+                    case "SendDataToGame":
+                    case "SendEvent":
+                    case "IapPurchaseRequest":
+                    case "BuyBundle":
+                    case "OpenBundle":
+                    case "OpenGacha":
+                    case "AddItem":
+                    case "AddCurrency":
+                    case "ClaimTierReward":
+                    case "ApplyLiveEventItems":
+                    case "ReceiveReward":
+                        gameInstance.SendMessage(gameObjectName, e.data.action, JSON.stringify(e.data.data));
+                        break;
+
                     default:
                         console.log("Unrecognised call from child: " + e.data.action);
                 }
