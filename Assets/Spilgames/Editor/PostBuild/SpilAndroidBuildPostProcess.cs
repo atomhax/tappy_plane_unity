@@ -35,6 +35,9 @@ public class SpilAndroidBuildPostProcess : MonoBehaviour {
             //Check if AndroidMaifest.xml has the correct values
             VerifyManifest();
 
+            //Add Firebase google_app_id if present
+            //AddGoogleId();
+            
             //Check if the Spil SDK is up-to-date
             CheckLatestPluginVersion();
             
@@ -135,7 +138,7 @@ public class SpilAndroidBuildPostProcess : MonoBehaviour {
                 "You did not disable the automatic Unity permission request. Please add the following line to your \"applicaiton\" tag: \"<meta-data android:name=\"unityplayer.SkipPermissionsDialog\" android:value=\"true\" />\". This is required in order to not have any problems with the Spil SDK's permission system. Keep in mind that all your dangerous permissions will be handled by the Spil SDK automatically");
         }
     }
-
+    
     public static void CheckSlotGameConifg() {
         JSONObject slotConfigJSON = new JSONObject(GetData("requestConfig"));
         JSONObject localConfigJSON = new JSONObject(System.IO.File.ReadAllText(Application.streamingAssetsPath + "/defaultGameConfig.json"));

@@ -68,6 +68,7 @@
     <None Include="Assets\Plugins\Android\crashlytics\NOTICE.txt" />
     <None Include="Assets\Plugins\Android\crashlytics-wrapper\AndroidManifest.xml" />
     <None Include="Assets\Plugins\Android\fabric-init\AndroidManifest.xml" />
+    <None Include="Assets\Plugins\Android\res\values\strings.xml" />
     <None Include="Assets\Plugins\Android\crashlytics\THIRDPARTYLICENSE.txt" />
     <None Include="Assets\Plugins\Android\answers\AndroidManifest.xml" />
     <None Include="Assets\Plugins\Android\fabric\NOTICE.txt" />

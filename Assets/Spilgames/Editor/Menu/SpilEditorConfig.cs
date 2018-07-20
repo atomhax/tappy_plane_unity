@@ -7,10 +7,13 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using SpilGames.Unity;
 using System.Xml;
+using System.Xml.Serialization;
 using JetBrains.Annotations;
 using SpilGames.Unity.Base.Implementations;
 using SpilGames.Unity.Base.UnityEditor;
 using SpilGames.Unity.Json;
+using UnityEngine.WSA;
+using Application = UnityEngine.Application;
 
 public class SpilEditorConfig : EditorWindow {
     private int tabSelected = 0;
@@ -200,7 +203,7 @@ public class SpilEditorConfig : EditorWindow {
             }
         }
     }
-
+    
     private void DrawIOS() {
         GUILayout.Label("This tab contains configuration information specific to iOS", EditorStyles.boldLabel);
         GUILayout.Label("");
@@ -241,7 +244,8 @@ public class SpilEditorConfig : EditorWindow {
         string spilSDKAdjust = "spilsdk-adjust-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
         string spilSDKChartboost = "spilsdk-chartboost-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
         string spilSDKAdMob = "spilsdk-admob-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
-
+        string spilSDKFirebase = "spilsdk-firebase-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
+        
         var styleGreen = new GUIStyle(EditorStyles.label);
         Color green = new Color();
         ColorUtility.TryParseHtmlString("#006400", out green);
@@ -254,6 +258,7 @@ public class SpilEditorConfig : EditorWindow {
         string spilSDKAdjustCheck = "";
         string spilSDKChartboostCheck = "";
         string spilSDKAdMobCheck = "";
+        string spilSDKFirebaseCheck = "";
 
         if (!File.Exists(androidFolder + spilSDK)) {
             spilSDKCheck = " - False";
@@ -291,6 +296,15 @@ public class SpilEditorConfig : EditorWindow {
             GUILayout.Label(" • AdMob (Advertising):" + spilSDKAdMobCheck, styleGreen);
         }
 
+        if (!File.Exists(androidFolder + spilSDKFirebase)) {
+            spilSDKFirebaseCheck = " - False";
+            GUILayout.Label(" • Firebase (Analytics & Deep Linking):" + spilSDKFirebaseCheck, styleRed);
+        }
+        else {
+            spilSDKFirebaseCheck = " - True";
+            GUILayout.Label(" • Firebase (Analytics & Deep Linking):" + spilSDKFirebaseCheck, styleGreen);
+        }
+        
         GUILayout.Label("");
 
         GUILayout.Label("Android Project Id:", EditorStyles.boldLabel);
@@ -472,6 +486,7 @@ public class SpilEditorConfig : EditorWindow {
         }
         
         GetTrackingFile();
+        AddGoogleAppId();
 
         if (retrievalError) {
             SpilLogging.Error("Error retrieving default files! Please check the logs!");
@@ -792,5 +807,56 @@ public class SpilEditorConfig : EditorWindow {
         }
 
         return true;
+    }
+
+    public static void AddGoogleAppId() {
+        string androidFolder = "Assets/Plugins/Android/";
+        string spilSDKFirebase = "spilsdk-firebase-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
+        string gameConfigPath = Application.streamingAssetsPath + "/defaultGameConfig.json";
+
+        string savePath = androidFolder + "res/values/";
+
+        if (!File.Exists(gameConfigPath) || !File.Exists(androidFolder + spilSDKFirebase)) {
+            return;
+        }
+
+        if (!Directory.Exists(androidFolder + "res")) {
+            Directory.CreateDirectory(androidFolder + "res");
+        }
+        
+        if (!Directory.Exists(androidFolder + "res/values")) {
+            Directory.CreateDirectory(androidFolder + "res/values");
+        }
+
+        JSONObject localConfig = new JSONObject(File.ReadAllText(gameConfigPath)).GetField("androidSdkConfig");
+        string firebaseAppId = localConfig.GetField("firebase").GetField("applicationId").str;
+
+        if (File.Exists(savePath + "strings.xml")) {
+            XmlDocument stringsFileXML = new XmlDocument();
+            stringsFileXML.Load(savePath + "strings.xml");
+
+            XmlElement xmlRoot = stringsFileXML.DocumentElement;
+
+            XmlNodeList nodes = stringsFileXML.GetElementsByTagName("string");
+            for (int i = 0; i < nodes.Count; i++) {
+                if (nodes[i].Attributes["name"].Value == "google_app_id") {
+                    xmlRoot.RemoveChild(nodes[i]);
+                }
+            }
+            
+            XmlNode node = stringsFileXML.CreateElement("string");
+            XmlAttribute attribute = stringsFileXML.CreateAttribute("name");
+            attribute.Value = "google_app_id";
+            node.Attributes.Append(attribute);
+            node.InnerText = firebaseAppId;
+
+            xmlRoot.AppendChild(node);
+            
+            stringsFileXML.Save(savePath + "strings.xml");
+        } else {
+            string fileOutput = "<?xml version='1.0' encoding='utf-8'?><resources><string name='google_app_id'>" + firebaseAppId + "</string></resources>";
+
+            File.WriteAllText(savePath + "strings.xml", fileOutput);
+        }
     }
 }

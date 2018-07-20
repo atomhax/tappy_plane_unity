@@ -1900,7 +1900,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		    DailyBonusHelper = Spil.MonoInstance.gameObject.AddComponent<DailyBonusHelper>();
 		    DailyBonusHelper.DailyBonus = GetDailyBonusConfig();
 		    
-		    if (type != null && type.Trim().ToLower().Equals("assetbundle")) {
+		    if (type != null && type.Equals("assetBundle")) {
 			    Spil.MonoInstance.StartCoroutine(DailyBonusHelper.DownloadDailyBonusAssets());
 		    }
 		    

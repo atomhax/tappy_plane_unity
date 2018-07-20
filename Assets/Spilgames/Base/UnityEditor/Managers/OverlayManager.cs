@@ -39,19 +39,17 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             SplashScreen = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/SplashScreen.prefab"));
             SplashScreen.SetActive(true);
 
-            //Spil.MonoInstance.StartCoroutine(SetupSplashScreen(data, url));
+//            Spil.MonoInstance.StartCoroutine(SetupSplashScreen(data, url));
         }
 
         public static IEnumerator SetupSplashScreen(JSONObject data, string url) {
-            TempSpilSplashScreen = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/UI/SplashScreen.prefab"));
-            Spil.MonoInstance.StartCoroutine(DownloadSplashScreenAssets(url));
+            yield return Spil.MonoInstance.StartCoroutine(DownloadSplashScreenAssets(url));
             
-            TempSpilSplashScreen = Instantiate(SpilSplashScreen);
-
+            
             Image[] images = TempSpilSplashScreen.GetComponentsInChildren<Image>();
             foreach (Image image in images) {
                 if (data.HasField(image.name)) {
-                    yield return Spil.MonoInstance.StartCoroutine(DownloadSplashScreenImage(data.GetField(image.name).str, image, !image.name.Contains("background")));
+                    yield return Spil.MonoInstance.StartCoroutine(DownloadSplashScreenImages(data.GetField(image.name).str, image, !image.name.Contains("background")));
                 }
             }
 
@@ -66,17 +64,16 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         }
         
         public static IEnumerator DownloadSplashScreenAssets(string url) {
-            if (!Caching.IsVersionCached(url, Hash128.Parse(url))) {
-                UnityWebRequest request = UnityWebRequestAssetBundle.GetAssetBundle(url, Hash128.Parse(url), 0);
-                yield return request.SendWebRequest();
+            UnityWebRequest request = UnityWebRequestAssetBundle.GetAssetBundle(url);
+            yield return request.SendWebRequest();
 
-                AssetBundle bundle = DownloadHandlerAssetBundle.GetContent(request);
-                bundle.LoadAllAssets();
-                SpilSplashScreen = bundle.LoadAsset<GameObject>("SplashScreen");
-            }   
+            AssetBundle bundle = DownloadHandlerAssetBundle.GetContent(request);
+            bundle.LoadAllAssets();
+            SpilSplashScreen = bundle.LoadAsset<GameObject>("SplashScreen");
+            TempSpilSplashScreen = (GameObject) Instantiate(SpilSplashScreen); 
         }
 
-        public static IEnumerator DownloadSplashScreenImage(string url, Image image, bool preserveAspect) {
+        public static IEnumerator DownloadSplashScreenImages(string url, Image image, bool preserveAspect) {
             Texture2D tex = new Texture2D((int) image.sprite.rect.width, (int) image.sprite.rect.height);
             WWW www = new WWW(url);
             yield return www;
@@ -105,6 +102,12 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             Destroy(SplashScreen);
         }
 
+        public void CloseSplashScreenA() {
+            Spil.Instance.fireSplashScreenClosed();
+            
+            Destroy(TempSpilSplashScreen);
+        }
+        
         public void CloseDailyBonus() {
             Spil.Instance.fireDailyBonusClosed();
 
@@ -176,7 +179,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             string url = null;
 
             if (response.data.HasField("url")) {
-                url = response.data.GetField("url").Print(false);
+                url = response.data.GetField("url").str;
             }
 
             if (response.action.ToLower().Trim().Equals("show")) {
