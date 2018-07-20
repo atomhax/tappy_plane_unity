@@ -101,12 +101,6 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
             Destroy(SplashScreen);
         }
-
-        public void CloseSplashScreenA() {
-            Spil.Instance.fireSplashScreenClosed();
-            
-            Destroy(TempSpilSplashScreen);
-        }
         
         public void CloseDailyBonus() {
             Spil.Instance.fireDailyBonusClosed();
