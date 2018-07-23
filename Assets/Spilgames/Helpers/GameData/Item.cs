@@ -62,6 +62,15 @@ namespace SpilGames.Unity.Helpers.GameData {
         /// <summary>
         /// Gets the display name of the item.
         /// </summary>
+        public string ReportingName {
+            get { return reportingName; }
+        }
+
+        private string reportingName;
+        
+        /// <summary>
+        /// Gets the display name of the item.
+        /// </summary>
         public string DisplayName {
             get { return displayName; }
         }
@@ -110,11 +119,12 @@ namespace SpilGames.Unity.Helpers.GameData {
 
         private int limit;
         
-        public Item(int id, string name, int type, string imageUrl, string displayName, string displayDescription, bool isGacha, List<SpilGachaContent> content, Dictionary<string, object> properties, int limit) {
+        public Item(int id, string name, int type, string imageUrl, string reportingName, string displayName, string displayDescription, bool isGacha, List<SpilGachaContent> content, Dictionary<string, object> properties, int limit) {
             this.id = id;
             this.name = name;
             this.type = type;
             this.imageUrl = imageUrl;
+            this.reportingName = reportingName;
             this.displayName = displayName;
             this.displayDescription = displayDescription;
             this.isGacha = isGacha;

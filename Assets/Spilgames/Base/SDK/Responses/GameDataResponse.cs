@@ -22,6 +22,7 @@ namespace SpilGames.Unity.Base.SDK {
         public string name;
         public int initialValue;
         public int type;
+        public string reportingName;
         public string imageUrl;
         public string displayName;
         public string displayDescription;

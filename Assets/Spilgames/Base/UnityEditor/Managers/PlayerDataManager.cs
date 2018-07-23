@@ -10,6 +10,7 @@ using SpilGames.Unity.Helpers.PlayerData;
 using SpilGames.Unity.Helpers.Promotions;
 using SpilGames.Unity.Json;
 using UnityEngine;
+using UnityEngine.Experimental.UIElements;
 using Random = UnityEngine.Random;
 
 namespace SpilGames.Unity.Base.UnityEditor.Managers {
@@ -946,8 +947,13 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     obj.AddField("id", currencyData.id);
                     obj.AddField("currentBalance", currencyData.currentBalance);
                     obj.AddField("delta", currencyData.delta);
-                    obj.AddField("limit", currencyData.limit);
-                    obj.AddField("overflow", currencyData.overflow);
+                    if (currencyData.limit > 0) {
+                        obj.AddField("limit", currencyData.limit);
+                    }
+
+                    if (currencyData.overflow > 0) {
+                        obj.AddField("overflow", currencyData.overflow); 
+                    }
                     
                     currenciesJSON.Add(obj);
                 }
@@ -982,8 +988,18 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     obj.AddField("id", playerItemData.id);
                     obj.AddField("amount", playerItemData.amount);
                     obj.AddField("delta", playerItemData.delta);
-                    obj.AddField("limit", playerItemData.limit);
-                    obj.AddField("overflow", playerItemData.overflow);
+
+                    if (playerItemData.limit > 0) {
+                        obj.AddField("limit", playerItemData.limit);
+                    }
+
+                    if (playerItemData.overflow > 0) {
+                        obj.AddField("overflow", playerItemData.overflow); 
+                    }
+
+                    if (playerItemData.reportingName != null) {
+                        obj.AddField("reportinName", playerItemData.reportingName); 
+                    }
 
                     itemsJSON.Add(obj);
                 }

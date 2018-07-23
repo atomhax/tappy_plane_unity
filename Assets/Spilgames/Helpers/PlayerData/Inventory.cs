@@ -18,10 +18,10 @@ namespace SpilGames.Unity.Helpers.PlayerData {
         public Inventory(List<PlayerItemData> itemData) {
             items = new List<PlayerItem>();
 
-            //Adding currencies of the player
+            //Adding items of the player
             if (itemData != null) {
                 foreach (PlayerItemData playerItemData in itemData) {
-                    items.Add(new PlayerItem(playerItemData.id, playerItemData.name, playerItemData.type, playerItemData.amount, playerItemData.delta, playerItemData.value, playerItemData.imageUrl, playerItemData.displayName, playerItemData.displayDescription, playerItemData.isGacha, playerItemData.content, playerItemData.properties, playerItemData.limit, playerItemData.overflow));
+                    items.Add(new PlayerItem(playerItemData.id, playerItemData.name, playerItemData.type, playerItemData.amount, playerItemData.delta, playerItemData.value, playerItemData.imageUrl, playerItemData.reportingName, playerItemData.displayName, playerItemData.displayDescription, playerItemData.isGacha, playerItemData.content, playerItemData.properties, playerItemData.limit, playerItemData.overflow));
                 }
             }
         }
@@ -63,7 +63,7 @@ namespace SpilGames.Unity.Helpers.PlayerData {
 
         private int overflow;
         
-        public PlayerItem(int id, string name, int type, int amount, int delta, int value, string imageURL, string displayName, string displayDescription, bool isGacha, List<SpilGachaContent> content, Dictionary<string, object> properties, int limit, int overflow) : base(id, name, type, imageURL, displayName, displayDescription, isGacha, content, properties, limit) {
+        public PlayerItem(int id, string name, int type, int amount, int delta, int value, string imageURL, string reportingName, string displayName, string displayDescription, bool isGacha, List<SpilGachaContent> content, Dictionary<string, object> properties, int limit, int overflow) : base(id, name, type, imageURL, reportingName, displayName, displayDescription, isGacha, content, properties, limit) {
             this.amount = amount;
             this.delta = delta;
             this.value = value;
