@@ -58,10 +58,10 @@ public class IAPPanelController : MonoBehaviour {
 		}
 
 		PackagesHelper helper = Spil.Instance.GetPackages ();
-		if(helper != null){
+        if(helper != null && iapManager.packageCosts.Count > 0){
 			if (helper.Packages.Count == 0) {
-			gameObject.SetActive (false);
-			return;
+			    gameObject.SetActive (false);
+			    return;
 			} else {
 				gameObject.SetActive (true);
 			}

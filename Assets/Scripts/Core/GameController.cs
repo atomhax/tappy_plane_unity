@@ -658,6 +658,7 @@ public class GameController : MonoBehaviour
 		FB.GetAppLink(DeepLinkCallback);
 		FB.Mobile.FetchDeferredAppLinkData(DeepLinkCallback);
 #endif
+        shopPanelController.iapManager.requestFBIAPS();
     }
 
     public void FacebookLogin() {
