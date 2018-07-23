@@ -2985,6 +2985,8 @@ namespace SpilGames.Unity.Base.Implementations{
 
         #region Config
 
+	    public abstract void RequestGameConfig();
+	    
         public abstract string GetConfigAll();
 
         public abstract string GetConfigValue(string key);
