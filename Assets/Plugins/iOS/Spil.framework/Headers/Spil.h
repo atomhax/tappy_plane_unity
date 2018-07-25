@@ -9,7 +9,7 @@
 #import "HookBridge.h"
 #import "GAI.h"
 
-#define SPIL_SDK_VERSION @"3.0.0"
+#define SPIL_SDK_VERSION @"3.1.0"
 
 @class ImageContext;
 @class Spil;
@@ -54,6 +54,7 @@
 
 // Daily bonus screen events
 -(void)dailyBonusOpen;
+-(void)dailyBonusAvailable:(nonnull NSString*)type; // New "" | "assetBundle"
 -(void)dailyBonusNotAvailable;
 -(void)dailyBonusClosed;
 -(void)dailyBonusReward:(nonnull NSDictionary*)data;
@@ -851,12 +852,29 @@
  */
 +(void)showHelpCenterWebview:(nonnull NSString*)url;
 
-#pragma mark Web
+#pragma mark Daily bonus
 
 /**
  * Request the daily bonus screen
  */
 +(void)requestDailyBonus;
+
+/**
+ * Shows the daily bonus screen
+ */
++(void)showDailyBonus;
+
+/**
+ * Returns the current loaded daily bonus config
+ */
++(nonnull NSString*)getDailyBonusConfig;
+
+/**
+ * Collects the current daily bonus data
+ */
++(void)collectDailyBonus;
+
+#pragma mark Splashscreens
 
 /**
  * Request a splash screen

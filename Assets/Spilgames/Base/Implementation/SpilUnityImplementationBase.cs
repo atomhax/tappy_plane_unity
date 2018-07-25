@@ -1895,12 +1895,14 @@ namespace SpilGames.Unity.Base.Implementations{
 	    /// This method is meant for internal use only, it should not be used by developers.
 	    /// </summary>
 	    public void fireDailyBonusAvailable(string type) {
-		    SpilLogging.Log("Daily bonus available");
+		    SpilLogging.Log("Daily bonus available: " + type);
 
 		    DailyBonusHelper = Spil.MonoInstance.gameObject.AddComponent<DailyBonusHelper>();
 		    DailyBonusHelper.DailyBonus = GetDailyBonusConfig();
 		    
-		    if (type != null && type.Trim().ToLower().Equals("assetbundle")) {
+		    Debug.Log("[DB] fireDailyBonusAvailable: " + type);
+		    if (type != null && type.Equals("assetBundle")) {
+			    Debug.Log("[DB] StartCoroutine DownloadDailyBonusAssets");
 			    Spil.MonoInstance.StartCoroutine(DailyBonusHelper.DownloadDailyBonusAssets());
 		    }
 		    

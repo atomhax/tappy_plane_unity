@@ -25,7 +25,7 @@
 
 -(PlayerCurrency*)getCurrency:(int)id;
 
--(NSArray*)getUpdatedCurrencies;
+-(NSArray*)getUpdatedCurrencies:(bool)includeContent;
 
 -(BOOL)hasEnoughCurrencyForBundle:(Bundle*)bundle;
 

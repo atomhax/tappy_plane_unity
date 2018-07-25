@@ -192,9 +192,17 @@ extern "C" {
     
     void showHelpCenterWebviewNative(char* url);
     
-    // --- Web ---
+    // --- Daily bonus ---
     
     void requestDailyBonusNative();
+    
+    void showDailyBonusNative();
+    
+    char* getDailyBonusConfigNative();
+    
+    void collectDailyBonusNative();
+    
+    // --- Splashscreens ---
     
     void requestSplashScreenNative(const char* type);
     

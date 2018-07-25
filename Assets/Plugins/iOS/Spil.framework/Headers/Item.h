@@ -19,6 +19,7 @@
 @property (strong, nonatomic) NSString *displayName;
 @property (strong, nonatomic) NSString *displayDescription;
 @property (assign, nonatomic) int limit;
+@property (strong, nonatomic) NSString *reportingName;
 
 @property (assign, nonatomic) int isGacha;
 @property (strong, nonatomic) NSMutableArray *gachaContent;

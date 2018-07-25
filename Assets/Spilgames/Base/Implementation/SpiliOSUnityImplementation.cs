@@ -7,6 +7,7 @@ using SpilGames.Unity.Json;
 using System.Collections;
 using SpilGames.Unity.Helpers;
 using System.Runtime.Serialization.Formatters;
+using SpilGames.Unity.Helpers.DailyBonus;
 
 namespace SpilGames.Unity.Base.Implementations
 {
@@ -719,7 +720,7 @@ namespace SpilGames.Unity.Base.Implementations
         public override DailyBonus GetDailyBonusConfig()
         {
             SpilDailyBonus spilDailyBonus = JsonHelper.getObjectFromJson<SpilDailyBonus>(getDailyBonusConfigNative());
-            DailyBonus dailyBonus = new DailyBonus(spilDailyBonus.url, spilDailyBonus.days);
+            DailyBonus dailyBonus = new DailyBonus(spilDailyBonus.url, spilDailyBonus.type, spilDailyBonus.days);
             return dailyBonus;
         }
 
@@ -728,7 +729,7 @@ namespace SpilGames.Unity.Base.Implementations
     
         public override void CollectDailyBonus()
         {
-            requestDailyBonusNative();
+            collectDailyBonusNative();
         }
 
         [DllImport("__Internal")]

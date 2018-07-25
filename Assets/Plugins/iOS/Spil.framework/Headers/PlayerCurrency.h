@@ -18,6 +18,6 @@
 -(id)initWithCurrency:(Currency*)currency;
 -(id)initWithDictionary:(NSDictionary*)dict;
 
--(NSDictionary*)toJSONObject;
+-(NSDictionary*)toJSONObject:(bool)includeContent;
 
 @end
