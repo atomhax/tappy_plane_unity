@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2647338295
+CRC: 309546766
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: b53de81317d624c1ce131eda01635f5a
+    Hash: e98dcc7637104990feac1706a2e0f87d
   TypeTreeHash:
     serializedVersion: 2
-    Hash: c0cdfabd3c1b3cd7302239c9be098f0d
+    Hash: 628e1137922b544dad135d6087a24aaf
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -17,6 +17,8 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 48
   Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: deba88d167a6d41338e2cd7c5b2500ff, type: 3}
 - Class: 114
   Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 - Class: 114
@@ -31,8 +33,6 @@ ClassTypes:
   Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 - Class: 114
   Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 8eec84923d3e4afcac4f1f0427197a88, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 128
@@ -46,5 +46,5 @@ ClassTypes:
 - Class: 224
   Script: {instanceID: 0}
 Assets:
-- Assets/Prefabs/UI/DailyBonus.prefab
+- Assets/Prefabs/UI/SplashScreen.prefab
 Dependencies: []

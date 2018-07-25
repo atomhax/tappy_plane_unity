@@ -28,7 +28,17 @@ namespace SpilGames.Unity.Base.Implementations
     #endregion
 
     #region Game config
-
+    
+        /// <summary>
+        /// Returns the game config as a json string.
+        /// This is not essential for developers so could be made private (getConfig<T>() uses it so it cannot be removed entirely) but might be handy for some developers so we left it in.
+        /// </summary>
+        /// <returns></returns>
+        public override string RequestGameConfig()
+        {
+            return requestGameConfigNative();
+        }
+    
         /// <summary>
         /// Returns the game config as a json string.
         /// This is not essential for developers so could be made private (getConfig<T>() uses it so it cannot be removed entirely) but might be handy for some developers so we left it in.
@@ -566,6 +576,9 @@ namespace SpilGames.Unity.Base.Implementations
 
     #region Game config
 
+        [DllImport("__Internal")]
+        private static extern string requestGameConfigNative();
+    
         [DllImport("__Internal")]
         private static extern string getConfigNative();
 

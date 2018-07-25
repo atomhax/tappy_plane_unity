@@ -31,6 +31,15 @@ namespace SpilGames.Unity.Base.Implementations {
         #region Game config
 
         /// <summary>
+        /// Request the game config from the backend.
+        /// This is not essential for developers so could be made private (getConfig T () uses it so it cannot be removed entirely) but might be handy for some developers so we left it in.
+        /// </summary>
+        /// <returns></returns> 
+        public override void RequestGameConfig() {
+            RequestConfig();
+        }
+
+        /// <summary>
         /// Returns the game config as a json string.
         /// This is not essential for developers so could be made private (getConfig T () uses it so it cannot be removed entirely) but might be handy for some developers so we left it in.
         /// </summary>

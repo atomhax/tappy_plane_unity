@@ -1900,9 +1900,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		    DailyBonusHelper = Spil.MonoInstance.gameObject.AddComponent<DailyBonusHelper>();
 		    DailyBonusHelper.DailyBonus = GetDailyBonusConfig();
 		    
-		    Debug.Log("[DB] fireDailyBonusAvailable: " + type);
 		    if (type != null && type.Equals("assetBundle")) {
-			    Debug.Log("[DB] StartCoroutine DownloadDailyBonusAssets");
 			    Spil.MonoInstance.StartCoroutine(DailyBonusHelper.DownloadDailyBonusAssets());
 		    }
 		    
@@ -2987,6 +2985,8 @@ namespace SpilGames.Unity.Base.Implementations{
 
         #region Config
 
+	    public abstract void RequestGameConfig();
+	    
         public abstract string GetConfigAll();
 
         public abstract string GetConfigValue(string key);
