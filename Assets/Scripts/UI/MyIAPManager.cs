@@ -369,7 +369,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
           productCallback // callback that receives a IGraphResult
         );
     }
-    
+
     void productCallback(IGraphResult result)
     {
         JSONObject graphResult = new JSONObject(JsonHelper.getJSONFromObject(result));
@@ -408,7 +408,12 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
                 var response = result.ResultDictionary;
                 if (Convert.ToString(response["status"]) == "completed")
                 {
-                    RewardPlayer((string)result.ResultDictionary["payment_id"]);
+                    if (((string)result.ResultDictionary["product_id"]).Equals("com.spilgames.tappyplane.goldplane"))
+                    {
+                        Spil.Instance.AddItemToInventory(100291, 1, PlayerDataUpdateReasons.IAP, "Splash Screen", null, "EditorTransaction");
+                    } else {
+                        RewardPlayer((string)result.ResultDictionary["payment_id"]);
+                    }
 
                     String localisedName = null;
                     foreach(JSONObject product in WebGLJavaScriptInterface.iapDetails)
@@ -430,7 +435,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
                     .Track();
 
                     FB.API(
-                        "/" + (string)result.ResultDictionary["purchase_token"] + "/consume?access_token=" + FB.ClientToken,
+                        "/" + (string)result.ResultDictionary["purchase_token"] + "/consume?access_token=" + AccessToken.CurrentAccessToken.TokenString,
                         HttpMethod.POST,
                         this.consumeCallback // callback that receives a IGraphResult
                     );
@@ -456,5 +461,6 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
         }
     }
 
-    void consumeCallback(IGraphResult result) { } // should contain: { success: true }
+    // RawResult should contain: { success: true }
+    void consumeCallback(IGraphResult result) { }        
 }

@@ -27,12 +27,14 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         
         public static void PlayVideo() {
 #if UNITY_WEBGL
-            AdOverlay = (GameObject) Instantiate(UnityEngine.Resources.Load("Assets/Spilgames/Editor/Prefabs/AdOverlay.prefab"));
+            WebGLJavaScriptInterface.init(3028, 4106, 2021, false);
+            WebGLJavaScriptInterface.PlayVideo((obj) => { SpilLogging.Log("AppLixir result: " + obj.ToString()); });
+            provider = "AppLixir";
 #else 
             AdOverlay = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/AdOverlay.prefab"));
-#endif
             AdOverlay.SetActive(true);
             provider = "Fyber";
+#endif
             adType = "rewardVideo";
             adInfoText = provider + " " + adType + " is playing!";
 			Spil.Instance.fireAdStart();

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -6,6 +7,7 @@ using SpilGames.Unity;
 using SpilGames.Unity.Json;
 using SpilGames.Unity.Base.UnityEditor.Managers;
 using SpilGames.Unity.Base.Implementations;
+using AOT;
 
 namespace SpilGames.Unity.Base.Implementations
 {
@@ -248,6 +250,121 @@ namespace SpilGames.Unity.Base.Implementations
         {
             JSONObject paramsJsonObject = new JSONObject(paramsJson);
             TieredEventManager.ClaimTierReward((int)paramsJsonObject.GetField("tieredEventId").i, (int)paramsJsonObject.GetField("tierId").i);
+        }
+
+        // AppLixir
+
+        public delegate void SimpleCallback(int val);
+
+        [DllImport("__Internal")]
+
+        public static extern void ShowVideo(int devId, int gameId, int zoneId, int fallback, SimpleCallback onCompleted);
+
+        [MonoPInvokeCallback(typeof(SimpleCallback))]
+
+        private static void ApplixirCompletedHandler(int result)
+        {
+            Debug.Log("ApplixirCompletedHandler GOT VIDEO RESULT CALLBACK: " + result);
+
+            PlayVideoResult pvr = (PlayVideoResult)result;
+
+            if (callback != null)
+            {
+                callback(pvr);
+            }
+        }
+
+        public enum PlayVideoResult
+        {
+            NONE = 0,
+            AD_WATCHED = 1, // an ad was presented and ran for more than 5 Seconds
+            NETWORK_ERROR = 2, // no connectivity available
+            AD_BLOCKER = 3, // an ad blocker was detected
+            AD_INTERRUPTED = 4, // ad was ended prior to 5 seconds (abnormal end)
+            AD_FALLBACK = 6, // fallback mode displayed a banner in response to ads-unavailable.Will only occur if "fallback:1" is set in the options.
+            ADS_UNAVAILABLE = 5, // no ads were returned to the player
+            CORS_ERROR = 7,
+            NO_ZONEID = 8,
+            AD_STARTED = 9,
+            SYS_CLOSING = 10
+        }
+
+        private static Action<PlayVideoResult> callback = null;
+
+        /// <summary>
+        /// Calls out to the applixir service to show a video ad.
+        /// Result is returned via the resultListerens event.
+        /// </summary>
+        public static void PlayVideo(Action<PlayVideoResult> callback)
+        {
+            WebGLJavaScriptInterface.callback = callback;
+            ShowVideo(devId, gameId, zoneId, (fallback ? 1 : 0),
+            ApplixirCompletedHandler);
+        }
+
+        private static int devId;
+        private static int gameId;
+        private static int zoneId;
+        private static bool fallback;
+
+        public static void init(int devId, int gameId, int zoneId, bool fallback)
+        {
+            WebGLJavaScriptInterface.devId = devId;
+            WebGLJavaScriptInterface.gameId = gameId;
+            WebGLJavaScriptInterface.zoneId = zoneId;
+            WebGLJavaScriptInterface.fallback = fallback;
+        }
+
+        public static void onPlayVideoResultString(string result)
+        {
+            Debug.Log("onPlayVideoResultString GOT VIDEO RESULT CALLBACK: " + result);
+            PlayVideoResult pvr = PlayVideoResult.ADS_UNAVAILABLE;
+
+            if (!string.IsNullOrEmpty(result))
+            {
+                result = result.ToLower().Trim();
+                switch (result)
+                {
+                    case "ad-watched":
+                        pvr = PlayVideoResult.AD_WATCHED;
+                    break;
+                    case "network-error":
+                        pvr = PlayVideoResult.NETWORK_ERROR;
+                    break;
+                    case "ad-blocker":
+                        pvr = PlayVideoResult.AD_BLOCKER;
+                    break;
+                    case "ad-interrupted":
+                        pvr = PlayVideoResult.AD_INTERRUPTED;
+                    break;
+                    case "ads-unavailable":
+                        pvr = PlayVideoResult.ADS_UNAVAILABLE;
+                    break;
+                    case "ad-fallback":
+                        pvr = PlayVideoResult.AD_FALLBACK;
+                    break;
+                    case "cors - error":
+                        pvr = PlayVideoResult.CORS_ERROR;
+                    break;
+                    case "no_zoneId":
+                        pvr = PlayVideoResult.NO_ZONEID;
+                    break;
+                    case "ad - started":
+                        pvr = PlayVideoResult.AD_STARTED;
+                    break;
+                    case "sys - closing":
+                        pvr = PlayVideoResult.SYS_CLOSING;
+                    break;
+                    default:
+                        pvr = PlayVideoResult.ADS_UNAVAILABLE;
+                    break;
+                }
+            }
+
+            if (callback != null)
+            {
+                callback(pvr);
+            }
         }
 
         #endif

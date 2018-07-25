@@ -8,19 +8,45 @@
     <link rel="stylesheet" href="TemplateData/style.css">
 
     <style>
+
+        #gameContainer {
+            width: 744px;
+            height: 465px;
+        }
+
         #iframe {
             position: absolute;
-            width: %UNITY_WIDTH%px;
-            height: %UNITY_HEIGHT%px;
+            width: 744px;
+            height: 465px;
             border: 0px;
             padding: 0px;
-            margin-left: auto;
-            margin-right: auto;
-            left: 0;
-            right: 0;
-            top: 0;
-            z-index: 999;
+            z-index: 998;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            margin-top: -21px;
         }
+
+        #applixir_container {
+            position: absolute;
+            width: 744px;
+            height: 465px;
+            border: 0px;
+            padding: 0px;
+            left: -5%;
+            right: 0px;
+            top: -20%;
+            pointer-events: none;
+        }
+
+        #applixir_parent {
+            display: inline-block;
+            padding: 44px;
+            background-color: #000000;
+        }
+
+
     </style>
     <script src="%UNITY_WEBGL_LOADER_URL%"></script>
     <script>
@@ -148,7 +174,16 @@
 </head>
 <body onload="createUI()">
     <div class="webgl-content">
-        <div id="gameContainer" style="width: %UNITY_WIDTH%px; height: %UNITY_HEIGHT%px; margin: auto"></div>
+        <div id="gameContainer"></div>
+
+        <!-- AppLixir -->
+        <script type='text/javascript' src="https://cdn.applixir.com/applixir.sdk3.0m.js"></script>
+        <div id="applixir_container">
+            <div id="applixir_vanishing_div" hidden>
+                <iframe id="applixir_parent"></iframe>
+            </div>
+        </div>
+
         <div class="footer">
             <div class="webgl-logo"></div>
             <div class="fullscreen" onclick="gameInstance.SetFullscreen(1)"></div>
