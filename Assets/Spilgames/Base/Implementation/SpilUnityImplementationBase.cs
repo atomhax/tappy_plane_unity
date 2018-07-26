@@ -17,10 +17,10 @@ using SpilGames.Unity.Helpers.PlayerData;
 namespace SpilGames.Unity.Base.Implementations{
     public abstract class SpilUnityImplementationBase{
         public static string PluginName = "Unity";
-        public static string PluginVersion = "3.0.0";
+        public static string PluginVersion = "3.1.0";
 
-        public static string AndroidVersion = "3.0.0";
-        public static string iOSVersion = "3.0.0";
+        public static string AndroidVersion = "3.1.0";
+        public static string iOSVersion = "3.1.0";
 	    
         /// <summary>
         /// Contains the game data: items, currencies, bundles (collections of items/currencies for softcurrency/hardcurrency transactions and gifting), Shop and Gacha boxes.

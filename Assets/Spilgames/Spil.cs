@@ -1,6 +1,6 @@
 /*
  * Spil Games Unity SDK 2018
- * Version 3.0.0
+ * Version 3.1.0
  *
  * If you have any questions, don't hesitate to e-mail us at info@spilgames.com
  * Be sure to check the github page for documentation and the latest updates

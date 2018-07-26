@@ -1020,7 +1020,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.007344633, y: 0.3881225}
   m_AnchorMax: {x: 0.15423729, y: 0.532}
-  m_AnchoredPosition: {x: 0.40997314, y: -0.9000015}
+  m_AnchoredPosition: {x: 0.4099121, y: -0.8999939}
   m_SizeDelta: {x: -8, y: -3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &134196487
@@ -2076,7 +2076,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.044444446, y: 0.116000004}
   m_AnchorMax: {x: 0.96666664, y: 0.9285714}
-  m_AnchoredPosition: {x: -1, y: 0.2545128}
+  m_AnchoredPosition: {x: -1, y: 0.25450897}
   m_SizeDelta: {x: -1.6000004, y: 2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &216915674
@@ -8332,7 +8332,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00002670288}
+  m_AnchoredPosition: {x: 0, y: 0.000030517578}
   m_SizeDelta: {x: -69.3, y: -22.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1012484667
@@ -10083,7 +10083,7 @@ MonoBehaviour:
   useUnityPrefab: 0
   PrefabOrientation: 0
   ProjectId: 492493592102
-  AndroidStore: 1
+  AndroidStore: 0
   CustomBundleId: 
   EditorDebugMode: 0
   spilUserIdEditor: 
@@ -17349,7 +17349,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.17966102, y: 0.012048192}
   m_AnchorMax: {x: 0.820339, y: 0.09075001}
-  m_AnchoredPosition: {x: -0.0005493164, y: 1.8200073}
+  m_AnchoredPosition: {x: -0.0005493164, y: 1.8200684}
   m_SizeDelta: {x: 0.070007324, y: 4.399994}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1763718775
@@ -18037,7 +18037,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.05508033, y: 0.259}
   m_AnchorMax: {x: 0.5000001, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 2.9560013}
+  m_AnchoredPosition: {x: 0, y: 2.9559937}
   m_SizeDelta: {x: 1, y: 0.796463}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1814425609
@@ -19146,7 +19146,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.00002670288}
+  m_AnchoredPosition: {x: 0, y: -0.000030517578}
   m_SizeDelta: {x: -69.3, y: -18.444}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1935606435
@@ -19430,7 +19430,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.007344633, y: 0.238}
   m_AnchorMax: {x: 0.15423729, y: 0.37187248}
-  m_AnchoredPosition: {x: 0.40997314, y: 0.6000061}
+  m_AnchoredPosition: {x: 0.4099121, y: 0.6000366}
   m_SizeDelta: {x: -8, y: 2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1958994440

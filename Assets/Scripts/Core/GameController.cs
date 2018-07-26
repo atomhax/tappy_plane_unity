@@ -334,6 +334,8 @@ public class GameController : MonoBehaviour
 
         FireTrackEventSample();
 
+        Spil.Instance.SetCurrencyLimit(28, 5000);
+        
         Invoke("InitGooglePlayGames", 10);
     }
     
@@ -1029,6 +1031,8 @@ public class GameController : MonoBehaviour
             PlayerPrefs.SetInt("Skin", 0);
             PlayerPrefs.SetFloat("Speed", 1);
         
+            Spil.Instance.SetCurrencyLimit(28, 5000);
+            
             player.SetupPlayerSkin();
             foreach (SpriteRenderer spriteRenderer in backgroundSpriteRenderes) {
                 spriteRenderer.sprite = backgroundSprites[PlayerPrefs.GetInt("Background", 0)];
@@ -1054,6 +1058,8 @@ public class GameController : MonoBehaviour
             
         PlayerPrefs.SetInt("Background", 0);
         PlayerPrefs.SetInt("Skin", 0);
+        
+        Spil.Instance.SetCurrencyLimit(28, 5000);
         
         player.SetupPlayerSkin();
         foreach (SpriteRenderer spriteRenderer in backgroundSpriteRenderes) {
