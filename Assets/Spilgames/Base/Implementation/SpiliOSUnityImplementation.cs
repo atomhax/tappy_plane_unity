@@ -30,13 +30,12 @@ namespace SpilGames.Unity.Base.Implementations
     #region Game config
     
         /// <summary>
-        /// Returns the game config as a json string.
-        /// This is not essential for developers so could be made private (getConfig<T>() uses it so it cannot be removed entirely) but might be handy for some developers so we left it in.
+        /// Requests the game config.
         /// </summary>
         /// <returns></returns>
-        public override string RequestGameConfig()
+        public override void RequestGameConfig()
         {
-            return requestGameConfigNative();
+            requestGameConfigNative();
         }
     
         /// <summary>
@@ -111,6 +110,7 @@ namespace SpilGames.Unity.Base.Implementations
         public override string GetPackagePromotion(string packageId) {
             return getPackagePromotionNative(packageId);
         }
+        [DllImport("__Internal")]
         private static extern string getPackagePromotionNative(string packageId);
         
         public override void ShowPromotionScreen(int promotionId) {
@@ -577,7 +577,7 @@ namespace SpilGames.Unity.Base.Implementations
     #region Game config
 
         [DllImport("__Internal")]
-        private static extern string requestGameConfigNative();
+        private static extern void requestGameConfigNative();
     
         [DllImport("__Internal")]
         private static extern string getConfigNative();
