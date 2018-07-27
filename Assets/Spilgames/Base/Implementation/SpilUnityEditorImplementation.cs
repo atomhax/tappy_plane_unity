@@ -786,13 +786,23 @@ namespace SpilGames.Unity.Base.Implementations {
 
         #region Social Login
 
-        public override void UserLogin(string socialId, string socialProvider, string socialToken) {
+        /// <summary>
+        /// Only for Facebook and GPG login, for iOS Game Center use the other UserLogin method with publicKeyUrl, seed and timeStamp parameters.
+        /// </summary>
+        public void UserLogin(string socialId, string socialProvider, string socialToken) {
+            UserLogin(socialId, socialProvider, socialToken, null, null, 0);
+        }
+
+        public override void UserLogin(string socialId, string socialProvider, string socialToken, string publicKeyUrl, string salt, long timeStamp) {
             SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
             spilEvent.eventName = "userLogin";
 
             spilEvent.customData.AddField("socialId", socialId);
             spilEvent.customData.AddField("socialProvider", socialProvider);
             spilEvent.customData.AddField("socialToken", socialToken);
+            spilEvent.customData.AddField("publicKeyUrl", publicKeyUrl);
+            spilEvent.customData.AddField("salt", salt);
+            spilEvent.customData.AddField("timeStamp", timeStamp);
 
             spilEvent.Send();
         }
