@@ -7,7 +7,10 @@ buildscript {
 	}
 
 	dependencies {
-		classpath 'com.android.tools.build:gradle:2.3.0'
+		//Use this if you are using 2018.2
+		classpath 'com.android.tools.build:gradle:3.0.1'
+		//Use this if you are using below 2018.2
+		//classpath 'com.android.tools.build:gradle:2.3.0'
 	}
 }
 

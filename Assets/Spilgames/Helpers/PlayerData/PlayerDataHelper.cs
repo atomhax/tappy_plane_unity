@@ -16,7 +16,22 @@ namespace SpilGames.Unity.Helpers.PlayerData {
         public Wallet Wallet;
         public Inventory Inventory;
 
+        public PlayerDataHelper() {
+            
+        }
+        
         public PlayerDataHelper(SpilUnityImplementationBase Instance) {
+            string walletString = Instance.GetWalletFromSdk();
+            string inventoryString = Instance.GetInvetoryFromSdk();
+            if (walletString != null && inventoryString != null) {
+                WalletData walletData = JsonHelper.getObjectFromJson<WalletData>(walletString);
+                InventoryData inventoryData = JsonHelper.getObjectFromJson<InventoryData>(inventoryString);
+
+                AddDataToHelper(walletData != null ? walletData.currencies : null, inventoryData != null ? inventoryData.items : null);
+            }
+        }
+        
+        public void RefreshData(SpilUnityImplementationBase Instance) {
             string walletString = Instance.GetWalletFromSdk();
             string inventoryString = Instance.GetInvetoryFromSdk();
             if (walletString != null && inventoryString != null) {

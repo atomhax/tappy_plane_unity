@@ -2876,7 +2876,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		public void firePrivacyPolicyStatus(string sAccepted) {
 			SpilLogging.Log("firePrivacyPolicyStatus");
 
-			bool accepted =Convert.ToBoolean(sAccepted);
+			bool accepted = Convert.ToBoolean(sAccepted);
 
 			if (accepted) {
 				if (Spil.UseUnityPrefab) {
@@ -2885,6 +2885,7 @@ namespace SpilGames.Unity.Base.Implementations{
 					Spil.Instance.SpilInit(true);
 				}
 			}
+			
 			if(OnPrivacyPolicyStatus != null){
 				OnPrivacyPolicyStatus(accepted);
 			}

@@ -137,6 +137,9 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                         item.isGacha = gameDataItem.isGacha;
                         item.name = gameDataItem.name;
                         item.type = gameDataItem.type;
+                        item.properties = gameDataItem.properties;
+                        item.reportingName = gameDataItem.reportingName;
+                        item.limit = gameDataItem.limit;
                     } else {
                         // TODO: Playerdata contains an item that is not defined in the gamedata, should this throw an exception?
                         // TODO: Remove the item from the list or keep it with missing data (as it is now)?
@@ -308,6 +311,8 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                             playerItem.displayDescription = item.displayDescription;
                             playerItem.isGacha = item.isGacha;
                             playerItem.content = item.content;
+                            playerItem.properties = item.properties;
+                            playerItem.reportingName = item.reportingName;
 
                             Inventory.items.Add(playerItem);
 
@@ -435,6 +440,8 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             item.displayDescription = gameItem.displayDescription;
             item.isGacha = gameItem.isGacha;
             item.content = gameItem.content;
+            item.properties = gameItem.properties;
+            item.reportingName = gameItem.reportingName;
             
             int updatedAmount = amount;
                                 
@@ -650,6 +657,8 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     item.displayDescription = gameItem.displayDescription;
                     item.isGacha = gameItem.isGacha;
                     item.content = gameItem.content;
+                    item.properties = gameItem.properties;
+                    item.reportingName = gameItem.reportingName;
 
                     PlayerItemData inventoryItem = GetItemFromInventory(bundleItem.id);
 
@@ -748,6 +757,8 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                         item.displayDescription = gameItem.displayDescription;
                         item.isGacha = gameItem.isGacha;
                         item.content = gameItem.content;
+                        item.properties = gameItem.properties;
+                        item.reportingName = gameItem.reportingName;
 
                         PlayerItemData inventoryItem = GetItemFromInventory(extraEntity.Id);
 
@@ -945,6 +956,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 foreach (PlayerCurrencyData currencyData in currencyList) {
                     JSONObject obj = new JSONObject();
                     obj.AddField("id", currencyData.id);
+                    obj.AddField("name", currencyData.name);
                     obj.AddField("currentBalance", currencyData.currentBalance);
                     obj.AddField("delta", currencyData.delta);
                     if (currencyData.limit > 0) {
@@ -986,6 +998,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 foreach (PlayerItemData playerItemData in itemsList) {
                     JSONObject obj = new JSONObject();
                     obj.AddField("id", playerItemData.id);
+                    obj.AddField("name", playerItemData.name);
                     obj.AddField("amount", playerItemData.amount);
                     obj.AddField("delta", playerItemData.delta);
 

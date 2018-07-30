@@ -500,7 +500,11 @@ public class SpilEditorConfig : EditorWindow {
 
     void GetTrackingFile() {
         SpilLogging.Log("Getting Game Specific Tracking File");
-        WWW request = new WWW("https://splashscreens.cdn.spilcloud.com/native_game_tracking/" + androidPackageName + ".cs");
+        
+        var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        var time = (long) (DateTime.Now.ToUniversalTime() - epoch).TotalMilliseconds;
+        
+        WWW request = new WWW("https://splashscreens.cdn.spilcloud.com/native_game_tracking/" + androidPackageName + ".cs?ts=" + time.ToString());
         while (!request.isDone) ;
         if (request.error != null && !request.error.Equals("")) {
             SpilLogging.Log("No Game Specific Tracking File available!");

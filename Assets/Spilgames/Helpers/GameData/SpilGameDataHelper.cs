@@ -16,6 +16,10 @@ namespace SpilGames.Unity.Helpers.GameData {
         public List<Bundle> Bundles = new List<Bundle>();
         public Shop Shop;
 
+        public SpilGameDataHelper() {
+            
+        }
+        
         public SpilGameDataHelper(SpilUnityImplementationBase Instance) {
             string spilGameDataString = Instance.GetSpilGameDataFromSdk();
             if (spilGameDataString != null) {

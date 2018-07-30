@@ -146,6 +146,9 @@ namespace SpilGames.Unity.Base.Implementations
         /// </summary>
         internal override void SpilInit(bool withPrivacyPolicy)
         {
+            GameData.RefreshData(Spil.Instance);
+		    PlayerData.RefreshData(Spil.Instance);
+    
             JSONObject options = new JSONObject();
             options.AddField("isUnity", true);
             options.AddField("privacyPolicyEnabled", withPrivacyPolicy);

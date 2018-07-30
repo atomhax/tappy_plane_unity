@@ -424,10 +424,10 @@ namespace SpilGames.Unity {
             gameObject.name = "SpilSDK";
 
 #if !UNITY_EDITOR
-			GameDataObject = new SpilGameDataHelper (Instance);
+			GameDataObject = new SpilGameDataHelper ();
 			GameData = GameDataObject;
 
-			PlayerDataObject = new PlayerDataHelper (Instance);
+			PlayerDataObject = new PlayerDataHelper ();
 			PlayerData = PlayerDataObject;
 #endif
         }

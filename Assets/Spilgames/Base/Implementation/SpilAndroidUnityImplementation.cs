@@ -83,6 +83,9 @@ namespace SpilGames.Unity.Base.Implementations {
         /// </summary>
         internal override void SpilInit(bool withPrivacyPolicy) {
             #if UNITY_ANDROID
+            GameData.RefreshData(Spil.Instance);
+            PlayerData.RefreshData(Spil.Instance);
+            
             Spil spil = GameObject.FindObjectOfType<Spil>();
             CallNativeMethod("init", new object[] {withPrivacyPolicy}, true);
             RegisterDevice(spil.ProjectId);
