@@ -21,7 +21,7 @@ namespace Spilgames.Base.Tracking {
         }
 
         public class Parameters {
-            
+            public string test = "test";
         }
     }
 }

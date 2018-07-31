@@ -336,7 +336,7 @@ public class GameController : MonoBehaviour
 
         Spil.Instance.SetCurrencyLimit(28, 5000);
         
-        //Invoke("InitGooglePlayGames", 10);
+        Invoke("InitGooglePlayGames", 10);
     }
     
     public void OnPrivacyPolicyStatus(bool accepted) {
