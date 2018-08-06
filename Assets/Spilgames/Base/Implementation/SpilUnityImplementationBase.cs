@@ -1995,7 +1995,7 @@ namespace SpilGames.Unity.Base.Implementations{
         /// This method is meant for internal use only, it should not be used by developers.
         /// </summary>
         public void fireDeepLinkReceived(string deepLink) {
-            SpilLogging.Log("Received deeplink = " + deepLink);
+            SpilLogging.Log("DeepLinkReceived: " + deepLink);
 
             JSONObject deeplinkJSON = new JSONObject(deepLink);
             string url = deeplinkJSON.GetField("url").str;
@@ -3270,7 +3270,7 @@ namespace SpilGames.Unity.Base.Implementations{
 
         #region Social Login
 
-        public abstract void UserLogin(string socialId, string socialProvider, string socialToken);
+        public abstract void UserLogin(string socialId, string socialProvider, string socialToken, string publicKeyUrl, string salt, long timeStamp);
 
         public abstract void UserLogout(bool global);
 

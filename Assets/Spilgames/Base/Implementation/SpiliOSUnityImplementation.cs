@@ -810,9 +810,9 @@ namespace SpilGames.Unity.Base.Implementations
 
     #region Social Login
 
-        public override void UserLogin(string socialId, string socialProvider, string socialToken)
+        public override void UserLogin(string socialId, string socialProvider, string socialToken, string publicKeyUrl, string salt, long timeStamp) {
         {
-            loginNative(socialId, socialProvider, socialToken);
+            loginNative(socialId, socialProvider, socialToken, publicKeyUrl, salt, timeStamp);
         }
 
         [DllImport("__Internal")]
