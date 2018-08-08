@@ -810,13 +810,15 @@ namespace SpilGames.Unity.Base.Implementations
 
     #region Social Login
 
-        public override void UserLogin(string socialId, string socialProvider, string socialToken)
+        public override void UserLogin(string socialId, string socialProvider, string socialToken, Dictionary<string,object> socialValidationData = null)
         {
-            loginNative(socialId, socialProvider, socialToken);
+            string socialValidationDataJson = socialValidationData == null ? "" : JsonHelper.getJSONFromObject(socialValidationData);
+            Debug.Log("socialValidationDataJson: " + socialValidationDataJson);
+            loginNative(socialId, socialProvider, socialToken, socialValidationDataJson);
         }
 
         [DllImport("__Internal")]
-        private static extern void loginNative(string externalUserId, string externalProviderId, string externalToken);
+        private static extern void loginNative(string externalUserId, string externalProviderId, string externalToken, string socialValidationData);
 
         public override void UserLogout(bool global)
         {

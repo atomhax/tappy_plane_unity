@@ -620,7 +620,7 @@ namespace SpilGames.Unity.Base.Implementations {
 
         #region Social Login
 
-        public override void UserLogin(string socialId, string socialProvider, string socialToken) {
+        public override void UserLogin(string socialId, string socialProvider, string socialToken, Dictionary<string,object> socialValidationData = null) {
             CallNativeMethod("userLogin", new object[] {
                 socialId,
                 socialProvider,
