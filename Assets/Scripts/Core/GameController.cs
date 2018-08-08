@@ -767,7 +767,7 @@ public class GameController : MonoBehaviour
 
             if (socialId != null && token != null) {
                 PlayerPrefs.SetInt("facebook_connected", 1);
-                Spil.Instance.UserLogin(socialId, "facebook", token);
+                Spil.Instance.UserLogin(socialId, "facebook", token, null, null, 0);
             }
         }
     }
@@ -1348,12 +1348,16 @@ public class GameController : MonoBehaviour
             Debug.Log("GPG Token Id: " + PlayGamesPlatform.Instance.GetIdToken());
             
             PlayGamesPlatform.Instance.GetAnotherServerAuthCode(false, Target);
-    
-            PlayerPrefs.SetInt("platform_connected", 1);
-            overlayEnabled = false;
-            platformLoginButton.SetActive(false);
-            platformLogoutButton.SetActive(true);
-            highScoreButton.SetActive(true);
+
+            if(success)
+            {
+                PlayerPrefs.SetInt("platform_connected", 1);
+                overlayEnabled = false;
+                platformLoginButton.SetActive(false);
+                platformLogoutButton.SetActive(true);
+                highScoreButton.SetActive(true);
+                Spil.Instance.UserLogin(PlayGamesPlatform.Instance.GetUserId(), "GPG", PlayGamesPlatform.Instance.GetIdToken());
+            }
         });
         #endif
     }

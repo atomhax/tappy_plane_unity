@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using SpilGames.Unity.Base.SDK;
+using SpilGames.Unity.Helpers.DailyBonus;
 
 namespace SpilGames.Unity.Base.Implementations
 {
@@ -366,6 +367,11 @@ namespace SpilGames.Unity.Base.Implementations
 
         }
 
+        public override void UserLogin(string socialId, string socialProvider, string socialToken, string publicKeyUrl, string salt, long timeStamp)
+        {
+
+        }
+
         public override void UserLogout(bool global)
         {
 
@@ -407,6 +413,26 @@ namespace SpilGames.Unity.Base.Implementations
         }
 
         public override void SetItemLimit(int itemId, int limit)
+        {
+            
+        }
+
+        public override void RequestGameConfig()
+        {
+            
+        }
+
+        protected override void ShowDailyBonusNative()
+        {
+            
+        }
+
+        public override DailyBonus GetDailyBonusConfig()
+        {
+            return null;
+        }
+
+        public override void CollectDailyBonus()
         {
             
         }

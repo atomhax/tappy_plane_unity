@@ -816,6 +816,11 @@ namespace SpilGames.Unity.Base.Implementations
             Debug.Log("socialValidationDataJson: " + socialValidationDataJson);
             loginNative(socialId, socialProvider, socialToken, socialValidationDataJson);
         }
+        
+        public override void UserLogin(string socialId, string socialProvider, string socialToken, string publicKeyUrl, string salt, long timeStamp)
+        {
+            loginNative(socialId, socialProvider, socialToken, "");
+        }
 
         [DllImport("__Internal")]
         private static extern void loginNative(string externalUserId, string externalProviderId, string externalToken, string socialValidationData);
