@@ -9,7 +9,7 @@
 #import "HookBridge.h"
 #import "GAI.h"
 
-#define SPIL_SDK_VERSION @"3.1.0"
+#define SPIL_SDK_VERSION @"3.2.0"
 
 @class ImageContext;
 @class Spil;
@@ -1030,7 +1030,7 @@
  * @param externalProviderId The id of the service (e.g. facebook)
  * @param externalToken The auth token provided by the external provider
  */
-+(void)loginWithExternalUserId:(nonnull NSString*)externalUserId externalProviderId:(nonnull NSString*)externalProviderId externalToken:(nonnull NSString*)externalToken;
++(void)loginWithExternalUserId:(nonnull NSString*)externalUserId externalProviderId:(nonnull NSString*)externalProviderId externalToken:(nonnull NSString*)externalToken socialValidationData:(nonnull NSDictionary*)socialValidationData;
 
 /**
  * Returns the current login status
