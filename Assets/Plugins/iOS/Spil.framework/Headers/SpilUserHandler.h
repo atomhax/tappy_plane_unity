@@ -39,7 +39,7 @@
 
 // --- Login ---
 
--(void)loginWithExternalUserId:(NSString*)externalUserId externalProviderId:(NSString*)externalProviderId externalToken:(NSString*)externalToken;
+-(void)loginWithExternalUserId:(NSString*)externalUserId externalProviderId:(NSString*)externalProviderId externalToken:(NSString*)externalToken socialValidationData:(NSDictionary*)socialValidationData;
 -(BOOL)isLoggedIn;
 -(void)logout:(BOOL)global;
 -(void)userPlayAsGuest;

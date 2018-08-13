@@ -15,9 +15,13 @@ using SpilGames.Unity.Helpers.PlayerData;
 using SpilGames.Unity.Json;
 using UnityEngine;
 using UnityEngine.Analytics;
+using UnityEngine.SocialPlatforms.GameCenter;
 using UnityEngine.UI;
 using AssetBundle = SpilGames.Unity.Helpers.AssetBundles.AssetBundle;
 using Random = UnityEngine.Random;
+#if UNITY_IOS
+using GCIdentityPlugin;
+#endif
 #if !UNITY_TVOS
 using Facebook.Unity;
 
@@ -80,6 +84,8 @@ public class GameController : MonoBehaviour
         liveEventButton,
         tieredEventButton,
         FBLoginButton,
+        platformLoginButton,
+        platformLogoutButton,
         FBLogoutButton,
         FBShareButton;
 
@@ -272,8 +278,6 @@ public class GameController : MonoBehaviour
         backgroundMusic.Play();
     }
 
-
-
     void Update() {
         #if UNITY_ANDROID
         if (Input.GetKeyDown(KeyCode.Escape)) {
@@ -335,8 +339,22 @@ public class GameController : MonoBehaviour
         FireTrackEventSample();
 
         Spil.Instance.SetCurrencyLimit(28, 5000);
-        
-        Invoke("InitGooglePlayGames", 10);
+
+        #if UNITY_IOS
+        platformLoginButton.GetComponentInChildren<Text>().text = "GAMECENTER LOGIN";
+        platformLogoutButton.GetComponentInChildren<Text>().text = "GAMECENTER LOGOUT";
+        #elif UNITY_ANDROID
+        platformLoginButton.GetComponentInChildren<Text>().text = "PLAY GAMES LOGIN";
+        platformLogoutButton.GetComponentInChildren<Text>().text = "PLAY GAMES LOGOUT";
+        #endif
+        if (PlayerPrefs.GetInt("platform_connected") == 1)
+        {
+            #if UNITY_IOS
+            Invoke("InitGameCenter", 1);
+            #elif UNITY_ANDROID
+            Invoke("InitGooglePlayGames", 10);
+            #endif
+        }
     }
     
     public void OnPrivacyPolicyStatus(bool accepted) {
@@ -630,7 +648,7 @@ public class GameController : MonoBehaviour
     private void OnFBInitComplete() {
         Debug.Log("Facebook Initialised");
         
-        if (Spil.Instance.IsLoggedIn()) {
+        if (Spil.Instance.IsLoggedIn() && PlayerPrefs.GetInt("facebook_connected") == 1) {
 #if UNITY_IOS
 			if (FB.IsLoggedIn) {
 				Debug.Log("FB already Logged In!");
@@ -639,10 +657,11 @@ public class GameController : MonoBehaviour
 				String token = AccessToken.CurrentAccessToken.TokenString;
 				if (socialId != null && token != null) {
 					Debug.Log("Saving User Id");
+				    PlayerPrefs.SetInt("facebook_connected", 1);
 					Spil.Instance.UserLogin(socialId, "facebook", token);
-
-					Debug.Log("Requesting friends list");
-					FB.API("/me/friends?fields=id,name", HttpMethod.GET, HandleFriendsLoaded);
+				    
+					//Debug.Log("Requesting friends list");
+					//FB.API("/me/friends?fields=id,name", HttpMethod.GET, HandleFriendsLoaded);
 
 					FBLoginButton.SetActive(false);
 					FBLogoutButton.SetActive(true);
@@ -660,6 +679,30 @@ public class GameController : MonoBehaviour
 		FB.GetAppLink(DeepLinkCallback);
 		FB.Mobile.FetchDeferredAppLinkData(DeepLinkCallback);
     }
+    
+    public void PlatformSocialLogin() {
+        Debug.Log("Requesting Log In information");
+        overlayEnabled = true;
+        
+        #if UNITY_IOS
+        InitGameCenter();
+        #else
+        InitGooglePlayGames();
+        #endif
+    }
+
+    public void PlatformSocialLogout() {
+        Debug.Log("Logout");
+        overlayEnabled = true;
+        PlayerPrefs.SetInt("platform_connected", 0);
+        platformLoginButton.SetActive(true);
+        platformLogoutButton.SetActive(false);
+        if (PlayerPrefs.GetInt("facebook_connected") == 0)
+        {
+            highScoreButton.SetActive(false);
+            Spil.Instance.UserLogout(false);
+        }
+    }
 
     public void FacebookLogin() {
 #if !UNITY_TVOS
@@ -668,18 +711,22 @@ public class GameController : MonoBehaviour
             overlayEnabled = true;
             
             FB.LogInWithReadPermissions(new List<string>() {
-                "user_friends"
+                //"user_friends"
             }, this.HandleResult);
 //        }
 #endif
     }
 
     public void FacebookLogout() {
+        PlayerPrefs.SetInt("facebook_connected", 0);
         FB.LogOut();
-        Spil.Instance.UserLogout(false);
         FBLoginButton.SetActive(true);
         FBLogoutButton.SetActive(false);
-        highScoreButton.SetActive(false);
+        if (PlayerPrefs.GetInt("platform_connected") == 0)
+        {
+            highScoreButton.SetActive(false);
+            Spil.Instance.UserLogout(false);
+        }
         FBShareButton.SetActive(false);
     }
 
@@ -696,8 +743,8 @@ public class GameController : MonoBehaviour
                     Debug.Log("Saving User Id");
                     socialId = result.ResultDictionary[key].ToString();
 
-                    Debug.Log("Requesting friends list");
-                    FB.API("/me/friends?fields=id,name", HttpMethod.GET, HandleFriendsLoaded);
+                    //Debug.Log("Requesting friends list");
+                    //FB.API("/me/friends?fields=id,name", HttpMethod.GET, HandleFriendsLoaded);
                 }
 
                 if (key.Equals("access_token")) {
@@ -720,6 +767,7 @@ public class GameController : MonoBehaviour
 
             if (socialId != null && token != null) {
                 Spil.Instance.UserLogin(socialId, "facebook", token);
+                PlayerPrefs.SetInt("facebook_connected", 1);
             }
         }
     }
@@ -1065,8 +1113,6 @@ public class GameController : MonoBehaviour
         foreach (SpriteRenderer spriteRenderer in backgroundSpriteRenderes) {
             spriteRenderer.sprite = backgroundSprites[PlayerPrefs.GetInt("Background", 0)];
         }
-        
-        
     }
 
     private void OnLogoutFailed(SpilErrorMessage errorMessage) {
@@ -1230,6 +1276,54 @@ public class GameController : MonoBehaviour
     public void CloseQuitGamePanel() {
         quitGamePanel.SetActive(false);
     }
+
+    private void InitGameCenter()
+    {
+        #if UNITY_IOS
+        Social.localUser.Authenticate(ProcessAuthentication);
+        #endif
+    }
+    
+    #if UNITY_IOS
+    void ProcessAuthentication (bool success) {
+        Debug.Log("Player is authenticated: " + success);
+
+        if (success)
+        {
+            Debug.Log("Generate identity...");
+            GCIdentity.GenerateIdentity(this.name);
+        }
+    }
+    
+    public void OnIdentitySuccess(string identity)
+    {
+        var parsed = GCIdentity.ParseIdentity(identity);
+        Debug.LogFormat("Key: {0}\nSign: {1}\nSalt: {2}\nTimestamp: {3}", parsed[0], parsed[1], parsed[2], parsed[3]);
+
+        string publicKeyUrl = parsed[0];
+        string signature = parsed[1];
+        string salt = parsed[2];
+        string timestamp = parsed[3];
+        
+        Dictionary<string,object> socialValidationData = new Dictionary<string,object>();
+        socialValidationData.Add("publicKeyUrl", publicKeyUrl);
+        socialValidationData.Add("salt", salt);
+        socialValidationData.Add("timestamp", timestamp);
+        
+        PlayerPrefs.SetInt("platform_connected", 1);
+        Spil.Instance.UserLogin(Social.localUser.id, "game_center", signature, socialValidationData);
+        
+        overlayEnabled = false;
+        platformLoginButton.SetActive(false);
+        platformLogoutButton.SetActive(true);
+        highScoreButton.SetActive(true);
+    }
+
+    public void OnIdentityError(string error)
+    {
+        Debug.Log("Identity error: " + error);
+    }
+    #endif
     
     private void InitGooglePlayGames() {
         #if UNITY_ANDROID
@@ -1257,6 +1351,11 @@ public class GameController : MonoBehaviour
 
             if(success)
             {
+                PlayerPrefs.SetInt("platform_connected", 1);
+                overlayEnabled = false;
+                platformLoginButton.SetActive(false);
+                platformLogoutButton.SetActive(true);
+                highScoreButton.SetActive(true);
                 Spil.Instance.UserLogin(PlayGamesPlatform.Instance.GetUserId(), "GPG", PlayGamesPlatform.Instance.GetIdToken());
             }
         });

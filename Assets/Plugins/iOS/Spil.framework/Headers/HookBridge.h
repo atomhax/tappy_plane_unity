@@ -261,7 +261,7 @@ extern "C" {
     
     // --- Login ---
     
-    void loginNative(char* externalUserId, char* externalProviderId, char* externalToken);
+    void loginNative(char* externalUserId, char* externalProviderId, char* externalToken, char* socialValidationData);
     
     bool isLoggedInNative();
     
