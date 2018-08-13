@@ -620,21 +620,12 @@ namespace SpilGames.Unity.Base.Implementations {
 
         #region Social Login
 
-        /// <summary>
-        /// Only for Facebook and GPG login, for iOS Game Center use the other UserLogin method with publicKeyUrl, seed and timeStamp parameters.
-        /// </summary>
-        public void UserLogin(string socialId, string socialProvider, string socialToken) {
-            UserLogin(socialId, socialProvider, socialToken, null, null, 0);
-        }
-
-        public override void UserLogin(string socialId, string socialProvider, string socialToken, string publicKeyUrl, string salt, long timeStamp) {
+        public override void UserLogin(string socialId, string socialProvider, string socialToken, Dictionary<string, object> socialValidationData = null) {
             CallNativeMethod("userLogin", new object[] {
                 socialId,
                 socialProvider,
                 socialToken,
-                publicKeyUrl,
-                salt,
-                timeStamp
+                JsonHelper.getJSONFromObject(socialValidationData)
             }, true);
         }
 

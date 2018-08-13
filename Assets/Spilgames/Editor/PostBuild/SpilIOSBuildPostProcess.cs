@@ -70,6 +70,7 @@ public class SpilIOSBuildPostProcess : MonoBehaviour
 				CheckLatestPluginVersion();
 				CheckSlotGameConifg();
 				CheckSlotGameData();
+				CheckFrameworkVersion();
 			} catch (Exception) {}
 
 			UnityEngine.Debug.Log ("[SPIL] Moving Spil.framework to the root of the project");
@@ -181,6 +182,18 @@ public class SpilIOSBuildPostProcess : MonoBehaviour
 		return data;
 	}
 
+	public static void CheckFrameworkVersion() {
+		string iosFolder = "Assets/Plugins/iOS/";
+		string[] iosVersionFile = File.ReadAllLines(iosFolder + "Spil.framework/Headers/Spil.h");
+        
+		foreach (string line in iosVersionFile) {
+            
+			if (line.Contains("#define SPIL_SDK_VERSION @") && !line.Contains(SpilUnityImplementationBase.iOSVersion)) {
+				Debug.LogError("Spil iOS Framework version does not match Spil Unity Plugin. Please make sure you updated the Spil iOS Framework and Unity Plugin correctly.");
+			}
+		}
+	}
+ 	
 	static WWWForm GetFormData () {
 		JSONObject dummyData = new JSONObject ();
 		dummyData.AddField ("uid", "deadbeef");

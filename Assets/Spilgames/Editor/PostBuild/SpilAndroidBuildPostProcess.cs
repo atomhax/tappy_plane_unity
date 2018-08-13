@@ -34,15 +34,14 @@ public class SpilAndroidBuildPostProcess : MonoBehaviour {
 
             //Check if AndroidMaifest.xml has the correct values
             VerifyManifest();
-
-            //Add Firebase google_app_id if present
-            //AddGoogleId();
             
             //Check if the Spil SDK is up-to-date
             CheckLatestPluginVersion();
             
             Analytics.enabled = false;
             Analytics.deviceStatsEnabled = false;
+            
+            Debug.Log("Verification step for Android Spil SDK completed");
         }
     }
 
@@ -57,21 +56,55 @@ public class SpilAndroidBuildPostProcess : MonoBehaviour {
         string spilSDKAdjust = "spilsdk-adjust-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
         string spilSDKChartboost = "spilsdk-chartboost-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
         string spilSDKAdMob = "spilsdk-admob-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
+        string spilSDKFirebase = "spilsdk-firebase-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
 
-        if (!File.Exists(androidFolder + spilSDK)) {
-            Debug.LogError("The Spil SDK aar file is missing from your 'Assets/Plugins/Android/'. If you want to use the Spil SDK please make sure to include the file to that location");
+        String[] gradleLines = File.ReadAllLines(androidFolder + "mainTemplate.gradle");
+        bool gradleSpilSDKCheck = false;
+        bool gradleAdjustSpilSDKCheck = false;
+        bool gradleChartboostSpilSDKCheck = false;
+        bool gradleAdMobSpilSDKCheck = false;
+        bool gradleFirebaseSpilSDKCheck = false;
+        
+        foreach (string line in gradleLines) {
+            if (line.Contains("spilsdk:" + SpilUnityImplementationBase.AndroidVersion) && !line.Contains("//")) {
+                gradleSpilSDKCheck = true;
+            }
+            
+            if (line.Contains("spilsdk-adjust:" + SpilUnityImplementationBase.AndroidVersion) && !line.Contains("//")) {
+                gradleAdjustSpilSDKCheck = true;
+            }
+            
+            if (line.Contains("spilsdk-chartboost:" + SpilUnityImplementationBase.AndroidVersion) && !line.Contains("//")) {
+                gradleChartboostSpilSDKCheck = true;
+            }
+            
+            if (line.Contains("spilsdk-admob:" + SpilUnityImplementationBase.AndroidVersion) && !line.Contains("//")) {
+                gradleAdMobSpilSDKCheck = true;
+            }
+            
+            if (line.Contains("spilsdk-firebase:" + SpilUnityImplementationBase.AndroidVersion) && !line.Contains("//")) {
+                gradleFirebaseSpilSDKCheck = true;
+            }
+        }
+        
+        if (!File.Exists(androidFolder + spilSDK) && !gradleSpilSDKCheck) {
+            Debug.LogError("The Spil SDK aar file is missing from your 'Assets/Plugins/Android/' or the gradle file is missing the declaration. If you want to use the Spil SDK please make sure to include the file to that location or include the mainTemplate.gradle file included with the Spil SDK package.");
         }
 
-        if (!File.Exists(androidFolder + spilSDKAdjust)) {
-            Debug.Log("The Spil SDK Adjust aar file is missing from your 'Assets/Plugins/Android/'. If you want to use the Spil SDK Adjust please make sure to included the file to that location");
+        if (!File.Exists(androidFolder + spilSDKAdjust) && !gradleAdjustSpilSDKCheck) {
+            Debug.Log("The Spil SDK Adjust aar file is missing from your 'Assets/Plugins/Android/' or the gradle file is missing the declaration. If you want to use the Spil SDK Adjust please make sure to included the file to that location or enable the feature from the configuration menu.");
         }
 
-        if (!File.Exists(androidFolder + spilSDKChartboost)) {
-            Debug.Log("The Spil SDK Chartboost aar file is missing from your 'Assets/Plugins/Android/'. If you want to use the Spil SDK Chartboost please make sure to included to that location");
+        if (!File.Exists(androidFolder + spilSDKChartboost) && !gradleChartboostSpilSDKCheck) {
+            Debug.Log("The Spil SDK Chartboost aar file is missing from your 'Assets/Plugins/Android/' or the gradle file is missing the declaration. If you want to use the Spil SDK Chartboost please make sure to included to that location or enable the feature from the configuration menu.");
         }
 
-        if (!File.Exists(androidFolder + spilSDKAdMob)) {
-            Debug.Log("The Spil SDK AdMob aar file is missing from your 'Assets/Plugins/Android/'. If you want to use the Spil SDK DFP please make sure to included the file to that location");
+        if (!File.Exists(androidFolder + spilSDKAdMob) && !gradleAdMobSpilSDKCheck) {
+            Debug.Log("The Spil SDK AdMob aar file is missing from your 'Assets/Plugins/Android/' or the gradle file is missing the declaration. If you want to use the Spil SDK AdMob please make sure to included the file to that location or enable the feature from the configuration menu.");
+        }
+        
+        if (!File.Exists(androidFolder + spilSDKFirebase) && !gradleFirebaseSpilSDKCheck) {
+            Debug.Log("The Spil SDK Firebase aar file is missing from your 'Assets/Plugins/Android/' or the gradle file is missing the declaration. If you want to use the Spil SDK Firebase please make sure to included the file to that location or enable the feature from the configuration menu.");
         }
         
         CheckSlotGameConifg();

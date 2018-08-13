@@ -61,6 +61,8 @@ namespace SpilGames.Unity.Base.SDK {
 
     public class PlayerDataUpdatedData {
         public string reason;
+        public int bundleId;
+        public int gachaId;
         public List<PlayerItemData> items = new List<PlayerItemData>();
         public List<PlayerCurrencyData> currencies = new List<PlayerCurrencyData>();
     }

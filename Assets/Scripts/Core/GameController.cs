@@ -719,7 +719,7 @@ public class GameController : MonoBehaviour
             }
 
             if (socialId != null && token != null) {
-                Spil.Instance.UserLogin(socialId, "facebook", token, null, null, 0);
+                Spil.Instance.UserLogin(socialId, "facebook", token);
             }
         }
     }

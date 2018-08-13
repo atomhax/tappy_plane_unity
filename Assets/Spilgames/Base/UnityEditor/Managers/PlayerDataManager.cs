@@ -18,6 +18,8 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         public WalletData Wallet;
         public InventoryData Inventory;
 
+        public static int gachaId = 0;
+        
         public WalletData InitWallet() {
             if (Wallet != null) return Wallet;
             TempUserInfo temp;
@@ -396,6 +398,10 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 updatedData.currencies.Add(currency);
                 updatedData.reason = reason;
 
+                if(gachaId != 0) {
+                    updatedData.gachaId = gachaId;
+                }
+                
 				Spil.Instance.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
 
                 SendUpdatePlayerDataEvent(null, reason, reasonDetails, location, transactionId);
@@ -501,6 +507,10 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             updatedData.items.Add(item);
             updatedData.reason = reason;
 
+            if(gachaId != 0) {
+                updatedData.gachaId = gachaId;
+            }
+            
 			Spil.Instance.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
 
             SendUpdatePlayerDataEvent(null, reason, reasonDetails, location, transactionId);
@@ -821,6 +831,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             UserDataManager.UpdateUserDataMeta();
             
             updatedData.reason = reason;
+            updatedData.bundleId = bundleId;
 
 			Spil.Instance.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
 
@@ -903,7 +914,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     gachaPlayerItem.delta = gachaPlayerItem.delta - 1;
                     
                     UpdateItem(gachaPlayerItem);
-
+                    PlayerDataManager.gachaId = gachaItem.id;
                     switch (gachaContent.type) {
                         case "CURRENCY":
                             WalletOperation("add", gachaContent.id, gachaContent.amount, reason, reasonDetails, location, null);
@@ -933,6 +944,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                             return;
                     }
 
+                    PlayerDataManager.gachaId = 0;
                     break;
                 }
             }

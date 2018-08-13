@@ -3270,7 +3270,7 @@ namespace SpilGames.Unity.Base.Implementations{
 
         #region Social Login
 
-        public abstract void UserLogin(string socialId, string socialProvider, string socialToken, string publicKeyUrl, string salt, long timeStamp);
+        public abstract void UserLogin(string socialId, string socialProvider, string socialToken, Dictionary<string, object> socialValidationData = null);
 
         public abstract void UserLogout(bool global);
 

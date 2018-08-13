@@ -367,7 +367,7 @@ namespace SpilGames.Unity.Base.Implementations
 
         }
 
-        public override void UserLogin(string socialId, string socialProvider, string socialToken, string publicKeyUrl, string salt, long timeStamp)
+        public override void UserLogin(string socialId, string socialProvider, string socialToken, string socialValidationData)
         {
 
         }
