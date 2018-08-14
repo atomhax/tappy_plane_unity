@@ -42,15 +42,15 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
         public static void PlayInterstitial(string selectedProvider) {
 #if UNITY_WEBGL
-            AdOverlay = (GameObject) Instantiate(UnityEngine.Resources.Load("Assets/Spilgames/Editor/Prefabs/AdOverlay.prefab"));
 #else 
-            AdOverlay = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/AdOverlay.prefab"));
-#endif
+            AdOverlay = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/AdOverlay.prefab"));            
             AdOverlay.SetActive(true);
             provider = selectedProvider;
             adType = "interstitial";
             adInfoText = provider + " " + adType + " is playing!";
 			Spil.Instance.fireAdStart();
+#endif
+
         }
 
         public static void PlayMoreApps() {

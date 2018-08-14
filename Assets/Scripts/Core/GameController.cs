@@ -639,7 +639,7 @@ public class GameController : MonoBehaviour
 					Spil.Instance.UserLogin(socialId, "facebook", token);
 
 					Debug.Log("Requesting friends list");
-					FB.API("/me/friends?fields=id,name", HttpMethod.GET, HandleFriendsLoaded);
+					//FB.API("/me/friends?fields=id,name", HttpMethod.GET, HandleFriendsLoaded);
 
 					FBLoginButton.SetActive(false);
 					FBLogoutButton.SetActive(true);
@@ -708,7 +708,7 @@ public class GameController : MonoBehaviour
                     socialId = result.ResultDictionary[key].ToString();
 
                     Debug.Log("Requesting friends list");
-                    FB.API("/me/friends?fields=id,name", HttpMethod.GET, HandleFriendsLoaded);
+                    //FB.API("/me/friends?fields=id,name", HttpMethod.GET, HandleFriendsLoaded);
                 }
 
                 if (key.Equals(accessTokenKey)) {
@@ -735,7 +735,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    protected void HandleFriendsLoaded(IResult result) {
+    /*protected void HandleFriendsLoaded(IResult result) {
         Debug.Log("FB friends loaded!");
 
         if (result.ResultDictionary != null) {
@@ -751,7 +751,7 @@ public class GameController : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
 #endif
 
 #if !UNITY_TVOS && !UNITY_WEBGL
