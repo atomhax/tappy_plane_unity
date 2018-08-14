@@ -51,6 +51,8 @@ namespace SpilGames.Unity {
         [SerializeField] private bool checkPrivacyPolicyAndroid = true;
 
         [SerializeField] private bool checkPrivacyPolicyIOS = true;
+        
+        [SerializeField] private bool checkPrivacyPolicyWeb = true;
 
         /// <summary>
         /// Not intended for use by developers.
@@ -59,8 +61,10 @@ namespace SpilGames.Unity {
         public static bool CheckPrivacyPolicy {
             get
             {
-#if UNITY_WEBGL || UNITY_STANDALONE
-                return false;                
+#if UNITY_STANDALONE
+                return false;
+#elif UNITY_WEBGL
+                return MonoInstance.checkPrivacyPolicyWeb;            
 #elif UNITY_ANDROID
                 return MonoInstance.checkPrivacyPolicyAndroid;
 #elif UNITY_IPHONE || UNITY_TVOS
@@ -423,7 +427,6 @@ namespace SpilGames.Unity {
 #endif
 
             UseUnityPrefab = useUnityPrefab;
-            
             if (CheckPrivacyPolicy) {
                 if (useUnityPrefab) {
                     Instance.CheckPrivacyPolicyUnity();
