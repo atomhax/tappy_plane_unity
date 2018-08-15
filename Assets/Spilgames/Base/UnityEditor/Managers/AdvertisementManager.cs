@@ -24,11 +24,22 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         void Update() {
             AdInfo.text = adInfoText;
         }
-        
-        public static void PlayVideo() {
+
+        static bool ApplixirInitialised = false;
+
+        public static void PlayVideo()
+        {
 #if UNITY_WEBGL
-            WebGLJavaScriptInterface.init(3028, 4106, 2021, false);
-            WebGLJavaScriptInterface.PlayVideo((obj) => { SpilLogging.Log("AppLixir result: " + obj.ToString()); });
+            if (!ApplixirInitialised)
+            {
+                ApplixirInitialised = true;
+                WebGLJavaScriptInterface.init(3028, 4106, 2021, false);
+            }
+
+            WebGLJavaScriptInterface.PlayVideo((obj) =>
+            {
+                SpilLogging.Log("AppLixir result: " + obj.ToString());
+            });
             provider = "AppLixir";
 #else 
             AdOverlay = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/AdOverlay.prefab"));
@@ -37,7 +48,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 #endif
             adType = "rewardVideo";
             adInfoText = provider + " " + adType + " is playing!";
-			Spil.Instance.fireAdStart();
+            Spil.Instance.fireAdStart();
         }
 
         public static void PlayInterstitial(string selectedProvider) {

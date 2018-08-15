@@ -32,7 +32,7 @@ namespace SpilGames.Unity.Base.UnityEditor {
 
         public IEnumerator SendCoroutine() {
             Spil spil = GameObject.FindObjectOfType<Spil>();
-#if !UNITY_WEBGL
+#if !UNITY_WEBGL || UNITY_EDITOR
             platform = EditorUserBuildSettings.activeBuildTarget.ToString().Trim().ToLower();
 #endif
             
@@ -112,15 +112,10 @@ namespace SpilGames.Unity.Base.UnityEditor {
         }
 
         private void AddDefaultParameters() {
-#if !UNITY_WEBGL
-            data.AddField("deviceId", SystemInfo.deviceUniqueIdentifier);
-#else
-            string deviceId = PlayerPrefs.GetString("DeviceId");
-            data.AddField("deviceId", deviceId);
-#endif
+            data.AddField("deviceId", Spil.Instance.GetDeviceId());
             data.AddField("uid", uid);
             data.AddField("locale", "en");
-#if !UNITY_WEBGL
+#if !UNITY_WEBGL || UNITY_EDITOR
             data.AddField("appVersion", PlayerSettings.bundleVersion);
 #else
             data.AddField("appVersion", "30");
@@ -128,7 +123,7 @@ namespace SpilGames.Unity.Base.UnityEditor {
             data.AddField("apiVersion", SpilUnityImplementationBase.PluginVersion);
             data.AddField("osVersion", "1.0");
             data.AddField("os", platform);
-#if !UNITY_WEBGL
+#if !UNITY_WEBGL || UNITY_EDITOR
             data.AddField("deviceModel", "Editor");
 #else
             data.AddField("deviceModel", "WebGL");
