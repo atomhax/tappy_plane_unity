@@ -44,7 +44,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 		return;
 		#endif
 
-        #if !UNITY_WEBGL
+        #if !UNITY_WEBGL || UNITY_EDITOR
 		if (m_StoreController == null) {
 			InitializePurchasing ();
 		}
@@ -372,6 +372,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 
     void productCallback(IGraphResult result)
     {
+#if UNITY_WEBGL && !UNITY_EDITOR
         JSONObject graphResult = new JSONObject(JsonHelper.getJSONFromObject(result));
 
         packageCosts.Clear();
@@ -394,6 +395,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
         WebGLJavaScriptInterface.iapDetails = iapDetails;
 
         iapPanelController.SetupIAPButtons();
+#endif
     }
 
     void PayCallback(IPayResult result)

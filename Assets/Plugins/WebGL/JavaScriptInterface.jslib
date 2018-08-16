@@ -8,5 +8,14 @@
     NativeMessage : function (message, data)
     {
         nativeMessage(Pointer_stringify(message), Pointer_stringify(data));
+    },
+
+    GetDeviceIdJS : function ()
+    {
+        var returnStr = getDeviceId();
+        var bufferSize = lengthBytesUTF8(returnStr) + 1;
+        var buffer = _malloc(bufferSize);
+        stringToUTF8(returnStr, buffer, bufferSize);
+        return buffer;
     }
 });

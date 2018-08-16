@@ -48,6 +48,7 @@
 
 
     </style>
+    <script src="fingerprint2.js"></script>
     <script src="%UNITY_WEBGL_LOADER_URL%"></script>
     <script>
         
@@ -71,7 +72,19 @@
             }
         }
 
-        function createUI() {
+        function onLoad() {
+
+            // Create a browser fingerprint that will serve as the device id.
+            // Don't do this directly after page load, wait a little while
+            // or the fingerprinting might not work properly.
+            setTimeout(function() {                
+                new Fingerprint2().get(
+                    function(result, components) {
+                        deviceId = result; // a hash, representing your device fingerprint
+                    }
+                );
+            }, 500);
+        
             var gameObjectName = 'WebGLJavascriptInterface';
             // Listen to message from child window
             bindEvent(window, 'message', function(e) {      
@@ -170,9 +183,15 @@
             openIframe(url);
         }
 
+        var deviceId = null;
+        function getDeviceId() {
+            console.log("DEVICEID: " + deviceId);
+            return deviceId;
+        }
+
 </script>
 </head>
-<body onload="createUI()">
+<body onload="onLoad()">
     <div class="webgl-content">
         <div id="gameContainer"></div>
 

@@ -78,13 +78,11 @@ namespace SpilGames.Unity.Base.Implementations
 
         public override string GetDeviceId()
         {
-            string deviceId = PlayerPrefs.GetString("DeviceId");
-            if (string.IsNullOrEmpty(deviceId))
-            {
-                deviceId = Guid.NewGuid().ToString();
-                PlayerPrefs.SetString("DeviceId", deviceId);
-            }
-            return deviceId;
+#if !UNITY_EDITOR
+            return WebGLJavaScriptInterface.GetDeviceIdJS();
+#else
+            return SystemInfo.deviceUniqueIdentifier;
+#endif
         }
 
         /*public override string GetImagePath(string url)
@@ -479,4 +477,4 @@ namespace SpilGames.Unity.Base.Implementations
         }*/
     }
 #endif
-}
+        }

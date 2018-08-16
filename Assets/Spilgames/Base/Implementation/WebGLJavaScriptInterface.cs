@@ -3,10 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
-using SpilGames.Unity;
 using SpilGames.Unity.Json;
 using SpilGames.Unity.Base.UnityEditor.Managers;
-using SpilGames.Unity.Base.Implementations;
 using AOT;
 
 namespace SpilGames.Unity.Base.Implementations
@@ -16,6 +14,14 @@ namespace SpilGames.Unity.Base.Implementations
         #if UNITY_WEBGL
 
         // JavaScript methods called from Unity
+
+        public string GetDeviceId()
+        {
+            return GetDeviceIdJS();
+        }
+        
+        [DllImport("__Internal")]
+        public static extern string GetDeviceIdJS();
 
         static enumSplashScreenType splashScreenType = enumSplashScreenType.SPLASH_SCREEN;
         public static JSONObject iapDetails = new JSONObject("{}");
@@ -281,8 +287,8 @@ namespace SpilGames.Unity.Base.Implementations
             NETWORK_ERROR = 2, // no connectivity available
             AD_BLOCKER = 3, // an ad blocker was detected
             AD_INTERRUPTED = 4, // ad was ended prior to 5 seconds (abnormal end)
-            AD_FALLBACK = 6, // fallback mode displayed a banner in response to ads-unavailable.Will only occur if "fallback:1" is set in the options.
             ADS_UNAVAILABLE = 5, // no ads were returned to the player
+            AD_FALLBACK = 6, // fallback mode displayed a banner in response to ads-unavailable.Will only occur if "fallback:1" is set in the options.
             CORS_ERROR = 7,
             NO_ZONEID = 8,
             AD_STARTED = 9,
@@ -298,8 +304,7 @@ namespace SpilGames.Unity.Base.Implementations
         public static void PlayVideo(Action<PlayVideoResult> callback)
         {
             WebGLJavaScriptInterface.callback = callback;
-            ShowVideo(devId, gameId, zoneId, (fallback ? 1 : 0),
-            ApplixirCompletedHandler);
+            ShowVideo(devId, gameId, zoneId, (fallback ? 1 : 0), ApplixirCompletedHandler);
         }
 
         private static int devId;
@@ -315,6 +320,7 @@ namespace SpilGames.Unity.Base.Implementations
             WebGLJavaScriptInterface.fallback = fallback;
         }
 
+        /*
         public static void onPlayVideoResultString(string result)
         {
             Debug.Log("onPlayVideoResultString GOT VIDEO RESULT CALLBACK: " + result);
@@ -366,6 +372,7 @@ namespace SpilGames.Unity.Base.Implementations
                 callback(pvr);
             }
         }
+        */
 
         #endif
     }

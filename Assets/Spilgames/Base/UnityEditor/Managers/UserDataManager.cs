@@ -311,22 +311,23 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         public static void UpdateUserDataVersions() {
             bool check = false;
 
-            for (int i = 0; i < userDataVersions.Count; i++) {
-                if (userDataVersions[i].deviceId.Equals(SystemInfo.deviceUniqueIdentifier)) {
+            for (int i = 0; i < userDataVersions.Count; i++)
+            {
+                if (userDataVersions[i].deviceId.Equals(Spil.Instance.GetDeviceId())) {
                     check = true;
                 }
             }
 
             if (!check) {
                 UserDataVersion userDataVersion = new UserDataVersion();
-                userDataVersion.deviceId = SystemInfo.deviceUniqueIdentifier;
+                userDataVersion.deviceId = Spil.Instance.GetDeviceId();
                 userDataVersion.version = 0;
 
                 userDataVersions.Add(userDataVersion);
             }
 
             for (int i = 0; i < userDataVersions.Count; i++) {
-                if (userDataVersions[i].deviceId.Equals(SystemInfo.deviceUniqueIdentifier)) {
+                if (userDataVersions[i].deviceId.Equals(Spil.Instance.GetDeviceId())) {
                     userDataVersions[i].version++;
                 }
             }
@@ -335,7 +336,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         public static JSONObject GenerateUserDataVersionsJSON(List<UserDataVersion> userDataVersions) {
             if (userDataVersions.Count == 0) {
                 UserDataVersion localUserDataVersion = new UserDataVersion();
-                localUserDataVersion.deviceId = SystemInfo.deviceUniqueIdentifier;
+                localUserDataVersion.deviceId = Spil.Instance.GetDeviceId();
                 localUserDataVersion.version = 0;
 
                 userDataVersions.Add(localUserDataVersion);
