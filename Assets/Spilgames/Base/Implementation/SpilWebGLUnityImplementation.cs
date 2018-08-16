@@ -78,11 +78,7 @@ namespace SpilGames.Unity.Base.Implementations
 
         public override string GetDeviceId()
         {
-#if !UNITY_EDITOR
             return WebGLJavaScriptInterface.GetDeviceIdJS();
-#else
-            return SystemInfo.deviceUniqueIdentifier;
-#endif
         }
 
         /*public override string GetImagePath(string url)

@@ -28,6 +28,7 @@ public class ShopPanelController : MonoBehaviour {
     public MyIAPManager iapManager;
 
     void OnEnable() {
+
         Spil.Instance.OnAdAvailable -= OnAdAvailable;
         Spil.Instance.OnAdAvailable += OnAdAvailable;
 
@@ -51,8 +52,9 @@ public class ShopPanelController : MonoBehaviour {
 
         Spil.Instance.OnPromotionsAvailable -= OnPromotionsAvailable;
         Spil.Instance.OnPromotionsAvailable += OnPromotionsAvailable;
-        
+
         Invoke("RequestRewardVideo", 2); 
+
         OnPlayerDataUpdated("Opened", null);
 
         spilIds.text = "DeviceId: " + Spil.Instance.GetDeviceId() + "\nUserId: " + Spil.Instance.GetSpilUserId();
@@ -60,7 +62,7 @@ public class ShopPanelController : MonoBehaviour {
         if (!Spil.CheckPrivacyPolicy) {
             privacyPolicySettingsButton.SetActive(false);
         }
-        
+
         ResetShop();
         CreateShop();
     }
@@ -128,8 +130,10 @@ public class ShopPanelController : MonoBehaviour {
     }
 
     void OnPlayerDataUpdated(string reason, PlayerDataUpdatedData updatedData) {
+
         starsAmountText.text = Spil.PlayerData.GetCurrencyBalance(25).ToString();
         diamonsAmountText.text = Spil.PlayerData.GetCurrencyBalance(28).ToString();
+
         if (Spil.PlayerData.GetItemAmount(100077) < 0) {
             tapperAmountText.text = "0";
         } else {
