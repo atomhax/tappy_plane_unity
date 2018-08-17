@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using UnityEngine;
 using SpilGames.Unity.Helpers;
 using SpilGames.Unity.Helpers.GameData;
@@ -7,6 +8,7 @@ using SpilGames.Unity.Helpers.PlayerData;
 using SpilGames.Unity.Json;
 using SpilGames.Unity.Base.SDK;
 using SpilGames.Unity.Helpers.DailyBonus;
+using SpilGames.Unity.Helpers.PlayerData.Perk;
 
 namespace SpilGames.Unity.Base.Implementations {
     #if UNITY_ANDROID
@@ -405,13 +407,20 @@ namespace SpilGames.Unity.Base.Implementations {
         }
 
         public override void BuyBundle(int bundleId, string reason, string location, string reasonDetails = null,
-            string transactionId = null) {
+            string transactionId = null, PerkItem perkItem = null) {
+            string perkItemJSON = null;
+            
+            if (perkItem != null) {
+                perkItemJSON = JsonHelper.getJSONFromObject(perkItem);
+            }
+            
             CallNativeMethod("buyBundle", new object[] {
                 bundleId,
                 reason,
                 location,
                 reasonDetails,
-                transactionId
+                transactionId,
+                perkItemJSON
             }, true);
         }
 
@@ -458,6 +467,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// Used to get the image from the cache, based on the url provided.
         /// </summary>
         public override string GetImagePath(string url) {
+            Debug.Log("Url: " + url);
             return CallNativeMethod("getImagePath", new object[] {
                 url
             }, true);

@@ -1,18 +1,12 @@
 ﻿using System;
 using UnityEngine;
-using System.Collections;
 using UnityEditor;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using SpilGames.Unity;
 using System.Xml;
-using System.Xml.Serialization;
-using JetBrains.Annotations;
 using SpilGames.Unity.Base.Implementations;
-using SpilGames.Unity.Base.UnityEditor;
-using SpilGames.Unity.Json;
-using UnityEngine.WSA;
 using Application = UnityEngine.Application;
 
 public class SpilEditorConfig : EditorWindow {
@@ -220,8 +214,7 @@ public class SpilEditorConfig : EditorWindow {
 
     private void DrawAndroid() {
         string androidFolder = "Assets/Plugins/Android/";
-        string spilFolder = "Assets/Spilgames/Plugins/NativeLibraries/Android/";
-        string spilAndroidInstalationFolder = "Assets/Spilgames/Plugins/Android/";
+        string spilFolder = "Assets/Spilgames/Plugins/NativeLibraries~/Android/";
         string spilSDK = "spilsdk-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
         string spilSDKAdjust = "spilsdk-adjust-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
         string spilSDKChartboost = "spilsdk-chartboost-" + SpilUnityImplementationBase.AndroidVersion + ".aar";

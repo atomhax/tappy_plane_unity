@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{F4EAF2BE-4DEE-4F99-C860-C2F87F3D0D46}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-firstpass", "Assembly-CSharp-firstpass.csproj", "{12C0FBD5-B090-A94D-1AF8-3A80511B45DB}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.Analytics.DataPrivacy", "Unity.Analytics.DataPrivacy.csproj", "{ABFCD062-638F-7C06-7CF0-CB586B98A3F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-firstpass", "Assembly-CSharp-firstpass.csproj", "{12C0FBD5-B090-A94D-1AF8-3A80511B45DB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{B8964501-82DB-B9B4-DCC9-ADBB83662020}"
 EndProject
@@ -23,14 +23,14 @@ Global
 		{F4EAF2BE-4DEE-4F99-C860-C2F87F3D0D46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4EAF2BE-4DEE-4F99-C860-C2F87F3D0D46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4EAF2BE-4DEE-4F99-C860-C2F87F3D0D46}.Release|Any CPU.Build.0 = Release|Any CPU
-		{12C0FBD5-B090-A94D-1AF8-3A80511B45DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{12C0FBD5-B090-A94D-1AF8-3A80511B45DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{12C0FBD5-B090-A94D-1AF8-3A80511B45DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{12C0FBD5-B090-A94D-1AF8-3A80511B45DB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ABFCD062-638F-7C06-7CF0-CB586B98A3F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ABFCD062-638F-7C06-7CF0-CB586B98A3F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABFCD062-638F-7C06-7CF0-CB586B98A3F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABFCD062-638F-7C06-7CF0-CB586B98A3F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12C0FBD5-B090-A94D-1AF8-3A80511B45DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12C0FBD5-B090-A94D-1AF8-3A80511B45DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12C0FBD5-B090-A94D-1AF8-3A80511B45DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12C0FBD5-B090-A94D-1AF8-3A80511B45DB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B8964501-82DB-B9B4-DCC9-ADBB83662020}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B8964501-82DB-B9B4-DCC9-ADBB83662020}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8964501-82DB-B9B4-DCC9-ADBB83662020}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -1,14 +1,10 @@
 ﻿using System;
 using UnityEngine;
-using System.Collections;
 using UnityEditor.Callbacks;
 using UnityEditor;
-using SpilGames.Unity;
 using System.IO;
 using SpilGames.Unity.Base.Implementations;
 using System.Xml;
-using SpilGames.Unity.Base.UnityEditor;
-using SpilGames.Unity.Json;
 using UnityEngine.Analytics;
 
 

@@ -6,8 +6,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Collections.Generic;
 using SpilGames.Unity.Base.Implementations;
-using SpilGames.Unity;
-using SpilGames.Unity.Json;
 using Debug = UnityEngine.Debug;
 
 public class SpilIOSBuildPostProcess : MonoBehaviour

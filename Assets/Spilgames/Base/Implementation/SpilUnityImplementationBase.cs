@@ -13,6 +13,7 @@ using SpilGames.Unity.Helpers.IAPPackages;
 using SpilGames.Unity.Helpers.Promotions;
 using SpilGames.Unity.Helpers.GameData;
 using SpilGames.Unity.Helpers.PlayerData;
+using SpilGames.Unity.Helpers.PlayerData.Perk;
 
 namespace SpilGames.Unity.Base.Implementations{
     public abstract class SpilUnityImplementationBase{
@@ -3172,7 +3173,7 @@ namespace SpilGames.Unity.Base.Implementations{
             string reasonDetails = null, string transactionId = null);
 
         public abstract void BuyBundle(int bundleId, string reason, string location, string reasonDetails = null,
-            string transactionId = null);
+            string transactionId = null, PerkItem perkItem = null);
 
         public abstract void OpenGacha(int gachaId, string reason, string location, string reasonDetails = null);
 

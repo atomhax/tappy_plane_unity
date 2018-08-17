@@ -7,6 +7,7 @@ using SpilGames.Unity.Base.Implementations;
 using SpilGames.Unity.Base.SDK;
 using SpilGames.Unity.Helpers.GameData;
 using SpilGames.Unity.Helpers.PlayerData;
+using SpilGames.Unity.Helpers.PlayerData.Perk;
 using SpilGames.Unity.Helpers.Promotions;
 using SpilGames.Unity.Json;
 using UnityEngine;
@@ -566,7 +567,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             }
         }
 
-        public void BuyBundle(int bundleId, string reason, string reasonDetails, string location, string transactionId) {
+        public void BuyBundle(int bundleId, string reason, string reasonDetails, string location, string transactionId, PerkItem perkItem) {
             PlayerDataUpdatedData updatedData = new PlayerDataUpdatedData();
 
             SpilBundleData bundle = GetBundleFromObjects(bundleId);
@@ -599,6 +600,22 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 bundlePrices = bundle.prices;
             }
 
+            if (perkItem != null) {
+                foreach (PerkPriceReduction priceReduction in perkItem.priceReductions) {
+                    for(int i = 0; i < bundlePrices.Count; i++) {
+                        if(priceReduction.currencyId == bundlePrices[i].currencyId) {
+                            int priceAfterPerk = bundlePrices[i].value - priceReduction.discountValue;
+
+                            if (priceAfterPerk < 0) {
+                                priceAfterPerk = 0;
+                            }
+
+                            bundlePrices[i].value = priceAfterPerk;
+                        }
+                    }
+                }
+            }
+            
             bundle.prices = bundlePrices;
             
             foreach (SpilBundlePriceData bundlePrice in bundlePrices) {
@@ -633,13 +650,23 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             foreach (SpilBundleItemData bundleItem in bundle.items) {
                 if (bundleItem.type.Equals("CURRENCY")) {
                     PlayerCurrencyData currency = GetCurrencyFromWallet(bundleItem.id);
-                        
+                    int perkAdditionAmount = 0;
+                    
                     if (currency == null) {
                         SpilLogging.Error("Currency does not exist!");
                         return;
                     }
 
-                    int updatedBalance = currency.currentBalance + bundleItem.amount;
+                    if(perkItem != null) {
+                        foreach (PerkAddition perkAddition in perkItem.additions) {
+                            if(perkAddition.type.Equals("CURRENCY") && perkAddition.id == currency.id) {
+                                perkAdditionAmount = perkAddition.additionalValue;
+                                break;
+                            }
+                        }
+                    }
+                    
+                    int updatedBalance = currency.currentBalance + bundleItem.amount + perkAdditionAmount;
                     //Check for currency limit and overflow
                     int currencyLimit = currency.limit;
                     if(currencyLimit > 0 && updatedBalance > currencyLimit) {
@@ -674,11 +701,21 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
                     int inventoryItemAmount;
                     int itemLimit = gameItem.limit;
+                    int perkAdditionAmount = 0;
 
+                    if(perkItem != null) {
+                        foreach (PerkAddition perkAddition in perkItem.additions) {
+                            if(perkAddition.type.Equals("ITEM") && perkAddition.id == gameItem.id) {
+                                perkAdditionAmount = perkAddition.additionalValue;
+                                break;
+                            }
+                        }
+                    }
+                    
                     if (inventoryItem != null) {
                         inventoryItemAmount = inventoryItem.amount;
 
-                        inventoryItemAmount = inventoryItemAmount + bundleItem.amount;
+                        inventoryItemAmount = inventoryItemAmount + bundleItem.amount + perkAdditionAmount;
 
                         //Check for item limit and overflow
                         if(itemLimit > 0 && inventoryItemAmount > itemLimit) {
@@ -695,7 +732,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                         updatedData.items.Add(inventoryItem);
                     }
                     else {
-                        inventoryItemAmount = bundleItem.amount;
+                        inventoryItemAmount = bundleItem.amount + perkAdditionAmount;
 
                         //Check for item limit and overflow
                         if(itemLimit > 0 && inventoryItemAmount > itemLimit) {
@@ -826,6 +863,10 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     }
                 }
             }
+
+            if (perkItem != null) {
+                updatedData.perkItem = perkItem;
+            }
             
             UserDataManager.UpdateUserDataVersions();
             UserDataManager.UpdateUserDataMeta();
@@ -841,7 +882,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 PromotionsManager.SendBoughtPromotion(promotion.Id);
             }
             
-            SendUpdatePlayerDataEvent(bundle, reason, reasonDetails, location, transactionId);
+            SendUpdatePlayerDataEvent(bundle, reason, reasonDetails, location, transactionId, perkItem);
 
             foreach (SpilBundlePriceData bundlePrice in bundlePrices) {
                 UpdateTieredEvent(bundlePrice.currencyId, -bundlePrice.value, "CURRENCY");
@@ -950,7 +991,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             }
         }
 
-        public void SendUpdatePlayerDataEvent(SpilBundleData bundle, string reason, string reasonDetails, string location, string transactionId) {
+        public void SendUpdatePlayerDataEvent(SpilBundleData bundle, string reason, string reasonDetails, string location, string transactionId, PerkItem perkItem = null) {
             SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
             spilEvent.eventName = "updatePlayerData";
 
@@ -1058,6 +1099,10 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
             if (transactionId != null) {
                 spilEvent.customData.AddField("transactionId", transactionId);
+            }
+
+            if (perkItem != null) {
+                spilEvent.customData.AddField("perk", new JSONObject(JsonHelper.getJSONFromObject(perkItem)));
             }
             
             spilEvent.customData.AddField("deviceVersions", UserDataManager.GenerateUserDataVersionsJSON(UserDataManager.userDataVersions));

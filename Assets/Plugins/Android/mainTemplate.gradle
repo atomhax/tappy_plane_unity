@@ -11,9 +11,9 @@ buildscript {
 
 	dependencies {
 		//Use this if you are using 2018.2
-		classpath 'com.android.tools.build:gradle:3.0.1'
+		//classpath 'com.android.tools.build:gradle:3.0.1'
 		//Use this if you are using below 2018.2
-		//classpath 'com.android.tools.build:gradle:2.3.0'
+		classpath 'com.android.tools.build:gradle:2.3.0'
 	}
 }
 
@@ -47,11 +47,11 @@ dependencies {
 	compile 'com.android.support:appcompat-v7:27.1.1'
 	compile 'com.android.support:cardview-v7:27.1.1'
 
-    compile 'com.spilgames.spilsdk:spilsdk:3.1.0'
-    compile 'com.spilgames.spilsdk:spilsdk-adjust:3.1.0'
-    compile 'com.spilgames.spilsdk:spilsdk-chartboost:3.1.0'
-    compile 'com.spilgames.spilsdk:spilsdk-admob:3.1.0'
-    compile 'com.spilgames.spilsdk:spilsdk-firebase:3.1.0'
+    //compile 'com.spilgames.spilsdk:spilsdk:3.1.0'
+    //compile 'com.spilgames.spilsdk:spilsdk-adjust:3.1.0'
+    //compile 'com.spilgames.spilsdk:spilsdk-chartboost:3.1.0'
+    //compile 'com.spilgames.spilsdk:spilsdk-admob:3.1.0'
+    //compile 'com.spilgames.spilsdk:spilsdk-firebase:3.1.0'
 
 	compile 'com.google.android.gms:play-services-ads:12.0.1'
 	compile 'com.google.android.gms:play-services-gcm:12.0.1'

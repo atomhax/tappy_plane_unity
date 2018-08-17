@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using SpilGames.Unity.Helpers.PlayerData.Perk;
 
 namespace SpilGames.Unity.Base.SDK {
     public class PlayerCurrencyData : SpilCurrencyData {
@@ -63,6 +64,7 @@ namespace SpilGames.Unity.Base.SDK {
         public string reason;
         public int bundleId;
         public int gachaId;
+        public PerkItem perkItem;
         public List<PlayerItemData> items = new List<PlayerItemData>();
         public List<PlayerCurrencyData> currencies = new List<PlayerCurrencyData>();
     }

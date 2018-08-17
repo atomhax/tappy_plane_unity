@@ -10,6 +10,7 @@ using SpilGames.Unity.Helpers.GameData;
 using SpilGames.Unity.Helpers.PlayerData;
 using SpilGames.Unity.Base.SDK;
 using SpilGames.Unity.Helpers.DailyBonus;
+using SpilGames.Unity.Helpers.PlayerData.Perk;
 
 namespace SpilGames.Unity.Base.Implementations {
     public class SpilUnityEditorImplementation : SpilUnityImplementationBase {
@@ -397,8 +398,8 @@ namespace SpilGames.Unity.Base.Implementations {
         }
 
         public override void BuyBundle(int bundleId, string reason, string location, string reasonDetails = null,
-            string transactionId = null) {
-            pData.BuyBundle(bundleId, reason, reasonDetails, location, transactionId);
+            string transactionId = null, PerkItem perkItem = null) {
+            pData.BuyBundle(bundleId, reason, reasonDetails, location, transactionId, perkItem);
         }
 
         public override void OpenGacha(int gachaId, string reason, string location, string reasonDetails = null) {

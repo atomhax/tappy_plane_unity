@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using SpilGames.Unity.Base.SDK;
 using SpilGames.Unity.Helpers.DailyBonus;
+using SpilGames.Unity.Helpers.PlayerData.Perk;
 
 namespace SpilGames.Unity.Base.Implementations
 {
@@ -17,7 +18,7 @@ namespace SpilGames.Unity.Base.Implementations
 
         }
 
-        public override void BuyBundle(int bundleId, string reason, string location, string reasonDetails = null, string transactionId = null)
+        public override void BuyBundle(int bundleId, string reason, string location, string reasonDetails = null, string transactionId = null, PerkItem perkItem = null)
         {
 
         }
@@ -363,11 +364,6 @@ namespace SpilGames.Unity.Base.Implementations
         }
 
         public override void UserLogin(string socialId, string socialProvider, string socialToken, Dictionary<string,object> socialValidationData = null)
-        {
-
-        }
-
-        public override void UserLogin(string socialId, string socialProvider, string socialToken, string socialValidationData)
         {
 
         }

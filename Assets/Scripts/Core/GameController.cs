@@ -15,12 +15,12 @@ using SpilGames.Unity.Helpers.PlayerData;
 using SpilGames.Unity.Json;
 using UnityEngine;
 using UnityEngine.Analytics;
-using UnityEngine.SocialPlatforms.GameCenter;
 using UnityEngine.UI;
 using AssetBundle = SpilGames.Unity.Helpers.AssetBundles.AssetBundle;
 using Random = UnityEngine.Random;
 #if UNITY_IOS
 using GCIdentityPlugin;
+using UnityEngine.SocialPlatforms.GameCenter;
 #endif
 #if !UNITY_TVOS
 using Facebook.Unity;
@@ -1349,13 +1349,12 @@ public class GameController : MonoBehaviour
             
             PlayGamesPlatform.Instance.GetAnotherServerAuthCode(false, Target);
 
-            if(success)
-            {
+            if(success) {
                 PlayerPrefs.SetInt("platform_connected", 1);
                 overlayEnabled = false;
                 platformLoginButton.SetActive(false);
                 platformLogoutButton.SetActive(true);
-                highScoreButton.SetActive(true);
+                highScoreButton.SetActive(false);
                 Spil.Instance.UserLogin(PlayGamesPlatform.Instance.GetUserId(), "GPG", PlayGamesPlatform.Instance.GetIdToken());
             }
         });
