@@ -146,8 +146,13 @@ namespace SpilGames.Unity.Base.Implementations
         /// </summary>
         internal override void SpilInit(bool withPrivacyPolicy)
         {
-            GameData.RefreshData(Spil.Instance);
-		    PlayerData.RefreshData(Spil.Instance);
+            if (Spil.Instance.GameData != null) {
+                Spil.Instance.GameData.RefreshData(Spil.Instance);
+            }
+
+            if (Spil.Instance.PlayerData != null) {
+                Spil.Instance.PlayerData.RefreshData(Spil.Instance);
+            }
     
             JSONObject options = new JSONObject();
             options.AddField("isUnity", true);

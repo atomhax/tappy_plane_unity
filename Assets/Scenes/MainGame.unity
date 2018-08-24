@@ -10243,7 +10243,7 @@ MonoBehaviour:
   SpilLoggingEnabled: 1
   checkPrivacyPolicyAndroid: 1
   checkPrivacyPolicyIOS: 1
-  useUnityPrefab: 0
+  useUnityPrefab: 1
   PrefabOrientation: 0
   ProjectId: 492493592102
   AndroidStore: 0

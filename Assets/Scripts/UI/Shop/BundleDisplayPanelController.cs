@@ -257,10 +257,7 @@ public class BundleDisplayPanelController : MonoBehaviour {
     }
 
     void BuyBundleFromSDK() {
-        PerkItem perkItem = new PerkItem("TestPerk");
-        PerkPriceReduction perkPriceReduction = new PerkPriceReduction(bundleDisplayed.Prices[0].CurrencyId, 20);
-        perkItem.priceReductions.Add(perkPriceReduction);
-        Spil.Instance.BuyBundle(bundleDisplayed.Id, PlayerDataUpdateReasons.ItemBought, "Shop", null, null, perkItem);
+        Spil.Instance.BuyBundle(bundleDisplayed.Id, PlayerDataUpdateReasons.ItemBought, "Shop", null, null, null);
     }
 
     public void OnImageLoaded(Texture2D image, string localPath) {

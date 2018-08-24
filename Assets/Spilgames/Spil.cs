@@ -360,18 +360,26 @@ namespace SpilGames.Unity {
 #endif
 
         void Awake() {            
-            if ((monoInstance != null) && (this != monoInstance)) {
-                if (Application.isPlaying) {
-                    Destroy (gameObject);
-                }
-                return;
-            }
-
-            monoInstance = this;
+//            if ((monoInstance != null) && (this != monoInstance)) {
+//                if (Application.isPlaying) {
+//                    Destroy (gameObject);
+//                }
+//                return;
+//            }
+//
+//            monoInstance = this;
             
             if (Application.isPlaying) {
                 DontDestroyOnLoad (gameObject);
             }
+
+#if !UNITY_EDITOR
+			GameDataObject = new SpilGameDataHelper ();
+			GameData = GameDataObject;
+
+			PlayerDataObject = new PlayerDataHelper ();
+			PlayerData = PlayerDataObject;
+#endif
 
             if (initializeOnAwake) {
                 Initialize();
@@ -423,13 +431,7 @@ namespace SpilGames.Unity {
             
             gameObject.name = "SpilSDK";
 
-#if !UNITY_EDITOR
-			GameDataObject = new SpilGameDataHelper ();
-			GameData = GameDataObject;
 
-			PlayerDataObject = new PlayerDataHelper ();
-			PlayerData = PlayerDataObject;
-#endif
         }
 
         void InitEditor() {
@@ -468,6 +470,22 @@ namespace SpilGames.Unity {
             RewardToken = rewardToken;
         }
 
+        /// <summary>
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
+        /// </summary>
+        public void UserIdChangeRequest(string newUid) {
+            Spil.Instance.fireUserIdChangeRequest(newUid);
+        }
+        
+        /// <summary>
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
+        /// </summary>
+        public void UserIdChangeCompleted() {
+            Spil.Instance.fireUserIdChangeCompleted();
+        }
+        
         /// <summary>
         /// This method is meant for internal use only, it should not be used by developers.
         /// Developers can subscribe to events defined in Spil.Instance.

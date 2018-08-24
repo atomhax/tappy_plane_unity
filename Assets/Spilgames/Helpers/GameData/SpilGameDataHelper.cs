@@ -218,7 +218,7 @@ namespace SpilGames.Unity.Helpers.GameData {
 
             if (bundles != null) {
                 foreach (SpilBundleData spilBundleData in bundles) {
-                    Bundles.Add(new Bundle(spilBundleData.id, spilBundleData.name, spilBundleData.prices, spilBundleData.items, spilBundleData.imageUrl, spilBundleData.displayName, spilBundleData.displayDescription));
+                    Bundles.Add(new Bundle(spilBundleData.id, spilBundleData.name, spilBundleData.prices, spilBundleData.items, spilBundleData.imageUrl, spilBundleData.displayName, spilBundleData.displayDescription, spilBundleData.properties));
                 }
             }
 

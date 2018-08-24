@@ -85,12 +85,22 @@ namespace SpilGames.Unity.Base.Implementations {
         /// </summary>
         internal override void SpilInit(bool withPrivacyPolicy) {
             #if UNITY_ANDROID
-            GameData.RefreshData(Spil.Instance);
-            PlayerData.RefreshData(Spil.Instance);
+            if (Spil.Instance.GameData != null) {
+                Spil.Instance.GameData.RefreshData(Spil.Instance);
+            } 
+
+            if (Spil.Instance.PlayerData != null) {
+                Spil.Instance.PlayerData.RefreshData(Spil.Instance);
+            } 
             
             Spil spil = GameObject.FindObjectOfType<Spil>();
             CallNativeMethod("init", new object[] {withPrivacyPolicy}, true);
-            RegisterDevice(spil.ProjectId);
+            if (spil != null) {
+                RegisterDevice(spil.ProjectId);
+            } else {
+                SpilLogging.Log("Spil object was not found in the scene. Could not retrieve ProjectId. Initialization was not fully completed.");
+            }
+            
             RequestPackages();
             #endif
         }
@@ -138,6 +148,10 @@ namespace SpilGames.Unity.Base.Implementations {
 
         public override void SetCustomBundleId(string bundleId) {
             // TODO
+        }
+
+        public override void ConfirmUserIdChange() {
+            CallNativeMethod("confirmUserIdChange");
         }
 
         /// <summary>

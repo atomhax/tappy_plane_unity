@@ -87,8 +87,14 @@ namespace SpilGames.Unity.Helpers.GameData {
         }
 
         private string _displayDescription;
+        
+        public Dictionary<string, object> Properties {
+            get { return properties; }
+        }
 
-        public Bundle(int id, string name, List<SpilBundlePriceData> prices, List<SpilBundleItemData> items, string imageURL, string displayName, string displayDescription) {
+        private Dictionary<string, object> properties;
+
+        public Bundle(int id, string name, List<SpilBundlePriceData> prices, List<SpilBundleItemData> items, string imageURL, string displayName, string displayDescription, Dictionary<string, object> properties) {
             _Id = id;
             _Name = name;
             _imageURL = imageURL;
@@ -108,6 +114,8 @@ namespace SpilGames.Unity.Helpers.GameData {
                     _Items.Add(new BundleItem(bundleItemData.id, bundleItemData.type, bundleItemData.amount));
                 }
             }
+
+            this.properties = properties;
         }
     }
 

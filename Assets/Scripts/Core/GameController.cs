@@ -117,6 +117,9 @@ public class GameController : MonoBehaviour
         Spil.Instance.OnPrivacyPolicyStatus -= OnPrivacyPolicyStatus;
         Spil.Instance.OnPrivacyPolicyStatus += OnPrivacyPolicyStatus;
         
+        Spil.Instance.OnUserIdChangeRequest -= OnUserIdChangeRequest;
+        Spil.Instance.OnUserIdChangeRequest += OnUserIdChangeRequest;
+        
         Spil.Instance.OnReward -= Spil_Instance_OnReward;
         Spil.Instance.OnReward += Spil_Instance_OnReward;
 
@@ -556,6 +559,10 @@ public class GameController : MonoBehaviour
         shopPanelController.RequestRewardVideo();
     }
 
+    private void OnUserIdChangeRequest(string newuserid) {
+        Spil.Instance.ConfirmUserIdChange();
+    }
+    
     public void OnGameStateUpdated(string access) {
         if (access.Equals("private")) {
             Debug.Log("Private Game State Updated! Request new private game state!");

@@ -60,6 +60,7 @@ namespace SpilGames.Unity.Base.SDK {
         public string imageUrl;
         public string displayName;
         public string displayDescription;
+        public Dictionary<string, object> properties = new Dictionary<string, object>();
     }
 
     public class SpilGameData {

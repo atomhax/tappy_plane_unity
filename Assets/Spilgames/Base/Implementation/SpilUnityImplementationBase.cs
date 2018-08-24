@@ -1231,7 +1231,6 @@ namespace SpilGames.Unity.Base.Implementations{
         }
         
         #endregion
-
 	            
         #region Game config
 
@@ -2861,6 +2860,46 @@ namespace SpilGames.Unity.Base.Implementations{
 
         #endregion
 
+	    #region Initialization
+
+	    public delegate void UserIdChangeRequest(string newUserId);
+
+	    /// <summary>
+	    /// This event indicates that the game needs to inform the user that a user id change has been done from the backend.
+	    /// </summary>
+	    public event UserIdChangeRequest OnUserIdChangeRequest;
+
+	    /// <summary>
+	    /// This method is meant for internal use only, it should not be used by developers.
+	    /// </summary>
+	    public void fireUserIdChangeRequest(string newUserId) {
+		    SpilLogging.Log("fireUserIdChangeRequest");
+
+		    if(OnUserIdChangeRequest != null) {
+			    OnUserIdChangeRequest(newUserId);
+		    }
+	    }
+
+	    public delegate void UserIdChangeCompleted();
+
+	    /// <summary>
+	    /// This event indicates that the user id changing was completed, the data is in the process of resetting and the game should restart (not hard restart).
+	    /// </summary>
+	    public event UserIdChangeCompleted OnUserIdChangeCompleted;
+
+	    /// <summary>
+	    /// This method is meant for internal use only, it should not be used by developers.
+	    /// </summary>
+	    public void fireUserIdChangeCompleted() {
+		    SpilLogging.Log("fireUserIdChangeCompleted");
+
+		    if(OnUserIdChangeCompleted != null) {
+			    OnUserIdChangeCompleted();
+		    }
+	    }
+	    
+	    #endregion
+	    
         #region Privacy Policy
 
         public delegate void PrivacyPolicyStatus(bool accepted);
@@ -2983,6 +3022,8 @@ namespace SpilGames.Unity.Base.Implementations{
         
         public abstract void SetPluginInformation(string PluginName, string PluginVersion);
 
+	    public abstract void ConfirmUserIdChange();
+	    
         #endregion
 
         #region Config

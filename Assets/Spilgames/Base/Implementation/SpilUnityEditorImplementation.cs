@@ -132,6 +132,10 @@ namespace SpilGames.Unity.Base.Implementations {
             return EditorPrefs.GetInt(GetSpilUserId() + "-gdprStatusUnity", -1);
         }
 
+        public override void ConfirmUserIdChange() {
+            
+        }
+
         public override void ResetData() {            
             gData = null;
             Spil.GameData = null;
