@@ -438,12 +438,19 @@ namespace SpilGames.Unity.Base.Implementations {
             }, true);
         }
 
-        public override void OpenGacha(int gachaId, string reason, string location, string reasonDetails = null) {
+        public override void OpenGacha(int gachaId, string reason, string location, string reasonDetails = null, PerkItem perkItem = null) {
+            string perkItemJSON = null;
+            
+            if (perkItem != null) {
+                perkItemJSON = JsonHelper.getJSONFromObject(perkItem);
+            }
+            
             CallNativeMethod("openGacha", new object[] {
                 gachaId,
                 reason,
                 location,
-                reasonDetails
+                reasonDetails,
+                perkItemJSON
             }, true);
         }
 

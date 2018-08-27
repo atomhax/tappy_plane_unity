@@ -406,8 +406,8 @@ namespace SpilGames.Unity.Base.Implementations {
             pData.BuyBundle(bundleId, reason, reasonDetails, location, transactionId, perkItem);
         }
 
-        public override void OpenGacha(int gachaId, string reason, string location, string reasonDetails = null) {
-            pData.OpenGacha(gachaId, reason, reasonDetails, location);
+        public override void OpenGacha(int gachaId, string reason, string location, string reasonDetails = null, PerkItem perkItem = null) {
+            pData.OpenGacha(gachaId, reason, reasonDetails, location, perkItem);
         }
 
         public override void SetCurrencyLimit(int currencyId, int limit) {

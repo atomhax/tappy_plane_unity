@@ -660,7 +660,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     if(perkItem != null) {
                         foreach (PerkAddition perkAddition in perkItem.additions) {
                             if(perkAddition.type.Equals("CURRENCY") && perkAddition.id == currency.id) {
-                                perkAdditionAmount = perkAddition.additionalValue;
+                                perkAdditionAmount = perkAddition.additionValue;
                                 break;
                             }
                         }
@@ -676,7 +676,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     }
                     
                     currency.currentBalance = updatedBalance;
-                    currency.delta = currency.delta + bundleItem.amount;
+                    currency.delta = currency.delta + bundleItem.amount + perkAdditionAmount;
 
                     UpdateCurrency(currency);
                 } else {
@@ -706,7 +706,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     if(perkItem != null) {
                         foreach (PerkAddition perkAddition in perkItem.additions) {
                             if(perkAddition.type.Equals("ITEM") && perkAddition.id == gameItem.id) {
-                                perkAdditionAmount = perkAddition.additionalValue;
+                                perkAdditionAmount = perkAddition.additionValue;
                                 break;
                             }
                         }
@@ -724,7 +724,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                             inventoryItemAmount = itemLimit;
                         }
                         
-                        inventoryItem.delta = bundleItem.amount;
+                        inventoryItem.delta = inventoryItem.delta + bundleItem.amount + perkAdditionAmount;
                         inventoryItem.amount = inventoryItemAmount;
 
                         UpdateItem(inventoryItem);
@@ -889,7 +889,118 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             }
         }
 
-        private void OpenBundle(int bundleId, int amount, string reason, string reasonDetails, string location) {
+        private void OpenBundle(int bundleId, int amount, string reason, string reasonDetails, string location, PerkItem perkItem) {
+            PlayerDataUpdatedData updatedData = new PlayerDataUpdatedData();
+
+            SpilBundleData bundle = GetBundleFromObjects(bundleId);
+
+            if (bundle == null || reason == null) {
+                SpilLogging.Error("Error adding bundle to player inventory!");
+                return;
+            }
+            
+            foreach (SpilBundleItemData bundleItem in bundle.items) {
+                if (bundleItem.type.Equals("CURRENCY")) {
+                    PlayerCurrencyData currency = GetCurrencyFromWallet(bundleItem.id);
+                    int perkAdditionAmount = 0;
+
+                    if (currency == null) {
+                        SpilLogging.Error("Currency does not exist!");
+                        return;
+                    }
+
+                    if (perkItem != null) {
+                        foreach (PerkAddition perkAddition in perkItem.additions) {
+                            if (perkAddition.type.Equals("CURRENCY") && perkAddition.id == currency.id) {
+                                perkAdditionAmount = perkAddition.additionValue;
+                                break;
+                            }
+                        }
+                    }
+
+                    int updatedBalance = currency.currentBalance + bundleItem.amount + perkAdditionAmount;
+
+                    //Check for currency limit and overflow
+                    int currencyLimit = currency.limit;
+                    if (currencyLimit > 0 && updatedBalance > currencyLimit) {
+                        int newOverflow = (updatedBalance - currencyLimit) + currency.overflow;
+                        currency.overflow = newOverflow;
+                        updatedBalance = currencyLimit;
+                    }
+
+                    currency.currentBalance = updatedBalance;
+                    currency.delta = currency.delta + bundleItem.amount + perkAdditionAmount;
+
+                    UpdateCurrency(currency);
+                    updatedData.currencies.Add(currency);
+                }
+                else {
+                    SpilItemData gameItem = GetItemFromObjects(bundleItem.id);
+
+                    if (gameItem == null) {
+                        SpilLogging.Error("Item does not exist!");
+                        return;
+                    };
+                    PlayerItemData item = new PlayerItemData();
+                    item.id = gameItem.id;
+                    item.name = gameItem.name;
+                    item.type = gameItem.type;
+                    item.displayName = gameItem.displayName;
+                    item.displayDescription = gameItem.displayDescription;
+                    item.isGacha = gameItem.isGacha;
+                    item.content = gameItem.content;
+                    item.properties = gameItem.properties;
+                    item.reportingName = gameItem.reportingName;
+
+                    PlayerItemData inventoryItem = GetItemFromInventory(bundleItem.id);
+                    
+                    int inventoryItemAmount;
+                    int itemLimit = item.limit;
+                    int perkAdditionAmount = 0;
+
+                    if (perkItem != null) {
+                        foreach (PerkAddition perkAddition in perkItem.additions) {
+                            if (perkAddition.type.Equals("ITEM") && perkAddition.id == gameItem.id) {
+                                perkAdditionAmount = perkAddition.additionValue;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (inventoryItem != null) {
+                        inventoryItemAmount = inventoryItem.amount + bundleItem.amount + perkAdditionAmount;
+
+                        if (itemLimit > 0 && inventoryItemAmount > itemLimit) {
+                            int newOverflow = (inventoryItemAmount - itemLimit) + inventoryItem.overflow;
+                            inventoryItem.overflow = newOverflow;
+                            inventoryItemAmount = itemLimit;
+                        }
+
+                        inventoryItem.delta = inventoryItem.delta + bundleItem.amount + perkAdditionAmount;
+                        inventoryItem.amount = inventoryItemAmount;
+                        
+                        UpdateItem(inventoryItem);
+
+                        updatedData.items.Add(inventoryItem);
+                    }
+                    else {
+                        inventoryItemAmount = bundleItem.amount + perkAdditionAmount;
+
+                        if (itemLimit > 0 && inventoryItemAmount > itemLimit) {
+                            int newOverflow = (inventoryItemAmount - itemLimit) + item.overflow;
+                            item.overflow = newOverflow;
+                            inventoryItemAmount = itemLimit;
+                        }
+
+                        item.delta = inventoryItemAmount;
+                        item.amount = inventoryItemAmount;
+                        
+                        Inventory.items.Add(item);
+
+                        updatedData.items.Add(item);
+                    }
+                }
+            }
         }
 
         private SpilBundleData GetBundleFromObjects(int bundleId) {
@@ -902,7 +1013,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             return null;
         }
 
-        public void OpenGacha(int gachaId, string reason, string reasonDetails, string location) {
+        public void OpenGacha(int gachaId, string reason, string reasonDetails, string location, PerkItem perkItem) {
             PlayerItemData gachaPlayerItem = GetGachaFromInventory(gachaId);
             SpilItemData gachaItem = GetGachaFromObjects(gachaId);
 
@@ -927,7 +1038,18 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
             int weightSum = 0;
 
-            foreach (SpilGachaContent gachaContent in gachaPlayerItem.content) {
+            List<SpilGachaContent> gachaContents = gachaPlayerItem.content;
+            if (perkItem != null) {
+                for(int i = 0; i < gachaContents.Count; i++) {
+                    for (int j = 0; j < perkItem.gachaWeights.Count; j++) {
+                        if(perkItem.gachaWeights[j].id == gachaContents[i].id) {
+                            gachaContents[i].weight = perkItem.gachaWeights[j].weight;
+                        }
+                    }
+                }
+            }
+            
+            foreach (SpilGachaContent gachaContent in gachaContents) {
                 weightSum = weightSum + gachaContent.weight;
             }
 
@@ -941,8 +1063,8 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             int low = 0;
             int high = 0;
 
-            for (int i = 0; i < gachaPlayerItem.content.Count; i++) {
-                SpilGachaContent gachaContent = gachaPlayerItem.content[i];
+            for (int i = 0; i < gachaContents.Count; i++) {
+                SpilGachaContent gachaContent = gachaContents[i];
 
                 if (i != 0) {
                     low = high;
@@ -958,16 +1080,46 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     PlayerDataManager.gachaId = gachaItem.id;
                     switch (gachaContent.type) {
                         case "CURRENCY":
-                            WalletOperation("add", gachaContent.id, gachaContent.amount, reason, reasonDetails, location, null);
+                            int amountCurrency = gachaContent.amount;
+
+                            if (perkItem != null) {
+                                for(int j = 0; i < perkItem.additions.Count; i++) {
+                                    if(perkItem.additions[j].id == gachaContent.id && perkItem.additions[j].type.Equals("CURRENCY")) {
+                                        amountCurrency = amountCurrency + perkItem.additions[j].additionValue;
+                                    }
+                                }
+                            }
+                            
+                            WalletOperation("add", gachaContent.id, amountCurrency, reason, reasonDetails, location, null);
                             break;
                         case "ITEM":
-                            InventoryOperation("add", gachaContent.id, gachaContent.amount, reason, reasonDetails, location, null);
+                            int amountItem = gachaContent.amount;
+
+                            if (perkItem != null) {
+                                for(int j = 0; i < perkItem.additions.Count; i++) {
+                                    if(perkItem.additions[j].id == gachaContent.id && perkItem.additions[j].type.Equals("ITEM")) {
+                                        amountItem = amountItem + perkItem.additions[j].additionValue;
+                                    }
+                                }
+                            }
+                            
+                            InventoryOperation("add", gachaContent.id, amountItem, reason, reasonDetails, location, null);
                             break;
                         case "BUNDLE":
-                            OpenBundle(gachaContent.id, gachaContent.amount, reason, reasonDetails, location);
+                            OpenBundle(gachaContent.id, gachaContent.amount, reason, reasonDetails, location, perkItem);
                             break;
                         case "GACHA":
-                            InventoryOperation("add", gachaContent.id, gachaContent.amount, reason, reasonDetails, location, null);
+                            int amountGacha = gachaContent.amount;
+
+                            if (perkItem != null) {
+                                for(int j = 0; i < perkItem.additions.Count; i++) {
+                                    if(perkItem.additions[j].id == gachaContent.id && perkItem.additions[j].type.Equals("ITEM")) {
+                                        amountGacha = amountGacha + perkItem.additions[j].additionValue;
+                                    }
+                                }
+                            }
+                            
+                            InventoryOperation("add", gachaContent.id, amountGacha, reason, reasonDetails, location, null);
                             break;
                         case "NONE":
                             UserDataManager.UpdateUserDataVersions();
