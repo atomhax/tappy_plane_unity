@@ -21,7 +21,7 @@ namespace SpilGames.Unity.Helpers.GameData {
         public Shop(List<SpilShopTabData> shop) {
             if (shop != null) {
                 foreach (SpilShopTabData tab in shop) {
-                    _Tabs.Add(new Tab(tab.name, tab.entries, tab.imageEntries));
+                    _Tabs.Add(new Tab(tab.name, tab.entries, tab.imageEntries, tab.properties));
                 }
             }
         }
@@ -60,7 +60,13 @@ namespace SpilGames.Unity.Helpers.GameData {
 
         private List<ImageEntry> _ImageEntries = new List<ImageEntry>();
         
-        public Tab(string name, List<SpilShopEntryData> entries, List<SpilShopImageEntry> imageEntries) {
+        public Dictionary<string, object> Properties {
+            get { return properties; }
+        }
+
+        private Dictionary<string, object> properties;
+        
+        public Tab(string name, List<SpilShopEntryData> entries, List<SpilShopImageEntry> imageEntries, Dictionary<string, object> properties) {
             _Name = name;
 
             if (imageEntries != null) {
@@ -72,9 +78,11 @@ namespace SpilGames.Unity.Helpers.GameData {
             
             if (entries != null) {
                 foreach (SpilShopEntryData entry in entries) {
-                    _Entries.Add(new Entry(entry.id, entry.type, entry.label, entry.position, entry.imageEntries));
+                    _Entries.Add(new Entry(entry.id, entry.type, entry.label, entry.position, entry.imageEntries, entry.properties));
                 }
             }
+
+            this.properties = properties;
         }
     }
 
@@ -127,12 +135,19 @@ namespace SpilGames.Unity.Helpers.GameData {
         }
 
         private List<ImageEntry> _ImageEntries = new List<ImageEntry>();
+
+        public Dictionary<string, object> Properties {
+            get { return properties; }
+        }
+
+        private Dictionary<string, object> properties;
         
-        public Entry(int id, string type, string label, int position, List<SpilShopImageEntry> imageEntries) {
+        public Entry(int id, string type, string label, int position, List<SpilShopImageEntry> imageEntries, Dictionary<string, object> properties) {
             _Id = id;
             _Type = type;
             _Label = label;
             _Position = position;
+            this.properties = properties;
             
             if (imageEntries != null) {
                 foreach (SpilShopImageEntry imageEntry in imageEntries) {

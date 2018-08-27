@@ -80,12 +80,14 @@ namespace SpilGames.Unity.Base.SDK {
         public string label;
         public int position;
         public List<SpilShopImageEntry> imageEntries;
+        public Dictionary<string, object> properties = new Dictionary<string, object>(); 
     }
 
     public class SpilShopTabData {
         public string name;
         public List<SpilShopImageEntry> imageEntries;
         public List<SpilShopEntryData> entries;
+        public Dictionary<string, object> properties = new Dictionary<string, object>();
     }
 
     public class SpilShopImageEntry {
