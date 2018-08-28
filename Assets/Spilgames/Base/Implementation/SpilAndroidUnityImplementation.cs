@@ -421,11 +421,11 @@ namespace SpilGames.Unity.Base.Implementations {
         }
 
         public override void BuyBundle(int bundleId, string reason, string location, string reasonDetails = null,
-            string transactionId = null, PerkItem perkItem = null) {
-            string perkItemJSON = null;
+            string transactionId = null, List<PerkItem> perkItems = null) {
+            string perkItemsJSON = null;
             
-            if (perkItem != null) {
-                perkItemJSON = JsonHelper.getJSONFromObject(perkItem);
+            if (perkItems != null) {
+                perkItemsJSON = JsonHelper.getJSONFromObject(perkItems);
             }
             
             CallNativeMethod("buyBundle", new object[] {
@@ -434,15 +434,15 @@ namespace SpilGames.Unity.Base.Implementations {
                 location,
                 reasonDetails,
                 transactionId,
-                perkItemJSON
+                perkItemsJSON
             }, true);
         }
 
-        public override void OpenGacha(int gachaId, string reason, string location, string reasonDetails = null, PerkItem perkItem = null) {
-            string perkItemJSON = null;
+        public override void OpenGacha(int gachaId, string reason, string location, string reasonDetails = null, List<PerkItem> perkItems = null) {
+            string perkItemsJSON = null;
             
-            if (perkItem != null) {
-                perkItemJSON = JsonHelper.getJSONFromObject(perkItem);
+            if (perkItems != null) {
+                perkItemsJSON = JsonHelper.getJSONFromObject(perkItems);
             }
             
             CallNativeMethod("openGacha", new object[] {
@@ -450,7 +450,7 @@ namespace SpilGames.Unity.Base.Implementations {
                 reason,
                 location,
                 reasonDetails,
-                perkItemJSON
+                perkItemsJSON
             }, true);
         }
 

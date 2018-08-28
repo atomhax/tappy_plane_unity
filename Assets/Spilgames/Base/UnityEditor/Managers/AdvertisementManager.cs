@@ -28,7 +28,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         public static void PlayVideo() {
             AdOverlay = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/AdOverlay.prefab"));
             AdOverlay.SetActive(true);
-            provider = "Fyber";
+            provider = "AdMob";
             adType = "rewardVideo";
             adInfoText = provider + " " + adType + " is playing!";
 			Spil.Instance.fireAdStart();
@@ -113,7 +113,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             if (response.action.Equals("init")) {
                 JSONObject provider = response.data.GetField("providers");
 
-                if (provider.HasField("AdMob")) {
+                if (provider.HasField("AdMob") || provider.HasField("DFP")) {
                     AdvertisementManager.AdMobEnabled = true;
                     SpilLogging.Log("AdMob Enabled");
                 }
@@ -136,7 +136,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 int probability = Random.Range(0, 100);
                 bool available = probability > 20;
 
-                if (provider.ToLower().Trim().Equals("admob")) {
+                if (provider.ToLower().Trim().Equals("admob") || Response.provider.ToLower().Trim().Equals("dfp")) {
                     if (available) {
                         SpilLogging.Log("AdMob Show");
                         Spil.Instance.fireAdAvailable(adType);

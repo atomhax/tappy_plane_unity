@@ -3214,9 +3214,9 @@ namespace SpilGames.Unity.Base.Implementations{
             string reasonDetails = null, string transactionId = null);
 
         public abstract void BuyBundle(int bundleId, string reason, string location, string reasonDetails = null,
-            string transactionId = null, PerkItem perkItem = null);
+            string transactionId = null, List<PerkItem> perkItems = null);
 
-	    public abstract void OpenGacha(int gachaId, string reason, string location, string reasonDetails = null, PerkItem perkItem = null);
+	    public abstract void OpenGacha(int gachaId, string reason, string location, string reasonDetails = null, List<PerkItem> perkItems = null);
 
 	    public abstract void SetCurrencyLimit(int currencyId, int limit);
 

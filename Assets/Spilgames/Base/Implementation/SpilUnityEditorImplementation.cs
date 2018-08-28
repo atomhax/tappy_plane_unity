@@ -402,12 +402,12 @@ namespace SpilGames.Unity.Base.Implementations {
         }
 
         public override void BuyBundle(int bundleId, string reason, string location, string reasonDetails = null,
-            string transactionId = null, PerkItem perkItem = null) {
-            pData.BuyBundle(bundleId, reason, reasonDetails, location, transactionId, perkItem);
+            string transactionId = null, List<PerkItem> perkItems = null) {
+            pData.BuyBundle(bundleId, reason, reasonDetails, location, transactionId, perkItems);
         }
 
-        public override void OpenGacha(int gachaId, string reason, string location, string reasonDetails = null, PerkItem perkItem = null) {
-            pData.OpenGacha(gachaId, reason, reasonDetails, location, perkItem);
+        public override void OpenGacha(int gachaId, string reason, string location, string reasonDetails = null, List<PerkItem> perkItems = null) {
+            pData.OpenGacha(gachaId, reason, reasonDetails, location, perkItems);
         }
 
         public override void SetCurrencyLimit(int currencyId, int limit) {

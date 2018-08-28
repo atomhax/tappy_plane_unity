@@ -64,7 +64,7 @@ namespace SpilGames.Unity.Base.SDK {
         public string reason;
         public int bundleId;
         public int gachaId;
-        public PerkItem perkItem;
+        public List<PerkItem> perkItems;
         public List<PlayerItemData> items = new List<PlayerItemData>();
         public List<PlayerCurrencyData> currencies = new List<PlayerCurrencyData>();
     }

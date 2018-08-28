@@ -18,7 +18,7 @@ namespace SpilGames.Unity.Base.Implementations
 
         }
 
-        public override void BuyBundle(int bundleId, string reason, string location, string reasonDetails = null, string transactionId = null, PerkItem perkItem = null)
+        public override void BuyBundle(int bundleId, string reason, string location, string reasonDetails = null, string transactionId = null, List<PerkItem> perkItems = null)
         {
 
         }
@@ -163,7 +163,7 @@ namespace SpilGames.Unity.Base.Implementations
 
         }
 
-        public override void OpenGacha(int gachaId, string reason, string location, string reasonDetails = null)
+        public override void OpenGacha(int gachaId, string reason, string location, string reasonDetails = null, List<PerkItem> perkItems = null)
         {
 
         }

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using SpilGames.Unity;
@@ -257,7 +258,18 @@ public class BundleDisplayPanelController : MonoBehaviour {
     }
 
     void BuyBundleFromSDK() {
-        Spil.Instance.BuyBundle(bundleDisplayed.Id, PlayerDataUpdateReasons.ItemBought, "Shop", null, null, null);
+        List<PerkItem> perks = new List<PerkItem>();
+        PerkItem perkItem = new PerkItem("testPerk");
+        
+        PerkPriceReduction priceReduction = new PerkPriceReduction(28, 20);
+        PerkAddition perkAddition = new PerkAddition(100088, PerkAddition.PerkAdditionType.ITEM, 1);
+        
+        perkItem.priceReductions.Add(priceReduction);
+        perkItem.additions.Add(perkAddition);
+        
+        perks.Add(perkItem);
+        
+        Spil.Instance.BuyBundle(bundleDisplayed.Id, PlayerDataUpdateReasons.ItemBought, "Shop", null, null, perks);
     }
 
     public void OnImageLoaded(Texture2D image, string localPath) {
