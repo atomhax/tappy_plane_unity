@@ -599,20 +599,22 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             }
 
             if (perkItems != null) {
-                foreach (PerkItem perkItem in perkItems) {
-                    foreach (PerkPriceReduction priceReduction in perkItem.priceReductions) {
-                        for (int i = 0; i < bundlePrices.Count; i++) {
+                for (int i = 0; i < bundlePrices.Count; i++) {
+                    int priceAfterPerk = bundlePrices[i].value;
+                    foreach (PerkItem perkItem in perkItems) {
+                        foreach (PerkPriceReduction priceReduction in perkItem.priceReductions) {        
                             if (priceReduction.currencyId == bundlePrices[i].currencyId) {
-                                int priceAfterPerk = bundlePrices[i].value - priceReduction.discountValue;
+                                priceAfterPerk = priceAfterPerk - priceReduction.discountValue;
 
                                 if (priceAfterPerk < 0) {
                                     priceAfterPerk = 0;
                                 }
 
-                                bundlePrices[i].value = priceAfterPerk;
+                                
                             }
                         }
                     }
+                    bundlePrices[i].value = priceAfterPerk;
                 }
             }
 
@@ -661,7 +663,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                         foreach (PerkItem perkItem in perkItems) {
                             foreach (PerkAddition perkAddition in perkItem.additions) {
                                 if (perkAddition.type.Equals("CURRENCY") && perkAddition.id == currency.id) {
-                                    perkAdditionAmount = perkAddition.additionValue;
+                                    perkAdditionAmount = perkAdditionAmount + perkAddition.additionValue;
                                     break;
                                 }
                             }
@@ -712,7 +714,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                         foreach (PerkItem perkItem in perkItems) {
                             foreach (PerkAddition perkAddition in perkItem.additions) {
                                 if (perkAddition.type.Equals("ITEM") && perkAddition.id == gameItem.id) {
-                                    perkAdditionAmount = perkAddition.additionValue;
+                                    perkAdditionAmount = perkAdditionAmount + perkAddition.additionValue;
                                     break;
                                 }
                             }
@@ -924,7 +926,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                             foreach (PerkItem perkItem in perkItems) {
                                 foreach (PerkAddition perkAddition in perkItem.additions) {
                                     if (perkAddition.type.Equals("CURRENCY") && perkAddition.id == currency.id) {
-                                        perkAdditionAmount = perkAddition.additionValue;
+                                        perkAdditionAmount = perkAdditionAmount + perkAddition.additionValue;
                                         break;
                                     }
                                 }
@@ -977,7 +979,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                             foreach (PerkItem perkItem in perkItems) {
                                 foreach (PerkAddition perkAddition in perkItem.additions) {
                                     if (perkAddition.type.Equals("ITEM") && perkAddition.id == gameItem.id) {
-                                        perkAdditionAmount = perkAddition.additionValue;
+                                        perkAdditionAmount = perkAdditionAmount + perkAddition.additionValue;
                                         break;
                                     }
                                 }
