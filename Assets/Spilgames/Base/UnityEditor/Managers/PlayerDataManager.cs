@@ -338,7 +338,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             }
         }
 
-        public void WalletOperation(string action, int currencyId, int amount, string reason, string reasonDetails, string location, string transactionId) {
+        public void WalletOperation(string action, int currencyId, int amount, string reason, string reasonDetails, string location, string transactionId, List<PerkItem> perkItems = null) {
             if (currencyId <= 0 || reason == null) {
                 SpilLogging.Error("Error updating wallet!");
                 return;
@@ -403,7 +403,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
                 Spil.Instance.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
 
-                SendUpdatePlayerDataEvent(null, reason, reasonDetails, location, transactionId);
+                SendUpdatePlayerDataEvent(null, reason, reasonDetails, location, transactionId, null, perkItems);
 
                 UpdateTieredEvent(currency.id, amount, "CURRENCY");
             }
@@ -429,7 +429,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             }
         }
 
-        public void InventoryOperation(string action, int itemId, int amount, string reason, string reasonDetails, string location, string transactionId) {
+        public void InventoryOperation(string action, int itemId, int amount, string reason, string reasonDetails, string location, string transactionId, List<PerkItem> perkItems = null) {
             SpilItemData gameItem = GetItemFromObjects(itemId);
 
             if (gameItem == null || itemId <= 0 || action == null || reason == null) {
@@ -512,7 +512,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
             Spil.Instance.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
 
-            SendUpdatePlayerDataEvent(null, reason, reasonDetails, location, transactionId);
+            SendUpdatePlayerDataEvent(null, reason, reasonDetails, location, transactionId, null, perkItems);
 
             UpdateTieredEvent(item.id, amount, item.isGacha ? "GACHA" : "ITEM");
         }
@@ -1075,7 +1075,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 foreach (PerkItem perkItem in perkItems) {
                     for (int i = 0; i < gachaContents.Count; i++) {
                         for (int j = 0; j < perkItem.gachaWeights.Count; j++) {
-                            if (perkItem.gachaWeights[j].id == gachaContents[i].id) {
+                            if ((perkItem.gachaWeights[j].id == gachaContents[i].id) && (perkItem.gachaWeights[j].type.Equals(gachaContents[i].type))) {
                                 gachaContents[i].weight = perkItem.gachaWeights[j].weight;
                             }
                         }
@@ -1126,7 +1126,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                                 }
                             }
 
-                            WalletOperation("add", gachaContent.id, amountCurrency, reason, reasonDetails, location, null);
+                            WalletOperation("add", gachaContent.id, amountCurrency, reason, reasonDetails, location, null, perkItems);
                             break;
                         case "ITEM":
                             int amountItem = gachaContent.amount;
@@ -1141,7 +1141,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                                 }
                             }
 
-                            InventoryOperation("add", gachaContent.id, amountItem, reason, reasonDetails, location, null);
+                            InventoryOperation("add", gachaContent.id, amountItem, reason, reasonDetails, location, null, perkItems);
                             break;
                         case "BUNDLE":
                             OpenBundle(gachaContent.id, gachaContent.amount, reason, reasonDetails, location, perkItems);
@@ -1159,7 +1159,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                                 }
                             }
 
-                            InventoryOperation("add", gachaContent.id, amountGacha, reason, reasonDetails, location, null);
+                            InventoryOperation("add", gachaContent.id, amountGacha, reason, reasonDetails, location, null, perkItems);
                             break;
                         case "NONE":
                             UserDataManager.UpdateUserDataVersions();

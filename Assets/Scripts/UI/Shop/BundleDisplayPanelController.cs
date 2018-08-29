@@ -259,17 +259,36 @@ public class BundleDisplayPanelController : MonoBehaviour {
 
     void BuyBundleFromSDK() {
         List<PerkItem> perks = new List<PerkItem>();
-        PerkItem perkItem = new PerkItem("testPerk");
+        if (Spil.PlayerData.InventoryHasItem(100847)) {
+            PerkItem perkItem = new PerkItem("DiamondsDiscountPerk");
+
+            Item diamondPerkItem = Spil.GameData.GetItem(100847);
+            long discountValue = (long) diamondPerkItem.Properties["value"];
+            
+            PerkPriceReduction priceReduction = new PerkPriceReduction(28, (int)discountValue);
+            perkItem.priceReductions.Add(priceReduction);
+            
+            perks.Add(perkItem);
+        }
+
+        if (Spil.PlayerData.InventoryHasItem(100848)) {
+            PerkItem perkItem = new PerkItem("StarsAdditionPerk");
+
+            Item starsPerkItem = Spil.GameData.GetItem(100848);
+            long additionValue = (long) starsPerkItem.Properties["value"];
+            
+            PerkAddition addition = new PerkAddition(25, PerkAddition.PerkAdditionType.CURRENCY, (int)additionValue);
+            perkItem.additions.Add(addition);
+            
+            perks.Add(perkItem);
+        }
+
+        if (perks.Count > 0) {
+            Spil.Instance.BuyBundle(bundleDisplayed.Id, PlayerDataUpdateReasons.ItemBought, "Shop", null, null, perks);
+        } else {
+            Spil.Instance.BuyBundle(bundleDisplayed.Id, PlayerDataUpdateReasons.ItemBought, "Shop");
+        }
         
-        PerkPriceReduction priceReduction = new PerkPriceReduction(28, 20);
-        PerkAddition perkAddition = new PerkAddition(100088, PerkAddition.PerkAdditionType.ITEM, 1);
-        
-        perkItem.priceReductions.Add(priceReduction);
-        perkItem.additions.Add(perkAddition);
-        
-        perks.Add(perkItem);
-        
-        Spil.Instance.BuyBundle(bundleDisplayed.Id, PlayerDataUpdateReasons.ItemBought, "Shop", null, null, perks);
     }
 
     public void OnImageLoaded(Texture2D image, string localPath) {

@@ -136,7 +136,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 int probability = Random.Range(0, 100);
                 bool available = probability > 20;
 
-                if (provider.ToLower().Trim().Equals("admob") || Response.provider.ToLower().Trim().Equals("dfp")) {
+                if (provider.ToLower().Trim().Equals("admob") || provider.ToLower().Trim().Equals("dfp")) {
                     if (available) {
                         SpilLogging.Log("AdMob Show");
                         Spil.Instance.fireAdAvailable(adType);

@@ -42,10 +42,17 @@ namespace SpilGames.Unity.Helpers.PlayerData.Perk {
 
     public class PerkGachaWeight {
         public int id;
+        public string type;
         public int weight;
 
-        public PerkGachaWeight(int id, int weight) {
+        public enum PerkGachaWeightType {
+            CURRENCY,
+            ITEM
+        }
+        
+        public PerkGachaWeight(int id, PerkGachaWeightType type, int weight) {
             this.id = id;
+            this.type = type.ToString();
             this.weight = weight;
         }
     }
