@@ -111,6 +111,7 @@ namespace SpilGames.Unity.Base.SDK {
         public List<SpilPromotionExtraEntity> extraEntities;
         public List<SpilPromotionPriceOverride> priceOverride;
         public List<SpilPromotionGameAsset> gameAssets;
+        public bool hasSplashscreen;
     }
 
     public class SpilPromotionAffectedEntity {

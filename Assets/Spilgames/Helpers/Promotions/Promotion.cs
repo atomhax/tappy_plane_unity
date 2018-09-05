@@ -55,7 +55,13 @@ namespace SpilGames.Unity.Helpers.Promotions {
 
         public List<GameAsset> GameAssets;
 
-        public Promotion(int id, string name, int amountPurchased, int maxPurchase, string label, long startDate, long endDate, List<SpilPromotionAffectedEntity> affectedEntities, List<SpilPromotionExtraEntity> extraEntities, List<SpilPromotionPriceOverride> priceOverrides, List<SpilPromotionGameAsset> gameAssets) {
+        private bool hasSplashscreen;
+        
+        public bool HasSplashscreen {
+            get { return hasSplashscreen; }
+        }
+
+        public Promotion(int id, string name, int amountPurchased, int maxPurchase, string label, long startDate, long endDate, List<SpilPromotionAffectedEntity> affectedEntities, List<SpilPromotionExtraEntity> extraEntities, List<SpilPromotionPriceOverride> priceOverrides, List<SpilPromotionGameAsset> gameAssets, bool hasSplashscreen) {
             this.id = id;
             this.name = name;
             this.amountPurchased = amountPurchased;
@@ -83,6 +89,8 @@ namespace SpilGames.Unity.Helpers.Promotions {
             foreach (SpilPromotionGameAsset gameAsset in gameAssets) {
                 GameAssets.Add(new GameAsset(gameAsset.name, gameAsset.locale, gameAsset.position, gameAsset.type, gameAsset.value));
             }
+
+            this.hasSplashscreen = hasSplashscreen;
         }
 
         public bool IsValid() {
