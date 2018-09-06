@@ -29,5 +29,6 @@
 -(NSMutableDictionary*)toJSONObject:(bool)includeContent;
 
 -(GachaContent*)getRandomGachaReward;
+-(GachaContent*)getRandomGachaReward:(NSArray*)perkItems;
 
 @end

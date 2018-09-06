@@ -8,6 +8,7 @@
 #import <Foundation/Foundation.h>
 #import "BundleItem.h"
 #import "BundlePrice.h"
+#import "PerkItem.h"
 
 @interface Bundle : NSObject
 
@@ -22,8 +23,11 @@
 -(id)initWithDictionary:(NSDictionary*)data;
 
 -(NSDictionary*)toJSONObject;
+-(NSDictionary*)toJSONObject:(NSArray*)perkItems;
 
 -(NSArray*)getItemsJSONArray;
+-(NSArray*)getItemsJSONArray:(NSArray*)perkItems;
 -(NSArray*)getPricesJSONArray;
+-(NSArray*)getPricesJSONArray:(NSArray*)perkItems;
 
 @end

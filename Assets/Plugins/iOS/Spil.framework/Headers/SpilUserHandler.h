@@ -22,6 +22,8 @@
 
 -(void)syncSpilUserId;
 -(NSString*)getSpilUserId;
+-(void)checkForSLOTUidChange;
+-(void)confirmUserIdChange;
 
 // --- Device id ---
 

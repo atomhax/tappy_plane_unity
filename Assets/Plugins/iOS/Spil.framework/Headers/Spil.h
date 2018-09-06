@@ -8,8 +8,9 @@
 #import "JsonUtil.h"
 #import "HookBridge.h"
 #import "GAI.h"
+#import "PerkItem.h"
 
-#define SPIL_SDK_VERSION @"3.2.0"
+#define SPIL_SDK_VERSION @"3.1.0"
 
 @class ImageContext;
 @class Spil;
@@ -122,6 +123,8 @@
 -(void)onLogoutFailed:(nonnull NSString*)error;
 -(void)onAuthError:(nonnull NSString*)error;
 -(void)onRequestLogin;
+-(void)userIdChangeRequest:(nonnull NSString*)targetUid;
+-(void)userIdChangeCompleted;
 
 // Userdata syncing
 -(void)userDataAvailable;
@@ -780,8 +783,9 @@
  * @param reason        The bundle reason
  * @param location      The location where the event happened, for example level1
  * @param transactionId The transaction id used
+ * @param transactionId A json blob containing a PerkItem object
  */
-+(void)buyBundle:(int)bundleId withReason:(nonnull NSString*)reason withReasonDetails:(nullable NSString*)reasonDetails withLocation:(nullable NSString*)location withTransactionId:(nullable NSString*)transactionId;
++(void)buyBundle:(int)bundleId withReason:(nonnull NSString*)reason withReasonDetails:(nullable NSString*)reasonDetails withLocation:(nullable NSString*)location withTransactionId:(nullable NSString*)transactionId withPerkItems:(nullable NSArray*)perkItems;
 
 /**
  * Open the gacha and add the content to the inventory
@@ -790,7 +794,7 @@
  * @param reasonDetails The bundle reasonDetails
  * @param location      The location where the event happened, for example level1
  */
-+(void)openGacha:(int)itemId withReason:(nonnull NSString*)reason withReasonDetails:(nullable NSString*)reasonDetails withLocation:(nullable NSString*)location;
++(void)openGacha:(int)itemId withReason:(nonnull NSString*)reason withReasonDetails:(nullable NSString*)reasonDetails withLocation:(nullable NSString*)location withPerkItems:(nullable NSArray*)perkItems;
 
 /**
  * Get all the shop tabs
@@ -1030,7 +1034,7 @@
  * @param externalProviderId The id of the service (e.g. facebook)
  * @param externalToken The auth token provided by the external provider
  */
-+(void)loginWithExternalUserId:(nonnull NSString*)externalUserId externalProviderId:(nonnull NSString*)externalProviderId externalToken:(nonnull NSString*)externalToken;
++(void)loginWithExternalUserId:(nonnull NSString*)externalUserId externalProviderId:(nonnull NSString*)externalProviderId externalToken:(nonnull NSString*)externalToken socialValidationData:(nonnull NSDictionary*)socialValidationData;
 
 /**
  * Returns the current login status
@@ -1051,6 +1055,11 @@
  * Will reset the gameconfig, packages/promotions, gamedata, playerdata & gamestate
  */
 +(void)resetData;
+
+/**
+ * Call when the game is ready to change the uid requested by SLOT
+ */
++(void)confirmUserIdChange;
 
 /**
  * Show the default auth error dialog

@@ -8,6 +8,7 @@ using System.Collections;
 using SpilGames.Unity.Helpers;
 using System.Runtime.Serialization.Formatters;
 using SpilGames.Unity.Helpers.DailyBonus;
+using SpilGames.Unity.Helpers.PlayerData.Perk;
 
 namespace SpilGames.Unity.Base.Implementations
 {
@@ -330,6 +331,16 @@ namespace SpilGames.Unity.Base.Implementations
         }
         [DllImport("__Internal")]
         private static extern void setExternalUserIdNative(string providerId, string userId);
+        
+        /// <summary>
+        /// Confirm the user id change
+        /// </summary>
+        public override void ConfirmUserIdChange()
+        {
+            confirmUserIdChangeNative();
+        }
+        [DllImport("__Internal")]
+        private static extern void confirmUserIdChangeNative();
 
         public override void SetCustomBundleId(string bundleId)
         {
@@ -524,21 +535,23 @@ namespace SpilGames.Unity.Base.Implementations
         [DllImport("__Internal")]
         private static extern void subtractItemFromInventoryNative(int itemId, int amount, string reason, string location, string reasonDetails, string transactionId);
 
-        public override void BuyBundle(int bundleId, string reason, string location, string reasonDetails = null, string transactionId = null)
+        public override void BuyBundle(int bundleId, string reason, string location, string reasonDetails = null, string transactionId = null, List<PerkItem> perkItems = null)
         {
-            buyBundleNative(bundleId, reason, location, reasonDetails, transactionId);
+            string perksString = JsonHelper.getJSONFromObject(perkItems);
+            buyBundleNative(bundleId, reason, location, reasonDetails, transactionId, perksString);
         }
 
         [DllImport("__Internal")]
-        private static extern void buyBundleNative(int bundleId, string reason, string location, string reasonDetails, string transactionId);
+        private static extern void buyBundleNative(int bundleId, string reason, string location, string reasonDetails, string transactionId, string perksString);
 
-        public override void OpenGacha(int gachaId, string reason, string location, string reasonDetails = null)
+        public override void OpenGacha(int gachaId, string reason, string location, string reasonDetails = null, List<PerkItem> perkItems = null)
         {
-            openGachaNative(gachaId, reason, reasonDetails, location);
+            string perksString = JsonHelper.getJSONFromObject(perkItems);
+            openGachaNative(gachaId, reason, reasonDetails, location, perksString);
         }
 
         [DllImport("__Internal")]
-        private static extern void openGachaNative(int bundleId, string reason, string reasonDetails, string location);
+        private static extern void openGachaNative(int bundleId, string reason, string reasonDetails, string location, string perksString);
 
         public override void SetCurrencyLimit(int currencyId, int limit)
         {
@@ -815,7 +828,7 @@ namespace SpilGames.Unity.Base.Implementations
 
     #region Social Login
 
-        public override void UserLogin(string socialId, string socialProvider, string socialToken, Dictionary<string, object> socialValidationData = null) {
+        public override void UserLogin(string socialId, string socialProvider, string socialToken, Dictionary<string, object> socialValidationData = null)
         {
             string socialValidationDataJson = socialValidationData == null ? "" : JsonHelper.getJSONFromObject(socialValidationData);
             loginNative(socialId, socialProvider, socialToken, socialValidationDataJson);
