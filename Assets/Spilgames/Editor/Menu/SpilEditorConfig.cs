@@ -1,14 +1,13 @@
 ﻿using System;
 using UnityEngine;
-using System.Collections;
 using UnityEditor;
 using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 using SpilGames.Unity;
 using System.Xml;
-using JetBrains.Annotations;
 using SpilGames.Unity.Base.Implementations;
-using SpilGames.Unity.Base.UnityEditor;
-using SpilGames.Unity.Json;
+using Application = UnityEngine.Application;
 
 public class SpilEditorConfig : EditorWindow {
     private int tabSelected = 0;
@@ -27,6 +26,9 @@ public class SpilEditorConfig : EditorWindow {
 
     public static string androidPackageName;
 
+    int androidImplementationSelection = 0;
+    static string[] options = new string[] {" Gradle", " AAR Files"};
+    
     public static string GetAndroidPackageName() {
         #if UNITY_5_6_OR_NEWER
         return PlayerSettings.applicationIdentifier;
@@ -53,13 +55,14 @@ public class SpilEditorConfig : EditorWindow {
         SpilEditorConfig window = (SpilEditorConfig) EditorWindow.GetWindow(typeof(SpilEditorConfig));
         window.autoRepaintOnSceneChange = true;
         window.titleContent.text = "Configuration";
-        window.minSize = new Vector2(1000, 600);
+        window.minSize = new Vector2(1000, 700);
         window.Show();
 
         androidGameVersion = PlayerSettings.bundleVersion;
         androidPackageName = GetAndroidPackageName();
         iosGameVersion = PlayerSettings.bundleVersion;
         iosBundelId = GetIOSBundleId();
+        
     }
 
     void OnEnable() {
@@ -67,8 +70,14 @@ public class SpilEditorConfig : EditorWindow {
 
         logo = new Texture2D((int) size.x, (int) size.y, TextureFormat.RGB24, false);
         logo.LoadImage(File.ReadAllBytes(Application.dataPath + "/Resources/Spilgames/PrivacyPolicy/Images/spillogo.png"));
+
+        androidImplementationSelection = EditorPrefs.GetInt("spilSdkAndroidImplementation", 0);
     }
-    
+
+    private void OnDisable() {
+        EditorPrefs.SetInt("spilSdkAndroidImplementation", androidImplementationSelection);
+    }
+
     void OnGUI() {
         GUILayout.BeginVertical();
         scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(position.width), GUILayout.Height(position.height));
@@ -150,58 +159,33 @@ public class SpilEditorConfig : EditorWindow {
         if (GUILayout.Button("Create Default Configuration Files")) {
             CreateDefaultConfigFiles();
         }
-
-
-        if (File.Exists(Application.streamingAssetsPath + "/defaultGameConfig.json")) {
-            GUILayout.Label("");
-            GUILayout.Label("DefaultGameConfig Values:", EditorStyles.boldLabel);
-
-            if (configJSON == null) {
-                configJSON =
-                    new JSONObject(File.ReadAllText(Application.streamingAssetsPath + "/defaultGameConfig.json"));
-            }
-
-            GUILayout.Label("");
-            if (configJSON.HasField("androidSdkConfig")) {
-                if (android == null) {
-                    android = new JSONObject(configJSON.GetField("androidSdkConfig").Print(false));
-                }
-
-                GUILayout.Label("Android", EditorStyles.boldLabel);
-                string androidConfig = android.Print(true);
-                if (androidConfig.Length > 15000) {
-                    string message = "The displayed configuration has been truncated. If you want to view the full configuration please check SLOT!\n\n";
-                    string androidConfigPartial = androidConfig.Substring(0, 15000);
-                    GUILayout.Label(message + androidConfigPartial, EditorStyles.wordWrappedLabel);
-                }
-                else {
-                    GUILayout.Label(androidConfig, EditorStyles.wordWrappedLabel);
-                }
-            }
-
-            GUILayout.Label("");
-            if (configJSON.HasField("iosSdkConfig")) {
-                if (ios == null) {
-                    ios = new JSONObject(configJSON.GetField("iosSdkConfig").Print(false));
-                }
-
-                GUILayout.Label("iOS", EditorStyles.boldLabel);
-                string iosConfig = ios.Print(true);
-                if (iosConfig.Length > 15000) {
-                    string message = "The displayed configuration has been truncated. If you want to view the full configuration please check SLOT!\n\n";
-                    string androidConfigPartial = iosConfig.Substring(0, 15000);
-                    GUILayout.Label(message + androidConfigPartial, EditorStyles.wordWrappedLabel);
-                }
-                else {
-                    GUILayout.Label(iosConfig, EditorStyles.wordWrappedLabel);
-                }
-            }
-        }
     }
-
+    
     private void DrawIOS() {
+        string iosFolder = "Assets/Plugins/iOS/";
+        
         GUILayout.Label("This tab contains configuration information specific to iOS", EditorStyles.boldLabel);
         GUILayout.Label("");
+
+        var styleRed = new GUIStyle(EditorStyles.label);
+        styleRed.normal.textColor = Color.red;
+        styleRed.fontStyle = FontStyle.Bold;
+        
+        string[] iosVersionFile = File.ReadAllLines(iosFolder + "Spil.framework/Headers/Spil.h");
+        
+        foreach (string line in iosVersionFile) {
+            
+            if (line.Contains("#define SPIL_SDK_VERSION @") && !line.Contains(SpilUnityImplementationBase.iOSVersion)) {
+                string version = "";
+                foreach (Match m in Regex.Matches(line, "\".*?\"")) {
+                    version = m.Value.Replace("\"", "");
+                }
+                GUILayout.Label("Spil iOS Framework version does not match Spil Unity Plugin.", styleRed);
+                GUILayout.Label("Spil iOS Framework version: " + version, styleRed);
+                GUILayout.Label("Spil Unity Plugin version: " + SpilUnityImplementationBase.iOSVersion, styleRed);
+                GUILayout.Label("");
+            }
+        }
 
         string customUserId = "<< Spil component not found in scene! >>";
         bool exportDefaultEntitlements = EditorPrefs.GetBool("exportDefaultEntitlements");
@@ -229,20 +213,76 @@ public class SpilEditorConfig : EditorWindow {
     }
 
     private void DrawAndroid() {
-        GUILayout.Label("This tab contains configuration information specific to Android", EditorStyles.boldLabel);
-        GUILayout.Label("");
-
-        GUILayout.Label("Installed Modules:", EditorStyles.boldLabel);
-
         string androidFolder = "Assets/Plugins/Android/";
+        string spilFolder = "Assets/Spilgames/Plugins/NativeLibraries~/Android/";
         string spilSDK = "spilsdk-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
         string spilSDKAdjust = "spilsdk-adjust-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
         string spilSDKChartboost = "spilsdk-chartboost-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
         string spilSDKAdMob = "spilsdk-admob-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
+        string spilSDKFirebase = "spilsdk-firebase-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
 
+        string[] gradleLines = new string[0];
+
+        bool hasLatestGradleFile = false;
+        bool gradleSpilSDKCheck = false;
+        bool gradleAdjustSpilSDKCheck = false;
+        bool gradleChartboostSpilSDKCheck = false;
+        bool gradleAdMobSpilSDKCheck = false;
+        bool gradleFirebaseSpilSDKCheck = false;
+        
+        GUILayout.Label("This tab contains configuration information specific to Android", EditorStyles.boldLabel);
+        GUILayout.Label("");
+        
+        if (!File.Exists(androidFolder + "mainTemplate.gradle")) {
+            GUILayout.Label("Implementation type: AAR Files", EditorStyles.boldLabel);
+            androidImplementationSelection = 1;
+            #if UNITY_2017_1_OR_NEWER
+            if (GUILayout.Button("Enable Gradle building using Spil Gradle Template")) {
+                File.Copy(spilFolder + "Gradle/mainTemplate.gradle", androidFolder + "mainTemplate.gradle");
+                androidImplementationSelection = 0;
+
+                foreach (string fileName in Directory.GetFiles(androidFolder)) {
+                    if (fileName.Contains("spilsdk") && fileName.Contains(".aar") && !fileName.Contains("resources")) {
+                        File.Delete(fileName);
+                    }
+                }
+            }
+            #endif
+        }
+        else {
+            androidImplementationSelection = GUILayout.SelectionGrid(androidImplementationSelection, options, options.Length, EditorStyles.radioButton);
+            gradleLines = File.ReadAllLines(androidFolder + "mainTemplate.gradle");
+            foreach (string line in gradleLines) {
+                if (line.Contains("spilsdk:" + SpilUnityImplementationBase.AndroidVersion) && !line.Contains("//")) {
+                    gradleSpilSDKCheck = true;
+                }
+            
+                if (line.Contains("spilsdk-adjust:" + SpilUnityImplementationBase.AndroidVersion) && !line.Contains("//")) {
+                    gradleAdjustSpilSDKCheck = true;
+                }
+            
+                if (line.Contains("spilsdk-chartboost:" + SpilUnityImplementationBase.AndroidVersion) && !line.Contains("//")) {
+                    gradleChartboostSpilSDKCheck = true;
+                }
+            
+                if (line.Contains("spilsdk-admob:" + SpilUnityImplementationBase.AndroidVersion) && !line.Contains("//")) {
+                    gradleAdMobSpilSDKCheck = true;
+                }
+            
+                if (line.Contains("spilsdk-firebase:" + SpilUnityImplementationBase.AndroidVersion) && !line.Contains("//")) {
+                    gradleFirebaseSpilSDKCheck = true;
+                }
+                
+                if (line.Contains("Unity SpilSDK") && line.Contains(SpilUnityImplementationBase.PluginVersion)) {
+                    hasLatestGradleFile = true;
+                }
+            }
+        }
+        GUILayout.Label("");
+        
         var styleGreen = new GUIStyle(EditorStyles.label);
         Color green = new Color();
-        ColorUtility.TryParseHtmlString("#006400", out green);
+        ColorUtility.TryParseHtmlString("#00E676", out green);
         styleGreen.normal.textColor = green;
 
         var styleRed = new GUIStyle(EditorStyles.label);
@@ -252,43 +292,212 @@ public class SpilEditorConfig : EditorWindow {
         string spilSDKAdjustCheck = "";
         string spilSDKChartboostCheck = "";
         string spilSDKAdMobCheck = "";
+        string spilSDKFirebaseCheck = "";
 
-        if (!File.Exists(androidFolder + spilSDK)) {
+        if (File.Exists(androidFolder + "mainTemplate.gradle") && !hasLatestGradleFile) {
+            GUILayout.Label("Not using latest version of the Spil SDK Gradle file!" + spilSDKCheck, styleRed);
+            if (GUILayout.Button("Update Gradle File")) {
+                File.Delete(androidFolder + "mainTemplate.gradle");
+                File.Copy(spilFolder + "Gradle/mainTemplate.gradle", androidFolder + "mainTemplate.gradle");
+            }
+        }
+        
+        GUILayout.Label("Installed Modules:", EditorStyles.boldLabel);
+        if (!File.Exists(androidFolder + spilSDK) && !gradleSpilSDKCheck) {
             spilSDKCheck = " - False";
             GUILayout.Label(" • SDK Main Module:" + spilSDKCheck, styleRed);
+            if (GUILayout.Button("Enable SDK Main Module")) {
+                switch (androidImplementationSelection) {
+                        case 0:
+                            for (int i = 0; i < gradleLines.Length; i++) {
+                                if (gradleLines[i].Contains("spilsdk:" + SpilUnityImplementationBase.AndroidVersion) && gradleLines[i].Contains("//")) {
+                                    gradleLines[i] = gradleLines[i].Replace("//", "");
+                                }
+                            }
+                            
+                            File.WriteAllLines(androidFolder + "mainTemplate.gradle", gradleLines);
+                            break;
+                        case 1:
+                            foreach (string fileName in Directory.GetFiles(androidFolder)) {
+                                if (fileName.Contains("spilsdk") && fileName.Contains(".aar") && !fileName.Contains("resources")) {
+                                    File.Delete(fileName);
+                                }
+                            }
+                            File.Copy(spilFolder + "Main SDK/spilsdk-" + SpilUnityImplementationBase.AndroidVersion +".aar", androidFolder + "spilsdk-" + SpilUnityImplementationBase.AndroidVersion +".aar");
+                            
+                            break;
+                }
+            }
         }
         else {
             spilSDKCheck = " - True";
             GUILayout.Label(" • SDK Main Module:" + spilSDKCheck, styleGreen);
+            if (GUILayout.Button("Update SDK Main Module")) {
+                switch (androidImplementationSelection) {
+                    case 0:
+                        for (int i = 0; i < gradleLines.Length; i++) {
+                            if (gradleLines[i].Contains("spilsdk:" + SpilUnityImplementationBase.AndroidVersion) && gradleLines[i].Contains("//")) {
+                                gradleLines[i] = gradleLines[i].Replace("//", "");
+                            }
+                        }
+                            
+                        File.WriteAllLines(androidFolder + "mainTemplate.gradle", gradleLines);
+                        
+                        foreach (string fileName in Directory.GetFiles(androidFolder)) {
+                            if (fileName.Contains("spilsdk") && fileName.Contains(".aar") && !fileName.Contains("resources")) {
+                                File.Delete(fileName);
+                            }
+                        }
+                        
+                        break;
+                    case 1:
+                        foreach (string fileName in Directory.GetFiles(androidFolder)) {
+                            if (fileName.Contains("spilsdk") && fileName.Contains(".aar") && !fileName.Contains("resources")) {
+                                File.Delete(fileName);
+                            }
+                        }
+                        File.Copy(spilFolder + "Main SDK/spilsdk-" + SpilUnityImplementationBase.AndroidVersion +".aar", androidFolder + "spilsdk-" + SpilUnityImplementationBase.AndroidVersion +".aar");
+                            
+                        for (int i = 0; i < gradleLines.Length; i++) {
+                            if (gradleLines[i].Contains("spilsdk") && !gradleLines[i].Contains("//")) {
+                                gradleLines[i] = gradleLines[i].Replace("compile", "//compile");
+                            }
+                        }
+                        File.WriteAllLines(androidFolder + "mainTemplate.gradle", gradleLines);
+                        
+                        break;
+                }
+            }
         }
-
-        if (!File.Exists(androidFolder + spilSDKAdjust)) {
+        GUILayout.Label("");
+        
+        if (!File.Exists(androidFolder + spilSDKAdjust) && !gradleAdjustSpilSDKCheck) {
             spilSDKAdjustCheck = " - False";
             GUILayout.Label(" • Adjust (Analytics):" + spilSDKAdjustCheck, styleRed);
+            if (GUILayout.Button("Enable Adjust (Analytics) Module")) {
+                switch (androidImplementationSelection) {
+                    case 0:
+                        for (int i = 0; i < gradleLines.Length; i++) {
+                            if (gradleLines[i].Contains("spilsdk-adjust:" + SpilUnityImplementationBase.AndroidVersion) && gradleLines[i].Contains("//")) {
+                                gradleLines[i] = gradleLines[i].Replace("//", "");
+                            }
+                        }
+                            
+                        File.WriteAllLines(androidFolder + "mainTemplate.gradle", gradleLines);
+                        break;
+                    case 1:
+                        foreach (string fileName in Directory.GetFiles(androidFolder)) {
+                            if (fileName.Contains("spilsdk-adjust") && fileName.Contains(".aar") && !fileName.Contains("resources")) {
+                                File.Delete(fileName);
+                            }
+                        }
+                        File.Copy(spilFolder + "Adjust/spilsdk-adjust-" + SpilUnityImplementationBase.AndroidVersion +".aar", androidFolder + "spilsdk-adjust-" + SpilUnityImplementationBase.AndroidVersion +".aar");
+                            
+                        break;
+                }
+            }
         }
         else {
             spilSDKAdjustCheck = " - True";
             GUILayout.Label(" • Adjust (Analytics):" + spilSDKAdjustCheck, styleGreen);
         }
+        GUILayout.Label("");
 
-        if (!File.Exists(androidFolder + spilSDKChartboost)) {
+        if (!File.Exists(androidFolder + spilSDKChartboost) && !gradleChartboostSpilSDKCheck) {
             spilSDKChartboostCheck = " - False";
             GUILayout.Label(" • Chartboost (Advertising):" + spilSDKChartboostCheck, styleRed);
+            if (GUILayout.Button("Enable Chartboost (Advertising) Module")) {
+                switch (androidImplementationSelection) {
+                    case 0:
+                        for (int i = 0; i < gradleLines.Length; i++) {
+                            if (gradleLines[i].Contains("spilsdk-chartboost:" + SpilUnityImplementationBase.AndroidVersion) && gradleLines[i].Contains("//")) {
+                                gradleLines[i] = gradleLines[i].Replace("//", "");
+                            }
+                        }
+                            
+                        File.WriteAllLines(androidFolder + "mainTemplate.gradle", gradleLines);
+                        break;
+                    case 1:
+                        foreach (string fileName in Directory.GetFiles(androidFolder)) {
+                            if (fileName.Contains("spilsdk-chartboost") && fileName.Contains(".aar") && !fileName.Contains("resources")) {
+                                File.Delete(fileName);
+                            }
+                        }
+                        File.Copy(spilFolder + "Advertisement/Chartboost/spilsdk-chartboost-" + SpilUnityImplementationBase.AndroidVersion +".aar", androidFolder + "spilsdk-chartboost-" + SpilUnityImplementationBase.AndroidVersion +".aar");
+                            
+                        break;
+                }
+            }
         }
         else {
             spilSDKChartboostCheck = " - True";
             GUILayout.Label(" • Chartboost (Advertising):" + spilSDKChartboostCheck, styleGreen);
         }
-
-        if (!File.Exists(androidFolder + spilSDKAdMob)) {
+        GUILayout.Label("");
+        
+        if (!File.Exists(androidFolder + spilSDKAdMob) && !gradleAdMobSpilSDKCheck) {
             spilSDKAdMobCheck = " - False";
             GUILayout.Label(" • AdMob (Advertising):" + spilSDKAdMobCheck, styleRed);
+            if (GUILayout.Button("Enable AdMob (Advertising) Module")) {
+                switch (androidImplementationSelection) {
+                    case 0:
+                        for (int i = 0; i < gradleLines.Length; i++) {
+                            if (gradleLines[i].Contains("spilsdk-admob:" + SpilUnityImplementationBase.AndroidVersion) && gradleLines[i].Contains("//")) {
+                                gradleLines[i] = gradleLines[i].Replace("//", "");
+                            }
+                        }
+                            
+                        File.WriteAllLines(androidFolder + "mainTemplate.gradle", gradleLines);
+                        break;
+                    case 1:
+                        foreach (string fileName in Directory.GetFiles(androidFolder)) {
+                            if (fileName.Contains("spilsdk-admob") && fileName.Contains(".aar") && !fileName.Contains("resources")) {
+                                File.Delete(fileName);
+                            }
+                        }
+                        File.Copy(spilFolder + "Advertisement/AdMob/spilsdk-admob-" + SpilUnityImplementationBase.AndroidVersion +".aar", androidFolder + "spilsdk-admob-" + SpilUnityImplementationBase.AndroidVersion +".aar");
+                            
+                        break;
+                }
+            }
         }
         else {
             spilSDKAdMobCheck = " - True";
             GUILayout.Label(" • AdMob (Advertising):" + spilSDKAdMobCheck, styleGreen);
         }
-
+        GUILayout.Label("");
+        
+        if (!File.Exists(androidFolder + spilSDKFirebase) && !gradleFirebaseSpilSDKCheck) {
+            spilSDKFirebaseCheck = " - False";
+            GUILayout.Label(" • Firebase (Analytics & Deep Linking):" + spilSDKFirebaseCheck, styleRed);
+            if (GUILayout.Button("Enable Firebase (Analytics & Deep Linking) Module")) {
+                switch (androidImplementationSelection) {
+                    case 0:
+                        for (int i = 0; i < gradleLines.Length; i++) {
+                            if (gradleLines[i].Contains("spilsdk-firebase:" + SpilUnityImplementationBase.AndroidVersion) && gradleLines[i].Contains("//")) {
+                                gradleLines[i] = gradleLines[i].Replace("//", "");
+                            }
+                        }
+                            
+                        File.WriteAllLines(androidFolder + "mainTemplate.gradle", gradleLines);
+                        break;
+                    case 1:
+                        foreach (string fileName in Directory.GetFiles(androidFolder)) {
+                            if (fileName.Contains("spilsdk-firebase") && fileName.Contains(".aar") && !fileName.Contains("resources")) {
+                                File.Delete(fileName);
+                            }
+                        }
+                        File.Copy(spilFolder + "Firebase/spilsdk-firebase-" + SpilUnityImplementationBase.AndroidVersion +".aar", androidFolder + "spilsdk-firebase-" + SpilUnityImplementationBase.AndroidVersion +".aar");
+                            
+                        break;
+                }
+            }
+        }
+        else {
+            spilSDKFirebaseCheck = " - True";
+            GUILayout.Label(" • Firebase (Analytics & Deep Linking):" + spilSDKFirebaseCheck, styleGreen);
+        }
+        
         GUILayout.Label("");
 
         GUILayout.Label("Android Project Id:", EditorStyles.boldLabel);
@@ -468,6 +677,9 @@ public class SpilEditorConfig : EditorWindow {
 
             File.WriteAllText(streamingAssetsPath + "/defaultPlayerData.json", playerData.Print(false));
         }
+        
+        GetTrackingFile();
+        AddGoogleAppId();
 
         if (retrievalError) {
             SpilLogging.Error("Error retrieving default files! Please check the logs!");
@@ -479,6 +691,42 @@ public class SpilEditorConfig : EditorWindow {
         retrievalError = false;
     }
 
+    void GetTrackingFile() {
+        SpilLogging.Log("Getting Game Specific Tracking File");
+        
+        var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        var time = (long) (DateTime.Now.ToUniversalTime() - epoch).TotalMilliseconds;
+        
+        WWW request = new WWW("https://splashscreens.cdn.spilcloud.com/native_game_tracking/" + androidPackageName + ".cs?ts=" + time.ToString());
+        while (!request.isDone) ;
+        if (request.error != null && !request.error.Equals("")) {
+            SpilLogging.Log("No Game Specific Tracking File available!");
+        }
+        else {
+            string fileName = "";
+            string version = "";
+            using (StringReader reader = new StringReader(request.text)) {
+                string line;
+                while ((line = reader.ReadLine()) != null) {
+                    if (line.Contains("FileName")) {
+                        fileName = line.Split('"').Where((s, i) => i % 2 == 1).ToList()[0];
+                    }
+                    
+                    if (line.Contains("Version")) {
+                        version = line.Split('"').Where((s, i) => i % 2 == 1).ToList()[0];
+                    }
+                }
+            }
+
+            if (!File.Exists(Application.dataPath + "/Spilgames/Base/Tracking/" + fileName + ".cs")) {
+                File.WriteAllText(Application.dataPath + "/Spilgames/Base/Tracking/" + fileName + ".cs", request.text);
+            } else {
+                File.Delete(Application.dataPath + "/Spilgames/Base/Tracking/" + fileName + ".cs");
+                File.WriteAllText(Application.dataPath + "/Spilgames/Base/Tracking/" + fileName + ".cs", request.text);
+            }
+        }
+    }
+    
     string GetData(string type) {
         string gameData = "";
 
@@ -756,5 +1004,56 @@ public class SpilEditorConfig : EditorWindow {
         }
 
         return true;
+    }
+
+    public static void AddGoogleAppId() {
+        string androidFolder = "Assets/Plugins/Android/";
+        string spilSDKFirebase = "spilsdk-firebase-" + SpilUnityImplementationBase.AndroidVersion + ".aar";
+        string gameConfigPath = Application.streamingAssetsPath + "/defaultGameConfig.json";
+
+        string savePath = androidFolder + "res/values/";
+
+        if (!File.Exists(gameConfigPath) || !File.Exists(androidFolder + spilSDKFirebase)) {
+            return;
+        }
+
+        if (!Directory.Exists(androidFolder + "res")) {
+            Directory.CreateDirectory(androidFolder + "res");
+        }
+        
+        if (!Directory.Exists(androidFolder + "res/values")) {
+            Directory.CreateDirectory(androidFolder + "res/values");
+        }
+
+        JSONObject localConfig = new JSONObject(File.ReadAllText(gameConfigPath)).GetField("androidSdkConfig");
+        string firebaseAppId = localConfig.GetField("firebase").GetField("applicationId").str;
+
+        if (File.Exists(savePath + "strings.xml")) {
+            XmlDocument stringsFileXML = new XmlDocument();
+            stringsFileXML.Load(savePath + "strings.xml");
+
+            XmlElement xmlRoot = stringsFileXML.DocumentElement;
+
+            XmlNodeList nodes = stringsFileXML.GetElementsByTagName("string");
+            for (int i = 0; i < nodes.Count; i++) {
+                if (nodes[i].Attributes["name"].Value == "google_app_id") {
+                    xmlRoot.RemoveChild(nodes[i]);
+                }
+            }
+            
+            XmlNode node = stringsFileXML.CreateElement("string");
+            XmlAttribute attribute = stringsFileXML.CreateAttribute("name");
+            attribute.Value = "google_app_id";
+            node.Attributes.Append(attribute);
+            node.InnerText = firebaseAppId;
+
+            xmlRoot.AppendChild(node);
+            
+            stringsFileXML.Save(savePath + "strings.xml");
+        } else {
+            string fileOutput = "<?xml version='1.0' encoding='utf-8'?><resources><string name='google_app_id'>" + firebaseAppId + "</string></resources>";
+
+            File.WriteAllText(savePath + "strings.xml", fileOutput);
+        }
     }
 }

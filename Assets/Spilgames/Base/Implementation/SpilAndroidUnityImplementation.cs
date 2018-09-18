@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using UnityEngine;
 using SpilGames.Unity.Helpers;
 using SpilGames.Unity.Helpers.GameData;
 using SpilGames.Unity.Helpers.PlayerData;
 using SpilGames.Unity.Json;
 using SpilGames.Unity.Base.SDK;
+using SpilGames.Unity.Helpers.DailyBonus;
+using SpilGames.Unity.Helpers.PlayerData.Perk;
 
 namespace SpilGames.Unity.Base.Implementations {
-#if UNITY_ANDROID
+    #if UNITY_ANDROID
     public class SpilAndroidUnityImplementation : SpilUnityImplementationBase {
         #region Inherited members
 
@@ -20,6 +23,15 @@ namespace SpilGames.Unity.Base.Implementations {
         }
 
         #region Game config
+
+        /// <summary>
+        /// Requests the game config from the backend.
+        /// This is not essential for developers so could be made private (getConfig T () uses it so it cannot be removed entirely) but might be handy for some developers so we left it in.
+        /// </summary>
+        /// <returns></returns>     
+        public override void RequestGameConfig() {
+            CallNativeMethod("requestGameConfig");
+        }
 
         /// <summary>
         /// Returns the game config as a json string.
@@ -72,12 +84,25 @@ namespace SpilGames.Unity.Base.Implementations {
         /// Internal method names start with a lower case so you can easily recognise and avoid them.
         /// </summary>
         internal override void SpilInit(bool withPrivacyPolicy) {
-#if UNITY_ANDROID
+            #if UNITY_ANDROID
+            if (Spil.Instance.GameData != null) {
+                Spil.Instance.GameData.RefreshData(Spil.Instance);
+            } 
+
+            if (Spil.Instance.PlayerData != null) {
+                Spil.Instance.PlayerData.RefreshData(Spil.Instance);
+            } 
+            
             Spil spil = GameObject.FindObjectOfType<Spil>();
             CallNativeMethod("init", new object[] {withPrivacyPolicy}, true);
-            RegisterDevice(spil.ProjectId);
+            if (spil != null) {
+                RegisterDevice(spil.ProjectId);
+            } else {
+                SpilLogging.Log("Spil object was not found in the scene. Could not retrieve ProjectId. Initialization was not fully completed.");
+            }
+            
             RequestPackages();
-#endif
+            #endif
         }
 
         internal override void CheckPrivacyPolicy() {
@@ -89,15 +114,16 @@ namespace SpilGames.Unity.Base.Implementations {
                 SpilLogging.Log("Privacy Policy not enabled. Will not show privacy policy settings screen");
                 return;
             }
-            
+
             if (Spil.UseUnityPrefab) {
                 PrivacyPolicyHelper.PrivacyPolicyObject = (GameObject) GameObject.Instantiate(Resources.Load("Spilgames/PrivacyPolicy/PrivacyPolicyUnity" + Spil.MonoInstance.PrefabOrientation));
                 PrivacyPolicyHelper.PrivacyPolicyObject.SetActive(true);
-            
+
                 PrivacyPolicyHelper.Instance.ShowSettingsScreen(1);
-            } else {
+            }
+            else {
                 CallNativeMethod("showPrivacyPolicySettings");
-            }    
+            }
         }
 
         public override void SavePrivValue(int priv) {
@@ -122,6 +148,10 @@ namespace SpilGames.Unity.Base.Implementations {
 
         public override void SetCustomBundleId(string bundleId) {
             // TODO
+        }
+
+        public override void ConfirmUserIdChange() {
+            CallNativeMethod("confirmUserIdChange");
         }
 
         /// <summary>
@@ -194,7 +224,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// <param name="eventName"></param>
         /// <param name="dict"></param>
         internal override void SendCustomEventInternal(string eventName, Dictionary<string, object> dict) {
-            SpilLogging.Log("SendCustomEvent " + eventName);
+            SpilLogging.Log("SendCustomEvent: " + eventName + " params: " + JsonHelper.getJSONFromObject(dict));
 
             if (eventName.Equals("updatePlayerData") && dict.ContainsKey("inventory") &&
                 dict["inventory"] is Dictionary<string, object>) {
@@ -202,6 +232,7 @@ namespace SpilGames.Unity.Base.Implementations {
                 string inventoryAsString = JsonHelper.DictToJSONObject(inventory).ToString().Replace("\"", "\\\"");
                 dict["inventory"] = inventoryAsString;
             }
+
             if (eventName.Equals("updatePlayerData") && dict.ContainsKey("wallet") &&
                 dict["wallet"] is Dictionary<string, object>) {
                 Dictionary<string, object> wallet = (Dictionary<string, object>) dict["wallet"];
@@ -326,7 +357,7 @@ namespace SpilGames.Unity.Base.Implementations {
         }
 
         #endregion
-        
+
         #region Player Data
 
         public override void UpdatePlayerData() {
@@ -390,22 +421,50 @@ namespace SpilGames.Unity.Base.Implementations {
         }
 
         public override void BuyBundle(int bundleId, string reason, string location, string reasonDetails = null,
-            string transactionId = null) {
+            string transactionId = null, List<PerkItem> perkItems = null) {
+            string perkItemsJSON = null;
+            
+            if (perkItems != null) {
+                perkItemsJSON = JsonHelper.getJSONFromObject(perkItems);
+            }
+            
             CallNativeMethod("buyBundle", new object[] {
                 bundleId,
                 reason,
                 location,
                 reasonDetails,
-                transactionId
+                transactionId,
+                perkItemsJSON
             }, true);
         }
 
-        public override void OpenGacha(int gachaId, string reason, string location, string reasonDetails = null) {
+        public override void OpenGacha(int gachaId, string reason, string location, string reasonDetails = null, List<PerkItem> perkItems = null) {
+            string perkItemsJSON = null;
+            
+            if (perkItems != null) {
+                perkItemsJSON = JsonHelper.getJSONFromObject(perkItems);
+            }
+            
             CallNativeMethod("openGacha", new object[] {
                 gachaId,
                 reason,
                 location,
-                reasonDetails
+                reasonDetails,
+                perkItemsJSON
+            }, true);
+        }
+
+        public override void SetCurrencyLimit(int currencyId, int limit) {
+            CallNativeMethod("setCurrencyLimit", new object[] {
+                currencyId,
+                limit,
+            }, true);
+        }
+
+        public override void SetItemLimit(int itemId, int limit) {
+            CallNativeMethod("setItemLimit", new object[] {
+                itemId,
+                limit,
             }, true);
         }
 
@@ -429,6 +488,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// Used to get the image from the cache, based on the url provided.
         /// </summary>
         public override string GetImagePath(string url) {
+            Debug.Log("Url: " + url);
             return CallNativeMethod("getImagePath", new object[] {
                 url
             }, true);
@@ -564,6 +624,7 @@ namespace SpilGames.Unity.Base.Implementations {
                 SpilLogging.Log(tieredEventsJson);
                 return JsonHelper.getObjectFromJson<List<TieredEvent>>(tieredEventsJson);
             }
+
             return null;
         }
 
@@ -575,7 +636,7 @@ namespace SpilGames.Unity.Base.Implementations {
             if (tieredEventProgressJson == null) {
                 return null;
             }
-            
+
             SpilLogging.Log(tieredEventProgressJson);
             return JsonHelper.getObjectFromJson<TieredEventProgress>(tieredEventProgressJson);
         }
@@ -590,11 +651,12 @@ namespace SpilGames.Unity.Base.Implementations {
 
         #region Social Login
 
-        public override void UserLogin(string socialId, string socialProvider, string socialToken) {
+        public override void UserLogin(string socialId, string socialProvider, string socialToken, Dictionary<string, object> socialValidationData = null) {
             CallNativeMethod("userLogin", new object[] {
                 socialId,
                 socialProvider,
-                socialToken
+                socialToken,
+                JsonHelper.getJSONFromObject(socialValidationData)
             }, true);
         }
 
@@ -618,12 +680,12 @@ namespace SpilGames.Unity.Base.Implementations {
             }, true);
         }
 
-        public override bool IsLoggedIn() {     
+        public override bool IsLoggedIn() {
             return Convert.ToBoolean(CallNativeMethod("isLoggedIn"));
         }
 
         #endregion
-        
+
         #region Userdata syncing
 
         public override void RequestUserData() {
@@ -664,7 +726,7 @@ namespace SpilGames.Unity.Base.Implementations {
                 mergeType
             }, true);
         }
-        
+
         #endregion
 
         public override void ResetData() {
@@ -740,7 +802,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// <returns></returns>
         private string CallNativeMethod<T>(string methodName, T param1 = null, bool useParam1 = false) where T : class {
             SpilLogging.Log("CallNativeMethod " + methodName +
-                      (param1 != null ? " param: " + param1.ToString() : ""));
+                            (param1 != null ? " param: " + param1.ToString() : ""));
 
             string value = null;
             using (AndroidJavaClass pClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer")) {
@@ -753,6 +815,7 @@ namespace SpilGames.Unity.Base.Implementations {
                         if (param1 is object[]) {
                             realParam = (object[]) ((object) param1);
                         }
+
                         if (realParam != null) {
                             try {
                                 value = instance.Call<string>(methodName, realParam);
@@ -786,6 +849,7 @@ namespace SpilGames.Unity.Base.Implementations {
                     }
                 }
             }
+
             return value;
         }
 
@@ -805,6 +869,20 @@ namespace SpilGames.Unity.Base.Implementations {
 
         public override void RequestDailyBonus() {
             CallNativeMethod("requestDailyBonus");
+        }
+
+        protected override void ShowDailyBonusNative() {
+            CallNativeMethod("showDailyBonus");
+        }
+
+        public override DailyBonus GetDailyBonusConfig() {
+            SpilDailyBonus spilDailyBonus = JsonHelper.getObjectFromJson<SpilDailyBonus>(CallNativeMethod("getDailyBonusConfig"));
+            DailyBonus dailyBonus = new DailyBonus(spilDailyBonus.url, spilDailyBonus.type, spilDailyBonus.days);
+            return dailyBonus;
+        }
+
+        public override void CollectDailyBonus() {
+            CallNativeMethod("collectDailyBonus");
         }
 
         public override void RequestSplashScreen(string type) {
@@ -884,5 +962,5 @@ namespace SpilGames.Unity.Base.Implementations {
 
         #endregion
     }
-#endif
+    #endif
 }

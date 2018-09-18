@@ -44,6 +44,57 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
             return JsonHelper.getObjectFromJson<GameDataManager>(gameData);
         }
+
+        public void SetCurrencyLimit(int currencyId, int limit) {
+            string currencyName = "";
+            foreach (SpilCurrencyData currency in currencies) {
+                if (currency.id == currencyId) {
+                    currency.limit = limit;
+                    currencyName = currency.name;
+                }
+            }
+
+            foreach (PlayerCurrencyData playerCurrency in SpilUnityEditorImplementation.pData.Wallet.currencies) {
+                if (playerCurrency.id == currencyId) {
+                    playerCurrency.limit = limit;
+                }
+            }
+            
+            SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
+            spilEvent.eventName = "setCurrencyLimit";
+
+            spilEvent.customData.AddField("id", currencyId);
+            spilEvent.customData.AddField("name", currencyName);
+            spilEvent.customData.AddField("limit", limit);
+            
+            spilEvent.Send();
+        }
+
+        public void SetItemLimit(int itemId, int limit) {
+            string itemName = "";
+            
+            foreach (SpilItemData item in items) {
+                if (item.id == itemId) {
+                    item.limit = limit;
+                    itemName = item.name;
+                }
+            }
+
+            foreach (PlayerItemData playerItem in SpilUnityEditorImplementation.pData.Inventory.items) {
+                if (playerItem.id == itemId) {
+                    playerItem.limit = limit;
+                }
+            }
+            
+            SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
+            spilEvent.eventName = "setCurrencyLimit";
+
+            spilEvent.customData.AddField("id", itemId);
+            spilEvent.customData.AddField("name", itemName);
+            spilEvent.customData.AddField("limit", limit);
+            
+            spilEvent.Send();
+        }
     }
     
     public class GameDataResponse : Response {

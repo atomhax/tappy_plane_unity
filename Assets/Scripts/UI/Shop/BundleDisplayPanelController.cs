@@ -1,9 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 using SpilGames.Unity;
 using SpilGames.Unity.Helpers.GameData;
 using SpilGames.Unity.Base.SDK;
 using SpilGames.Unity.Helpers.PlayerData;
+using SpilGames.Unity.Helpers.PlayerData.Perk;
 using SpilGames.Unity.Helpers.Promotions;
 
 public class BundleDisplayPanelController : MonoBehaviour {
@@ -255,7 +258,37 @@ public class BundleDisplayPanelController : MonoBehaviour {
     }
 
     void BuyBundleFromSDK() {
-        Spil.Instance.BuyBundle(bundleDisplayed.Id, PlayerDataUpdateReasons.ItemBought, "Shop");
+        List<PerkItem> perks = new List<PerkItem>();
+        if (Spil.PlayerData.InventoryHasItem(100847)) {
+            PerkItem perkItem = new PerkItem("DiamondsDiscountPerk");
+
+            Item diamondPerkItem = Spil.GameData.GetItem(100847);
+            long discountValue = (long) diamondPerkItem.Properties["value"];
+            
+            PerkPriceReduction priceReduction = new PerkPriceReduction(28, (int)discountValue);
+            perkItem.priceReductions.Add(priceReduction);
+            
+            perks.Add(perkItem);
+        }
+
+        if (Spil.PlayerData.InventoryHasItem(100848)) {
+            PerkItem perkItem = new PerkItem("StarsAdditionPerk");
+
+            Item starsPerkItem = Spil.GameData.GetItem(100848);
+            long additionValue = (long) starsPerkItem.Properties["value"];
+            
+            PerkAddition addition = new PerkAddition(25, PerkAddition.PerkAdditionType.CURRENCY, (int)additionValue);
+            perkItem.additions.Add(addition);
+            
+            perks.Add(perkItem);
+        }
+
+        if (perks.Count > 0) {
+            Spil.Instance.BuyBundle(bundleDisplayed.Id, PlayerDataUpdateReasons.ItemBought, "Shop", null, null, perks);
+        } else {
+            Spil.Instance.BuyBundle(bundleDisplayed.Id, PlayerDataUpdateReasons.ItemBought, "Shop");
+        }
+        
     }
 
     public void OnImageLoaded(Texture2D image, string localPath) {

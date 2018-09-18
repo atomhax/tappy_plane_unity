@@ -16,6 +16,10 @@ namespace SpilGames.Unity.Helpers.GameData {
         public List<Bundle> Bundles = new List<Bundle>();
         public Shop Shop;
 
+        public SpilGameDataHelper() {
+            
+        }
+        
         public SpilGameDataHelper(SpilUnityImplementationBase Instance) {
             string spilGameDataString = Instance.GetSpilGameDataFromSdk();
             if (spilGameDataString != null) {
@@ -198,7 +202,7 @@ namespace SpilGames.Unity.Helpers.GameData {
 
             if (currencies != null) {
                 foreach (SpilCurrencyData spilCurrencyData in currencies) {
-                    Currencies.Add(new Currency(spilCurrencyData.id, spilCurrencyData.name, spilCurrencyData.type, spilCurrencyData.imageUrl, spilCurrencyData.displayName, spilCurrencyData.displayDescription));
+                    Currencies.Add(new Currency(spilCurrencyData.id, spilCurrencyData.name, spilCurrencyData.type, spilCurrencyData.imageUrl, spilCurrencyData.displayName, spilCurrencyData.displayDescription, spilCurrencyData.limit));
                 }
             }
 
@@ -206,7 +210,7 @@ namespace SpilGames.Unity.Helpers.GameData {
 
             if (items != null) {
                 foreach (SpilItemData spilItemsData in items) {
-                    Items.Add(new Item(spilItemsData.id, spilItemsData.name, spilItemsData.type, spilItemsData.imageUrl, spilItemsData.displayName, spilItemsData.displayDescription, spilItemsData.isGacha, spilItemsData.content, spilItemsData.properties));
+                    Items.Add(new Item(spilItemsData.id, spilItemsData.name, spilItemsData.type, spilItemsData.imageUrl, spilItemsData.reportingName, spilItemsData.displayName, spilItemsData.displayDescription, spilItemsData.isGacha, spilItemsData.content, spilItemsData.properties, spilItemsData.limit));
                 }
             }
 
@@ -214,7 +218,7 @@ namespace SpilGames.Unity.Helpers.GameData {
 
             if (bundles != null) {
                 foreach (SpilBundleData spilBundleData in bundles) {
-                    Bundles.Add(new Bundle(spilBundleData.id, spilBundleData.name, spilBundleData.prices, spilBundleData.items, spilBundleData.imageUrl, spilBundleData.displayName, spilBundleData.displayDescription));
+                    Bundles.Add(new Bundle(spilBundleData.id, spilBundleData.name, spilBundleData.prices, spilBundleData.items, spilBundleData.imageUrl, spilBundleData.displayName, spilBundleData.displayDescription, spilBundleData.properties));
                 }
             }
 

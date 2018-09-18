@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using SpilGames.Unity.Base.SDK;
+using SpilGames.Unity.Helpers.DailyBonus;
+using SpilGames.Unity.Helpers.PlayerData.Perk;
 
 namespace SpilGames.Unity.Base.Implementations
 {
@@ -16,7 +18,7 @@ namespace SpilGames.Unity.Base.Implementations
 
         }
 
-        public override void BuyBundle(int bundleId, string reason, string location, string reasonDetails = null, string transactionId = null)
+        public override void BuyBundle(int bundleId, string reason, string location, string reasonDetails = null, string transactionId = null, List<PerkItem> perkItems = null)
         {
 
         }
@@ -161,7 +163,7 @@ namespace SpilGames.Unity.Base.Implementations
 
         }
 
-        public override void OpenGacha(int gachaId, string reason, string location, string reasonDetails = null)
+        public override void OpenGacha(int gachaId, string reason, string location, string reasonDetails = null, List<PerkItem> perkItems = null)
         {
 
         }
@@ -361,7 +363,7 @@ namespace SpilGames.Unity.Base.Implementations
 
         }
 
-        public override void UserLogin(string socialId, string socialProvider, string socialToken)
+        public override void UserLogin(string socialId, string socialProvider, string socialToken, Dictionary<string,object> socialValidationData = null)
         {
 
         }
@@ -399,6 +401,36 @@ namespace SpilGames.Unity.Base.Implementations
         internal override void SpilInit(bool withPrivacyPolicy)
         {
 
+        }
+
+        public override void SetCurrencyLimit(int currencyId, int limit)
+        {
+            
+        }
+
+        public override void SetItemLimit(int itemId, int limit)
+        {
+            
+        }
+
+        public override void RequestGameConfig()
+        {
+            
+        }
+
+        protected override void ShowDailyBonusNative()
+        {
+            
+        }
+
+        public override DailyBonus GetDailyBonusConfig()
+        {
+            return null;
+        }
+
+        public override void CollectDailyBonus()
+        {
+            
         }
     }
 #endif

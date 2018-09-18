@@ -1,0 +1,10 @@
+ManifestFileVersion: 0
+CRC: 2422093219
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: goldplane.asset
+      Dependencies: {}
+    Info_1:
+      Name: dailybonus.asset
+      Dependencies: {}

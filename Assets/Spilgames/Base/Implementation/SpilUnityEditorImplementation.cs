@@ -9,6 +9,8 @@ using SpilGames.Unity.Base.UnityEditor;
 using SpilGames.Unity.Helpers.GameData;
 using SpilGames.Unity.Helpers.PlayerData;
 using SpilGames.Unity.Base.SDK;
+using SpilGames.Unity.Helpers.DailyBonus;
+using SpilGames.Unity.Helpers.PlayerData.Perk;
 
 namespace SpilGames.Unity.Base.Implementations {
     public class SpilUnityEditorImplementation : SpilUnityImplementationBase {
@@ -28,6 +30,15 @@ namespace SpilGames.Unity.Base.Implementations {
         }
 
         #region Game config
+
+        /// <summary>
+        /// Request the game config from the backend.
+        /// This is not essential for developers so could be made private (getConfig T () uses it so it cannot be removed entirely) but might be handy for some developers so we left it in.
+        /// </summary>
+        /// <returns></returns> 
+        public override void RequestGameConfig() {
+            RequestConfig();
+        }
 
         /// <summary>
         /// Returns the game config as a json string.
@@ -77,7 +88,7 @@ namespace SpilGames.Unity.Base.Implementations {
         /// The Spil Unity SDK is not packaged as a seperate assembly yet so this method is currently visible, this will be fixed in the future.
         /// Internal method names start with a lower case so you can easily recognise and avoid them.
         /// </summary>
-        internal override void SpilInit(bool withPrivacyPolicy){
+        internal override void SpilInit(bool withPrivacyPolicy) {
             gData = new GameDataManager();
             pData = new PlayerDataManager();
             
@@ -127,6 +138,10 @@ namespace SpilGames.Unity.Base.Implementations {
 #else
             return EditorPrefs.GetInt(GetSpilUserId() + "-gdprStatusUnity", -1);
 #endif
+        }
+
+        public override void ConfirmUserIdChange() {
+            
         }
 
         public override void ResetData() {            
@@ -208,8 +223,8 @@ namespace SpilGames.Unity.Base.Implementations {
         /// </summary>
         /// <param name="eventName"></param>
         /// <param name="dict"></param>
-        internal override void SendCustomEventInternal(string eventName, Dictionary<string, object> dict = null) {
-            SpilLogging.Log("SendCustomEvent " + eventName);
+        internal override void SendCustomEventInternal(string eventName, Dictionary<string, object> dict) {
+            SpilLogging.Log("SendCustomEvent: " + eventName + " params: " + JsonHelper.getJSONFromObject(dict));
             SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
             spilEvent.eventName = eventName;
 
@@ -406,12 +421,20 @@ namespace SpilGames.Unity.Base.Implementations {
         }
 
         public override void BuyBundle(int bundleId, string reason, string location, string reasonDetails = null,
-            string transactionId = null) {
-            pData.BuyBundle(bundleId, reason, reasonDetails, location, transactionId);
+            string transactionId = null, List<PerkItem> perkItems = null) {
+            pData.BuyBundle(bundleId, reason, reasonDetails, location, transactionId, perkItems);
         }
 
-        public override void OpenGacha(int gachaId, string reason, string location, string reasonDetails = null) {
-            pData.OpenGacha(gachaId, reason, reasonDetails, location);
+        public override void OpenGacha(int gachaId, string reason, string location, string reasonDetails = null, List<PerkItem> perkItems = null) {
+            pData.OpenGacha(gachaId, reason, reasonDetails, location, perkItems);
+        }
+
+        public override void SetCurrencyLimit(int currencyId, int limit) {
+            gData.SetCurrencyLimit(currencyId, limit);
+        }
+
+        public override void SetItemLimit(int itemId, int limit) {
+            gData.SetItemLimit(itemId, limit);
         }
 
         public override void ResetPlayerData() {
@@ -655,6 +678,23 @@ namespace SpilGames.Unity.Base.Implementations {
             spilEvent.Send();
         }
 
+        protected override void ShowDailyBonusNative() {
+            OverlayManager.ShowDailyBonus();
+        }
+
+        public override DailyBonus GetDailyBonusConfig() {
+            SpilDailyBonus spilDailyBonus = OverlayManager.spilDailyBonusConfig;
+            DailyBonus dailyBonus = new DailyBonus(spilDailyBonus.url, spilDailyBonus.type, spilDailyBonus.days);
+            return dailyBonus;
+        }
+
+        public override void CollectDailyBonus() {
+            SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
+            spilEvent.eventName = "collectDailyBonus";
+
+            spilEvent.Send();
+        }
+
         public override void RequestSplashScreen(string type) {
             SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
             spilEvent.eventName = "requestSplashscreen";
@@ -678,7 +718,7 @@ namespace SpilGames.Unity.Base.Implementations {
 
             Spil.RewardFeatureTypeEnum tokenType = Spil.MonoInstance.RewardFeatureType;
             if (tokenType.Equals(Spil.RewardFeatureTypeEnum.DEEPLINK)) {
-                spilEvent.customData.AddField("rewardType", "deepLink");
+                spilEvent.customData.AddField("rewardType", "deeplink");
             }
 
             spilEvent.Send();
@@ -770,13 +810,14 @@ namespace SpilGames.Unity.Base.Implementations {
 
         #region Social Login
 
-        public override void UserLogin(string socialId, string socialProvider, string socialToken) {
+        public override void UserLogin(string socialId, string socialProvider, string socialToken, Dictionary<string, object> socialValidationData = null) {
             SpilEvent spilEvent = Spil.MonoInstance.gameObject.AddComponent<SpilEvent>();
             spilEvent.eventName = "userLogin";
 
             spilEvent.customData.AddField("socialId", socialId);
             spilEvent.customData.AddField("socialProvider", socialProvider);
             spilEvent.customData.AddField("socialToken", socialToken);
+            spilEvent.customData.AddField("socialValidationData", JsonHelper.DictToJSONObject(socialValidationData));
 
             spilEvent.Send();
         }

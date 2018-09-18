@@ -36,4 +36,7 @@
 
 -(NSMutableArray*)getShopTabs;
 
+-(void)setCurrencyLimit:(int)currencyId withLimit:(int)limit;
+-(void)setItemLimit:(int)itemId withLimit:(int)limit;
+
 @end

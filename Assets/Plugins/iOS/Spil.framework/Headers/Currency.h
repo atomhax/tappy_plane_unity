@@ -16,9 +16,10 @@
 @property (strong, nonatomic) NSString *imageUrl;
 @property (strong, nonatomic) NSString *displayName;
 @property (strong, nonatomic) NSString *displayDescription;
+@property (assign, nonatomic) int limit;
 
 -(id)initWithDictionary:(NSDictionary*)dict;
 
--(NSMutableDictionary*)toJSONObject;
+-(NSMutableDictionary*)toJSONObject:(bool)includeContent;
 
 @end

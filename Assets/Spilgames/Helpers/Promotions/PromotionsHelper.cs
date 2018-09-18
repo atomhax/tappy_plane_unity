@@ -13,7 +13,7 @@ namespace SpilGames.Unity.Helpers.Promotions {
 
             if (promotionData != null) {
                 foreach (SpilPromotionData promotion in promotionData) {
-                    Promotions.Add(new Promotion(promotion.id, promotion.name, promotion.amountPurchased, promotion.maxPurchase, promotion.label, promotion.startDate, promotion.endDate, promotion.affectedEntities, promotion.extraEntities, promotion.priceOverride, promotion.gameAssets));
+                    Promotions.Add(new Promotion(promotion.id, promotion.name, promotion.amountPurchased, promotion.maxPurchase, promotion.label, promotion.startDate, promotion.endDate, promotion.affectedEntities, promotion.extraEntities, promotion.priceOverride, promotion.gameAssets, promotion.hasSplashscreen));
                 }
             }
         }

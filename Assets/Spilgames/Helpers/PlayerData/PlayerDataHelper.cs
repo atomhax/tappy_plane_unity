@@ -5,6 +5,7 @@ using UnityEngine;
 using SpilGames.Unity.Helpers.GameData;
 using SpilGames.Unity.Base.Implementations;
 using SpilGames.Unity.Base.SDK;
+using SpilGames.Unity.Helpers.PlayerData.Perk;
 using SpilGames.Unity.Json;
 
 namespace SpilGames.Unity.Helpers.PlayerData {
@@ -16,7 +17,22 @@ namespace SpilGames.Unity.Helpers.PlayerData {
         public Wallet Wallet;
         public Inventory Inventory;
 
+        public PlayerDataHelper() {
+            
+        }
+        
         public PlayerDataHelper(SpilUnityImplementationBase Instance) {
+            string walletString = Instance.GetWalletFromSdk();
+            string inventoryString = Instance.GetInvetoryFromSdk();
+            if (walletString != null && inventoryString != null) {
+                WalletData walletData = JsonHelper.getObjectFromJson<WalletData>(walletString);
+                InventoryData inventoryData = JsonHelper.getObjectFromJson<InventoryData>(inventoryString);
+
+                AddDataToHelper(walletData != null ? walletData.currencies : null, inventoryData != null ? inventoryData.items : null);
+            }
+        }
+        
+        public void RefreshData(SpilUnityImplementationBase Instance) {
             string walletString = Instance.GetWalletFromSdk();
             string inventoryString = Instance.GetInvetoryFromSdk();
             if (walletString != null && inventoryString != null) {
@@ -97,7 +113,7 @@ namespace SpilGames.Unity.Helpers.PlayerData {
         /// <summary>
         /// Helper method that consumes the bundle given a bundleId and a reason
         /// </summary>
-        public void BuyBundle(int bundleId, string reason, string location, string reasonDetails = null, string transactionId = null) {
+        public void BuyBundle(int bundleId, string reason, string location, string reasonDetails = null, string transactionId = null, PerkItem perkItem = null) {
             Spil.Instance.BuyBundle(bundleId, reason, location, reasonDetails, transactionId);
         }
 

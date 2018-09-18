@@ -1,0 +1,24 @@
+ManifestFileVersion: 0
+CRC: 1860530912
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 6eb054c5b8f52c685b08d5cb74030622
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: b4a74efcf86e1512cfbb02a0edb6e22f
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Sprites/Planes/planeYellow1.png
+- Assets/Animations/Player/PlayerGold.controller
+- Assets/Animations/Player/PlayerGold.anim
+Dependencies: []

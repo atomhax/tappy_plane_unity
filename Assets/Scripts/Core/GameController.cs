@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Xml;
 using System.Text.RegularExpressions;
 using System.Linq;
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
 using SpilGames.Unity;
 using SpilGames.Unity.Base.Implementations;
 using SpilGames.Unity.Base.Implementations.Tracking;
@@ -16,7 +18,11 @@ using UnityEngine.Analytics;
 using UnityEngine.UI;
 using AssetBundle = SpilGames.Unity.Helpers.AssetBundles.AssetBundle;
 using Random = UnityEngine.Random;
-#if !UNITY_TVOS //&& !UNITY_WEBGL
+#if UNITY_IOS
+using GCIdentityPlugin;
+using UnityEngine.SocialPlatforms.GameCenter;
+#endif
+#if !UNITY_TVOS
 using Facebook.Unity;
 #endif
 
@@ -77,6 +83,8 @@ public class GameController : MonoBehaviour
         liveEventButton,
         tieredEventButton,
         FBLoginButton,
+        platformLoginButton,
+        platformLogoutButton,
         FBLogoutButton,
         FBShareButton;
 
@@ -110,6 +118,9 @@ public class GameController : MonoBehaviour
         Spil.Instance.OnPrivacyPolicyStatus -= OnPrivacyPolicyStatus;
         Spil.Instance.OnPrivacyPolicyStatus += OnPrivacyPolicyStatus;
         
+        Spil.Instance.OnUserIdChangeRequest -= OnUserIdChangeRequest;
+        Spil.Instance.OnUserIdChangeRequest += OnUserIdChangeRequest;
+        
         Spil.Instance.OnReward -= Spil_Instance_OnReward;
         Spil.Instance.OnReward += Spil_Instance_OnReward;
 
@@ -119,6 +130,9 @@ public class GameController : MonoBehaviour
         Spil.Instance.OnDailyBonusClosed -= OnDailyBonusClosed;
         Spil.Instance.OnDailyBonusClosed += OnDailyBonusClosed;
 
+        Spil.Instance.OnDailyBonusAvailable -= OnDailyBonusAvailable;
+        Spil.Instance.OnDailyBonusAvailable += OnDailyBonusAvailable;
+        
         Spil.Instance.OnDailyBonusNotAvailable -= OnDailyBonusNotAvailable;
         Spil.Instance.OnDailyBonusNotAvailable += OnDailyBonusNotAvailable;
 
@@ -268,14 +282,6 @@ public class GameController : MonoBehaviour
         }
         
         backgroundMusic.Play();
-
-        List<string> itReason = new List<string>();
-        itReason.Add("bla");
-        itReason.Add("bla2");
-        
-        SpilTracking.DialogueChosen("test", "test1", "test2", true, false, false, false, false)
-            .AddIterationReason(itReason)
-            .Track();
     }
 
     void Update() {
@@ -334,10 +340,29 @@ public class GameController : MonoBehaviour
         Spil.Instance.RequestServerTime();
         Spil.Instance.RequestLiveEvent();
         Spil.Instance.RequestTieredEvents();
+        Spil.Instance.RequestDailyBonus();
         SavePrivateGameState();
         RequestMoreApps();
-        
+
         FireTrackEventSample();
+
+        Spil.Instance.SetCurrencyLimit(28, 5000);
+
+        #if UNITY_IOS
+        platformLoginButton.GetComponentInChildren<Text>().text = "GAMECENTER LOGIN";
+        platformLogoutButton.GetComponentInChildren<Text>().text = "GAMECENTER LOGOUT";
+        #elif UNITY_ANDROID
+        platformLoginButton.GetComponentInChildren<Text>().text = "PLAY GAMES LOGIN";
+        platformLogoutButton.GetComponentInChildren<Text>().text = "PLAY GAMES LOGOUT";
+        #endif
+        if (PlayerPrefs.GetInt("platform_connected") == 1)
+        {
+            #if UNITY_IOS
+            Invoke("InitGameCenter", 1);
+            #elif UNITY_ANDROID
+            Invoke("InitGooglePlayGames", 10);
+            #endif
+        }
     }
     
     public void OnPrivacyPolicyStatus(bool accepted) {
@@ -367,7 +392,6 @@ public class GameController : MonoBehaviour
     }
 
     public void SetupNewGame() {
-
         ClearOutOldObsticles();
         playerScore = 0;
         tapperScore = 0;
@@ -540,6 +564,10 @@ public class GameController : MonoBehaviour
         shopPanelController.RequestRewardVideo();
     }
 
+    private void OnUserIdChangeRequest(string newuserid) {
+        Spil.Instance.ConfirmUserIdChange();
+    }
+    
     public void OnGameStateUpdated(string access) {
         if (access.Equals("private")) {
             Debug.Log("Private Game State Updated! Request new private game state!");
@@ -586,8 +614,13 @@ public class GameController : MonoBehaviour
         overlayEnabled = false;
     }
 
+    private void OnDailyBonusAvailable() {
+       dailyBonusButton.SetActive(true);
+    }
+    
     public void OnDailyBonusNotAvailable() {
         Debug.Log("DailyBonusNotAvailable");
+        dailyBonusButton.SetActive(false);
     }
 
     public void OnPlayerDataUpdated(string reason, PlayerDataUpdatedData updatedData) {
@@ -627,7 +660,7 @@ public class GameController : MonoBehaviour
     private void OnFBInitComplete() {
         Debug.Log("Facebook Initialised");
         
-        if (Spil.Instance.IsLoggedIn()) {
+        if (Spil.Instance.IsLoggedIn() && PlayerPrefs.GetInt("facebook_connected") == 1) {
 #if UNITY_IOS
 			if (FB.IsLoggedIn) {
 				Debug.Log("FB already Logged In!");
@@ -636,9 +669,9 @@ public class GameController : MonoBehaviour
 				String token = AccessToken.CurrentAccessToken.TokenString;
 				if (socialId != null && token != null) {
 					Debug.Log("Saving User Id");
+				    PlayerPrefs.SetInt("facebook_connected", 1);
 					Spil.Instance.UserLogin(socialId, "facebook", token);
 
-					Debug.Log("Requesting friends list");
 					//FB.API("/me/friends?fields=id,name", HttpMethod.GET, HandleFriendsLoaded);
 
 					FBLoginButton.SetActive(false);
@@ -660,6 +693,30 @@ public class GameController : MonoBehaviour
 #endif
         shopPanelController.iapManager.requestFBIAPS();
     }
+    
+    public void PlatformSocialLogin() {
+        Debug.Log("Requesting Log In information");
+        overlayEnabled = true;
+        
+        #if UNITY_IOS
+        InitGameCenter();
+        #else
+        InitGooglePlayGames();
+        #endif
+    }
+
+    public void PlatformSocialLogout() {
+        Debug.Log("Logout");
+        overlayEnabled = true;
+        PlayerPrefs.SetInt("platform_connected", 0);
+        platformLoginButton.SetActive(true);
+        platformLogoutButton.SetActive(false);
+        if (PlayerPrefs.GetInt("facebook_connected") == 0)
+        {
+            highScoreButton.SetActive(false);
+            Spil.Instance.UserLogout(false);
+        }
+    }
 
     public void FacebookLogin() {
 #if !UNITY_TVOS //&& !UNITY_WEBGL
@@ -667,18 +724,23 @@ public class GameController : MonoBehaviour
             overlayEnabled = true;
             
             FB.LogInWithReadPermissions(new List<string>() {
-                "user_friends"
+                //"user_friends"
             }, this.HandleResult);
 #endif
     }
 
     public void FacebookLogout() {
 #if !UNITY_TVOS //&& !UNITY_WEBGL
+        PlayerPrefs.SetInt("facebook_connected", 0);
+
         FB.LogOut();
-        Spil.Instance.UserLogout(false);
         FBLoginButton.SetActive(true);
         FBLogoutButton.SetActive(false);
-        highScoreButton.SetActive(false);
+        if (PlayerPrefs.GetInt("platform_connected") == 0)
+        {
+            highScoreButton.SetActive(false);
+            Spil.Instance.UserLogout(false);
+        }
         FBShareButton.SetActive(false);
 #endif
     }
@@ -707,7 +769,6 @@ public class GameController : MonoBehaviour
                     Debug.Log("Saving User Id");
                     socialId = result.ResultDictionary[key].ToString();
 
-                    Debug.Log("Requesting friends list");
                     //FB.API("/me/friends?fields=id,name", HttpMethod.GET, HandleFriendsLoaded);
                 }
 
@@ -731,6 +792,7 @@ public class GameController : MonoBehaviour
 
             if (socialId != null && token != null) {
                 Spil.Instance.UserLogin(socialId, "facebook", token);
+                PlayerPrefs.SetInt("facebook_connected", 1);
             }
         }
     }
@@ -792,6 +854,10 @@ public class GameController : MonoBehaviour
 
     public void RequestDailyBonus() {
         Spil.Instance.RequestDailyBonus();
+    }
+
+    public void ShowDailyBonus() {
+        Spil.Instance.ShowDailyBonus();
     }
 
     public static string GetNameForFbId(string fbId) {
@@ -1044,11 +1110,14 @@ public class GameController : MonoBehaviour
             Spil.Instance.ResetData();
             Spil.Instance.RequestLiveEvent();
             Spil.Instance.RequestTieredEvents();
+            Spil.Instance.RequestDailyBonus();
             
             PlayerPrefs.SetInt("Background", 0);
             PlayerPrefs.SetInt("Skin", 0);
             PlayerPrefs.SetFloat("Speed", 1);
         
+            Spil.Instance.SetCurrencyLimit(28, 5000);
+            
             player.SetupPlayerSkin();
             foreach (SpriteRenderer spriteRenderer in backgroundSpriteRenderes) {
                 spriteRenderer.sprite = backgroundSprites[PlayerPrefs.GetInt("Background", 0)];
@@ -1070,16 +1139,17 @@ public class GameController : MonoBehaviour
         Spil.Instance.ResetData();
         Spil.Instance.RequestLiveEvent();
         Spil.Instance.RequestTieredEvents();
+        Spil.Instance.RequestDailyBonus();
             
         PlayerPrefs.SetInt("Background", 0);
         PlayerPrefs.SetInt("Skin", 0);
+        
+        Spil.Instance.SetCurrencyLimit(28, 5000);
         
         player.SetupPlayerSkin();
         foreach (SpriteRenderer spriteRenderer in backgroundSpriteRenderes) {
             spriteRenderer.sprite = backgroundSprites[PlayerPrefs.GetInt("Background", 0)];
         }
-        
-        
     }
 
     private void OnLogoutFailed(SpilErrorMessage errorMessage) {
@@ -1127,6 +1197,8 @@ public class GameController : MonoBehaviour
 	    
 	    showMergeDialog = true;
 	    showSyncDialog = true;
+	    
+	    
 	}
 
 	void OnUserDataError(SpilErrorMessage errorMessage) {
@@ -1241,7 +1313,96 @@ public class GameController : MonoBehaviour
     public void CloseQuitGamePanel() {
         quitGamePanel.SetActive(false);
     }
+
+    private void InitGameCenter()
+    {
+        #if UNITY_IOS
+        Social.localUser.Authenticate(ProcessAuthentication);
+        #endif
+    }
     
+    #if UNITY_IOS
+    void ProcessAuthentication (bool success) {
+        Debug.Log("Player is authenticated: " + success);
+
+        if (success)
+        {
+            Debug.Log("Generate identity...");
+            GCIdentity.GenerateIdentity(this.name);
+        }
+    }
+    
+    public void OnIdentitySuccess(string identity)
+    {
+        var parsed = GCIdentity.ParseIdentity(identity);
+        Debug.LogFormat("Key: {0}\nSign: {1}\nSalt: {2}\nTimestamp: {3}", parsed[0], parsed[1], parsed[2], parsed[3]);
+
+        string publicKeyUrl = parsed[0];
+        string signature = parsed[1];
+        string salt = parsed[2];
+        string timestamp = parsed[3];
+        
+        Dictionary<string,object> socialValidationData = new Dictionary<string,object>();
+        socialValidationData.Add("publicKeyUrl", publicKeyUrl);
+        socialValidationData.Add("salt", salt);
+        socialValidationData.Add("timestamp", timestamp);
+        
+        PlayerPrefs.SetInt("platform_connected", 1);
+        Spil.Instance.UserLogin(Social.localUser.id, "game_center", signature, socialValidationData);
+        
+        overlayEnabled = false;
+        platformLoginButton.SetActive(false);
+        platformLogoutButton.SetActive(true);
+        highScoreButton.SetActive(true);
+    }
+
+    public void OnIdentityError(string error)
+    {
+        Debug.Log("Identity error: " + error);
+    }
+    #endif
+    
+    private void InitGooglePlayGames() {
+        #if UNITY_ANDROID
+        PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
+            // requests a server auth code be generated so it can be passed to an
+            //  associated back end server application and exchanged for an OAuth token.
+            .RequestServerAuthCode(false)
+            .RequestIdToken()
+            .Build();
+
+        PlayGamesPlatform.InitializeInstance(config);
+        // recommended for debugging:
+        PlayGamesPlatform.DebugLogEnabled = true;
+        // Activate the Google Play Games platform
+        PlayGamesPlatform.Activate();
+        
+        Social.localUser.Authenticate((bool success) => {
+            // handle success or failure
+            Debug.Log("GPG Login status success: " + success);
+            Debug.Log("GPG Server Auth: " + PlayGamesPlatform.Instance.GetServerAuthCode());
+            Debug.Log("GPG User Id: " + PlayGamesPlatform.Instance.GetUserId());
+            Debug.Log("GPG Token Id: " + PlayGamesPlatform.Instance.GetIdToken());
+            
+            PlayGamesPlatform.Instance.GetAnotherServerAuthCode(false, Target);
+
+            if(success) {
+                PlayerPrefs.SetInt("platform_connected", 1);
+                overlayEnabled = false;
+                platformLoginButton.SetActive(false);
+                platformLogoutButton.SetActive(true);
+                highScoreButton.SetActive(false);
+                Spil.Instance.UserLogin(PlayGamesPlatform.Instance.GetUserId(), "GPG", PlayGamesPlatform.Instance.GetIdToken());
+            }
+        });
+        #endif
+    }
+
+    private void Target(string obj) {
+        Debug.Log("GPG Server Another Auth: " + obj);
+    }
+
+
     /*public void FBShareScore ()
     {
         System.Uri url = new System.Uri ("http://files.cdn.spilcloud.com/10/1479133368_tappy_logo.png");

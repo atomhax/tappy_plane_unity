@@ -18,6 +18,8 @@
 @property (strong, nonatomic) NSString *imageUrl;
 @property (strong, nonatomic) NSString *displayName;
 @property (strong, nonatomic) NSString *displayDescription;
+@property (assign, nonatomic) int limit;
+@property (strong, nonatomic) NSString *reportingName;
 
 @property (assign, nonatomic) int isGacha;
 @property (strong, nonatomic) NSMutableArray *gachaContent;
@@ -27,5 +29,6 @@
 -(NSMutableDictionary*)toJSONObject:(bool)includeContent;
 
 -(GachaContent*)getRandomGachaReward;
+-(GachaContent*)getRandomGachaReward:(NSArray*)perkItems;
 
 @end

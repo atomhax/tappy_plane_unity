@@ -9,6 +9,7 @@ namespace SpilGames.Unity.Base.SDK {
         public string packageId;
         public List<PackageItemData> items;
         public string discountLabel;
+        public Dictionary<string, object> properties = new Dictionary<string, object>();
     }
 
     public class PackageItemData {

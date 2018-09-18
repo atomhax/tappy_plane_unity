@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.IO;
 using UnityEditor;
 
@@ -13,7 +12,7 @@ public class SpilEditorDocumentation : EditorWindow {
         SpilEditorDocumentation window = (SpilEditorDocumentation) EditorWindow.GetWindow(typeof(SpilEditorDocumentation));
         window.autoRepaintOnSceneChange = true;
         window.titleContent.text = "Documentation";
-        window.minSize = new Vector2(1000, 600);
+        window.minSize = new Vector2(1000, 700);
         window.Show();
     }
 
@@ -193,6 +192,15 @@ public class SpilEditorDocumentation : EditorWindow {
         if (GUILayout.Button("Implementing The Spil SDK", GUILayout.Width(400))) {
             Application.OpenURL("http://www.spilgames.com/integration/unity/implementing-spil-sdk/");
         }
+        
+        GUILayout.Label("");
+        GUILayout.Label("When setting up your game to create an Android build, make sure you have done the following steps:", EditorStyles.wordWrappedLabel);
+        GUILayout.Label("");
+        GUILayout.Label("1. Used the correct AndroidManifest.xml definition. This means that the Android application is the SpilSDKApplication (com.spilgames.spilsdk.activities.SpilSDKApplication) and the main Android activity is the SpilUnityActivity (com.spilgames.spilsdk.activities.SpilUnityActivity). We advise that you pay attention to the supplied AndroidManifest.xml contained in the Plugin package.", EditorStyles.wordWrappedLabel);
+        GUILayout.Label("2. The Google Play Services and AppCompat Dependencies are resolved using the mainTemplate.gradle file provided by the Spil SDK. If you are using Gradle building, make sure you do not have the .aar files for Google Play Services or Appcompat in your Plugins/Android folder as there will be dependency conflicts.", EditorStyles.wordWrappedLabel);
+        GUILayout.Label("3. If you are not using the Unity Version 2017.+ or Gradle Main Template provided in the SDK make sure to copy the Google Play Services libraries in the correct folder (Plugins/Android) and that there are no multiple version of the Google Play Services. No subdirectories should be used.", EditorStyles.wordWrappedLabel);
+        GUILayout.Label("4. Before building for Android, go to the Spil SDK menu (Top Bar), select the Configuration menu, go into the Android tab and click the Verify Android Setup button. Pay attention to the console for any potential issues.", EditorStyles.wordWrappedLabel);
+        GUILayout.Label("");
     }
 
     private void DrawEventTracking() {

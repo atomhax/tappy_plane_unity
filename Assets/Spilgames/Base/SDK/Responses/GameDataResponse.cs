@@ -14,6 +14,7 @@ namespace SpilGames.Unity.Base.SDK {
         public string imageUrl;
         public string displayName;
         public string displayDescription;
+        public int limit;
     }
 
     public class SpilItemData {
@@ -21,12 +22,14 @@ namespace SpilGames.Unity.Base.SDK {
         public string name;
         public int initialValue;
         public int type;
+        public string reportingName;
         public string imageUrl;
         public string displayName;
         public string displayDescription;
         public bool isGacha;
         public List<SpilGachaContent> content;
         public Dictionary<string, object> properties = new Dictionary<string, object>();
+        public int limit;
     }
 
     public class SpilGachaContent {
@@ -57,6 +60,7 @@ namespace SpilGames.Unity.Base.SDK {
         public string imageUrl;
         public string displayName;
         public string displayDescription;
+        public Dictionary<string, object> properties = new Dictionary<string, object>();
     }
 
     public class SpilGameData {
@@ -76,12 +80,14 @@ namespace SpilGames.Unity.Base.SDK {
         public string label;
         public int position;
         public List<SpilShopImageEntry> imageEntries;
+        public Dictionary<string, object> properties = new Dictionary<string, object>(); 
     }
 
     public class SpilShopTabData {
         public string name;
         public List<SpilShopImageEntry> imageEntries;
         public List<SpilShopEntryData> entries;
+        public Dictionary<string, object> properties = new Dictionary<string, object>();
     }
 
     public class SpilShopImageEntry {
@@ -105,6 +111,7 @@ namespace SpilGames.Unity.Base.SDK {
         public List<SpilPromotionExtraEntity> extraEntities;
         public List<SpilPromotionPriceOverride> priceOverride;
         public List<SpilPromotionGameAsset> gameAssets;
+        public bool hasSplashscreen;
     }
 
     public class SpilPromotionAffectedEntity {

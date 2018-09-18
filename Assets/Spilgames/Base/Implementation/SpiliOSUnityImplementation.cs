@@ -7,6 +7,8 @@ using SpilGames.Unity.Json;
 using System.Collections;
 using SpilGames.Unity.Helpers;
 using System.Runtime.Serialization.Formatters;
+using SpilGames.Unity.Helpers.DailyBonus;
+using SpilGames.Unity.Helpers.PlayerData.Perk;
 
 namespace SpilGames.Unity.Base.Implementations
 {
@@ -27,7 +29,16 @@ namespace SpilGames.Unity.Base.Implementations
     #endregion
 
     #region Game config
-
+    
+        /// <summary>
+        /// Requests the game config.
+        /// </summary>
+        /// <returns></returns>
+        public override void RequestGameConfig()
+        {
+            requestGameConfigNative();
+        }
+    
         /// <summary>
         /// Returns the game config as a json string.
         /// This is not essential for developers so could be made private (getConfig<T>() uses it so it cannot be removed entirely) but might be handy for some developers so we left it in.
@@ -100,6 +111,7 @@ namespace SpilGames.Unity.Base.Implementations
         public override string GetPackagePromotion(string packageId) {
             return getPackagePromotionNative(packageId);
         }
+        [DllImport("__Internal")]
         private static extern string getPackagePromotionNative(string packageId);
         
         public override void ShowPromotionScreen(int promotionId) {
@@ -135,6 +147,14 @@ namespace SpilGames.Unity.Base.Implementations
         /// </summary>
         internal override void SpilInit(bool withPrivacyPolicy)
         {
+            if (Spil.Instance.GameData != null) {
+                Spil.Instance.GameData.RefreshData(Spil.Instance);
+            }
+
+            if (Spil.Instance.PlayerData != null) {
+                Spil.Instance.PlayerData.RefreshData(Spil.Instance);
+            }
+    
             JSONObject options = new JSONObject();
             options.AddField("isUnity", true);
             options.AddField("privacyPolicyEnabled", withPrivacyPolicy);
@@ -157,7 +177,7 @@ namespace SpilGames.Unity.Base.Implementations
         /// <param name="dict"></param>
         internal override void SendCustomEventInternal(string eventName, Dictionary<string, object> dict)
         {
-            SpilLogging.Log("SendCustomEvent \"" + eventName + "\"" + (dict == null ? "" : " params: " + JsonHelper.DictToJSONObject(dict).ToString()));
+            SpilLogging.Log("SendCustomEvent: " + eventName + " params: " + JsonHelper.getJSONFromObject(dict));
 
             string parameters = null;
 
@@ -311,6 +331,16 @@ namespace SpilGames.Unity.Base.Implementations
         }
         [DllImport("__Internal")]
         private static extern void setExternalUserIdNative(string providerId, string userId);
+        
+        /// <summary>
+        /// Confirm the user id change
+        /// </summary>
+        public override void ConfirmUserIdChange()
+        {
+            confirmUserIdChangeNative();
+        }
+        [DllImport("__Internal")]
+        private static extern void confirmUserIdChangeNative();
 
         public override void SetCustomBundleId(string bundleId)
         {
@@ -505,22 +535,40 @@ namespace SpilGames.Unity.Base.Implementations
         [DllImport("__Internal")]
         private static extern void subtractItemFromInventoryNative(int itemId, int amount, string reason, string location, string reasonDetails, string transactionId);
 
-        public override void BuyBundle(int bundleId, string reason, string location, string reasonDetails = null, string transactionId = null)
+        public override void BuyBundle(int bundleId, string reason, string location, string reasonDetails = null, string transactionId = null, List<PerkItem> perkItems = null)
         {
-            buyBundleNative(bundleId, reason, location, reasonDetails, transactionId);
+            string perksString = JsonHelper.getJSONFromObject(perkItems);
+            buyBundleNative(bundleId, reason, location, reasonDetails, transactionId, perksString);
         }
 
         [DllImport("__Internal")]
-        private static extern void buyBundleNative(int bundleId, string reason, string location, string reasonDetails, string transactionId);
+        private static extern void buyBundleNative(int bundleId, string reason, string location, string reasonDetails, string transactionId, string perksString);
 
-        public override void OpenGacha(int gachaId, string reason, string location, string reasonDetails = null)
+        public override void OpenGacha(int gachaId, string reason, string location, string reasonDetails = null, List<PerkItem> perkItems = null)
         {
-            openGachaNative(gachaId, reason, reasonDetails, location);
+            string perksString = JsonHelper.getJSONFromObject(perkItems);
+            openGachaNative(gachaId, reason, reasonDetails, location, perksString);
         }
 
         [DllImport("__Internal")]
-        private static extern void openGachaNative(int bundleId, string reason, string reasonDetails, string location);
+        private static extern void openGachaNative(int bundleId, string reason, string reasonDetails, string location, string perksString);
 
+        public override void SetCurrencyLimit(int currencyId, int limit)
+        {
+            setCurrencyLimitNative(currencyId, limit);    
+        }
+    
+        [DllImport("__Internal")]
+        private static extern void setCurrencyLimitNative(int currencyId, int limit);
+    
+        public override void SetItemLimit(int itemId, int limit)
+        {
+            setItemLimitNative(itemId, limit);    
+        }
+    
+        [DllImport("__Internal")]
+        private static extern void setItemLimitNative(int itemId, int limit);    
+    
         public override void ResetPlayerData()
         {
             resetPlayerDataNative();
@@ -549,6 +597,9 @@ namespace SpilGames.Unity.Base.Implementations
 
     #region Game config
 
+        [DllImport("__Internal")]
+        private static extern void requestGameConfigNative();
+    
         [DllImport("__Internal")]
         private static extern string getConfigNative();
 
@@ -692,6 +743,32 @@ namespace SpilGames.Unity.Base.Implementations
         [DllImport("__Internal")]
         private static extern void requestDailyBonusNative();
 
+        protected override void ShowDailyBonusNative()
+        {
+            showDailyBonusNative();
+        }
+
+        [DllImport("__Internal")]
+        private static extern void showDailyBonusNative();
+    
+        public override DailyBonus GetDailyBonusConfig()
+        {
+            SpilDailyBonus spilDailyBonus = JsonHelper.getObjectFromJson<SpilDailyBonus>(getDailyBonusConfigNative());
+            DailyBonus dailyBonus = new DailyBonus(spilDailyBonus.url, spilDailyBonus.type, spilDailyBonus.days);
+            return dailyBonus;
+        }
+
+        [DllImport("__Internal")]
+        private static extern string getDailyBonusConfigNative();
+    
+        public override void CollectDailyBonus()
+        {
+            collectDailyBonusNative();
+        }
+
+        [DllImport("__Internal")]
+        private static extern void collectDailyBonusNative();
+    
         public override void RequestSplashScreen(string type)
         {
             requestSplashScreenNative(type);
@@ -751,13 +828,14 @@ namespace SpilGames.Unity.Base.Implementations
 
     #region Social Login
 
-        public override void UserLogin(string socialId, string socialProvider, string socialToken)
+        public override void UserLogin(string socialId, string socialProvider, string socialToken, Dictionary<string, object> socialValidationData = null)
         {
-            loginNative(socialId, socialProvider, socialToken);
+            string socialValidationDataJson = socialValidationData == null ? "" : JsonHelper.getJSONFromObject(socialValidationData);
+            loginNative(socialId, socialProvider, socialToken, socialValidationDataJson);
         }
 
         [DllImport("__Internal")]
-        private static extern void loginNative(string externalUserId, string externalProviderId, string externalToken);
+        private static extern void loginNative(string externalUserId, string externalProviderId, string externalToken, string socialValidationData);
 
         public override void UserLogout(bool global)
         {

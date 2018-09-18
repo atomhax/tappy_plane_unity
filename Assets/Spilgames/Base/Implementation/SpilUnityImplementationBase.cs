@@ -7,19 +7,21 @@ using SpilGames.Unity.Base.Implementations.Tracking;
 using SpilGames.Unity.Json;
 using SpilGames.Unity.Base.SDK;
 using SpilGames.Unity.Helpers.AssetBundles;
+using SpilGames.Unity.Helpers.DailyBonus;
 using SpilGames.Unity.Helpers.EventParams;
 using SpilGames.Unity.Helpers.IAPPackages;
 using SpilGames.Unity.Helpers.Promotions;
 using SpilGames.Unity.Helpers.GameData;
 using SpilGames.Unity.Helpers.PlayerData;
+using SpilGames.Unity.Helpers.PlayerData.Perk;
 
 namespace SpilGames.Unity.Base.Implementations{
     public abstract class SpilUnityImplementationBase{
         public static string PluginName = "Unity";
-        public static string PluginVersion = "3.0.0";
+        public static string PluginVersion = "3.1.0";
 
-        public static string AndroidVersion = "3.0.0";
-        public static string iOSVersion = "3.0.0";
+        public static string AndroidVersion = "3.1.0";
+        public static string iOSVersion = "3.1.0";
 	    
         /// <summary>
         /// Contains the game data: items, currencies, bundles (collections of items/currencies for softcurrency/hardcurrency transactions and gifting), Shop and Gacha boxes.
@@ -35,7 +37,9 @@ namespace SpilGames.Unity.Base.Implementations{
 		/// Same as Spil.PlayerData
         /// </summary>
         public PlayerDataHelper PlayerData { get { return Spil.PlayerData; } }
-        
+
+	    private DailyBonusHelper DailyBonusHelper;
+	    
         #region Events
 
         #region Standard Spil events
@@ -1227,7 +1231,6 @@ namespace SpilGames.Unity.Base.Implementations{
         }
         
         #endregion
-
 	            
         #region Game config
 
@@ -1880,6 +1883,32 @@ namespace SpilGames.Unity.Base.Implementations{
 			}
 		}
 
+	    public delegate void DailyBonusAvailable();
+
+	    /// <summary>
+	    /// This event indicates that a daily bonus screen was available.
+	    /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-splash-daily-bonus-screen/
+	    /// </summary>
+	    public event DailyBonusAvailable OnDailyBonusAvailable;
+
+	    /// <summary>
+	    /// This method is meant for internal use only, it should not be used by developers.
+	    /// </summary>
+	    public void fireDailyBonusAvailable(string type) {
+		    SpilLogging.Log("Daily bonus available: " + type);
+
+		    DailyBonusHelper = Spil.MonoInstance.gameObject.AddComponent<DailyBonusHelper>();
+		    DailyBonusHelper.DailyBonus = GetDailyBonusConfig();
+		    
+		    if (type != null && type.Equals("assetBundle")) {
+			    Spil.MonoInstance.StartCoroutine(DailyBonusHelper.DownloadDailyBonusAssets());
+		    }
+		    
+		    if(OnDailyBonusAvailable != null) {
+			    OnDailyBonusAvailable();
+		    }
+	    }
+	    
         public delegate void DailyBonusNotAvailable();
 
         /// <summary>
@@ -1954,6 +1983,28 @@ namespace SpilGames.Unity.Base.Implementations{
 				OnDailyBonusReward(receivedReward);
 			}
 		}
+
+        public delegate void DeepLinkReceived(string url, JSONObject payload);
+
+        /// <summary>
+        /// This event indicates that a deeplink was received. The developer can subscribe to this event, read the deeplink url and payload and react to the deeplink.
+        /// </summary>
+		public event DeepLinkReceived OnDeepLinkReceived;
+
+        /// <summary>
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// </summary>
+        public void fireDeepLinkReceived(string deepLink) {
+            SpilLogging.Log("DeepLinkReceived: " + deepLink);
+
+            JSONObject deeplinkJSON = new JSONObject(deepLink);
+            string url = deeplinkJSON.GetField("url").str;
+            JSONObject payload = deeplinkJSON.GetField("payload");
+
+            if (OnDeepLinkReceived != null) {
+                OnDeepLinkReceived(url, payload);
+            }
+        }
 
         public delegate void RewardTokenReceived(string token, List<RewardObject> reward, string rewardType);
 
@@ -2819,6 +2870,46 @@ namespace SpilGames.Unity.Base.Implementations{
 
         #endregion
 
+	    #region Initialization
+
+	    public delegate void UserIdChangeRequest(string newUserId);
+
+	    /// <summary>
+	    /// This event indicates that the game needs to inform the user that a user id change has been done from the backend.
+	    /// </summary>
+	    public event UserIdChangeRequest OnUserIdChangeRequest;
+
+	    /// <summary>
+	    /// This method is meant for internal use only, it should not be used by developers.
+	    /// </summary>
+	    public void fireUserIdChangeRequest(string newUserId) {
+		    SpilLogging.Log("fireUserIdChangeRequest");
+
+		    if(OnUserIdChangeRequest != null) {
+			    OnUserIdChangeRequest(newUserId);
+		    }
+	    }
+
+	    public delegate void UserIdChangeCompleted();
+
+	    /// <summary>
+	    /// This event indicates that the user id changing was completed, the data is in the process of resetting and the game should restart (not hard restart).
+	    /// </summary>
+	    public event UserIdChangeCompleted OnUserIdChangeCompleted;
+
+	    /// <summary>
+	    /// This method is meant for internal use only, it should not be used by developers.
+	    /// </summary>
+	    public void fireUserIdChangeCompleted() {
+		    SpilLogging.Log("fireUserIdChangeCompleted");
+
+		    if(OnUserIdChangeCompleted != null) {
+			    OnUserIdChangeCompleted();
+		    }
+	    }
+	    
+	    #endregion
+	    
         #region Privacy Policy
 
         public delegate void PrivacyPolicyStatus(bool accepted);
@@ -2835,7 +2926,7 @@ namespace SpilGames.Unity.Base.Implementations{
 		public void firePrivacyPolicyStatus(string sAccepted) {
 			SpilLogging.Log("firePrivacyPolicyStatus");
 
-			bool accepted =Convert.ToBoolean(sAccepted);
+			bool accepted = Convert.ToBoolean(sAccepted);
 
 			if (accepted) {
 				if (Spil.UseUnityPrefab) {
@@ -2844,6 +2935,7 @@ namespace SpilGames.Unity.Base.Implementations{
 					Spil.Instance.SpilInit(true);
 				}
 			}
+			
 			if(OnPrivacyPolicyStatus != null){
 				OnPrivacyPolicyStatus(accepted);
 			}
@@ -2940,10 +3032,14 @@ namespace SpilGames.Unity.Base.Implementations{
         
         public abstract void SetPluginInformation(string PluginName, string PluginVersion);
 
+	    public abstract void ConfirmUserIdChange();
+	    
         #endregion
 
         #region Config
 
+	    public abstract void RequestGameConfig();
+	    
         public abstract string GetConfigAll();
 
         public abstract string GetConfigValue(string key);
@@ -3032,6 +3128,27 @@ namespace SpilGames.Unity.Base.Implementations{
         /// </summary>
         public abstract void RequestDailyBonus();
 
+	    /// <summary>
+	    /// Requests the daily bonus screen.
+	    /// </summary>
+	    public void ShowDailyBonus() {
+		    if (DailyBonusHelper.DailyBonus.Type != null && DailyBonusHelper.DailyBonus.Type.Equals("assetBundle")) {
+			    DailyBonusHelper.ShowDailyBonus();
+		    } else {
+			    ShowDailyBonusNative();
+		    }
+	    }
+
+	    protected abstract void ShowDailyBonusNative();
+
+	    public DailyBonusHelper GetDailyBonusHelper() {
+		    return DailyBonusHelper;
+	    }
+	    
+	    public abstract DailyBonus GetDailyBonusConfig();
+
+	    public abstract void CollectDailyBonus();
+	    
         /// <summary>
         /// Requests the splashscreen.
         /// </summary>
@@ -3107,10 +3224,14 @@ namespace SpilGames.Unity.Base.Implementations{
             string reasonDetails = null, string transactionId = null);
 
         public abstract void BuyBundle(int bundleId, string reason, string location, string reasonDetails = null,
-            string transactionId = null);
+            string transactionId = null, List<PerkItem> perkItems = null);
 
-        public abstract void OpenGacha(int gachaId, string reason, string location, string reasonDetails = null);
-        
+	    public abstract void OpenGacha(int gachaId, string reason, string location, string reasonDetails = null, List<PerkItem> perkItems = null);
+
+	    public abstract void SetCurrencyLimit(int currencyId, int limit);
+
+	    public abstract void SetItemLimit(int itemId, int limit);
+	    
         /// <summary>
         /// Sets the state of the private game.
         /// </summary>
@@ -3201,7 +3322,7 @@ namespace SpilGames.Unity.Base.Implementations{
 
         #region Social Login
 
-        public abstract void UserLogin(string socialId, string socialProvider, string socialToken);
+        public abstract void UserLogin(string socialId, string socialProvider, string socialToken, Dictionary<string, object> socialValidationData = null);
 
         public abstract void UserLogout(bool global);
 

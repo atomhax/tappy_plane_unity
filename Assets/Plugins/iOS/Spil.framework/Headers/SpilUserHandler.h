@@ -22,6 +22,8 @@
 
 -(void)syncSpilUserId;
 -(NSString*)getSpilUserId;
+-(void)checkForSLOTUidChange;
+-(void)confirmUserIdChange;
 
 // --- Device id ---
 
@@ -39,7 +41,7 @@
 
 // --- Login ---
 
--(void)loginWithExternalUserId:(NSString*)externalUserId externalProviderId:(NSString*)externalProviderId externalToken:(NSString*)externalToken;
+-(void)loginWithExternalUserId:(NSString*)externalUserId externalProviderId:(NSString*)externalProviderId externalToken:(NSString*)externalToken socialValidationData:(NSDictionary*)socialValidationData;
 -(BOOL)isLoggedIn;
 -(void)logout:(BOOL)global;
 -(void)userPlayAsGuest;

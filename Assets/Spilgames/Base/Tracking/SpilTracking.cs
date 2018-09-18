@@ -186,7 +186,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
             }
             
             /// <param name="customCreated">If set to <c>true</c> custom created.</param>
-            public BaseLevelStart AddCustomCreated(float customCreated) {
+            public BaseLevelStart AddCustomCreated(bool customCreated) {
                 parameters.Add("customCreated", customCreated);
                 return this;
             }
@@ -253,9 +253,9 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
                 parameters.Add("stars", stars);
                 return this;
             }
-            
+
             /// <param name="speed">The speed at which the level was completed.</param>
-            public BaseLevelComplete AddSpeed(string speed) {
+            public BaseLevelComplete AddSpeed(int speed) {
                 parameters.Add("speed", speed);
                 return this;
             }
@@ -298,7 +298,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
             
             /// <param name="avgCombos">The average number of combos used for completing the level.</param>
             public BaseLevelComplete AddAvgCombos(float avgCombos) {
-                parameters.Add("difficulty", avgCombos);
+                parameters.Add("avgCombos", avgCombos);
                 return this;
             }
             
@@ -366,7 +366,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
             }
             
             /// <param name="speed">The speed at which the level was completed.</param>
-            public BaseLevelFailed AddSpeed(string speed) {
+            public BaseLevelFailed AddSpeed(int speed) {
                 parameters.Add("speed", speed);
                 return this;
             }
@@ -409,7 +409,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
             
             /// <param name="avgCombos">The average number of combos used for completing the level.</param>
             public BaseLevelFailed AddAvgCombos(float avgCombos) {
-                parameters.Add("difficulty", avgCombos);
+                parameters.Add("avgCombos", avgCombos);
                 return this;
             }
             
@@ -769,7 +769,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
                 return this;
             }
 
-            /// <param name="localPrice">The local price value of an IAP. Only to be used for Amazon IAPs!</param>
+            /// <param name="localPrice">The local price value of an IAP. Only to be used for Amazon IAPs! Only numerical values, dots and comma's are allowed.</param>
             public BaseIAPPurchased AddLocalPrice(string localPrice) {
                 if (!string.IsNullOrEmpty(localPrice)) {
                     String newLocalPrice = "";
@@ -1040,7 +1040,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
             }
             
             /// <param name="startPoint">The point in game which we start to measure time.</param>
-            public BaseTimeElapLoad AddStartPoint(double startPoint) {
+            public BaseTimeElapLoad AddStartPoint(string startPoint) {
                 parameters.Add("startPoint", startPoint);
                 return this;
             }
@@ -1276,8 +1276,8 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         /// </summary>
         /// <param name="friend">The id of the friend that was added.</param>
         /// <returns></returns>
-        public static BaseSendGift FriendAdded(string friend) {
-            return new BaseSendGift(friend);
+        public static BaseFriendAdded FriendAdded(string friend) {
+            return new BaseFriendAdded(friend);
         }
         
         public class BaseGameObjectInteraction : BaseTracking {
@@ -1562,8 +1562,8 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
             }
             
             /// <param name="itemType"></param>
-            public BaseMatchWon AddItemType(string itemType) {
-                parameters.Add("itemType", itemType);
+            public BaseMatchWon AddItemType(List<string> itemType) {
+                parameters.Add("itemType", new JSONObject(JsonHelper.getJSONFromObject(itemType)));
                 return this;
             }
             
@@ -1656,7 +1656,7 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         
         public class BaseTimedAction : BaseTracking {
             public BaseTimedAction(string timedAction) {
-                eventName = "pawnMoved";
+                eventName = "timedAction";
                 parameters.Add("timedAction", timedAction);
             }
             
@@ -1690,8 +1690,8 @@ namespace SpilGames.Unity.Base.Implementations.Tracking {
         /// </summary>
         /// <param name="timedAction">The name of the action.</param>
         /// <returns></returns>
-        public static BasePawnMoved TimedAction(string timedAction) {
-            return new BasePawnMoved(timedAction);
+        public static BaseTimedAction TimedAction(string timedAction) {
+            return new BaseTimedAction(timedAction);
         }
         
         public class BaseTransitionToMenu : BaseTracking {

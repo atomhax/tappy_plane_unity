@@ -8,6 +8,7 @@
 #import <Foundation/Foundation.h>
 #import "PlayerCurrency.h"
 #import "Bundle.h"
+#import "PerkItem.h"
 
 @interface Wallet : NSObject
 
@@ -25,9 +26,9 @@
 
 -(PlayerCurrency*)getCurrency:(int)id;
 
--(NSArray*)getUpdatedCurrencies;
+-(NSArray*)getUpdatedCurrencies:(bool)includeContent;
 
--(BOOL)hasEnoughCurrencyForBundle:(Bundle*)bundle;
+-(BOOL)hasEnoughCurrencyForBundle:(Bundle*)bundle withPerkItems:(NSArray*)perkItems;
 
 -(void)reset;
 

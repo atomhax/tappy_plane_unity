@@ -174,9 +174,9 @@ extern "C" {
     
     void subtractItemFromInventoryNative(int itemId, int amount, char* reasonName, char* location, char* reasonDetails, char* transactionId);
     
-    void buyBundleNative(int itemId, char* reasonName, char* location, char* reasonDetails, char* transactionId);
+    void buyBundleNative(int itemId, char* reasonName, char* location, char* reasonDetails, char* transactionId, char* perkItemJson);
     
-    void openGachaNative(int itemId, char* reasonName, char* reasonDetails, char* location);
+    void openGachaNative(int itemId, char* reasonName, char* reasonDetails, char* location, char* perkItemJson);
     
     void resetPlayerDataNative();
     
@@ -184,13 +184,25 @@ extern "C" {
     
     void resetWalletNative();
     
+    void setCurrencyLimitNative(int currencyId, int limit);
+    
+    void setItemLimitNative(int itemId, int limit);
+    
     // --- Customer support ---
     
     void showHelpCenterWebviewNative(char* url);
     
-    // --- Web ---
+    // --- Daily bonus ---
     
     void requestDailyBonusNative();
+    
+    void showDailyBonusNative();
+    
+    char* getDailyBonusConfigNative();
+    
+    void collectDailyBonusNative();
+    
+    // --- Splashscreens ---
     
     void requestSplashScreenNative(const char* type);
     
@@ -249,7 +261,7 @@ extern "C" {
     
     // --- Login ---
     
-    void loginNative(char* externalUserId, char* externalProviderId, char* externalToken);
+    void loginNative(char* externalUserId, char* externalProviderId, char* externalToken, char* socialValidationData);
     
     bool isLoggedInNative();
     
@@ -260,6 +272,8 @@ extern "C" {
     void showAuthorizedDialogNative(char* title, char* message, char* loginButtonText, char* guestButtonText);
     
     void resetDataNative();
+    
+    void confirmUserIdChangeNative();
     
     // --- Data syncing ---
     

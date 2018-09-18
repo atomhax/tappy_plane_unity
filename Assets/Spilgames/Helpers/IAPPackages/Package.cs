@@ -37,7 +37,13 @@ namespace SpilGames.Unity.Helpers.IAPPackages {
 
         public List<PackageItem> Items;
 
-        public Package(int id, string packageId, string discountLabel, List<PackageItemData> packageItems) {
+        public Dictionary<string, object> Properties {
+            get { return properties; }
+        }
+
+        private Dictionary<string, object> properties;
+        
+        public Package(int id, string packageId, string discountLabel, List<PackageItemData> packageItems, Dictionary<string, object> properties) {
             this.id = id;
             this.packageId = packageId;
             this.discountLabel = discountLabel;
@@ -48,6 +54,8 @@ namespace SpilGames.Unity.Helpers.IAPPackages {
             foreach (PackageItemData packageItem in packageItems) {
                 Items.Add(new PackageItem(packageItem.id, packageItem.type, packageItem.value));
             }
+
+            this.properties = properties;
         }
 
         public PackageItem GetItemById(string itemId) {

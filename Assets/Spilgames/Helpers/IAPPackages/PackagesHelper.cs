@@ -19,7 +19,7 @@ namespace SpilGames.Unity.Helpers.IAPPackages {
             // Create package objects with promotion data (if any)
             if (packages != null) {
                 foreach (PackageData packageData in packages) {     
-                    Packages.Add(new Package(packageData.id, packageData.packageId, packageData.discountLabel, packageData.items));
+                    Packages.Add(new Package(packageData.id, packageData.packageId, packageData.discountLabel, packageData.items, packageData.properties));
                 }
             }
         }

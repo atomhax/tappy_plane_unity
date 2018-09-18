@@ -4,6 +4,7 @@ using SpilGames.Unity;
 using SpilGames.Unity.Base.SDK;
 using SpilGames.Unity.Helpers.GameData;
 using SpilGames.Unity.Helpers.PlayerData;
+using SpilGames.Unity.Helpers.PlayerData.Perk;
 using SpilGames.Unity.Json;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +15,7 @@ public class ShopPanelController : MonoBehaviour {
     public GameController gameController;
 
     public Text starsAmountText, diamonsAmountText, starsRewardedText, tapperAmountText, tappyChestAmountText, spilIds;
+    public Image starsPerkImage, diamondsPerkImage, tappyChestPerkImage;
 
     public List<GameObject> shopTabs = new List<GameObject>();
     public List<GameObject> tabButtons = new List<GameObject>();
@@ -78,6 +80,18 @@ public class ShopPanelController : MonoBehaviour {
         for (int i = 0; i < Spil.GameData.Shop.Tabs.Count; i++) {
             CreateTabButton(Spil.GameData.Shop.Tabs[i], i);
             CreateTab(Spil.GameData.Shop.Tabs[i]);
+        }
+
+        if (Spil.PlayerData.InventoryHasItem(100848)) {
+            starsPerkImage.gameObject.SetActive(true);
+        }
+        
+        if (Spil.PlayerData.InventoryHasItem(100847)) {
+            diamondsPerkImage.gameObject.SetActive(true);
+        }
+        
+        if (Spil.PlayerData.InventoryHasItem(100849)) {
+            tappyChestPerkImage.gameObject.SetActive(true);
         }
     }
 
@@ -209,7 +223,25 @@ public class ShopPanelController : MonoBehaviour {
     }
     
     public void OpenTappyChest() {
-        Spil.PlayerData.OpenGacha(100088, PlayerDataUpdateReasons.OpenGacha, "Shop", "Opening Tappy Chest");
+        List<PerkItem> perks = new List<PerkItem>();
+        if (Spil.PlayerData.InventoryHasItem(100849)) {
+            PerkItem perkItem = new PerkItem("TappyChestWeightPerk");
+
+            Item tappyChestWeightPerk = Spil.GameData.GetItem(100849);
+            long weightValue = (long) tappyChestWeightPerk.Properties["value"];
+            
+            PerkGachaWeight gachaWeight = new PerkGachaWeight(28, PerkGachaWeight.PerkGachaWeightType.CURRENCY, (int)weightValue);
+            perkItem.gachaWeights.Add(gachaWeight);
+            
+            perks.Add(perkItem);
+        }
+        
+        if (perks.Count > 0) {
+            Spil.Instance.OpenGacha(100088, PlayerDataUpdateReasons.OpenGacha, "Shop", "Opening Tappy Chest", perks);
+        } else {
+            Spil.Instance.OpenGacha(100088, PlayerDataUpdateReasons.OpenGacha, "Shop", "Opening Tappy Chest");
+
+        }
     }
 
     public void ShowTappyWheel() {

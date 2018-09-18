@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using SpilGames.Unity.Helpers.PlayerData.Perk;
 
 namespace SpilGames.Unity.Base.SDK {
     public class PlayerCurrencyData : SpilCurrencyData {
         public int currentBalance;
         public int delta;
+        public int overflow;
 
         public PlayerCurrencyData() {
         }
@@ -18,6 +20,7 @@ namespace SpilGames.Unity.Base.SDK {
             imageUrl = spilCurrencyData.imageUrl;
             displayName = spilCurrencyData.displayName;
             displayDescription = spilCurrencyData.displayDescription;
+            limit = spilCurrencyData.limit;
         }
     }
 
@@ -31,6 +34,7 @@ namespace SpilGames.Unity.Base.SDK {
         public int amount;
         public int delta;
         public int value;
+        public int overflow;
 
         public PlayerItemData() {
         }
@@ -45,6 +49,8 @@ namespace SpilGames.Unity.Base.SDK {
             displayDescription = spilItemData.displayDescription;
             isGacha = spilItemData.isGacha;
             content = spilItemData.content;
+            properties = spilItemData.properties;
+            limit = spilItemData.limit;
         }
     }
 
@@ -56,6 +62,9 @@ namespace SpilGames.Unity.Base.SDK {
 
     public class PlayerDataUpdatedData {
         public string reason;
+        public int bundleId;
+        public int gachaId;
+        public List<PerkItem> perkItems;
         public List<PlayerItemData> items = new List<PlayerItemData>();
         public List<PlayerCurrencyData> currencies = new List<PlayerCurrencyData>();
     }

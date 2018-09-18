@@ -398,6 +398,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 #endif
     }
 
+#if UNITY_WEBGL
     void PayCallback(IPayResult result)
     {
         iapPanelController.pleaseWaitPanel.SetActive(false);
@@ -462,7 +463,8 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
             skinSelectPanelController.PurchaseFailed();
         }
     }
-
+#endif
+	
     // RawResult should contain: { success: true }
     void consumeCallback(IGraphResult result) { }        
 }

@@ -11,42 +11,42 @@ namespace SpilGames.Unity.Helpers.GameData {
         /// The currency Id
         /// </summary>
         public int Id {
-            get { return _Id; }
+            get { return id; }
         }
 
-        private int _Id;
+        private int id;
 
         /// <summary>
         /// The currency Name
         /// </summary>
         public string Name {
-            get { return _Name; }
+            get { return name; }
         }
 
-        private string _Name;
+        private string name;
 
         /// <summary>
         /// The currency Type (Premium and Non-Premium)
         /// </summary>
         public int Type {
-            get { return _Type; }
+            get { return type; }
         }
 
-        public int _Type;
+        public int type;
 
-        private string _imageURL;
+        private string imageUrl;
 
         /// <summary>
         /// Get the local image path of the currency. (disk cache)
         /// </summary>
         public string GetImagePath() {
-            string imagePath = Spil.Instance.GetImagePath(_imageURL);
+            string imagePath = Spil.Instance.GetImagePath(imageUrl);
 
             if (imagePath != null) {
                 return imagePath;
             }
             else {
-                Spil.Instance.RequestImage(_imageURL, _Id, "currency");
+                Spil.Instance.RequestImage(imageUrl, id, "currency");
                 return null;
             }
         }
@@ -55,34 +55,44 @@ namespace SpilGames.Unity.Helpers.GameData {
         /// Checks if there is an image defined for the currency.
         /// </summary>
         public bool HasImage() {
-            return !String.IsNullOrEmpty(_imageURL);
+            return !String.IsNullOrEmpty(imageUrl);
         }
 
         /// <summary>
         /// Gets the display name of the currency.
         /// </summary>
         public string DisplayName {
-            get { return _displayName; }
+            get { return displayName; }
         }
 
-        private string _displayName;
+        private string displayName;
 
         /// <summary>
         /// Gets the display description of the currency.
         /// </summary>
         public string DisplayDescription {
-            get { return _displayDescription; }
+            get { return displayDescription; }
         }
 
-        private string _displayDescription;
+        private string displayDescription;
 
-        public Currency(int id, string name, int type, string imageUrl, string displayName, string displayDescription) {
-            _Id = id;
-            _Name = name;
-            _Type = type;
-            _imageURL = imageUrl;
-            _displayName = displayName;
-            _displayDescription = displayDescription;
+        /// <summary>
+        /// Gets the limit of the currency. This represents how many of this currency can the player have.
+        /// </summary>
+        public int Limit {
+            get { return limit; }
+        }
+
+        private int limit;
+        
+        public Currency(int id, string name, int type, string imageUrl, string displayName, string displayDescription, int limit) {
+            this.id = id;
+            this.name = name;
+            this.type = type;
+            this.imageUrl = imageUrl;
+            this.displayName = displayName;
+            this.displayDescription = displayDescription;
+            this.limit = limit;
         }
     }
 }

@@ -1,6 +1,6 @@
 /*
  * Spil Games Unity SDK 2018
- * Version 3.0.0
+ * Version 3.1.0
  *
  * If you have any questions, don't hesitate to e-mail us at info@spilgames.com
  * Be sure to check the github page for documentation and the latest updates
@@ -377,18 +377,26 @@ namespace SpilGames.Unity {
 #endif
 
         void Awake() {            
-            if ((monoInstance != null) && (this != monoInstance)) {
-                if (Application.isPlaying) {
-                    Destroy (gameObject);
-                }
-                return;
-            }
-
-            monoInstance = this;
+//            if ((monoInstance != null) && (this != monoInstance)) {
+//                if (Application.isPlaying) {
+//                    Destroy (gameObject);
+//                }
+//                return;
+//            }
+//
+//            monoInstance = this;
             
             if (Application.isPlaying) {
                 DontDestroyOnLoad (gameObject);
             }
+
+#if !UNITY_EDITOR
+			GameDataObject = new SpilGameDataHelper ();
+			GameData = GameDataObject;
+
+			PlayerDataObject = new PlayerDataHelper ();
+			PlayerData = PlayerDataObject;
+#endif
 
             if (initializeOnAwake) {
                 Initialize();
@@ -439,13 +447,7 @@ namespace SpilGames.Unity {
             
             gameObject.name = "SpilSDK";
 
-#if !UNITY_EDITOR
-			GameDataObject = new SpilGameDataHelper (Instance);
-			GameData = GameDataObject;
 
-			PlayerDataObject = new PlayerDataHelper (Instance);
-			PlayerData = PlayerDataObject;
-#endif
         }
 
         void InitEditor() {
@@ -507,6 +509,22 @@ namespace SpilGames.Unity {
 #endif
         }
 
+        /// <summary>
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
+        /// </summary>
+        public void UserIdChangeRequest(string newUid) {
+            Spil.Instance.fireUserIdChangeRequest(newUid);
+        }
+        
+        /// <summary>
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
+        /// </summary>
+        public void UserIdChangeCompleted() {
+            Spil.Instance.fireUserIdChangeCompleted();
+        }
+        
         /// <summary>
         /// This method is meant for internal use only, it should not be used by developers.
         /// Developers can subscribe to events defined in Spil.Instance.
@@ -694,6 +712,14 @@ namespace SpilGames.Unity {
         /// This method is meant for internal use only, it should not be used by developers.
         /// Developers can subscribe to events defined in Spil.Instance.
         /// </summary>
+        public void DailyBonusAvailable(string type) {
+            Spil.Instance.fireDailyBonusAvailable(type);
+        }
+        
+        /// <summary>
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
+        /// </summary>
         public void DailyBonusNotAvailable() {
 			Spil.Instance.fireDailyBonusNotAvailable();
         }
@@ -720,6 +746,14 @@ namespace SpilGames.Unity {
         /// </summary>
         public void DailyBonusError(string error) {
 			Spil.Instance.fireDailyBonusError(error);
+        }
+
+        /// <summary>
+        /// This method is meant for internal use only, it should not be used by developers.
+        /// Developers can subscribe to events defined in Spil.Instance.
+        /// </summary>
+        public void DeepLinkReceived(string deepLink) {
+            Spil.Instance.fireDeepLinkReceived(deepLink);
         }
 
         /// <summary>

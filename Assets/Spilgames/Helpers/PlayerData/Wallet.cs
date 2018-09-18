@@ -21,7 +21,7 @@ namespace SpilGames.Unity.Helpers.PlayerData {
             // Adding currencies of the player
             if (currencyData != null) {
                 foreach (PlayerCurrencyData playerCurrencyData in currencyData) {
-                    currencies.Add(new PlayerCurrency(playerCurrencyData.id, playerCurrencyData.name, playerCurrencyData.type, playerCurrencyData.currentBalance, playerCurrencyData.delta, playerCurrencyData.imageUrl, playerCurrencyData.displayName, playerCurrencyData.displayDescription));
+                    currencies.Add(new PlayerCurrency(playerCurrencyData.id, playerCurrencyData.name, playerCurrencyData.type, playerCurrencyData.currentBalance, playerCurrencyData.delta, playerCurrencyData.imageUrl, playerCurrencyData.displayName, playerCurrencyData.displayDescription, playerCurrencyData.limit, playerCurrencyData.overflow));
                 }
             }
         }
@@ -50,10 +50,17 @@ namespace SpilGames.Unity.Helpers.PlayerData {
         }
 
         private int delta;
+        
+        public int Overflow {
+            get { return overflow; }
+        }
 
-        public PlayerCurrency(int id, string name, int type, int currentBalance, int delta, string imageURL, string displayName, string displayDescription) : base(id, name, type, imageURL, displayName, displayDescription) {
+        private int overflow;
+
+        public PlayerCurrency(int id, string name, int type, int currentBalance, int delta, string imageURL, string displayName, string displayDescription, int limit, int overflow) : base(id, name, type, imageURL, displayName, displayDescription, limit) {
             this.currentBalance = currentBalance;
             this.delta = delta;
+            this.overflow = overflow;
         }
     }
 }
