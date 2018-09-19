@@ -936,7 +936,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         /// <summary>
         /// Don't use this for now, still needs to be implemented..
         /// </summary>
-        private void OpenBundle(int bundleId, int amount, string reason, string reasonDetails, string location, List<PerkItem> perkItems) {
+        public void OpenBundle(int bundleId, int amount, string reason, string reasonDetails, string location, List<PerkItem> perkItems) {
             for (int i = 0; i < amount; i++) {
                 PlayerDataUpdatedData updatedData = new PlayerDataUpdatedData();
 

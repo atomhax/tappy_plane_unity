@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using SpilGames.Unity.Json;
+#if UNITY_EDITOR
 using SpilGames.Unity.Base.UnityEditor.Managers;
+#endif
 using AOT;
 
 namespace SpilGames.Unity.Base.Implementations
@@ -199,7 +201,7 @@ namespace SpilGames.Unity.Base.Implementations
         public void OpenBundle(string paramsJson)
         {
             JSONObject paramsJsonObject = new JSONObject(paramsJson);
-            SpilWebGLUnityImplementation.pData.OpenBundle((int)paramsJsonObject.GetField("bundleId").n, (int)paramsJsonObject.GetField("amount").n, paramsJsonObject.GetField("reason").str, paramsJsonObject.GetField("location").str, paramsJsonObject.GetField("reasonDetails").str);
+            SpilWebGLUnityImplementation.pData.OpenBundle((int)paramsJsonObject.GetField("bundleId").n, (int)paramsJsonObject.GetField("amount").n, paramsJsonObject.GetField("reason").str, paramsJsonObject.GetField("reasonDetails").str, paramsJsonObject.GetField("location").str, null);
         }
 
         public void OpenGacha(string paramsJson)
