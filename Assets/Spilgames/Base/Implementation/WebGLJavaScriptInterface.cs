@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using SpilGames.Unity.Json;
-#if UNITY_EDITOR
+#if UNITY_EDITOR || UNITY_WEBGL
 using SpilGames.Unity.Base.UnityEditor.Managers;
 #endif
 using AOT;

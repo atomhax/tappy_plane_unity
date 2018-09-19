@@ -221,10 +221,10 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 
         string skuId = "";
         string transactionID = "";
-		string token = "";
 
 		#if UNITY_ANDROID
-
+		string token = "";
+	
 		switch (Spil.MonoInstance.AndroidStore.ToString()) {
 				case "GooglePlay":
 					//parse the json

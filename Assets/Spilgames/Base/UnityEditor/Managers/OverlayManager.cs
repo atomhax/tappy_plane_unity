@@ -95,9 +95,11 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             SpilLogging.Log("Opening URL: " + spilDailyBonusConfig.url + " With data: " + JsonHelper.getJSONFromObject(spilDailyBonusConfig));
 
 			Spil.Instance.fireDailyBonusOpen();
-
             #if UNITY_WEBGL && !UNITY_EDITOR
-            WebGLJavaScriptInterface.OpenUrl(url, data, WebGLJavaScriptInterface.enumSplashScreenType.DAILY_BONUS);
+            string jsonString = JsonHelper.getJSONFromObject(spilDailyBonusConfig);
+            Dictionary<string, object> jsonDict = JsonHelper.getObjectFromJson<Dictionary<string, object>>(jsonString);
+            JSONObject jsonObject = JsonHelper.DictToJSONObject(jsonDict);
+            WebGLJavaScriptInterface.OpenUrl(spilDailyBonusConfig.url, jsonObject, WebGLJavaScriptInterface.enumSplashScreenType.DAILY_BONUS);
             #else 
             DailyBonus = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/DailyBonus.prefab"));
             DailyBonus.SetActive(true);
