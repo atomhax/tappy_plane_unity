@@ -941,7 +941,9 @@ public class GameController : MonoBehaviour
 
     void Spil_Instance_OnAdAvailable(enumAdType adType) {
         if (adType == enumAdType.MoreApps) {
+#if !UNITY_WEBGL
             moreGamesButton.SetActive(true);
+#endif
         }
     }
 

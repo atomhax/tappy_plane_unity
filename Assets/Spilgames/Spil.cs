@@ -324,6 +324,7 @@ namespace SpilGames.Unity {
         [SerializeField] public TextAsset defaultPlayerDataAsset;
         [SerializeField] public TextAsset defaultGameDataAsset;
         [SerializeField] public TextAsset defaultGameConfigAsset;
+        [SerializeField] public GameObject privacyPolicyPopupPrefab;
 
         private static Spil monoInstance;
 

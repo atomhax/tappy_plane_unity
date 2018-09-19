@@ -14,7 +14,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             settingsScreen = settings;
             
 #if UNITY_WEBGL
-            PrivacyPolicy = (GameObject) Instantiate(Resources.Load("Assets/Spilgames/Editor/Prefabs/PrivacyPolicy.prefab"));
+            PrivacyPolicy = (GameObject)Instantiate(Spil.MonoInstance.privacyPolicyPopupPrefab);
 #else 
             PrivacyPolicy = (GameObject)Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/PrivacyPolicy.prefab"));
 #endif
