@@ -113,6 +113,11 @@ namespace SpilGames.Unity.Base.Implementations {
                 return;
             }
             
+            #if UNITY_WEBGL
+            PrivacyPolicyHelper.PrivacyPolicyObject = (GameObject) GameObject.Instantiate(Resources.Load("Spilgames/PrivacyPolicy/PrivacyPolicyUnity" + Spil.MonoInstance.PrefabOrientation));
+            PrivacyPolicyHelper.PrivacyPolicyObject.SetActive(true);
+            PrivacyPolicyHelper.Instance.ShowSettingsScreen(1);
+            #else
             if (Spil.UseUnityPrefab) {
                 PrivacyPolicyHelper.PrivacyPolicyObject = (GameObject) GameObject.Instantiate(Resources.Load("Spilgames/PrivacyPolicy/PrivacyPolicyUnity" + Spil.MonoInstance.PrefabOrientation));
                 PrivacyPolicyHelper.PrivacyPolicyObject.SetActive(true);
@@ -121,11 +126,11 @@ namespace SpilGames.Unity.Base.Implementations {
             } else {
                 PrivacyPolicyManager.ShowPrivacyPolicy(true);
             }
-            
+            #endif
         }
 
         public override void SavePrivValue(int priv) {
-#if UNITY_WEBGL
+#if UNITY_WEBGL && !UNITY_EDITOR
             PlayerPrefs.SetInt(GetSpilUserId() + "-gdprStatusUnity", priv);
 #else
             EditorPrefs.SetInt(GetSpilUserId() + "-gdprStatusUnity", priv);
@@ -133,8 +138,9 @@ namespace SpilGames.Unity.Base.Implementations {
         }
 
         public override int GetPrivValue() {
-#if UNITY_WEBGL
-            return PlayerPrefs.GetInt(GetSpilUserId() + "-gdprStatusUnity", -1);
+#if UNITY_WEBGL && !UNITY_EDITOR
+            int priv = PlayerPrefs.GetInt(GetSpilUserId() + "-gdprStatusUnity", -1);
+            return priv;
 #else
             return EditorPrefs.GetInt(GetSpilUserId() + "-gdprStatusUnity", -1);
 #endif

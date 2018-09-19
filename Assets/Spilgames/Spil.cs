@@ -437,11 +437,15 @@ namespace SpilGames.Unity {
 
             UseUnityPrefab = useUnityPrefab;
             if (CheckPrivacyPolicy) {
+                #if UNITY_WEBGL
+                    Instance.CheckPrivacyPolicyUnity();
+                #else
                 if (useUnityPrefab) {
                     Instance.CheckPrivacyPolicyUnity();
                 } else {
                     Instance.CheckPrivacyPolicy();
                 }
+                #endif
             } else {
                 Instance.SpilInit(false);                
             }
@@ -499,6 +503,7 @@ namespace SpilGames.Unity {
             RewardToken = rewardToken;
             
 #if UNITY_EDITOR || UNITY_WEBGL
+            // TODO: check if gdpr was accepted, else send it after gdpr
             Spil.Instance.SendCustomEventInternal("sessionStart", null);
 #endif
         }
