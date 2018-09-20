@@ -503,8 +503,10 @@ namespace SpilGames.Unity {
             RewardToken = rewardToken;
             
 #if UNITY_EDITOR || UNITY_WEBGL
-            // TODO: check if gdpr was accepted, else send it after gdpr
-            Spil.Instance.SendCustomEventInternal("sessionStart", null);
+            if (Spil.Instance.GetPrivValue() > -1)
+            {
+                Spil.Instance.SendCustomEventInternal("sessionStart", null);
+            }
 #endif
         }
 

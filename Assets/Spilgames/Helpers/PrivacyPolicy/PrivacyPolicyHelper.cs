@@ -261,7 +261,10 @@ public class PrivacyPolicyHelper : MonoBehaviour {
         int oldPriv;
         int newPriv;
         switch (openId) {
-            case 0:                
+            case 0:
+#if UNITY_EDITOR || UNITY_WEBGL
+                Spil.Instance.SendCustomEventInternal("sessionStart", null);
+#endif
                 MainScreen.SetActive(true);
                 SettingsScreen.SetActive(false);
                 InfoScreen.SetActive(false);

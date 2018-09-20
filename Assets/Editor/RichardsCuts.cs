@@ -32,4 +32,10 @@ public class RichardsCuts : MonoBehaviour {
 	static void ToggleActive(){
 		Selection.activeGameObject.SetActive (!Selection.activeGameObject.activeInHierarchy);
 	}
+	
+	[MenuItem("RichardsCuts/ResetPlayerPrefs")]
+	static void ResetPlayerPrefs(){
+		PlayerPrefs.DeleteAll();
+		EditorPrefs.DeleteAll();
+	}
 }

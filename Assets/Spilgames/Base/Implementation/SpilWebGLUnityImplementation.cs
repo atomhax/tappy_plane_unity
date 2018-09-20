@@ -308,14 +308,14 @@ namespace SpilGames.Unity.Base.Implementations
         public override void SetUserId(string providerId, string userId)
         {
 
-        }
+        }*/
 
         public override void ShowHelpCenterWebview(string url)
         {
-
+            Application.OpenURL(url);
         }
 
-        public override void ShowMergeConflictDialog(string title, string message, string localButtonText, string remoteButtonText, string mergeButtonText = null)
+       /* public override void ShowMergeConflictDialog(string title, string message, string localButtonText, string remoteButtonText, string mergeButtonText = null)
         {
 
         }
