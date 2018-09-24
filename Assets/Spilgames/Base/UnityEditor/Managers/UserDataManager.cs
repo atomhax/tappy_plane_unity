@@ -67,7 +67,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         }
 
         public static void ProcessRequestUserData(WalletData receivedWallet, InventoryData receivedInventory, bool externalChange, string gameStateData, List<UserDataVersion> receivedUserDataVersions, UserDataMeta receivedUserDataMeta) {
-            SpilUnityEditorImplementation.pData.CalculatePlayerDataResponse(receivedWallet, receivedInventory, true);
+            SpilUnityEditorImplementation.pData.CalculatePlayerDataResponse(receivedWallet, receivedInventory, true, externalChange);
             GameStateManager.ProcessMyGameStateResponse(new JSONObject(gameStateData));
 
             if (receivedUserDataVersions != null) {
@@ -156,10 +156,31 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                         receivedInventory.items[i].initialValue = SpilUnityEditorImplementation.gData.items[j].initialValue;
                         receivedInventory.items[i].isGacha = SpilUnityEditorImplementation.gData.items[j].isGacha;
                         receivedInventory.items[i].content = SpilUnityEditorImplementation.gData.items[j].content;
+                        receivedInventory.items[i].limit = SpilUnityEditorImplementation.gData.items[j].limit;
+                        receivedInventory.items[i].properties = SpilUnityEditorImplementation.gData.items[j].properties;
+                        receivedInventory.items[i].isUnique = SpilUnityEditorImplementation.gData.items[j].isUnique;
                     }
                 }
             }
 
+            for (int i = 0; i < receivedInventory.uniqueItems.Count; i++) {
+                for (int j = 0; j < SpilUnityEditorImplementation.gData.items.Count; j++) {
+                    if (receivedInventory.uniqueItems[i].id == SpilUnityEditorImplementation.gData.items[j].id) {
+                        receivedInventory.uniqueItems[i].name = SpilUnityEditorImplementation.gData.items[j].name;
+                        receivedInventory.uniqueItems[i].type = SpilUnityEditorImplementation.gData.items[j].type;
+                        receivedInventory.uniqueItems[i].displayName = SpilUnityEditorImplementation.gData.items[j].displayName;
+                        receivedInventory.uniqueItems[i].displayDescription = SpilUnityEditorImplementation.gData.items[j].displayDescription;
+                        receivedInventory.uniqueItems[i].imageUrl = SpilUnityEditorImplementation.gData.items[j].imageUrl;
+                        receivedInventory.uniqueItems[i].initialValue = SpilUnityEditorImplementation.gData.items[j].initialValue;
+                        receivedInventory.uniqueItems[i].isGacha = SpilUnityEditorImplementation.gData.items[j].isGacha;
+                        receivedInventory.uniqueItems[i].content = SpilUnityEditorImplementation.gData.items[j].content;
+                        receivedInventory.uniqueItems[i].limit = SpilUnityEditorImplementation.gData.items[j].limit;
+                        receivedInventory.uniqueItems[i].properties = SpilUnityEditorImplementation.gData.items[j].properties;
+                        receivedInventory.uniqueItems[i].isUnique = SpilUnityEditorImplementation.gData.items[j].isUnique;
+                    }
+                }
+            }
+            
             remotePlayerData.AddField("inventory", new JSONObject(JsonHelper.getJSONFromObject(receivedInventory)));
 
             remoteData.AddField("playerData", remotePlayerData);
@@ -226,6 +247,21 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             mergePlayerData.RemoveField("items");
             mergePlayerData.AddField("items", mergeItems);
 
+            for (int i = 0; i < mergeInventory.GetField("uniqueItems").Count; i++) {
+                JSONObject uniqueItem = new JSONObject();
+                uniqueItem.AddField("uniqueId", mergeInventory.GetField("uniqueItems")[i].GetField("uniqueId"));
+                uniqueItem.AddField("id", mergeInventory.GetField("uniqueItems")[i].GetField("id"));
+                uniqueItem.AddField("name", mergeInventory.GetField("uniqueItems")[i].GetField("name"));
+                uniqueItem.AddField("type", mergeInventory.GetField("uniqueItems")[i].GetField("type"));
+                uniqueItem.AddField("amount", mergeInventory.GetField("uniqueItems")[i].GetField("amount"));
+                uniqueItem.AddField("delta", mergeInventory.GetField("uniqueItems")[i].GetField("delta"));
+                uniqueItem.AddField("status", mergeInventory.GetField("uniqueItems")[i].GetField("status"));
+                uniqueItem.AddField("uniqueProperties", mergeInventory.GetField("uniqueItems")[i].GetField("uniqueProperties"));
+                mergeItems.Add(uniqueItem);
+            }
+            mergePlayerData.RemoveField("uniqueItems");
+            mergePlayerData.AddField("uniqueItems", mergeItems);
+            
             if (!mergeType.Equals("local")) {
                 WalletData wallet = JsonHelper.getObjectFromJson<WalletData>(mergeDataJSON.GetField("playerData").GetField("wallet").Print());
                 InventoryData inventory = JsonHelper.getObjectFromJson<InventoryData>(mergeDataJSON.GetField("playerData").GetField("inventory").Print());
@@ -485,6 +521,18 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                         }
                     }
 
+                    if (inventoryJSON.HasField("uniqueItems")) {
+                        receivedInventory.uniqueItems = new List<UniquePlayerItemData>();
+                    
+                        JSONObject uniqueItemsJSON = inventoryJSON.GetField("uniqueItems");
+
+                        for (int i = 0; i < uniqueItemsJSON.Count; i++) {
+                            UniquePlayerItemData uniquePlayerItemData = JsonHelper.getObjectFromJson<UniquePlayerItemData>(uniqueItemsJSON.list[i].Print());
+                        
+                            receivedInventory.uniqueItems.Add(uniquePlayerItemData);
+                        }
+                    }
+                    
                     receivedInventory.offset = (long) inventoryJSON.GetField("offset").n;
                     receivedInventory.logic = inventoryJSON.GetField("logic").str;
                 }

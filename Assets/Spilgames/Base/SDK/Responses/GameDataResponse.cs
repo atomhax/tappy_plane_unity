@@ -30,6 +30,7 @@ namespace SpilGames.Unity.Base.SDK {
         public List<SpilGachaContent> content;
         public Dictionary<string, object> properties = new Dictionary<string, object>();
         public int limit;
+        public bool isUnique;
     }
 
     public class SpilGachaContent {

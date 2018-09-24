@@ -60,7 +60,7 @@ namespace SpilGames.Unity.Json {
         }
 
         public static JSONObject DictToJSONObject(IDictionary<string, object> dict) {
-            JSONObject jsonObject = new JSONObject();
+            JSONObject jsonObject = new JSONObject(JSONObject.Type.OBJECT);
 
             foreach (KeyValuePair<string, object> kvp in dict) {
                 if (kvp.Value != null) {

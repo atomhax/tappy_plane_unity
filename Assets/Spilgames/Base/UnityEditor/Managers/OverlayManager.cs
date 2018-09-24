@@ -1,4 +1,5 @@
 ﻿#if UNITY_EDITOR
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using SpilGames.Unity.Base.Implementations;
@@ -151,7 +152,28 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 if (rewardType == Spil.DailyBonusRewardTypeEnum.CURRENCY) {
                     SpilUnityEditorImplementation.pData.WalletOperation("add", id, amount, PlayerDataUpdateReasons.DailyBonus, null, "DailyBonus", null);
                 } else if (rewardType == Spil.DailyBonusRewardTypeEnum.ITEM) {
-                    SpilUnityEditorImplementation.pData.InventoryOperation("add", id, amount, PlayerDataUpdateReasons.DailyBonus, null, "DailyBonus", null);
+                    SpilItemData gameItem = SpilUnityEditorImplementation.pData.GetItemFromObjects(id);
+
+                    if (gameItem == null) {
+                        SpilLogging.Error("Item does not exist!");
+                        return;
+                    }
+
+                    if (gameItem.isUnique) {
+                        UniquePlayerItem uniquePlayerItem = new UniquePlayerItem(gameItem.id, gameItem.name, gameItem.type, 0, 0, gameItem.imageUrl, gameItem.reportingName, gameItem.displayName,
+                            gameItem.displayDescription, gameItem.isGacha, gameItem.content, gameItem.properties, gameItem.limit, gameItem.isUnique, Guid.NewGuid().ToString(), "NONE", new Dictionary<string, object>());
+                            
+                        JSONObject uniquePlayerItemInfo = new JSONObject();
+                        uniquePlayerItemInfo.AddField("uniqueItem", JsonHelper.getJSONFromObject(uniquePlayerItem));
+                        uniquePlayerItemInfo.AddField("bundleId", 0);
+                        uniquePlayerItemInfo.AddField("gachaId", 0);
+                        uniquePlayerItemInfo.AddField("tierId", 0);
+                        uniquePlayerItemInfo.AddField("reason", PlayerDataUpdateReasons.DailyBonus);
+                        
+                        Spil.Instance.firePlayerDataNewUniqueItem(uniquePlayerItemInfo.Print());
+                    } else {
+                        SpilUnityEditorImplementation.pData.InventoryOperation("add", id, amount, PlayerDataUpdateReasons.DailyBonus, null, "DailyBonus", null);
+                    }
                 }
             }
 

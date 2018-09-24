@@ -78,7 +78,7 @@ namespace SpilGames.Unity.Base.Implementations
             return null;
         }
 
-        public override string GetInvetoryFromSdk()
+        public override string GetInventoryFromSdk()
         {
             return null;
         }

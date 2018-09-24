@@ -215,7 +215,10 @@ public class ShopPanelController : MonoBehaviour {
     }
 
     public void ShowTermsAndConditions() {
-        Application.OpenURL("http://www.spilgames.com/terms-of-use/");
+        //Application.OpenURL("http://www.spilgames.com/terms-of-use/");
+        
+        UniquePlayerItem uniquePlayerItem = Spil.PlayerData.GetUniqueItem("blue-skin");
+        Spil.PlayerData.Inventory.RemoveUniquePlayerItemFromInventory(uniquePlayerItem, "Item Update", "Shop");
     }
     
     public void OpenTappyChest() {
@@ -241,7 +244,12 @@ public class ShopPanelController : MonoBehaviour {
     }
 
     public void ShowTappyWheel() {
-        Spil.Instance.RequestSplashScreen("tappyWheel");
+        //Spil.Instance.RequestSplashScreen("tappyWheel");
+
+        UniquePlayerItem uniquePlayerItem = Spil.PlayerData.GetUniqueItem("blue-skin");        
+        uniquePlayerItem.UniqueProperties.Add("bla", "test");
+        
+        Spil.PlayerData.Inventory.UpdateUniquePlayerItemFromInventory(uniquePlayerItem, "Item Update", "Shop");
     }
     
     void OnSplashScreenOpen() {

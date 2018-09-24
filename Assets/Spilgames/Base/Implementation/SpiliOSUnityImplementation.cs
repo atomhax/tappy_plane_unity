@@ -273,19 +273,6 @@ namespace SpilGames.Unity.Base.Implementations
         private static extern void showMoreAppsNative();
 
         /// <summary>
-        /// Method that initiaties a Test Ad.
-        /// This is not essential for developers so could be hidden but it might be handy for some developers so we left it in.
-        /// </summary>
-        /// <param name="adUnitId"></param>
-        public override void TestRequestAd(string providerName, string adType, bool parentalGate)
-        {
-            devRequestAdNative(providerName, adType, parentalGate);
-        }
-
-        [DllImport("__Internal")]
-        private static extern void devRequestAdNative(string providerName, string adTypeName, bool parentalGate);
-
-        /// <summary>
         /// Retrieves the Spil User Id so that developers can show this in-game for users.
         /// If users contact Spil customer service they can supply this Id so that 
         /// customer support can help them properly. Please make this Id available for users
@@ -484,7 +471,7 @@ namespace SpilGames.Unity.Base.Implementations
         [DllImport("__Internal")]
         private static extern string getWalletNative();
 
-        public override string GetInvetoryFromSdk()
+        public override string GetInventoryFromSdk()
         {
             return getInventoryNative();
         }

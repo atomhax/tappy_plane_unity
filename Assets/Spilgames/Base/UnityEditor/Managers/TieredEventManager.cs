@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SpilGames.Unity.Helpers.PlayerData;
 using SpilGames.Unity.Json;
 #if UNITY_EDITOR
@@ -161,7 +162,29 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                         Spil.Instance.AddCurrencyToWallet(reward.id, reward.amount, PlayerDataUpdateReasons.TierReward, tierName, "sdk", null);
                     }
                     else if (reward.type.Equals(Item)) {
-                        Spil.Instance.AddItemToInventory(reward.id, reward.amount, PlayerDataUpdateReasons.TierReward, tierName, "sdk", null);
+                        SpilItemData gameItem = SpilUnityEditorImplementation.pData.GetItemFromObjects(reward.id);
+
+                        if (gameItem == null) {
+                            SpilLogging.Error("Item does not exist!");
+                            return;
+                        }
+
+                        if (gameItem.isUnique) {
+                            UniquePlayerItem uniquePlayerItem = new UniquePlayerItem(gameItem.id, gameItem.name, gameItem.type, 0, 0, gameItem.imageUrl, gameItem.reportingName, gameItem.displayName,
+                                gameItem.displayDescription, gameItem.isGacha, gameItem.content, gameItem.properties, gameItem.limit, gameItem.isUnique, Guid.NewGuid().ToString(), "NONE", new Dictionary<string, object>());
+                            
+                            JSONObject uniquePlayerItemInfo = new JSONObject();
+                            uniquePlayerItemInfo.AddField("uniqueItem", JsonHelper.getJSONFromObject(uniquePlayerItem));
+                            uniquePlayerItemInfo.AddField("bundleId", 0);
+                            uniquePlayerItemInfo.AddField("gachaId", 0);
+                            uniquePlayerItemInfo.AddField("tierId", 0);
+                            uniquePlayerItemInfo.AddField("reason", PlayerDataUpdateReasons.TierReward);
+                        
+                            Spil.Instance.firePlayerDataNewUniqueItem(uniquePlayerItemInfo.Print());
+                        } else {
+                            Spil.Instance.AddItemToInventory(reward.id, reward.amount, PlayerDataUpdateReasons.TierReward, tierName, "sdk", null);
+                        }
+                        
                     }
                 }
             }

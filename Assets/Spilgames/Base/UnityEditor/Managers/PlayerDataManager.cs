@@ -190,6 +190,8 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     SpilUnityEditorImplementation.pData.Inventory.items.Add(playerItem);
                 }
             }
+            
+            SpilUnityEditorImplementation.pData.Inventory.uniqueItems.Clear();
         }
 
         public void ResetPlayerData() {
@@ -197,7 +199,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             ResetInventory();
         }
 
-        public void CalculatePlayerDataResponse(WalletData receivedWallet, InventoryData receivedInventory, bool fromInit) {
+        public void CalculatePlayerDataResponse(WalletData receivedWallet, InventoryData receivedInventory, bool fromInit, bool externalChange) {
             bool updated = false;
             PlayerDataUpdatedData updatedData = new PlayerDataUpdatedData();
 
@@ -254,7 +256,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     playerItem.delta = 0;
                 }
 
-                if (Inventory.offset < receivedInventory.offset && receivedInventory.items.Count > 0) {
+                if (Inventory.offset < receivedInventory.offset && (receivedInventory.items.Count > 0 || receivedInventory.items.Count > 0)) {
                     List<PlayerItemData> itemsToBeAdded = new List<PlayerItemData>();
 
                     foreach (PlayerItemData playerItem in receivedInventory.items) {
@@ -320,6 +322,36 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                             updated = true;
                         }
                     }
+
+                    if (externalChange) {
+                        Inventory.uniqueItems.Clear();
+                        Inventory.uniqueItems = receivedInventory.uniqueItems;
+                    } else {
+                        foreach (UniquePlayerItemData uniqueItem in receivedInventory.uniqueItems) {
+                            if (receivedInventory.logic.Equals("CLIENT")) {
+                                UniquePlayerItemData uniquePlayerItemData = Inventory.uniqueItems.FirstOrDefault(a => a.uniqueId == uniqueItem.uniqueId);
+                                if (uniquePlayerItemData != null) {
+                                    if (uniqueItem.status.Equals("UPDATE")) {
+                                        uniquePlayerItemData.status = "UPDATE";
+                                        uniquePlayerItemData.properties = uniqueItem.uniqueProperties;
+                                    
+                                        updated = true;
+                                    
+                                        updatedData.uniqueItems.Add(uniquePlayerItemData);
+                                    } else if (uniqueItem.status.Equals("REMOVE")) {
+                                        uniquePlayerItemData.status = "REMOVE";
+                                        uniquePlayerItemData.amount = 0;
+                                        uniquePlayerItemData.delta = -1;
+                                    
+                                        updated = true;
+                                    
+                                        updatedData.uniqueItems.Add(uniquePlayerItemData);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
                 }
 
                 Inventory.offset = receivedInventory.offset;
@@ -517,7 +549,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             UpdateTieredEvent(item.id, amount, item.isGacha ? "GACHA" : "ITEM");
         }
 
-        private SpilItemData GetItemFromObjects(int itemId) {
+        public SpilItemData GetItemFromObjects(int itemId) {
             foreach (SpilItemData item in SpilUnityEditorImplementation.gData.items) {
                 if (item.id == itemId) {
                     return item;
@@ -557,6 +589,16 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             return null;
         }
 
+        private UniquePlayerItemData GetUniqueItemFromInventory(string uniqueId) {
+            foreach (UniquePlayerItemData uniqueItem in Inventory.uniqueItems) {
+                if (uniqueItem.uniqueId == uniqueId) {
+                    return uniqueItem;
+                }
+            }
+
+            return null;
+        }
+
         private void UpdateItem(PlayerItemData item) {
             foreach (PlayerItemData playerItem in Inventory.items) {
                 if (playerItem.id != item.id) continue;
@@ -565,6 +607,153 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             }
         }
 
+        private void UpdateUniqueItem(UniquePlayerItemData uniquePlayerItem) {
+            foreach (UniquePlayerItemData uniquePlayerItemData in Inventory.uniqueItems) {
+                if (uniquePlayerItemData.uniqueId != uniquePlayerItem.uniqueId) continue;
+                uniquePlayerItemData.amount = uniquePlayerItem.amount;
+                uniquePlayerItemData.delta = uniquePlayerItem.delta;
+                uniquePlayerItemData.status = uniquePlayerItem.status;
+                uniquePlayerItemData.uniqueProperties = uniquePlayerItem.uniqueProperties;
+            }
+        }
+
+        public UniquePlayerItem CreateUniquePlayerItem(int itemId, string uniqueId) {
+            SpilItemData gameItem = GetItemFromObjects(itemId);
+
+            if (gameItem == null) {
+                SpilLogging.Error("Item does not exist!");
+                return null;
+            }         
+            
+            if (uniqueId != null && Inventory.uniqueItems.FirstOrDefault(a => a.uniqueId == uniqueId) != null) {
+                SpilLogging.Error("Unique Item with unique id = " + uniqueId + " already exists!");
+                return null;
+            }
+            
+            UniquePlayerItem uniquePlayerItem = new UniquePlayerItem(gameItem.id, gameItem.name, gameItem.type, 0, 0, gameItem.imageUrl, gameItem.reportingName, gameItem.displayName,
+                gameItem.displayDescription, gameItem.isGacha, gameItem.content, gameItem.properties, gameItem.limit, gameItem.isUnique, Guid.NewGuid().ToString(), "NONE", new Dictionary<string, object>());
+
+            if (uniqueId != null) {
+                uniquePlayerItem.UniqueId = uniqueId;
+            }
+
+            return uniquePlayerItem;
+        }
+       
+        public void AddUniquePlayerItemToInventory(UniquePlayerItem uniquePlayerItem, string reason, string location, string reasonDetails, string transactionId) {
+            if (uniquePlayerItem == null) {
+                SpilLogging.Error("Unique Item is null!");
+                return;
+            }
+            
+            SpilItemData gameItem = GetItemFromObjects(uniquePlayerItem.Id);
+            
+            if (gameItem == null) {
+                SpilLogging.Error("Item does not exist!");
+                return;
+            }          
+
+            uniquePlayerItem.Amount = 1;
+            uniquePlayerItem.Delta = 1;
+            uniquePlayerItem.Status = "CREATE";
+            
+            UniquePlayerItemData uniquePlayerItemData = new UniquePlayerItemData(gameItem);
+            uniquePlayerItemData.uniqueId = uniquePlayerItem.UniqueId;
+            uniquePlayerItemData.amount = uniquePlayerItem.Amount;
+            uniquePlayerItemData.delta = uniquePlayerItem.Delta;
+            uniquePlayerItemData.status = uniquePlayerItem.Status;
+            uniquePlayerItemData.uniqueProperties = uniquePlayerItem.UniqueProperties;
+            
+            Inventory.uniqueItems.Add(uniquePlayerItemData);
+            
+            UserDataManager.UpdateUserDataVersions();
+            UserDataManager.UpdateUserDataMeta();
+
+            PlayerDataUpdatedData updatedData = new PlayerDataUpdatedData();
+            updatedData.uniqueItems.Add(uniquePlayerItemData);
+            updatedData.reason = reason;
+
+            Spil.Instance.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
+
+            SendUpdatePlayerDataEvent(null, reason, reasonDetails, location, transactionId);
+        }
+
+        public void UpdateUniquePlayerItemFromInventory(UniquePlayerItem uniquePlayerItem, string reason, string location, string reasonDetails, string transactionId) {
+            if (uniquePlayerItem == null) {
+                SpilLogging.Error("Unique Item is null!");
+                return;
+            }
+            
+            SpilItemData gameItem = GetItemFromObjects(uniquePlayerItem.Id);
+            
+            if (gameItem == null) {
+                SpilLogging.Error("Item does not exist!");
+                return;
+            } 
+            
+            uniquePlayerItem.Amount = 1;
+            uniquePlayerItem.Delta = 0;
+            uniquePlayerItem.Status = "UPDATE";
+            
+            UniquePlayerItemData uniquePlayerItemData = new UniquePlayerItemData(gameItem);
+            uniquePlayerItemData.uniqueId = uniquePlayerItem.UniqueId;
+            uniquePlayerItemData.amount = uniquePlayerItem.Amount;
+            uniquePlayerItemData.delta = uniquePlayerItem.Delta;
+            uniquePlayerItemData.status = uniquePlayerItem.Status;
+            uniquePlayerItemData.uniqueProperties = uniquePlayerItem.UniqueProperties;
+            
+            UpdateUniqueItem(uniquePlayerItemData);
+            
+            UserDataManager.UpdateUserDataVersions();
+            UserDataManager.UpdateUserDataMeta();
+
+            PlayerDataUpdatedData updatedData = new PlayerDataUpdatedData();
+            updatedData.uniqueItems.Add(uniquePlayerItemData);
+            updatedData.reason = reason;
+
+            Spil.Instance.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
+
+            SendUpdatePlayerDataEvent(null, reason, reasonDetails, location, transactionId);
+        }
+
+        public void RemoveUniquePlayerItemFromInventory(UniquePlayerItem uniquePlayerItem, string reason, string location, string reasonDetails, string transactionId) {
+            if (uniquePlayerItem == null) {
+                SpilLogging.Error("Unique Item is null!");
+                return;
+            }
+            
+            SpilItemData gameItem = GetItemFromObjects(uniquePlayerItem.Id);
+            
+            if (gameItem == null) {
+                SpilLogging.Error("Item does not exist!");
+                return;
+            } 
+            
+            uniquePlayerItem.Amount = 0;
+            uniquePlayerItem.Delta = -1;
+            uniquePlayerItem.Status = "REMOVE";
+            
+            UniquePlayerItemData uniquePlayerItemData = new UniquePlayerItemData(gameItem);
+            uniquePlayerItemData.uniqueId = uniquePlayerItem.UniqueId;
+            uniquePlayerItemData.amount = uniquePlayerItem.Amount;
+            uniquePlayerItemData.delta = uniquePlayerItem.Delta;
+            uniquePlayerItemData.status = uniquePlayerItem.Status;
+            uniquePlayerItemData.uniqueProperties = uniquePlayerItem.UniqueProperties;
+            
+            UpdateUniqueItem(uniquePlayerItemData);
+            
+            UserDataManager.UpdateUserDataVersions();
+            UserDataManager.UpdateUserDataMeta();
+
+            PlayerDataUpdatedData updatedData = new PlayerDataUpdatedData();
+            updatedData.uniqueItems.Add(uniquePlayerItemData);
+            updatedData.reason = reason;
+
+            Spil.Instance.firePlayerDataUpdated(JsonHelper.getJSONFromObject(updatedData));
+
+            SendUpdatePlayerDataEvent(null, reason, reasonDetails, location, transactionId);
+        }
+        
         public void BuyBundle(int bundleId, string reason, string reasonDetails, string location, string transactionId, List<PerkItem> perkItems) {
             PlayerDataUpdatedData updatedData = new PlayerDataUpdatedData();
 
@@ -684,7 +873,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
                     UpdateCurrency(currency);
                 }
-                else {
+                else if (bundleItem.type.Equals("ITEM") || bundleItem.type.Equals("GACHA")) {
                     SpilItemData gameItem = GetItemFromObjects(bundleItem.id);
 
                     if (gameItem == null) {
@@ -692,72 +881,90 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                         return;
                     }
 
-                    ;
-                    PlayerItemData item = new PlayerItemData();
-                    item.id = gameItem.id;
-                    item.name = gameItem.name;
-                    item.type = gameItem.type;
-                    item.displayName = gameItem.displayName;
-                    item.displayDescription = gameItem.displayDescription;
-                    item.isGacha = gameItem.isGacha;
-                    item.content = gameItem.content;
-                    item.properties = gameItem.properties;
-                    item.reportingName = gameItem.reportingName;
+                    if (gameItem.isUnique) {
+                        if (gameItem == null) {
+                            SpilLogging.Error("Item does not exist!");
+                            return;
+                        }
 
-                    PlayerItemData inventoryItem = GetItemFromInventory(bundleItem.id);
-
-                    int inventoryItemAmount;
-                    int itemLimit = gameItem.limit;
-                    int perkAdditionAmount = 0;
-
-                    if (perkItems != null) {
-                        foreach (PerkItem perkItem in perkItems) {
-                            foreach (PerkAddition perkAddition in perkItem.additions) {
-                                if (perkAddition.type.Equals("ITEM") && perkAddition.id == gameItem.id) {
-                                    perkAdditionAmount = perkAdditionAmount + perkAddition.additionValue;
-                                    break;
+                        UniquePlayerItem uniquePlayerItem = new UniquePlayerItem(gameItem.id, gameItem.name, gameItem.type, 0, 0, gameItem.imageUrl, gameItem.reportingName, gameItem.displayName,
+                            gameItem.displayDescription, gameItem.isGacha, gameItem.content, gameItem.properties, gameItem.limit, gameItem.isUnique, Guid.NewGuid().ToString(), "NONE", new Dictionary<string, object>());
+                            
+                        JSONObject uniquePlayerItemInfo = new JSONObject();
+                        uniquePlayerItemInfo.AddField("uniqueItem", JsonHelper.getJSONFromObject(uniquePlayerItem));
+                        uniquePlayerItemInfo.AddField("bundleId", bundleId);
+                        uniquePlayerItemInfo.AddField("gachaId", 0);
+                        uniquePlayerItemInfo.AddField("tierId", 0);
+                        uniquePlayerItemInfo.AddField("reason", reason);
+                        
+                        Spil.Instance.firePlayerDataNewUniqueItem(uniquePlayerItemInfo.Print());
+                    } else {
+                        PlayerItemData item = new PlayerItemData();
+                        item.id = gameItem.id;
+                        item.name = gameItem.name;
+                        item.type = gameItem.type;
+                        item.displayName = gameItem.displayName;
+                        item.displayDescription = gameItem.displayDescription;
+                        item.isGacha = gameItem.isGacha;
+                        item.content = gameItem.content;
+                        item.properties = gameItem.properties;
+                        item.reportingName = gameItem.reportingName;
+    
+                        PlayerItemData inventoryItem = GetItemFromInventory(bundleItem.id);
+    
+                        int inventoryItemAmount;
+                        int itemLimit = gameItem.limit;
+                        int perkAdditionAmount = 0;
+    
+                        if (perkItems != null) {
+                            foreach (PerkItem perkItem in perkItems) {
+                                foreach (PerkAddition perkAddition in perkItem.additions) {
+                                    if (perkAddition.type.Equals("ITEM") && perkAddition.id == gameItem.id) {
+                                        perkAdditionAmount = perkAdditionAmount + perkAddition.additionValue;
+                                        break;
+                                    }
                                 }
                             }
                         }
-                    }
-
-                    if (inventoryItem != null) {
-                        inventoryItemAmount = inventoryItem.amount;
-
-                        inventoryItemAmount = inventoryItemAmount + bundleItem.amount + perkAdditionAmount;
-
-                        //Check for item limit and overflow
-                        if (itemLimit > 0 && inventoryItemAmount > itemLimit) {
-                            int newOverflow = (inventoryItemAmount - itemLimit) + item.overflow;
-                            item.overflow = newOverflow;
-                            inventoryItemAmount = itemLimit;
+    
+                        if (inventoryItem != null) {
+                            inventoryItemAmount = inventoryItem.amount;
+    
+                            inventoryItemAmount = inventoryItemAmount + bundleItem.amount + perkAdditionAmount;
+    
+                            //Check for item limit and overflow
+                            if (itemLimit > 0 && inventoryItemAmount > itemLimit) {
+                                int newOverflow = (inventoryItemAmount - itemLimit) + item.overflow;
+                                item.overflow = newOverflow;
+                                inventoryItemAmount = itemLimit;
+                            }
+    
+                            inventoryItem.delta = inventoryItem.delta + bundleItem.amount + perkAdditionAmount;
+                            inventoryItem.amount = inventoryItemAmount;
+    
+                            UpdateItem(inventoryItem);
+    
+                            updatedData.items.Add(inventoryItem);
                         }
-
-                        inventoryItem.delta = inventoryItem.delta + bundleItem.amount + perkAdditionAmount;
-                        inventoryItem.amount = inventoryItemAmount;
-
-                        UpdateItem(inventoryItem);
-
-                        updatedData.items.Add(inventoryItem);
-                    }
-                    else {
-                        inventoryItemAmount = bundleItem.amount + perkAdditionAmount;
-
-                        //Check for item limit and overflow
-                        if (itemLimit > 0 && inventoryItemAmount > itemLimit) {
-                            int newOverflow = (inventoryItemAmount - itemLimit) + item.overflow;
-                            item.overflow = newOverflow;
-                            inventoryItemAmount = itemLimit;
+                        else {
+                            inventoryItemAmount = bundleItem.amount + perkAdditionAmount;
+    
+                            //Check for item limit and overflow
+                            if (itemLimit > 0 && inventoryItemAmount > itemLimit) {
+                                int newOverflow = (inventoryItemAmount - itemLimit) + item.overflow;
+                                item.overflow = newOverflow;
+                                inventoryItemAmount = itemLimit;
+                            }
+    
+                            item.delta = inventoryItemAmount;
+                            item.amount = inventoryItemAmount;
+    
+                            Inventory.items.Add(item);
+    
+                            updatedData.items.Add(item);
                         }
-
-                        item.delta = inventoryItemAmount;
-                        item.amount = inventoryItemAmount;
-
-                        Inventory.items.Add(item);
-
-                        updatedData.items.Add(item);
-                    }
-                }
+                    }     
+                } 
             }
 
             if (isPromotionValid) {
@@ -807,70 +1014,88 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                             return;
                         }
 
-                        ;
-                        PlayerItemData item = new PlayerItemData();
-                        item.id = gameItem.id;
-                        item.name = gameItem.name;
-                        item.type = gameItem.type;
-                        item.displayName = gameItem.displayName;
-                        item.displayDescription = gameItem.displayDescription;
-                        item.isGacha = gameItem.isGacha;
-                        item.content = gameItem.content;
-                        item.properties = gameItem.properties;
-                        item.reportingName = gameItem.reportingName;
-
-                        PlayerItemData inventoryItem = GetItemFromInventory(extraEntity.Id);
-
-                        int inventoryItemAmount;
-                        int itemLimit = gameItem.limit;
-
-                        if (inventoryItem != null) {
-                            inventoryItemAmount = inventoryItem.amount;
-
-                            inventoryItemAmount = inventoryItemAmount + extraEntity.Amount;
-
-                            //Check for item limit and overflow
-                            if (itemLimit > 0 && inventoryItemAmount > itemLimit) {
-                                int newOverflow = (inventoryItemAmount - itemLimit) + item.overflow;
-                                item.overflow = newOverflow;
-                                inventoryItemAmount = itemLimit;
+                        if (gameItem.isUnique) {
+                            if (gameItem == null) {
+                                SpilLogging.Error("Item does not exist!");
+                                return;
                             }
 
-                            inventoryItem.delta = inventoryItem.delta + extraEntity.Amount;
-                            inventoryItem.amount = inventoryItemAmount;
-
-                            UpdateItem(inventoryItem);
-
-                            PlayerItemData temp = null;
-
-                            foreach (PlayerItemData playerItem in updatedData.items) {
-                                if (playerItem.id == extraEntity.Id) {
-                                    temp = playerItem;
+                            UniquePlayerItem uniquePlayerItem = new UniquePlayerItem(gameItem.id, gameItem.name, gameItem.type, 0, 0, gameItem.imageUrl, gameItem.reportingName, gameItem.displayName,
+                                gameItem.displayDescription, gameItem.isGacha, gameItem.content, gameItem.properties, gameItem.limit, gameItem.isUnique, Guid.NewGuid().ToString(), "NONE", new Dictionary<string, object>());
+                            
+                            JSONObject uniquePlayerItemInfo = new JSONObject();
+                            uniquePlayerItemInfo.AddField("uniqueItem", JsonHelper.getJSONFromObject(uniquePlayerItem));
+                            uniquePlayerItemInfo.AddField("bundleId", bundleId);
+                            uniquePlayerItemInfo.AddField("gachaId", 0);
+                            uniquePlayerItemInfo.AddField("tierId", 0);
+                            uniquePlayerItemInfo.AddField("reason", reason);
+                        
+                            Spil.Instance.firePlayerDataNewUniqueItem(uniquePlayerItemInfo.Print());
+                        } else {
+                            PlayerItemData item = new PlayerItemData();
+                            item.id = gameItem.id;
+                            item.name = gameItem.name;
+                            item.type = gameItem.type;
+                            item.displayName = gameItem.displayName;
+                            item.displayDescription = gameItem.displayDescription;
+                            item.isGacha = gameItem.isGacha;
+                            item.content = gameItem.content;
+                            item.properties = gameItem.properties;
+                            item.reportingName = gameItem.reportingName;
+    
+                            PlayerItemData inventoryItem = GetItemFromInventory(extraEntity.Id);
+    
+                            int inventoryItemAmount;
+                            int itemLimit = gameItem.limit;
+    
+                            if (inventoryItem != null) {
+                                inventoryItemAmount = inventoryItem.amount;
+    
+                                inventoryItemAmount = inventoryItemAmount + extraEntity.Amount;
+    
+                                //Check for item limit and overflow
+                                if (itemLimit > 0 && inventoryItemAmount > itemLimit) {
+                                    int newOverflow = (inventoryItemAmount - itemLimit) + item.overflow;
+                                    item.overflow = newOverflow;
+                                    inventoryItemAmount = itemLimit;
                                 }
+    
+                                inventoryItem.delta = inventoryItem.delta + extraEntity.Amount;
+                                inventoryItem.amount = inventoryItemAmount;
+    
+                                UpdateItem(inventoryItem);
+    
+                                PlayerItemData temp = null;
+    
+                                foreach (PlayerItemData playerItem in updatedData.items) {
+                                    if (playerItem.id == extraEntity.Id) {
+                                        temp = playerItem;
+                                    }
+                                }
+    
+                                if (temp != null) {
+                                    updatedData.items.Remove(temp);
+                                }
+    
+                                updatedData.items.Add(inventoryItem);
                             }
-
-                            if (temp != null) {
-                                updatedData.items.Remove(temp);
-                            }
-
-                            updatedData.items.Add(inventoryItem);
-                        }
-                        else {
-                            inventoryItemAmount = extraEntity.Amount;
-
-                            //Check for item limit and overflow
-                            if (itemLimit > 0 && inventoryItemAmount > itemLimit) {
-                                int newOverflow = (inventoryItemAmount - itemLimit) + item.overflow;
-                                item.overflow = newOverflow;
-                                inventoryItemAmount = itemLimit;
-                            }
-
-                            item.delta = inventoryItemAmount;
-                            item.amount = inventoryItemAmount;
-
-                            Inventory.items.Add(item);
-
-                            updatedData.items.Add(item);
+                            else {
+                                inventoryItemAmount = extraEntity.Amount;
+    
+                                //Check for item limit and overflow
+                                if (itemLimit > 0 && inventoryItemAmount > itemLimit) {
+                                    int newOverflow = (inventoryItemAmount - itemLimit) + item.overflow;
+                                    item.overflow = newOverflow;
+                                    inventoryItemAmount = itemLimit;
+                                }
+    
+                                item.delta = inventoryItemAmount;
+                                item.amount = inventoryItemAmount;
+    
+                                Inventory.items.Add(item);
+    
+                                updatedData.items.Add(item);
+                            }                            
                         }
                     }
                 }
@@ -949,7 +1174,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                         UpdateCurrency(currency);
                         updatedData.currencies.Add(currency);
                     }
-                    else {
+                    else if (bundleItem.type.Equals("ITEM") || bundleItem.type.Equals("GACHA")) {
                         SpilItemData gameItem = GetItemFromObjects(bundleItem.id);
 
                         if (gameItem == null) {
@@ -957,68 +1182,86 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                             return;
                         }
 
-                        ;
-                        PlayerItemData item = new PlayerItemData();
-                        item.id = gameItem.id;
-                        item.name = gameItem.name;
-                        item.type = gameItem.type;
-                        item.displayName = gameItem.displayName;
-                        item.displayDescription = gameItem.displayDescription;
-                        item.isGacha = gameItem.isGacha;
-                        item.content = gameItem.content;
-                        item.properties = gameItem.properties;
-                        item.reportingName = gameItem.reportingName;
+                        if (gameItem.isUnique) {
+                            if (gameItem == null) {
+                                SpilLogging.Error("Item does not exist!");
+                                return;
+                            }
 
-                        PlayerItemData inventoryItem = GetItemFromInventory(bundleItem.id);
-
-                        int inventoryItemAmount;
-                        int itemLimit = item.limit;
-                        int perkAdditionAmount = 0;
-
-                        if (perkItems != null) {
-                            foreach (PerkItem perkItem in perkItems) {
-                                foreach (PerkAddition perkAddition in perkItem.additions) {
-                                    if (perkAddition.type.Equals("ITEM") && perkAddition.id == gameItem.id) {
-                                        perkAdditionAmount = perkAdditionAmount + perkAddition.additionValue;
-                                        break;
+                            UniquePlayerItem uniquePlayerItem = new UniquePlayerItem(gameItem.id, gameItem.name, gameItem.type, 0, 0, gameItem.imageUrl, gameItem.reportingName, gameItem.displayName,
+                                gameItem.displayDescription, gameItem.isGacha, gameItem.content, gameItem.properties, gameItem.limit, gameItem.isUnique, Guid.NewGuid().ToString(), "NONE", new Dictionary<string, object>());
+                            
+                            JSONObject uniquePlayerItemInfo = new JSONObject();
+                            uniquePlayerItemInfo.AddField("uniqueItem", JsonHelper.getJSONFromObject(uniquePlayerItem));
+                            uniquePlayerItemInfo.AddField("bundleId", bundleId);
+                            uniquePlayerItemInfo.AddField("gachaId", 0);
+                            uniquePlayerItemInfo.AddField("tierId", 0);
+                            uniquePlayerItemInfo.AddField("reason", reason);
+                        
+                            Spil.Instance.firePlayerDataNewUniqueItem(uniquePlayerItemInfo.Print());
+                        } else {
+                            PlayerItemData item = new PlayerItemData();
+                            item.id = gameItem.id;
+                            item.name = gameItem.name;
+                            item.type = gameItem.type;
+                            item.displayName = gameItem.displayName;
+                            item.displayDescription = gameItem.displayDescription;
+                            item.isGacha = gameItem.isGacha;
+                            item.content = gameItem.content;
+                            item.properties = gameItem.properties;
+                            item.reportingName = gameItem.reportingName;
+    
+                            PlayerItemData inventoryItem = GetItemFromInventory(bundleItem.id);
+    
+                            int inventoryItemAmount;
+                            int itemLimit = item.limit;
+                            int perkAdditionAmount = 0;
+    
+                            if (perkItems != null) {
+                                foreach (PerkItem perkItem in perkItems) {
+                                    foreach (PerkAddition perkAddition in perkItem.additions) {
+                                        if (perkAddition.type.Equals("ITEM") && perkAddition.id == gameItem.id) {
+                                            perkAdditionAmount = perkAdditionAmount + perkAddition.additionValue;
+                                            break;
+                                        }
                                     }
                                 }
                             }
-                        }
-
-                        if (inventoryItem != null) {
-                            inventoryItemAmount = inventoryItem.amount + bundleItem.amount + perkAdditionAmount;
-
-                            if (itemLimit > 0 && inventoryItemAmount > itemLimit) {
-                                int newOverflow = (inventoryItemAmount - itemLimit) + inventoryItem.overflow;
-                                inventoryItem.overflow = newOverflow;
-                                inventoryItemAmount = itemLimit;
+    
+                            if (inventoryItem != null) {
+                                inventoryItemAmount = inventoryItem.amount + bundleItem.amount + perkAdditionAmount;
+    
+                                if (itemLimit > 0 && inventoryItemAmount > itemLimit) {
+                                    int newOverflow = (inventoryItemAmount - itemLimit) + inventoryItem.overflow;
+                                    inventoryItem.overflow = newOverflow;
+                                    inventoryItemAmount = itemLimit;
+                                }
+    
+                                inventoryItem.delta = inventoryItem.delta + bundleItem.amount + perkAdditionAmount;
+                                inventoryItem.amount = inventoryItemAmount;
+    
+                                UpdateItem(inventoryItem);
+    
+                                updatedData.items.Add(inventoryItem);
                             }
-
-                            inventoryItem.delta = inventoryItem.delta + bundleItem.amount + perkAdditionAmount;
-                            inventoryItem.amount = inventoryItemAmount;
-
-                            UpdateItem(inventoryItem);
-
-                            updatedData.items.Add(inventoryItem);
-                        }
-                        else {
-                            inventoryItemAmount = bundleItem.amount + perkAdditionAmount;
-
-                            if (itemLimit > 0 && inventoryItemAmount > itemLimit) {
-                                int newOverflow = (inventoryItemAmount - itemLimit) + item.overflow;
-                                item.overflow = newOverflow;
-                                inventoryItemAmount = itemLimit;
+                            else {
+                                inventoryItemAmount = bundleItem.amount + perkAdditionAmount;
+    
+                                if (itemLimit > 0 && inventoryItemAmount > itemLimit) {
+                                    int newOverflow = (inventoryItemAmount - itemLimit) + item.overflow;
+                                    item.overflow = newOverflow;
+                                    inventoryItemAmount = itemLimit;
+                                }
+    
+                                item.delta = inventoryItemAmount;
+                                item.amount = inventoryItemAmount;
+    
+                                Inventory.items.Add(item);
+    
+                                updatedData.items.Add(item);
                             }
-
-                            item.delta = inventoryItemAmount;
-                            item.amount = inventoryItemAmount;
-
-                            Inventory.items.Add(item);
-
-                            updatedData.items.Add(item);
                         }
-                    }
+                    } 
                 }
 
                 if (perkItems != null) {
@@ -1131,19 +1374,41 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                             WalletOperation("add", gachaContent.id, amountCurrency, reason, reasonDetails, location, null, perkItems);
                             break;
                         case "ITEM":
-                            int amountItem = gachaContent.amount;
+                            SpilItemData gameItem = GetItemFromObjects(gachaContent.id);
 
-                            if (perkItems != null) {
-                                foreach (PerkItem perkItem in perkItems) {
-                                    for (int j = 0; i < perkItem.additions.Count; i++) {
-                                        if (perkItem.additions[j].id == gachaContent.id && perkItem.additions[j].type.Equals("ITEM")) {
-                                            amountItem = amountItem + perkItem.additions[j].additionValue;
+                            if (gameItem == null) {
+                                SpilLogging.Error("Item does not exist!");
+                                return;
+                            }
+
+                            if (gameItem.isUnique) {
+                                UniquePlayerItem uniquePlayerItem = new UniquePlayerItem(gameItem.id, gameItem.name, gameItem.type, 0, 0, gameItem.imageUrl, gameItem.reportingName, gameItem.displayName,
+                                    gameItem.displayDescription, gameItem.isGacha, gameItem.content, gameItem.properties, gameItem.limit, gameItem.isUnique, Guid.NewGuid().ToString(), "NONE", new Dictionary<string, object>());
+                            
+                                JSONObject uniquePlayerItemInfo = new JSONObject();
+                                uniquePlayerItemInfo.AddField("uniqueItem", JsonHelper.getJSONFromObject(uniquePlayerItem));
+                                uniquePlayerItemInfo.AddField("bundleId", 0);
+                                uniquePlayerItemInfo.AddField("gachaId", gachaId);
+                                uniquePlayerItemInfo.AddField("tierId", 0);
+                                uniquePlayerItemInfo.AddField("reason", reason);
+                        
+                                Spil.Instance.firePlayerDataNewUniqueItem(uniquePlayerItemInfo.Print());
+                            } else {                 
+                                int amountItem = gachaContent.amount;
+
+                                if (perkItems != null) {
+                                    foreach (PerkItem perkItem in perkItems) {
+                                        for (int j = 0; i < perkItem.additions.Count; i++) {
+                                            if (perkItem.additions[j].id == gachaContent.id && perkItem.additions[j].type.Equals("ITEM")) {
+                                                amountItem = amountItem + perkItem.additions[j].additionValue;
+                                            }
                                         }
                                     }
                                 }
+
+                                InventoryOperation("add", gachaContent.id, amountItem, reason, reasonDetails, location, null, perkItems);   
                             }
 
-                            InventoryOperation("add", gachaContent.id, amountItem, reason, reasonDetails, location, null, perkItems);
                             break;
                         case "BUNDLE":
                             OpenBundle(gachaContent.id, gachaContent.amount, reason, reasonDetails, location, perkItems);
@@ -1232,6 +1497,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
             JSONObject inventoryObject = new JSONObject();
             List<PlayerItemData> itemsList = new List<PlayerItemData>();
+            List<UniquePlayerItemData> uniqueItemsList = new List<UniquePlayerItemData>();
 
             foreach (PlayerItemData playerItemData in Inventory.items) {
                 if (playerItemData.delta != 0) {
@@ -1239,9 +1505,15 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 }
             }
 
-            if (itemsList.Count > 0) {
-                JSONObject itemsJSON = new JSONObject(JSONObject.Type.ARRAY);
-
+            foreach (UniquePlayerItemData uniquePlayerItemData in Inventory.uniqueItems) {
+                if (!uniquePlayerItemData.status.Equals("NONE")) {
+                    uniqueItemsList.Add(uniquePlayerItemData);
+                }
+            }
+            
+            JSONObject itemsJSON = new JSONObject(JSONObject.Type.ARRAY);
+            
+            if (itemsList.Count > 0) {        
                 foreach (PlayerItemData playerItemData in itemsList) {
                     JSONObject obj = new JSONObject();
                     obj.AddField("id", playerItemData.id);
@@ -1264,11 +1536,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     itemsJSON.Add(obj);
                 }
 
-                inventoryObject.AddField("items", itemsJSON);
 
-                inventoryObject.AddField("offset", Inventory.offset);
-
-                spilEvent.customData.AddField("inventory", inventoryObject);
 
                 foreach (PlayerItemData playerItemData in Inventory.items) {
                     playerItemData.delta = 0;
@@ -1277,6 +1545,44 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 }
             }
 
+            JSONObject uniqueItemsJSON = new JSONObject(JSONObject.Type.ARRAY);
+            
+            if (uniqueItemsList.Count > 0) {      
+                foreach (UniquePlayerItemData uniquePlayerItemData in uniqueItemsList) {
+                    JSONObject obj = new JSONObject();
+                    obj.AddField("uniqueId", uniquePlayerItemData.uniqueId);
+                    obj.AddField("id", uniquePlayerItemData.id);
+                    obj.AddField("name", uniquePlayerItemData.name);
+                    obj.AddField("amount", uniquePlayerItemData.amount);
+                    obj.AddField("delta", uniquePlayerItemData.delta);
+                    obj.AddField("status", uniquePlayerItemData.status);
+
+                    JSONObject uniqueProperties = JsonHelper.DictToJSONObject(uniquePlayerItemData.uniqueProperties);
+                    obj.AddField("uniqueProperties", uniqueProperties);
+                    obj.AddField("isGacha", uniquePlayerItemData.isGacha);
+                    
+                    uniqueItemsJSON.Add(obj);
+                }
+                
+                List<UniquePlayerItemData> tempList = new List<UniquePlayerItemData>(Inventory.uniqueItems);
+
+                for (int i = 0; i < tempList.Count; i++) {
+                    if (tempList[i].status.Equals("REMOVE")) {
+                        Inventory.uniqueItems.Remove(Inventory.uniqueItems[i]);
+                    } else {
+                        Inventory.uniqueItems[i].delta = 0;
+                        Inventory.uniqueItems[i].status = "NONE";
+                    }
+                }
+            }
+            
+            inventoryObject.AddField("items", itemsJSON);
+            inventoryObject.AddField("uniqueItems", uniqueItemsJSON);
+
+            inventoryObject.AddField("offset", Inventory.offset);
+
+            spilEvent.customData.AddField("inventory", inventoryObject);
+            
             if (bundle != null) {
                 spilEvent.customData.AddField("bundle", new JSONObject(JsonHelper.getJSONFromObject(bundle)));
             }
@@ -1510,12 +1816,24 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     }
                 }
 
+                if (inventoryJSON.HasField("uniqueItems")) {
+                    receivedInventory.uniqueItems = new List<UniquePlayerItemData>();
+                    
+                    JSONObject uniqueItemsJSON = inventoryJSON.GetField("uniqueItems");
+
+                    for (int i = 0; i < uniqueItemsJSON.Count; i++) {
+                        UniquePlayerItemData uniquePlayerItemData = JsonHelper.getObjectFromJson<UniquePlayerItemData>(uniqueItemsJSON.list[i].Print());
+                        
+                        receivedInventory.uniqueItems.Add(uniquePlayerItemData);
+                    }
+                }
+                
                 receivedInventory.offset = (long) inventoryJSON.GetField("offset").n;
                 receivedInventory.logic = inventoryJSON.GetField("logic").str;
             }
 
             if (response.action.ToLower().Trim().Equals("update")) {
-                SpilUnityEditorImplementation.pData.CalculatePlayerDataResponse(receivedWallet, receivedInventory, false);
+                SpilUnityEditorImplementation.pData.CalculatePlayerDataResponse(receivedWallet, receivedInventory, false, false);
             }
             else if (response.action.ToLower().Trim().Equals("syncerror")) {
                 UserDataManager.ProcessSyncError();

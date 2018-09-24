@@ -30,6 +30,8 @@ public class SpilEditorIntro : EditorWindow {
 
     [MenuItem("Spil SDK/Introduction", false, 0)]
     static void Init() {
+        if (UnityEditorInternal.InternalEditorUtility.inBatchMode) return;
+        
         SpilEditorIntro window = (SpilEditorIntro) EditorWindow.GetWindow(typeof(SpilEditorIntro));
         window.autoRepaintOnSceneChange = true;
         window.titleContent.text = "Introduction";

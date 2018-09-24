@@ -358,6 +358,17 @@ public class GameController : MonoBehaviour
             Invoke("InitGooglePlayGames", 10);
             #endif
         }
+
+        if (PlayerPrefs.GetInt("ui-test-" + Spil.Instance.GetSpilUserId(), 0) == 0) {
+            UniquePlayerItem uniquePlayerItem = Spil.Instance.CreateUniquePlayerItem(52);
+            Spil.Instance.AddUniquePlayerItemToInventory(uniquePlayerItem, "New Item", "Start");
+        
+            UniquePlayerItem uniquePlayerItem2 = Spil.Instance.CreateUniquePlayerItem(49, "blue-skin");
+            Spil.Instance.AddUniquePlayerItemToInventory(uniquePlayerItem2, "New Item", "Start");
+            
+            PlayerPrefs.SetInt("ui-test-" + Spil.Instance.GetSpilUserId(), 1);
+        }
+
     }
     
     public void OnPrivacyPolicyStatus(bool accepted) {

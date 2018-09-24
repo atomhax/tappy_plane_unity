@@ -368,7 +368,7 @@ namespace SpilGames.Unity.Base.Implementations {
             return CallNativeMethod("getWallet");
         }
 
-        public override string GetInvetoryFromSdk() {
+        public override string GetInventoryFromSdk() {
             return CallNativeMethod("getInventory");
         }
 
@@ -413,6 +413,99 @@ namespace SpilGames.Unity.Base.Implementations {
             CallNativeMethod("subtractItemFromInventory", new object[] {
                 itemId,
                 amount,
+                reason,
+                location,
+                reasonDetails,
+                transactionId
+            }, true);
+        }
+
+        public override UniquePlayerItem CreateUniquePlayerItem(int itemId, string uniqueId = null) {
+            string uniquePlayerItemJSON = CallNativeMethod("createUniqueItem", new object[] {
+                itemId,
+                uniqueId,
+            }, true);
+            UniquePlayerItemData uniquePlayerItemData = JsonHelper.getObjectFromJson<UniquePlayerItemData>(uniquePlayerItemJSON);
+            return new UniquePlayerItem(uniquePlayerItemData.id, uniquePlayerItemData.name, uniquePlayerItemData.type, uniquePlayerItemData.amount, uniquePlayerItemData.delta, uniquePlayerItemData.imageUrl, uniquePlayerItemData.reportingName, uniquePlayerItemData.displayName, uniquePlayerItemData.displayDescription, uniquePlayerItemData.isGacha, uniquePlayerItemData.content, uniquePlayerItemData.properties, uniquePlayerItemData.limit, uniquePlayerItemData.isUnique, uniquePlayerItemData.uniqueId, uniquePlayerItemData.status, uniquePlayerItemData.uniqueProperties);
+        }
+
+        public override void AddUniquePlayerItemToInventory(UniquePlayerItem uniquePlayerItem, string reason, string location, string reasonDetails = null, string transactionId = null) {
+            UniquePlayerItemData temp = new UniquePlayerItemData();
+            temp.id = uniquePlayerItem.Id;
+            temp.name = uniquePlayerItem.Name;
+            temp.type = uniquePlayerItem.Type;
+            temp.displayName = uniquePlayerItem.DisplayName;
+            temp.displayDescription = uniquePlayerItem.DisplayDescription;
+            temp.isGacha = uniquePlayerItem.IsGacha;
+            temp.properties = uniquePlayerItem.Properties;
+            temp.limit = uniquePlayerItem.Limit;
+            
+            temp.status = uniquePlayerItem.Status;
+            temp.uniqueId = uniquePlayerItem.UniqueId;
+            temp.amount = uniquePlayerItem.Amount;
+            temp.delta = uniquePlayerItem.Delta;
+            temp.uniqueProperties = uniquePlayerItem.UniqueProperties;         
+            
+            string uniquePlayerItemJSON = JsonHelper.getJSONFromObject(temp);
+            
+            CallNativeMethod("addUniqueItemToInventory", new object[] {
+                uniquePlayerItemJSON,
+                reason,
+                location,
+                reasonDetails,
+                transactionId
+            }, true);
+        }
+
+        public override void UpdateUniquePlayerItemFromInventory(UniquePlayerItem uniquePlayerItem, string reason, string location, string reasonDetails = null, string transactionId = null) {
+            UniquePlayerItemData temp = new UniquePlayerItemData();
+            temp.id = uniquePlayerItem.Id;
+            temp.name = uniquePlayerItem.Name;
+            temp.type = uniquePlayerItem.Type;
+            temp.displayName = uniquePlayerItem.DisplayName;
+            temp.displayDescription = uniquePlayerItem.DisplayDescription;
+            temp.isGacha = uniquePlayerItem.IsGacha;
+            temp.properties = uniquePlayerItem.Properties;
+            temp.limit = uniquePlayerItem.Limit;
+            
+            temp.status = uniquePlayerItem.Status;
+            temp.uniqueId = uniquePlayerItem.UniqueId;
+            temp.amount = uniquePlayerItem.Amount;
+            temp.delta = uniquePlayerItem.Delta;
+            temp.uniqueProperties = uniquePlayerItem.UniqueProperties; 
+            
+            string uniquePlayerItemJSON = JsonHelper.getJSONFromObject(temp);
+            
+            CallNativeMethod("updateUniqueItemFromInventory", new object[] {
+                uniquePlayerItemJSON,
+                reason,
+                location,
+                reasonDetails,
+                transactionId
+            }, true);
+        }
+
+        public override void RemoveUniquePlayerItemFromInventory(UniquePlayerItem uniquePlayerItem, string reason, string location, string reasonDetails = null, string transactionId = null) {
+            UniquePlayerItemData temp = new UniquePlayerItemData();
+            temp.id = uniquePlayerItem.Id;
+            temp.name = uniquePlayerItem.Name;
+            temp.type = uniquePlayerItem.Type;
+            temp.displayName = uniquePlayerItem.DisplayName;
+            temp.displayDescription = uniquePlayerItem.DisplayDescription;
+            temp.isGacha = uniquePlayerItem.IsGacha;
+            temp.properties = uniquePlayerItem.Properties;
+            temp.limit = uniquePlayerItem.Limit;
+            
+            temp.status = uniquePlayerItem.Status;
+            temp.uniqueId = uniquePlayerItem.UniqueId;
+            temp.amount = uniquePlayerItem.Amount;
+            temp.delta = uniquePlayerItem.Delta;
+            temp.uniqueProperties = uniquePlayerItem.UniqueProperties; 
+            
+            string uniquePlayerItemJSON = JsonHelper.getJSONFromObject(temp);
+            
+            CallNativeMethod("removeUniqueItemFromInventory", new object[] {
+                uniquePlayerItemJSON,
                 reason,
                 location,
                 reasonDetails,
@@ -524,61 +617,6 @@ namespace SpilGames.Unity.Base.Implementations {
         #endregion
 
         #region Non inherited members (Android only members)
-
-        #region DFP / Fyber / Chartboost
-
-        /// <summary>
-        /// Method that initiaties DFP Ads (to be used only for testing purposes).
-        /// This is not essential for developers so could be hidden but it might be handy for some developers so we left it in.
-        /// </summary>
-        /// <param name="adUnitId"></param>
-        public void TestStartDFP(string adUnitId) {
-            CallNativeMethod("startDFP", adUnitId, true);
-        }
-
-        /// <summary>
-        /// Method that initiaties Fyber Ads (to be used only for testing purposes).
-        /// This is not essential for developers so could be hidden but it might be handy for some developers so we left it in.
-        /// </summary>
-        /// <param name="appId"></param>
-        /// <param name="token"></param>
-        public void TestStartFyber(string appId, string token) {
-            CallNativeMethod("startFyber", new object[] {
-                appId,
-                token
-            }, true);
-        }
-
-        /// <summary>
-        /// Method that shows Chartboost more apps (to be used only for testing purposes).
-        /// This is not essential for developers so could be hidden but it might be handy for some developers so we left it in.
-        /// </summary>
-        /// <param name="appId"></param>
-        /// <param name="appSignature"></param>
-        public void TestStartChartBoost(string appId, string appSignature) {
-            CallNativeMethod("startChartboost", new object[] {
-                appId,
-                appSignature
-            }, true);
-        }
-
-        /// <summary>
-        /// Method that requests ads (to be used only for testing purposes).
-        /// This is not essential for developers so could be hidden but it might be handy for some developers so we left it in.
-        /// Use SendrequestRewardVideoEvent() if you want to request an ad!
-        /// </summary>
-        /// <param name="provider"></param>
-        /// <param name="adType"></param>
-        /// <param name="parentalGate"></param>
-        public override void TestRequestAd(string provider, string adType, bool parentalGate) {
-            CallNativeMethod("requestAd", new object[] {
-                provider,
-                adType,
-                parentalGate
-            }, true);
-        }
-
-        #endregion
 
         #region Server Time
 

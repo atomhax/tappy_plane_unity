@@ -377,7 +377,7 @@ namespace SpilGames.Unity.Base.Implementations {
             return JsonHelper.getJSONFromObject(pData.Wallet);
         }
 
-        public override string GetInvetoryFromSdk() {
+        public override string GetInventoryFromSdk() {
             return JsonHelper.getJSONFromObject(pData.Inventory);
         }
 
@@ -399,6 +399,22 @@ namespace SpilGames.Unity.Base.Implementations {
         public override void SubtractItemFromInventory(int itemId, int amount, string reason, string location,
             string reasonDetails = null, string transactionId = null) {
             pData.InventoryOperation("subtract", itemId, amount, reason, reasonDetails, location, transactionId);
+        }
+
+        public override UniquePlayerItem CreateUniquePlayerItem(int itemId, string uniqueId = null) {
+            return pData.CreateUniquePlayerItem(itemId, uniqueId);
+        }
+
+        public override void AddUniquePlayerItemToInventory(UniquePlayerItem uniquePlayerItem, string reason, string location, string reasonDetails = null, string transactionId = null) {
+            pData.AddUniquePlayerItemToInventory(uniquePlayerItem, reason, location, reasonDetails, transactionId);
+        }
+
+        public override void UpdateUniquePlayerItemFromInventory(UniquePlayerItem uniquePlayerItem, string reason, string location, string reasonDetails = null, string transactionId = null) {
+            pData.UpdateUniquePlayerItemFromInventory(uniquePlayerItem, reason, location, reasonDetails, transactionId);
+        }
+
+        public override void RemoveUniquePlayerItemFromInventory(UniquePlayerItem uniquePlayerItem, string reason, string location, string reasonDetails = null, string transactionId = null) {
+            pData.RemoveUniquePlayerItemFromInventory(uniquePlayerItem, reason, location, reasonDetails, transactionId);
         }
 
         public override void BuyBundle(int bundleId, string reason, string location, string reasonDetails = null,
@@ -436,47 +452,6 @@ namespace SpilGames.Unity.Base.Implementations {
         #endregion
 
         #region Non inherited members (Android only members)
-
-        #region DFP / Fyber / Chartboost
-
-        /// <summary>
-        /// Method that initiaties DFP Ads (to be used only for testing purposes).
-        /// This is not essential for developers so could be hidden but it might be handy for some developers so we left it in.
-        /// </summary>
-        /// <param name="adUnitId"></param>
-        public void TestStartDFP(string adUnitId) {
-        }
-
-        /// <summary>
-        /// Method that initiaties Fyber Ads (to be used only for testing purposes).
-        /// This is not essential for developers so could be hidden but it might be handy for some developers so we left it in.
-        /// </summary>
-        /// <param name="appId"></param>
-        /// <param name="token"></param>
-        public void TestStartFyber(string appId, string token) {
-        }
-
-        /// <summary>
-        /// Method that shows Chartboost more apps (to be used only for testing purposes).
-        /// This is not essential for developers so could be hidden but it might be handy for some developers so we left it in.
-        /// </summary>
-        /// <param name="appId"></param>
-        /// <param name="appSignature"></param>
-        public void TestStartChartBoost(string appId, string appSignature) {
-        }
-
-        /// <summary>
-        /// Method that requests ads (to be used only for testing purposes).
-        /// This is not essential for developers so could be hidden but it might be handy for some developers so we left it in.
-        /// Use SendrequestRewardVideoEvent() if you want to request an ad!
-        /// </summary>
-        /// <param name="provider"></param>
-        /// <param name="adType"></param>
-        /// <param name="parentalGate"></param>
-        public override void TestRequestAd(string provider, string adType, bool parentalGate) {
-        }
-
-        #endregion
 
         #region Push notifications
 

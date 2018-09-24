@@ -23,23 +23,23 @@ namespace SpilGames.Unity.Helpers.PlayerData {
         
         public PlayerDataHelper(SpilUnityImplementationBase Instance) {
             string walletString = Instance.GetWalletFromSdk();
-            string inventoryString = Instance.GetInvetoryFromSdk();
+            string inventoryString = Instance.GetInventoryFromSdk();
             if (walletString != null && inventoryString != null) {
                 WalletData walletData = JsonHelper.getObjectFromJson<WalletData>(walletString);
                 InventoryData inventoryData = JsonHelper.getObjectFromJson<InventoryData>(inventoryString);
 
-                AddDataToHelper(walletData != null ? walletData.currencies : null, inventoryData != null ? inventoryData.items : null);
+                AddDataToHelper(walletData != null ? walletData.currencies : null, inventoryData != null ? inventoryData.items : null, inventoryData != null ? inventoryData.uniqueItems : null);
             }
         }
         
         public void RefreshData(SpilUnityImplementationBase Instance) {
             string walletString = Instance.GetWalletFromSdk();
-            string inventoryString = Instance.GetInvetoryFromSdk();
+            string inventoryString = Instance.GetInventoryFromSdk();
             if (walletString != null && inventoryString != null) {
                 WalletData walletData = JsonHelper.getObjectFromJson<WalletData>(walletString);
                 InventoryData inventoryData = JsonHelper.getObjectFromJson<InventoryData>(inventoryString);
 
-                AddDataToHelper(walletData != null ? walletData.currencies : null, inventoryData != null ? inventoryData.items : null);
+                AddDataToHelper(walletData != null ? walletData.currencies : null, inventoryData != null ? inventoryData.items : null, inventoryData != null ? inventoryData.uniqueItems : null);
             }
         }
 
@@ -53,10 +53,24 @@ namespace SpilGames.Unity.Helpers.PlayerData {
                         return true;
                     }
                 }
-                return false;
-            } else {
-                return false;
             }
+
+            return false;
+        }
+        
+        /// <summary>
+        /// Helper method that returns true if a unique item is in the inventory
+        /// </summary>
+        public Boolean InventoryHasUniquePlayerItem(string uniqueId) {
+            if (Inventory != null) {
+                foreach (UniquePlayerItem uniquePlayerItem in Inventory.UniqueItems) {
+                    if (uniquePlayerItem.UniqueId.Equals(uniqueId)) {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -70,10 +84,9 @@ namespace SpilGames.Unity.Helpers.PlayerData {
                         return currency.CurrentBalance;
                     }
                 }
-                return -1;
-            } else {
-                return -1;
             }
+
+            return -1;
         }
 
         /// <summary>
@@ -87,12 +100,23 @@ namespace SpilGames.Unity.Helpers.PlayerData {
                         return item.Amount;
                     }
                 }
-                return -1;
-            } else {
-                return -1;
             }
+
+            return -1;
         }
 
+        public UniquePlayerItem GetUniqueItem(string uniqueId) {
+            if (Inventory != null) {
+                foreach (UniquePlayerItem uniquePlayerItem in Inventory.UniqueItems) {
+                    if (uniquePlayerItem.UniqueId.Equals(uniqueId)) {
+                        return uniquePlayerItem;
+                    }
+                }
+            }
+
+            return null;
+        }
+        
         /// <summary>
         /// Helper method that returns all the gacha Items owned by the user
         /// </summary>
@@ -128,9 +152,9 @@ namespace SpilGames.Unity.Helpers.PlayerData {
             Spil.Instance.OpenGacha(gachaId, reason, location, reasonDetails);
         }
 
-        private void AddDataToHelper(List<PlayerCurrencyData> walletCurrencies, List<PlayerItemData> inventoryItems) {
+        private void AddDataToHelper(List<PlayerCurrencyData> walletCurrencies, List<PlayerItemData> inventoryItems, List<UniquePlayerItemData> uniquePlayerItems) {
             Wallet = new Wallet(walletCurrencies);
-            Inventory = new Inventory(inventoryItems);
+            Inventory = new Inventory(inventoryItems, uniquePlayerItems);
         }
 
         public void PlayerDataUpdatedHandler() {
@@ -139,12 +163,12 @@ namespace SpilGames.Unity.Helpers.PlayerData {
 
 		public void UpdatePlayerData() {
             string walletString = Spil.Instance.GetWalletFromSdk();
-            string inventoryString = Spil.Instance.GetInvetoryFromSdk();
+            string inventoryString = Spil.Instance.GetInventoryFromSdk();
             if (walletString != null && inventoryString != null) {
                 WalletData walletData = JsonHelper.getObjectFromJson<WalletData>(walletString);
                 InventoryData inventoryData = JsonHelper.getObjectFromJson<InventoryData>(inventoryString);
 
-                AddDataToHelper(walletData != null ? walletData.currencies : null, inventoryData != null ? inventoryData.items : null);
+                AddDataToHelper(walletData != null ? walletData.currencies : null, inventoryData != null ? inventoryData.items : null, inventoryData != null ? inventoryData.uniqueItems : null);
             }
         }
     }

@@ -119,7 +119,16 @@ namespace SpilGames.Unity.Helpers.GameData {
 
         private int limit;
         
-        public Item(int id, string name, int type, string imageUrl, string reportingName, string displayName, string displayDescription, bool isGacha, List<SpilGachaContent> content, Dictionary<string, object> properties, int limit) {
+        /// <summary>
+        /// Tells if the item should be an UniquePlayerItem or not.
+        /// </summary>
+        public bool IsUnique {
+            get { return isUnique; }
+        }
+
+        private bool isUnique;
+        
+        public Item(int id, string name, int type, string imageUrl, string reportingName, string displayName, string displayDescription, bool isGacha, List<SpilGachaContent> content, Dictionary<string, object> properties, int limit, bool isUnique) {
             this.id = id;
             this.name = name;
             this.type = type;
@@ -138,6 +147,7 @@ namespace SpilGames.Unity.Helpers.GameData {
 
             this.properties = properties;
             this.limit = limit;
+            this.isUnique = isUnique;
         }
     }
 }

@@ -1699,8 +1699,41 @@ namespace SpilGames.Unity.Base.Implementations{
 			}
 		}
 
-        public delegate void PlayerDataEmptyGacha();
+	    public delegate void PlayerDataNewUniqueItem(PlayerDataNewUniqueItemInfo uniquePlayerItemInfo);
+	    
+	    /// <summary>
+	    /// This event indicates that a new UniquePlayerItem has been created using BuyBundle and OpenGacha methods.
+	    /// The returned UniquePlayerItem is not automatically added to the Inventory so modification to the uniqueId and uniqueProperties can still be made.
+	    /// Make sure to call AddUniquePlayerItemToInventory!
+	    /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-wallet-shop-inventory/
+	    /// </summary>
+	    public event PlayerDataNewUniqueItem OnPlayerDataNewUniqueItem;
 
+	    /// <summary>
+	    /// This method is meant for internal use only, it should not be used by developers.
+	    /// </summary>
+	    public void firePlayerDataNewUniqueItem(string uniquePlayerItemJSON) {
+		    SpilLogging.Log("New UniquePlayerItem with data: " + uniquePlayerItemJSON);
+
+		    JSONObject newUniquePlayerItemInfoJSON = new JSONObject(uniquePlayerItemJSON);
+		    
+		    UniquePlayerItemData uniquePlayerItemData = JsonHelper.getObjectFromJson<UniquePlayerItemData>(newUniquePlayerItemInfoJSON.GetField("uniqueItem").Print());
+		    UniquePlayerItem uniquePlayerItem = new UniquePlayerItem(uniquePlayerItemData.id, uniquePlayerItemData.name, uniquePlayerItemData.type, uniquePlayerItemData.amount, uniquePlayerItemData.delta, uniquePlayerItemData.imageUrl, uniquePlayerItemData.reportingName, uniquePlayerItemData.displayName, uniquePlayerItemData.displayDescription, uniquePlayerItemData.isGacha, uniquePlayerItemData.content, uniquePlayerItemData.properties, uniquePlayerItemData.limit, uniquePlayerItemData.isUnique, uniquePlayerItemData.uniqueId, uniquePlayerItemData.status, uniquePlayerItemData.uniqueProperties);
+		    
+		    PlayerDataNewUniqueItemInfo uniquePlayerItemInfo = new PlayerDataNewUniqueItemInfo();
+		    uniquePlayerItemInfo.uniquePlayerItem = uniquePlayerItem;
+		    uniquePlayerItemInfo.bundleId = (int) newUniquePlayerItemInfoJSON.GetField("bundleId").i;
+		    uniquePlayerItemInfo.gachaId = (int) newUniquePlayerItemInfoJSON.GetField("gachaId").i;
+		    uniquePlayerItemInfo.tierId = (int) newUniquePlayerItemInfoJSON.GetField("tierId").i;
+		    uniquePlayerItemInfo.reason = newUniquePlayerItemInfoJSON.GetField("reason").Print();
+		    
+		    if(OnPlayerDataNewUniqueItem != null){
+			    OnPlayerDataNewUniqueItem(uniquePlayerItemInfo);
+		    }
+	    }
+	    
+        public delegate void PlayerDataEmptyGacha();
+	    
         /// <summary>
         /// This event indicates that a user received nothing from a gacha box.
         /// See also: http://www.spilgames.com/integration/unity/spil-sdk-features/spil-sdk-wallet-shop-inventory/
@@ -3046,8 +3079,6 @@ namespace SpilGames.Unity.Base.Implementations{
 
         public abstract void PlayMoreApps();
 
-        public abstract void TestRequestAd(string providerName, string adType, bool parentalGate);
-
         /// <summary>
         /// Call to inform the SDK that the parental gate was (not) passes
         /// </summary>
@@ -3199,7 +3230,7 @@ namespace SpilGames.Unity.Base.Implementations{
         
         public abstract string GetWalletFromSdk();
 
-        public abstract string GetInvetoryFromSdk();
+        public abstract string GetInventoryFromSdk();
 
         public abstract void AddCurrencyToWallet(int currencyId, int amount, string reason, string location,
             string reasonDetails = null, string transactionId = null);
@@ -3213,6 +3244,14 @@ namespace SpilGames.Unity.Base.Implementations{
         public abstract void SubtractItemFromInventory(int itemId, int amount, string reason, string location,
             string reasonDetails = null, string transactionId = null);
 
+	    public abstract UniquePlayerItem CreateUniquePlayerItem(int itemId, string uniqueId = null);
+	    
+	    public abstract void AddUniquePlayerItemToInventory(UniquePlayerItem uniquePlayerItem, string reason, string location, string reasonDetails = null, string transactionId = null);
+	    
+	    public abstract void UpdateUniquePlayerItemFromInventory(UniquePlayerItem uniquePlayerItem, string reason, string location, string reasonDetails = null, string transactionId = null);
+
+	    public abstract void RemoveUniquePlayerItemFromInventory(UniquePlayerItem uniquePlayerItem, string reason, string location, string reasonDetails = null, string transactionId = null);
+	    
         public abstract void BuyBundle(int bundleId, string reason, string location, string reasonDetails = null,
             string transactionId = null, List<PerkItem> perkItems = null);
 
