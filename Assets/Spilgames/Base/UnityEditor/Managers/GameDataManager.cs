@@ -22,7 +22,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             if (!updatedFromServer) {
                 try {
 #if UNITY_WEBGL
-                    string gameData = GameObject.FindObjectOfType<Spil>().defaultGameDataAsset.text;
+                    string gameData = Spil.MonoInstance.defaultGameDataAsset.text;
 #else
                     string gameData = File.ReadAllText(Application.streamingAssetsPath + "/defaultGameData.json");
 #endif
