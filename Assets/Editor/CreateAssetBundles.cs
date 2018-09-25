@@ -6,7 +6,7 @@ namespace Editor {
     public class CreateAssetBundles {
         [MenuItem("Assets/Build AssetBundles")]
         static void BuildAllAssetBundles() {
-            // Cleanup iOS & Android
+            // Cleanup iOS, Android & WebGL
             string androidAssetBundleDirectory = "Assets/AssetBundles/Android";
             if (Directory.Exists(androidAssetBundleDirectory)) {
                 Directory.Delete(androidAssetBundleDirectory, true);
@@ -14,6 +14,10 @@ namespace Editor {
             string iosAssetBundleDirectory = "Assets/AssetBundles/iOS";
             if (Directory.Exists(iosAssetBundleDirectory)) {
                 Directory.Delete(iosAssetBundleDirectory, true);
+            }
+            string webAssetBundleDirectory = "Assets/AssetBundles/WebGL";
+            if (Directory.Exists(webAssetBundleDirectory)) {
+                Directory.Delete(webAssetBundleDirectory, true);
             }
             
             // Build iOS
@@ -31,6 +35,14 @@ namespace Editor {
             }
             BuildPipeline.BuildAssetBundles(androidAssetBundleDirectory, BuildAssetBundleOptions.ForceRebuildAssetBundle, BuildTarget.Android);
             Debug.Log("Finished Android asset bundle building.");
+            
+            // Build WebGL
+            Debug.Log("Starting WebGL asset bundle building.");
+            if (!Directory.Exists(webAssetBundleDirectory)) {
+                Directory.CreateDirectory(webAssetBundleDirectory);
+            }
+            BuildPipeline.BuildAssetBundles(webAssetBundleDirectory, BuildAssetBundleOptions.ForceRebuildAssetBundle, BuildTarget.WebGL);
+            Debug.Log("Finished WebGL asset bundle building.");
         }
     }
 }

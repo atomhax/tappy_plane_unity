@@ -1,4 +1,4 @@
-﻿#if UNITY_EDITOR
+﻿#if UNITY_EDITOR || UNITY_WEBGL
 using System.Collections;
 using System.Collections.Generic;
 using SpilGames.Unity.Base.Implementations;
@@ -32,14 +32,14 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         }
         
         public static void ShowSplashScreen(JSONObject data, string url) {
-            SpilLogging.Log("Opening URL: " + url + " With data: " + data.Print(false));
-
 			Spil.Instance.fireSplashScreenOpen();
 
+            #if UNITY_WEBGL && !UNITY_EDITOR
+            SpilWebGLJavaScriptInterface.OpenSplashScreenUrlWebGL(url, data, SpilWebGLJavaScriptInterface.enumSplashScreenTypeWebGL.SPLASH_SCREEN);
+            #else 
             SplashScreen = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/SplashScreen.prefab"));
             SplashScreen.SetActive(true);
-
-//            Spil.MonoInstance.StartCoroutine(SetupSplashScreen(data, url));
+            #endif
         }
 
         public static IEnumerator SetupSplashScreen(JSONObject data, string url) {
@@ -88,33 +88,35 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         }
         
         public static void ShowDailyBonus() {
-            SpilLogging.Log("Opening URL: " + spilDailyBonusConfig.url + " With data: " + JsonHelper.getJSONFromObject(spilDailyBonusConfig));
-
 			Spil.Instance.fireDailyBonusOpen();
-
+            #if UNITY_WEBGL && !UNITY_EDITOR
+            SpilWebGLJavaScriptInterface.OpenSplashScreenUrlWebGL(spilDailyBonusConfig.url, new JSONObject(JsonHelper.getJSONFromObject(spilDailyBonusConfig)), SpilWebGLJavaScriptInterface.enumSplashScreenTypeWebGL.DAILY_BONUS);
+            #else 
             DailyBonus = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/DailyBonus.prefab"));
             DailyBonus.SetActive(true);
+            #endif 
         }
 
-        public void CloseSplashScreen() {
-			Spil.Instance.fireSplashScreenClosed();
-
+        public static void CloseSplashScreen() {
+            Spil.Instance.fireSplashScreenClosed();
             Destroy(SplashScreen);
         }
-        
+
         public void CloseDailyBonus() {
             Spil.Instance.fireDailyBonusClosed();
-
+            
             Destroy(DailyBonus);
         }
         
         public void OpenShop() {
 			Spil.Instance.fireSplashScreenOpenShop();
-
             Destroy(SplashScreen);
         }
 
-        public void IAPPurchaseRequest() {
+        public static void IAPPurchaseRequest(string skuId = null) {
+            if(skuId != null) {
+                Spil.IapPurchaseRequest = skuId;
+            }
             if (Spil.IapPurchaseRequest == null || Spil.IapPurchaseRequest.Equals("")) {
                 SpilLogging.Error("Iap Purchase Request SKU Id not set! Please configure value in the Spil SDK object!");
             } else {
@@ -123,8 +125,8 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
             Destroy(SplashScreen);
         }
-        
-        public void CollectReward() {
+
+        public static void CollectReward() {
             if (rewardType == Spil.DailyBonusRewardTypeEnum.EXTERNAL) {
                 List<Reward> rewards = new List<Reward>();
 
@@ -178,7 +180,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
             if (response.action.ToLower().Trim().Equals("show")) {
                 if (response.eventName.ToLower().Equals("splashscreen")) {
-                    OverlayManager.ShowSplashScreen(response.data.GetField("data"), url);
+                    OverlayManager.ShowSplashScreen(response.data, url);
                 }
                 else if (response.eventName.ToLower().Equals("dailybonus")) {
                     OverlayManager.processDailyBonusResponse(response.data.Print());

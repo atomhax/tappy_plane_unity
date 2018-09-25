@@ -1,0 +1,4 @@
+google.com, pub-8637246282765423, RESELLER, f08c47fec0942fa0
+OATH, - 7475, Reseller, A544843
+spotx.tv, 1590898, Reseller, 7842df1d2fe2db34
+AppLixir, 2893, ssd.applixir.com, 3976

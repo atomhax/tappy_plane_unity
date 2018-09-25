@@ -10,8 +10,11 @@ using SpilGames.Unity.Json;
 using SpilGames.Unity.Helpers.IAPPackages;
 using SpilGames.Unity.Helpers.PlayerData;
 using SpilGames.Unity.Helpers.Promotions;
+using SpilGames.Unity.Base.Implementations;
 using UnityEngine.UI;
+using Facebook.Unity;
 
+using Facebook.Unity.Canvas;
 
 public class MyIAPManager : MonoBehaviour, IStoreListener
 {
@@ -41,9 +44,11 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 		return;
 		#endif
 
+        #if !UNITY_WEBGL || UNITY_EDITOR
 		if (m_StoreController == null) {
 			InitializePurchasing ();
 		}
+        #endif
 		
 		Spil.Instance.OnPackagesAvailable -= OnPackagesAvailable;
 		Spil.Instance.OnPackagesAvailable += OnPackagesAvailable;
@@ -66,7 +71,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 	
 	public void InitializePurchasing ()
 	{
-		#if UNITY_TVOS
+		#if UNITY_TVOS || UNITY_WEBGL
 		return;
 		#endif
 
@@ -89,7 +94,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 
 	private bool IsInitialized ()
 	{
-		#if UNITY_TVOS
+		#if UNITY_TVOS || UNITY_WEBGL
 		return false;
 		#endif
 
@@ -124,8 +129,17 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 		skinSelectPanelController.PurchaseSuccess (productId);
 		
 		return;
+        #elif UNITY_WEBGL          
+
+        iapPanelController.PurchaseStarted ();
+        skinSelectPanelController.PurchaseStarted ();
+
+        FB.Canvas.PayWithProductId(productId, "purchaseiap", 1, null, null, null, null, null, PayCallback);
+
+        return;
+
 		#endif
-		
+
 		iapPanelController.PurchaseStarted ();
 		skinSelectPanelController.PurchaseStarted ();
 		
@@ -164,7 +178,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 
 	public void OnInitialized (IStoreController controller, IExtensionProvider extensions)
 	{
-		#if UNITY_TVOS
+		#if UNITY_TVOS || UNITY_WEBGL
 		return;
 		#endif
 
@@ -180,7 +194,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 
 	void StoreProductPrices ()
 	{
-		#if UNITY_TVOS
+		#if UNITY_TVOS || UNITY_WEBGL
 		return;
 		#endif
 
@@ -192,7 +206,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 
 	public void OnInitializeFailed (InitializationFailureReason error)
 	{
-		#if UNITY_TVOS
+		#if UNITY_TVOS || UNITY_WEBGL
 		return;
 		#endif
 
@@ -201,16 +215,16 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 
 	public PurchaseProcessingResult ProcessPurchase (PurchaseEventArgs args)
 	{
-		#if UNITY_TVOS
+		#if UNITY_TVOS || UNITY_WEBGL
 		return PurchaseProcessingResult.Complete;
 		#endif
 
         string skuId = "";
         string transactionID = "";
-		string token = "";
 
 		#if UNITY_ANDROID
-
+		string token = "";
+	
 		switch (Spil.MonoInstance.AndroidStore.ToString()) {
 				case "GooglePlay":
 					//parse the json
@@ -304,6 +318,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 					Promotion packagePromotion = Spil.Instance.GetPromotions().GetPackagePromotion(helper.Packages[i].PackageId);
 					packageValue = packageValue + packagePromotion.ExtraEntities[0].Amount;
 				}
+                // TODO: This only works for IAPs that reward currencies?
 				Spil.PlayerData.Wallet.Add (int.Parse (helper.Packages [i].Items [0].Id), packageValue, PlayerDataUpdateReasons.IAP, "Shop", "Shop Purchase", transactionId);
 			}
 		}
@@ -312,7 +327,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 
 	public void OnPurchaseFailed (Product product, PurchaseFailureReason failureReason)
 	{
-		#if UNITY_TVOS
+		#if UNITY_TVOS || UNITY_WEBGL
 		return;
 		#endif
 
@@ -342,4 +357,117 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
 			Spil.Instance.TrackIAPRestoredEvent(item.definition.id, item.transactionID, item, "IAP Restore");
 		}*/
 	}
+
+    // FB IAP's
+
+    // Called on app start to request IAP data
+    public void requestFBIAPS()
+    {
+        FB.API(
+          "app/products",
+          HttpMethod.GET,
+          productCallback // callback that receives a IGraphResult
+        );
+    }
+
+    void productCallback(IGraphResult result)
+    {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        JSONObject graphResult = new JSONObject(JsonHelper.getJSONFromObject(result));
+
+        packageCosts.Clear();
+
+        // Fill iapDetails for splash screens, fill packageCosts for iapPanel
+        JSONObject iapDetails = new JSONObject();
+
+        foreach (JSONObject product in graphResult.GetField("ResultDictionary").GetField("data"))
+        {
+            JSONObject iapDetailsProduct = new JSONObject();
+            iapDetailsProduct.AddField("title", product.GetField("title"));
+            iapDetailsProduct.AddField("currency", product.GetField("price_currency_code"));
+            iapDetailsProduct.AddField("price", product.GetField("price"));
+            iapDetailsProduct.AddField("skuId", product.GetField("product_id"));
+            iapDetails.Add(iapDetailsProduct);
+
+            packageCosts.Add(product.GetField("product_id").str, product.GetField("price").str);
+        }
+
+        SpilWebGLJavaScriptInterface.iapDetailsWebGL = iapDetails;
+
+        iapPanelController.SetupIAPButtons();
+#endif
+    }
+
+#if UNITY_WEBGL
+    void PayCallback(IPayResult result)
+    {
+        iapPanelController.pleaseWaitPanel.SetActive(false);
+        skinSelectPanelController.pleaseWaitPanel.SetActive(false);
+
+        if (result != null)
+        {
+            if(result.Error == null)
+            {
+                var response = result.ResultDictionary;
+                if (Convert.ToString(response["status"]) == "completed")
+                {
+                    if (((string)result.ResultDictionary["product_id"]).Equals("com.spilgames.tappyplane.goldplane"))
+                    {
+                        Spil.Instance.AddItemToInventory(100291, 1, PlayerDataUpdateReasons.IAP, "Splash Screen", null, "EditorTransaction");
+                    } else {
+                        RewardPlayer((string)result.ResultDictionary["payment_id"]);
+                    }
+
+                    String localisedName = null;
+                    foreach(JSONObject product in SpilWebGLJavaScriptInterface.iapDetailsWebGL)
+                    {
+                        if(product.GetField("skuId").str.Equals((string)result.ResultDictionary["product_id"]))
+                        {
+                            localisedName = product.GetField("title").str;
+                            break;
+                        }
+                    }
+
+                    // TODO: Add store parameter? (amazon/facebook?)
+                    SpilTracking.IAPPurchased((string)result.ResultDictionary["product_id"], (string)result.ResultDictionary["payment_id"])
+                    .AddToken((string)result.ResultDictionary["purchase_token"])
+                    .AddReason("purchase")
+                    .AddLocation("store")
+                    .AddLocalPrice((string)result.ResultDictionary["amount"])
+                    .AddLocalCurrency((string)result.ResultDictionary["currency"])
+                    .Track();
+
+                    FB.API(
+                        "/" + (string)result.ResultDictionary["purchase_token"] + "/consume?access_token=" + AccessToken.CurrentAccessToken.TokenString,
+                        HttpMethod.POST,
+                        this.consumeCallback // callback that receives a IGraphResult
+                    );
+
+                    iapPanelController.PurchaseSuccess(localisedName);
+                    skinSelectPanelController.PurchaseSuccess(localisedName);
+
+                } else {
+                    // Payment not yet complete? TODO: When does this happen?
+                    SpilTracking.IAPFailed(lastProductSKU, "IAP status: " + Convert.ToString(response["status"])).Track();
+                    iapPanelController.PurchaseFailed();
+                    skinSelectPanelController.PurchaseFailed();
+                }
+            } else {
+                SpilTracking.IAPFailed(lastProductSKU, result.Error).Track();
+                iapPanelController.PurchaseFailed();
+                skinSelectPanelController.PurchaseFailed();
+            }
+        } else {
+            SpilTracking.IAPFailed(lastProductSKU, "IPayResult was null").Track();
+            iapPanelController.PurchaseFailed();
+            skinSelectPanelController.PurchaseFailed();
+        }
+
+        // Give the WebGL player focus or it won't update the UI for WebGL
+        SpilWebGLJavaScriptInterface.GivePlayerFocusJS();
+    }
+#endif
+	
+    // RawResult should contain: { success: true }
+    void consumeCallback(IGraphResult result) { }        
 }

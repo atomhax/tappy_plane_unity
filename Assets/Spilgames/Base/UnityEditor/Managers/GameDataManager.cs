@@ -1,4 +1,5 @@
-﻿#if UNITY_EDITOR
+﻿#if UNITY_EDITOR || UNITY_WEBGL
+using System;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -20,10 +21,14 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         public string GetGameData() {
             if (!updatedFromServer) {
                 try {
+#if UNITY_WEBGL
+                    string gameData = Spil.MonoInstance.defaultGameDataAsset.text;
+#else
                     string gameData = File.ReadAllText(Application.streamingAssetsPath + "/defaultGameData.json");
+#endif
                     return gameData;
                 }
-                catch (FileNotFoundException e) {
+                catch (Exception e) {
                     SpilLogging.Log("defaultGameData.json not found. Creating a placeholder!" + e.ToString());
                     string placeholder =
                         "{\"currencies\": [],\"promotions\": [],\"shop\": [],\"bundles\": [],\"items\": []}";

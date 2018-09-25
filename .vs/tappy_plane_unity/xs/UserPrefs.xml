@@ -1,0 +1,26 @@
+﻿<Properties StartupConfiguration="{F4EAF2BE-4DEE-4F99-C860-C2F87F3D0D46}|">
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="Unity.Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Spilgames/Base/Implementation/SpilWebGLJavaScriptInterface.cs">
+    <Files>
+      <File FileName="Assets/Scripts/UI/MyIAPManager.cs" Line="394" Column="9" />
+      <File FileName="Assets/Spilgames/Base/Implementation/SpilWebGLJavaScriptInterface.cs" Line="17" Column="24" />
+      <File FileName="Assets/Spilgames/Base/Implementation/SpilWebGLUnityImplementation.cs" Line="84" Column="13" />
+      <File FileName="Assets/Spilgames/Base/UnityEditor/Managers/AdvertisementManager.cs" Line="37" Column="14" />
+      <File FileName="Assets/Scripts/Core/SpilDataPrivacyButton.cs" Line="6" Column="43" />
+      <File FileName="Assets/Scripts/UI/Shop/ShopPanelController.cs" Line="267" Column="13" />
+      <File FileName="Assets/Spilgames/Base/Implementation/SpilUnityImplementationBase.cs" Line="2844" Column="1" />
+      <File FileName="Assets/Spilgames/Base/UnityEditor/Managers/OverlayManager.cs" Line="93" Column="13" />
+      <File FileName="Assets/Spilgames/Base/UnityEditor/Managers/PlayerDataManager.cs" Line="1232" Column="1" />
+      <File FileName="Assets/Spilgames/Base/UnityEditor/Managers/TieredEventManager.cs" Line="201" Column="13" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/rik/Documents/GitHub/tappy_plane_unity/Assets/Spilgames/Base/UnityEditor/Managers/OverlayManager.cs" relfile="Assets/Spilgames/Base/UnityEditor/Managers/OverlayManager.cs" line="175" column="12" />
+      <Breakpoint file="/Users/rik/Documents/GitHub/tappy_plane_unity/Assets/Spilgames/Base/UnityEditor/Managers/OverlayManager.cs" relfile="Assets/Spilgames/Base/UnityEditor/Managers/OverlayManager.cs" line="183" column="22" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+</Properties>

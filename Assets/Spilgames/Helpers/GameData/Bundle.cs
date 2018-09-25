@@ -45,20 +45,20 @@ namespace SpilGames.Unity.Helpers.GameData {
 
         private List<BundleItem> _Items = new List<BundleItem>();
 
-        private string _imageURL;
+        public string imageURL; // Needs to be public so it's included when converting to json (for WebGL)
 
 
         /// <summary>
         /// Get the local image path of the item. (disk cache)
         /// </summary>
         public string GetImagePath() {
-            string imagePath = Spil.Instance.GetImagePath(_imageURL);
+            string imagePath = Spil.Instance.GetImagePath(imageURL);
 
             if (imagePath != null) {
                 return imagePath;
             }
             else {
-                Spil.Instance.RequestImage(_imageURL, _Id, "bundle");
+                Spil.Instance.RequestImage(imageURL, _Id, "bundle");
                 return null;
             }
         }
@@ -67,7 +67,7 @@ namespace SpilGames.Unity.Helpers.GameData {
         /// Checks if there is an image defined for the item.
         /// </summary>
         public bool HasImage() {
-            return !String.IsNullOrEmpty(_imageURL);
+            return !String.IsNullOrEmpty(imageURL);
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace SpilGames.Unity.Helpers.GameData {
         public Bundle(int id, string name, List<SpilBundlePriceData> prices, List<SpilBundleItemData> items, string imageURL, string displayName, string displayDescription, Dictionary<string, object> properties) {
             _Id = id;
             _Name = name;
-            _imageURL = imageURL;
+            this.imageURL = imageURL;
             _displayName = displayName;
             _displayDescription = displayDescription;
 

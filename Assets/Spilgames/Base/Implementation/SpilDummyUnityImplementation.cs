@@ -5,7 +5,7 @@ using SpilGames.Unity.Helpers.PlayerData.Perk;
 
 namespace SpilGames.Unity.Base.Implementations
 {
-#if UNITY_WEBGL || UNITY_STANDALONE
+#if UNITY_STANDALONE
     public class SpilDummyUnityImplementation : SpilUnityImplementationBase
     {
         public override void AddCurrencyToWallet(int currencyId, int amount, string reason, string location, string reasonDetails = null, string transactionId = null)

@@ -1,7 +1,7 @@
 ﻿using SpilGames.Unity.Base.Implementations;
 using SpilGames.Unity.Helpers.PlayerData;
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR || UNITY_WEBGL
 namespace SpilGames.Unity.Base.UnityEditor.Managers {
     public class RewardManager {
         public static Spil.RewardFeatureTypeEnum rewardFeatureType = Spil.MonoInstance.RewardFeatureType;

@@ -1,4 +1,4 @@
-﻿#if UNITY_EDITOR
+﻿#if UNITY_EDITOR || UNITY_WEBGL
 using System;
 using System.Collections.Generic;
 using SpilGames.Unity.Base.Implementations;
@@ -311,22 +311,23 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         public static void UpdateUserDataVersions() {
             bool check = false;
 
-            for (int i = 0; i < userDataVersions.Count; i++) {
-                if (userDataVersions[i].deviceId.Equals(SystemInfo.deviceUniqueIdentifier)) {
+            for (int i = 0; i < userDataVersions.Count; i++)
+            {
+                if (userDataVersions[i].deviceId.Equals(Spil.Instance.GetDeviceId())) {
                     check = true;
                 }
             }
 
             if (!check) {
                 UserDataVersion userDataVersion = new UserDataVersion();
-                userDataVersion.deviceId = SystemInfo.deviceUniqueIdentifier;
+                userDataVersion.deviceId = Spil.Instance.GetDeviceId();
                 userDataVersion.version = 0;
 
                 userDataVersions.Add(userDataVersion);
             }
 
             for (int i = 0; i < userDataVersions.Count; i++) {
-                if (userDataVersions[i].deviceId.Equals(SystemInfo.deviceUniqueIdentifier)) {
+                if (userDataVersions[i].deviceId.Equals(Spil.Instance.GetDeviceId())) {
                     userDataVersions[i].version++;
                 }
             }
@@ -335,7 +336,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         public static JSONObject GenerateUserDataVersionsJSON(List<UserDataVersion> userDataVersions) {
             if (userDataVersions.Count == 0) {
                 UserDataVersion localUserDataVersion = new UserDataVersion();
-                localUserDataVersion.deviceId = SystemInfo.deviceUniqueIdentifier;
+                localUserDataVersion.deviceId = Spil.Instance.GetDeviceId();
                 localUserDataVersion.version = 0;
 
                 userDataVersions.Add(localUserDataVersion);
@@ -351,7 +352,11 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         }
 
         public static void ShowSyncErrorDialog(string selectedTitle, string selectedMessage, string selectedMergeButton) {
-            SyncError = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/SyncError.prefab"));
+#if UNITY_WEBGL
+            SyncError = (GameObject) Instantiate(Resources.Load("Assets/Spilgames/Editor/Prefabs/SyncError.prefab"));
+#else 
+            SyncError = (GameObject)Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/SyncError.prefab"));
+#endif
             SyncError.SetActive(true);
 
             title = selectedTitle;
@@ -361,7 +366,11 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         }
 
         public static void ShowMergeFailedDialog(string selectedTitle, string selectedMessage, string selectedRetryButton, string selectedMergeData, string selectedMergeType) {
-            MergeFailed = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/MergeFailed.prefab"));
+#if UNITY_WEBGL
+            MergeFailed = (GameObject) Instantiate(Resources.Load("Assets/Spilgames/Editor/Prefabs/MergeFailed.prefab"));
+#else 
+            MergeFailed = (GameObject)Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/MergeFailed.prefab"));
+#endif
             MergeFailed.SetActive(true);
 
             title = selectedTitle;
@@ -373,7 +382,11 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         }
 
         public static void ShowMergeConflictDialog(string selectedTitle, string selectedMessage, string selectedLocalButton, string selectedRemoteButton, string selectedMergeButton) {
-            MergeConflict = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/MergeConflict.prefab"));
+#if UNITY_WEBGL
+            MergeConflict = (GameObject) Instantiate(Resources.Load("Assets/Spilgames/Editor/Prefabs/MergeConflict.prefab"));
+#else 
+            MergeConflict = (GameObject)Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/MergeConflict.prefab"));
+#endif
             MergeConflict.SetActive(true);
 
             title = selectedTitle;

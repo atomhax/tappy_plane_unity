@@ -1,4 +1,4 @@
-﻿#if UNITY_EDITOR
+﻿#if UNITY_EDITOR || UNITY_WEBGL
 using SpilGames.Unity.Base.Implementations;
 using SpilGames.Unity.Base.SDK;
 using UnityEngine;

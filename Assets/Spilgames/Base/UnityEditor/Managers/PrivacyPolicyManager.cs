@@ -1,4 +1,4 @@
-﻿#if UNITY_EDITOR
+﻿#if UNITY_EDITOR || UNITY_WEBGL
 using SpilGames.Unity.Base.Implementations;
 using UnityEditor;
 using UnityEngine;
@@ -13,7 +13,11 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
             settingsScreen = settings;
             
-            PrivacyPolicy = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/PrivacyPolicy.prefab"));
+#if UNITY_WEBGL
+            PrivacyPolicy = (GameObject)Instantiate(Spil.MonoInstance.privacyPolicyPopupPrefab);
+#else 
+            PrivacyPolicy = (GameObject)Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/PrivacyPolicy.prefab"));
+#endif
             PrivacyPolicy.SetActive(true);
         }
 

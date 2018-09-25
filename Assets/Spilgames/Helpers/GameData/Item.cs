@@ -36,7 +36,7 @@ namespace SpilGames.Unity.Helpers.GameData {
 
         private int type;
 
-        private string imageUrl;
+        public string imageUrl; // Needs to be public so it's included when converting to json (for WebGL)
 
         /// <summary>
         /// Get the local image path of the item. (disk cache)

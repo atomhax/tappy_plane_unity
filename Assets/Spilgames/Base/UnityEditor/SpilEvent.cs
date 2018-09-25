@@ -1,4 +1,4 @@
-﻿#if UNITY_EDITOR
+﻿#if UNITY_EDITOR || UNITY_WEBGL
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -32,14 +32,21 @@ namespace SpilGames.Unity.Base.UnityEditor {
 
         public IEnumerator SendCoroutine() {
             Spil spil = GameObject.FindObjectOfType<Spil>();
+#if !UNITY_WEBGL || UNITY_EDITOR
             platform = EditorUserBuildSettings.activeBuildTarget.ToString().Trim().ToLower();
-
-#if UNITY_5_6_OR_NEWER
+#endif
+            
+#if UNITY_5_6_OR_NEWER && !UNITY_WEBGL
             bundleIdentifier = PlayerSettings.applicationIdentifier;
-#elif UNITY_5_3_OR_NEWER
+#elif UNITY_5_3_OR_NEWER && !UNITY_WEBGL
 			bundleIdentifier = PlayerSettings.bundleIdentifier;
 #endif
-
+            
+#if UNITY_WEBGL
+            bundleIdentifier = Spil.BundleIdEditor;
+            platform = "android";
+#endif
+            
             AddDefaultParameters();
 
             WWWForm requestForm = new WWWForm();
@@ -105,14 +112,22 @@ namespace SpilGames.Unity.Base.UnityEditor {
         }
 
         private void AddDefaultParameters() {
-            data.AddField("deviceId", SystemInfo.deviceUniqueIdentifier);
+            data.AddField("deviceId", Spil.Instance.GetDeviceId());
             data.AddField("uid", uid);
             data.AddField("locale", "en");
+#if !UNITY_WEBGL || UNITY_EDITOR
             data.AddField("appVersion", PlayerSettings.bundleVersion);
+#else
+            data.AddField("appVersion", "30");
+#endif
             data.AddField("apiVersion", SpilUnityImplementationBase.PluginVersion);
             data.AddField("osVersion", "1.0");
             data.AddField("os", platform);
+#if !UNITY_WEBGL || UNITY_EDITOR
             data.AddField("deviceModel", "Editor");
+#else
+            data.AddField("deviceModel", "WebGL");
+#endif
             data.AddField("timezoneOffset", "0");
             data.AddField("tto", "200");
             if (platform.Equals("android")) {

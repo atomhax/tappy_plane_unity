@@ -27,7 +27,7 @@ namespace UnityEngine.Analytics
             urlOpened = true;
 
         #if UNITY_WEBGL && !UNITY_EDITOR
-            Application.ExternalEval("window.open(\"" + url + "\",\"_blank\")");
+            Application.OpenURL(url); // NOTE: ExternalEval is deprecated there is no similar replacement.. Application.ExternalEval("window.open(\"" + url + "\",\"_blank\")");
         #else
             Application.OpenURL(url);
         #endif

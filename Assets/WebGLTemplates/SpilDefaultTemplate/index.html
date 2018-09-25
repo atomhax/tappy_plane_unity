@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | %UNITY_WEB_NAME%</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
+
+    <style>
+
+        #gameContainer {
+            width: 744px;
+            height: 465px;
+        }
+
+        #iframe {
+            position: absolute;
+            width: 744px;
+            height: 465px;
+            border: 0px;
+            padding: 0px;
+            z-index: 998;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            margin-top: -21px;
+        }
+
+        #applixir_container {
+            position: absolute;
+            width: 744px;
+            height: 465px;
+            border: 0px;
+            padding: 0px;
+            left: -5%;
+            right: 0px;
+            top: -20%;
+            pointer-events: none;
+        }
+
+        #applixir_parent {
+            display: inline-block;
+            padding: 44px;
+            background-color: #000000;
+        }
+
+        canvas {
+            outline: none;
+        }
+
+    </style>
+    <script src="fingerprint2.js"></script>
+    <script src="%UNITY_WEBGL_LOADER_URL%"></script>
+    <script>
+        
+        var gameInstance = UnityLoader.instantiate(
+            "gameContainer", 
+            "%UNITY_WEBGL_BUILD_URL%"
+        );
+
+        gameInstance.Module.splashScreenStyle = "Light";
+
+    </script>
+    <script>
+
+        // addEventListener support for IE8
+        function bindEvent(element, eventName, eventHandler) {
+            if (element.addEventListener) {
+                element.addEventListener(eventName, eventHandler, false);
+            }
+            else if (element.attachEvent) {
+                element.attachEvent('on' + eventName, eventHandler);
+            }
+        }
+
+        function onLoad() {
+
+            // Create a browser fingerprint that will serve as the device id.
+            // Don't do this directly after page load, wait a little while
+            // or the fingerprinting might not work properly.
+            setTimeout(function() {                
+                new Fingerprint2().get(
+                    function(result, components) {
+                        deviceId = result; // a hash, representing your device fingerprint
+                    }
+                );
+            }, 500);
+        
+            var gameObjectName = 'SpilSDK';
+            // Listen to message from child window
+            bindEvent(window, 'message', function(e) {      
+                switch (e.data.action) {
+
+                    case "RequestSplashScreenData":
+                        SendSplashScreenData();
+                        break;
+                    case "OpenUrl":
+                        window.open(e.data.data.url, "_blank");
+                        break;
+                    case "ShowLoader":
+                        // TODO: Show a loading spinner icon
+                        break;
+                    case "HideLoader":
+                        // TODO: Hide the loading spinner icon
+                        break;
+                    case "DisplayMessage":
+                        window.alert(e.data.data.message);
+                        break;
+                    case "CloseOverlay":
+                        removeIframe();
+                        gameInstance.SendMessage(gameObjectName, "CloseSplashScreenWebGL");
+                        break;
+    
+                    case "OpenGameShop":
+                    case "Collect":
+                    case "OpenLiveEventNextStage":
+                        gameInstance.SendMessage(gameObjectName, e.data.action + "WebGL");
+                        break;
+    
+                    case "SendDataToGame":
+                    case "SendEvent":
+                    case "IapPurchaseRequest":
+                    case "BuyBundle":
+                    case "OpenBundle":
+                    case "OpenGacha":
+                    case "AddItem":
+                    case "AddCurrency":
+                    case "ClaimTierReward":
+                    case "ApplyLiveEventItems":
+                    case "ReceiveReward":
+                        gameInstance.SendMessage(gameObjectName, e.data.action + "WebGL", JSON.stringify(e.data.data));
+                        break;
+
+                    default:
+                        console.log("Unrecognised call from child: " + e.data.action);
+                }
+            });
+        }
+
+        function openUrlInNewWindow(iframeSource) {
+            window.open(iframeSource, "_blank");
+        }
+
+        function openIframe(iframeSource) {
+            removeIframe();
+            iframeSource = iframeSource.replace(/"/g, '');
+            var iframe = document.createElement('iframe');
+            iframe.setAttribute('src', iframeSource);
+            iframe.setAttribute('id', 'iframe');
+            document.body.insertBefore(iframe, document.body.children[0]);
+        }
+
+        function removeIframe() {
+            var iframe = document.getElementById('iframe');
+            if (iframe != null) {
+                document.body.removeChild(iframe);
+            }
+            givePlayerFocus();
+        }
+
+        var splashScreenData = null;
+        function SendSplashScreenData() {
+            var iframeEl = document.getElementById('iframe');
+            if (iframeEl != null) {
+                iframeEl.contentWindow.postMessage(
+                {
+                    action: "SplashScreenData",
+                    splashScreenData: splashScreenData
+                }, '*');
+            }
+        }
+
+        // Called from Unity and JS
+
+        function givePlayerFocus()
+        {
+            if(document.getElementById('#canvas') != null)
+            {
+                document.getElementById('#canvas').tabIndex = 0;
+                document.getElementById('#canvas').focus();
+            }
+        }
+
+        // Called from Unity
+
+        function nativeMessage(message, data) {
+            var iframeEl = document.getElementById('iframe');
+            if (iframeEl != null) {
+                iframeEl.contentWindow.postMessage(
+                {
+                    action: "NativeMessage",
+                    message: message,
+                    data: data
+                }, '*');
+            }
+        }
+
+        function openSplashScreen(url, data) {
+            splashScreenData = data;
+            openIframe(url);
+        }
+
+        var deviceId = null;
+        function getDeviceId() {
+            return deviceId;
+        }
+
+</script>
+</head>
+<body onload="onLoad()">
+    <div class="webgl-content">
+        <div id="gameContainer"></div>
+
+        <!-- AppLixir -->
+        <script type='text/javascript' src="https://cdn.applixir.com/applixir.sdk3.0m.js"></script>
+        <div id="applixir_container">
+            <div id="applixir_vanishing_div" hidden>
+                <iframe id="applixir_parent"></iframe>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="webgl-logo"></div>
+            <div class="fullscreen" onclick="gameInstance.SetFullscreen(1)"></div>
+            <div class="title">Tappy Plane</div>
+        </div>
+    </div>
+</body>
+</html>

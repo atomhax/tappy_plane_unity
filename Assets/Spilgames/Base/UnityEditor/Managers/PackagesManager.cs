@@ -1,4 +1,4 @@
-﻿#if UNITY_EDITOR
+﻿#if UNITY_EDITOR || UNITY_WEBGL
 using UnityEngine;
 using System.Collections;
 using SpilGames.Unity.Helpers;

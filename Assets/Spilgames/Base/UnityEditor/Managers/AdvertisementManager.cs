@@ -1,4 +1,4 @@
-﻿#if UNITY_EDITOR
+﻿#if UNITY_EDITOR || UNITY_WEBGL
 using System;
 using UnityEngine;
 using System.Collections;
@@ -24,27 +24,52 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         void Update() {
             AdInfo.text = adInfoText;
         }
-        
-        public static void PlayVideo() {
+
+        static bool ApplixirInitialised = false;
+
+        public static void PlayVideo()
+        {
+#if UNITY_WEBGL
+            if (!ApplixirInitialised)
+            {
+                ApplixirInitialised = true;
+                SpilWebGLJavaScriptInterface.initAppLixirWebGL(3028, 4106, 2021, false);
+            }
+
+            SpilWebGLJavaScriptInterface.PlayAppLixirVideoWebGL((obj) =>
+            {
+                SpilLogging.Log("AppLixir result: " + obj.ToString());
+            });
+            provider = "AppLixir";
+#else 
             AdOverlay = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/AdOverlay.prefab"));
             AdOverlay.SetActive(true);
             provider = "AdMob";
             adType = "rewardVideo";
             adInfoText = provider + " " + adType + " is playing!";
-			Spil.Instance.fireAdStart();
+            Spil.Instance.fireAdStart();
+#endif
         }
 
         public static void PlayInterstitial(string selectedProvider) {
-            AdOverlay = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/AdOverlay.prefab"));
+#if UNITY_WEBGL
+#else 
+            AdOverlay = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/AdOverlay.prefab"));            
             AdOverlay.SetActive(true);
             provider = selectedProvider;
             adType = "interstitial";
             adInfoText = provider + " " + adType + " is playing!";
 			Spil.Instance.fireAdStart();
+#endif
+
         }
 
         public static void PlayMoreApps() {
+#if UNITY_WEBGL
+            AdOverlay = (GameObject) Instantiate(UnityEngine.Resources.Load("Assets/Spilgames/Editor/Prefabs/AdOverlay.prefab"));
+#else 
             AdOverlay = (GameObject) Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/AdOverlay.prefab"));
+#endif
             AdOverlay.SetActive(true);
             provider = "Spil";
             adType = "moreApps";

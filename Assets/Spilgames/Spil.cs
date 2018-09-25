@@ -51,6 +51,8 @@ namespace SpilGames.Unity {
         [SerializeField] private bool checkPrivacyPolicyAndroid = true;
 
         [SerializeField] private bool checkPrivacyPolicyIOS = true;
+        
+        [SerializeField] private bool checkPrivacyPolicyWeb = true;
 
         /// <summary>
         /// Not intended for use by developers.
@@ -59,8 +61,10 @@ namespace SpilGames.Unity {
         public static bool CheckPrivacyPolicy {
             get
             {
-#if UNITY_WEBGL || UNITY_STANDALONE
-                return false;                
+#if UNITY_STANDALONE
+                return false;
+#elif UNITY_WEBGL
+                return MonoInstance.checkPrivacyPolicyWeb;            
 #elif UNITY_ANDROID
                 return MonoInstance.checkPrivacyPolicyAndroid;
 #elif UNITY_IPHONE || UNITY_TVOS
@@ -147,7 +151,7 @@ namespace SpilGames.Unity {
         /// Not intended for use by developers.
         /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
         /// </summary>
-        public static string BundleIdEditor { get; private set; }
+        public static string BundleIdEditor { get; set; }
 
         /// <summary>
         /// Not intended for use by developers.
@@ -159,7 +163,7 @@ namespace SpilGames.Unity {
         /// Not intended for use by developers.
         /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
         /// </summary>
-        public static string IapPurchaseRequest { get; private set; }
+        public static string IapPurchaseRequest { get; set; }
 
         [Header("Reward Settings")] [Header("Ads")] [SerializeField]
         private string currencyName;
@@ -314,6 +318,13 @@ namespace SpilGames.Unity {
         /// SpilSDK settings can be changed via the SpilSDK menu in the inspector tab when selecting the SpilSDK object in your app's first scene.
         /// </summary>
         public TokenRewardTypeEnum TokenRewardType;
+        
+        [Header("WebGL Settings")]
+
+        [SerializeField] public TextAsset defaultPlayerDataAsset;
+        [SerializeField] public TextAsset defaultGameDataAsset;
+        [SerializeField] public TextAsset defaultGameConfigAsset;
+        [SerializeField] public GameObject privacyPolicyPopupPrefab;
 
         private static Spil monoInstance;
 
@@ -334,12 +345,19 @@ namespace SpilGames.Unity {
             }
         }
 
-#if UNITY_WEBGL || UNITY_STANDALONE
+#if UNITY_STANDALONE
         /// <summary>
         /// Main entry-point for developers, exposes all SpilSDK methods and events (except Spil.Initialize).
         /// </summary>
         public static SpilDummyUnityImplementation Instance = new SpilDummyUnityImplementation();
 
+#elif UNITY_WEBGL
+        /// <summary>
+        /// Main entry-point for developers, exposes all SpilSDK methods and events (except Spil.Initialize).
+        /// </summary>
+        //public static SpilWebGLUnityImplementation Instance = new SpilWebGLUnityImplementation();        
+        public static SpilWebGLUnityImplementation Instance = new SpilWebGLUnityImplementation();
+        
 #elif UNITY_EDITOR
         /// <summary>
         /// Main entry-point for developers, exposes all SpilSDK methods and events (except Spil.Initialize).
@@ -393,13 +411,13 @@ namespace SpilGames.Unity {
         public void Initialize()
         {
             SpilLogging.Log("SpilSDK-Unity Init");
-#if UNITY_WEBGL || UNITY_STANDALONE
+#if UNITY_STANDALONE
             SpilLogging.Error("Unsupported platform detected, skipping SpilSDK initialisation.");
             return;
 #endif
 
             Instance.SetPluginInformation(SpilUnityImplementationBase.PluginName, SpilUnityImplementationBase.PluginVersion);       
-#if UNITY_EDITOR
+#if UNITY_EDITOR || UNITY_WEBGL
             InitEditor();
 #endif
 
@@ -418,13 +436,16 @@ namespace SpilGames.Unity {
 #endif
 
             UseUnityPrefab = useUnityPrefab;
-            
             if (CheckPrivacyPolicy) {
+                #if UNITY_WEBGL
+                    Instance.CheckPrivacyPolicyUnity();
+                #else
                 if (useUnityPrefab) {
                     Instance.CheckPrivacyPolicyUnity();
                 } else {
                     Instance.CheckPrivacyPolicy();
                 }
+                #endif
             } else {
                 Instance.SpilInit(false);                
             }
@@ -435,6 +456,7 @@ namespace SpilGames.Unity {
         }
 
         void InitEditor() {
+#if UNITY_EDITOR
             if (string.IsNullOrEmpty(spilUserIdEditor)) {
                 spilUserIdEditor = Guid.NewGuid().ToString();
             } else {
@@ -443,6 +465,17 @@ namespace SpilGames.Unity {
 
             SpilUserIdEditor = spilUserIdEditor;
             SpilLogging.Log("SpilSDK-Unity Using SpilUserIdEditor: " + SpilUserIdEditor);
+#elif UNITY_WEBGL
+            SpilUserIdEditor = PlayerPrefs.GetString("SpilUserId");
+            if (string.IsNullOrEmpty(SpilUserIdEditor)) {
+                SpilUserIdEditor = Guid.NewGuid().ToString();
+                PlayerPrefs.SetString("SpilUserId", SpilUserIdEditor);
+            }
+            SpilLogging.Log("SpilSDK-Unity Using SpilUserIdEditor: " + SpilUserIdEditor);
+    
+            string deviceId = Spil.Instance.GetDeviceId();
+            SpilLogging.Log("SpilSDK-Unity Using DeviceId: " + deviceId);
+#endif
             
             BundleIdEditor = bundleIdEditor;
             if (string.IsNullOrEmpty(bundleIdEditor)) {
@@ -468,6 +501,20 @@ namespace SpilGames.Unity {
             TokenRewardAmount = tokenRewardAmount;
 
             RewardToken = rewardToken;
+            
+#if UNITY_EDITOR || UNITY_WEBGL
+            if (Spil.Instance.GetPrivValue() > -1)
+            {
+                Spil.Instance.SendCustomEventInternal("sessionStart", null);
+            }
+#endif
+        }
+
+        void OnApplicationQuit()
+        {
+#if UNITY_EDITOR || UNITY_WEBGL
+            Spil.Instance.SendCustomEventInternal("sessionStop", null);
+#endif
         }
 
         /// <summary>

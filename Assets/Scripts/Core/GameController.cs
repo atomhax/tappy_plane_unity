@@ -24,7 +24,6 @@ using UnityEngine.SocialPlatforms.GameCenter;
 #endif
 #if !UNITY_TVOS
 using Facebook.Unity;
-
 #endif
 
 public class GameController : MonoBehaviour
@@ -111,6 +110,8 @@ public class GameController : MonoBehaviour
     private Quaternion initialRotation;
 
     void Awake() {
+        Debug.Log("version: v1");
+        
         Analytics.enabled = false;
         Analytics.deviceStatsEnabled = false;
         
@@ -256,12 +257,12 @@ public class GameController : MonoBehaviour
         Spil.Instance.OnPermissionResponse -= OnPermissionResponse;
         Spil.Instance.OnPermissionResponse += OnPermissionResponse;
 #endif
-#if UNITY_EDITOR
+#if UNITY_EDITOR || UNITY_WEBGL
         PlayerPrefs.SetInt("Background", 0);
         PlayerPrefs.SetInt("Skin", 0);
 #endif
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR || UNITY_WEBGL
         if (Spil.RewardToken != null && !Spil.RewardToken.Equals(""))
         {
 			Spil.Instance.ClaimToken(Spil.RewardToken, "deeplink");
@@ -274,7 +275,9 @@ public class GameController : MonoBehaviour
         initialPosition = player.gameObject.transform.position;
         initialRotation = player.gameObject.transform.rotation;
 
+        Debug.Log("Awake facebook");
         if (!Spil.CheckPrivacyPolicy) {
+            Debug.Log("InitComponents facebook");
             InitComponents();
         }
         
@@ -327,7 +330,9 @@ public class GameController : MonoBehaviour
     }
 
     private void InitComponents() {
-#if !UNITY_TVOS
+#if !UNITY_TVOS //&& !UNITY_WEBGL
+
+        Debug.Log("init facebook");
         FB.Init(OnFBInitComplete);
         Fabric.Runtime.Fabric.Initialize();
 #endif
@@ -387,25 +392,24 @@ public class GameController : MonoBehaviour
     }
 
     public void SetupNewGame() {
+
         ClearOutOldObsticles();
+
         playerScore = 0;
         tapperScore = 0;
         player.tapperCount = 0;
-
         player.dead = false;
         player.idleMode = true;
-
         player.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         player.gameObject.GetComponent<Rigidbody2D>().angularVelocity = 0;
         player.gameObject.transform.position = initialPosition;
         player.gameObject.transform.rotation = initialRotation;
-
         UpdateUI(GameStates.Start);
         foreach (SpriteRenderer spriteRenderer in backgroundSpriteRenderes) {
             spriteRenderer.sprite = backgroundSprites[PlayerPrefs.GetInt("Background", 0)];
         }
-        player.SetupPlayerSkin();
 
+        player.SetupPlayerSkin();
         Spil.Instance.OnGameStateUpdated -= OnGameStateUpdated;
         Spil.Instance.OnGameStateUpdated += OnGameStateUpdated;
 
@@ -666,8 +670,7 @@ public class GameController : MonoBehaviour
 					Debug.Log("Saving User Id");
 				    PlayerPrefs.SetInt("facebook_connected", 1);
 					Spil.Instance.UserLogin(socialId, "facebook", token);
-				    
-					//Debug.Log("Requesting friends list");
+
 					//FB.API("/me/friends?fields=id,name", HttpMethod.GET, HandleFriendsLoaded);
 
 					FBLoginButton.SetActive(false);
@@ -683,8 +686,11 @@ public class GameController : MonoBehaviour
 #endif
         }
 
+#if !UNITY_TVOS && !UNITY_WEBGL
 		FB.GetAppLink(DeepLinkCallback);
 		FB.Mobile.FetchDeferredAppLinkData(DeepLinkCallback);
+#endif
+        shopPanelController.iapManager.requestFBIAPS();
     }
     
     public void PlatformSocialLogin() {
@@ -712,20 +718,20 @@ public class GameController : MonoBehaviour
     }
 
     public void FacebookLogin() {
-#if !UNITY_TVOS
-//        if (!FB.IsLoggedIn) {
+#if !UNITY_TVOS //&& !UNITY_WEBGL
             Debug.Log("Requesting Log In information");
             overlayEnabled = true;
             
             FB.LogInWithReadPermissions(new List<string>() {
                 //"user_friends"
             }, this.HandleResult);
-//        }
 #endif
     }
 
     public void FacebookLogout() {
+#if !UNITY_TVOS //&& !UNITY_WEBGL
         PlayerPrefs.SetInt("facebook_connected", 0);
+
         FB.LogOut();
         FBLoginButton.SetActive(true);
         FBLogoutButton.SetActive(false);
@@ -735,10 +741,14 @@ public class GameController : MonoBehaviour
             Spil.Instance.UserLogout(false);
         }
         FBShareButton.SetActive(false);
+#endif
     }
 
-#if !UNITY_TVOS
+#if !UNITY_TVOS //&& !UNITY_WEBGL
     protected void HandleResult(IResult result) {
+        Debug.Log("HandleResult START");
+        Debug.Log("result:" + result.RawResult.ToString());
+        //Debug.Log("result:" + result..ToString());
         overlayEnabled = false;
         fbLoggedIn = true;
         if (result.ResultDictionary != null) {
@@ -746,15 +756,22 @@ public class GameController : MonoBehaviour
             string token = null;
             foreach (string key in result.ResultDictionary.Keys) {
                 Debug.Log(key + " : " + result.ResultDictionary[key].ToString());
-                if (key.Equals("user_id")) {
+
+                string userIdKey = "user_id";
+                string accessTokenKey = "access_token";
+                #if UNITY_WEBGL
+                userIdKey = "userID";
+                accessTokenKey = "accessToken";
+                #endif
+                
+                if (key.Equals(userIdKey)) {
                     Debug.Log("Saving User Id");
                     socialId = result.ResultDictionary[key].ToString();
 
-                    //Debug.Log("Requesting friends list");
                     //FB.API("/me/friends?fields=id,name", HttpMethod.GET, HandleFriendsLoaded);
                 }
 
-                if (key.Equals("access_token")) {
+                if (key.Equals(accessTokenKey)) {
                     FBLoginButton.SetActive(false);
                     FBLogoutButton.SetActive(true);
                     highScoreButton.SetActive(true);
@@ -779,7 +796,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    protected void HandleFriendsLoaded(IResult result) {
+    /*protected void HandleFriendsLoaded(IResult result) {
         Debug.Log("FB friends loaded!");
 
         if (result.ResultDictionary != null) {
@@ -795,9 +812,10 @@ public class GameController : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
 #endif
 
+#if !UNITY_TVOS && !UNITY_WEBGL
 	void DeepLinkCallback(IAppLinkResult result) {
 
 		// Tested with FB dev console deeplink helper: tappyplane://token=DCWC0P78&reward=%5B%7B%22type%22%3A+%22CURRENCY%22%2C+%22amount%22%3A+1000%2C+%22id%22%3A+28%7D%5D
@@ -823,6 +841,7 @@ public class GameController : MonoBehaviour
 		    }
 		}
 	}
+#endif
 
 	static Dictionary<string, string> GetParams(string uri) {
 		MatchCollection matches = Regex.Matches(uri, @"[\?&](([^&=]+)=([^&=#]*))", RegexOptions.None);
@@ -913,7 +932,7 @@ public class GameController : MonoBehaviour
 
 
     public void FBShare() {
-#if !UNITY_TVOS
+#if !UNITY_TVOS //&& !UNITY_WEBGL
         Uri url = new Uri("http://files.cdn.spilcloud.com/10/1479133368_tappy_logo.png");
         FB.ShareLink(url, "Tappy Plane", "Check out Tappy Plane for iOS and Android!", url, null);
 #endif
@@ -921,7 +940,9 @@ public class GameController : MonoBehaviour
 
     void Spil_Instance_OnAdAvailable(enumAdType adType) {
         if (adType == enumAdType.MoreApps) {
+#if !UNITY_WEBGL
             moreGamesButton.SetActive(true);
+#endif
         }
     }
 
@@ -1043,6 +1064,15 @@ public class GameController : MonoBehaviour
     }
     
     private void OnAssetBundlesAvailable() {
+#if UNITY_WEBGL
+        AssetBundlesHelper assetBundlesHelper = Spil.Instance.GetAssetBundles();
+        StartCoroutine(AssetBundleController.DownloadGoldenPlaneBundle(this, assetBundlesHelper.GetAssetBundle("goldplane_gl")));
+
+        List<AssetBundle> assetBundles = Spil.Instance.GetAssetBundles().GetAssetBundlesOfType("background_gl");
+        foreach (AssetBundle assetBundle in assetBundles) {
+            StartCoroutine(AssetBundleController.DownloadBackgroundBundle(this, assetBundle));
+        }
+#else
         AssetBundlesHelper assetBundlesHelper = Spil.Instance.GetAssetBundles();
         StartCoroutine(AssetBundleController.DownloadGoldenPlaneBundle(this, assetBundlesHelper.GetAssetBundle("goldplane")));
 
@@ -1050,6 +1080,7 @@ public class GameController : MonoBehaviour
         foreach (AssetBundle assetBundle in assetBundles) {
             StartCoroutine(AssetBundleController.DownloadBackgroundBundle(this, assetBundle));
         }
+#endif
     }
 
     private void OnAssetBundlesNotAvailable() {

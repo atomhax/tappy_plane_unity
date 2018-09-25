@@ -10,7 +10,7 @@ using SpilGames.Unity.Base.Implementations;
 using SpilGames.Unity.Base.SDK;
 using UnityEngine.UI;
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR || UNITY_WEBGL
 namespace SpilGames.Unity.Base.UnityEditor.Managers {
     public class TieredEventManager : MonoBehaviour {
         // Event names
@@ -80,10 +80,10 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 foreach (TieredEventProgress tieredProgress in tieredEvents.progress) {
                     tieredEventsOverview.progress.Add(tieredProgress.tieredEventId, tieredProgress);
                 }
-				Spil.Instance.fireTieredEventsAvailable();
+                Spil.Instance.fireTieredEventsAvailable();
             } else {
                 SpilLogging.Error("Error retrieving tiered event data!");
-				Spil.Instance.fireTieredEventsNotAvailable();
+                Spil.Instance.fireTieredEventsNotAvailable();
             }
         }
 
@@ -115,11 +115,11 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 tieredEventsOverview.progress.Remove(progress.tieredEventId);
                 tieredEventsOverview.progress.Add(progress.tieredEventId, progress);
 
-				Spil.Instance.fireTieredEventUpdated(JsonHelper.getJSONFromObject(progress));
+                Spil.Instance.fireTieredEventUpdated(JsonHelper.getJSONFromObject(progress));
             }
             else {
                 SpilErrorMessage error = new SpilErrorMessage(42, "TieredEventShowProgressError", "Unable to show tiered event progress.");
-				Spil.Instance.fireTieredEventsError(JsonHelper.getJSONFromObject(error));
+                Spil.Instance.fireTieredEventsError(JsonHelper.getJSONFromObject(error));
             }
             
         }
@@ -129,7 +129,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
             if(tieredEvent == null) {
                 SpilErrorMessage error = new SpilErrorMessage(44, "TieredEventClaimTierError", "Unable to claim the tier reward.");
-				Spil.Instance.fireTieredEventsError(JsonHelper.getJSONFromObject(error));
+                Spil.Instance.fireTieredEventsError(JsonHelper.getJSONFromObject(error));
                 return;
             }
 
@@ -165,6 +165,10 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     }
                 }
             }
+
+            #if UNITY_WEBGL && !UNITY_EDITOR
+            SpilWebGLJavaScriptInterface.SendNativeMessageWebGL("claimTierReward", responseData);
+            #endif
         }
 
         public static void ShowTieredEventProgress(int tieredEventId) {
@@ -188,10 +192,15 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         public static void ProcessShowTieredEventProgress(JSONObject responseData) {
             ShowProgressResponse showProgressResponse = JsonHelper.getObjectFromJson<ShowProgressResponse>(responseData.ToString());
             // Show splash screen and inject data.
-            OpenTieredEventProgressView(showProgressResponse);
+            OpenTieredEventProgressView(showProgressResponse, responseData);
         }
 
-        static void OpenTieredEventProgressView(ShowProgressResponse showProgressResponse) {
+        static void OpenTieredEventProgressView(ShowProgressResponse showProgressResponse, JSONObject responseData = null) {
+
+            #if UNITY_WEBGL && !UNITY_EDITOR
+            SpilWebGLJavaScriptInterface.OpenSplashScreenUrlWebGL(showProgressResponse.url, responseData, SpilWebGLJavaScriptInterface.enumSplashScreenTypeWebGL.TIERED_EVENT);
+            #else
+
             currentTieredEvent = tieredEventsOverview.tieredEvents[showProgressResponse.tieredEventId];
 
             string info = "";
@@ -201,8 +210,8 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                 tieredEventTierTitleText = currentTier.name + " (Id: " + currentTier.id + ")";
                 
                 info = info + "Tier Start: " + currentTier.entityTierStart + " Tier End: " + currentTier.entityTierEnd + "\n";
-            }  
-            
+            }
+
             TieredEventOverlay = (GameObject)Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Spilgames/Editor/Prefabs/TieredEventInfo.prefab"));
             TieredEventOverlay.SetActive(true);
             
@@ -213,6 +222,8 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             info = info + "Completed tiers: " + JsonHelper.getJSONFromObject(showProgressResponse.completedTiers) + "\n";
 
             tiereEventInfoText = info;
+
+            #endif
             
 			Spil.Instance.fireTieredEventProgressOpen();
         }
@@ -272,6 +283,11 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                         SpilErrorMessage errorMessage = new SpilErrorMessage();
                         if (response.eventName.Contains("claimTierReward")) {
                             errorMessage = new SpilErrorMessage(44, "TieredEventClaimTierError", "Unable to claim the tier reward.");
+
+                            #if UNITY_WEBGL && !UNITY_EDITOR
+                            SpilWebGLJavaScriptInterface.SendNativeMessageWebGL("claimTierReward", response.data);
+                            #endif
+                            
                         } else if(response.eventName.Contains("showTieredEventProgress")) {
                             errorMessage = new SpilErrorMessage(42, "TieredEventShowProgressError", "Unable to show tiered event progress.");
                         } else if (response.eventName.Contains("updateTIeredEventProgress")) {

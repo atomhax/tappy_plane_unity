@@ -1,8 +1,9 @@
-﻿#if UNITY_EDITOR
+﻿#if UNITY_EDITOR || UNITY_WEBGL
+using System.IO;
 using UnityEngine;
-using System.Collections;
-using SpilGames.Unity.Base.Implementations;
-using SpilGames.Unity.Json;
+//using System.Collections;
+//using SpilGames.Unity.Base.Implementations;
+//using SpilGames.Unity.Json;
 
 namespace SpilGames.Unity.Base.UnityEditor.Managers {
     public class ConfigManager {
@@ -19,7 +20,11 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         }
 
         private static string loadGameConfigFromAssets() {
-            string config = System.IO.File.ReadAllText(Application.streamingAssetsPath + "/defaultGameConfig.json");
+#if UNITY_WEBGL
+            string config = GameObject.FindObjectOfType<Spil>().defaultGameConfigAsset.text;
+#else
+            string config = File.ReadAllText(Application.streamingAssetsPath + "/defaultGameConfig.json");
+#endif
 
             return config;
         }
