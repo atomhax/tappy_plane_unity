@@ -167,7 +167,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             }
 
             #if UNITY_WEBGL && !UNITY_EDITOR
-            WebGLJavaScriptInterface.SendNativeMessage("claimTierReward", responseData);
+            SpilWebGLJavaScriptInterface.SendNativeMessageWebGL("claimTierReward", responseData);
             #endif
         }
 
@@ -198,7 +198,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
         static void OpenTieredEventProgressView(ShowProgressResponse showProgressResponse, JSONObject responseData = null) {
 
             #if UNITY_WEBGL && !UNITY_EDITOR
-            WebGLJavaScriptInterface.OpenUrl(showProgressResponse.url, responseData, WebGLJavaScriptInterface.enumSplashScreenType.TIERED_EVENT);
+            SpilWebGLJavaScriptInterface.OpenSplashScreenUrlWebGL(showProgressResponse.url, responseData, SpilWebGLJavaScriptInterface.enumSplashScreenTypeWebGL.TIERED_EVENT);
             #else
 
             currentTieredEvent = tieredEventsOverview.tieredEvents[showProgressResponse.tieredEventId];
@@ -285,7 +285,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                             errorMessage = new SpilErrorMessage(44, "TieredEventClaimTierError", "Unable to claim the tier reward.");
 
                             #if UNITY_WEBGL && !UNITY_EDITOR
-                            WebGLJavaScriptInterface.SendNativeMessage("claimTierReward", response.data);
+                            SpilWebGLJavaScriptInterface.SendNativeMessageWebGL("claimTierReward", response.data);
                             #endif
                             
                         } else if(response.eventName.Contains("showTieredEventProgress")) {

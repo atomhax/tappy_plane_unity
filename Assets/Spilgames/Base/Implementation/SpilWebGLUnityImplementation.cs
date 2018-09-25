@@ -81,7 +81,7 @@ namespace SpilGames.Unity.Base.Implementations
             #if UNITY_EDITOR
             return @"0123-4567-89012-3456";
             #else
-            return WebGLJavaScriptInterface.GetDeviceIdJS();
+            return SpilWebGLJavaScriptInterface.GetDeviceIdJS();
             #endif
         }
 
@@ -312,10 +312,11 @@ namespace SpilGames.Unity.Base.Implementations
 
         public override void ShowHelpCenterWebview(string url)
         {
-            Application.OpenURL(url);
+            SpilWebGLJavaScriptInterface.OpenUrlInNewWindowWebGL(url);
         }
 
-       /* public override void ShowMergeConflictDialog(string title, string message, string localButtonText, string remoteButtonText, string mergeButtonText = null)
+        /* 
+        public override void ShowMergeConflictDialog(string title, string message, string localButtonText, string remoteButtonText, string mergeButtonText = null)
         {
 
         }
@@ -332,7 +333,7 @@ namespace SpilGames.Unity.Base.Implementations
 
         public override void ShowPrivacyPolicySettings()
         {
-
+            
         }
 
         public override void ShowPromotionScreen(int promotionId)
@@ -474,7 +475,8 @@ namespace SpilGames.Unity.Base.Implementations
             spilEvent.eventName = "advertisementInit";
 
             spilEvent.Send();
-        }*/
+        }
+        */
     }
 #endif
         }

@@ -1,11 +1,21 @@
 ﻿mergeInto(LibraryManager.library,
 {
-    OpenUrlWithData : function (url, data)
+    GivePlayerFocusJS : function ()
+    {
+        givePlayerFocus();
+    },
+
+    OpenUrlInNewWindowJS : function (url)
+    {
+        openUrlInNewWindow(Pointer_stringify(url));
+    },
+
+    OpenSplashScreenUrlJS : function (url, data)
     {
         openSplashScreen(Pointer_stringify(url), Pointer_stringify(data));
     },
 
-    NativeMessage : function (message, data)
+    NativeMessageJS : function (message, data)
     {
         nativeMessage(Pointer_stringify(message), Pointer_stringify(data));
     },

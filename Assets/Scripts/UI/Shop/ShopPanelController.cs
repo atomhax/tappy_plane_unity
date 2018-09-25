@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SpilGames.Unity;
+using SpilGames.Unity.Base.Implementations;
 using SpilGames.Unity.Base.SDK;
 using SpilGames.Unity.Helpers.GameData;
 using SpilGames.Unity.Helpers.PlayerData;
@@ -9,7 +10,8 @@ using SpilGames.Unity.Json;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShopPanelController : MonoBehaviour {
+public class ShopPanelController : MonoBehaviour
+{
     public GameObject getFreeCoinsButton, rewardSucessPanel;
 
     public GameController gameController;
@@ -29,7 +31,8 @@ public class ShopPanelController : MonoBehaviour {
 
     public MyIAPManager iapManager;
 
-    void OnEnable() {
+    void OnEnable()
+    {
 
         Spil.Instance.OnAdAvailable -= OnAdAvailable;
         Spil.Instance.OnAdAvailable += OnAdAvailable;
@@ -55,13 +58,14 @@ public class ShopPanelController : MonoBehaviour {
         Spil.Instance.OnPromotionsAvailable -= OnPromotionsAvailable;
         Spil.Instance.OnPromotionsAvailable += OnPromotionsAvailable;
 
-        Invoke("RequestRewardVideo", 2); 
+        Invoke("RequestRewardVideo", 2);
 
         OnPlayerDataUpdated("Opened", null);
 
         spilIds.text = "DeviceId: " + Spil.Instance.GetDeviceId() + "\nUserId: " + Spil.Instance.GetSpilUserId();
 
-        if (!Spil.CheckPrivacyPolicy) {
+        if (!Spil.CheckPrivacyPolicy)
+        {
             privacyPolicySettingsButton.SetActive(false);
         }
 
@@ -69,46 +73,56 @@ public class ShopPanelController : MonoBehaviour {
         CreateShop();
     }
 
-    private void OnPromotionsAvailable() {
+    private void OnPromotionsAvailable()
+    {
         ResetShop();
         CreateShop();
     }
 
     //this method will take the Spil game data and create the shop from it
-    public void CreateShop() {
+    public void CreateShop()
+    {
         //First create the buttons for each shop tab/window
-        for (int i = 0; i < Spil.GameData.Shop.Tabs.Count; i++) {
+        for (int i = 0; i < Spil.GameData.Shop.Tabs.Count; i++)
+        {
             CreateTabButton(Spil.GameData.Shop.Tabs[i], i);
             CreateTab(Spil.GameData.Shop.Tabs[i]);
         }
 
-        if (Spil.PlayerData.InventoryHasItem(100848)) {
+        if (Spil.PlayerData.InventoryHasItem(100848))
+        {
             starsPerkImage.gameObject.SetActive(true);
         }
-        
-        if (Spil.PlayerData.InventoryHasItem(100847)) {
+
+        if (Spil.PlayerData.InventoryHasItem(100847))
+        {
             diamondsPerkImage.gameObject.SetActive(true);
         }
-        
-        if (Spil.PlayerData.InventoryHasItem(100849)) {
+
+        if (Spil.PlayerData.InventoryHasItem(100849))
+        {
             tappyChestPerkImage.gameObject.SetActive(true);
         }
     }
 
-    public void ResetShop() {
+    public void ResetShop()
+    {
         getFreeCoinsButton.SetActive(false);
-        for (int i = 0; i < tabButtons.Count; i++) {
+        for (int i = 0; i < tabButtons.Count; i++)
+        {
             Destroy(tabButtons[i]);
         }
         tabButtons.Clear();
-        for (int i = 0; i < shopTabs.Count; i++) {
+        for (int i = 0; i < shopTabs.Count; i++)
+        {
             Destroy(shopTabs[i]);
         }
         shopTabs.Clear();
     }
 
-    void CreateTabButton(Tab tab, int position) {
-        GameObject newTabButton = (GameObject) Instantiate(tabButtonPrefab);
+    void CreateTabButton(Tab tab, int position)
+    {
+        GameObject newTabButton = (GameObject)Instantiate(tabButtonPrefab);
         newTabButton.transform.SetParent(tabButtonPanel);
         bool hasActivePromotion = Spil.Instance.GetPromotions().HasActiveTabPromotion(tab);
         newTabButton.GetComponent<TabButtonController>().SetupButton(tab.Name, position, hasActivePromotion, this);
@@ -116,69 +130,91 @@ public class ShopPanelController : MonoBehaviour {
         tabButtons.Add(newTabButton);
     }
 
-    void CreateTab(Tab tab) {
-        GameObject newTab = (GameObject) Instantiate(tabPrefab);
+    void CreateTab(Tab tab)
+    {
+        GameObject newTab = (GameObject)Instantiate(tabPrefab);
         newTab.transform.SetParent(tabsPanel);
         newTab.GetComponent<TabController>().SetupTab(this, tab);
         newTab.SetActive(false);
         shopTabs.Add(newTab);
     }
 
-    void OnDisable() {
+    void OnDisable()
+    {
         gameController.UpdateSkins();
     }
 
-    public void updatePlayerValues() {
+    public void updatePlayerValues()
+    {
         starsAmountText.text = Spil.PlayerData.GetCurrencyBalance(25).ToString();
         diamonsAmountText.text = Spil.PlayerData.GetCurrencyBalance(28).ToString();
-        if (Spil.PlayerData.GetItemAmount(100077) < 0) {
+        if (Spil.PlayerData.GetItemAmount(100077) < 0)
+        {
             tapperAmountText.text = "0";
-        } else {
+        }
+        else
+        {
             tapperAmountText.text = Spil.PlayerData.GetItemAmount(100077).ToString();
         }
-        if (Spil.PlayerData.GetItemAmount(100088) < 0) {
+        if (Spil.PlayerData.GetItemAmount(100088) < 0)
+        {
             tappyChestAmountText.text = "0";
-        } else {
+        }
+        else
+        {
             tappyChestAmountText.text = Spil.PlayerData.GetItemAmount(100088).ToString();
         }
     }
 
-    void OnPlayerDataUpdated(string reason, PlayerDataUpdatedData updatedData) {
+    void OnPlayerDataUpdated(string reason, PlayerDataUpdatedData updatedData)
+    {
 
         starsAmountText.text = Spil.PlayerData.GetCurrencyBalance(25).ToString();
         diamonsAmountText.text = Spil.PlayerData.GetCurrencyBalance(28).ToString();
 
-        if (Spil.PlayerData.GetItemAmount(100077) < 0) {
+        if (Spil.PlayerData.GetItemAmount(100077) < 0)
+        {
             tapperAmountText.text = "0";
-        } else {
+        }
+        else
+        {
             tapperAmountText.text = Spil.PlayerData.GetItemAmount(100077).ToString();
         }
-        if (Spil.PlayerData.GetItemAmount(100088) < 0) {
+        if (Spil.PlayerData.GetItemAmount(100088) < 0)
+        {
             tappyChestAmountText.text = "0";
-        } else {
+        }
+        else
+        {
             tappyChestAmountText.text = Spil.PlayerData.GetItemAmount(100088).ToString();
         }
     }
 
-    void OnAdAvailable(enumAdType adType) {
-        if (adType == enumAdType.RewardVideo) {
+    void OnAdAvailable(enumAdType adType)
+    {
+        if (adType == enumAdType.RewardVideo)
+        {
             getFreeCoinsButton.SetActive(true);
         }
     }
 
-    public void RequestRewardVideo() {
+    public void RequestRewardVideo()
+    {
         Spil.Instance.RequestRewardVideo("Shop");
     }
-    
-    public void StartRewardedVideo() {
+
+    public void StartRewardedVideo()
+    {
         Spil.Instance.OnAdFinished -= Spil_Instance_OnAdFinished;
         Spil.Instance.OnAdFinished += Spil_Instance_OnAdFinished;
         Spil.Instance.PlayVideo("Shop Button");
     }
 
-    void Spil_Instance_OnAdFinished(SpilAdFinishedResponse response) {
+    void Spil_Instance_OnAdFinished(SpilAdFinishedResponse response)
+    {
         getFreeCoinsButton.SetActive(false);
-        if (response.reward != null) {
+        if (response.reward != null)
+        {
             gameController.latestRewardAmount = 0;
             gameController.latestRewardAmount = response.reward.reward;
             gameController.latestRewardType = "stars";
@@ -191,7 +227,8 @@ public class ShopPanelController : MonoBehaviour {
         Spil.Instance.RequestRewardVideo("Shop");
     }
 
-    public void ShowReward(PlayerCurrencyData currency) {
+    public void ShowReward(PlayerCurrencyData currency)
+    {
         gameController.latestRewardAmount = currency.delta;
         gameController.latestRewardType = currency.name;
 
@@ -200,26 +237,37 @@ public class ShopPanelController : MonoBehaviour {
         rewardSucessPanel.SetActive(true);
     }
 
-    public void RewardScreenClosed() {
-        if (closeShopAfterReward) {
+    public void RewardScreenClosed()
+    {
+        if (closeShopAfterReward)
+        {
             rewardSucessPanel.SetActive(false);
             this.gameObject.SetActive(false);
             closeShopAfterReward = false;
-        } else {
+        }
+        else
+        {
             rewardSucessPanel.SetActive(false);
         }
     }
 
-    public void ShowHelpCenter() {
+    public void ShowHelpCenter()
+    {
         Spil.Instance.ShowHelpCenterWebview("https://support.spilgames.com/hc/en-us");
     }
 
-    public void ShowPrivacyPolicySettings() {
+    public void ShowPrivacyPolicySettings()
+    {
         Spil.Instance.ShowPrivacyPolicySettings();
     }
 
-    public void ShowTermsAndConditions() {
-        Application.OpenURL("http://www.spilgames.com/terms-of-use/");
+    public void ShowTermsAndConditions()
+    {
+        #if UNITY_WEBGL && !UNITY_EDITOR
+            SpilWebGLJavaScriptInterface.OpenUrlInNewWindowWebGL("http://www.spilgames.com/terms-of-use/");
+        #else
+            Application.OpenURL("http://www.spilgames.com/terms-of-use/");
+        #endif       
     }
     
     public void OpenTappyChest() {

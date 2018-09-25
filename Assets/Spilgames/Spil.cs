@@ -17,7 +17,7 @@ using SpilGames.Unity.Json;
 
 namespace SpilGames.Unity {
     [HelpURL("http://www.spilgames.com/developers/integration/unity/unity-get-started/")]
-    public class Spil : MonoBehaviour {
+    public partial class Spil : MonoBehaviour {
 
         private SpilGameDataHelper GameDataObject;
         /// <summary>

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using SpilGames.Unity.Json;
+using SpilGames.Unity.Base.Implementations;
 #if UNITY_EDITOR || UNITY_WEBGL
 using SpilGames.Unity.Base.UnityEditor.Managers;
 #endif
@@ -11,13 +12,13 @@ using AOT;
 
 namespace SpilGames.Unity.Base.Implementations
 {
-    public class WebGLJavaScriptInterface : MonoBehaviour
+    public class SpilWebGLJavaScriptInterface : MonoBehaviour
     {
         #if UNITY_WEBGL
 
         // JavaScript methods called from Unity
 
-        public string GetDeviceId()
+        public string GetDeviceIdWebGL()
         {
             return GetDeviceIdJS();
         }
@@ -25,10 +26,10 @@ namespace SpilGames.Unity.Base.Implementations
         [DllImport("__Internal")]
         public static extern string GetDeviceIdJS();
 
-        static enumSplashScreenType splashScreenType = enumSplashScreenType.SPLASH_SCREEN;
-        public static JSONObject iapDetails = new JSONObject("{}");
+        static enumSplashScreenTypeWebGL splashScreenTypeWebGL = enumSplashScreenTypeWebGL.SPLASH_SCREEN;
+        public static JSONObject iapDetailsWebGL = new JSONObject("{}");
 
-        public enum enumSplashScreenType
+        public enum enumSplashScreenTypeWebGL
         {
             DAILY_BONUS,
             SPLASH_SCREEN,
@@ -36,9 +37,17 @@ namespace SpilGames.Unity.Base.Implementations
             LIVE_EVENT
         }
 
-        public static void OpenUrl(string url, JSONObject data, enumSplashScreenType splashScreenType)
+        public static void OpenUrlInNewWindowWebGL(string url)
         {
-            WebGLJavaScriptInterface.splashScreenType = splashScreenType;
+            OpenUrlInNewWindowJS(url);
+        }
+
+        [DllImport("__Internal")]
+        public static extern void OpenUrlInNewWindowJS(string url);
+
+        public static void OpenSplashScreenUrlWebGL(string url, JSONObject data, enumSplashScreenTypeWebGL splashScreenType)
+        {
+            SpilWebGLJavaScriptInterface.splashScreenTypeWebGL = splashScreenType;
 
             JSONObject dataToSend = new JSONObject("{}");
 
@@ -49,29 +58,32 @@ namespace SpilGames.Unity.Base.Implementations
 
             dataToSend.AddField("eventData", data);
 
-            dataToSend.AddField("iapDetails", toSnakeCase(iapDetails));
+            dataToSend.AddField("iapDetails", toSnakeCaseWebGL(iapDetailsWebGL));
             dataToSend.AddField("liveEventDetails", new JSONObject("{}")); // TODO: Where to fetch this from?
-            dataToSend.AddField("tieredEvents", toSnakeCase(new JSONObject(JsonHelper.getJSONFromObject(TieredEventManager.GetTieredEventsOverview().tieredEvents.Values.ToList()))));
+            dataToSend.AddField("tieredEvents", toSnakeCaseWebGL(new JSONObject(JsonHelper.getJSONFromObject(TieredEventManager.GetTieredEventsOverview().tieredEvents.Values.ToList()))));
 
             JSONObject spilgameDataJson = new JSONObject();
-            spilgameDataJson.AddField("items", toSnakeCase(new JSONObject(JsonHelper.getJSONFromObject(Spil.GameData.Items))));
-            spilgameDataJson.AddField("currencies", toSnakeCase(new JSONObject(JsonHelper.getJSONFromObject(Spil.GameData.Currencies))));
-            spilgameDataJson.AddField("bundles", toSnakeCase(new JSONObject(JsonHelper.getJSONFromObject(Spil.GameData.Bundles))));
-            spilgameDataJson.AddField("shop", toSnakeCase(new JSONObject(JsonHelper.getJSONFromObject(Spil.GameData.Shop))));
+            spilgameDataJson.AddField("items", toSnakeCaseWebGL(new JSONObject(JsonHelper.getJSONFromObject(Spil.GameData.Items))));
+            spilgameDataJson.AddField("currencies", toSnakeCaseWebGL(new JSONObject(JsonHelper.getJSONFromObject(Spil.GameData.Currencies))));
+            spilgameDataJson.AddField("bundles", toSnakeCaseWebGL(new JSONObject(JsonHelper.getJSONFromObject(Spil.GameData.Bundles))));
+            spilgameDataJson.AddField("shop", toSnakeCaseWebGL(new JSONObject(JsonHelper.getJSONFromObject(Spil.GameData.Shop))));
             dataToSend.AddField("gameData", spilgameDataJson);
 
             JSONObject spilWalletJson = new JSONObject();
-            spilWalletJson.AddField("currencies", toSnakeCase(new JSONObject(JsonHelper.getJSONFromObject(Spil.PlayerData.Wallet.Currencies))));
+            spilWalletJson.AddField("currencies", toSnakeCaseWebGL(new JSONObject(JsonHelper.getJSONFromObject(Spil.PlayerData.Wallet.Currencies))));
             dataToSend.AddField("wallet", spilWalletJson);
 
             JSONObject spilInventoryJson = new JSONObject();
-            spilInventoryJson.AddField("items", toSnakeCase(new JSONObject(JsonHelper.getJSONFromObject(Spil.PlayerData.Inventory.Items))));
+            spilInventoryJson.AddField("items", toSnakeCaseWebGL(new JSONObject(JsonHelper.getJSONFromObject(Spil.PlayerData.Inventory.Items))));
             dataToSend.AddField("inventory", spilInventoryJson);
 
-            OpenUrlWithData(url, dataToSend.ToString());
+            OpenSplashScreenUrlJS(url, dataToSend.ToString());
         }
 
-        static JSONObject toSnakeCase(JSONObject inputObject)
+        [DllImport("__Internal")]
+        public static extern void OpenSplashScreenUrlJS(string url, string data);
+
+        static JSONObject toSnakeCaseWebGL(JSONObject inputObject)
         {
             JSONObject returnObject = new JSONObject("{}");
 
@@ -84,7 +96,7 @@ namespace SpilGames.Unity.Base.Implementations
                     JSONObject value = inputObject.GetField(key);
                     if (value.IsObject)
                     {
-                        value = toSnakeCase(value);
+                        value = toSnakeCaseWebGL(value);
                         returnObject.AddField(keyNameSnakeCase, value);
                     }
                     else if (value.IsArray)
@@ -92,7 +104,7 @@ namespace SpilGames.Unity.Base.Implementations
                         List<JSONObject> newValue = new List<JSONObject>();
                         for (int a = 0; a < value.list.Count; a++)
                         {
-                            newValue.Add(toSnakeCase(value.list[a]));
+                            newValue.Add(toSnakeCaseWebGL(value.list[a]));
                         }
                         returnObject.AddField(keyNameSnakeCase, new JSONObject(newValue.ToArray()));
                     } else {
@@ -105,7 +117,7 @@ namespace SpilGames.Unity.Base.Implementations
                 List<JSONObject> newValue = new List<JSONObject>();
                 for (int a = 0; a < inputObject.list.Count; a++)
                 {
-                    newValue.Add(toSnakeCase(inputObject.list[a]));
+                    newValue.Add(toSnakeCaseWebGL(inputObject.list[a]));
                 }
                 returnObject = new JSONObject(newValue.ToArray());
             } else {
@@ -115,51 +127,56 @@ namespace SpilGames.Unity.Base.Implementations
             return returnObject;
         }
 
-        [DllImport("__Internal")]
-        public static extern void OpenUrlWithData(string url, string data);
-
-        public static void SendNativeMessage(string message, JSONObject data)
+        public static void GiveWebGLPlayerFocus()
         {
-            NativeMessage(message, toSnakeCase(data).ToString());
+            GivePlayerFocusJS();
         }
 
         [DllImport("__Internal")]
-        public static extern void NativeMessage(string message, string data);
+        public static extern void GivePlayerFocusJS();
+
+        public static void SendNativeMessageWebGL(string message, JSONObject data)
+        {
+            NativeMessageJS(message, toSnakeCaseWebGL(data).ToString());
+        }
+
+        [DllImport("__Internal")]
+        public static extern void NativeMessageJS(string message, string data);
 
         // Unity methods called from JavaScript
 
-        public void CloseSplashScreen()
+        public void CloseSplashScreenWebGL()
         {
-            switch(splashScreenType)
+            switch(splashScreenTypeWebGL)
             {
-                case enumSplashScreenType.SPLASH_SCREEN:
+                case enumSplashScreenTypeWebGL.SPLASH_SCREEN:
                     Spil.Instance.fireSplashScreenClosed();
                     break;
-                case enumSplashScreenType.DAILY_BONUS:
+                case enumSplashScreenTypeWebGL.DAILY_BONUS:
                     Spil.Instance.fireDailyBonusClosed();
                     break;
-                case enumSplashScreenType.TIERED_EVENT:
+                case enumSplashScreenTypeWebGL.TIERED_EVENT:
                     Spil.Instance.fireTieredEventProgressClosed();
                     break;
             }
         }
 
-        public void OpenGameShop()
+        public void OpenGameShopWebGL()
         {
             Spil.Instance.fireSplashScreenOpenShop();
         }
 
-        public void Collect() // Only for daily bonus with non-external reward
+        public void CollectWebGL() // Only for daily bonus with non-external reward
         {
             Spil.Instance.SendCustomEventInternal("collectDailyBonus", null);
         }
 
-        public void ReceiveReward(string paramsJson) // Only for daily bonus with external reward
+        public void ReceiveRewardWebGL(string paramsJson) // Only for daily bonus with external reward
         {
             Spil.Instance.fireDailyBonusReward(paramsJson);
         }
 
-        public void SendEvent(string paramsJson)
+        public void SendEventWebGL(string paramsJson)
         {
             JSONObject paramsJsonObject = new JSONObject(paramsJson);
             JSONObject payload = new JSONObject(paramsJsonObject.HasField("payload") ? paramsJsonObject.GetField("payload").str : null);
@@ -175,7 +192,7 @@ namespace SpilGames.Unity.Base.Implementations
             Spil.Instance.SendCustomEventInternal(paramsJsonObject.GetField("eventName").str, paramsDict);
         }
 
-        public void IapPurchaseRequest(string paramsJson)
+        public void IapPurchaseRequestWebGL(string paramsJson)
         {
             JSONObject paramsJsonObject = new JSONObject(paramsJson);
             string skuId = paramsJsonObject.GetField("skuId").str;
@@ -192,25 +209,25 @@ namespace SpilGames.Unity.Base.Implementations
             }
         }
 
-        public void BuyBundle(string paramsJson)
+        public void BuyBundleWebGL(string paramsJson)
         {
             JSONObject paramsJsonObject = new JSONObject(paramsJson);
             Spil.Instance.BuyBundle((int)paramsJsonObject.GetField("bundleId").n, paramsJsonObject.HasField("reason") ? paramsJsonObject.GetField("reason").str : null, paramsJsonObject.HasField("location") ? paramsJsonObject.GetField("location").str : null, paramsJsonObject.HasField("reasonDetails") ? paramsJsonObject.GetField("reasonDetails").str : null);
         }
 
-        public void OpenBundle(string paramsJson)
+        public void OpenBundleWebGL(string paramsJson)
         {
             JSONObject paramsJsonObject = new JSONObject(paramsJson);
             SpilWebGLUnityImplementation.pData.OpenBundle((int)paramsJsonObject.GetField("bundleId").n, (int)paramsJsonObject.GetField("amount").n, paramsJsonObject.GetField("reason").str, paramsJsonObject.GetField("reasonDetails").str, paramsJsonObject.GetField("location").str, null);
         }
 
-        public void OpenGacha(string paramsJson)
+        public void OpenGachaWebGL(string paramsJson)
         {
             JSONObject paramsJsonObject = new JSONObject(paramsJson);
             Spil.Instance.OpenGacha((int)paramsJsonObject.GetField("gachaId").n, paramsJsonObject.HasField("reason") ? paramsJsonObject.GetField("reason").str : null, paramsJsonObject.HasField("location") ? paramsJsonObject.GetField("location").str : null, paramsJsonObject.HasField("reasonDetails") ? paramsJsonObject.GetField("reasonDetails").str : null);
         }
 
-        public void AddItem(string paramsJson)
+        public void AddItemWebGL(string paramsJson)
         {
             JSONObject paramsJsonObject = new JSONObject(paramsJson);
 
@@ -222,7 +239,7 @@ namespace SpilGames.Unity.Base.Implementations
             }
         }
 
-        public void AddCurrency(string paramsJson)
+        public void AddCurrencyWebGL(string paramsJson)
         {
             JSONObject paramsJsonObject = new JSONObject(paramsJson);
 
@@ -234,7 +251,7 @@ namespace SpilGames.Unity.Base.Implementations
             }
         }
 
-        public void SendDataToGame(string paramsJson)
+        public void SendDataToGameWebGL(string paramsJson)
         {
             Spil.Instance.fireSplashScreenData(paramsJson);
         }
@@ -242,19 +259,19 @@ namespace SpilGames.Unity.Base.Implementations
         // Live events 
         // TODO: Implement and test live events!
          
-        public void OpenLiveEventNextStage()
+        public void OpenLiveEventNextStageWebGL()
         {
             //LiveEventManager.ProcessAdvanceToNextStage(); // TODO: Implement this?
         }
 
-        public void ApplyLiveEventItems(string paramsJson)
+        public void ApplyLiveEventItemsWebGL(string paramsJson)
         {
             LiveEventManager.ProcessApplyItems(new JSONObject(paramsJson));
         }
 
         // Tiered events
 
-        public void ClaimTierReward(string paramsJson)
+        public void ClaimTierRewardWebGL(string paramsJson)
         {
             JSONObject paramsJsonObject = new JSONObject(paramsJson);
             TieredEventManager.ClaimTierReward((int)paramsJsonObject.GetField("tieredEventId").i, (int)paramsJsonObject.GetField("tierId").i);
@@ -265,8 +282,7 @@ namespace SpilGames.Unity.Base.Implementations
         public delegate void SimpleCallback(int val);
 
         [DllImport("__Internal")]
-
-        public static extern void ShowVideo(int devId, int gameId, int zoneId, int fallback, SimpleCallback onCompleted);
+        public static extern void ShowAppLixirVideoWebGL(int devId, int gameId, int zoneId, int fallback, SimpleCallback onCompleted);
 
         [MonoPInvokeCallback(typeof(SimpleCallback))]
 
@@ -276,9 +292,9 @@ namespace SpilGames.Unity.Base.Implementations
 
             PlayVideoResult pvr = (PlayVideoResult)result;
 
-            if (callback != null)
+            if (callbackAppLixirWebGL != null)
             {
-                callback(pvr);
+                callbackAppLixirWebGL(pvr);
             }
         }
 
@@ -297,16 +313,16 @@ namespace SpilGames.Unity.Base.Implementations
             SYS_CLOSING = 10
         }
 
-        private static Action<PlayVideoResult> callback = null;
+        private static Action<PlayVideoResult> callbackAppLixirWebGL = null;
 
         /// <summary>
         /// Calls out to the applixir service to show a video ad.
         /// Result is returned via the resultListerens event.
         /// </summary>
-        public static void PlayVideo(Action<PlayVideoResult> callback)
+        public static void PlayAppLixirVideoWebGL(Action<PlayVideoResult> callback)
         {
-            WebGLJavaScriptInterface.callback = callback;
-            ShowVideo(devId, gameId, zoneId, (fallback ? 1 : 0), ApplixirCompletedHandler);
+            SpilWebGLJavaScriptInterface.callbackAppLixirWebGL = callback;
+            ShowAppLixirVideoWebGL(devId, gameId, zoneId, (fallback ? 1 : 0), ApplixirCompletedHandler);
         }
 
         private static int devId;
@@ -314,12 +330,12 @@ namespace SpilGames.Unity.Base.Implementations
         private static int zoneId;
         private static bool fallback;
 
-        public static void init(int devId, int gameId, int zoneId, bool fallback)
+        public static void initAppLixirWebGL(int devId, int gameId, int zoneId, bool fallback)
         {
-            WebGLJavaScriptInterface.devId = devId;
-            WebGLJavaScriptInterface.gameId = gameId;
-            WebGLJavaScriptInterface.zoneId = zoneId;
-            WebGLJavaScriptInterface.fallback = fallback;
+            SpilWebGLJavaScriptInterface.devId = devId;
+            SpilWebGLJavaScriptInterface.gameId = gameId;
+            SpilWebGLJavaScriptInterface.zoneId = zoneId;
+            SpilWebGLJavaScriptInterface.fallback = fallback;
         }
 
         /*

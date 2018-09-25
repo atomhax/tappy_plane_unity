@@ -392,7 +392,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
             packageCosts.Add(product.GetField("product_id").str, product.GetField("price").str);
         }
 
-        WebGLJavaScriptInterface.iapDetails = iapDetails;
+        SpilWebGLJavaScriptInterface.iapDetailsWebGL = iapDetails;
 
         iapPanelController.SetupIAPButtons();
 #endif
@@ -419,7 +419,7 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
                     }
 
                     String localisedName = null;
-                    foreach(JSONObject product in WebGLJavaScriptInterface.iapDetails)
+                    foreach(JSONObject product in SpilWebGLJavaScriptInterface.iapDetailsWebGL)
                     {
                         if(product.GetField("skuId").str.Equals((string)result.ResultDictionary["product_id"]))
                         {
@@ -462,6 +462,9 @@ public class MyIAPManager : MonoBehaviour, IStoreListener
             iapPanelController.PurchaseFailed();
             skinSelectPanelController.PurchaseFailed();
         }
+
+        // Give the WebGL player focus or it won't update the UI for WebGL
+        SpilWebGLJavaScriptInterface.GivePlayerFocusJS();
     }
 #endif
 	

@@ -1034,7 +1034,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 134196485}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5ebb11c6fc3a2f498bd89593f7744aa, type: 3}
+  m_Script: {fileID: 11500000, guid: 24728d6b065f4427b979fbabf78c653e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -10518,6 +10518,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1087916765}
   - component: {fileID: 1087916764}
+  - component: {fileID: 1087916766}
   m_Layer: 0
   m_Name: SpilSDK
   m_TagString: Untagged
@@ -10588,6 +10589,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1087916766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1087916763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0c8cc92b6b004b8a861df7732010ffb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1089260491
 GameObject:
   m_ObjectHideFlags: 0

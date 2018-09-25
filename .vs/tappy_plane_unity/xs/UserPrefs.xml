@@ -1,28 +1,25 @@
-﻿<Properties StartupConfiguration="{FCF3EBED-1117-7C63-5D4A-C0589384D5DC}|">
+﻿<Properties StartupConfiguration="{F4EAF2BE-4DEE-4F99-C860-C2F87F3D0D46}|">
   <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="Unity.Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Spilgames/Base/UnityEditor/Managers/UserDataManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Spilgames/Base/Implementation/SpilWebGLJavaScriptInterface.cs">
     <Files>
-      <File FileName="Assets/Spilgames/Base/Implementation/WebGLJavaScriptInterface.cs" Line="10" Column="47" />
-      <File FileName="Assets/Plugins/WebGL/JavaScriptInterface.jslib" Line="19" Column="23" />
-      <File FileName="Assets/Plugins/WebGL/AppLixir.jslib" Line="48" Column="7" />
-      <File FileName="Assets/Spilgames/Base/UnityEditor/Managers/AdvertisementManager.cs" Line="24" Column="24" />
-      <File FileName="Assets/WebGLTemplates/SpilDefaultTemplate/index.html" Line="178" Column="14" />
-      <File FileName="Assets/Spilgames/Base/Implementation/SpilWebGLUnityImplementation.cs" Line="84" Column="31" />
-      <File FileName="Assets/Scripts/UI/Shop/ShopPanelController.cs" Line="58" Column="61" />
-      <File FileName="Assets/Scripts/DataPrivacy/Runtime/DataPrivacy.cs" Line="162" Column="17" />
-      <File FileName="Assets/Scripts/DataPrivacy/Runtime/DataPrivacyUtils.cs" Line="11" Column="7" />
-      <File FileName="Assets/Spilgames/Spil.cs" Line="1" Column="1" />
-      <File FileName="Assets/Spilgames/Base/UnityEditor/SpilEvent.cs" Line="156" Column="7" />
-      <File FileName="Assets/Spilgames/Base/UnityEditor/Managers/UserDataManager.cs" Line="317" Column="64" />
-      <File FileName="Assets/Spilgames/Base/Implementation/SpilAndroidUnityImplementation.cs" Line="122" Column="5" />
-      <File FileName="Assets/FacebookSDK/Examples/Scripts/SubMenus/MainMenu.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/UI/MyIAPManager.cs" Line="398" Column="7" />
-      <File FileName="Assets/Spilgames/Base/Implementation/SpilUnityEditorImplementation.cs" Line="531" Column="39" />
+      <File FileName="Assets/Scripts/UI/MyIAPManager.cs" Line="394" Column="9" />
+      <File FileName="Assets/Spilgames/Base/Implementation/SpilWebGLJavaScriptInterface.cs" Line="17" Column="24" />
+      <File FileName="Assets/Spilgames/Base/Implementation/SpilWebGLUnityImplementation.cs" Line="84" Column="13" />
+      <File FileName="Assets/Spilgames/Base/UnityEditor/Managers/AdvertisementManager.cs" Line="37" Column="14" />
+      <File FileName="Assets/Scripts/Core/SpilDataPrivacyButton.cs" Line="6" Column="43" />
+      <File FileName="Assets/Scripts/UI/Shop/ShopPanelController.cs" Line="267" Column="13" />
+      <File FileName="Assets/Spilgames/Base/Implementation/SpilUnityImplementationBase.cs" Line="2844" Column="1" />
+      <File FileName="Assets/Spilgames/Base/UnityEditor/Managers/OverlayManager.cs" Line="93" Column="13" />
+      <File FileName="Assets/Spilgames/Base/UnityEditor/Managers/PlayerDataManager.cs" Line="1232" Column="1" />
+      <File FileName="Assets/Spilgames/Base/UnityEditor/Managers/TieredEventManager.cs" Line="201" Column="13" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/rik/Documents/GitHub/tappy_plane_unity/Assets/Spilgames/Base/UnityEditor/Managers/OverlayManager.cs" relfile="Assets/Spilgames/Base/UnityEditor/Managers/OverlayManager.cs" line="175" column="12" />
+      <Breakpoint file="/Users/rik/Documents/GitHub/tappy_plane_unity/Assets/Spilgames/Base/UnityEditor/Managers/OverlayManager.cs" relfile="Assets/Spilgames/Base/UnityEditor/Managers/OverlayManager.cs" line="183" column="22" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MultiItemStartupConfigurations />

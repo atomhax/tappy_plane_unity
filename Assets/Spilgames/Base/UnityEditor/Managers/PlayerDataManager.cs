@@ -923,7 +923,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             webViewDataInfo.AddField("bundleId", bundleId);
             webViewData.AddField("data", webViewDataInfo);
 
-            WebGLJavaScriptInterface.SendNativeMessage("buyBundle", webViewData);
+            SpilWebGLJavaScriptInterface.SendNativeMessageWebGL("buyBundle", webViewData);
             #endif
             
             SendUpdatePlayerDataEvent(bundle, reason, reasonDetails, location, transactionId, promotion, perkItems);
@@ -1229,7 +1229,7 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
 
                     webViewData.AddField("data", webViewDataInfo);
 
-                    WebGLJavaScriptInterface.SendNativeMessage("openGacha", webViewData);
+                    SpilWebGLJavaScriptInterface.SendNativeMessageWebGL("openGacha", webViewData);
                     #endif
                     
                     PlayerDataManager.gachaId = 0;

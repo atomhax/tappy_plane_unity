@@ -2841,7 +2841,7 @@ namespace SpilGames.Unity.Base.Implementations{
             jsonObject.AddField("name", errorMessage.name);
             jsonObject.AddField("message", errorMessage.message);
 
-            WebGLJavaScriptInterface.SendNativeMessage("userDataError", jsonObject);
+            SpilWebGLJavaScriptInterface.SendNativeMessageWebGL("userDataError", jsonObject);
             #endif
 
 			if(OnUserDataError != null){

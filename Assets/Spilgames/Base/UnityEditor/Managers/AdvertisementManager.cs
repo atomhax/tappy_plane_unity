@@ -33,10 +33,10 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
             if (!ApplixirInitialised)
             {
                 ApplixirInitialised = true;
-                WebGLJavaScriptInterface.init(3028, 4106, 2021, false);
+                SpilWebGLJavaScriptInterface.initAppLixirWebGL(3028, 4106, 2021, false);
             }
 
-            WebGLJavaScriptInterface.PlayVideo((obj) =>
+            SpilWebGLJavaScriptInterface.PlayAppLixirVideoWebGL((obj) =>
             {
                 SpilLogging.Log("AppLixir result: " + obj.ToString());
             });

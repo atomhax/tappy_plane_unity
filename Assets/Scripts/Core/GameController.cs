@@ -392,25 +392,24 @@ public class GameController : MonoBehaviour
     }
 
     public void SetupNewGame() {
+
         ClearOutOldObsticles();
+
         playerScore = 0;
         tapperScore = 0;
         player.tapperCount = 0;
-
         player.dead = false;
         player.idleMode = true;
-
         player.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         player.gameObject.GetComponent<Rigidbody2D>().angularVelocity = 0;
         player.gameObject.transform.position = initialPosition;
         player.gameObject.transform.rotation = initialRotation;
-
         UpdateUI(GameStates.Start);
         foreach (SpriteRenderer spriteRenderer in backgroundSpriteRenderes) {
             spriteRenderer.sprite = backgroundSprites[PlayerPrefs.GetInt("Background", 0)];
         }
-        player.SetupPlayerSkin();
 
+        player.SetupPlayerSkin();
         Spil.Instance.OnGameStateUpdated -= OnGameStateUpdated;
         Spil.Instance.OnGameStateUpdated += OnGameStateUpdated;
 

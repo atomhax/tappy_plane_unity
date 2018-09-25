@@ -46,6 +46,9 @@
             background-color: #000000;
         }
 
+        canvas {
+            outline: none;
+        }
 
     </style>
     <script src="fingerprint2.js"></script>
@@ -85,7 +88,7 @@
                 );
             }, 500);
         
-            var gameObjectName = 'WebGLJavascriptInterface';
+            var gameObjectName = 'SpilSDK';
             // Listen to message from child window
             bindEvent(window, 'message', function(e) {      
                 switch (e.data.action) {
@@ -107,13 +110,13 @@
                         break;
                     case "CloseOverlay":
                         removeIframe();
-                        gameInstance.SendMessage(gameObjectName, 'CloseSplashScreen');
+                        gameInstance.SendMessage(gameObjectName, "CloseSplashScreenWebGL");
                         break;
     
                     case "OpenGameShop":
                     case "Collect":
                     case "OpenLiveEventNextStage":
-                        gameInstance.SendMessage(gameObjectName, e.data.action);
+                        gameInstance.SendMessage(gameObjectName, e.data.action + "WebGL");
                         break;
     
                     case "SendDataToGame":
@@ -127,13 +130,17 @@
                     case "ClaimTierReward":
                     case "ApplyLiveEventItems":
                     case "ReceiveReward":
-                        gameInstance.SendMessage(gameObjectName, e.data.action, JSON.stringify(e.data.data));
+                        gameInstance.SendMessage(gameObjectName, e.data.action + "WebGL", JSON.stringify(e.data.data));
                         break;
 
                     default:
                         console.log("Unrecognised call from child: " + e.data.action);
                 }
             });
+        }
+
+        function openUrlInNewWindow(iframeSource) {
+            window.open(iframeSource, "_blank");
         }
 
         function openIframe(iframeSource) {
@@ -150,6 +157,7 @@
             if (iframe != null) {
                 document.body.removeChild(iframe);
             }
+            givePlayerFocus();
         }
 
         var splashScreenData = null;
@@ -161,6 +169,17 @@
                     action: "SplashScreenData",
                     splashScreenData: splashScreenData
                 }, '*');
+            }
+        }
+
+        // Called from Unity and JS
+
+        function givePlayerFocus()
+        {
+            if(document.getElementById('#canvas') != null)
+            {
+                document.getElementById('#canvas').tabIndex = 0;
+                document.getElementById('#canvas').focus();
             }
         }
 
