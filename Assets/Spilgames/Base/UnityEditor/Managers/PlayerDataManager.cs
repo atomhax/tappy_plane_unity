@@ -262,9 +262,16 @@ namespace SpilGames.Unity.Base.UnityEditor.Managers {
                     foreach (PlayerItemData playerItem in receivedInventory.items) {
                         if (receivedInventory.logic.Equals("CLIENT")) {
                             PlayerItemData item = Inventory.items.FirstOrDefault(a => a.id == playerItem.id);
-                            if (item != null && playerItem.delta != 0) {
-                                int updatedAmount = item.amount + playerItem.delta;
-
+                            if (item != null) {
+                                int updatedAmount = item.amount;
+                                if (externalChange) {
+                                    updatedAmount = playerItem.amount;
+                                } else if (playerItem.delta != 0) {
+                                    updatedAmount = updatedAmount + playerItem.delta;
+                                } else {
+                                  continue;  
+                                }
+                                
                                 //Check for item limit and overflow
                                 int itemLimit = item.limit;
                                 if (itemLimit > 0 && updatedAmount > itemLimit) {
