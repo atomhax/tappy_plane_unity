@@ -126,7 +126,7 @@ namespace SpilGames.Unity.Base.UnityEditor {
 #if !UNITY_WEBGL || UNITY_EDITOR
             data.AddField("deviceModel", "Editor");
 #else
-            data.AddField("deviceModel", "WebGL");
+            data.AddField("deviceModel", SpilWebGLJavaScriptInterface.getBrowserInfoWebGL());
 #endif
             data.AddField("timezoneOffset", "0");
             data.AddField("tto", "200");

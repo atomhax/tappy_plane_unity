@@ -18,6 +18,19 @@ namespace SpilGames.Unity.Base.Implementations
 
         // JavaScript methods called from Unity
 
+        string browserInfo = null;
+        public string GetBrowserInfoWebGL()
+        {
+            if (browserInfo == null)
+            {
+                browserInfo = GetBrowserInfoJS();
+            }
+            return browserInfo;
+        }
+
+        [DllImport("__Internal")]
+        public static extern string GetBrowserInfoJS();
+
         public string GetDeviceIdWebGL()
         {
             return GetDeviceIdJS();
